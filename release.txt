@@ -1,0 +1,52 @@
+v2.0.0-Alpha    
+2019-10-22
+==========
+New:
+- Master 
+    * Eselon 1
+    * Eselon 2
+    * Eselon 3
+    * Eselon 4
+    * Struktur Organisasi
+    * Pegawai
+    * Kategori Posisi
+    * Grade Posisi
+    * Hari Aktif
+    * Tugas Belajar
+    * Tunjangan Profesi
+    * Golongan
+    * Jurusan Pendidikan
+    * Akademik
+    * Jabatan Fungsional Umum
+- Rekapitulasi
+    * Data Kinerja
+    * Tunjangan Kinerja Aspek Produktivitas & Aspek Kinerja
+    * Import Tunjangan Kinerja Aspek Produktivitas & Aspek Kinerja
+- Transaksi
+    * Transaksi
+        # link SKP (Realisasi)
+    * Tugas tambahan dan kreativitas
+        # link SKP (Realisasi)
+    * Persetujuan tugas tambahan dan kreativitas
+- SKP
+    * Master SKP
+    * Setup SKP
+    * Penilaian Prilaku
+    * Cetak SKP
+- Konfigurasi
+    * Management Menu & Submenu
+    * Akses Menu
+    * Role
+- Pesan 
+- Dashboard
+    * Informasi Pegawai
+    * Ubah data Pribadi
+    * Persentase menit kerja
+    * Chart Pencapaian ment efektif per tahun
+- Other
+    * Notification
+Improved:
+0
+Fixed:
+0
+Error:

@@ -1,0 +1,76 @@
+.nav-tabs > li:nth-child(1)
+{
+	background-color: #FFEB3B;
+}
+
+.nav-tabs > li:nth-child(2)
+{
+	background-color: #00BCD4;
+}
+
+.nav-tabs > li:nth-child(3)
+{
+	background-color: #8BC34A;
+}
+
+.nav-tabs > li:nth-child(4)
+{
+	background-color: #673ab7;
+}
+
+.nav-tabs > li:nth-child(5)
+{
+	background-color: #009688;
+}
+
+.nav-tabs > li:nth-child(6)
+{
+	background-color: #FF5722;
+}
+
+.nav-tabs > li:nth-child(6)
+{
+    background-color: #E91E63;
+}
+
+.nav-tabs > li:nth-child(7)
+{
+    background-color: #9E9E9E;
+}
+
+.nav-tabs > li:nth-child(8)
+{
+    background-color: #FF9800;
+}
+
+.nav-tabs > li:nth-child(9)
+{
+    background-color: #E91E63;
+}
+
+.nav-tabs > li >a
+{
+	color: #fff;
+    height: 47px;
+}
+
+.nav-tabs > li > a:hover
+{
+	color: #000;
+}
+
+.notif-count
+{
+	display: inline-block;
+    font-size: 14px;
+    line-height: 25px;
+    width: 26px;
+    background: red;
+    border-radius: 50%;
+    margin-left: 0px;
+    font-weight: bold;
+    animation: earthquake 150ms 60;
+    vertical-align: 5%;
+    color: white;
+    text-align: center;
+}
