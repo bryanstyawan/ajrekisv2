@@ -21,7 +21,7 @@
                 <tr>
                     <td><?=$i+1;?><input type="hidden" value="<?=$list[$i]->id;?>"></td>
                     <td><?=$list[$i]->nama_jabatan;?></td>
-                    <td><?=$list[$i]->posisi_class;?><input type="hidden" value="<?=$list[$i]->id_kelas_jabatan;?>"></td>
+                    <td><?=$list[$i]->posisi_class;?></td>
                     <td><?=number_format($list[$i]->tunjangan,0);?></td>								
                     <td>
                         <a class="btn btn-success btn-choose"><i class="fa fa-check"></i> Pilih<input type="hidden" value="<?=$i+1;?>"></a>
@@ -58,12 +58,12 @@
             $('#index-table').val(index);
             id               = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > input[type="hidden"]').val ();
             text_jabatan     = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html ();
-            id_kelas_jabatan = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3) > input[type="hidden"]').val ();
+            id_kelas_jabatan = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html ();
             $("#id_jfu").val(id);
             $("#jabatan").val(text_jabatan);
             $("#grade").val(id_kelas_jabatan);            
             $("#modal-detail-jfu").modal('hide');				            
-            // console.log(text);            
+            console.log(id_kelas_jabatan);            
         })
     });
 </script>

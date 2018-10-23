@@ -530,11 +530,13 @@ $(document).ready(function(){
 		$('#es4 option[value=""]').attr('selected', 'selected');
 		if (this.value == 4) {
 			$('#grade').prop('disabled', true);
+			$('#input-jabatan > input').prop('disabled', true);			
 			$('#input-jabatan > a').css('display','');			
 		}
 		else
 		{
 			$('#grade').prop('disabled', false);
+			$('#input-jabatan > input').prop('disabled', false);						
 			$('#input-jabatan > a').css('display','none');						
 		}
 	})
@@ -788,60 +790,53 @@ $(document).ready(function(){
 				msg: "Data Atasan tidak boleh kosong."
 			});
 		}
-	    else if (grade <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Kelas Jabatan tidak boleh kosong."
-			});
-		}
-			else if (jabatan.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Jabatan tidak boleh kosong."
-			});
-		}
 		else
 		{
-    		// $.ajax({
-    		// 	url :"<?php echo site_url()?>/master/data_struktur/addStruktur",
-    		// 	type:"post",
-    		// 	data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade,
-    		// 	beforeSend:function(){
-    		// 		$("#newData").modal('hide');
-    		// 		$("#loadprosess").modal('show');
-    		// 	},
-    		// 	success:function(){
-    		// 		Lobibox.notify('success', {
-    		// 			msg: 'Data Berhasil Ditambahkan'
-    		// 		});
-
-    		// 		setTimeout(function(){
-    		// 			$("#loadprosess").modal('hide');
-    	    //           	setTimeout(function(){
-    	    //             	location.reload();
-    	    //           	}, 1500);
-    		// 		}, 5000);
-    		// 	},
-    		// 	error:function(){
-    		// 			Lobibox.notify('error', {
-    		// 			msg: 'Gagal Melakukan Penambahan data'
-    		// 			});
-    		// 			}
-    		// })
+			if (kat == 4) {
+				if (jabatan.length <= 0)
+				{
+					Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+					{
+						msg: "Data Jabatan tidak boleh kosong."
+					});
+				}
+				else
+				{
+					add_struktur();
+				}
+			} else 
+			{
+				if (grade <= 0)
+				{
+					Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+					{
+						msg: "Data Kelas Jabatan tidak boleh kosong."
+					});
+				}
+				else if (jabatan.length <= 0)
+				{
+					Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+					{
+						msg: "Data Jabatan tidak boleh kosong."
+					});
+				}
+				else
+				{
+					add_struktur();
+				}
+			}
 		}
 	})
 
 	$("#edit").click(function(){
-	    var es1= $("#nes1").val();
-		var es2= $("#nes2").val();
-		var es3= $("#nes3").val();
-		var es4= $("#nes4").val();
-		var grade= $("#ngrade").val();
-		var atasan= $("#natasan").val();
-		var kat= $("#nkat").val();
-		var jabatan= $("#njabatan").val();
+	    var es1     = $("#nes1").val();
+	    var es2     = $("#nes2").val();
+	    var es3     = $("#nes3").val();
+	    var es4     = $("#nes4").val();
+	    var grade   = $("#ngrade").val();
+	    var atasan  = $("#natasan").val();
+	    var kat     = $("#nkat").val();
+	    var jabatan = $("#njabatan").val();
 
 	    if (kat.length <= 0)
 		{
@@ -871,7 +866,7 @@ $(document).ready(function(){
 				msg: "Data Kelas Jabatan tidak boleh kosong."
 			});
 		}
-			else if (jabatan.length <= 0)
+		else if (jabatan.length <= 0)
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
 			{
@@ -932,7 +927,6 @@ function edit(id){
 		function( response )
 		{
 			// console.log(response[0]['atasan']);
-
 			$("#editData").modal('show');
 			$("#nes1").val(response['eselon1']);
 			$("#nes2").append('<option value="'+response['eselon2']+'" selected>'+response['nama_eselon2']+'</option>');
@@ -975,5 +969,44 @@ function del(id){
     }
                 })
 
+}
+
+function add_struktur() {
+	var es1     = $("#es1").val();
+	var es2     = $("#es2").val();
+	var es3     = $("#es3").val();
+	var es4     = $("#es4").val();
+	var grade   = $("#grade").val();
+	var atasan  = $("#atasan").val();
+	var kat     = $("#kat").val();
+	var jabatan = $("#jabatan").val();
+	var id_jfu  = $("#id_jfu").val();
+
+	$.ajax({
+		url :"<?php echo site_url()?>/master/data_struktur/addStruktur",
+		type:"post",
+		data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade+"&id_jfu="+id_jfu,
+		beforeSend:function(){
+			$("#newData").modal('hide');
+			$("#loadprosess").modal('show');
+		},
+		success:function(){
+			Lobibox.notify('success', {
+				msg: 'Data Berhasil Ditambahkan'
+			});
+
+			setTimeout(function(){
+				$("#loadprosess").modal('hide');
+				setTimeout(function(){
+					location.reload();
+				}, 1500);
+			}, 5000);
+		},
+		error:function(){
+				Lobibox.notify('error', {
+				msg: 'Gagal Melakukan Penambahan data'
+				});
+				}
+	})	
 }
 </script>

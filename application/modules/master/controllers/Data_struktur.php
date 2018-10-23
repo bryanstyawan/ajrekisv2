@@ -31,14 +31,15 @@ class Data_struktur extends CI_Controller {
 	public function addStruktur(){
 		$this->Allcrud->session_rule();							
 		$add = array(
-			'eselon1' =>$this->input->post('es1'),
-			'eselon2' =>$this->input->post('es2'),
-			'eselon3' =>$this->input->post('es3'),
-			'eselon4' =>$this->input->post('es4'),
-			'atasan' =>$this->input->post('atasan'),
-			'kat_posisi' =>$this->input->post('kat'),
-			'posisi_class' =>$this->input->post('grade'),
-			'nama_posisi' =>strtoupper($this->input->post('jabatan'))
+			'eselon1'      => $this->input->post('es1'),
+			'eselon2'      => $this->input->post('es2'),
+			'eselon3'      => $this->input->post('es3'),
+			'eselon4'      => $this->input->post('es4'),
+			'atasan'       => $this->input->post('atasan'),
+			'kat_posisi'   => $this->input->post('kat'),
+			'posisi_class' => $this->input->post('grade'),
+			'nama_posisi'  => strtoupper($this->input->post('jabatan')),
+			'id_jfu'       => $this->input->post('id_jfu'),
 		);
 		$this->Allcrud->addData('mr_posisi',$add);
 	}
