@@ -307,7 +307,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    &copy; 2018 Kementerian Dalam Negeri, Biro Kepegawaian - Pengembangan Karier.
+                    &copy; 2018 Kementerian Dalam Negeri, Biro Kepegawaian - Pengembangan Karier. V.2.0.0-Alpha
                 </div>
                 <div class="col-sm-7 text-center">
                     <ul class="social-icons">

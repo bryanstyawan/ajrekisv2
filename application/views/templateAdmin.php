@@ -198,8 +198,9 @@ $(document).click(function(e) {
                 <div class="row">
                     <div class="col-lg-12" style="padding-top: 15px;">
                         <div class="text-center" style="color:#fff;">
-                            <span>Copyright@2014 Biro Kepegawaian All</span></br>
-                            <span>Right Reserved</span>
+                            <span>Copyright@2018 Biro Kepegawaian</span><span>Right Reserved</span>
+                            <br>
+                            <span>V.2.0.0-Alpha</span>
                         </div>
                     </div>
                 </div>

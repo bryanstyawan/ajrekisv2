@@ -440,10 +440,11 @@ input {
 						<!-- Remind Passowrd -->
 						<div id="formFooter">
 							<a class="underlineHover" href="#">Lupa Password?</a>
+							<hr>
+							<span style="color:#92badd;">V.2.0.0-Alpha</span>
 						</div>
 					</div>
 				</div>
-
 
 			</div>
 		</div>

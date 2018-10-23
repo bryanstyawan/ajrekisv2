@@ -804,32 +804,32 @@ $(document).ready(function(){
 		}
 		else
 		{
-    		$.ajax({
-    			url :"<?php echo site_url()?>/master/data_struktur/addStruktur",
-    			type:"post",
-    			data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade,
-    			beforeSend:function(){
-    				$("#newData").modal('hide');
-    				$("#loadprosess").modal('show');
-    			},
-    			success:function(){
-    				Lobibox.notify('success', {
-    					msg: 'Data Berhasil Ditambahkan'
-    				});
+    		// $.ajax({
+    		// 	url :"<?php echo site_url()?>/master/data_struktur/addStruktur",
+    		// 	type:"post",
+    		// 	data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade,
+    		// 	beforeSend:function(){
+    		// 		$("#newData").modal('hide');
+    		// 		$("#loadprosess").modal('show');
+    		// 	},
+    		// 	success:function(){
+    		// 		Lobibox.notify('success', {
+    		// 			msg: 'Data Berhasil Ditambahkan'
+    		// 		});
 
-    				setTimeout(function(){
-    					$("#loadprosess").modal('hide');
-    	              	setTimeout(function(){
-    	                	location.reload();
-    	              	}, 1500);
-    				}, 5000);
-    			},
-    			error:function(){
-    					Lobibox.notify('error', {
-    					msg: 'Gagal Melakukan Penambahan data'
-    					});
-    					}
-    		})
+    		// 		setTimeout(function(){
+    		// 			$("#loadprosess").modal('hide');
+    	    //           	setTimeout(function(){
+    	    //             	location.reload();
+    	    //           	}, 1500);
+    		// 		}, 5000);
+    		// 	},
+    		// 	error:function(){
+    		// 			Lobibox.notify('error', {
+    		// 			msg: 'Gagal Melakukan Penambahan data'
+    		// 			});
+    		// 			}
+    		// })
 		}
 	})
 
