@@ -702,6 +702,27 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     </div>
 </div>
 
+<!-- ---------------------------------------------------------------------------- -->
+<div class="example-modal">
+    <div class="modal modal-success fade" id="modal-transaksi-proses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header"><h3 class="heading-hr text-center text-uppercase"><i class="icon-user"></i>Pekerjaan Belum Selesai</h3></div>
+                    <div class="modal-body" style="background-color: #fff!important;color:#000!important;">
+                        <div class="container-fluid" id="get-datatable">
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------------------- -->
+
+
+
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/knob/jquery.knob.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxchart.core.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxdata.js"></script>
@@ -823,6 +844,22 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
         {
             $("#modal-info-pegawai").modal('show');
         });
+
+        $("#btn_masih_diproses").click(function() 
+        {
+            $.ajax({
+                url :"<?php echo site_url()?>dashboard/get_datamodal_transaksi/0",
+                type:"post",
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                },
+                success:function(msg){
+                    $("#get-datatable").html(msg);					
+                    $("#modal-transaksi-proses").modal('show');
+                    $("#loadprosess").modal('hide');							
+                }
+            })		            				
+        })
 
         $("#btn-save-profile").click(function()
         {

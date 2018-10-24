@@ -5,13 +5,13 @@ class Dashboard extends CI_Controller {
 	public function __construct () {
 		parent::__construct();
 		$this->load->model ('mdashboard', '', TRUE);
+		$this->load->model ('transaksi/mtrx', '', TRUE);		
 		$this->load->model ('laporan/mlaporan', '', TRUE);
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function home()
 	{
-		// print_r($this->session->userdata());die();								
 		error_reporting(E_ALL ^ E_WARNING);
 		$this->Allcrud->session_rule();
 		$this->Allcrud->notif_message();
@@ -30,16 +30,6 @@ class Dashboard extends CI_Controller {
 		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'));
 		$data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));
 		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year();
-
-		// echo "<pre>";
-		// print_r($data['menit_efektif_year']);		
-		// // var_dump(scandir('/tmp'));
-		// echo "</pre>";
-		// // echo '<br>';
-		// // echo "<pre>";		
-		// // var_dump($_SERVER);
-		// // echo "<pre>";
-		// die();
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -150,66 +140,11 @@ class Dashboard extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
-
-
-
-	// public function profil($id)
-	// {
-	// 	if(!$this->session->userdata('login')){
-	// 		redirect('admin/loginadmin');
-	// 	}
-	// 	$data['pending']      = $this->Allcrud->getData('tr_capaian_pekerjaan',array('stat'=>0,'id_pegawai'=>$this->session->userdata('sesUser'),'tgl_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-	// 	$data['terima']       = $this->Allcrud->getData('tr_capaian_pekerjaan',array('stat'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tgl_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-	// 	$data['tolak']        = $this->Allcrud->getData('tr_capaian_pekerjaan',array('stat'=>2,'id_pegawai'=>$this->session->userdata('sesUser'),'tgl_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-	// 	$data['revisi']       = $this->Allcrud->getData('tr_capaian_pekerjaan',array('stat'=>3,'id_pegawai'=>$this->session->userdata('sesUser'),'tgl_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-	// 	$data['banding']      = $this->Allcrud->getData('tr_capaian_pekerjaan',array('stat'=>4,'id_pegawai'=>$this->session->userdata('sesUser'),'tgl_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-	// 	$data['pegawai']      = $this->mdashboard->dataUser(($id/1988)-1502)->row();
-	// 	$data['title']        = 'Profil Pegawai';
-	// 	$data['content']      = 'vprofil';
-	// 	$data['agama']        = $this->Allcrud->listData('mr_agama');
-	// 	$data['status_nikah'] = $this->Allcrud->listData('mr_status_nikah');
-	// 	$this->load->view('templateAdmin',$data);
-	// }
-
-	// public function setting($id){
-	// 	if(!$this->session->userdata('login')){
-	// 		redirect('admin/loginadmin');
-	// 	}
-	// 	$q = $this->mdashboard->dataUser($id)->row();
-	// 	echo json_encode($q);
-	// }
-
-	// public function editProfil(){
-	// 	$pass = $this->input->post('pass');
-	// 	$flag = array('id'=>$this->input->post('oid'));
-	// 	$lahir = date('Y-m-d',strtotime($this->input->post('lahir')));
-
-	// 	if($pass != NULL || $pass != ""){
-	// 		$edit =array(
-	// 			'nama_pegawai' => $this->input->post('nama'),
-	// 			'tgl_lahir'    => $lahir,
-	// 			'alamat'       => $this->input->post('alamat'),
-	// 			'gender'       => $this->input->post('gender'),
-	// 			'agama'        => $this->input->post('agama'),
-	// 			'status_nikah' => $this->input->post('status_nikah'),
-	// 			'password'     => sha1(md5($pass))
-	// 		);
-	// 	}else{
-	// 		$edit =array(
-	// 			'nama_pegawai' => $this->input->post('nama'),
-	// 			'tgl_lahir'    => $lahir,
-	// 			'alamat'       => $this->input->post('alamat'),
-	// 			'gender'       => $this->input->post('gender'),
-	// 			'agama'        => $this->input->post('agama'),
-	// 			'status_nikah' => $this->input->post('status_nikah')
-	// 		);
-	// 	}
-	// 	$this->Allcrud->editData('mr_pegawai',$edit,$flag);
-	// }
-
-	// public function kinerja(){
-	// 	$user = $this->session->userdata('sesUser');
-	// 	$data = $this->mdashboard->kinerja($user)->row();
-	// 	echo json_encode($data);
-	// }
+	public function get_datamodal_transaksi($oid)
+	{
+		# code...
+		$data['list']  = $this->mtrx->status_pekerjaan($oid,$this->session->userdata('sesUser'));
+		$data['title'] = '';
+		$this->load->view('dashboard/datatable_modal',$data);		
+	}
 }
