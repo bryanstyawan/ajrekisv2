@@ -3,8 +3,9 @@ v2.0.0-Alpha
 ==========
 New:
 Improved:
-- modal pekerjaan belum diperiksa
-- sync Jabatan Fungsional Umum - Organisasi
+- [dashboard]modal pekerjaan belum diperiksa
+- [dashboard]modal Realisasi menit kerja efektif
+- [dashboard]sync Jabatan Fungsional Umum - Organisasi
 Fixed:
 - uppercase pekerjaan belum diperiksa, Realisasi, Tunjangan, fingerprint, capaian skp di dashboard
 
