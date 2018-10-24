@@ -1,4 +1,15 @@
 v2.0.0-Alpha    
+2019-10-24
+==========
+New:
+Improved:
+- modal pekerjaan belum diperiksa
+- sync Jabatan Fungsional Umum - Organisasi
+Fixed:
+- uppercase pekerjaan belum diperiksa, Realisasi, Tunjangan, fingerprint, capaian skp di dashboard
+
+
+v2.0.0-Alpha    
 2019-10-22
 ==========
 New:

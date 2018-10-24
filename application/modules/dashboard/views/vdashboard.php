@@ -284,7 +284,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
         </div>
     </div>
 
-    <div class="col-lg-2 col-xs-8 tour-step tour4 btn-show-stat shrink" id="">
+    <div class="col-lg-2 col-xs-8 tour-step tour4 btn-show-stat shrink" id="btn_realisasi_menit_efektif">
         <div class="small-box" style="background-color: #d2d6de !important">
             <div class="icon">
                 <i class="fa fa-clock-o" style="background-color: #673AB7;"></i>
@@ -306,7 +306,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
             <div class="inner">
                 <h3><?php echo number_format($data_transaksi[0]->real_tunjangan_kinerja);?></h3>
             </div>
-            <div class="inner col-lg-7">
+            <div class="inner col-lg-7 text-uppercase">
                 <p>Tunjangan</p>
             </div>
         </div>
@@ -320,7 +320,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
             <div class="inner">
                 <h3>0</h3>
             </div>
-            <div class="inner col-lg-7">
+            <div class="inner col-lg-7 text-uppercase">
                 <p>FingerPrint</p>
             </div>
         </div>
@@ -335,7 +335,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                 <h3><?=$skp['persentase_target_realisasi']->persentase;?></h3>
                 <label><?=$skp['persentase_target_realisasi']->total_target_kuantitas.' / '.$skp['persentase_target_realisasi']->total_realisasi_kuantitas;?></label>
             </div>
-            <div class="inner">
+            <div class="inner text-uppercase">
                 <p>Capaian SKP</p>
             </div>
         </div>
@@ -720,6 +720,23 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     </div>
 </div>
 <!-- ---------------------------------------------------------------------------- -->
+<div class="example-modal">
+    <div class="modal modal-success fade" id="modal-transaksi-realisasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header"><h3 class="heading-hr text-center text-uppercase"><i class="icon-user"></i>Realisasi Menit Kerja Efektif</h3></div>
+                    <div class="modal-body" style="background-color: #fff!important;color:#000!important;">
+                        <div class="container-fluid" id="get-datatable1">
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ---------------------------------------------------------------------------- -->
 
 
 
@@ -852,10 +869,28 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                 type:"post",
                 beforeSend:function(){
                     $("#loadprosess").modal('show');
+                    $('.table-view').dataTable().remove();                    
                 },
                 success:function(msg){
                     $("#get-datatable").html(msg);					
                     $("#modal-transaksi-proses").modal('show');
+                    $("#loadprosess").modal('hide');							
+                }
+            })		            				
+        })
+
+        $("#btn_realisasi_menit_efektif").click(function() 
+        {
+            $.ajax({
+                url :"<?php echo site_url()?>dashboard/get_datamodal_transaksi/1",
+                type:"post",
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                    $('.table-view').dataTable().remove();                    
+                },
+                success:function(msg){
+                    $("#get-datatable1").html(msg);					
+                    $("#modal-transaksi-realisasi").modal('show');
                     $("#loadprosess").modal('hide');							
                 }
             })		            				

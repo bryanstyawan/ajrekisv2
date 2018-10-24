@@ -1,7 +1,7 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/datatables/dataTables.bootstrap.css'; ?>");</style>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<table class="table table-bordered table-striped" id="table-view">
+<table class="table table-bordered table-striped table-view">
     <thead>
         <tr>
             <th>Tanggal, Jam Mulai</th>
@@ -12,6 +12,7 @@
             <th>Keterangan Pekerjaan</th>
             <th>Output Kuantitas</th>
             <th>File Pendukung</th>
+            <?=($oid == 1)?'<th>Menit Efektif</th>':'';?>
         </tr>
     </thead>
     <tbody>
@@ -43,6 +44,7 @@
                         }
                     ?>
                     </td>         
+                    <?=($oid == 1)?'<td>'.$list[$i]->menit_efektif.'</td>':'';?>
                 </tr>
     <?php
             }
@@ -51,8 +53,8 @@
     </tbody>
 </table>
 <script>
-    $(document).ready(function(){        
-        $("#table-view").DataTable({
+    $(document).ready(function(){             
+        $(".table-view").DataTable({
             "oLanguage": {
                 "sSearch": "Pencarian :",
                 "sSearchPlaceholder" : "Ketik untuk mencari",

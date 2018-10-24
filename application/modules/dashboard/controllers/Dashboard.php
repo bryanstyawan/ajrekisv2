@@ -145,6 +145,7 @@ class Dashboard extends CI_Controller {
 		# code...
 		$data['list']  = $this->mtrx->status_pekerjaan($oid,$this->session->userdata('sesUser'));
 		$data['title'] = '';
+		$data['oid']   = $oid;
 		$this->load->view('dashboard/datatable_modal',$data);		
 	}
 }
