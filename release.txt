@@ -1,4 +1,13 @@
 v2.0.0-Alpha    
+2019-10-31
+==========
+New:
+Improved:
+Fixed:
+- Fixing bug pengajuan setup skp
+
+
+v2.0.0-Alpha    
 2019-10-24
 ==========
 New:
