@@ -242,7 +242,7 @@ class Skp extends CI_Controller {
 				'target_kualitasmutu' => 100,
 				'target_waktu_bln'    => $data_sender['waktu'],
 				'target_biaya'        => $data_sender['biaya'],
-				// 'status'			  => 0,
+				'status'			  => 0,
 				'audit_update'        => date('Y-m-d H:i:s'),
 				'audit_priority'      => $param_pk,
 				'audit_user_update'   => $this->session->userdata('sesUser')

@@ -1,3 +1,4 @@
+
 <?php 
 $data_value = json_encode($class_posisi);
 ?>
