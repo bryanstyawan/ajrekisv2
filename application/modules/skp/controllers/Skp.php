@@ -1063,6 +1063,9 @@ class Skp extends CI_Controller {
 	public function syncronice_skp($id_pegawai,$posisi,$tahun)
 	{
 		# code...
+		$check_posisi = $this->Allcrud->getData('mr_posisi',array('id' => $posisi));
+		print_r($check_posisi);die();
+
 		$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
 
 		if ($bind_data != 0) {
@@ -1077,6 +1080,7 @@ class Skp extends CI_Controller {
 						'id_posisi'      => $posisi,
 						'tahun'          => date('Y'),
 						'id_skp_master'  => $bind_data[$i]->id_skp,
+						''
 						'status'         => '6',
 						'audit_priority' => ''
 					);

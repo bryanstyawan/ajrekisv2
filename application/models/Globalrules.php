@@ -369,7 +369,7 @@ last edited : 27/06/2016
 		$data['summary_prilaku_skp']['nilai_prilaku_kerja'] = ($data['summary_prilaku_skp']['rata_rata']*40)/100;
 /**********************************************************************************************************/
 		$data['summary_skp']['nilai_capaian_skp'] = "";
-		$data['summary_skp']['total_aspek']       = "";
+		$data['summary_skp']['total_aspek']       = 0;
 		// echo "<pre>";
 		// print_r($data['list_skp']);
 		// echo "</pre>";

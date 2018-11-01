@@ -407,7 +407,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                 </thead>
                 <tbody>
                     <?php
-                    $total             = "";
+                    $total             = 0;
                     if ($list_skp != 0) {
                         # code...
                         for ($i=0; $i < count($list_skp); $i++) {
