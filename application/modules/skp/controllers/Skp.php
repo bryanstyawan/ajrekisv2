@@ -1063,29 +1063,50 @@ class Skp extends CI_Controller {
 	public function syncronice_skp($id_pegawai,$posisi,$tahun)
 	{
 		# code...
-		$check_posisi = $this->Allcrud->getData('mr_posisi',array('id' => $posisi));
-		print_r($check_posisi);die();
-
-		$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
-
-		if ($bind_data != 0) {
+		$check_posisi = $this->Allcrud->getData('mr_posisi',array('id' => $posisi))->result_array();
+		if ($check_posisi != array()) {
 			# code...
-			for ($i=0; $i < count($bind_data); $i++) {
+			$kat_posisi = $check_posisi[0]['kat_posisi']; 
+
+			if ($kat_posisi == 1) {
 				# code...
-				$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun);
-				if ($check_data == false) {
+				$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
+
+				if ($bind_data != 0) {
 					# code...
-					$data = array(
-						'id_pegawai'     => $id_pegawai,
-						'id_posisi'      => $posisi,
-						'tahun'          => date('Y'),
-						'id_skp_master'  => $bind_data[$i]->id_skp,
-						''
-						'status'         => '6',
-						'audit_priority' => ''
-					);
-					$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+					for ($i=0; $i < count($bind_data); $i++) {
+						# code...
+						$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun);
+						if ($check_data == false) {
+							# code...
+							$data = array(
+								'id_pegawai'     => $id_pegawai,
+								'id_posisi'      => $posisi,
+								'tahun'          => date('Y'),
+								'id_skp_master'  => $bind_data[$i]->id_skp,
+								'status'         => '6',
+								'audit_priority' => ''
+							);
+							$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+						}
+					}
+				}				
+			}
+			elseif ($kat_posisi == 2) {
+				# code...
+			}
+			elseif ($kat_posisi == 4) {
+				# code...
+				if ($check_posisi[0]['id_jfu']) {
+					# code...
 				}
+				else {
+					# code...
+					echo "cannot sync";
+				}
+			}
+			elseif ($kat_posisi == 6) {
+				# code...
 			}
 		}
 	}

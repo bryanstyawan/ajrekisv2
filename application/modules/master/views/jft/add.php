@@ -213,7 +213,7 @@ $(document).ready(function(){
             console.log(data_detail);                                
 
             $.ajax({
-                url :"<?php echo site_url();?>master/jabatan_fungsional_umum/process_data/"+$("#flag_crud").val(),
+                url :"<?php echo site_url();?>master/jabatan_fungsional_tertentu/process_data/"+$("#flag_crud").val(),
                 type:"post",
                 data:{data_header : data_header, data_detail : data_detail},
                 beforeSend:function(){
@@ -283,7 +283,7 @@ $(document).ready(function(){
         else
         {
             $.ajax({
-                url :"<?php echo site_url();?>master/jabatan_fungsional_umum/process_data_single/",
+                url :"<?php echo site_url();?>master/jabatan_fungsional_tertentu/process_data_single/",
                 type:"post",
                 data:{data_sender : data_header},
                 beforeSend:function(){
@@ -413,7 +413,7 @@ function del(id){
         callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>master/jabatan_fungsional_umum/delete_uraian_tugas_jfu/"+id,
+					url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/delete_uraian_tugas_jfu/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');

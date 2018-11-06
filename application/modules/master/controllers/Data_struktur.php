@@ -40,6 +40,7 @@ class Data_struktur extends CI_Controller {
 			'posisi_class' => $this->input->post('grade'),
 			'nama_posisi'  => strtoupper($this->input->post('jabatan')),
 			'id_jfu'       => $this->input->post('id_jfu'),
+			'id_jft'       => $this->input->post('id_jft'),			
 		);
 		$this->Allcrud->addData('mr_posisi',$add);
 	}

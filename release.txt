@@ -1,4 +1,15 @@
 v2.0.0-Alpha    
+2019-11-5
+==========
+New:
+- master jft
+Improved:
+- master jfu (tahun)
+- sync master jft to organisasi
+Fixed:
+
+
+v2.0.0-Alpha    
 2019-10-31
 ==========
 New:

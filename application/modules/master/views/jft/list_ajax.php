@@ -59,8 +59,8 @@
             id               = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > input[type="hidden"]').val ();
             text_jabatan     = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html ();
             id_kelas_jabatan = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html ();
-            $("#id_jfu").val(id);
-            $("#id_jft").val('');            
+            $("#id_jft").val(id);
+            $("#id_jfu").val('');            
             $("#jabatan").val(text_jabatan);
             $("#grade").val(id_kelas_jabatan);            
             $("#modal-detail-jfu").modal('hide');				            

@@ -874,4 +874,54 @@ class Mmaster extends CI_Model {
 			return 0;
 		}
 	}		
+
+	public function get_data_jft($id=NULL)
+	{
+		# code...
+		$sql_WHERE = "";
+		if ($id != NULL) {
+			# code...
+			$sql_WHERE = "WHERE a.id = '".$id."'";
+		}
+		$sql = "SELECT a.*,
+						b.posisi_class,
+						b.tunjangan,
+						COALESCE(
+							(
+								SELECT COUNT(aa.id)
+								FROM mr_posisi aa
+								WHERE aa.id_jft = a.id
+							),'0'
+						) as counter_jft
+				FROM mr_jabatan_fungsional_tertentu a
+				JOIN mr_posisi_class b
+				on a.id_kelas_jabatan = b.id
+				".$sql_WHERE."";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
+
+	public function get_data_jft_detail($id=NULL)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_jabatan_fungsional_tertentu_uraian_tugas a
+				WHERE a.id_jft = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}			
 }

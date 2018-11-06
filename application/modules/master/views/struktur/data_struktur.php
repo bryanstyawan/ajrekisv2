@@ -297,6 +297,7 @@ isset($class_posisi);
 			                    <input type="text" id="jabatan" name="jabatan" class="form-control" placeholder="jabatan">
 								<a class="form-control btn btn-success" style="display:none;"><i class="fa fa-plus-square"></i> Lihat Jabatan</a>							
 								<input type="hidden" id="id_jfu">
+								<input type="hidden" id="id_jft">								
 							</div>
 						</div>
 
@@ -528,7 +529,7 @@ $(document).ready(function(){
 		$('#es2 option[value=""]').attr('selected', 'selected');
 		$('#es3 option[value=""]').attr('selected', 'selected');
 		$('#es4 option[value=""]').attr('selected', 'selected');
-		if (this.value == 4) {
+		if (this.value == 4 || this.value == 2) {
 			$('#grade').prop('disabled', true);
 			$('#input-jabatan > input').prop('disabled', true);			
 			$('#input-jabatan > a').css('display','');			
@@ -542,18 +543,38 @@ $(document).ready(function(){
 	})
 
 	$('#input-jabatan > a').click(function() {
-		$.ajax({
+		if($("#kat").val() == 2)
+		{
+			$.ajax({
+			url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/res_data/datatable",
+			type:"post",
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success:function(msg){
+				$('#modal-detail-jfu > div > div > div > div.modal-header > h3').html("Jabatan Fungsional Tertentu");													
+				$("#get-datatable").html(msg);					
+				$("#modal-detail-jfu").modal('show');				
+				$("#loadprosess").modal('hide');							
+			}
+		})		
+		}
+		else if($("#kat").val() == 4)
+		{
+			$.ajax({
 			url :"<?php echo site_url()?>master/jabatan_fungsional_umum/res_data/datatable",
 			type:"post",
 			beforeSend:function(){
 				$("#loadprosess").modal('show');
 			},
 			success:function(msg){
+				$('#modal-detail-jfu > div > div > div > div.modal-header > h3').html("Jabatan Fungsional Umum");								
 				$("#get-datatable").html(msg);					
 				$("#modal-detail-jfu").modal('show');				
 				$("#loadprosess").modal('hide');							
 			}
 		})		
+		}
 	})			
 
 	$("#es1").change(function(){
@@ -981,11 +1002,12 @@ function add_struktur() {
 	var kat     = $("#kat").val();
 	var jabatan = $("#jabatan").val();
 	var id_jfu  = $("#id_jfu").val();
+	var id_jft  = $("#id_jft").val();
 
 	$.ajax({
 		url :"<?php echo site_url()?>/master/data_struktur/addStruktur",
 		type:"post",
-		data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade+"&id_jfu="+id_jfu,
+		data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade+"&id_jfu="+id_jfu+"&id_jft="+id_jft,
 		beforeSend:function(){
 			$("#newData").modal('hide');
 			$("#loadprosess").modal('show');
