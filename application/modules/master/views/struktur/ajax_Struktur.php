@@ -13,6 +13,7 @@
 				<td><?=$list[$i]->nama_eselon4;?></td>
 				<td><?=$list[$i]->nama_kat_posisi;?></td>
 				<td><?=$list[$i]->nama_posisi;?></td>
+				<td><?=$list[$i]->counter_pegawai;?></td>				
 				<td>
 <?php
 				if ($param == 'master_skp') {

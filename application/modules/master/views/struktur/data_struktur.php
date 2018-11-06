@@ -173,6 +173,7 @@ isset($class_posisi);
 							<th>Jenis Jabatan</th>
 							<th>Jabatan</th>
 							<th>Jumlah Pegawai</th>
+							<th>Status SKP</th>
 							<th width="7%">action</th>
 				        </tr>
 					</thead>
@@ -193,6 +194,22 @@ isset($class_posisi);
 										<td><?=$list[$i]->nama_kat_posisi;?></td>
 										<td><?=$list[$i]->nama_posisi;?></td>
 										<td><?=$list[$i]->counter_pegawai;?></td>
+										<td>
+											<?php
+												if($list[$i]->counter_skp == 0)
+												{
+											?>
+													<label class="btn btn-danger">SKP tidak tersedia</label>
+											<?php
+												}
+												else {
+													# code...
+											?>
+													<label class="btn btn-success">SKP tersedia</label>
+											<?php													
+												}
+											?>
+										</td>
 										<td>
 											<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
 											<button class="btn btn-primary btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>

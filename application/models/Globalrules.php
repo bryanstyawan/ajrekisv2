@@ -894,4 +894,31 @@ By: Bryan Setyawan
 		}
 		return $res;
 	}
+
+	public function counter_datatable($arg,$table_destiny,$key_from,$key_to,$param_return,$param=NULL)
+	{
+		# code...
+		$store = array();
+		if ($param == NULL) {
+			# code...
+			if($arg->result_array() != array())
+			{
+				$store = $arg->result_array();
+				for ($i=0; $i < count($arg->result_array()); $i++) { 
+					# code...
+					$get_data_es = $this->Allcrud->getData($table_destiny,array($key_to => $arg->result_array()[$i][$key_from]));
+					if($get_data_es->result_array() != array())
+					{					
+						$store[$i][$param_return] = count($get_data_es->result_array());
+					}
+					else {	
+						# code...
+						$store[$i][$param_return] = 0;
+					}
+				}
+			}			
+		}
+		
+		return $store;
+	}
 }

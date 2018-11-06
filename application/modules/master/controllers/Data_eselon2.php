@@ -11,10 +11,11 @@ class Data_eselon2 extends CI_Controller {
 	public function index()
 	{
 		$this->Allcrud->session_rule();						
-		$data['title']   = '<b>Struktur Organisasi</b> <i class="fa fa-angle-double-right"></i> Data Eselon 2';
-		$data['content'] = 'master/eselon/data_eselon2';
-		$data['es1']     = $this->Allcrud->listData('mr_eselon1');
-		$data['list']    = $this->Mmaster->eselon2();
+		$data['title']      = '<b>Struktur Organisasi</b> <i class="fa fa-angle-double-right"></i> Data Eselon 2';
+		$data['content']    = 'master/eselon/data_eselon2';
+		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
+		$data['list']       = $this->Mmaster->eselon2();
+		$data['list_final'] = $this->Globalrules->counter_datatable($data['list'],'mr_eselon3','id_es2','id_es2','counter_data');
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -29,7 +30,8 @@ class Data_eselon2 extends CI_Controller {
 
 	public function ajaxEselon2(){
 		$this->Allcrud->session_rule();						
-		$data['list'] = $this->Mmaster->eselon2();
+		$data['list']       = $this->Mmaster->eselon2();
+		$data['list_final'] = $this->Globalrules->counter_datatable($data['list'],'mr_eselon3','id_es2','id_es2','counter_data');
 		$this->load->view('master/eselon/ajaxEselon2',$data);
 	}
 

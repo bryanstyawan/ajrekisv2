@@ -25,6 +25,52 @@ class Data_struktur extends CI_Controller {
 							'eselon4' => ''																					
 						);			
 		$data['list']         = $this->Mmaster->get_struktur_organisasi($data_sender);		
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) {
+				# code...
+				if($data['list'][$i]->kat_posisi == 1)
+				{
+					$get_summary_urtug = $this->mskp->get_summary_master_skp($data['list'][$i]->id);
+					if ($get_summary_urtug != 0) {
+						# code...
+						$data['list'][$i]->counter_skp = $get_summary_urtug;
+					}
+					else
+					{
+						$data['list'][$i]->counter_skp = 0;
+					}
+				}
+				elseif ($data['list'][$i]->kat_posisi == 2) {
+					# code...
+					$get_data = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $data['list'][$i]->id_jft));
+					if($get_data->result_array() != array())
+					{					
+						$data['list'][$i]->counter_skp = count($get_data->result_array());
+					}
+					else {	
+						# code...
+						$data['list'][$i]->counter_skp = 0;
+					}					
+				}
+				elseif ($data['list'][$i]->kat_posisi == 4) {
+					# code...
+					$get_data = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $data['list'][$i]->id_jfu));
+					if($get_data->result_array() != array())
+					{					
+						$data['list'][$i]->counter_skp = count($get_data->result_array());
+					}
+					else {	
+						# code...
+						$data['list'][$i]->counter_skp = 0;
+					}					
+				}				
+				else {
+					# code...
+					$data['list'][$i]->counter_skp = 0;					
+				}
+			}
+		}	
 		$this->load->view('templateAdmin',$data);
 	}
 

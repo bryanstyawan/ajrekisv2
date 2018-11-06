@@ -16,18 +16,30 @@
 	                </tr>
 				</thead>
 				<tbody>
-					<?php $x=1;
-						foreach($list->result() as $row){?>
-							<tr>
-								<td><?php echo $x;?></td>
-								<td><?php echo $row->nama_eselon1;?></td>
-								<td><?php echo $row->nama_eselon2;?></td>
-								<td><?php echo $row->nama_eselon3;?></td>
-								<td><button class="btn btn-primary btn-xs" onclick="edit('<?php echo $row->id_es3;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
-								<!-- <button class="btn btn-danger btn-xs" onclick="del('<?php echo $row->id_es3;?>')"><i class="fa fa-trash"></i></button> -->
-							</tr>
-						<?php $x++; }
-					?>
+				<?php
+						for ($i=0; $i < count($list_final); $i++) { 
+						# code...
+				?>
+						<tr>
+							<td><?=$i+1;?></td>
+							<td><?=$list_final[$i]['nama_eselon1'];?></td>
+							<td><?=$list_final[$i]['nama_eselon2'];?></td>						
+							<td><?=$list_final[$i]['nama_eselon3'];?></td>												
+							<td>
+								<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list_final[$i]['id_es3'];?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
+						<?php
+								if($list_final[$i]['counter_data'] == 0)
+								{
+						?>
+								<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list_final[$i]['id_es3'];?>')"><i class="fa fa-trash"></i></button>											
+						<?php
+								}
+						?>
+							</td>
+						</tr>
+				<?php
+					}
+				?>
 				</tbody>
 		  </table>
 	    </div>
