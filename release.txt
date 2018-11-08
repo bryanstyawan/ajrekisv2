@@ -2,6 +2,15 @@ v2.0.0-Alpha
 2019-11-5
 ==========
 New:
+Improved:
+Fixed:
+- fixing frezee ketika menyimpan tambah skp pegawai dalam keadaan kosong
+- remarks skp hanya ditampilkan ketika ada penolakan data skp dari atasan
+
+v2.0.0-Alpha    
+2019-11-5
+==========
+New:
 - master jft
 Improved:
 - master jfu (tahun)

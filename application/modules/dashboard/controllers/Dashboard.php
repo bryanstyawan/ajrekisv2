@@ -135,8 +135,9 @@ class Dashboard extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Allcrud->notif_message();
-		$data['title']           = 'Lihat Semua Pemberitahuan';
-		$data['content']         = 'dashboard/notification/view_all';
+		$data['title']   = 'Lihat Semua Pemberitahuan';
+		$data['list']    = $this->Allcrud->getData('log_notifikasi',array('receiver'=>$this->session->userdata('sesUser')));
+		$data['content'] = 'dashboard/notification/view_all';
 		$this->load->view('templateAdmin',$data);
 	}
 

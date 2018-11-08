@@ -1102,7 +1102,7 @@ class Skp extends CI_Controller {
 				}
 				else {
 					# code...
-					echo "cannot sync";
+					// echo "cannot sync";
 				}
 			}
 			elseif ($kat_posisi == 6) {

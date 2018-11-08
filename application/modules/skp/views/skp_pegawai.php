@@ -288,7 +288,16 @@
                         <td style="<?=$style_td;?>"><?=$target_waktu_bln;?></td>
                         <td style="<?=$style_td;?>">bln</td>
                         <td style="<?=$style_td;?>"><?=number_format($target_biaya);?></td>
-                        <td style="<?=$style_td;?>"><b><?=$list[$i]->remarks;?></b></td>
+                        <td style="<?=$style_td;?>">
+                            <?php
+                                if ($list[$i]->status != 1) {
+                                    # code...
+                            ?>
+                                    <b><?=$list[$i]->remarks;?></b>                            
+                            <?php
+                                }
+                            ?>
+                        </td>
                         <td style="<?=$style_td;?>">
                             <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah</button>
                             &nbsp;
@@ -932,7 +941,7 @@ $(document).ready(function()
         }
     })
 
-    $("#btn_save_skp_tambah").click(function() {
+        $("#btn_save_skp_tambah").click(function() {
         // body...
         var kegiatan      = $('#kegiatan').val();
         var pk            = $('#perjanjian_kerja').val();
