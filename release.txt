@@ -1,4 +1,13 @@
 v2.0.0-Alpha    
+2019-11-9
+==========
+New:
+Improved:
+- layouting header - helper 
+Fixed:
+- datatable Struktur Organisasi
+
+v2.0.0-Alpha    
 2019-11-5
 ==========
 New:

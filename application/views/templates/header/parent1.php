@@ -1,0 +1,1 @@
+<li><?php echo anchor($url_pages,"<i class='".$icon."'></i><span style='padding-left: 10px;'>".$name."</span>");?></li>

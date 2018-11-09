@@ -15,6 +15,22 @@
 				<td><?=$list[$i]->nama_posisi;?></td>
 				<td><?=$list[$i]->counter_pegawai;?></td>				
 				<td>
+					<?php
+						if($list[$i]->counter_skp == 0)
+						{
+					?>
+							<label class="btn btn-danger">SKP tidak tersedia</label>
+					<?php
+						}
+						else {
+							# code...
+					?>
+							<label class="btn btn-success">SKP tersedia</label>
+					<?php													
+						}
+					?>
+				</td>				
+				<td>
 <?php
 				if ($param == 'master_skp') {
 					# code...
