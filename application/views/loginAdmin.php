@@ -520,10 +520,9 @@ function login() {
 					setTimeout(function(){
 						$("#loadprosess").modal('hide');
 						setTimeout(function(){
-							// window.location.href = "<?=base_url();?>admin/loginadmin/route/"+nip+'/'+password;
 							window.location.href = "<?=base_url();?>";							
-						}, 1500);
-					}, 1500);
+						}, 500);
+					}, 500);
 				}
 				else
 				{
@@ -534,11 +533,9 @@ function login() {
 					$("#loadprosess").modal('hide');
 				}
 			},
-			error:function(){
-					Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-										{
-											msg: 'Kesalahan Sistem'
-										});
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})
 	}	

@@ -1,194 +1,131 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+if (!function_exists('base_url')) {
+  function base_url($atRoot=FALSE, $atCore=FALSE, $parse=FALSE){
+      if (isset($_SERVER['HTTP_HOST'])) {
+          $http = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+          $hostname = $_SERVER['HTTP_HOST'];
+          $dir =  str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+          $core = preg_split('@/@', str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath(dirname(__FILE__))), NULL, PREG_SPLIT_NO_EMPTY);
+          $core = $core[0];
+          $tmplt = $atRoot ? ($atCore ? "%s://%s/%s/" : "%s://%s/") : ($atCore ? "%s://%s/%s/" : "%s://%s%s");
+          $end = $atRoot ? ($atCore ? $core : $hostname) : ($atCore ? $core : $dir);
+          $base_url = sprintf( $tmplt, $http, $hostname, $end );
+      }
+      else $base_url = 'http://localhost/';
+      if ($parse) {
+          $base_url = parse_url($base_url);
+          if (isset($base_url['path'])) if ($base_url['path'] == '/') $base_url['path'] = '';
+      }
+      return $base_url;
+  }
+}
+$base_url      = base_url();
+$random_number = rand(10,100);
 ?>
-<style type="text/css">
-@-webkit-keyframes cursor-blink {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@-moz-keyframes cursor-blink {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes cursor-blink {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-body {
-  background-color: black;
-}
+<html lang="en" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface no-generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Libs CSS -->
+    <link type="text/css" media="all" href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template CSS -->
+    <link type="text/css" media="all" href="<?php echo base_url(); ?>assets/css/error/style.css" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link type="text/css" media="all" href="<?php echo base_url(); ?>assets/css/error/respons.css" rel="stylesheet">
 
-.four-oh-four {
-  position: relative;
-  top: 0;
-  left: 0;
-  min-height: 100vh;
-  min-width: 100vw;
-  z-index: 2;
-  background-color: black;
-  transition: opacity 300ms ease-out;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-.four-oh-four .dJAX_internal {
-  opacity: 0.0;
-}
-.four-oh-four form, .four-oh-four input {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  background-color: black;
-}
-
-.terminal {
-  position: relative;
-  padding-top: 10px;
-  padding-left: 58px;
-  padding-bottom: 21px;
-  padding-right: 48px;
-  background-color: #000;  
-}
-.terminal .prompt {
-  color: #1ff042;
-  display: block;
-  font-family: 'AndaleMono', monospace;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  letter-spacing: 0.15em;
-  white-space: pre-wrap;
-  text-shadow: 0 0 2px rgba(31, 240, 66, 0.75);
-  line-height: 1;
-  margin-bottom: 0.75em;
-}
-.terminal .prompt:before {
-  content: '> ';
-  display: inline-block;
-}
-.terminal .new-output {
-  display: inline-block;
-}
-.terminal .new-output:after {
-  display: inline-block;
-  vertical-align: -0.15em;
-  width: 0.75em;
-  height: 1em;
-  margin-left: 5px;
-  background: #1ff042;
-  box-shadow: 1px 1px 1px rgba(31, 240, 66, 0.65), -1px -1px 1px rgba(31, 240, 66, 0.65), 1px -1px 1px rgba(31, 240, 66, 0.65), -1px 1px 1px rgba(31, 240, 66, 0.65);
-  -webkit-animation: cursor-blink 1.25s steps(1) infinite;
-  -moz-animation: cursor-blink 1.25s steps(1) infinite;
-  animation: cursor-blink 1.25s steps(1) infinite;
-  content: '';
-}
-
-.kittens p {
-  letter-spacing: 0;
-  opacity: 0;
-  line-height: 1rem;
-}
-
-.kitten-gif {
-  margin: 20px;
-  max-width: 300px;
-}
-
-.four-oh-four-form {
-  opacity: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-}	
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-$(document).ready(function()
-{
-	var inputReady = true;
-	var input = $('.404-input');
-	input.focus();
-	$('.container').on('click', function(e)
-	{  
-		input.focus();
-	});
-
-	input.on('keyup', function(e){  
-		$('.new-output').text(input.val());  
-		if (e.which == 13) 
-		{
-			if (input.val() == 'back' || input.val() == 'home') 
-			{
-				alert("goto home");
-			}
-			else if(input.val() == "refresh" || input.val() == "r" || input.val() == "R")
-			{
-				location.reload();				
-			}
-      else
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="144x144" href="<?php echo base_url(); ?>assets/css/error/img/favicon144x144.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?php echo base_url(); ?>assets/css/error/img/favicon114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?php echo base_url(); ?>assets/css/error/img/favicon72x72.png">
+    <link rel="apple-touch-icon" href="<?php echo base_url(); ?>assets/css/error/img/favicon57x57.png">
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/css/error/img/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,800italic,800,700italic,700,600italic,600,400italic,300" rel="stylesheet" type="text/css">
+    <style>
+      .container > .error_php > p
       {
-        
-      }      
-		}
-	});
-		// console.log(inputReady);});$('.four-oh-four-form').on('submit', function(e){  e.preventDefault();  var val = $(this).children($('.404-input')).val().toLowerCase();  var href;     if (val === 'kittens'){    showKittens();  }else {    resetForm();  }});function resetForm(withKittens){  var message = "Sorry that command is not recognized."  var input = $('.404-input');  if (withKittens){    $('.kittens').removeClass('kittens');    message = "Huzzzzzah Kittehs!"  }  $('.new-output').removeClass('new-output');  input.val('');  $('.terminal').append('<p class="prompt">' + message + '</p><p class="prompt output new-output"></p>');  $('.new-output').velocity(    'scroll'  ), {duration: 100}}    function showKittens(){        $('.terminal').append("<div class='kittens'>"+                                 "<p class='prompt'>                                 ,----,         ,----,                                          ,---,</p>" +                                 "<p class='prompt'>       ,--.                ,/   .`|       ,/   .`|                     ,--.              ,`--.' |</p>" +                                 "<p class='prompt'>   ,--/  /|    ,---,     ,`   .'  :     ,`   .'  :     ,---,.        ,--.'|   .--.--.    |   :  :</p>" +                                 "<p class='prompt'>,---,': / ' ,`--.' |   ;    ;     /   ;    ;     /   ,'  .' |    ,--,:  : |  /  /    '.  '   '  ;</p>" +                                 "<p class='prompt'>:   : '/ /  |   :  : .'___,/    ,'  .'___,/    ,'  ,---.'   | ,`--.'`|  ' : |  :  /`. /  |   |  |</p>" +                                 "<p class='prompt'>|   '   ,   :   |  ' |    :     |   |    :     |   |   |   .' |   :  :  | | ;  |  |--`   '   :  ;</p>" +                                 "<p class='prompt'>'   |  /    |   :  | ;    |.';  ;   ;    |.';  ;   :   :  |-, :   |   \\ | : |  :  ;_     |   |  '</p>" +                                 "<p class='prompt'>|   ;  ;    '   '  ; `----'  |  |   `----'  |  |   :   |  ;/| |   : '  '; |  \\  \\    `.  '   :  |</p>" +                                 "<p class='prompt'>:   '   \\   |   |  |     '   :  ;       '   :  ;   |   :   .' '   ' ;.    ;   `----.   \\ ;   |  ;</p>" +                                 "<p class='prompt'>'   : |.  \\ |   |  '     '   :  |       '   :  |   '   :  ;/| '   : |  ; .'  /  /`--'  /  `--..`;  </p>" +                                 "<p class='prompt'>|   | '_\\.' '   :  |     ;   |.'        ;   |.'    |   |    \\ |   | '`--'   '--'.     /  .--,_   </p>" +                                 "<p class='prompt'>'   : |     ;   |.'      '---'          '---'      |   :   .' '   : |         `--'---'   |    |`.  </p>" +                                 "<p class='prompt'>;   |,'     '---'                                  |   | ,'   ;   |.'                    `-- -`, ; </p>" +                                 "<p class='prompt'>'---'                                              `----'     '---'                        '---`'</p>" +                                 "<p class='prompt'>                                                              </p></div>");                var lines = $('.kittens p');        $.each(lines, function(index, line){            setTimeout(function(){                $(line).css({                    "opacity": 1                });                textEffect($(line))            }, index * 100);        });        $('.new-output').velocity(            'scroll'        ), {duration: 100}        setTimeout(function(){            var gif;            $.get('http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=kittens', function(result){                gif = result.data.image_url;                $('.terminal').append('<img class="kitten-gif" src="' + gif + '"">');                resetForm(true);            });        }, (lines.length * 100) + 1000);    }    function textEffect(line){        var alpha = [';', '.', ',', ':', ';', '~', '`'];        var animationSpeed = 10;        var index = 0;        var string = line.text();        var splitString = string.split("");        var copyString = splitString.slice(0);        var emptyString = copyString.map(function(el){            return [alpha[Math.floor(Math.random() * (alpha.length))], index++];        })        emptyString = shuffle(emptyString);        $.each(copyString, function(i, el){            var newChar = emptyString[i];            toUnderscore(copyString, line, newChar);            setTimeout(function(){              fromUnderscore(copyString, splitString, newChar, line);            },i * animationSpeed);          })    }    function toUnderscore(copyString, line, newChar){        copyString[newChar[1]] = newChar[0];        line.text(copyString.join(''));    }    function fromUnderscore(copyString, splitString, newChar, line){        copyString[newChar[1]] = splitString[newChar[1]];        line.text(copyString.join(""));    }    function shuffle(o){        for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);        return o;    };
-});
-</script>
-<div class="container">  
-	<form class="four-oh-four-form">    
-		<input type="text" class="404-input">  
-	</form>  
-	<div class="terminal">      
-		<p class="prompt">-------------------------------------------------------------------------------</p>      		
-		<p class="prompt">A PHP Error was encountered</p>      	
-		<p class="prompt">Severity: <?php echo $severity; ?></p>
-		<p class="prompt">Message:  <?php echo $message; ?></p>		      			
-		<p class="prompt">Filename: <?php echo $filepath; ?></p>		      			
-		<p class="prompt">Line Number: <?php echo $line; ?></p>
-		<p class="prompt">
-		<?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE): ?>
+          color     : #fff;
+          text-align: center;
+      }
+    </style>
+</head>
+<body style="background-color: #232a4b;">
 
-			<p class="prompt">Backtrace:</p>
-			<?php foreach (debug_backtrace() as $error): ?>
+    <!-- Load page -->
+    <div class="animationload" style="display: none;">
+        <div class="loader" style="display: none;">
+        </div>
+    </div>
+    <!-- End load page -->
 
-				<?php if (isset($error['file']) && strpos($error['file'], realpath(BASEPATH)) !== 0): ?>
 
-					<p class="prompt" style="margin-left:10px">
-					File: <?php echo $error['file'] ?><br />
-					Line: <?php echo $error['line'] ?><br />
-					Function: <?php echo $error['function'] ?>
-					</p>
+    <!-- Content Wrapper -->
+    <div id="wrapper" style="background-color: #F44336;">
+        <div class="container">
+          <div class="error_php" style="display:none">
+            <p>-------------------------------------------------------------------------------</p>      		
+            <p>A PHP Error was encountered</p>      	
+            <p>Severity: <?php echo $severity; ?></p>
+            <p>Message:  <?php echo $message; ?></p>		      			
+            <p>Filename: <?php echo $filepath; ?></p>		      			
+            <p>Line Number: <?php echo $line; ?></p>
+            <p>
+                <?php if (defined('SHOW_DEBUG_BACKTRACE') && SHOW_DEBUG_BACKTRACE === TRUE): ?>
 
-				<?php endif ?>
+                    <p>Backtrace:</p>
+                    <?php foreach (debug_backtrace() as $error): ?>
 
-			<?php endforeach ?>
+                        <?php if (isset($error['file']) && strpos($error['file'], realpath(BASEPATH)) !== 0): ?>
 
-		<?php endif ?>			
-		</p>						      						
-		<p class="prompt">-------------------------------------------------------------------------------</p>
-		<p class="prompt">Go home : type home or back</p>		
-		<p class="prompt">refresh : type all character</p>				
-		<p class="prompt output new-output"></p>  
-	</div>
-</div>
+                            <p style="margin-left:10px">
+                            File: <?php echo $error['file'] ?><br />
+                            Line: <?php echo $error['line'] ?><br />
+                            Function: <?php echo $error['function'] ?>
+                            </p>
+
+                        <?php endif ?>
+
+                    <?php endforeach ?>
+
+                <?php endif ?>			
+              </p>						      						
+            </div>
+            <!-- brick of wall -->
+            <div class="brick"></div>                                         
+            <!-- end brick of wall -->
+
+            <!-- Number -->
+            <div class="number">
+                <div class="info col-lg-12 text-center" style="margin-left:0px">
+                    <h2>Something is wrong</h2>
+                </div>              
+                <div class="wall-brick"></div>
+            </div>
+            <!-- end Number -->
+
+            <!-- Info -->
+            <!-- end Info -->
+
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end Content Wrapper -->
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <!-- Worker -->
+            <div class="worker"></div>
+        </div>
+        <!-- end container -->
+    </footer>
+    <!-- end Footer -->
+
+    <!-- Scripts -->
+    <script src="<?php echo base_url(); ?>assets/css/error1/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/css/error1/modernizr.custom.js" type="text/javascript"></script>
+    <script src="<?php echo base_url(); ?>assets/css/error1/scripts.js" type="text/javascript"></script>
+
+
+</body></html>

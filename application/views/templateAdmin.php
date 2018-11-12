@@ -279,14 +279,108 @@ $.widget.bridge('uibutton', $.ui.button);
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+function ajax_status(obj)
+{
+    if (obj.status == 1)
+    {
+        Lobibox.notify('success', {
+            msg: obj.text
+            });
+        setTimeout(function(){
+            $("#loadprosess").modal('hide');
+            setTimeout(function(){
+                location.reload();
+            }, 500);
+        }, 500);
+    }
+    else
+    {
+        Lobibox.notify('success', {
+            msg: obj.text
+            });
+        setTimeout(function(){
+            $("#loadprosess").modal('hide');
+        }, 500);
+    }
+}
+
+function ajax_catch(jqXHR,exception) {
+    console.log(jqXHR);
+    if (jqXHR.status === 0) 
+    {
+        Lobibox.notify('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: 'Not connect.\n Verify Network.'
+        });        
+        alert('');
+    } 
+    else if (jqXHR.status == 404) 
+    {
+        Lobibox.notify('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: 'Requested page not found. [404]'
+        });
+    } 
+    else if (jqXHR.status == 500) 
+    {
+        Lobibox.notify('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: jqXHR.statusText
+        });
+    } 
+    else if (exception === 'parsererror') 
+    {
+        Lobibox.notify('error', {
+            title: exception,
+            msg: 'Requested JSON parse failed.'
+        });        
+    } 
+    else if (exception === 'timeout') 
+    {
+        Lobibox.notify('error', {
+            title: exception,
+            msg: 'Time out error.'
+        });                
+    } 
+    else if (exception === 'abort') 
+    {
+        Lobibox.notify('error', {
+            title: exception,
+            msg: 'Ajax request aborted.'
+        });                        
+    } 
+    else 
+    {
+        Lobibox.notify('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: 'Uncaught Error.\n' + jqXHR.responseText
+        });                        
+    }
+
+    setTimeout(function(){
+        setTimeout(function(){
+            $("#loadprosess").modal('hide');
+        }, 500);
+    }, 500);    
+}
+
     $(document).ready(function(){        
         $(".table-view").DataTable({
             "oLanguage": {
-                "sSearch": "Pencarian :",
-                "sSearchPlaceholder" : "Ketik untuk mencari",
-                "sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-                "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                "sZeroRecords": "Data tidak ditemukan"
+                "sSearch"    : "Pencarian :",
+                "sInfoEmpty" : "",
+                "sLengthMenu": "Show _MENU_ entries",
+                "oPaginate"  : {
+                    "sFirst"   : "Halaman Pertama",       // This is the link to the first page
+                    "sPrevious": "Halaman Sebelumnya",    // This is the link to the previous page
+                    "sNext"    : "Halaman Selanjutnya",   // This is the link to the next page
+                    "sLast"    : "Halaman Terakhir"       // This is the link to the last page
+                },
+                "sSearchPlaceholder": "Ketik untuk mencari",
+                "sLengthMenu"       : "Menampilkan &nbsp; _MENU_ &nbsp;Data",
+                "sInfo"             : "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                "sZeroRecords"      : "Data tidak ditemukan"
             },
             "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
                     "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
