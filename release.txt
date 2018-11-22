@@ -1,4 +1,17 @@
 v2.0.0-Alpha    
+2019-11-22
+==========
+New:
+Improved:
+- return 0 to return array() di list_bawahan
+- Penilaian Prilaku, atasan dapat langsung menilai bawahan tanpa harus bawahan mengajukan penilaian Prilaku
+- Penilaian Prilaku, tambahan rekomendasi yang wajib diisi oleh atasan
+- Penilaian Prilaku, ada penanda jika sudah dilakukan penilaian
+- Penambahan lupa password (popup Informasi)
+Fixed:
+
+
+v2.0.0-Alpha    
 2019-11-9
 ==========
 New:

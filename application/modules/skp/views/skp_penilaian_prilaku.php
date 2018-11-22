@@ -37,8 +37,21 @@
                     {
                         $data_link_a = 'http://sikerja.kemendagri.go.id/images/demo/users/'.$request_eval[$i]->photo;
                     }                    
+
+                    $data_done = "";
+                    if ($request_eval[$i]->status_prilaku != NULL) {
+                        # code...
+                        if ($request_eval[$i]->status_prilaku == 1) {
+                            # code...
+                            $data_done = "background-color: #4caf50;";                            
+                        }
+                    }
+                    else {
+                        # code...
+                        $data_done = "";                        
+                    }
         ?>
-                    <a class="btn btn-app" onclick="send_penilaian_prilaku(<?=$request_eval[$i]->evaluator_id;?>,<?=$request_eval[$i]->id_pegawai;?>)">
+                    <a class="btn btn-app" onclick="send_penilaian_prilaku(<?=$request_eval[$i]->evaluator_id;?>,<?=$request_eval[$i]->id_pegawai;?>)" style="<?=$data_done;?>">
                         <img src="<?=$data_link_a;?>" style="height: 100%">
                         <span><?=$request_eval[$i]->nama_pegawai;?></span>                            
                     </a>                    
@@ -271,8 +284,7 @@
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
                                                 <input type ="text" id="nama_pegawai" name="nama_pegawai" class="form-control" disabled="disabled">
                                             </div>
-                                        </div>
-                                        
+                                        </div>                                        
                                     </div>
 
                                     <div class="col-md-6">
@@ -287,7 +299,6 @@
                                     </div>    
                                 </div>
 
-                                <hr>
                                 <div class="row">                    
                                     <div class="col-lg-12 text-center">
                                         <h4 style="color: #000">Penilaian</h4>                                    
@@ -325,6 +336,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6">
 
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Disiplin</label>
@@ -355,6 +367,29 @@
                                         </div>                                                                                                                        
 
                                     </div>
+
+                                    <?php
+                                        if ($bawahan != array()) {
+                                            # code...
+                                        ?>
+                                        <div class="col-lg-12">
+                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Rekomendasi</label>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class ="input-group-addon"><i class="fa fa-star"></i></span>
+                                                    <textarea id="rekomendasi" name="rekomendasi" class="form-control"></textarea>
+                                                </div>
+                                            </div>                                    
+                                        </div>                                    
+                                        <?php                                                
+                                        }
+                                        else {
+                                            # code...
+                                        ?>
+                                        <input type="hidden" id="rekomendasi">
+                                        <?php
+                                        }
+                                    ?>
                                 </div>
 
                                 <div class="row" style="background-color: #fff!important;border-top-color: #d2d6de;">
@@ -550,13 +585,14 @@ $(document).ready(function()
             callback: function ($this, type) {
                 if (type === 'yes'){
                     data_sender = {
-                                    id                  : $("#oid_skp").val(),
-                                    orientasi_pelayanan : $("#orientasi_pelayanan").val(),
-                                    integritas          : $("#integritas").val(),
-                                    komitmen            : $("#komitmen").val(),
-                                    disiplin            : $("#disiplin").val(),
-                                    kerjasama           : $("#kerjasama").val(),
-                                    kepemimpinan        : $("#kepemimpinan").val()                                                                                                                                                                                    
+                                    id                 : $("#oid_skp").val(),
+                                    orientasi_pelayanan: $("#orientasi_pelayanan").val(),
+                                    integritas         : $("#integritas").val(),
+                                    komitmen           : $("#komitmen").val(),
+                                    disiplin           : $("#disiplin").val(),
+                                    kerjasama          : $("#kerjasama").val(),
+                                    kepemimpinan       : $("#kepemimpinan").val(),
+                                    rekomendasi        : $("#rekomendasi").val() 
 
                     }
                     $.ajax({
@@ -700,12 +736,13 @@ function send_penilaian_prilaku(id,id_pegawai) {
             $("#nama_pegawai").val(obj[0].nama_pegawai);
             $("#nip").val(obj[0].nip);
             $("#oid_skp").val(obj[0].evaluator_id);                   
-            // $("#nes1").val(obj[0].orientasi_pelayanan);
-            // $("#nes1").val(obj[0].integritas);
-            // $("#nes1").val(obj[0].komitmen);
-            // $("#nes1").val(obj[0].disiplin);
-            // $("#nes1").val(obj[0].kerjasama);
-            // $("#nes1").val(obj[0].kepemimpinan);                                                                                    
+            $("#orientasi_pelayanan").val(obj[0].orientasi_pelayanan);
+            $("#integritas").val(obj[0].integritas);
+            $("#komitmen").val(obj[0].komitmen);
+            $("#disiplin").val(obj[0].disiplin);
+            $("#kerjasama").val(obj[0].kerjasama);
+            $("#kepemimpinan").val(obj[0].kepemimpinan);                                                                                    
+            $("#rekomendasi").val(obj[0].rekomendasi);                                                                                                
             console.log(obj[0]);      
             setTimeout(function(){ 
                 $("#loadprosess").modal('hide');                                

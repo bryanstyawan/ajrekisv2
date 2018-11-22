@@ -662,8 +662,24 @@ class Skp extends CI_Controller {
 		$data['peer']         = $this->Globalrules->list_bawahan($this->session->userdata('atasan'));
 		$data['bawahan']      = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
+		if($data['bawahan'] != 0){
+			for ($i=0; $i < count($data['bawahan']); $i++) { 
+				# code...
+				$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
+				if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
+					# code...
+					$data_store = array
+							(
+								'id_pegawai'         => $data['bawahan'][$i]->id,
+								'id_pegawai_penilai' => $this->session->userdata('sesUser'),
+								'tahun'              => date('Y')
+							);
+					$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
+				}
+			}
+		}
 		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),date('Y'));
-		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y'));
+		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y'));				
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -745,7 +761,8 @@ class Skp extends CI_Controller {
 						'disiplin'            => $data_sender['disiplin'],
 						'kerjasama'           => $data_sender['kerjasama'],
 						'kepemimpinan'        => $data_sender['kepemimpinan'],
-						'status'			  => '1'
+						'status'              => '1',
+						'rekomendasi'         => $data_sender['rekomendasi']	
 					);
 			$flag        = array('id'=>$data_sender['id']);
 			$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,$flag);

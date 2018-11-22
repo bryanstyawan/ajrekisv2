@@ -462,7 +462,7 @@ last edited : 27/06/2016
 		}
 		else
 		{
-			return 0;
+			return array();
 		}
 	}
 

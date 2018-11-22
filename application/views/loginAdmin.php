@@ -439,7 +439,7 @@ input {
 
 						<!-- Remind Passowrd -->
 						<div id="formFooter">
-							<a class="underlineHover" href="#">Lupa Password?</a>
+							<a class="underlineHover" href="#" id="btn_forgot_password">Lupa Password?</a>
 							<hr>
 							<span style="color:#92badd;">V.2.0.0-Alpha</span>
 						</div>
@@ -462,6 +462,14 @@ $(document).ready(function(){
 		'marginLeft' : '100%'
 		});
 	});
+
+	$('#btn_forgot_password').on('click', function(){
+        Lobibox.alert('info', {
+            title: 'Info',
+            msg: 'Harap menghubungi Administrasi SIKERJA di sikerja@kemendagri.go.id'
+        });       
+	})
+
 	$('#goLeft').on('click', function(){
 		$('#slideBox').animate({
 		'marginLeft' : '50%'
@@ -489,6 +497,65 @@ $(document).ready(function(){
 		login();
 	})
 });
+
+function ajax_catch(jqXHR,exception) {
+    console.log(jqXHR);
+    if (jqXHR.status === 0) 
+    {
+        Lobibox.alert('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: 'Not connect.\n Verify Network.'
+        });        
+    } 
+    else if (jqXHR.status == 404) 
+    {
+        Lobibox.alert('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: 'Requested page not found. [404]'
+        });
+    } 
+    else if (jqXHR.status == 500) 
+    {
+        Lobibox.alert('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: jqXHR.statusText
+        });
+    } 
+    else if (exception === 'parsererror') 
+    {
+        Lobibox.alert('error', {
+            title: exception,
+            msg: 'Requested JSON parse failed.'
+        });        
+    } 
+    else if (exception === 'timeout') 
+    {
+        Lobibox.alert('error', {
+            title: exception,
+            msg: 'Time out error.'
+        });                
+    } 
+    else if (exception === 'abort') 
+    {
+        Lobibox.alert('error', {
+            title: exception,
+            msg: 'Ajax request aborted.'
+        });                        
+    } 
+    else 
+    {
+        Lobibox.alert('error', {
+            title: 'ERROR '+jqXHR.status,
+            msg: 'Uncaught Error.\n' + jqXHR.responseText
+        });                        
+    }
+
+    setTimeout(function(){
+        setTimeout(function(){
+            $("#loadprosess").modal('hide');
+        }, 500);
+    }, 500);    
+}
 
 function login() {
 	var nip      = $("#nip").val();

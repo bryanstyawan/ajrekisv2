@@ -506,6 +506,7 @@ class Mskp extends CI_Model
 	{
 		# code...
 		$sql = "SELECT a.*,
+						a.status as `status_prilaku`,
 					   b.*,
 						COALESCE(
 									(

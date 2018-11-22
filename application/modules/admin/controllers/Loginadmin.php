@@ -12,7 +12,7 @@ class Loginadmin extends CI_Controller {
 	{
 		// echo CI_VERSION;die();
 		error_reporting(E_ALL ^ E_WARNING);				
-		$this->load->view('loginAdmin');.
+		$this->load->view('loginAdmin');
 	}
 
 	public function test()
