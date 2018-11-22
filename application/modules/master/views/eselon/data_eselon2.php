@@ -6,7 +6,7 @@
 			</div>
         </div>
         <div class="box-body" id="isi">
-            <table id="example1" class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-view">
 				<thead>
             <tr>
 				<th>No</th>
@@ -172,19 +172,13 @@ $(document).ready(function(){
 					$("#newData").modal('hide');
 					$("#loadprosess").modal('show');
 				},
-				success:function(){
-					Lobibox.notify('success', {
-						msg: 'Data Berhasil Ditambahkan'
-						});
-					$("#isi").load('data_eselon2/ajaxEselon2');
-					setTimeout(function(){
-						$("#loadprosess").modal('hide');
-					}, 5000);
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
 				},
-				error:function(){
-					Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Penambahan data'
-					});
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
 				}
 			})
 		}
@@ -217,23 +211,15 @@ $(document).ready(function(){
     			beforeSend:function(){
     				$("#editData").modal('hide');
     				$("#loadprosess").modal('show');
-
     			},
-    			success:function(){
-    				Lobibox.notify('success', {
-    					msg: 'Data Berhasil Dirubah'
-    					});
-    				$("#isi").load('data_eselon2/ajaxEselon2');
-    				setTimeout(function(){
-    					$("#loadprosess").modal('hide');
-    				}, 5000);
-
-    			},
-    			error:function(){
-    				Lobibox.notify('error', {
-    					msg: 'Gagal Melakukan Perubahan data'
-    				});
-    			}
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
     		})
 		}
 
@@ -265,42 +251,17 @@ function del(id){
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
 					},
-					success:function(){
-						Lobibox.notify('success', {
-							msg: 'Data Berhasil Dihapus'
-						});
-						$("#isi").load('data_eselon2/ajaxEselon2');
-						setTimeout(function(){
-							$("#loadprosess").modal('hide');
-						}, 3000);
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
 					},
-					error:function(){
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Hapus data'
-						});
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
 	    }
     })
 }
-
-      $(function () {
-        $("#example1").DataTable({
-			"oLanguage": {
-				"sSearch": "Pencarian :",
-				"sSearchPlaceholder" : "Ketik untuk mencari",
-				"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-				"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-				"sZeroRecords": "Data tidak ditemukan"
-			},
-			"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
-					"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
-					"<'row'<'col-sm-12'tr>>" +
-					"<'row'<'col-sm-5'i><'col-sm-7'p>>"
-
-			// "dom": '<"top"f>rt'
-			// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
-		});
-      });
 </script>

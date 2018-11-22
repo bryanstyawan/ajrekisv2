@@ -25,7 +25,14 @@ class Data_eselon2 extends CI_Controller {
 			'id_es1'       => $this->input->post('es1'),
 			'nama_eselon2' => $this->input->post('es2')
 		);
-		$this->Allcrud->addData('mr_eselon2',$add);
+		$res_data    = $this->Allcrud->addData('mr_eselon2',$add);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 2 telah berhasil ditambahkan.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);								
 	}
 
 	public function ajaxEselon2(){
@@ -49,13 +56,27 @@ class Data_eselon2 extends CI_Controller {
 			'id_es1'       => $this->input->post('nes1'),
 			'nama_eselon2' =>$this->input->post('nes2')
 		);
-		$this->Allcrud->editData('mr_eselon2',$edit,$flag);
+		$res_data    = $this->Allcrud->editData('mr_eselon2',$edit,$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 2 telah berhasil diubah.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);										
 	}
 
 	public function delEselon2($id){
 		$this->Allcrud->session_rule();						
-		$flag = array('id_es2' => $id);
-		$this->Allcrud->delData('mr_eselon2',$flag);
+		$flag        = array('id_es2' => $id);
+		$res_data    = $this->Allcrud->delData('mr_eselon2',$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 2 telah berhasil diubah.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);										
 	}
 
 	public function cariEs2(){

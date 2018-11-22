@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Data_eselon1 extends CI_Controller {
 
 	public function __construct () {
-   		parent::__construct();
+		parent::__construct();
 		$this->load->model ('Mmaster', '', TRUE);
 	}
 	
@@ -20,10 +20,15 @@ class Data_eselon1 extends CI_Controller {
 
 	public function addEselon1(){
 		$this->Allcrud->session_rule();						
-		$add = array(
-			'nama_eselon1' =>$this->input->post('es1')
-		);
-		$this->Allcrud->addData('mr_eselon1',$add);
+		$add         = array('nama_eselon1' =>$this->input->post('es1'));
+		$res_data    = $this->Allcrud->addData('mr_eselon1',$add);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 1 telah berhasil ditambahkan.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);				
 	}
 
 	public function ajaxEselon1(){
@@ -41,16 +46,28 @@ class Data_eselon1 extends CI_Controller {
 
 	public function peditEselon1(){
 		$this->Allcrud->session_rule();						
-		$flag = array('id_es1'=>$this->input->post('oid'));
-		$edit = array(
-			'nama_eselon1' =>$this->input->post('nes1')
-		);
-		$this->Allcrud->editData('mr_eselon1',$edit,$flag);
+		$flag        = array('id_es1'=>$this->input->post('oid'));
+		$edit        = array('nama_eselon1' =>$this->input->post('nes1'));
+		$res_data    = $this->Allcrud->editData('mr_eselon1',$edit,$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 1 telah berhasil diubah.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);						
 	}
 
 	public function delEselon1($id){
 		$this->Allcrud->session_rule();						
-		$flag = array('id_es1' => $id);
-		$this->Allcrud->delData('mr_eselon1',$flag);
+		$flag        = array('id_es1' => $id);
+		$res_data    = $this->Allcrud->delData('mr_eselon1',$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 1 telah berhasil dihapus.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
 	}	
 }

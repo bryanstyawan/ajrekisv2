@@ -8,6 +8,7 @@ Improved:
 - Penilaian Prilaku, tambahan rekomendasi yang wajib diisi oleh atasan
 - Penilaian Prilaku, ada penanda jika sudah dilakukan penilaian
 - Penambahan lupa password (popup Informasi)
+- Penambahan dan improvisasi Notification error + mempersingkat cooldown setelah proses transaksi di eselon 1,2,3,4
 Fixed:
 
 

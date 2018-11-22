@@ -190,10 +190,10 @@ last edited : 27/06/2016
 			# code...
 			$text_status = $text_status;
 		}
-    elseif ($res_data == 2) {
-      // code...
-			$text_status = $text_status;
-    }
+		elseif ($res_data == 2) {
+		// code...
+				$text_status = $text_status;
+		}
 		else
 		{
 			$text_status = "Telah terjadi kesalahan sistem";

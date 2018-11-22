@@ -31,10 +31,19 @@ class Data_eselon4 extends CI_Controller {
 	public function addEselon4(){
 		$this->Allcrud->session_rule();								
 		$add = array(
+			'id_es1'       => $this->input->post('es1'),						
+			'id_es2'       => $this->input->post('es2'),			
 			'id_es3'       => $this->input->post('es3'),
 			'nama_eselon4' =>$this->input->post('es4')
 		);
-		$this->Allcrud->addData('mr_eselon4',$add);
+		$res_data    = $this->Allcrud->addData('mr_eselon4',$add);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 4 telah berhasil ditambahkan.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);														
 	}
 	
 	public function editEselon4($id){
@@ -51,13 +60,27 @@ class Data_eselon4 extends CI_Controller {
 			'id_es3'       => $this->input->post('nes3'),
 			'nama_eselon4' =>$this->input->post('nes4')
 		);
-		$this->Allcrud->editData('mr_eselon4',$edit,$flag);
+		$res_data    = $this->Allcrud->editData('mr_eselon4',$edit,$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 4 telah berhasil diubah.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);														
 	}
 
 	public function delEselon4($id){
 		$this->Allcrud->session_rule();							
-		$flag = array('id_es4' => $id);
-		$this->Allcrud->delData('mr_eselon4',$flag);
+		$flag        = array('id_es4' => $id);
+		$res_data    = $this->Allcrud->delData('mr_eselon4',$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 4 telah berhasil dihapus.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);														
 	}	
 
 	public function ajaxEselon4(){
