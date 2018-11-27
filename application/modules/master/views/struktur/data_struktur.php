@@ -160,7 +160,6 @@ isset($class_posisi);
 			<h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addData"><i class="fa fa-plus-square"></i> Tambah Jabatan</button></h3>
     		<div class="box-body" id="isi">
 		    	<div id="halaman_header" class="pull-right" style="margin-top: 40px;margin-left: 76%;">
-					<!-- <?php echo $halaman;?>                 -->
 		    	</div>
 		        <table id="example1" class="table table-bordered table-striped" style="font-size:12px;">
 					<thead>
@@ -212,7 +211,14 @@ isset($class_posisi);
 										</td>
 										<td>
 											<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
-											<button class="btn btn-primary btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>
+											<?php
+												if ($list[$i]->counter_pegawai < 1) {
+													# code...
+											?>
+												<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+											<?php
+												}
+											?>
 										</td>
 									</tr>
 						<?php
@@ -222,7 +228,6 @@ isset($class_posisi);
 					</tbody>
 			  	</table>
 		    	<div id="halaman_footer" class="pull-right">
-			  		<!-- <?php echo $halaman;?> -->
 			  	</div>
 		    </div><!-- /.box-body -->
 		</div><!-- /.box -->
@@ -921,43 +926,17 @@ $(document).ready(function(){
 					$("#editData").modal('hide');
 					$("#loadprosess").modal('show');
 				},
-				success:function(){
-					Lobibox.notify('success', {
-						msg: 'Data Berhasil Dirubah'
-						});
-					setTimeout(function(){
-						$("#loadprosess").modal('hide');
-		              	setTimeout(function(){
-		                	location.reload();
-		              	}, 1500);
-					}, 5000);
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
 				},
-				error:function(){
-						Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Perubahan data'
-						});
-						}
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
 			})
 		}
 	})
-
-	$("#search").on('keydown', function(e) {
-	    if (e.which == 13) {
-			var key = $("#search").val();
-	        $.ajax({
-				url :"<?php echo site_url();?>/master/data_struktur/cariStruktur",
-				type:"post",
-				data:"key="+key,
-				success:function(hasil){
-					$("#isi").html(hasil);
-				}
-			})
-	    }
-	});
-
-	$('#btn_search').on('click', function(){
-			$("#nes1").val(response['eselon1']);
-	});
 })
 
 function edit(id){
@@ -975,7 +954,6 @@ function edit(id){
 			$("#nkat").val(response['kat_posisi']);
 			$("#njabatan").val(response['nama_posisi']);
 			// $("#njabatan").append('<option value="'+response['nama_posisi']+'" selected>'+response['nama_posisi']+'</option>');
-
 			// $("#natasan").val(response['atasan']);
 			$("#oid").val(response['id']);
 		}
@@ -991,22 +969,18 @@ function del(id){
 				$.ajax({
 					url :"<?php echo site_url()?>/master/data_struktur/delStruktur/"+id,
 					type:"post",
-					success:function(){
-					Lobibox.notify('success', {
-					msg: 'Data Berhasil Dihapus'
-					});
-						$("#isi").load('data_struktur/ajaxStruktur');
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
 					},
-					error:function(){
-					Lobibox.notify('error', {
-					msg: 'Gagal Melakukan Hapus data'
-					});
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
-    }
-                })
-
+		}
+	})
 }
 
 function add_struktur() {
@@ -1029,23 +1003,14 @@ function add_struktur() {
 			$("#newData").modal('hide');
 			$("#loadprosess").modal('show');
 		},
-		success:function(){
-			Lobibox.notify('success', {
-				msg: 'Data Berhasil Ditambahkan'
-			});
-
-			setTimeout(function(){
-				$("#loadprosess").modal('hide');
-				setTimeout(function(){
-					location.reload();
-				}, 1500);
-			}, 5000);
+		success:function(msg){
+			var obj = jQuery.parseJSON (msg);
+			ajax_status(obj);
 		},
-		error:function(){
-				Lobibox.notify('error', {
-				msg: 'Gagal Melakukan Penambahan data'
-				});
-				}
+		error:function(jqXHR,exception)
+		{
+			ajax_catch(jqXHR,exception);					
+		}
 	})	
 }
 </script>

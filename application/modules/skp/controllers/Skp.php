@@ -333,6 +333,21 @@ class Skp extends CI_Controller {
 		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),11);
 		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($id,'id');
 		$data['member']   	 = $this->mskp->get_member($this->session->userdata('sesPosisi'));
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id))->num_rows();
+				if ($get_data) {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = 0;
+				}
+			}
+		}
 		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
 		$data['content']     = 'skp/skp_approval_pegawai';
 		$this->load->view('templateAdmin',$data);

@@ -59,7 +59,7 @@ $data_value = json_encode($class_posisi);
     </div>
 </div>
 
-<div class="col-xs-12">
+<div class="col-xs-12"> 
 	<div class="box">
         <div class="box-header">
 			<div class="box-tools">
@@ -72,6 +72,8 @@ $data_value = json_encode($class_posisi);
                     <tr>
                         <th></th>
                         <th>Uraian Tugas</th>
+                        <th>Keterangan</th>
+                        <th>Output</th>
                         <th>Tahun</th>
                         <th>Action</th>
                     </tr>
@@ -81,8 +83,27 @@ $data_value = json_encode($class_posisi);
                             <input type="text" id="uraian_tugas" class="col-lg-12" >
                         </th>
                         <th>
+                            <input type="text" id="uraian_tugas_keterangan" class="col-lg-12" >                        
+                        </th>     
+                        <th>
+                            <select id="uraian_tugas_output">
+                                <option value=""> - - - - - - - </option>
+                                <?php
+                                    if ($list_satuan_skp->result_array() != array()) {
+                                        # code...
+                                        for ($i=0; $i < count($list_satuan_skp->result_array()); $i++) { 
+                                            # code...
+                                ?>
+                                        <option value="<?=$list_satuan_skp->result_array()[$i]['id'];?>"><?=$list_satuan_skp->result_array()[$i]['nama'];?></option>                                        
+                                <?php
+                                        }
+                                    }
+                                ?>
+                            </select>
+                        </th>
+                        <th>
                             <input type="number" id="uraian_tugas_tahun" class="col-lg-12" >                        
-                        </th>                                                
+                        </th>                                           
                         <th>
                             <a class="btn btn-default" id="btn-add-row"><i class="fa fa-plus"></i> Tambah</a>
                             <a class="btn btn-default" id="btn-change-this-row" style="display:none"><i class="fa fa-edit"></i> Ubah data yang telah ditandai ini</a>                            
@@ -99,6 +120,8 @@ $data_value = json_encode($class_posisi);
                                 <tr class="child-urtug">
                                     <td><span><?=$list_detail[$i]->id;?></span></td>
                                     <td><?=$list_detail[$i]->uraian_tugas;?></td>
+                                    <td><?=$list_detail[$i]->keterangan;?></td>  
+                                    <td><?=$this->Allcrud->getData('mr_skp_satuan',array('id'=>$list_detail[$i]->output))->result_array()[0]['nama'];?></td>                                                                                                          
                                     <td><?=$list_detail[$i]->tahun;?></td>                                    
                                     <td><a class="btn btn-danger btn-delete" onclick="del('<?php echo $list_detail[$i]->id;?>')"><i class="fa fa-delete"></i> Hapus Data (Server)</a> | <a class="btn btn-warning btn-update-data"><i class="fa fa-delete"></i> Ubah<input type="hidden" value="<?=$i+1;?>"></a><a class="btn btn-danger btn-cancel" style="display:none"><i class="fa fa-delete"></i> Batal<input type="hidden" value="<?=$i+1;?>"></a></td>                                                                        
                                 </tr>
@@ -184,10 +207,12 @@ $(document).ready(function(){
         {
             $("#loadprosess").modal('show');            
             for (index = 1; index <= data_rows.length; index++) {            
-                raise_data      = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html();
-                raise_data_year = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html();
-                flag            = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(4) > a.btn.btn-danger.btn-delete').html();
-                oid             = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > span').html();
+                oid                = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > span').html();
+                raise_data         = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html();
+                raise_data_remarks = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html();
+                raise_data_output  = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(4)').html();
+                raise_data_year    = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(5)').html();
+                flag               = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(6) > a.btn.btn-danger.btn-delete').html();
                 if (flag == '<i class="fa fa-delete"></i> Hapus Data (Server)') {
                     flag = 'update';
                 }
@@ -199,7 +224,7 @@ $(document).ready(function(){
                 if (oid == '<i class="fa fa-dot-circle-o"></i>') {
                     oid = 0;
                 }
-                data_detail[index-1] = {'uraian_tugas' : raise_data, 'uraian_tugas_tahun' :  raise_data_year, 'flag' : flag , 'OID' : oid}
+                data_detail[index-1] = {'uraian_tugas' : raise_data, 'keterangan' : raise_data_remarks, 'output' : raise_data_output, 'uraian_tugas_tahun' :  raise_data_year, 'flag' : flag , 'OID' : oid}
             }
 
             data_header = {
@@ -222,32 +247,11 @@ $(document).ready(function(){
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
+                    ajax_status(obj,'master/jabatan_fungsional_tertentu');
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal melakukan transaksi'
-                    });
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
                 }
             })
 
@@ -358,8 +362,10 @@ $(document).ready(function(){
     });    
 
     $("#btn-add-row").click(function() {
-        var uraian_tugas       = $("#uraian_tugas").val();
-        var uraian_tugas_tahun = $("#uraian_tugas_tahun").val();
+        var uraian_tugas            = $("#uraian_tugas").val();
+        var uraian_tugas_tahun      = $("#uraian_tugas_tahun").val();
+        var uraian_tugas_keterangan = $("#uraian_tugas_keterangan").val();
+        var uraian_tugas_output     = $("#uraian_tugas_output option:selected").text();
         
         if (uraian_tugas.length <= 0) {
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
@@ -374,6 +380,13 @@ $(document).ready(function(){
                 msg: "Tahun Uraian Tugas kosong, mohon lengkapi data tersebut"
             });                            
         }
+        else if(uraian_tugas_output.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Output Uraian Tugas kosong, mohon lengkapi data tersebut"
+            });                            
+        }        
         else
         {
             var rows = $('.table-view tbody .child-urtug').length;
@@ -384,6 +397,8 @@ $(document).ready(function(){
                                         '<span><i class="fa fa-dot-circle-o"></i></span>'+
                                     '</td>'+
                                     '<td>'+uraian_tugas+'</td>'+
+                                    '<td>'+uraian_tugas_keterangan+'</td>'+
+                                    '<td>'+uraian_tugas_output+'</td>'+
                                     '<td>'+uraian_tugas_tahun+'</td>'+                                    
                                     '<td><a class="btn btn-danger btn-delete"><i class="fa fa-delete"></i> Hapus Data (Local)</a></td>'+                                
                                 '</tr>');                            
@@ -395,12 +410,16 @@ $(document).ready(function(){
                                         '<span><i class="fa fa-dot-circle-o"></i></span>'+
                                     '</td>'+
                                     '<td>'+uraian_tugas+'</td>'+
+                                    '<td>'+uraian_tugas_keterangan+'</td>'+
+                                    '<td>'+uraian_tugas_output+'</td>'+
+                                    '<td>'+uraian_tugas_tahun+'</td>'+                                    
                                     '<td><a class="btn btn-danger btn-delete"><i class="fa fa-delete"></i> Hapus Data (Local)</a></td>'+                                
                                 '</tr>');                
             }            
 
             $('#uraian_tugas').val('');
             $('#uraian_tugas_tahun').val('');        
+            $('#uraian_tugas_keterangan').val('');                    
             $('#uraian_tugas').focus();        
         }
     })    
@@ -413,40 +432,19 @@ function del(id){
         callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/delete_uraian_tugas_jfu/"+id,
+					url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/delete_uraian_tugas_jft/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
 					},
                     success:function(msg){
                         var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
+                        ajax_status(obj,'master/jabatan_fungsional_tertentu');
                     },
-					error:function(){
-					Lobibox.notify('error', {
-					msg: 'Gagal Melakukan Hapus data'
-					});
-					}
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
+                    }
 				})
 			}
 	    }

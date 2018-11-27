@@ -88,7 +88,7 @@
 									else {
 										# code...
 				?>
-										<a href="" class="btn btn-danger"><i class="fa fa-close"></i> Hapus</a>													
+										<a onclick="del('<?php echo $list[$i]->id;?>')" class="btn btn-danger"><i class="fa fa-close"></i> Hapus</a>													
 				<?php
 									}
 				?>
@@ -208,21 +208,6 @@ function validateForm() {
     }    
 }
 
-function edit(id)
-{
-	$("#loadprosess").modal('show');
-	$.getJSON('<?php echo site_url() ?>/master/data_eselon1/editEselon1/'+id,
-		function( response ) {
-			$("#editData").modal('show');
-			$("#nes1").val(response['nama_eselon1']);
-			$("#oid").val(response['id_es1']);
-			setTimeout(function(){
-				$("#loadprosess").modal('hide');
-			}, 1000);
-		}
-	);
-}
-
 function del(id){
     LobiboxBase = {
         //DO NOT change this value. Lobibox depended on it
@@ -269,25 +254,19 @@ function del(id){
 		 callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/data_eselon1/delEselon1/"+id,
+					url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/delete_head_uraian_tugas_jfu/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
 					},
-					success:function(){
-						Lobibox.notify('success', {
-							msg: 'Data Berhasil Dihapus. Mohon tunggu, sedang memuat data.'
-						});
-						$("#isi").load('data_eselon1/ajaxEselon1');
-						setTimeout(function(){
-							$("#loadprosess").modal('hide');
-						}, 3000);
-					},
-					error:function(){
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Hapus data'
-						});
-					}
+                    success:function(msg){
+                        var obj = jQuery.parseJSON (msg);
+                        ajax_status(obj,'master/jabatan_fungsional_tertentu');
+                    },
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
+                    }
 				})
 			}
   	  	}

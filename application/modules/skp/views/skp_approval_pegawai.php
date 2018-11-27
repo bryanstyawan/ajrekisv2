@@ -173,7 +173,7 @@ if ($member != 0) {
                             <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                             <sup style="<?=$flag_counter;?>">
                                 <span class="notif-count pull-right">
-                                    <!-- <span><?=$member[$i]->counter_belum_diperiksa;?></span> -->
+                                <span><?=$member[$i]->counter_belum_diperiksa;?></span>
                                 </span>
                             </sup>
                           </a>

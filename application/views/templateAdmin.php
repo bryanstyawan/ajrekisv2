@@ -280,7 +280,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function ajax_status(obj)
+function ajax_status(obj,arg)
 {
     if (obj.status == 1)
     {
@@ -290,7 +290,14 @@ function ajax_status(obj)
         setTimeout(function(){
             $("#loadprosess").modal('hide');
             setTimeout(function(){
-                location.reload();
+                // alert(arg);
+                if (arg == null) {
+                    location.reload();                    
+                }
+                else
+                {
+                    window.location.href = "<?=base_url();?>"+arg;                    
+                }
             }, 500);
         }, 500);
     }

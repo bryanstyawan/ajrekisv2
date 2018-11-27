@@ -862,4 +862,11 @@ class Master extends CI_Controller {
 		# code...
 		redirect('master/data_akademik');		
 	}
+
+	public function output_skp()
+	{
+		# code...
+		redirect('master/data_output_skp');		
+		
+	}
 }

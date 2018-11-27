@@ -65,6 +65,8 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 			# code...
 			$detail['uraian_tugas'] = $data_detail[$i]['uraian_tugas'];
 			$detail['tahun']        = $data_detail[$i]['uraian_tugas_tahun'];
+			$detail['keterangan']   = $data_detail[$i]['keterangan'];
+			$detail['output']       = $this->Allcrud->getData('mr_skp_satuan',array('nama'=>$data_detail[$i]['output']))->result_array()[0]['id'];
 
 
 			if ($arg == 'create') {
@@ -121,16 +123,19 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('b6', 'Uraian Tugas');
 		$this->excel->getActiveSheet()->setCellValue('c6', 'Keterangan');
 		$this->excel->getActiveSheet()->setCellValue('d6', 'Angka Kredit');
+		$this->excel->getActiveSheet()->setCellValue('e6', 'Output');		
 
 		$this->excel->getActiveSheet()->setCellValue('a7', '+');
 		$this->excel->getActiveSheet()->setCellValue('b7', 'Test');
 		$this->excel->getActiveSheet()->setCellValue('c7', 'Test Keterangan');		
-		$this->excel->getActiveSheet()->setCellValue('d7', '69');				
+		$this->excel->getActiveSheet()->setCellValue('d7', '69');
+		$this->excel->getActiveSheet()->setCellValue('e7', 'Laporan');						
 
 		$this->excel->getActiveSheet()->setCellValue('a8', '+');
 		$this->excel->getActiveSheet()->setCellValue('b8', 'Test test untuk keterangan yang kosong');
         $this->excel->getActiveSheet()->setCellValue('c8', '-');				
-		$this->excel->getActiveSheet()->setCellValue('d8', '-');				        
+		$this->excel->getActiveSheet()->setCellValue('d8', '-');	
+		$this->excel->getActiveSheet()->setCellValue('e8', '-');					        
 
 		$filename='Template Unggah Master jft - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
 		//header('Content-Type: application/vnd.ms-excel'); //mime type
@@ -214,8 +219,9 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 										'id_jft'       => $res_data_id,
 										'uraian_tugas' => $data['values'][$i]['B'],
 										'keterangan'   => $data['values'][$i]['C'],
-                                        'tahun'        => $data['values'][4]['B'],
-                                        'angka_kredit' => $data['values'][$i]['D'],
+										'tahun'        => $data['values'][4]['B'],
+										'angka_kredit' => $data['values'][$i]['D'],
+										'output'       => $this->trigger_output($data['values'][$i]['E']),
 										'status'       => 1
 								);
 				if ($data['values'][$i]['A'] == '+') {
@@ -232,6 +238,22 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
         }		
 	}
 
+	public function trigger_output($data)
+	{
+		# code...
+		$data_get = $this->Allcrud->getData('mr_skp_satuan',array('nama'=>$data))->result_array();
+		if ($data_get == array()) {
+			# code...
+			$data_store = array('nama'=>$data);
+			$res_data = $this->Allcrud->addData_with_return_id('mr_skp_satuan',$data_store);
+			return $res_data;			
+		}		
+		else {
+			# code...
+			return $data_get[0]['id'];
+		}
+	}
+
 	public function add_data()
 	{
 		# code...
@@ -242,6 +264,7 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 		$data['class_posisi'] = $this->Mmaster->get_posisi_class();
 		$data['list']         = '';
 		$data['list_detail']  = '';
+		$data['list_satuan_skp'] = $this->Allcrud->listData('mr_skp_satuan');		
 		$this->load->view('templateAdmin',$data);		
 	}
 
@@ -249,13 +272,31 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 	{
 		# code...
 		$this->Allcrud->session_rule();						
-		$data['title']        = 'Master Jabatan Fungsional tertentu >> Tambah Data';
-		$data['content']      = 'master/jft/add';
-		$data['flag_crud']    = 'update';
-		$data['class_posisi'] = $this->Mmaster->get_posisi_class();
-		$data['list']         = $this->Mmaster->get_data_jft($id);
-		$data['list_detail']  = $this->Mmaster->get_data_jft_detail($id);
+		$data['title']           = 'Master Jabatan Fungsional tertentu >> Tambah Data';
+		$data['content']         = 'master/jft/add';
+		$data['flag_crud']       = 'update';
+		$data['class_posisi']    = $this->Mmaster->get_posisi_class();
+		$data['list']            = $this->Mmaster->get_data_jft($id);
+		$data['list_detail']     = $this->Mmaster->get_data_jft_detail($id);
+		$data['list_satuan_skp'] = $this->Allcrud->listData('mr_skp_satuan');
 		$this->load->view('templateAdmin',$data);	
+	}
+
+	public function delete_head_uraian_tugas_jfu($id)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$flag        = array('id' => $id);
+		$res_data    = $this->Allcrud->delData('mr_jabatan_fungsional_tertentu',$flag);		
+		$flag        = array('id_jft' => $id);		
+		$res_data    = $this->Allcrud->delData('mr_jabatan_fungsional_tertentu_uraian_tugas',$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Uraian Tugas telah dihapus');
+		$res         = array
+							(
+								'status' => $res_data,
+								'text'   => $text_status
+							);
+		echo json_encode($res);		
 	}
 
 	public function delete_uraian_tugas_jft($id)

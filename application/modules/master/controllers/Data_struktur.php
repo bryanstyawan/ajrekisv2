@@ -88,7 +88,14 @@ class Data_struktur extends CI_Controller {
 			'id_jfu'       => $this->input->post('id_jfu'),
 			'id_jft'       => $this->input->post('id_jft'),			
 		);
-		$this->Allcrud->addData('mr_posisi',$add);
+		$res_data    = $this->Allcrud->addData('mr_posisi',$add);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil ditambahkan.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);								
 	}
 
 	public function editStruktur($id){
@@ -111,13 +118,27 @@ class Data_struktur extends CI_Controller {
 			'kat_posisi' =>$this->input->post('nkat'),
 			'nama_posisi' =>strtoupper($this->input->post('njabatan'))
 		);
-		$this->Allcrud->editData('mr_posisi',$edit,$flag);
+		$res_data    = $this->Allcrud->editData('mr_posisi',$edit,$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil diubah.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);								
 	}
 
 	public function delStruktur($id){
 		$this->Allcrud->session_rule();							
-		$flag = array('id' => $id);
-		$this->Allcrud->delData('mr_posisi',$flag);
+		$flag        = array('id' => $id);
+		$res_data    = $this->Allcrud->delData('mr_posisi',$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil dihapus.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);								
 	}	
 
 	public function ajaxStruktur($id=NULL){
