@@ -24,6 +24,14 @@
 							</td>
 							<td>
 								<button class="btn btn-primary btn-xs" onclick="show_skp('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> SKP</button>&nbsp;&nbsp;								
+								<?php
+									if ($list[$i]->is_master_skp == 'ready') {
+										# code...
+								?>
+									<button class="btn btn-danger btn-xs" onclick="delete_all_urtug('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Hapus Semua Uraian Tugas</button>&nbsp;&nbsp;
+								<?php
+									}
+								?>								
 							</td>
 						</tr>
 					<?php
