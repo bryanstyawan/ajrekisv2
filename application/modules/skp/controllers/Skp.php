@@ -905,6 +905,19 @@ class Skp extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function delete_master_skp_posisi($id)
+	{
+		# code...
+		$res_data    = $this->Allcrud->delData('mr_skp_master',array('posisi'=>$id));
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Uraian Tugas berhasil dihapus.');
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}
+
 	public function add_master_skp_posisi($OID)
 	{
 		# code...

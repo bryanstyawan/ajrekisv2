@@ -1,4 +1,12 @@
 v2.0.0-Alpha    
+2018-11-28
+==========
+New:
+Improved:
+- Penambahan fitur hapus semua uraian tugas di master skp
+Fixed:
+
+v2.0.0-Alpha    
 2018-11-27
 ==========
 New:

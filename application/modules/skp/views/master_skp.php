@@ -189,6 +189,14 @@ isset($class_posisi);
 										</td>
 										<td>
 											<button class="btn btn-primary btn-xs" onclick="show_skp('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> SKP</button>&nbsp;&nbsp;
+											<?php
+												if ($list[$i]->is_master_skp == 'ready') {
+													# code...
+											?>
+												<button class="btn btn-danger btn-xs" onclick="delete_all_urtug('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Hapus Semua Uraian Tugas</button>&nbsp;&nbsp;
+											<?php
+												}
+											?>																						
 										</td>
 									</tr>			
 						<?php
@@ -660,5 +668,32 @@ $(document).ready(function(){
 function show_skp(id) {
 	// body...
 	window.location.href = "<?php echo site_url();?>skp/master_skp_posisi/"+id;	
+}
+
+function delete_all_urtug(id) {
+	Lobibox.confirm({
+		title   : "Konfirmasi",
+		msg     : "Anda yakin akan menghapus semua uraian Tugas data ini ?",
+		callback: function ($this, type) {
+			if (type === 'yes'){			
+				$.ajax({
+					url :"<?php echo site_url();?>skp/delete_master_skp_posisi/"+id,
+					type:"post",
+					beforeSend:function(){
+						$("#editData").modal('hide');
+						$("#loadprosess").modal('show');
+					},
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})
+			}
+		}
+	})			
 }
 </script>
