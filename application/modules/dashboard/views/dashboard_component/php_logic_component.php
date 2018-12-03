@@ -1,0 +1,1 @@
+<input type="hidden" id="role" value="<?php echo $this->session->userdata('sesRole');?>">

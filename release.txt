@@ -1,7 +1,22 @@
 v2.0.0-Alpha    
+2018-12-03
+==========
+New:
+- Penambahan pemotongan tunjangan bawahan berdasarkan penilaian capaian skp oleh atasan di dashboard
+Improved:
+- Penambahan daftar bawahan di dashboard untuk atasan
+- pembenahan struktur dashboard
+- Penambahan pemotongan tunjangan bawahan berdasarkan penilaian capaian skp oleh atasan di Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin 
+- Menghapus Kelas Jabatan di Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin 
+- Penambahan fungsi hapus data jabatan fungsional umum (jabatan + uraian tugas) di master jabatan fungsional umum
+- penyederhaaan prosess ajax di master jabatan fungsional umum
+Fixed:
+
+v2.0.0-Alpha    
 2018-11-28
 ==========
 New:
+- Penambahan tombol kembali pada ubah data pribadi
 Improved:
 - Penambahan fitur hapus semua uraian tugas di master skp
 Fixed:

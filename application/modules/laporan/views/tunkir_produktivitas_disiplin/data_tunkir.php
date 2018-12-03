@@ -153,10 +153,11 @@ $(window).load(function() { // makes sure the whole site is loaded
 						<th>Nama</th>
 						<th>Jabatan</th>
 						<th>Atasan Langsung</th>
-						<th>Kelas Jabatan</th>
+						<!-- <th>Kelas Jabatan</th> -->
 						<th>Tunjangan Kinerja 100%</th>
 						<th>Tunjangan Profesi</th>
 						<th>Realisasi Menit Efektif</th>
+						<th>Potongan Kualitas Capaian SKP</th>
 						<th>Tunjangan Kinerja (Aspek Produktifitas)</th>
 						<th>Tunjangan Kinerja (Aspek Disiplin)</th>
 						<th>Total Tunjangan Kinerja (Aspek Produktifitas & Disiplin)</th>

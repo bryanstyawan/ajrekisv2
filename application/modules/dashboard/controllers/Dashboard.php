@@ -29,7 +29,37 @@ class Dashboard extends CI_Controller {
 		$data['history_golongan']   = $this->mdashboard->get_history_golongan();
 		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'));
 		$data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));
+		if ($data['data_transaksi']) {
+			# code...
+			$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
+			if ($get_data != array()) {
+				# code...
+				$data['data_transaksi'][0]->persentase_potongan    = $get_data[0]['persentase'];
+				      $real_tunjangan_kinerja                      = $data['data_transaksi'][0]->real_tunjangan_kinerja - ($data['data_transaksi'][0]->real_tunjangan_kinerja*($data['data_transaksi'][0]->persentase_potongan/100));
+				$data['data_transaksi'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;
+			}
+			else
+			{
+
+			}
+		}
 		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year();
+		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')))->num_rows();
+				if ($get_data) {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = 0;
+				}
+			}
+		}		
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -148,5 +178,50 @@ class Dashboard extends CI_Controller {
 		$data['title'] = '';
 		$data['oid']   = $oid;
 		$this->load->view('dashboard/datatable_modal',$data);		
+	}
+
+	public function post_penilaian_skp_bulan($arg,$oid)
+	{
+		# code...
+		$res_data = 0;
+		$getdata  = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$oid,'tahun'=>date('Y'),'bulan'=>date('m')))->result_array();
+		$persentase = '0';
+		if ($arg == 'no') {
+			# code...
+			$persentase = '5';
+		}
+		else {
+			# code...
+			$persentase = '0';			
+		}
+		$data = array
+					(
+						'id_pegawai' => $oid,
+						'tahun'      => date('Y'),
+						'bulan'      => date('m'),
+						'persentase' => $persentase
+					);
+		if ($getdata == array()) {
+			# code...
+			$res_data = $this->Allcrud->addData('tr_pengurangan_tunjangan',$data);
+		}							
+		else {
+			# code...
+			$flag = array
+			(
+				'id_pegawai' => $oid,
+				'tahun'      => date('Y'),
+				'bulan'      => date('m')
+			);
+			$res_data    = $this->Allcrud->editData('tr_pengurangan_tunjangan',$data,$flag);			
+		}
+
+		$text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');
+		$res            = array
+						(
+							'status' => $res_data,
+							'text'   => $text_status
+						);
+		echo json_encode($res);		
 	}
 }

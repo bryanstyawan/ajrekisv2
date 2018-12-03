@@ -286,4 +286,20 @@ class Jabatan_fungsional_umum extends CI_Controller {
 							);
 		echo json_encode($res);					
 	}
+
+	public function del_data_jfu($id)
+	{
+		# code...
+		$flag        = array('id' => $id);
+		$res_data    = $this->Allcrud->delData('mr_jabatan_fungsional_umum',$flag);		
+		$flag        = array('id_jfu' => $id);
+		$res_data    = $this->Allcrud->delData('mr_jabatan_fungsional_umum_uraian_tugas',$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Jabatan Fungsional Umum telah dihapus');
+		$res         = array
+							(
+								'status' => $res_data,
+								'text'   => $text_status
+							);
+		echo json_encode($res);		
+	}
 }

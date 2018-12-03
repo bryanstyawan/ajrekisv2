@@ -318,6 +318,23 @@ class Laporan extends CI_Controller {
 				$data['list'][$i]->tugas_belajar            = $data_transaksi[0]->tugas_belajar;
 
 
+				if ($data_transaksi) {
+					# code...
+					$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['list'][$i]->id_pegawai,'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
+					if ($get_data != array()) {
+						# code...
+						$data_transaksi[0]->persentase_potongan = $get_data[0]['persentase'];
+						$data_transaksi[0]->potongan_kinerja    = ($data_transaksi[0]->real_tunjangan_kinerja*($data_transaksi[0]->persentase_potongan/100));
+					}
+					else
+					{
+						$data_transaksi[0]->persentase_potongan = 0;
+						$data_transaksi[0]->potongan_kinerja    = 0;
+					}
+				}
+
+				$data['list'][$i]->persentase_potongan      = $data_transaksi[0]->persentase_potongan;
+				$data['list'][$i]->potongan_kinerja         = $data_transaksi[0]->potongan_kinerja;
 				$data['list'][$i]->tunjangan_kinerja        = $data_transaksi[0]->tunjangan_kinerja;
 				$data['list'][$i]->tunjangan_kinerja_sistem = $data_transaksi[0]->tunjangan_kinerja_sistem;
 				$data['list'][$i]->tunjangan_disiplin       = $data_transaksi[0]->tunjangan_disiplin;

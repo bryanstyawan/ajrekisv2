@@ -88,7 +88,7 @@
 									else {
 										# code...
 				?>
-										<a href="" class="btn btn-danger"><i class="fa fa-close"></i> Hapus</a>													
+										<a onclick="del('<?php echo $list[$i]->id;?>')" class="btn btn-danger"><i class="fa fa-close"></i> Hapus</a>													
 				<?php
 									}
 				?>
@@ -117,80 +117,6 @@ $(document).ready(function(){
 		window.location.href = "<?=base_url();?>master/jabatan_fungsional_umum/add_data";		
 		// $("#newData").modal('show');
 	})
-
-	$("#add").click(function(){
-		var es1= $("#es1").val();
-		if (es1.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 1 tidak boleh kosong."
-			});
-		}
-		else
-		{
-			$.ajax({
-				url :"<?php echo site_url()?>/master/data_eselon1/addEselon1",
-				type:"post",
-				data:"es1="+es1,
-				beforeSend:function(){
-					$("#newData").modal('hide');
-					$("#loadprosess").modal('show');
-				},
-				success:function(){
-					Lobibox.notify('success', {
-						msg: 'Data Berhasil Ditambahkan. Mohon tunggu, sedang memuat data.'
-					});
-					$("#isi").load('data_eselon1/ajaxEselon1');
-					setTimeout(function(){
-						$("#loadprosess").modal('hide');
-					}, 5000);
-				},
-				error:function(){
-					Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Penambahan data'
-					});
-				}
-			})
-		}
-	})
-
-	$("#edit").click(function(){
-		var es1= $("#nes1").val();
-		if (es1.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 1 tidak boleh kosong."
-			});
-		}
-		else
-		{
-			$.ajax({
-				url :"<?php echo site_url();?>/master/data_eselon1/peditEselon1",
-				type:"post",
-				data:$("#editForm").serialize(),
-				beforeSend:function(){
-					$("#editData").modal('hide');
-					$("#loadprosess").modal('show');
-				},
-				success:function(){
-					Lobibox.notify('success', {
-						msg: 'Data Berhasil Dirubah. Mohon tunggu, sedang memuat data.'
-						});
-					$("#isi").load('data_eselon1/ajaxEselon1');
-					setTimeout(function(){
-						$("#loadprosess").modal('hide');
-					}, 5000);
-				},
-				error:function(){
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Perubahan data'
-						});
-				}
-			})
-		}
-	})
 })
 
 function validateForm() {
@@ -206,21 +132,6 @@ function validateForm() {
             });        
         return false;
     }    
-}
-
-function edit(id)
-{
-	$("#loadprosess").modal('show');
-	$.getJSON('<?php echo site_url() ?>/master/data_eselon1/editEselon1/'+id,
-		function( response ) {
-			$("#editData").modal('show');
-			$("#nes1").val(response['nama_eselon1']);
-			$("#oid").val(response['id_es1']);
-			setTimeout(function(){
-				$("#loadprosess").modal('hide');
-			}, 1000);
-		}
-	);
 }
 
 function del(id){
@@ -263,30 +174,24 @@ function del(id){
         }
     }
 
-	 Lobibox.confirm({
-		 title: "Konfirmasi",
-		 msg: "Anda yakin akan menghapus data ini ?",
-		 callback: function ($this, type) {
+	Lobibox.confirm({
+		title: "Konfirmasi",
+		msg: "Anda yakin akan menghapus data ini ?",
+		callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/data_eselon1/delEselon1/"+id,
+					url :"<?php echo site_url()?>master/jabatan_fungsional_umum/del_data_jfu/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
 					},
-					success:function(){
-						Lobibox.notify('success', {
-							msg: 'Data Berhasil Dihapus. Mohon tunggu, sedang memuat data.'
-						});
-						$("#isi").load('data_eselon1/ajaxEselon1');
-						setTimeout(function(){
-							$("#loadprosess").modal('hide');
-						}, 3000);
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
 					},
-					error:function(){
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Hapus data'
-						});
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
