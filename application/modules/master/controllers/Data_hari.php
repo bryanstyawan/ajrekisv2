@@ -10,7 +10,7 @@ class Data_hari extends CI_Controller {
 
 	public function index()
 	{
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Data Hari Aktif';
 		$data['content'] = 'master/aktif/data_aktif';
 		$data['list']    = $this->Mmaster->activeDay();
@@ -19,7 +19,7 @@ class Data_hari extends CI_Controller {
 	}
 
 	public function addHari_aktif(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$text_status 	= "";
 		$res_data			= "";
 		$flag 				= array('bulan'=>$this->input->post('bulan'),'tahun'=>$this->input->post('tahun'));
@@ -55,20 +55,20 @@ class Data_hari extends CI_Controller {
 	}
 
 	public function ajaxHari_aktif(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['list'] = $this->Mmaster->activeDay();
 		$this->load->view('master/aktif/ajaxAktif',$data);
 	}
 
 	public function editHari_aktif($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id_hari'=>$id);
 		$q    = $this->Allcrud->getData('mr_hari_aktif',$flag)->row();
 		echo json_encode($q);
 	}
 
 	public function peditHari_aktif(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id_hari'=>$this->input->post('oid'));
 		$edit = array(
 			'jml_hari_aktif'      =>$this->input->post('njmlhari'),
@@ -82,7 +82,7 @@ class Data_hari extends CI_Controller {
 	}
 
 	public function delHari_aktif($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id_hari' => $id);
 		$this->Allcrud->delData('mr_hari_aktif',$flag);
 	}

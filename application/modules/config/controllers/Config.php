@@ -28,7 +28,8 @@ class Config extends CI_Controller {
 	public function root_menu($id=NULL)
 	{
 		# code...
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();		
+		$this->Globalrules->notif_message();
 		$data['title']    = 'Management Menu '.$this->get_header($id);
 		$data['subtitle'] = '';
 		$data['list']     = $this->mconfig->get_menu($id);

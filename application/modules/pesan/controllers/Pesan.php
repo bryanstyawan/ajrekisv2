@@ -9,19 +9,15 @@ class Pesan extends CI_Controller {
 
 	public function index()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		redirect('dashboard/home');
 	}
 
 	public function home()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag                = array('posisi'=>$this->session->userdata('sesIdPos'));
 		$data['title']       = 'Pesan';
 		$data['list']        = $this->mpesan->contact($flag);
@@ -32,20 +28,17 @@ class Pesan extends CI_Controller {
 
 	public function compose()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']   = 'Pesan';
 		$data['content'] = 'pesan/pesan/tulis';
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function inbox(){
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+	public function inbox()
+	{
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag         = $this->session->userdata('sesUser');
 		$data['list'] = $this->mpesan->inbox($flag);
 
@@ -68,20 +61,17 @@ class Pesan extends CI_Controller {
 	}
 
 	public function sent(){
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag         = $this->session->userdata('sesUser');
 		$data['list'] = $this->mpesan->sent($flag);
 		$this->load->view('pesan/ajax/sent',$data);
 	}
 
-	public function trash(){
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+	public function trash()
+	{
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag         = array('id_pengirim'=>$this->session->userdata('sesUser'));
 		$data['list'] = $this->mpesan->trash($flag);
 		$this->load->view('pesan/ajax/trash',$data);
@@ -90,17 +80,16 @@ class Pesan extends CI_Controller {
 	public function new_message()
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$this->load->view('pesan/ajax/new_message',NULL);
 	}
 
 	public function send_chat()
 	{
 		# code...
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();		
+		$this->Globalrules->notif_message();
 		$data_sender = $this->input->post('data_sender');
 		$res_data_id = $this->mpesan->get_sender($data_sender['receiver']);
 
@@ -133,8 +122,9 @@ class Pesan extends CI_Controller {
 	public function view_message()
 	{
 		# code...
+		$this->Globalrules->session_rule();		
 		$data_sender = $this->input->post('data_sender');
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		$res         = "";
 		if ($data_sender['type'] == "sent") {
 			# code...
@@ -167,7 +157,8 @@ class Pesan extends CI_Controller {
 	public function delete_message($id=NULL,$param=NULL)
 	{
 		# code...
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();		
+		$this->Globalrules->notif_message();
 		if ($param == 'sent') {
 			# code...
 			$data_container = array

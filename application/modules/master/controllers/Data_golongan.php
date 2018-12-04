@@ -10,7 +10,7 @@ class Data_golongan extends CI_Controller {
 	
 	public function index()
 	{
-		$this->Allcrud->session_rule();								
+		$this->Globalrules->session_rule();								
 		$data['title']   = 'Golongan PNS';
 		$data['content'] = 'master/golongan/data_golongan';
 		$data['list']    = $this->Allcrud->listData('mr_golongan');
@@ -19,7 +19,7 @@ class Data_golongan extends CI_Controller {
 
 	public function addGolongan()
 	{
-		$this->Allcrud->session_rule();					
+		$this->Globalrules->session_rule();					
 		$data_sender = $this->input->post('data_sender');
 		$add = array
 		(
@@ -31,13 +31,13 @@ class Data_golongan extends CI_Controller {
 	}	
 
 	public function ajaxGolongan(){
-		$this->Allcrud->session_rule();								
+		$this->Globalrules->session_rule();								
 		$data['list'] = $this->Allcrud->listData('mr_golongan');
 		$this->load->view('master/golongan/ajaxGolongan',$data);
 	}		
 
 	public function edit_golongan($id){
-		$this->Allcrud->session_rule();						
+		$this->Globalrules->session_rule();						
 		$flag = array('id'=>$id);
 		$q    = $this->Allcrud->getData('mr_golongan',$flag)->row();
 		echo json_encode($q);
@@ -55,7 +55,7 @@ class Data_golongan extends CI_Controller {
 	}
 
 	public function delgolongan($id){
-		$this->Allcrud->session_rule();						
+		$this->Globalrules->session_rule();						
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_golongan',$flag);
 	}					

@@ -13,8 +13,8 @@ class Dashboard extends CI_Controller {
 	public function home()
 	{
 		error_reporting(E_ALL ^ E_WARNING);
-		$this->Allcrud->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 
 		$data['title']              = '';
 		$data['content']            = 'vdashboard';
@@ -164,7 +164,7 @@ class Dashboard extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		$data['title']   = 'Lihat Semua Pemberitahuan';
 		$data['list']    = $this->Allcrud->getData('log_notifikasi',array('receiver'=>$this->session->userdata('sesUser')));
 		$data['content'] = 'dashboard/notification/view_all';

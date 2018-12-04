@@ -85,7 +85,7 @@ class Master extends CI_Controller {
 
 	public function cariAtasan()
 	{
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data_var = "";
 		$data_sql = "";
 		if($this->input->post('kat') == 1 || $this->input->post('nkat') == 1)
@@ -121,7 +121,7 @@ class Master extends CI_Controller {
 	}
 
 	public function agama(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Data Agama';
 		$data['content'] = 'master/agama/data_agama';
 		$data['list']    = $this->Allcrud->listData('mr_agama');
@@ -129,13 +129,13 @@ class Master extends CI_Controller {
 	}
 
 	public function ajaxAgama(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['list'] = $this->Allcrud->listData('mr_agama');
 		$this->load->view('master/agama/ajaxAgama',$data);
 	}
 
 	public function addAgama(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$add = array(
 			'nama_agama' => strtoupper($this->input->post('agama'))
 		);
@@ -143,7 +143,7 @@ class Master extends CI_Controller {
 	}
 
 	public function editAgama($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$id);
 		$q    = $this->Allcrud->getData('mr_agama',$flag)->row();
 		echo json_encode($q);
@@ -158,13 +158,13 @@ class Master extends CI_Controller {
 	}
 
 	public function delAgama($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_agama',$flag);
 	}
 
 	public function pendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Data Pendidikan';
 		$data['content'] = 'master/pendidikan/data_pendidikan';
 		$data['list']    = $this->Allcrud->listData('mr_pendidikan');
@@ -177,7 +177,7 @@ class Master extends CI_Controller {
 	}
 
 	public function addPendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$add = array(
 			'kode'            => strtoupper($this->input->post('kode')),
 			'nama_pendidikan' => modif_kata($this->input->post('pendidikan'))
@@ -186,14 +186,14 @@ class Master extends CI_Controller {
 	}
 
 	public function editPendidikan($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$id);
 		$q    = $this->Allcrud->getData('mr_pendidikan',$flag)->row();
 		echo json_encode($q);
 	}
 
 	public function peditPendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$this->input->post('oid'));
 		$edit = array(
 			'kode'            => strtoupper($this->input->post('nkode')),
@@ -203,7 +203,7 @@ class Master extends CI_Controller {
 	}
 
 	public function delPendidikan($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_pendidikan',$flag);
 	}
@@ -217,7 +217,7 @@ class Master extends CI_Controller {
 	}
 
 	public function cariEs2cari(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag         = array('id_es1'=>$this->input->post('fes1'));
 		$data['fes2'] = $this->Allcrud->getData('mr_eselon2',$flag);
 		$this->load->view('master/eselon/ajax/eselon2cari',$data);
@@ -228,14 +228,14 @@ class Master extends CI_Controller {
 	}
 
 	public function cariEs3edit(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag         = array('id_es2'=>$this->input->post('nes2'));
 		$data['nes3'] = $this->Allcrud->getData('mr_eselon3',$flag);
 		$this->load->view('master/eselon/ajax/eselon3edit',$data);
 	}
 
 	public function cariEs3cari(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag         = array('id_es2'=>$this->input->post('fes2'));
 		$data['fes3'] = $this->Allcrud->getData('mr_eselon3',$flag);
 		$this->load->view('master/eselon/ajax/eselon3cari',$data);
@@ -246,14 +246,14 @@ class Master extends CI_Controller {
 	}
 
 	public function cariEs4edit(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag         = array('id_es3'=>$this->input->post('nes3'));
 		$data['nes4'] = $this->Allcrud->getData('mr_eselon4',$flag);
 		$this->load->view('master/eselon/ajax/eselon4edit',$data);
 	}
 
 	public function cariEs4cari(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag         = array('id_es3'=>$this->input->post('fes3'));
 		$data['fes4'] = $this->Allcrud->getData('mr_eselon4',$flag);
 		$this->load->view('master/eselon/ajax/eselon4cari',$data);
@@ -264,7 +264,7 @@ class Master extends CI_Controller {
 	}
 
 	public function jurusan_pendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Jurusan Pendidikan';
 		$data['content'] = 'master/jur_pendidikan/data_jur_pendidikan';
 		$data['list']    = $this->Allcrud->listData('mr_jur_pendidikan');
@@ -272,13 +272,13 @@ class Master extends CI_Controller {
 	}
 
 	public function ajaxJurusan_pendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['list'] = $this->Allcrud->listData('mr_jur_pendidikan');
 		$this->load->view('master/jur_pendidikan/ajaxJurusan_pendidikan',$data);
 	}
 
 	public function addJurusan_pendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$add = array(
 			'kode'                => strtoupper($this->input->post('kode')),
 			'nama_jur_pendidikan' => modif_kata($this->input->post('jur_pendidikan'))
@@ -287,14 +287,14 @@ class Master extends CI_Controller {
 	}
 
 	public function editJurusan_pendidikan($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$id);
 		$q    = $this->Allcrud->getData('mr_jur_pendidikan',$flag)->row();
 		echo json_encode($q);
 	}
 
 	public function peditJurusan_pendidikan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$this->input->post('oid'));
 		$edit = array(
 			'kode'                => strtoupper($this->input->post('nkode')),
@@ -304,13 +304,13 @@ class Master extends CI_Controller {
 	}
 
 	public function delJurusan_pendidikan($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_jur_pendidikan',$flag);
 	}
 
 	public function status_nikah(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Status Pernikahan';
 		$data['content'] = 'master/pernikahan/data_nikah';
 		$data['list']    = $this->Allcrud->listData('mr_status_nikah');
@@ -318,13 +318,13 @@ class Master extends CI_Controller {
 	}
 
 	public function ajaxStatus_nikah(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['list'] = $this->Allcrud->listData('mr_status_nikah');
 		$this->load->view('master/pernikahan/ajaxNikah',$data);
 	}
 
 	public function addStatus_nikah(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$add = array(
 			'nama_status_nikah' => strtoupper($this->input->post('nikah'))
 		);
@@ -332,14 +332,14 @@ class Master extends CI_Controller {
 	}
 
 	public function editStatus_nikah($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$id);
 		$q    = $this->Allcrud->getData('mr_status_nikah',$flag)->row();
 		echo json_encode($q);
 	}
 
 	public function peditStatus_nikah(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$this->input->post('oid'));
 		$edit = array(
 			'nama_status_nikah' => strtoupper($this->input->post('nnikah'))
@@ -348,7 +348,7 @@ class Master extends CI_Controller {
 	}
 
 	public function delStatus_nikah($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_status_nikah',$flag);
 	}
@@ -366,7 +366,7 @@ class Master extends CI_Controller {
 	}
 
 	public function cariStruktur($id=NULL){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$key                  = $this->input->post("key");
 		$jml                  = $this->Mmaster->struktur(
 															NULL,
@@ -386,7 +386,7 @@ class Master extends CI_Controller {
 	}
 
 	public function cariGrade(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		if($kat = $this->input->post('kat') != NULL){
 			$flag = array ('kat_posisi'=>$this->input->post('kat'),'flag'=>1);
 		}else{
@@ -420,7 +420,7 @@ class Master extends CI_Controller {
 
 
 	public function grade($id_kat_posisi){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		if(!$this->session->userdata('login')){
 			redirect('admin/loginAdmin');
 		}
@@ -436,7 +436,7 @@ class Master extends CI_Controller {
 
 	public function addGrade()
 	{
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('posisi_class'=>$this->input->post('grade'));
 		$get_data = $this->Allcrud->getData('mr_posisi_class',$flag)->row();
 		if ($get_data != '') {
@@ -465,14 +465,14 @@ class Master extends CI_Controller {
 	}
 
 	public function editGrade($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$id);
 		$q = $this->Allcrud->getData('mr_posisi_class',$flag)->row();
 		echo json_encode($q);
 	}
 
 	public function peditGrade(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$this->input->post('oid'));
 		$edit = array(
 			'posisi_class' =>$this->input->post('ngrade'),
@@ -482,13 +482,13 @@ class Master extends CI_Controller {
 	}
 
 	public function delGrade($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_posisi_class',$flag);
 	}
 
 	public function aktivasi(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array ('id' => $this->input->post('id_grade'));
 		if($this->input->post('nilai') == 0){
 			$this->Allcrud->editData('mr_grade_range',array('flag'=>1),$flag);
@@ -504,70 +504,8 @@ class Master extends CI_Controller {
 		redirect('master/data_pegawai');
 	}
 
-	// public function refresh_data($id=NULL)
-	// {
-	// 	# code...
-	// 	$flag                 = array();
-
-	// 	$page                 = $this->Mmaster->dataUser($flag,NULL,NULL);
-	// 	$config['base_url']   = site_url().'/master/pegawai';
-	// 	$config['total_rows'] = $page->num_rows();
-	// 	$config['per_page']   = '10';
-	// 	$this->pagination->initialize($config);
-
-	// 	$data['halaman']      = $this->pagination->create_links();
-	// 	$data['list']         = $this->Mmaster->refresh_data($config['per_page'],$id);
-	// 	$this->load->view('master/pegawai/ajax_pegawai',$data);
-	// }
-
-	// public function search_pegawai($param=NULL)
-	// {
-	// 	# code...
-	// 	$data_sender  = $this->input->post('data_sender');
-	// 	$data_nip     = $data_sender['nip'];
-	// 	$data_nama    = $data_sender['nama'];
-	// 	$data_jabatan = $data_sender['jabatan'];
-	// 	$data_role    = $data_sender['role'];
-
-	// 	$data['list']  = $this->Mmaster->search_data_pegawai(
-	// 															$data_nip,
-	// 															$data_nama,
-	// 															$data_jabatan,
-	// 															$data_role
-	// 														);
-	// 	$this->load->view('master/pegawai/ajax_pegawai',$data);
-	// }
-
-	// public function cariPegawai(){
-	// 	$this->Allcrud->session_rule();
-	// 	$es1 = $this->input->post('fes1');
-	// 	$es2 = $this->input->post('fes2');
-	// 	$es3 = $this->input->post('fes3');
-	// 	$es4 = $this->input->post('fes4');
-	// 	$flag = array();
-	// 	// $gol = $this->input->post('gol');
-	// 	if($es4 != "kosong"){
-	// 		$flag = array('es4.id_es4'=>$es4);
-	// 	}
-
-	// 	else if($es3 != "kosong"){
-	// 		$flag = array('es3.id_es3'=>$es3);
-	// 	}
-
-	// 	else if($es2 != "kosong"){
-	// 		$flag = array('es2.id_es2'=>$es2);
-	// 	}
-
-	// 	else if($es1 != "kosong"){
-	// 		$flag = array('es1.id_es1'=>$es1);
-	// 	}
-	// 	$data['list']= $this->Mmaster->dataUser($flag);
-	// 	$data['es1']= $this->Allcrud->listData('mr_eselon1');
-	// 	$this->load->view('master/pegawai/cariPegawai',$data);
-	// }
-/******************************************************************************************************/
 	public function reRole(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id'=>$this->input->post('oid'));
 		$ubah = array ('id_role'=>$this->input->post('nRole'));
 		$this->Allcrud->editData('mr_pegawai',$ubah,$flag);
@@ -576,7 +514,7 @@ class Master extends CI_Controller {
 	public function tugas_belajar()
 	{
 		# code...
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Data Tugas Belajar';
 		$data['content'] = 'master/tugas_belajar/data_tugas_belajar';
 		$data['list']    = $this->Mmaster->get_data_tugas_belajar();
@@ -653,7 +591,7 @@ class Master extends CI_Controller {
 	}
 
 	public function edit_tugas_belajar($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$res = $this->Mmaster->get_tugas_belajar_id($id);
 		if ($res != 0) {
 			# code...
@@ -667,7 +605,7 @@ class Master extends CI_Controller {
 	}
 
 	public function del_tugas_belajar($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_tugas_belajar',$flag);
 	}
@@ -675,7 +613,7 @@ class Master extends CI_Controller {
 	public function tunjangan_profesi()
 	{
 		# code...
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']   = 'Data Tunjangan Profesi';
 		$data['content'] = 'master/tunjangan_profesi/data_tunjangan_profesi';
 		$data['list']    = $this->Mmaster->get_data_tunjangan_profesi();
@@ -685,7 +623,7 @@ class Master extends CI_Controller {
 	public function edit_tunjangan_profesi($id)
 	{
 		# code...
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$res = $this->Mmaster->get_data_tunjangan_profesi_id($id);
 		if ($res != 0) {
 			# code...
@@ -804,7 +742,7 @@ class Master extends CI_Controller {
 	public function del_tunjangan_profesi($id)
 	{
 		# code...
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$check_nip = $this->Mmaster->get_data_pegawai_nip($data_sender['nip']);
 		if ($check_nip != 0) {
 			# code...
@@ -843,7 +781,7 @@ class Master extends CI_Controller {
 	public function uraian_tugas()
 	{
 		# code...
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']        = 'Data Uraian Tugas';
 		$data['content']      = 'master/uraian_tugas/data_pegawai';
 		$flag                 = array();

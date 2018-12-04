@@ -1,4 +1,8 @@
 <?php
+/*
+write by Bryan Setyawan
+Create : 27/06/2016
+*/
 class Globalrules extends CI_Model
 {
 
@@ -10,10 +14,6 @@ class Globalrules extends CI_Model
 		$this->load->model ('master/Mmaster', '', TRUE);
 	}
 
-/*
-write by Bryan Setyawan
-last edited : 27/06/2016
-*/
 	public function session_rule()
 	{
 		if($this->session->userdata('login') == "")
@@ -22,6 +22,51 @@ last edited : 27/06/2016
 			redirect('admin/loginadmin');
 		}
 	}
+
+	public function notif_message()
+		{
+		$count_inbox = "";
+		$count_send  = "";
+		$id_penerima = $this->session->userdata('sesUser');
+		$sql_inbox = "SELECT DISTINCT count(a.id_pesan) as `row`
+				    FROM pesan a
+				    WHERE a.id_penerima = '$id_penerima'
+				    AND a.flag_read <> 1
+				    AND a.flag_delete_inbox <> 1";
+
+		$sql_send = "SELECT DISTINCT count(a.id_pesan) as `row`
+				    FROM pesan a
+				    WHERE a.id_pengirim = '$id_penerima'
+				    AND a.audit_pengguna = '$id_penerima'
+				    AND a.flag_delete_sent <> 1";
+
+		$query_inbox = $this->db->query($sql_inbox);
+		$query_send  = $this->db->query($sql_send);
+
+		if($query_inbox->num_rows() > 0)
+		{
+			$count_inbox = $query_inbox->result();
+			$count_inbox = $count_inbox[0]->row;
+		}
+		else
+		{
+			$count_inbox = 0;
+		}
+
+		if($query_send->num_rows() > 0)
+		{
+			$count_send = $query_send->result();
+			$count_send = $count_send[0]->row;
+		}
+		else
+		{
+			$count_send = 0;
+		}
+
+		$this->input->set_cookie("row_send", $count_send, 3600);
+		$this->input->set_cookie("row_inbox", $count_inbox, 3600);
+		return $count_inbox;
+	}	
 
 	public function push_notifikasi($data_sender,$flag)
 	{
@@ -232,28 +277,28 @@ last edited : 27/06/2016
 		$aspek_waktu       = "";
 		$tingkat_efisiensi = "";
 
-    if ($kegiatan == 0) {
-        // # code...
-        $aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*0*100;
-    }
-    else
-    {
-    	  $tingkat_efisiensi = $this->tingkat_efisiensi($target_waktu_bln,$realisasi_waktu);
-        if ($tingkat_efisiensi <= 24) {
-        	# code...
-        	//nilai baik
-          $aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
-        }
-        elseif ($tingkat_efisiensi > 24) {
-            	# code...
-        	//nilai cukup-buruk
-          $aspek_waktu = 76 - ((((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100) - 100);
-        }
-    }
+		if ($kegiatan == 0) {
+			// # code...
+			$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*0*100;
+		}
+		else
+		{
+			$tingkat_efisiensi = $this->tingkat_efisiensi($target_waktu_bln,$realisasi_waktu);
+			if ($tingkat_efisiensi <= 24) {
+				# code...
+				//nilai baik
+			$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
+			}
+			elseif ($tingkat_efisiensi > 24) {
+					# code...
+				//nilai cukup-buruk
+			$aspek_waktu = 76 - ((((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100) - 100);
+			}
+		}
 
-    return array(
-                  'aspek_waktu'       => $aspek_waktu,
-                  'tingkat_efisiensi' => $tingkat_efisiensi
+		return array(
+					'aspek_waktu'       => $aspek_waktu,
+					'tingkat_efisiensi' => $tingkat_efisiensi
                 );
 	}
 
@@ -270,19 +315,19 @@ last edited : 27/06/2016
 		}
 		else
 		{
-        if ($target_biaya != 0 && $realisasi_biaya != 0) {
-            # code...
-      	  $tingkat_efisiensi = $this->tingkat_efisiensi($target_biaya,$realisasi_biaya);
-          if ($tingkat_efisiensi <= 24) {
-          	# code...
-          	//nilai baik
-              $aspek_biaya = ((1.76 * $target_biaya - $realisasi_biaya)/$target_biaya)*100;
-          }
-          else {
-            // code...
-              $aspek_biaya = 76 - ((((1.76 * $target_biaya - $realisasi_biaya)/$target_biaya)*100) - 100);
-          }
-        }
+			if ($target_biaya != 0 && $realisasi_biaya != 0) {
+				# code...
+				$tingkat_efisiensi = $this->tingkat_efisiensi($target_biaya,$realisasi_biaya);
+				if ($tingkat_efisiensi <= 24) {
+					# code...
+					//nilai baik
+					$aspek_biaya = ((1.76 * $target_biaya - $realisasi_biaya)/$target_biaya)*100;
+				}
+				else {
+					// code...
+					$aspek_biaya = 76 - ((((1.76 * $target_biaya - $realisasi_biaya)/$target_biaya)*100) - 100);
+				}
+			}
 		}
 	}
 
@@ -431,7 +476,6 @@ last edited : 27/06/2016
 		}
 	}
 
-
 	public function list_bawahan($posisi,$parameter=NULL)
 	{
 		# code...
@@ -492,7 +536,6 @@ last edited : 27/06/2016
 
     	return $data;
 	}
-
 
 	public function data_alphabet($param)
 	{
@@ -626,10 +669,6 @@ last edited : 27/06/2016
 		return $value;
 	}
 
-/*
-write by Bryan Setyawan
-last edited : 25/06/2016
-*/
 	public function data_bulan()
 	{
 		$data_bulan = array
@@ -651,10 +690,6 @@ last edited : 25/06/2016
 		return $data_bulan;
 	}
 
-/*
-write by Bryan Setyawan
-last edited : 25/06/2016
-*/
 	public function set_bulan($bulan)
 	{
 		$data_bulan = $this->data_bulan();
@@ -689,176 +724,6 @@ last edited : 25/06/2016
 		return $i_am;
 	}	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-write by Bryan Setyawan
-last edited : 21/11/2016
-*/
-	public function load_template($content,$data_entities)
-	{
-		$loadv                = $this->load;
-		$maintemplate         = "";
-		$template_main        = "home/home_template";
-		if ($data_entities['menu_param'] == "off") {
-			# code...
-			$maintemplate['menu']         = "";
-			$maintemplate['menu_trigger'] = 'style="margin-left: 0px;"';
-		}
-		else if ($data_entities['menu_param'] == "1")
-		{
-			$uri_segment_1                = $this->uri->segments[1];
-			$uri_segment_2                = $this->uri->segments[2];
-			$menu 						  = "/".$uri_segment_1."/".$uri_segment_2."/";
-			$menutemplate['title']        = $this->get_data_menu_title($data_entities['menu_param']);
-			$menutemplate['data_segment'] = $menu;
-			$menutemplate['data']         = $this->get_data_menu($data_entities['menu_param']);
-			$maintemplate['menu']         = $loadv->view("home/menu_1",$menutemplate, true);
-			$maintemplate['menu_trigger'] = "";
-		}
-		$maintemplate['title']   = $data_entities['title'];
-		$maintemplate['subtitle']   = $data_entities['subtitle'];
-		$maintemplate['header']  = $loadv->view("home/header", NULL, true);
-		$maintemplate['content'] = $content;
-	 	$loadv->view($template_main, $maintemplate);
-	}
-
-/*
-write by Bryan Setyawan
-last edited : 15/11/2016
-*/
-	public function get_data_menu($id=NULL)
-	{
-		# code...
-		$sql = "SELECT a.*
-		FROM mn_menu a
-		WHERE a.id_parent = '$id'";
-		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-/*
-write by Bryan Setyawan
-last edited : 15/11/2016
-*/
-	public function get_data_menu_title($id=NULL)
-	{
-		# code...
-		$sql = "SELECT a.*
-		FROM mn_main_menu a
-		WHERE a.id = '$id'";
-		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-
-
-/*
-Last Edited : 28/07/2016
-By: Bryan Setyawan
-*/
-	public function set_captcha($value=NULL,$flag=NULL)
-	{
-		$cookies = get_cookie('oid');
-		if ($cookies == "" || $flag == 0)
-		{
-			$res             = $value;
-			$this->input->set_cookie("oid", $res, 10800);
-
-		}
-	}
-
-/*
-Last Edited : 28/07/2016
-By: Bryan Setyawan
-*/
-	public function notif_message()
-		{
-		$count_inbox = "";
-		$count_send  = "";
-		$id_penerima = $this->session->userdata('sesUser');
-		$sql_inbox = "SELECT DISTINCT count(a.id_pesan) as `row`
-				    FROM pesan a
-				    WHERE a.id_penerima = '$id_penerima'
-				    AND a.flag_read <> 1
-				    AND a.flag_delete_inbox <> 1";
-
-		$sql_send = "SELECT DISTINCT count(a.id_pesan) as `row`
-				    FROM pesan a
-				    WHERE a.id_pengirim = '$id_penerima'
-				    AND a.audit_pengguna = '$id_penerima'
-				    AND a.flag_delete_sent <> 1";
-
-		$query_inbox = $this->db->query($sql_inbox);
-		$query_send  = $this->db->query($sql_send);
-
-		if($query_inbox->num_rows() > 0)
-		{
-			$count_inbox = $query_inbox->result();
-			$count_inbox = $count_inbox[0]->row;
-		}
-		else
-		{
-			$count_inbox = 0;
-		}
-
-		if($query_send->num_rows() > 0)
-		{
-			$count_send = $query_send->result();
-			$count_send = $count_send[0]->row;
-		}
-		else
-		{
-			$count_send = 0;
-		}
-
-		$this->input->set_cookie("row_send", $count_send, 3600);
-		$this->input->set_cookie("row_inbox", $count_inbox, 3600);
-		return $count_inbox;
-	}
-
-/*
-Last Edited : 12/07/2016
-By: Bryan Setyawan
-*/
 	public function randomCode($length)
 	{
 	    $retVal = "";
@@ -877,22 +742,6 @@ By: Bryan Setyawan
 	        $retVal .= $nextChar;
 	    }
 	    return $retVal;
-	}
-
-/*
-Last Edited : 12/07/2016
-By: Bryan Setyawan
-*/
-	public function set_captcha_number($flag=NULL)
-	{
-		$cookies = get_cookie('oid');
-		$res = "";
-		if ($cookies == "" || $flag == 0)
-		{
-			$res             = $this->randomCode(6);
-			$this->input->set_cookie("oid", $res, 10800);
-		}
-		return $res;
 	}
 
 	public function counter_datatable($arg,$table_destiny,$key_from,$key_to,$param_return,$param=NULL)
@@ -920,5 +769,37 @@ By: Bryan Setyawan
 		}
 		
 		return $store;
-	}
+	}	
+
+/*
+write by Bryan Setyawan
+last edited : 21/11/2016
+*/
+	// public function load_template($content,$data_entities)
+	// {
+	// 	$loadv                = $this->load;
+	// 	$maintemplate         = "";
+	// 	$template_main        = "home/home_template";
+	// 	if ($data_entities['menu_param'] == "off") {
+	// 		# code...
+	// 		$maintemplate['menu']         = "";
+	// 		$maintemplate['menu_trigger'] = 'style="margin-left: 0px;"';
+	// 	}
+	// 	else if ($data_entities['menu_param'] == "1")
+	// 	{
+	// 		$uri_segment_1                = $this->uri->segments[1];
+	// 		$uri_segment_2                = $this->uri->segments[2];
+	// 		$menu 						  = "/".$uri_segment_1."/".$uri_segment_2."/";
+	// 		$menutemplate['title']        = $this->get_data_menu_title($data_entities['menu_param']);
+	// 		$menutemplate['data_segment'] = $menu;
+	// 		$menutemplate['data']         = $this->get_data_menu($data_entities['menu_param']);
+	// 		$maintemplate['menu']         = $loadv->view("home/menu_1",$menutemplate, true);
+	// 		$maintemplate['menu_trigger'] = "";
+	// 	}
+	// 	$maintemplate['title']   = $data_entities['title'];
+	// 	$maintemplate['subtitle']   = $data_entities['subtitle'];
+	// 	$maintemplate['header']  = $loadv->view("home/header", NULL, true);
+	// 	$maintemplate['content'] = $content;
+	//  	$loadv->view($template_main, $maintemplate);
+	// }
 }

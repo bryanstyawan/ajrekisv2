@@ -10,7 +10,7 @@ class Data_pegawai extends CI_Controller {
 
 	public function index()
 	{
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']        = 'Data Pegawai';
 		$data['content']      = 'master/pegawai/data_pegawai';
 		$flag                 = array();
@@ -39,7 +39,7 @@ class Data_pegawai extends CI_Controller {
 	}
 
 	public function ubah_pegawai($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$data['title']             = '<b>Pegawai</b> <i class="fa fa-angle-double-right"></i> Ubah Pegawai';
 		$data['content']           = 'master/pegawai/editPegawai';
 		$data['flag_crud']         = 'edit';
@@ -168,7 +168,7 @@ class Data_pegawai extends CI_Controller {
 	}
 
 	public function ajaxPegawai(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag          = array('es1.id_es1'=>'1');
 		$data['list']  = $this->Mmaster->dataUser($flag,NULL,NULL);
 		$data['es1']   = $this->Allcrud->listData('mr_eselon1');
@@ -177,13 +177,13 @@ class Data_pegawai extends CI_Controller {
 	}
 
 	public function delPegawai($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$flag = array('id' => $id);
 		$this->Allcrud->delData('mr_pegawai',$flag);
 	}
 
 	public function delete_masa_kerja($id){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		$get_masa_kerja = $this->Mmaster->get_masa_kerja_id($id);
 		$id_pegawai     = "";
 		if ($get_masa_kerja != 0) {
@@ -312,7 +312,7 @@ class Data_pegawai extends CI_Controller {
 	}
 
 	public function cariJabatan(){
-		$this->Allcrud->session_rule();
+		$this->Globalrules->session_rule();
 		if($this->input->post('es4') != NULL || $this->input->post('nes4') != NULL){
 			if($this->input->post('es4') == NULL){
 				$flag = array(

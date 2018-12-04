@@ -16,19 +16,15 @@ class Skp extends CI_Controller {
 
 	public function index()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		redirect('dashboard/home');
 	}
 
 	public function skp_pegawai()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Setup SKP';
 		$data['subtitle'] = '';
@@ -308,10 +304,8 @@ class Skp extends CI_Controller {
 	public function approval_target_skp()
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
 		$data['subtitle'] = '';
 		$data['bawahan']      = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
@@ -324,10 +318,8 @@ class Skp extends CI_Controller {
 	public function skp_member_detail($id)
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
 		$data['subtitle']    = '';
 		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),11);
@@ -599,10 +591,8 @@ class Skp extends CI_Controller {
 	public function penilaian_skp($param=NULL)
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$id               = "";
 		$data['penilai']  = '';
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian SKP';
@@ -665,10 +655,8 @@ class Skp extends CI_Controller {
 	public function penilaian_prilaku()
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'));
 		$data['content']      = 'skp/skp_penilaian_prilaku';
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku';
@@ -825,10 +813,8 @@ class Skp extends CI_Controller {
 	public function master_skp()
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data_sender = array
 						(
 							'eselon1' => $this->session->userdata('sesEs1'),
@@ -891,10 +877,8 @@ class Skp extends CI_Controller {
 	public function master_skp_posisi($id)
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Master SKP - Detail';
 		$data['subtitle'] = '';
 		$data['list']     = $this->mskp->get_master_skp_id($id,'posisi');
@@ -998,7 +982,6 @@ class Skp extends CI_Controller {
 		{
 			return false;
 		}
-
 
 		$config['upload_path']        = './public/excel/';
 		$config['allowed_types']      = 'xls|xlsx';
@@ -1159,10 +1142,8 @@ class Skp extends CI_Controller {
 	public function cetak_skp($param=NULL)
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'));
 		$data['penilai']  = '';
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
@@ -1174,10 +1155,7 @@ class Skp extends CI_Controller {
 	{
 		# code...
 		$data                = $this->Globalrules->data_summary_skp_pegawai($id);
-		// echo '<pre>';
-		// print_r($data);
-		// echo '</pre>';
-		// die();
+
 		$evaluator                   = $data['evaluator'];
 		$total_realisasi_skp         = "";
 		$nilai_capaian_skp           = "";
@@ -1702,7 +1680,6 @@ class Skp extends CI_Controller {
 			$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet(14).$counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet(14).$counter_1)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		}
-
 
 /*******************************************************************************************************************************************************/
 		$this->excel->createSheet(2);

@@ -13,14 +13,14 @@ class Transaksi extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		redirect('dashboard/home');
 	}
 
 	public function home()
 	{
 		$this->Globalrules->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
 		$flag                         = array('tahun'      =>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));
@@ -59,7 +59,7 @@ class Transaksi extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		$pegawai                 = "";if ($id_pegawai != NULL)$pegawai = $this->Globalrules->get_info_pegawai($id_pegawai,'id');
 		$data['title']           = 'Transaksi';
 		$data['content']         = 'transaksi/trx/data_kinerja_anggota';
@@ -580,7 +580,7 @@ class Transaksi extends CI_Controller {
 			# code...
 			if ($get_data_transact[0]->status_pekerjaan != 1) {
 				# code...
-				$this->Allcrud->notif_message();
+				$this->Globalrules->notif_message();
 				$data['title']     = 'Transaksi';
 				$data['content']   = 'transaksi/trx/data_edit_pekerjaan';
 				$data['urtug']     = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'approve',1);
@@ -928,7 +928,7 @@ class Transaksi extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		if ($param == 'add-tugas-tambahan') {
 			# code...
 			$data['title']    = 'Tambah Tugas Tambahan';
@@ -1143,7 +1143,7 @@ class Transaksi extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		if ($iduser != NULL) {
 			# code...
 			$data['infoPegawai']       = $this->Globalrules->get_info_pegawai($iduser,'id');

@@ -10,7 +10,7 @@ class Data_akademik extends CI_Controller {
 	
 	public function index()
 	{
-		$this->Allcrud->session_rule();						
+		$this->Globalrules->session_rule();						
 		$data['title']   = ' Data Akademik';
 		$data['content'] = 'master/akademik/data_akademik';
 		$data['list']    = $this->Allcrud->listData('mr_pendidikan');

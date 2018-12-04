@@ -10,7 +10,7 @@ class Jabatan_fungsional_umum extends CI_Controller {
 	
 	public function index()
 	{
-		$this->Allcrud->session_rule();						
+		$this->Globalrules->session_rule();						
 		$data['title']   = 'Master Jabatan Fungsional Umum';
 		$data['content'] = 'master/jfu/index';
 		$data['list']    = $this->res_data();
@@ -230,7 +230,7 @@ class Jabatan_fungsional_umum extends CI_Controller {
 	public function add_data()
 	{
 		# code...
-		$this->Allcrud->session_rule();						
+		$this->Globalrules->session_rule();						
 		$data['title']        = 'Master Jabatan Fungsional Umum >> Tambah Data';
 		$data['content']      = 'master/jfu/add';
 		$data['flag_crud']    = 'create';
@@ -243,7 +243,7 @@ class Jabatan_fungsional_umum extends CI_Controller {
 	public function detail($id)
 	{
 		# code...
-		$this->Allcrud->session_rule();						
+		$this->Globalrules->session_rule();						
 		$data['title']        = 'Master Jabatan Fungsional Umum >> Tambah Data';
 		$data['content']      = 'master/jfu/add';
 		$data['flag_crud']    = 'update';

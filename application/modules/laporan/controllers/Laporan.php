@@ -19,20 +19,16 @@ class Laporan extends CI_Controller {
 
 	public function index()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		redirect('dashboard/home');
 	}
 
 	public function import_tunkir_produktivitas_disiplin()
 	{
 		# code...
-			if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']                = 'Import Tunjangan Kinerja Aspek Produktivitas dan Aspek Disiplin';
 		$data['subtitle']             = '';
 		$data['bulan']				  = $this->Globalrules->data_bulan();
@@ -49,15 +45,12 @@ class Laporan extends CI_Controller {
 			return false;
 		}
 
-
 		$config['upload_path']        = './public/excel/';
 		$config['allowed_types']      = 'xls|xlsx';
 		$config['max_size']           = 20000;
 
         $this->load->library('upload');
         $this->upload->initialize($config);
-
-        // print_r($_FILES['userfile']);die();
 
         if( $this->upload->do_upload('file') )
         {
@@ -148,7 +141,6 @@ class Laporan extends CI_Controller {
 							'text'   => 'Unggah data berhasil'
 						);
 			echo json_encode($res);
-
 			// $this->show_data_displin($es2,$bulan,$tahun);
         }
         else
@@ -236,15 +228,15 @@ class Laporan extends CI_Controller {
 
 	public function rekap_kinerja()
 	{
-		$this->Allcrud->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']      = 'Rekapitulasi Data Kinerja';
 		$data['content']    = 'laporan/kinerja/data_kinerja';
-		$data['bulan_list'] = $this->Allcrud->data_bulan();
-		$data['list']       =  '';
-		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']		  = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
-		$data['role']         = $this->Allcrud->listData('user_role');
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
+		$data['list']       = '';
+		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
+		$data['es2']        = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
+		$data['role']       = $this->Allcrud->listData('user_role');
 		// echo "<pre>";print_r($data['list']);die();
 		$this->load->view('templateAdmin',$data);
 	}
@@ -349,138 +341,16 @@ class Laporan extends CI_Controller {
 	public function rekap_tunkir_produktivitas_disiplin()
 	{
 		# code...
-		$this->Allcrud->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$data['title']      = 'Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin';
 		$data['content']    = 'laporan/tunkir_produktivitas_disiplin/data_tunkir';
-		$data['bulan_list'] = $this->Allcrud->data_bulan();
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
 		$data['list']       =  '';
 		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
 		$data['es2']        = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
 		$data['role']       = $this->Allcrud->listData('user_role');
 		$this->load->view('templateAdmin',$data);
-	}
-
-
-
-
-
-
-
-
-
-/*
-Create by : Bryan Setyawan Putra
-Last edit : 26/07/2016
-
-	public function get_data_report(
-										$flag            =NULL,
-										$bulan           =NULL,
-										$tahun           =NULL,
-										$eselon1         =NULL,
-										$eselon2         =NULL,
-										$eselon3         =NULL,
-										$eselon4         =NULL,
-										$format_date_sql =NULL
-									)
-	{
-		# code...
-		$this->Allcrud->notif_message();
-		$data         = $this->mlaporan->rekap_kinerja(
-														$flag,
-														$bulan,
-														$tahun,
-														$eselon1,
-														$eselon2,
-														$eselon3,
-														$eselon4
-													  );
-
-		if ($data != 0) {
-			# code...
-			for($i = 0; $i < count($data); $i++)
-			{
-				$temp                  = $this->mlaporan->rekap_kinerja_wrap($data[$i]->id_pegawai);
-				$temp_disetujui        = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'1');
-				$temp_ditolak          = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'2');
-				$temp_revisi           = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'3');
-				$temp_belum_diperiksa  = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'0');
-
-				$temp_banding          = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'6');
-				$temp_banding_ditolak  = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'7');
-				$temp_banding_diterima = $this->mlaporan->rekap_kinerja_stat($data[$i]->id_pegawai,'8');
-
-				if ($temp != 0) {
-					# code...
-					$data[$i]->jam_kerja        = ceil($temp[0]->jam_kerja);
-					$data[$i]->menit_efektif    = ceil($temp[0]->jam_kerja / 6600);
-					$data[$i]->tunjangan        = ceil($temp[0]->jam_kerja / 6600 * 0.5 * $data[$i]->tunjangan);
-					$data[$i]->tgl_mulai        = $temp[0]->tgl_mulai;
-					$data[$i]->jam_mulai        = $temp[0]->jam_mulai;
-					$data[$i]->jam_selesai      = $temp[0]->jam_selesai;
-					$data[$i]->nama_pekerjaan   = $temp[0]->nama_pekerjaan;
-					$data[$i]->output_pekerjaan = $temp[0]->output_pekerjaan;
-				}
-				else
-				{
-					$data[$i]->jam_kerja        = "0";
-					$data[$i]->menit_efektif    = "0";
-					$data[$i]->tunjangan        = "0";
-					$data[$i]->tgl_mulai        = "-";
-					$data[$i]->jam_mulai        = "-";
-					$data[$i]->jam_selesai      = "-";
-					$data[$i]->nama_pekerjaan   = "-";
-					$data[$i]->output_pekerjaan = "-";
-				}
-
-				if ($temp_disetujui != 0) {
-					# code...
-					$data[$i]->kerja_disetujui     = $temp_disetujui[0]->data_stat;
-				}
-				else $data[$i]->kerja_disetujui     = "0";
-
-				if ($temp_ditolak != 0) {
-					# code...
-					$data[$i]->kerja_ditolak     = $temp_ditolak[0]->data_stat;
-				}
-				else $data[$i]->kerja_ditolak     = "0";
-
-				if ($temp_revisi != 0) {
-					# code...
-					$data[$i]->kerja_revisi     = $temp_revisi[0]->data_stat;
-				}
-				else $data[$i]->kerja_revisi     = "0";
-
-				if ($temp_belum_diperiksa != 0) {
-					# code...
-					$data[$i]->kerja_belum_diperiksa     = $temp_belum_diperiksa[0]->data_stat;
-				}
-				else $data[$i]->kerja_belum_diperiksa     = "0";
-
-				if ($temp_banding != 0) {
-					# code...
-					$data[$i]->banding     = $temp_banding[0]->data_stat;
-				}
-				else $data[$i]->banding     = "0";
-
-				if ($temp_banding_ditolak != 0) {
-					# code...
-					$data[$i]->banding_ditolak     = $temp_banding_ditolak[0]->data_stat;
-				}
-				else $data[$i]->banding_ditolak     = "0";
-
-				if ($temp_banding_diterima != 0) {
-					# code...
-					$data[$i]->banding_disetujui     = $temp_banding_diterima[0]->data_stat;
-				}
-				else $data[$i]->banding_disetujui     = "0";
-
-
-
-			}
-		}
-
-		return $data;
 	}
 
 /*
@@ -491,7 +361,7 @@ Last edit : 27/07/2016
 	{
 		# code...
 		$data = "";
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		if ($flag != "ajax") {
 			# code...
 			$data['data_eselon1']         = $this->mlaporan->get_eselon('1');
@@ -511,16 +381,15 @@ Last edit : 27/07/2016
 Create by : Bryan Setyawan Putra
 Last edit : 22/07/2016
 */
-//		print_r($data['eselon']['data_eselon1']);die();
 	public function rekap_banding()
 	{
-		$this->Allcrud->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag               = array();
 		$data['eselon']     = $this->get_data_eselon();
 		$data['title']      = 'Rekapitulasi Data Banding';
 		$data['content']    = 'laporan/banding/data_banding';
-		$data['bulan_list'] = $this->Allcrud->data_bulan();
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
 		$data['list']       = $this->get_data_report();
 		$this->load->view('templateAdmin',$data);
 	}
@@ -531,13 +400,13 @@ Last edit : 13/07/2016
 */
 	public function rekap_tunjangan()
 	{
-		$this->Allcrud->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag               = array();
 		$data['eselon']     = $this->get_data_eselon();
 		$data['title']      = 'Rekapitulasi Tunjangan Kinerja';
 		$data['content']    = 'laporan/tunjangan/data_tunjangan';
-		$data['bulan_list'] = $this->Allcrud->data_bulan();
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
 		$data['list']    = $this->get_data_report();
 		$this->load->view('templateAdmin',$data);
 	}
@@ -548,13 +417,13 @@ Last edit : 13/07/2016
 */
 	public function rekap_keberatan()
 	{
-		$this->Allcrud->session_rule();
-		$this->Allcrud->notif_message();
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
 		$flag               = array();
 		$data['eselon']     = $this->get_data_eselon();
 		$data['title']      = 'Rekapitulasi Keberatan';
 		$data['content']    = 'laporan/keberatan/data_keberatan';
-		$data['bulan_list'] = $this->Allcrud->data_bulan();
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
 		$data['list']       = $this->get_data_report();
 		$this->load->view('templateAdmin',$data);
 	}
@@ -565,7 +434,7 @@ Last edit : 13/07/2016
 */
 	public function preview_data_report()
 	{
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		$data_sender     = $this->input->post('data_sender');
 		$format_date_sql = $data_sender['tahun']."-".$data_sender['bulan']."-01";
 
@@ -590,7 +459,7 @@ Last edit : 28/07/2016
 	public function get_data_eselon_by()
 	{
 		# code...
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		$data_sender = $this->input->post('data_sender');
 		$type        = $this->input->post('type');
 
@@ -598,7 +467,6 @@ Last edit : 28/07/2016
 
 		echo json_encode($res);
 	}
-
 /*
 Create by : Bryan Setyawan Putra
 Last edit : 27/07/2016
@@ -612,7 +480,7 @@ Last edit : 27/07/2016
 											$eselon4 =NULL
 										)
 	{
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 
 		if ($bulan == "-")$bulan = "";
 		if ($tahun == "-")$tahun = "";
@@ -760,7 +628,7 @@ Last edit : 25/07/2016
 										)
 	{
 		# code...
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		if ($bulan == "-")$bulan = "";
 		if ($tahun == "-")$tahun = "";
 		if ($eselon1 == "-")$eselon1 = "";
@@ -820,7 +688,6 @@ Last edit : 25/07/2016
 		$this->excel->getActiveSheet()->getStyle('B8:J8')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 		$this->excel->getActiveSheet()->getStyle('B8:J8')->getAlignment()->setWraptext(true);
 		$this->excel->getActiveSheet()->getStyle('B8:J8')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-//		print_r($this->excel->getActiveSheet());die();
 
 		$this->excel->getActiveSheet()->mergeCells('B3:J3');
 		$this->excel->getActiveSheet()->getStyle('B3')->getFont()->setSize(22);
@@ -906,7 +773,7 @@ Last edit : 26/07/2016
 									)
 	{
 		# code...
-		$this->Allcrud->notif_message();
+		$this->Globalrules->notif_message();
 		if ($bulan == "-")$bulan = "";
 		if ($tahun == "-")$tahun = "";
 		if ($eselon1 == "-")$eselon1 = "";

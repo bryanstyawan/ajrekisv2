@@ -10,7 +10,7 @@ class Data_eselon4 extends CI_Controller {
 	
 	public function index()
 	{
-		$this->Allcrud->session_rule();								
+		$this->Globalrules->session_rule();								
 		$data['title']      = '<b>Struktur Organisasi</b> <i class="fa fa-angle-double-right"></i> Data Eselon 4';
 		$data['content']    = 'master/eselon/data_eselon4';
 		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
@@ -22,14 +22,14 @@ class Data_eselon4 extends CI_Controller {
 	}
 
 	public function cariEs4(){
-		$this->Allcrud->session_rule();							
+		$this->Globalrules->session_rule();							
 		$flag        = array('id_es3'=>$this->input->post('es3'));
 		$data['es4'] = $this->Allcrud->getData('mr_eselon4',$flag);
 		$this->load->view('master/eselon/ajax/eselon4',$data);
 	}
 
 	public function addEselon4(){
-		$this->Allcrud->session_rule();								
+		$this->Globalrules->session_rule();								
 		$add = array(
 			'id_es1'       => $this->input->post('es1'),						
 			'id_es2'       => $this->input->post('es2'),			
@@ -47,14 +47,14 @@ class Data_eselon4 extends CI_Controller {
 	}
 	
 	public function editEselon4($id){
-		$this->Allcrud->session_rule();							
+		$this->Globalrules->session_rule();							
 		$flag = array('id_es4'=>$id);
 		$q    = $this->Mmaster->getEs4($flag)->row();
 		echo json_encode($q);
 	}
 
 	public function peditEselon4(){
-		$this->Allcrud->session_rule();							
+		$this->Globalrules->session_rule();							
 		$flag = array('id_es4'=>$this->input->post('oid'));
 		$edit = array(
 			'id_es3'       => $this->input->post('nes3'),
@@ -71,7 +71,7 @@ class Data_eselon4 extends CI_Controller {
 	}
 
 	public function delEselon4($id){
-		$this->Allcrud->session_rule();							
+		$this->Globalrules->session_rule();							
 		$flag        = array('id_es4' => $id);
 		$res_data    = $this->Allcrud->delData('mr_eselon4',$flag);
 		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 4 telah berhasil dihapus.');
@@ -84,7 +84,7 @@ class Data_eselon4 extends CI_Controller {
 	}	
 
 	public function ajaxEselon4(){
-		$this->Allcrud->session_rule();								
+		$this->Globalrules->session_rule();								
 		$data['list']       = $this->Mmaster->eselon4();
 		$data['list_final'] = $this->Globalrules->counter_datatable($data['list'],'mr_pegawai','id_es4','es4','counter_data');
 		$this->load->view('master/eselon/ajaxEselon4',$data);
@@ -93,7 +93,7 @@ class Data_eselon4 extends CI_Controller {
 	public function cariEs4_filter($param=NULL,$param1=NULL)
 	{
 		# code...
-		$this->Allcrud->session_rule();								
+		$this->Globalrules->session_rule();								
 		$flag                    = array('id_es3'=>$this->input->post('select_eselon_3'));
 		$data['select_eselon_4'] = $this->Allcrud->getData('mr_eselon4',$flag);
 		$data['param']           = $param;		
@@ -102,7 +102,7 @@ class Data_eselon4 extends CI_Controller {
 	}
 
 	public function formEselon4(){
-		$this->Allcrud->session_rule();							
+		$this->Globalrules->session_rule();							
 		$flag = array('id_es3'=>$this->input->post('nes3'));
 		$data['es4']= $this->Allcrud->getData('mr_eselon4',$flag);
 		$this->load->view('master/pegawai/eselon4',$data);

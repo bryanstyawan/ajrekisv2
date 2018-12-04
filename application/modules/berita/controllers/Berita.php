@@ -13,7 +13,7 @@ class Berita extends CI_Controller {
 		if(!$this->session->userdata('login')){
 			redirect('admin/loginadmin');
 		}
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->notif_message();		
 		redirect('dashboard/home');
 	}
 
@@ -22,7 +22,7 @@ class Berita extends CI_Controller {
 		if(!$this->session->userdata('login')){
 			redirect('admin/loginadmin');
 		}
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->notif_message();		
 		$data['title']	= 'berita';
 		$data['content']= 'berita/data_berita';
 		$data['list']	= $this->Allcrud->listdata('berita');

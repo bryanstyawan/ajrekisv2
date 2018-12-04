@@ -1,4 +1,12 @@
 v2.0.0-Alpha    
+2018-12-
+==========
+New:
+Improved:
+- Pembenahan session_rule dan notif_message dari allcrud ke Globalrules, implementasi ke semua controller
+Fixed:
+
+v2.0.0-Alpha    
 2018-12-03
 ==========
 New:
