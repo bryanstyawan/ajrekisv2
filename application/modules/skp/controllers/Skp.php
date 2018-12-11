@@ -852,15 +852,19 @@ class Skp extends CI_Controller {
 	public function get_data_master_skp($data_sender)
 	{
 		# code...
-		$data['list']         = $this->Mmaster->get_struktur_organisasi($data_sender);
+		$data['list']         = $this->Mmaster->get_struktur_organisasi($data_sender,1);
 		if ($data['list'] != 0) {
 			# code...
+			$xx = 0;
+			$data['data_counter']['ready'] = 0;			
 			for ($i=0; $i < count($data['list']); $i++) {
 				# code...
 				$get_summary_urtug = $this->mskp->get_summary_master_skp($data['list'][$i]->id);
 				if ($get_summary_urtug != 0) {
 					# code...
-					$data['list'][$i]->is_master_skp = 'ready';
+					$xx++;
+					$data['data_counter']['ready']      = $data['data_counter']['ready'] + 1;
+					$data['list'][$i]->is_master_skp    = 'ready';
 					$data['list'][$i]->count_master_skp = $get_summary_urtug;
 				}
 				else
@@ -869,6 +873,8 @@ class Skp extends CI_Controller {
 					$data['list'][$i]->count_master_skp = 0;
 				}
 			}
+
+			$data['data_counter']['ready'] = $xx;			
 		}
 
 		return $data;
@@ -881,11 +887,12 @@ class Skp extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Master SKP - Detail';
 		$data['subtitle'] = '';
+		$data['info']     = $this->Allcrud->getData('mr_posisi',array('id' => $id))->result_array();
 		$data['list']     = $this->mskp->get_master_skp_id($id,'posisi');
 		$data['content']  = 'skp/skp_master_posisi';
 		$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
 		$data['jenis']    = $this->Allcrud->listData('mr_skp_jenis');
-		$data['oid'] 	  = $id;
+		$data['oid']      = $id;
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -1039,7 +1046,7 @@ class Skp extends CI_Controller {
 									(
 										'posisi'     => $id,
 										'kegiatan'   => $data['values'][$i]['B'],
-										'keterangan' => $data['values'][$i]['C'],
+										// 'keterangan' => $data['values'][$i]['C'],
 										'status'     => 1
 								);
 				if ($data['values'][$i]['A'] == '+') {

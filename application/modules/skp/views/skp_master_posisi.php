@@ -73,6 +73,18 @@
         <div class="box-header">
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nama Posisi</label>
+                            <input class="form-control" disabled="disabled" value="<?=$info[0]['nama_posisi'];?>">
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <hr>
+
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="col-lg-10">
                         <p>Pastikan untuk melakukan unduh terlebih dahulu untuk mendapatkan format yang akan digunakan untuk unggah data. <br/>                        
                     </div>

@@ -1,9 +1,22 @@
 v2.0.0-Alpha    
-2018-12-
+2018-12-11
 ==========
 New:
+- Penambahan progres bar untuk mengetahui statistik skp yang tersedia di master skp [Jabatan struktural]
+- Penambahan nama posisi di master skp [Jabatan struktural]
+- Penambahan Informasi pegawai di penilaian skp bulanan
+Improved:
+Fixed:
+
+
+v2.0.0-Alpha    
+2018-12-6
+==========
+New:
+- layout dasar grafik di penilaian skp bulanan
 Improved:
 - Pembenahan session_rule dan notif_message dari allcrud ke Globalrules, implementasi ke semua controller
+- master skp [jabatan struktural] sekarang hanya menampilkan data struktural saja
 Fixed:
 
 v2.0.0-Alpha    

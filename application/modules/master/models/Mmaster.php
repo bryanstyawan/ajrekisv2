@@ -480,7 +480,7 @@ class Mmaster extends CI_Model {
 	}
 
 
-	public function get_struktur_organisasi($param)
+	public function get_struktur_organisasi($param,$arg=NULL)
 	{
 		# code...
 
@@ -488,6 +488,14 @@ class Mmaster extends CI_Model {
 		$sql_2 = "";
 		$sql_3 = "";
 		$sql_4 = "";
+		$sql_5 = "";
+
+		if ($arg == NULL) {
+			# code...
+			$sql_5 = "";
+		}
+		else $sql_5 = "AND b.id = '".$arg."'";		
+
 
 		if ($param['eselon1'] == '') {
 			# code...
@@ -539,6 +547,7 @@ class Mmaster extends CI_Model {
 				".$sql_2."
 				".$sql_3."
 				".$sql_4."
+				".$sql_5."
 				";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);

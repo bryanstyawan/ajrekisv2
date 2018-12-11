@@ -489,11 +489,55 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
         })
     }    
 
-    function view_option(arg) {
-        $("#loadprosess").modal('show');  
-        $("#main-dashboard").hide();
-        $('#member_section_area').css({"display":""});
-        $("#loadprosess").modal('hide');    
-        $("#member_section_oid").val(arg);
+    function view_option(arg) 
+    {
+        if(arg == 'main')
+        {
+            $("#loadprosess").modal('show');  
+            $("#member_section_area").hide();                
+            $("#main-dashboard").show();  
+            $("#loadprosess").modal('hide');                        
+        }
+        else
+        {
+            $.ajax({
+                url :"<?php echo site_url()?>laporan/statistik/get_statistik/"+arg,
+                type:"post",
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                },
+                success:function(msg){
+                    var obj = jQuery.parseJSON (msg);
+                    console.log(obj.data.infoPegawai[0]);
+                    if (obj.status == 1)
+                    {
+                        $("#main-dashboard").hide();
+                        $('#member_section_area').css({"display":""});
+                        $("#loadprosess").modal('hide');    
+                        $("#member_section_oid").val(arg);
+                        $("#f_name").val(obj.data.infoPegawai[0].nama_pegawai);
+                        $("#f_name_es1").val(obj.data.infoPegawai[0].nama_eselon1);
+                        $("#f_name_es2").val(obj.data.infoPegawai[0].nama_eselon2);
+                        $("#f_name_es3").val(obj.data.infoPegawai[0].nama_eselon3);
+                        $("#f_name_es4").val(obj.data.infoPegawai[0].nama_eselon4);
+                        $("#f_nip").val(obj.data.infoPegawai[0].nip);                                                                                                    
+                    }
+                    else
+                    {
+                        Lobibox.notify('success', {
+                            msg: obj.text
+                            });
+                        setTimeout(function(){
+                            $("#loadprosess").modal('hide');
+                        }, 5000);
+                    }
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
+                }
+            })
+        }
+
     }    
 </script>

@@ -145,6 +145,23 @@ isset($class_posisi);
   	<div class="box">
     	<div class="box-header">
     		<div class="box-body" id="isi">
+				<div class="col-lg-12">
+					<div class="col-lg-6">
+						<span class="col-lg-12">Total Jabatan Strukral : <span id="span_struktural"><?=count($list);?></span></span>
+						<span class="col-lg-12">Total SKP yang telah tersedia : <span id="span_counter_ready"><?=$data_counter['ready'];?></span></span>						
+					</div>
+					<div class="col-md-6">
+						<!-- /.progress-group -->
+						<div class="progress-group">
+							<span class="progress-text">Progress SKP</span>
+							<span class="progress-number"><b id="progress_bar_persentase"><?=round(($data_counter['ready']/count($list)*100));?></b>/100</span>
+
+							<div class="progress sm">
+							<div class="progress-bar progress-bar-red" id="progress_bar_style" style="width: <?=round(($data_counter['ready']/count($list)*100));?>%"></div>
+							</div>
+						</div>
+					</div>					
+				</div>
 		    	<div id="halaman_header" class="pull-right" style="margin-top: 40px;margin-left: 76%;">
 		    	</div>
 		        <table id="example1" class="table table-bordered table-striped" style="font-size:12px;">
@@ -590,7 +607,7 @@ $(document).ready(function(){
 						});
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
-						}, 1000);									
+						}, 500);									
 					}
 				})
 
@@ -655,7 +672,7 @@ $(document).ready(function(){
 						});
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
-						}, 1000);									
+						}, 500);									
 					}
 				})
 			}

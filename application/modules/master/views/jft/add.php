@@ -1,4 +1,3 @@
-
 <?php 
 $data_value = json_encode($class_posisi);
 ?>
@@ -121,7 +120,7 @@ $data_value = json_encode($class_posisi);
                                     <td><span><?=$list_detail[$i]->id;?></span></td>
                                     <td><?=$list_detail[$i]->uraian_tugas;?></td>
                                     <td><?=$list_detail[$i]->keterangan;?></td>  
-                                    <td><?=$this->Allcrud->getData('mr_skp_satuan',array('id'=>$list_detail[$i]->output))->result_array()[0]['nama'];?></td>                                                                                                          
+                                    <td><?=$this->Allcrud->getData('mr_skp_satuan',array('id'=>$list_detail[$i]->output))->result_array()[0]['nama'];?></td>                                    
                                     <td><?=$list_detail[$i]->tahun;?></td>                                    
                                     <td><a class="btn btn-danger btn-delete" onclick="del('<?php echo $list_detail[$i]->id;?>')"><i class="fa fa-delete"></i> Hapus Data (Server)</a> | <a class="btn btn-warning btn-update-data"><i class="fa fa-delete"></i> Ubah<input type="hidden" value="<?=$i+1;?>"></a><a class="btn btn-danger btn-cancel" style="display:none"><i class="fa fa-delete"></i> Batal<input type="hidden" value="<?=$i+1;?>"></a></td>                                                                        
                                 </tr>

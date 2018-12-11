@@ -24,10 +24,10 @@
                     $i = "";
                     for ($i=0; $i < $median_counter; $i++) {
                         // code...
-                        $flag_counter = "text-red text-red";
+                        $flag_counter = "text-red";
                         $flag_display = "display:none;";
-                        $flag_icon    = 'fa-circle-o';
-                        if ($member[$i]->counter_belum_diperiksa == 0) {
+                        $flag_icon    = 'fa-circle-o text-red';
+                        if ($member[$i]->counter_belum_diperiksa != 0) {
                             // code...
                             $flag_counter = "";
                             $flag_display = "display:'';";
@@ -50,17 +50,20 @@
                     $i = "";
                     for ($i=$median_counter; $i < $end_counter; $i++) {
                         // code...
-                        $flag_counter    = "";
-                        $flag_struktural = '';
-                        if ($member[$i]->b_kat_posisi == 1) {
-                            # code...
-                            $flag_struktural = 'background:#dddfff;';
+                        $flag_counter = "text-red text-red";
+                        $flag_display = "display:none;";
+                        $flag_icon    = 'fa-circle-o text-red';
+                        if ($member[$i]->counter_belum_diperiksa != 0) {
+                            // code...
+                            $flag_counter = "";
+                            $flag_display = "display:'';";
+                            $flag_icon    = 'fa-circle text-green';                            
                         }
                 ?>
-                        <li style="cursor: pointer;<?=$flag_struktural;?>" class="teamwork" id="li_member_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>','<?=$i;?>')">
+                        <li style="cursor: pointer;<?=$flag_counter;?>" class="teamwork" id="li_member_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>')">
                             <a class="contact-name">
-                                <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
-                                <span class="pull-right" style="display:none;"><i class="fa fa-check-circle-o" style="color: #4CAF50;"></i></span>
+                                <i class="fa <?=$flag_icon;?> contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
+                                <!-- <span class="pull-right" style="<?=$flag_display;?>"><i class="fa fa-check-circle-o" style="color: #8BC34A;"></i></span> -->
                             </a>
                             <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$member[$i]->nama_pegawai;?>"></input>
                         </li>
@@ -69,11 +72,18 @@
                 ?>
             </ul>             
         </div>
+        <?php
+            if ($end_counter > 16) {
+                # code...
+        ?>
         <div class="box-footer">
             <div class="text-center">
                 <a class="btn btn-success">Tampilkan Semua Anggota</a>
             </div>
-        </div>        
+        </div>                
+        <?php
+            }
+        ?>        
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
