@@ -22,7 +22,7 @@ New:
 - Penambahan Informasi pegawai di penilaian skp bulanan
 Improved:
 Fixed:
-- Perbaikan notifikasi di halaman ganti password yang sebelumnya langsung error
+- Perbaikan notifikasi di halaman ganti password yang sebelumnya error
 
 v2.0.0-Alpha    
 2018-12-6
