@@ -320,6 +320,9 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 		$data_sender = $this->input->post('data_sender');
 		$data = array(
 						'uraian_tugas' => $data_sender['uraian_tugas'],
+						'output'       => $data_sender['output'],
+						'keterangan'   => $data_sender['keterangan'],
+						'angka_kredit' => $data_sender['angka_kredit'],
 						'tahun'        => $data_sender['tahun']
 					);
 		$flag        = array('id'=>$data_sender['id'],'id_jft'=>$data_sender['oid']);

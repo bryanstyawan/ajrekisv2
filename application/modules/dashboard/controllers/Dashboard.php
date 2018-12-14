@@ -43,7 +43,7 @@ class Dashboard extends CI_Controller {
 
 			}
 		}
-		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year();
+		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
 		if ($data['member'] != 0) {
 			// code...

@@ -1,4 +1,19 @@
 v2.0.0-Alpha    
+2018-12-13
+==========
+New:
+- Menampilkan angka kredit di Uraian tugas JFT
+- Perbaikan penyimpanan data untuk output, keterangan, angka kredit di jft
+- Penambahan statistik pencapaian menit kerja efektif bawahan di penilaian skp / kinerja bulanan
+- Penambahan judul header di penilaian skp / kinerja bulanan
+- Penambahan Menu sources (untuk data js dan css) di Konfigurasi
+Improved:
+- buka akses untuk mendapatkan menit efektif pertahun untuk semua pegawai
+- Penyesuaian session_rule dan notif_message di halaman ubah pasword
+Fixed:
+
+
+v2.0.0-Alpha    
 2018-12-11
 ==========
 New:
@@ -7,7 +22,7 @@ New:
 - Penambahan Informasi pegawai di penilaian skp bulanan
 Improved:
 Fixed:
-
+- Perbaikan notifikasi di halaman ganti password yang sebelumnya langsung error
 
 v2.0.0-Alpha    
 2018-12-6

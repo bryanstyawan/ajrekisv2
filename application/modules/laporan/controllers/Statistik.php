@@ -29,7 +29,7 @@ class Statistik extends CI_Controller {
 		$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$oid))->result_array();
 		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($oid);
 		$data['data_transaksi']     = $this->mlaporan->get_transact($oid,1,date('m'),date('Y'));
-		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year();
+		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($oid);
 		$res = array
 					(
 						'status' => 1,

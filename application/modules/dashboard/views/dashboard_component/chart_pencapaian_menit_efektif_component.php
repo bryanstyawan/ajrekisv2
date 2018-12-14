@@ -22,7 +22,6 @@
     $("#profile-dashboard").hide();  
     var VALUES = '<?=$data_value;?>';
     var MONTHS = '<?=$data_bulan;?>';
-    console.log(jQuery.parseJSON (VALUES));
     var config = {
         type: 'line',
         data: {

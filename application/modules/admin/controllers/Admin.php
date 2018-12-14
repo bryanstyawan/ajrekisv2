@@ -13,19 +13,15 @@ class Admin extends CI_Controller
 	
 	public function index()
 	{
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
+		$this->Globalrules->session_rule();
 		redirect('dashboard/home');
 	}
 
 	public function change_password()
 	{
 		# code...
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();		
 		$data['title']      = 'Ubah Password';		
 		$data['subtitle']   = '';
 		$data['content']    = 'admin/user/change_password';
@@ -35,6 +31,7 @@ class Admin extends CI_Controller
 	public function do_change_password()
 	{
 		# code...
+		$this->Globalrules->session_rule();		
 		$res_data     = "";
 		$text_status  = "";
 		$pass_lama    = $this->input->post('pass_lama');
@@ -65,7 +62,6 @@ class Admin extends CI_Controller
 
 		}
 
-
 		$res = array
 					(
 						'status' => $res_data, 
@@ -79,6 +75,7 @@ class Admin extends CI_Controller
 	public function redirect_notifikasi($id)
 	{
 		# code...
+		$this->Globalrules->session_rule();		
 		$res = $this->Globalrules->get_log_notify_id($id);
 		if ($res != 0) {
 			# code...
@@ -94,11 +91,8 @@ class Admin extends CI_Controller
 
 	public function user()
 	{
-		if(!$this->session->userdata('login'))
-		{
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();	
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();	
 
 		$data['title']   = 'Administrator';
 		$data['content'] = 'admin/user/data_user';
@@ -109,7 +103,8 @@ class Admin extends CI_Controller
 
 	public function adduser()
 	{
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->session_rule();		
+		$this->Globalrules->notif_message();		
 		$add = array
 				(
 					'nama'     => modif_kata($this->input->post('nama')),
@@ -120,24 +115,23 @@ class Admin extends CI_Controller
 				);
 
 		$this->Allcrud->addData('user',$add);
-
 	}
 
 	public function ajaxuser(){
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->notif_message();		
 		$data['user'] = $this->madmin->datauser();
 		$this->load->view('admin/user/ajaxuser',$data);
 	}
 
 	public function edituser($id){
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->notif_message();		
 		$flag = array('id_user'=>$id);
 		$q    = $this->Allcrud->getData('user',$flag)->row();
 		echo json_encode($q);
 	}
 
 	public function pedituser(){
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->notif_message();		
 		$flag = array('id_user'=>$this->input->post('oid'));
 		$edit = array(
 						'nama'    => modif_kata($this->input->post('nnama')),
@@ -150,18 +144,15 @@ class Admin extends CI_Controller
 
 	public function deluser($id)
 	{
-		$this->Allcrud->notif_message();		
+		$this->Globalrules->notif_message();		
 		$flag = array('id_user' => $id);
 		$this->Allcrud->delData('user',$flag);
 	}
 	
 	public function role()
 	{
-		if(!$this->session->userdata('login'))
-		{
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();				
 		$data['title']   = 'role user';
 		$data['content'] = 'admin/role/data_role';
 		$data['role']    = $this->Allcrud->listData('user_role');
@@ -170,7 +161,7 @@ class Admin extends CI_Controller
 
 	public function addrole()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$role = $this->input->post('role');
 		$ket  = $this->input->post('ket');
 		$add  = array('nama_role' => modif_kata($role),'keterangan'=>$ket);
@@ -179,7 +170,7 @@ class Admin extends CI_Controller
 	
 	public function ajaxrole()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$data['content'] = 'admin/role/data_role';
 		$data['role']    = $this->Allcrud->listData('user_role');
 		$this->load->view('admin/role/ajaxrole',$data);
@@ -187,14 +178,14 @@ class Admin extends CI_Controller
 	
 	public function delrole($id)
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('id_role' => $id);
 		$this->Allcrud->delData('user_role',$flag);
 	}
 	
 	public function editrole($id)
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('id_role'=>$id);
 		$q    = $this->Allcrud->getData('user_role',$flag)->row();
 		echo json_encode($q);
@@ -202,7 +193,7 @@ class Admin extends CI_Controller
 	
 	public function peditrole()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('id_role'=>$this->input->post('oid'));
 		$edit = array(
 			'nama_role'  => $this->input->post('nrole'),
@@ -213,11 +204,8 @@ class Admin extends CI_Controller
 
 	public function akses($id_role)
 	{
-		if(!$this->session->userdata('login'))
-		{
-			redirect('admin/loginadmin');
-		}
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();				
 		$data['id_role']  = $id_role;
 		$data['title']    = 'Hak akses';
 		$data['content']  = 'admin/akses/data_akses';
@@ -237,7 +225,7 @@ class Admin extends CI_Controller
 
 	public function generate($id)
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('flag' => 1);
 		$menu = $this->Allcrud->getData('config_menu',$flag);
 		foreach ($menu->result() as $row)
@@ -259,7 +247,7 @@ class Admin extends CI_Controller
 	
 	public function create()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array ('id_akses' => $this->input->post('id_akses'));
 		
 		if($this->input->post('nilai') == 0)
@@ -283,7 +271,7 @@ class Admin extends CI_Controller
 	}
 	
 	public function read(){
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array ('id_akses' => $this->input->post('id_akses'));
 		$q    = $this->Allcrud->listData('user_role');
 
@@ -306,7 +294,7 @@ class Admin extends CI_Controller
 
 	public function update()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array (
 						'id_akses' => $this->input->post('id_akses')
 					);
@@ -333,7 +321,7 @@ class Admin extends CI_Controller
 	
 	public function delet()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array (
 						'id_akses' => $this->input->post('id_akses')
 					);
@@ -360,7 +348,7 @@ class Admin extends CI_Controller
 	
 	public function caries2()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('id_es1'=>$this->input->post('es1'));
 		$data['es2']= $this->Allcrud->getData('mr_eselon2',$flag);
 		$this->load->view('admin/urtug/ajax/eselon2',$data);
@@ -368,7 +356,7 @@ class Admin extends CI_Controller
 	
 	public function caries3()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('id_es2'=>$this->input->post('es2'));
 		$data['es3']= $this->Allcrud->getData('mr_eselon3',$flag);
 		$this->load->view('admin/urtug/ajax/eselon3',$data);
@@ -376,7 +364,7 @@ class Admin extends CI_Controller
 	
 	public function caries4()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		$flag = array('id_es3'=>$this->input->post('es3'));
 		$data['es4']= $this->Allcrud->getData('mr_eselon4',$flag);
 		$this->load->view('admin/urtug/ajax/eselon4',$data);
@@ -384,7 +372,7 @@ class Admin extends CI_Controller
 
 	public function carijabatan()
 	{
-		$this->Allcrud->notif_message();				
+		$this->Globalrules->notif_message();				
 		if($this->input->post('es4up') != NULL)
 		{
 			$flag = array(
@@ -418,7 +406,7 @@ class Admin extends CI_Controller
 
 	// public function upurtug()
 	// {
-	// 	$this->Allcrud->notif_message();				
+	// 	$this->Globalrules->notif_message();				
 	// 	$jab   = $this->input->post('jabatanup');
 	// 	$urtug = $_FILES['urtug'];
 	// 	$this->load->helpers(array('exreader'));

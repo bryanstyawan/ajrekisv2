@@ -40,8 +40,15 @@
 					?>
 
 <script>
+<?php 
+if($list != 0)
+{
+?>
 $("#span_struktural").html('<?=count($list);?>');
 $("#span_counter_ready").html('<?=$data_counter['ready'];?>');
 $("#progress_bar_persentase").html('<?=round(($data_counter['ready']/count($list)*100));?>');
 $('#progress_bar_style').css({"width":"<?=round(($data_counter['ready']/count($list)*100));?>%"});
+<?
+}
+?>
 </script>

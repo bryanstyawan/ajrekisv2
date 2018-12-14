@@ -119,7 +119,7 @@ Last edit : 19/07/2016
 	}
 
 
-  public function get_menit_efektif_year()
+  public function get_menit_efektif_year($id)
 	{
 		$sql = "SELECT a.nama_bulan,
             			 MONTH (b.tanggal_mulai) AS `month`,
@@ -128,7 +128,7 @@ Last edit : 19/07/2016
             			 COALESCE(COUNT(b.status_pekerjaan),0) AS counter_pekerjaan
             FROM mr_bulan a
             LEFT JOIN tr_capaian_pekerjaan b ON a.id = MONTH (b.tanggal_mulai)
-            AND b.id_pegawai = '".$this->session->userdata('sesUser')."'
+            AND b.id_pegawai = '".$id."'
             AND b.status_pekerjaan = 1
             AND YEAR(b.tanggal_mulai) = '".date('Y')."'
             GROUP BY a.nama_bulan

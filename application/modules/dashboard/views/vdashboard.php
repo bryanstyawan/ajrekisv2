@@ -209,7 +209,11 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                     $("#get-datatable").html(msg);					
                     $("#modal-transaksi-proses").modal('show');
                     $("#loadprosess").modal('hide');							
-                }
+                },
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}                
             })		            				
         })
 
@@ -226,7 +230,11 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                     $("#get-datatable1").html(msg);					
                     $("#modal-transaksi-realisasi").modal('show');
                     $("#loadprosess").modal('hide');							
-                }
+                },
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}                
             })		            				
         })
 
@@ -321,32 +329,11 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                         },
                         success:function(msg){
                             var obj = jQuery.parseJSON (msg);
-                            if (obj.status == 1)
-                            {
-                                Lobibox.notify('success', {
-                                    msg: obj.text
-                                    });
-                                setTimeout(function(){
-                                    $("#loadprosess").modal('hide');
-                                    setTimeout(function(){
-                                        location.reload();
-                                    }, 1500);
-                                }, 5000);
-                            }
-                            else
-                            {
-                                Lobibox.notify('success', {
-                                    msg: obj.text
-                                    });
-                                setTimeout(function(){
-                                    $("#loadprosess").modal('hide');
-                                }, 5000);
-                            }
+                            ajax_status(obj);
                         },
-                        error:function(){
-                            Lobibox.notify('error', {
-                                msg: 'Gagal melakukan transaksi'
-                            });
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
                         }
                     })                
                 }
@@ -386,32 +373,11 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                     },
                     success:function(msg){
                         var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
+                        ajax_status(obj);
                     },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal melakukan transaksi'
-                        });
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
                     }
                 })                
             }
@@ -434,13 +400,6 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
         }
     }
     
-    /* jQuery Validate Emails with Regex */
-    function validateEmail(Email) {
-        var pattern = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-
-        return $.trim(Email).match(pattern) ? true : false;
-    }    
-
     function delete_kompetensi(id) {
         // body...
         Lobibox.confirm({
@@ -456,32 +415,11 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                         },
                         success:function(msg){
                             var obj = jQuery.parseJSON (msg);
-                            if (obj.status == 1)
-                            {
-                                Lobibox.notify('success', {
-                                    msg: obj.text
-                                    });
-                                setTimeout(function(){
-                                    $("#loadprosess").modal('hide');
-                                    setTimeout(function(){
-                                        location.reload();
-                                    }, 1500);
-                                }, 5000);
-                            }
-                            else
-                            {
-                                Lobibox.notify('success', {
-                                    msg: obj.text
-                                    });
-                                setTimeout(function(){
-                                    $("#loadprosess").modal('hide');
-                                }, 5000);
-                            }
+                            ajax_status(obj);
                         },
-                        error:function(){
-                            Lobibox.notify('error', {
-                                msg: 'Gagal Melakukan Hapus data'
-                            });
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
                         }
                     })
                 }
@@ -508,7 +446,16 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
-                    console.log(obj.data.infoPegawai[0]);
+
+                    console.table(obj.data.skp.list_skp);
+                    MONTHS = [];
+                    VALUES = [];
+                    for(i=0;i<obj.data.menit_efektif_year.length;i++)
+                    {
+                        VALUES[i] = obj.data.menit_efektif_year[i].menit_efektif;
+                        MONTHS[i] = obj.data.menit_efektif_year[i].nama_bulan;                        
+                    }
+
                     if (obj.status == 1)
                     {
                         $("#main-dashboard").hide();
@@ -521,10 +468,52 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                         $("#f_name_es3").val(obj.data.infoPegawai[0].nama_eselon3);
                         $("#f_name_es4").val(obj.data.infoPegawai[0].nama_eselon4);
                         $("#f_nip").val(obj.data.infoPegawai[0].nip);                                                                                                    
+
+                        var config_bawahan = {
+                            type: 'line',
+                            data: {
+                                labels: MONTHS,
+                                datasets: [{
+                                    label: 'Menit Efektif',
+                                    data: VALUES,
+                                    fill: false,
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false,
+                                },
+                                hover: {
+                                    mode: 'nearest',
+                                    intersect: true
+                                },
+                                scales: {
+                                    xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Bulan'
+                                    }
+                                    }],
+                                    yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Menit Efektif'
+                                    }
+                                    }]
+                                }
+                            }
+                        };
+
+                        var ctx_bawahan   = document.getElementById('canvas_member_menif_efektif').getContext('2d');
+                            window.myLine = new Chart(ctx_bawahan, config_bawahan);
                     }
                     else
                     {
-                        Lobibox.notify('success', {
+                        Lobibox.notify('warning', {
                             msg: obj.text
                             });
                         setTimeout(function(){

@@ -74,6 +74,7 @@ $data_value = json_encode($class_posisi);
                         <th>Keterangan</th>
                         <th>Output</th>
                         <th>Tahun</th>
+                        <th>Angka Kredit</th>
                         <th>Action</th>
                     </tr>
                     <tr>
@@ -86,7 +87,6 @@ $data_value = json_encode($class_posisi);
                         </th>     
                         <th>
                             <select id="uraian_tugas_output">
-                                <option value=""> - - - - - - - </option>
                                 <?php
                                     if ($list_satuan_skp->result_array() != array()) {
                                         # code...
@@ -102,7 +102,10 @@ $data_value = json_encode($class_posisi);
                         </th>
                         <th>
                             <input type="number" id="uraian_tugas_tahun" class="col-lg-12" >                        
-                        </th>                                           
+                        </th>
+                        <th>
+                            <input type="number" id="uraian_tugas_angka_kredit" class="col-lg-12" >                        
+                        </th>                                                                   
                         <th>
                             <a class="btn btn-default" id="btn-add-row"><i class="fa fa-plus"></i> Tambah</a>
                             <a class="btn btn-default" id="btn-change-this-row" style="display:none"><i class="fa fa-edit"></i> Ubah data yang telah ditandai ini</a>                            
@@ -121,7 +124,8 @@ $data_value = json_encode($class_posisi);
                                     <td><?=$list_detail[$i]->uraian_tugas;?></td>
                                     <td><?=$list_detail[$i]->keterangan;?></td>  
                                     <td><?=$this->Allcrud->getData('mr_skp_satuan',array('id'=>$list_detail[$i]->output))->result_array()[0]['nama'];?></td>                                    
-                                    <td><?=$list_detail[$i]->tahun;?></td>                                    
+                                    <td><?=$list_detail[$i]->tahun;?></td>
+                                    <td><?=$list_detail[$i]->angka_kredit;?></td>                                                                        
                                     <td><a class="btn btn-danger btn-delete" onclick="del('<?php echo $list_detail[$i]->id;?>')"><i class="fa fa-delete"></i> Hapus Data (Server)</a> | <a class="btn btn-warning btn-update-data"><i class="fa fa-delete"></i> Ubah<input type="hidden" value="<?=$i+1;?>"></a><a class="btn btn-danger btn-cancel" style="display:none"><i class="fa fa-delete"></i> Batal<input type="hidden" value="<?=$i+1;?>"></a></td>                                                                        
                                 </tr>
                     <?php                                
@@ -211,7 +215,7 @@ $(document).ready(function(){
                 raise_data_remarks = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html();
                 raise_data_output  = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(4)').html();
                 raise_data_year    = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(5)').html();
-                flag               = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(6) > a.btn.btn-danger.btn-delete').html();
+                flag               = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(7) > a.btn.btn-danger.btn-delete').html();
                 if (flag == '<i class="fa fa-delete"></i> Hapus Data (Server)') {
                     flag = 'update';
                 }
@@ -258,16 +262,25 @@ $(document).ready(function(){
     })
 
     $("#btn-change-this-row").click(function(){
-        var uraian_tugas       = $("#uraian_tugas").val();
-        var uraian_tugas_tahun = $("#uraian_tugas_tahun").val();
-        var uraian_tugas_oid   = $("#uraian_tugas_oid").val();
+        var uraian_tugas_oid          = $("#uraian_tugas_oid").val();
+        var uraian_tugas              = $("#uraian_tugas").val();
+        var uraian_tugas_keterangan   = $('#uraian_tugas_keterangan').val();
+        var uraian_tugas_output       = $('#uraian_tugas_output').val();
+        var uraian_tugas_tahun        = $("#uraian_tugas_tahun").val();
+        var uraian_tugas_angka_kredit = $("#uraian_tugas_angka_kredit").val();
+
 
         data_header = {
+            'oid'         : $("#oid").val(),                        
             'id'          : uraian_tugas_oid,
             'uraian_tugas': uraian_tugas,
+            'keterangan'  : uraian_tugas_keterangan,
+            'output'      : uraian_tugas_output,
             'tahun'       : uraian_tugas_tahun,
-            'oid'         : $("#oid").val()
+            'angka_kredit': uraian_tugas_angka_kredit
         }
+
+        console.table(data_header);
 
         if(uraian_tugas.length <= 0)
         {
@@ -295,33 +308,12 @@ $(document).ready(function(){
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
+                    ajax_status(obj);
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal melakukan transaksi'
-                    });
-                }
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
             })            
         }
     })
@@ -329,16 +321,21 @@ $(document).ready(function(){
     $(".btn-update-data").click(function() {
         index = $(this).find("input[type='hidden']").val();
         $('#index-table').val(index);
-        text = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html();
-        year = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html();
-        oid  = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > span').html();
+        text         = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html();
+        keterangan   = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html();
+        output       = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(4)').html();
+        year         = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(5)').html();
+        angka_kredit = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(6)').html();
+        oid          = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > span').html();
 
         $('.table-view tbody > tr:nth-child('+index+')').css({"background-color":"yellow"});
         $("#btn-add-row").css({"display":"none"});        
         $("#btn-change-this-row").css({"display":""});                
         $('#uraian_tugas').val(text);
+        $('#uraian_tugas_keterangan').val(keterangan);
         $('#uraian_tugas_tahun').val(year);        
         $('#uraian_tugas_oid').val(oid);                
+        $('#uraian_tugas_angka_kredit').val(angka_kredit);                        
 
         $(".btn-update-data").css({"display":"none"});
         $(this).css({"display":"none"});
@@ -361,17 +358,25 @@ $(document).ready(function(){
     });    
 
     $("#btn-add-row").click(function() {
-        var uraian_tugas            = $("#uraian_tugas").val();
-        var uraian_tugas_tahun      = $("#uraian_tugas_tahun").val();
-        var uraian_tugas_keterangan = $("#uraian_tugas_keterangan").val();
-        var uraian_tugas_output     = $("#uraian_tugas_output option:selected").text();
-        
+        var uraian_tugas              = $("#uraian_tugas").val();
+        var uraian_tugas_tahun        = $("#uraian_tugas_tahun").val();
+        var uraian_tugas_keterangan   = $("#uraian_tugas_keterangan").val();
+        var uraian_tugas_output       = $("#uraian_tugas_output option:selected").text();
+        var uraian_tugas_angka_kredit = $("#uraian_tugas_angka_kredit").val();
+
         if (uraian_tugas.length <= 0) {
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
             {
                 msg: "Uraian Tugas kosong, mohon lengkapi data tersebut"
             });                            
         }
+        else if(uraian_tugas_output.length <= 0 || uraian_tugas_output == 0 || uraian_tugas_output == '-')
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Output Uraian Tugas kosong, mohon lengkapi data tersebut"
+            });                            
+        }                
         else if(uraian_tugas_tahun.length <= 0)
         {
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
@@ -379,46 +384,30 @@ $(document).ready(function(){
                 msg: "Tahun Uraian Tugas kosong, mohon lengkapi data tersebut"
             });                            
         }
-        else if(uraian_tugas_output.length <= 0)
-        {
-            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-            {
-                msg: "Output Uraian Tugas kosong, mohon lengkapi data tersebut"
-            });                            
-        }        
         else
         {
             var rows = $('.table-view tbody .child-urtug').length;
+            console.log(rows);
             if (rows == 0) {
-                $('.table-view tbody').remove();            
-                $('.table-view').append('<tr class="child-urtug">'+
-                                    '<td>'+
-                                        '<span><i class="fa fa-dot-circle-o"></i></span>'+
-                                    '</td>'+
-                                    '<td>'+uraian_tugas+'</td>'+
-                                    '<td>'+uraian_tugas_keterangan+'</td>'+
-                                    '<td>'+uraian_tugas_output+'</td>'+
-                                    '<td>'+uraian_tugas_tahun+'</td>'+                                    
-                                    '<td><a class="btn btn-danger btn-delete"><i class="fa fa-delete"></i> Hapus Data (Local)</a></td>'+                                
-                                '</tr>');                            
+                $('.table-view tbody').remove();             
             }
-            else
-            {
-                $('.table-view').append('<tr class="child-urtug">'+
-                                    '<td>'+
-                                        '<span><i class="fa fa-dot-circle-o"></i></span>'+
-                                    '</td>'+
-                                    '<td>'+uraian_tugas+'</td>'+
-                                    '<td>'+uraian_tugas_keterangan+'</td>'+
-                                    '<td>'+uraian_tugas_output+'</td>'+
-                                    '<td>'+uraian_tugas_tahun+'</td>'+                                    
-                                    '<td><a class="btn btn-danger btn-delete"><i class="fa fa-delete"></i> Hapus Data (Local)</a></td>'+                                
-                                '</tr>');                
-            }            
+
+            $('.table-view').append('<tr class="child-urtug">'+
+                                '<td>'+
+                                    '<span><i class="fa fa-dot-circle-o"></i></span>'+
+                                '</td>'+
+                                '<td>'+uraian_tugas+'</td>'+
+                                '<td>'+uraian_tugas_keterangan+'</td>'+
+                                '<td>'+uraian_tugas_output+'</td>'+
+                                '<td>'+uraian_tugas_tahun+'</td>'+                                    
+                                '<td>'+uraian_tugas_angka_kredit+'</td>'+                                                                        
+                                '<td><a class="btn btn-danger btn-delete"><i class="fa fa-delete"></i> Hapus Data (Local)</a></td>'+                                
+                            '</tr>');                           
 
             $('#uraian_tugas').val('');
             $('#uraian_tugas_tahun').val('');        
             $('#uraian_tugas_keterangan').val('');                    
+            $('#uraian_tugas_angka_kredit').val('');                                
             $('#uraian_tugas').focus();        
         }
     })    
