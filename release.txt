@@ -1,4 +1,15 @@
 v2.0.0-Alpha    
+2018-12-17
+==========
+New:
+- Penambahan Progress Kuantitas SKP di penilaian kinerja/skp bawahan
+Improved:
+- Pemindahan posisi layout 'Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?' dari posisi bawah ke atas di penilaian kinerja/skp bawahan
+- Pemindahan posisi layout close di penilaian kinerja/skp bawahan
+Fixed:
+- Pembersihan Character excel yang bermasalah sehingga menyebabkan file excel yang diunduh menjadi corrupt di cetak skp, unduh template master skp, unduh template jfu, unduh template jft
+
+v2.0.0-Alpha    
 2018-12-13
 ==========
 New:

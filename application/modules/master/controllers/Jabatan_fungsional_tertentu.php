@@ -138,6 +138,8 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('e8', '-');					        
 
 		$filename='Template Unggah Master jft - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
+
+		ob_clean();
 		//header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name

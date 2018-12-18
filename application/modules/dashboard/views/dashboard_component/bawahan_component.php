@@ -1,36 +1,53 @@
 <input type="hidden" id="member_section_oid">
 <h2 class="text-center">Penilaian SKP / Kinerja Bulanan</h2>
 <div style="display:none;" id="member_section_area">
+    <div class="col-md-12">
+        <div class="container-fluid">
+            <div class="box">
+                <div class="box-body">
+                    <a class="btn btn-danger pull-right" onclick="view_option('main')"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="box-footer">
+                    <h4 class="text-center">Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?</h4>
+                    <a class="btn btn-info pull-right" onclick="approve_good_kinerja('yes')">
+                        <i class="fa fa-check"></i> Ya
+                    </a>                                        
+                    <a class="btn btn-danger pull-left" onclick="approve_good_kinerja('no')">
+                        <i class="fa fa-close"></i> Tidak
+                    </a>                                                            
+                </div>                
+            </div>
+        </div>
+    </div>
     <div class="col-lg-12">
         <div class="container-fluid">
             <div class="box">
                 <div class="box-header">
-                    <a class="btn btn-danger pull-right" onclick="view_option('main')"><i class="fa fa-close"></i></a>
                 </div>
                 <div class="box-body">
                     <div class="row">					
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nama Pegawai</label>
                                 <input class="form-control" id="f_name" disabled="disabled">
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>NIP</label>
                                 <input class="form-control" id="f_nip" disabled="disabled">
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label>Eselon I</label>
+                                <label>Nama Jabatan</label>
                                 <input class="form-control" id="f_name_es1" disabled="disabled">
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Eselon II</label>
                                 <input class="form-control" id="f_name_es2" disabled="disabled">
@@ -49,7 +66,7 @@
                                 <label>Eselon IV</label>
                                 <input class="form-control" id="f_name_es4" disabled="disabled">
                             </div>
-                        </div>                                                            
+                        </div>                                                             -->
                     </div>                
                 </div>
                 <div class="box-footer">
@@ -99,24 +116,6 @@
         <!-- /.box -->
     </div>    
 
-    <div class="col-md-12">
-        <div class="container-fluid">
-            <div class="box">
-                <div class="box-body">
-
-                </div>
-                <div class="box-footer">
-                    <h4 class="text-center">Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?</h4>
-                    <a class="btn btn-info pull-right" onclick="approve_good_kinerja('yes')">
-                        <i class="fa fa-check"></i> Ya
-                    </a>                                        
-                    <a class="btn btn-danger pull-left" onclick="approve_good_kinerja('no')">
-                        <i class="fa fa-close"></i> Tidak
-                    </a>                                                            
-                </div>                
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>

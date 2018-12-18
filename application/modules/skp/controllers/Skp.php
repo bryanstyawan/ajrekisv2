@@ -1081,6 +1081,8 @@ class Skp extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('b4', 'Kegiatan');
 		$this->excel->getActiveSheet()->setCellValue('c4', 'Keterangan');
 
+		ob_clean();
+
 		$filename='Template Unggah Master SKP - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
 		//header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007
@@ -1779,6 +1781,7 @@ class Skp extends CI_Controller {
 
 		}
 
+		ob_clean();
 		$filename='PENILAIAN CAPAIAN SKP  - '.date("Y").'.xlsx'; //save our workbook as this file name
 		//header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007

@@ -447,7 +447,7 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
 
-                    console.table(obj.data.skp.list_skp);
+                    console.table(obj.data.infoPegawai);
                     MONTHS = [];
                     VALUES = [];
                     for(i=0;i<obj.data.menit_efektif_year.length;i++)
@@ -463,11 +463,68 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                         $("#loadprosess").modal('hide');    
                         $("#member_section_oid").val(arg);
                         $("#f_name").val(obj.data.infoPegawai[0].nama_pegawai);
-                        $("#f_name_es1").val(obj.data.infoPegawai[0].nama_eselon1);
-                        $("#f_name_es2").val(obj.data.infoPegawai[0].nama_eselon2);
-                        $("#f_name_es3").val(obj.data.infoPegawai[0].nama_eselon3);
-                        $("#f_name_es4").val(obj.data.infoPegawai[0].nama_eselon4);
+                        $("#f_name_es1").val(obj.data.infoPegawai[0].nama_jabatan);
+                        // $("#f_name_es2").val(obj.data.infoPegawai[0].nama_eselon2);
+                        // $("#f_name_es3").val(obj.data.infoPegawai[0].nama_eselon3);
+                        // $("#f_name_es4").val(obj.data.infoPegawai[0].nama_eselon4);
                         $("#f_nip").val(obj.data.infoPegawai[0].nip);                                                                                                    
+
+                        if(obj.data.skp.list_skp.length == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            $('#table_progress_skp').dataTable().fnDestroy();                            
+                            $('#table_progress_skp tbody').remove();                                         
+                            for(i=0;i<obj.data.skp.list_skp.length;i++)
+                            {
+                                realisasi_qty  = 0;
+                                persentase_qty = 0;
+                                if(obj.data.skp.list_skp[i].realisasi_kuantitas == null)
+                                {
+                                    persentase_qty = 0;
+                                }
+                                else
+                                {
+                                    persentase_qty = (obj.data.skp.list_skp[i].realisasi_kuantitas/obj.data.skp.list_skp[i].target_qty)*100;
+                                }
+
+                                $('#table_progress_skp').append('<tr class="child-urtug">'+
+                                    '<td>'+
+                                        '<span><i class="fa fa-dot-circle-o"></i></span>'+
+                                    '</td>'+
+                                    '<td>'+obj.data.skp.list_skp[i].kegiatan+'</td>'+
+                                    '<td>'+
+                                        '<div class="col-md-6">'+
+                                            '<div class="progress-group">'+
+                                                '<span class="progress-text">Progress SKP</span>'+
+                                                '<span class="progress-number"><b id="progress_bar_persentase">'+Math.round(persentase_qty)+'</b>/100 %</span>'+
+                                                '<div class="progress sm">'+
+                                                    '<div class="progress-bar progress-bar-green" id="progress_bar_style" style="width: '+Math.round(persentase_qty)+'%"></div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+                                    
+                                    '</td>'+                                                        
+                                '</tr>');                           
+                            }
+                            $("#table_progress_skp").DataTable({
+                                "oLanguage": {
+                                    "sSearch": "Pencarian :",
+                                    "sSearchPlaceholder" : "Ketik untuk mencari",
+                                    "sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+                                    "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                                    "sZeroRecords": "Data tidak ditemukan"	
+                                },
+                                "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+                                        "<'row'<'col-sm-5'i><'col-sm-7'p>>" +			
+                                        "<'row'<'col-sm-12'tr>>" +
+                                        "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                                "bSort": false						 
+                                // "dom": '<"top"f>rt'
+                                // "dom": '<"top"fl>rt<"bottom"ip><"clear">'			
+                            });                            
+                        }                        
 
                         var config_bawahan = {
                             type: 'line',
