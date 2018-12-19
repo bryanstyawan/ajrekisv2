@@ -438,15 +438,15 @@ class Mmaster extends CI_Model {
 						e.nama_posisi as `posisi_atasan`,
 						f.tunjangan
 				FROM mr_posisi a
-				JOIN mr_eselon2 b
+				LEFT JOIN mr_eselon2 b
 				ON b.id_es2       = a.eselon2
-				JOIN mr_eselon3 c
+				LEFT JOIN mr_eselon3 c
 				ON c.id_es3       = a.eselon3
-				JOIN mr_eselon4 d
+				LEFT JOIN mr_eselon4 d
 				ON d.id_es4       = a.eselon4
-				JOIN mr_posisi e
+				LEFT JOIN mr_posisi e
 				ON e.id       = a.atasan
-				JOIN mr_posisi_class f
+				LEFT JOIN mr_posisi_class f
 				ON f.posisi_class       = a.posisi_class
 				WHERE a.id = '".$id."'
 				";

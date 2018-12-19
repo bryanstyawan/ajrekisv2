@@ -19,12 +19,21 @@
                 # code...
     ?>
                 <tr>
-                    <td><?=$i+1;?><input type="hidden" value="<?=$list[$i]->id;?>"></td>
-                    <td><?=$list[$i]->nama_jabatan;?></td>
-                    <td><?=$list[$i]->posisi_class;?></td>
+                    <td>
+                        <?=$i+1;?>
+                        <input type="hidden" id="oid_<?=$list[$i]->id;?>" value="<?=$list[$i]->id;?>">
+                    </td>
+                    <td>
+                        <?=$list[$i]->nama_jabatan;?>
+                        <input type="hidden" id="nama_jabatan_<?=$list[$i]->id;?>" value="<?=$list[$i]->nama_jabatan;?>">                        
+                    </td>
+                    <td>
+                        <?=$list[$i]->posisi_class;?>
+                        <input type="hidden" id="posisi_kelas_<?=$list[$i]->id;?>" value="<?=$list[$i]->posisi_class;?>">                        
+                    </td>
                     <td><?=number_format($list[$i]->tunjangan,0);?></td>								
                     <td>
-                        <a class="btn btn-success btn-choose"><i class="fa fa-check"></i> Pilih<input type="hidden" value="<?=$i+1;?>"></a>
+                        <a class="btn btn-success" onclick="get_data('<?php echo $list[$i]->id;?>')"><i class="fa fa-check"></i> Pilih<input type="hidden" value="<?=$i+1;?>"></a>
                     </td>
                 </tr>
     <?php
@@ -52,19 +61,15 @@
             // "dom": '<"top"f>rt'
             // "dom": '<"top"fl>rt<"bottom"ip><"clear">'
         });
-
-        $(".btn-choose").click(function() {
-            index = $(this).find("input[type='hidden']").val();
-            $('#index-table').val(index);
-            id               = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(1) > input[type="hidden"]').val ();
-            text_jabatan     = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(2)').html ();
-            id_kelas_jabatan = $('.table-view tbody > tr:nth-child('+index+') > td:nth-child(3)').html ();
-            $("#id_jft").val(id);
-            $("#id_jfu").val('');            
-            $("#jabatan").val(text_jabatan);
-            $("#grade").val(id_kelas_jabatan);            
-            $("#modal-detail-jfu").modal('hide');				            
-            console.log(id_kelas_jabatan);            
-        })
     });
+
+function get_data(arg) 
+{
+    $("#id_jft").val(arg);
+    $("#id_jfu").val('');            
+    $("#jabatan").val($("#nama_jabatan_"+arg).val());
+    $("#grade").val($("#posisi_kelas_"+arg).val());            
+    $("#modal-detail-jfu").modal('hide');    
+}
+
 </script>

@@ -89,7 +89,7 @@ $(document).ready(function(){
 						});
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
-						}, 1000);									
+						}, 500);									
 					},
 					error:function(jqXHR,exception)
 					{

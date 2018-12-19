@@ -169,11 +169,25 @@ isset($class_posisi);
 										</td>
 										<td>
 											<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
+
 											<?php
-												if ($list[$i]->counter_pegawai < 1) {
-													# code...
+												if($list[$i]->counter_skp == 0)
+												{
 											?>
-												<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+													<?php
+														if ($list[$i]->counter_pegawai < 1) {
+															# code...
+													?>
+															<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+													<?php
+														}
+														else {
+															# code...
+													?>
+															<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+													<?php														
+														}
+													?>
 											<?php
 												}
 											?>
@@ -207,7 +221,8 @@ isset($class_posisi);
                   </div>
                 <div class="modal-body" style="background-color: #fff!important;">
 					<form id="addForm" name="addForm">
-
+						<input type="hidden" id="crud">
+						<input type="hidden" id="oid">						
 						<label style="color: #000;font-weight: 400;font-size: 19px;">Jenis Jabatan</label>
 						<div class="form-group">
 							<div class="input-group">
@@ -237,7 +252,7 @@ isset($class_posisi);
 							<div class="form-group">
 								<div class="input-group">
 				                    <span class="input-group-addon"></span>
-				                    <select class="form-control"><option value="">Pilih Eselon 2</option></select>
+				                    <select class="form-control" id="es2"><option value="">Pilih Eselon 2</option></select>
 								</div>
 							</div>
 						</div>
@@ -247,7 +262,7 @@ isset($class_posisi);
 							<div class="form-group">
 								<div class="input-group">
 				                    <span class="input-group-addon"></span>
-				                    <select class="form-control"><option value="">Pilih Eselon 3</option></select>
+				                    <select class="form-control" id="es3"><option value="">Pilih Eselon 3</option></select>
 								</div>
 							</div>
 						</div>
@@ -257,7 +272,7 @@ isset($class_posisi);
 							<div class="form-group">
 								<div class="input-group">
 				                    <span class="input-group-addon"></span>
-				                    <select class="form-control"><option value="">Pilih Eselon 3</option></select>
+				                    <select class="form-control" id="es4"><option value="">Pilih Eselon 3</option></select>
 								</div>
 							</div>
 						</div>
@@ -318,143 +333,6 @@ isset($class_posisi);
 -->
 
 <div class="example-modal">
-<div class="modal modal-success fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Jabatan</h4>
-                  </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="editForm">
-						<input type="hidden" id="oid" name="oid">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Jenis Jabatan</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"></span>
-			                    <select name="nkat" id="nkat" class="form-control"><option value="">Jenis Jabatan</option>
-									<?php foreach($katpos->result() as $row){?>
-										<option value="<?php echo $row->id;?>"><?php echo $row->nama_kat_posisi;?></option>
-									<?php }?>
-								</select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Pimpinan Tinggi Madya (Eselon I)</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"></span>
-			                    <select name="nes1" id="nes1" class="form-control"><option value="">Pilih Eselon 1</option>
-								<?php foreach($es1->result() as $row){?>
-									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-								<?php }?>
-								</select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Pimpinan Tinggi Pratama (Eselon II)</label>
-						<div id="isies2">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"></span>
-				                    <select name="nes2" id="nes2" class="form-control"><option value="">Pilih Eselon 2</option></select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Administrator (Eselon III)</label>
-						<div id="isies3">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"></span>
-				                    <select name="nes3" id="nes3" class="form-control"><option value="">Pilih Eselon 3</option></select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Pengawas (Eselon IV)</label>
-						<div id="isies4">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"></span>
-				                    <select name="nes4" id="nes4" class="form-control"><option value="">Pilih Eselon 4</option></select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Atasan</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"></span>
-			                    <select name="natasan" id="natasan" class="form-control"><option value=0>Pilih Atasan</option></select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Jabatan</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"></span>
-			                    <input type="text" id="njabatan" name="njabatan" class="form-control" placeholder="jabatan">
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Kelas Jabatan</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"></span>
-			                    <select name="ngrade" id="ngrade" class="form-control">
-			                    	<option value=0>Pilih Kelas Jabatan</option>
-			                    	<?php
-			                    		for ($i=0; $i < count($class_posisi) ; $i++) {
-			                    			# code...
-			                    	?>
-											 <option value="<?=$class_posisi[$i]->posisi_class;?>"><?=$class_posisi[$i]->posisi_class;?></option>
-									<?php
-			                    		}
-			                    	?>
-		                    	</select>
-							</div>
-						</div>
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="edit"/>
-
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div>
-
-<!---
-***************************************************************************************************************
--->
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="loadprosess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-			    <div style="margin-top: 320px;">
-			        <div class="loadme-rotateplane"></div>
-			        <div class="loadme-mask"></div>
-			    </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div>
-
-
-<!---
-***************************************************************************************************************
--->
-
-<div class="example-modal">
     <div class="modal modal-success fade" id="modal-detail-jfu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="box-content">
 
@@ -501,7 +379,7 @@ $(document).ready(function(){
 
 	$("#addData").click(function(){
 		$("#newData").modal('show');
-		$("#agama").focus();
+		$("#crud").val('insert');
 	})
 
 	$("#kat").change(function(){
@@ -603,6 +481,59 @@ $(document).ready(function(){
 		})
 	})
 
+	$("#select_jenis_jabatan").change(function(){  
+		var data_link = {
+						'data_1': $("#select_eselon_1").val(),
+						'data_2': $("#select_eselon_2").val(),
+						'data_3': $("#select_eselon_3").val(),
+						'data_4': $("#select_eselon_4").val(),
+						'data_5': $("#select_jenis_jabatan").val()
+		}
+		$.ajax({
+			url :"<?php echo site_url()?>/master/filter_data_eselon",
+			type:"post",
+			data: { data_sender : data_link},
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#halaman_header").html("");
+				$("#halaman_footer").html("");
+				$('#example1').dataTable().fnDestroy();
+				$("#example1 tbody tr").remove();
+				var newrec  = '<tr">' +
+		        					'<td colspan="8" class="text-center">Memuat Data</td>'
+		    				   '</tr>';
+		        $('#example1 tbody').append(newrec);
+			},			
+			success:function(msg){
+				$("#example1 tbody tr").remove();
+				$("#table_content").html(msg);
+				$("#example1").DataTable({
+					"oLanguage": {
+						"sSearch": "Pencarian :",
+						"sSearchPlaceholder" : "Ketik untuk mencari",
+						"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+						"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+						"sZeroRecords": "Data tidak ditemukan"
+					},
+					"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+							"<'row'<'col-sm-12'tr>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>"
+
+					// "dom": '<"top"f>rt'
+					// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+				});
+				setTimeout(function(){
+					$("#loadprosess").modal('hide');
+				}, 1000);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})		
+	})
+
 	$("#select_eselon_1").change(function(){
 		var select_eselon_1      = $(this).val();
 		var select_eselon_2      = '';
@@ -664,7 +595,7 @@ $(document).ready(function(){
 						});
 						setTimeout(function(){
 							$("#loadprosess").modal('hide');
-						}, 1000);
+						}, 500);
 					},
 					error:function(jqXHR,exception)
 					{
@@ -739,7 +670,7 @@ $(document).ready(function(){
 						});
 						setTimeout(function(){
 							$("#loadprosess").modal('hide');
-						}, 1000);
+						}, 500);
 					},
 					error:function(jqXHR,exception)
 					{
@@ -805,6 +736,7 @@ $(document).ready(function(){
 		var atasan  = $("#atasan").val();
 		var kat     = $("#kat").val();
 		var jabatan = $("#jabatan").val();
+		var crud    = $("#crud").val();
 
 	    if (kat.length <= 0)
 		{
@@ -822,10 +754,17 @@ $(document).ready(function(){
 		}
 		else if (atasan == 0)
 		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+			if(kat == 1)
 			{
-				msg: "Data Atasan tidak boleh kosong."
-			});
+				add_struktur();
+			}
+			else
+			{
+				Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+				{
+					msg: "Data Atasan tidak boleh kosong."
+				});
+			}
 		}
 		else
 		{
@@ -864,73 +803,6 @@ $(document).ready(function(){
 			}
 		}
 	})
-
-	$("#edit").click(function(){
-	    var es1     = $("#nes1").val();
-	    var es2     = $("#nes2").val();
-	    var es3     = $("#nes3").val();
-	    var es4     = $("#nes4").val();
-	    var grade   = $("#ngrade").val();
-	    var atasan  = $("#natasan").val();
-	    var kat     = $("#nkat").val();
-	    var jabatan = $("#njabatan").val();
-
-	    if (kat.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Jenis Jabatan tidak boleh kosong."
-			});
-		}
-		else if (es1.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Pimpinan Tinggi Madya Eselon 1 tidak boleh kosong."
-			});
-		}
-		else if (atasan == 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Atasan tidak boleh kosong."
-			});
-		}
-	    else if (grade <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Kelas Jabatan tidak boleh kosong."
-			});
-		}
-		else if (jabatan.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Jabatan tidak boleh kosong."
-			});
-		}
-		else
-		{
-			$.ajax({
-				url :"<?php echo site_url();?>/master/data_struktur/peditStruktur",
-				type:"post",
-				data:$("#editForm").serialize(),
-				beforeSend:function(){
-					$("#editData").modal('hide');
-					$("#loadprosess").modal('show');
-				},
-				success:function(msg){
-					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj);
-				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			})
-		}
-	})
 })
 
 function edit(id){
@@ -938,18 +810,17 @@ function edit(id){
 		function( response )
 		{
 			// console.log(response[0]['atasan']);
-			$("#editData").modal('show');
-			$("#nes1").val(response['eselon1']);
-			$("#nes2").append('<option value="'+response['eselon2']+'" selected>'+response['nama_eselon2']+'</option>');
-			$("#nes3").append('<option value="'+response['eselon3']+'" selected>'+response['nama_eselon3']+'</option>');
-			$("#nes4").append('<option value="'+response['eselon4']+'" selected>'+response['nama_eselon4']+'</option>');
-			$("#natasan").append('<option value="'+response['atasan']+'" selected>'+response['posisi_atasan']+'</option>');
-			$("#ngrade").append('<option value="'+response['posisi_class']+'" selected>'+response['posisi_class']+'</option>');
-			$("#nkat").val(response['kat_posisi']);
-			$("#njabatan").val(response['nama_posisi']);
-			// $("#njabatan").append('<option value="'+response['nama_posisi']+'" selected>'+response['nama_posisi']+'</option>');
-			// $("#natasan").val(response['atasan']);
-			$("#oid").val(response['id']);
+			$("#newData").modal('show');
+			$("#crud").val('update');
+			$("#oid").val(response['id']);			
+			$("#es1").val(response['eselon1']);
+			$("#es2").append('<option value="'+response['eselon2']+'" selected>'+response['nama_eselon2']+'</option>');
+			$("#es3").append('<option value="'+response['eselon3']+'" selected>'+response['nama_eselon3']+'</option>');
+			$("#es4").append('<option value="'+response['eselon4']+'" selected>'+response['nama_eselon4']+'</option>');
+			$("#kat").val(response['kat_posisi']);
+			$("#atasan").append('<option value="'+response['atasan']+'" selected>'+response['posisi_atasan']+'</option>');
+			$("#grade").append('<option value="'+response['posisi_class']+'" selected>'+response['posisi_class']+'</option>');
+			$("#jabatan").val(response['nama_posisi']);
 		}
 	);
 }
@@ -988,11 +859,13 @@ function add_struktur() {
 	var jabatan = $("#jabatan").val();
 	var id_jfu  = $("#id_jfu").val();
 	var id_jft  = $("#id_jft").val();
+	var crud    = $("#crud").val();
+	var oid     = $("#oid").val();
 
 	$.ajax({
 		url :"<?php echo site_url()?>/master/data_struktur/addStruktur",
 		type:"post",
-		data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade+"&id_jfu="+id_jfu+"&id_jft="+id_jft,
+		data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4+"&atasan="+atasan+"&kat="+kat+"&jabatan="+jabatan+"&grade="+grade+"&id_jfu="+id_jfu+"&id_jft="+id_jft+"&crud="+crud+"&oid="+oid,
 		beforeSend:function(){
 			$("#newData").modal('hide');
 			$("#loadprosess").modal('show');

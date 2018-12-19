@@ -77,7 +77,7 @@ $("#select_eselon_4 ").change(function(){
                 });
                 setTimeout(function(){ 
                     $("#loadprosess").modal('hide');                                
-                }, 1000);                                   
+                }, 500);                                   
             },
 			error:function(jqXHR,exception)
 			{

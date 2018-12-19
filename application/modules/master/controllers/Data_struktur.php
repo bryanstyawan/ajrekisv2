@@ -77,20 +77,32 @@ class Data_struktur extends CI_Controller {
 
 	public function addStruktur(){
 		$this->Globalrules->session_rule();							
-		$add = array(
-			'eselon1'      => $this->input->post('es1'),
-			'eselon2'      => $this->input->post('es2'),
-			'eselon3'      => $this->input->post('es3'),
-			'eselon4'      => $this->input->post('es4'),
-			'atasan'       => $this->input->post('atasan'),
-			'kat_posisi'   => $this->input->post('kat'),
-			'posisi_class' => $this->input->post('grade'),
-			'nama_posisi'  => strtoupper($this->input->post('jabatan')),
-			'id_jfu'       => $this->input->post('id_jfu'),
-			'id_jft'       => $this->input->post('id_jft'),			
-		);
-		$res_data    = $this->Allcrud->addData('mr_posisi',$add);
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil ditambahkan.');
+		$res_data    = "";
+		$text_status = "";
+		$add         = array(
+								'eselon1'      => $this->input->post('es1'),
+								'eselon2'      => $this->input->post('es2'),
+								'eselon3'      => $this->input->post('es3'),
+								'eselon4'      => $this->input->post('es4'),
+								'atasan'       => $this->input->post('atasan'),
+								'kat_posisi'   => $this->input->post('kat'),
+								'posisi_class' => $this->input->post('grade'),
+								'nama_posisi'  => strtoupper($this->input->post('jabatan')),
+								'id_jfu'       => $this->input->post('id_jfu'),
+								'id_jft'       => $this->input->post('id_jft'),			
+							);
+		if ($this->input->post('crud') == 'insert') {
+			# code...
+			$res_data    = $this->Allcrud->addData('mr_posisi',$add);
+			$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil ditambahkan.');			
+		}
+		else {
+			# code...
+			$flag = array('id'=>$this->input->post('oid'));			
+			$res_data    = $this->Allcrud->editData('mr_posisi',$add,$flag);
+			$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil diubah.');			
+		}
+
 		$res         = array
 					(
 						'status' => $res_data,
@@ -104,29 +116,6 @@ class Data_struktur extends CI_Controller {
 		$flag = array('id'=>$id);
 		$data = $this->Mmaster->get_posisi_struktur($id);
 		echo json_encode($data[0]);
-	}
-
-	public function peditStruktur(){
-		$this->Globalrules->session_rule();							
-		$flag = array('id'=>$this->input->post('oid'));
-		$edit = array(
-			'eselon1'      => $this->input->post('nes1'),
-			'eselon2'      => $this->input->post('nes2'),
-			'eselon3'      => $this->input->post('nes3'),
-			'eselon4'      => $this->input->post('nes4'),
-			'atasan'       => $this->input->post('natasan'),
-			'posisi_class' => $this->input->post('ngrade'),
-			'kat_posisi'   => $this->input->post('nkat'),
-			'nama_posisi'  => strtoupper($this->input->post('njabatan'))
-		);
-		$res_data    = $this->Allcrud->editData('mr_posisi',$edit,$flag);
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil diubah.');
-		$res         = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);								
 	}
 
 	public function delStruktur($id){

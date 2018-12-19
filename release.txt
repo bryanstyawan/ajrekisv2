@@ -1,4 +1,15 @@
 v2.0.0-Alpha    
+2018-12-19
+==========
+New:
+Improved:
+- improvisasi kecepatan tarik data organisasi, penyederhaaan tarik data
+Fixed:
+- Pembenahan tambah dan update organisasi
+- Pembenahan timeout progress ketika selesai melakukan pencarian
+- Perbaikan tombol pilih untuk jabatan jfu dan jft di organisasi
+
+v2.0.0-Alpha    
 2018-12-17
 ==========
 New:

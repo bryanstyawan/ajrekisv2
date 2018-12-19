@@ -87,7 +87,7 @@ $("#select_eselon_3").change(function(){
 						});
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
-						}, 1000);									
+						}, 500);									
 					},
 					error:function(jqXHR,exception)
 					{
