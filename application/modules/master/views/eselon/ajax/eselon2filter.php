@@ -31,10 +31,11 @@
 <script>
 $(document).ready(function(){
 	$("#select_eselon_2").change(function(){
-		var select_eselon_1 = $("#select_eselon_1").val();
-		var select_eselon_2 = $("#select_eselon_2").val();		
-		var select_eselon_3 = '';				
-		var select_eselon_4 = '';							 
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = '';
+		var select_eselon_4      = '';
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
         $('#select_eselon_3').find('option').remove();    
         $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------')); 	         
         $('#select_eselon_4').find('option').remove();    
@@ -60,7 +61,8 @@ $(document).ready(function(){
 	        					'data_1' : select_eselon_1,
 				                'data_2' : select_eselon_2,
 				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4							
+				                'data_4' : select_eselon_4,
+	        					'data_5': select_jenis_jabatan							
 				}				
 				$.ajax({
 					url :"<?php echo site_url()?><?=$param1;?>/<?=$param;?>",
@@ -88,8 +90,16 @@ $(document).ready(function(){
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
 						}, 1000);									
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})
 	})

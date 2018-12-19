@@ -1,65 +1,4 @@
-<style>
-
-.modal{
-	/*display: block !important; */
-	/* I added this to see the modal, you don't need this */
-}
-
-  /* Important part */
-.modal-dialog{
-	overflow-y: initial !important
-}
-.modal-body{
-	height: 500px;
-	overflow-y: auto;
-}
-
-#preloader {
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background-color:#ffffff; /* change if the mask should have another color then white */
-    z-index:99; /* makes sure it stays on top */
-}
-
-#status {
-    width:200px;
-    height:200px;
-    position:absolute;
-    left:50%; /* centers the loading animation horizontally one the screen */
-    top:50%; /* centers the loading animation vertically one the screen */
-    background-image:url(https://loading.io/spinners/liquid/lg.liquid-fill-preloader.gif); /* path to your loading animation */
-    background-repeat:no-repeat;
-    background-position:center;
-    margin:-100px 0 0 -100px; /* is width and height divided by two */
-}
-
-#text_loader {
-	color: #FF727D;
-    width:600px;
-    height:200px;
-    position:absolute;
-    left:40%; /* centers the loading animation horizontally one the screen */
-    top:85%; /* centers the loading animation vertically one the screen */
-    background-repeat:no-repeat;
-    background-position:center;
-    margin:-100px 0 0 -100px; /* is width and height divided by two */
-}
-</style>
-
-<div id ="preloader">
-	<div id ="status"></div>
-	<h1 id="text_loader">Mohon Tunggu, Sedang Memuat Data</h1>
-</div>
-<script type="text/javascript">
-$(window).load(function() { // makes sure the whole site is loaded
-	$("#status").fadeOut(); // will first fade out the loading animation
-	$("#preloader").delay(350).fadeOut("fast"); // will fade out the white DIV that covers the website.
-})
-
-</script>
+<?=$this->load->view('templates/common/preloader');?>
 <?php
 isset($es1);
 isset($class_posisi);
@@ -70,6 +9,25 @@ isset($class_posisi);
 
 			<div class="box-body">
 				<div class="container-fluid">
+					
+					<div class="row col-xs-12">
+			            <h4>Jenis Jabatan :</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</span>
+							<select class="form-control" name="select_jenis_jabatan" id="select_jenis_jabatan">
+								<option value="">------------NONE------------</option>
+								<?php foreach($jenis_posisi->result() as $row){?>
+									<option value="<?php echo $row->id;?>"><?php echo $row->nama_kat_posisi;?></option>
+								<?php }?>									
+							</select>
+						</div>
+						<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es3" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
+							25%
+						</progress>
+					</div>
+
 					<div class="row col-xs-6">
 
 			            <h4>Pimpinan Tinggi Madya (Eselon I) :</h4>
@@ -101,7 +59,7 @@ isset($class_posisi);
 							<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es3" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
 								25%
 							</progress>
-						</div>
+						</div>						
 					</div>
 
 					<div class="row col-xs-6 pull-right">
@@ -519,7 +477,7 @@ isset($class_posisi);
 <script>
 
 $(function () {
-
+	$("#select_jenis_jabatan").val('1');	
 	$("#select_eselon_1").val('<?=$this->session->userdata('sesEs1');?>');
     $("#example1").DataTable({
 		"oLanguage": {
@@ -568,18 +526,22 @@ $(document).ready(function(){
 		if($("#kat").val() == 2)
 		{
 			$.ajax({
-			url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/res_data/datatable",
-			type:"post",
-			beforeSend:function(){
-				$("#loadprosess").modal('show');
-			},
-			success:function(msg){
-				$('#modal-detail-jfu > div > div > div > div.modal-header > h3').html("Jabatan Fungsional Tertentu");													
-				$("#get-datatable").html(msg);					
-				$("#modal-detail-jfu").modal('show');				
-				$("#loadprosess").modal('hide');							
-			}
-		})		
+				url :"<?php echo site_url()?>master/jabatan_fungsional_tertentu/res_data/datatable",
+				type:"post",
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					$('#modal-detail-jfu > div > div > div > div.modal-header > h3').html("Jabatan Fungsional Tertentu");													
+					$("#get-datatable").html(msg);					
+					$("#modal-detail-jfu").modal('show');				
+					$("#loadprosess").modal('hide');							
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
+			})		
 		}
 		else if($("#kat").val() == 4)
 		{
@@ -594,6 +556,10 @@ $(document).ready(function(){
 				$("#get-datatable").html(msg);					
 				$("#modal-detail-jfu").modal('show');				
 				$("#loadprosess").modal('hide');							
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})		
 		}
@@ -612,7 +578,11 @@ $(document).ready(function(){
 				$("#isies2").html(msg);
 				setTimeout(function(){
 					$("#loadprosess").modal('hide');
-				}, 2000);
+				}, 500);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})
 	})
@@ -625,15 +595,20 @@ $(document).ready(function(){
 			data:"nes1="+es1,
 			success:function(msg){
 				$("#nisies2").html(msg);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})
 	})
 
 	$("#select_eselon_1").change(function(){
-		var select_eselon_1 = $(this).val();
-		var select_eselon_2 = '';
-		var select_eselon_3 = '';
-		var select_eselon_4 = '';
+		var select_eselon_1      = $(this).val();
+		var select_eselon_2      = '';
+		var select_eselon_3      = '';
+		var select_eselon_4      = '';
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
         $('#select_eselon_2').find('option').remove();
         $('#select_eselon_2').append($("<option></option>").attr("value", '').text('------------NONE------------'));
         $('#select_eselon_3').find('option').remove();
@@ -658,10 +633,11 @@ $(document).ready(function(){
 			success:function(msg){
 				$("#isi_select_eselon_2").html(msg);
 				var data_link = {
-	        					'data_1' : select_eselon_1,
-				                'data_2' : select_eselon_2,
-				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4
+	        					'data_1': select_eselon_1,
+	        					'data_2': select_eselon_2,
+	        					'data_3': select_eselon_3,
+	        					'data_4': select_eselon_4,
+	        					'data_5': select_jenis_jabatan
 				}
 				$.ajax({
 					url :"<?php echo site_url()?>/master/filter_data_eselon",
@@ -689,18 +665,27 @@ $(document).ready(function(){
 						setTimeout(function(){
 							$("#loadprosess").modal('hide');
 						}, 1000);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})
 	})
 
 	$("#select_eselon_2").change(function(){
-		var select_eselon_1 = $("#select_eselon_1").val();
-		var select_eselon_2 = $("#select_eselon_2").val();
-		var select_eselon_3 = '';
-		var select_eselon_4 = '';
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = '';
+		var select_eselon_4      = '';
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
         $('#select_eselon_3').find('option').remove();
         $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------'));
         $('#select_eselon_4').find('option').remove();
@@ -723,10 +708,11 @@ $(document).ready(function(){
 			success:function(msg){
 				$("#isi_select_eselon_3").html(msg);
 				var data_link = {
-	        					'data_1' : select_eselon_1,
-				                'data_2' : select_eselon_2,
-				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4
+	        					'data_1': select_eselon_1,
+	        					'data_2': select_eselon_2,
+	        					'data_3': select_eselon_3,
+	        					'data_4': select_eselon_4,
+	        					'data_5': select_jenis_jabatan
 				}
 				$.ajax({
 					url :"<?php echo site_url()?>/master/filter_data_eselon",
@@ -754,8 +740,16 @@ $(document).ready(function(){
 						setTimeout(function(){
 							$("#loadprosess").modal('hide');
 						}, 1000);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
 		})
 	})

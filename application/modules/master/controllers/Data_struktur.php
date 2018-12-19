@@ -13,8 +13,9 @@ class Data_struktur extends CI_Controller {
 		$this->Globalrules->session_rule();								
 		$data['title']        = 'Struktur Organisasi';
 		$data['content']      = 'master/struktur/data_struktur';
+		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']		  = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
+		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
 		$data['class_posisi'] = $this->Mmaster->get_posisi_class();
 		$data['katpos']       = $this->Allcrud->listData('mr_kat_posisi');
 		$data_sender = array
@@ -24,7 +25,7 @@ class Data_struktur extends CI_Controller {
 							'eselon3' => '', 
 							'eselon4' => ''																					
 						);			
-		$data['list']         = $this->Mmaster->get_struktur_organisasi($data_sender);		
+		$data['list']         = $this->Mmaster->get_struktur_organisasi($data_sender,1);		
 		if ($data['list'] != 0) {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) {
@@ -109,14 +110,14 @@ class Data_struktur extends CI_Controller {
 		$this->Globalrules->session_rule();							
 		$flag = array('id'=>$this->input->post('oid'));
 		$edit = array(
-			'eselon1' =>$this->input->post('nes1'),
-			'eselon2' =>$this->input->post('nes2'),
-			'eselon3' =>$this->input->post('nes3'),
-			'eselon4' =>$this->input->post('nes4'),
-			'atasan' =>$this->input->post('natasan'),
-			'posisi_class' =>$this->input->post('ngrade'),
-			'kat_posisi' =>$this->input->post('nkat'),
-			'nama_posisi' =>strtoupper($this->input->post('njabatan'))
+			'eselon1'      => $this->input->post('nes1'),
+			'eselon2'      => $this->input->post('nes2'),
+			'eselon3'      => $this->input->post('nes3'),
+			'eselon4'      => $this->input->post('nes4'),
+			'atasan'       => $this->input->post('natasan'),
+			'posisi_class' => $this->input->post('ngrade'),
+			'kat_posisi'   => $this->input->post('nkat'),
+			'nama_posisi'  => strtoupper($this->input->post('njabatan'))
 		);
 		$res_data    = $this->Allcrud->editData('mr_posisi',$edit,$flag);
 		$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil diubah.');
