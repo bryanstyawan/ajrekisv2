@@ -112,7 +112,44 @@ isset($class_posisi);
 		</div>
 	</div>
 </div>
-<div class="col-xs-12">
+
+<div class="col-xs-12" id="section_detail_pegawai">
+	<div class="box">
+    	<div class="box-header">
+			<h3>Detail Pegawai</h3>
+			<div class="box-tools pull-right">
+				<button class="btn btn-block btn-danger" onclick="detail_pegawai(0,'main')"><i class="fa fa-close"></i></button>
+			</div>
+		</div>
+		<div class="box-body">
+			<div class="container">
+				<div class="row">					
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Jabatan</label>
+							<input type="text" class="form-control" id="f_jabatan" disabled="disabled">
+						</div>
+					</div>
+				</div>					
+			</div>
+			<table id="example2" class="table table-bordered table-striped table-view" style="font-size:12px;">
+				<thead>
+					<tr>
+						<td></td>
+						<td>Nama Pegawai</td>
+						<td>NIP</td>
+						<td>Status</td>
+						<td>Status</td>																				
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="col-xs-12" id="section_view">
 	<div class="box">
     	<div class="box-header">
 			<h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addData"><i class="fa fa-plus-square"></i> Tambah Jabatan</button></h3>
@@ -150,7 +187,7 @@ isset($class_posisi);
 										<td><?=$list[$i]->nama_eselon4;?></td>
 										<td><?=$list[$i]->nama_kat_posisi;?></td>
 										<td><?=$list[$i]->nama_posisi;?></td>
-										<td><?=$list[$i]->counter_pegawai;?></td>
+										<td><a class="btn bg-yellow" onclick="detail_pegawai('<?php echo $list[$i]->id;?>','detail')"><?=$list[$i]->counter_pegawai;?></a></td>
 										<td>
 											<?php
 												if($list[$i]->counter_skp == 0)
@@ -355,6 +392,7 @@ isset($class_posisi);
 <script>
 
 $(function () {
+	$("#section_detail_pegawai").hide();			
 	$("#select_jenis_jabatan").val('1');	
 	$("#select_eselon_1").val('<?=$this->session->userdata('sesEs1');?>');
     $("#example1").DataTable({
@@ -571,7 +609,7 @@ $(document).ready(function(){
 	        					'data_5': select_jenis_jabatan
 				}
 				$.ajax({
-					url :"<?php echo site_url()?>/master/filter_data_eselon",
+					url :"<?php echo site_url()?>master/filter_data_eselon",
 					type:"post",
 					data: { data_sender : data_link},
 					success:function(msg){
@@ -819,7 +857,7 @@ function edit(id){
 			$("#es4").append('<option value="'+response['eselon4']+'" selected>'+response['nama_eselon4']+'</option>');
 			$("#kat").val(response['kat_posisi']);
 			$("#atasan").append('<option value="'+response['atasan']+'" selected>'+response['posisi_atasan']+'</option>');
-			$("#grade").append('<option value="'+response['posisi_class']+'" selected>'+response['posisi_class']+'</option>');
+			$("#grade").append('<option value="'+response['id_posisi_class']+'" selected>'+response['id_posisi_class']+'</option>');
 			$("#jabatan").val(response['nama_posisi']);
 		}
 	);
@@ -879,5 +917,36 @@ function add_struktur() {
 			ajax_catch(jqXHR,exception);					
 		}
 	})	
+}
+
+function detail_pegawai(id,arg) {
+	if(arg == 'detail')
+	{
+		$.ajax({
+			url :"<?php echo site_url()?>/master/data_struktur/get_emp_from_org/"+id,
+			type:"post",
+			beforeSend:function(){
+				$("#newData").modal('hide');
+				$("#loadprosess").modal('show');
+			},
+			success:function(msg){
+				// var obj = jQuery.parseJSON (msg);
+				$("#loadprosess").modal('hide');				
+				$('#example2 tbody').html(msg);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})		
+		$("#section_view").hide();
+		$("#section_detail_pegawai").show();
+	}
+	else if(arg == 'main')
+	{
+		$("#section_view").show();		
+		$("#section_detail_pegawai").hide();	
+		$('#example2 tbody').html('');			
+	}
 }
 </script>

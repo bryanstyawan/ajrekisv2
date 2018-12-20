@@ -146,4 +146,10 @@ class Data_struktur extends CI_Controller {
 		$this->load->view('master/struktur/ajaxCariStruktur',$data);
 	}	
 
+	public function get_emp_from_org($id)
+	{
+		$data['header'] = $this->Allcrud->getData('mr_posisi',array('id'=>$id))->result_array();
+		$data['list']   = $this->Allcrud->getData('mr_pegawai',array('posisi'=>$id))->result_array();
+		$this->load->view('master/struktur/ajax_emp_in_org',$data);		
+	}
 }

@@ -1,4 +1,15 @@
 v2.0.0-Alpha    
+2018-12-20
+==========
+New:
+- Penambahan fitur melihat detail pegawai (status aktif / tidak aktif (hapus))
+Improved:
+- Penyesuaian filter organisasi
+Fixed:
+- Perbaikan penempelan id jfu di organisasi
+- Perbaikan posisi di organisasi (edit)
+
+v2.0.0-Alpha    
 2018-12-19
 ==========
 New:

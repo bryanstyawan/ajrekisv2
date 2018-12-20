@@ -1,8 +1,8 @@
 <?php
-	if ($list != 0) 
+	if ($list != 0)
 	{
 		# code...
-		for ($i=0; $i < count($list); $i++) { 
+		for ($i=0; $i < count($list); $i++) {
 			# code...
 ?>
 			<tr>
@@ -13,7 +13,7 @@
 				<td><?=$list[$i]->nama_eselon4;?></td>
 				<td><?=$list[$i]->nama_kat_posisi;?></td>
 				<td><?=$list[$i]->nama_posisi;?></td>
-				<td><?=$list[$i]->counter_pegawai;?></td>				
+				<td><a class="btn bg-yellow" onclick="detail_pegawai('<?php echo $list[$i]->id;?>','detail')"><?=$list[$i]->counter_pegawai;?></a></td>
 				<td>
 					<?php
 						if($list[$i]->counter_skp == 0)
@@ -29,25 +29,33 @@
 					<?php													
 						}
 					?>
-				</td>				
-				<td>
-<?php
-				if ($param == 'master_skp') {
-					# code...
-?>
-					<button class="btn btn-primary btn-xs" onclick="show_skp('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> SKP</button>&nbsp;&nbsp;
-<?php					
-				}
-				else
-				{
-?>
-					<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
-					<button class="btn btn-primary btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>
-<?php
-				}
-?>
 				</td>
-			</tr>			
+				<td>
+					<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
+
+					<?php
+						if($list[$i]->counter_skp == 0)
+						{
+					?>
+							<?php
+								if ($list[$i]->counter_pegawai < 1) {
+									# code...
+							?>
+									<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+							<?php
+								}
+								else {
+									# code...
+							?>
+									<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+							<?php														
+								}
+							?>
+					<?php
+						}
+					?>
+				</td>
+			</tr>
 <?php
 		}
 	}

@@ -178,8 +178,14 @@ class Data_pegawai extends CI_Controller {
 
 	public function delPegawai($id){
 		$this->Globalrules->session_rule();
-		$flag = array('id' => $id);
-		$this->Allcrud->delData('mr_pegawai',$flag);
+		$res_data    = $this->Allcrud->delData('mr_pegawai',array('id' => $id));
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil dihapus.');		
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);									
 	}
 
 	public function delete_masa_kerja($id){

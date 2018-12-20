@@ -436,7 +436,8 @@ class Mmaster extends CI_Model {
 						c.nama_eselon3,
 						d.nama_eselon4,
 						e.nama_posisi as `posisi_atasan`,
-						f.tunjangan
+						f.tunjangan,
+						f.posisi_class as `id_posisi_class`
 				FROM mr_posisi a
 				LEFT JOIN mr_eselon2 b
 				ON b.id_es2       = a.eselon2
@@ -447,7 +448,7 @@ class Mmaster extends CI_Model {
 				LEFT JOIN mr_posisi e
 				ON e.id       = a.atasan
 				LEFT JOIN mr_posisi_class f
-				ON f.posisi_class       = a.posisi_class
+				ON f.id       = a.posisi_class
 				WHERE a.id = '".$id."'
 				";
 		$query = $this->db->query($sql);

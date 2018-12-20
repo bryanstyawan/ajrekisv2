@@ -65,8 +65,8 @@
 
 function get_data(arg) 
 {
-    $("#id_jft").val(arg);
-    $("#id_jfu").val('');            
+    $("#id_jft").val('');
+    $("#id_jfu").val(arg);            
     $("#jabatan").val($("#nama_jabatan_"+arg).val());
     $("#grade").val($("#posisi_kelas_"+arg).val());            
     $("#modal-detail-jfu").modal('hide');    
