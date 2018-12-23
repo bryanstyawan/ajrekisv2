@@ -923,7 +923,7 @@ function detail_pegawai(id,arg) {
 	if(arg == 'detail')
 	{
 		$.ajax({
-			url :"<?php echo site_url()?>/master/data_struktur/get_emp_from_org/"+id,
+			url :"<?php echo site_url()?>master/data_struktur/get_emp_from_org/"+id,
 			type:"post",
 			beforeSend:function(){
 				$("#newData").modal('hide');

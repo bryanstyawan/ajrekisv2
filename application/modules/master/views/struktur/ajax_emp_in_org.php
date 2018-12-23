@@ -66,4 +66,28 @@ function del(id){
  	   }
     })
 }
+
+function lepas_jabatan(id)
+{
+    Lobibox.confirm({
+		 title: "Konfirmasi",
+		 msg: "Anda yakin ingin lepas jabatan ini ?",
+		 callback: function ($this, type) {
+			if (type === 'yes'){
+				$.ajax({
+					url :"<?php echo site_url()?>master/data_struktur/lepas_jabatan/"+id,
+					type:"post",
+                    success:function(msg){
+                        var obj = jQuery.parseJSON (msg);
+                        ajax_status(obj);
+                    },
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
+                    }
+				})
+			}
+ 	   }
+    })    
+}
 </script>

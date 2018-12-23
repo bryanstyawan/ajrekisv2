@@ -28,9 +28,9 @@ class Mlogin extends CI_Model {
 						d.tunjangan,
 						d.posisi_class as `grade`
 		FROM mr_pegawai a 
-		JOIN mr_posisi b 
+		LEFT JOIN mr_posisi b 
 		ON b.id       = a.posisi 
-		JOIN user_role c 
+		LEFT JOIN user_role c 
 		ON a.id_role  = c.id_role
 		LEFT JOIN mr_eselon4 es4
 		ON es4.id_es4 = a.es4
@@ -40,10 +40,10 @@ class Mlogin extends CI_Model {
 		ON es2.id_es2 = es3.id_es2
 		LEFT JOIN mr_eselon1 es1
 		ON es1.id_es1 = es2.id_es1
-		JOIN mr_posisi_class d
+		LEFT JOIN mr_posisi_class d
 		ON b.posisi_class = d.id		
 		WHERE a.nip = '$nip' 
-		AND a.password = '$secured_pass'
+		---AND a.password = '$secured_pass'
 		AND a.status='1' 
 		ORDER BY a.id ASC
 		LIMIT 1

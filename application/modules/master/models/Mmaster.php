@@ -131,7 +131,8 @@ class Mmaster extends CI_Model {
 					a.id as id_pegawai,
 					a.nip,
 					a.nama_pegawai,
-					b.nama_posisi,
+					COALESCE(b.kat_posisi,'-') as kat_posisi,					
+					COALESCE(b.nama_posisi,'-') as nama_posisi,
 					COALESCE(es1.nama_eselon1,'-') as nama_eselon1,
 					COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
 					COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
@@ -139,22 +140,22 @@ class Mmaster extends CI_Model {
 					".$select_opt."
 					b.atasan,
 					COALESCE (
-							(
-								SELECT
-									tmt.StartDate
-								FROM
-									mr_masa_kerja tmt
-								WHERE tmt.EndDate <> '9999-01-01'
-								AND tmt.id_pegawai = a.id
-								ORDER BY tmt.EndDate ASC
-								LIMIT 1
-							),
-							'-'
+								(
+									SELECT
+										tmt.StartDate
+									FROM
+										mr_masa_kerja tmt
+									WHERE tmt.EndDate <> '9999-01-01'
+									AND tmt.id_pegawai = a.id
+									ORDER BY tmt.EndDate ASC
+									LIMIT 1
+								),
+								'-'
 						) AS tmt
 				FROM mr_pegawai a
-				JOIN mr_posisi b ON b.id = a.posisi
-				JOIN mr_posisi_class c ON b.posisi_class = c.id
-				JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+				LEFT JOIN mr_posisi b ON b.id = a.posisi
+				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
 				LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
 				LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
 				LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4

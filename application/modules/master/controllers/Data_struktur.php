@@ -152,4 +152,20 @@ class Data_struktur extends CI_Controller {
 		$data['list']   = $this->Allcrud->getData('mr_pegawai',array('posisi'=>$id))->result_array();
 		$this->load->view('master/struktur/ajax_emp_in_org',$data);		
 	}
+
+	public function lepas_jabatan($id)
+	{
+		$add         = array(
+			'posisi'      => ''
+		);		
+		$flag = array('id'=>$id);			
+		$res_data    = $this->Allcrud->editData('mr_pegawai',$add,$flag);
+		$text_status = $this->Globalrules->check_status_res($res_data,'Jabatan telah dilepas.');		
+		$res         = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);										
+	}
 }

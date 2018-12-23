@@ -2,6 +2,14 @@ v2.0.0-Alpha
 2018-12-20
 ==========
 New:
+- Penambahan Lepas jabatan
+Improved:
+Fixed:
+
+v2.0.0-Alpha    
+2018-12-20
+==========
+New:
 - Penambahan fitur melihat detail pegawai (status aktif / tidak aktif (hapus))
 Improved:
 - Penyesuaian filter organisasi
