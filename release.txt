@@ -1,5 +1,5 @@
 v2.0.0-Alpha    
-2018-12-20
+2018-12-23
 ==========
 New:
 - Penambahan Lepas jabatan
