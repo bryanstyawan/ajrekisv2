@@ -19,10 +19,11 @@ class Data_pegawai extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
-		$data['es1']   = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']   = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
-		$data['role']  = $this->Allcrud->listData('user_role');
-		$data['agama'] = $this->Allcrud->listData('mr_agama');
+		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
+		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
+		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
+		$data['role']         = $this->Allcrud->listData('user_role');
+		$data['agama']        = $this->Allcrud->listData('mr_agama');
 		$this->load->view('templateAdmin',$data);
 	}
 

@@ -73,6 +73,7 @@ class Mmaster extends CI_Model {
 		$sql_2      = "";
 		$sql_3      = "";
 		$sql_4      = "";
+		$sql_5      = "";		
 		$select_opt = "	COALESCE(
 									(SELECT 
 											pic.photo
@@ -94,6 +95,7 @@ class Mmaster extends CI_Model {
 		{
 			# code...
 			$sql_1 = "AND a.es1 = '".$this->session->userdata('sesEs1')."'";
+			$sql_5 = "AND b.kat_posisi = 1";			
 		}
 		elseif ($flag == 'report') {
 			# code...
@@ -125,6 +127,12 @@ class Mmaster extends CI_Model {
 				$sql_4 = "";
 			}
 			else $sql_4 = "AND a.es4 = '".$flag['eselon4']."'";
+
+			if ($flag['kat_posisi'] == '') {
+				# code...
+				$sql_5 = "";
+			}
+			else $sql_5 = "AND b.kat_posisi = '".$flag['kat_posisi']."'";			
 		}
 
 		$sql = "SELECT
@@ -173,6 +181,7 @@ class Mmaster extends CI_Model {
 				".$sql_2."
 				".$sql_3."
 				".$sql_4."
+				".$sql_5."				
 				ORDER BY ".$order_by."";
 		$query = $this->db->query($sql);
 		// print_r($sql);die();

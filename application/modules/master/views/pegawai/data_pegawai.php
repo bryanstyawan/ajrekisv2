@@ -5,6 +5,25 @@
 
 			<div class="box-body">
 				<div class="container-fluid">
+
+					<div class="row col-xs-12">
+			            <h4>Jenis Jabatan :</h4>
+						<div class="input-group">
+							<span class="input-group-addon">
+								<i class="fa fa-calendar"></i>
+							</span>
+							<select class="form-control" name="select_jenis_jabatan" id="select_jenis_jabatan">
+								<option value="">------------NONE------------</option>
+								<?php foreach($jenis_posisi->result() as $row){?>
+									<option value="<?php echo $row->id;?>"><?php echo $row->nama_kat_posisi;?></option>
+								<?php }?>									
+							</select>
+						</div>
+						<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es3" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
+							25%
+						</progress>
+					</div>
+
 					<div class="row col-xs-6">
 
 						<h4>Pimpinan Tinggi Madya (Eselon I) :</h4>
@@ -256,8 +275,8 @@ function progress_bar(al) {
 function preview_image(id,url) {
     // body...
     content = '<form id="editForm" name="addForm"><div class="col-lg-12">'+
-    		  	'<img class="col-lg-12" style="padding-bottom: 15px;width: 410px !important;height: 450px !important;" src="'+url+'">'+
-    		  '</div></form>';
+				'<img class="col-lg-12" style="padding-bottom: 15px;width: 410px !important;height: 450px !important;" src="'+url+'">'+
+			'</div></form>';
 	$("#preview_image_content").html(content);
     $("#preview_image_popup").modal('show');
     // $("#oid_keberatan").val(id);
@@ -265,12 +284,72 @@ function preview_image(id,url) {
 
 
 $(document).ready(function(){
+	$("#select_jenis_jabatan").val(1);	
 	$("#select_eselon_1").val('<?=$this->session->userdata('sesEs1');?>');
+	$('#select_jenis_jabatan').change(function() {
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = $("#select_eselon_3").val();
+		var select_eselon_4      = $("#select_eselon_4").val();
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();		
+		var data_link = {
+						'data_1': select_eselon_1,
+						'data_2': select_eselon_2,
+						'data_3': select_eselon_3,
+						'data_4': select_eselon_4,
+						'data_5': select_jenis_jabatan
+		}
+		$.ajax({
+			url :"<?php echo site_url()?>master/filter_data_pegawai",
+			type:"post",
+			data: { data_sender : data_link},
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#halaman_header").html("");
+				$("#halaman_footer").html("");
+				$('.table-view').dataTable().fnDestroy();
+				$(".table-view tbody tr").remove();
+				var newrec  = '<tr">' +
+		        					'<td colspan="5" class="text-center">Memuat Data</td>'
+		    				   '</tr>';
+		        $('.table-view tbody').append(newrec);
+			},			
+			success:function(msg){
+				$(".table-view tbody tr").remove();
+				$("#table_content").html(msg);
+				$(".table-view").DataTable({
+					"oLanguage": {
+						"sSearch": "Pencarian :",
+						"sSearchPlaceholder" : "Ketik untuk mencari",
+						"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+						"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+						"sZeroRecords": "Data tidak ditemukan"
+					},
+					"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+							"<'row'<'col-sm-12'tr>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+					"bSort": false
+					// "dom": '<"top"f>rt'
+					// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+				});
+				setTimeout(function(){
+					$("#loadprosess").modal('hide');
+				}, 500);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})		
+	})
+
 	$("#select_eselon_1").change(function(){
-		var select_eselon_1 = $(this).val();
-		var select_eselon_2 = '';
-		var select_eselon_3 = '';
-		var select_eselon_4 = '';
+		var select_eselon_1      = $(this).val();
+		var select_eselon_2      = '';
+		var select_eselon_3      = '';
+		var select_eselon_4      = '';
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
         $('#select_eselon_2').find('option').remove();
         $('#select_eselon_2').append($("<option></option>").attr("value", '').text('------------NONE------------'));
         $('#select_eselon_3').find('option').remove();
@@ -295,10 +374,11 @@ $(document).ready(function(){
 			success:function(msg){
 				$("#isi_select_eselon_2").html(msg);
 				var data_link = {
-	        					'data_1' : select_eselon_1,
-				                'data_2' : select_eselon_2,
-				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4
+	        					'data_1': select_eselon_1,
+	        					'data_2': select_eselon_2,
+	        					'data_3': select_eselon_3,
+	        					'data_4': select_eselon_4,
+	        					'data_5': select_jenis_jabatan
 				}
 				$.ajax({
 					url :"<?php echo site_url()?>/master/filter_data_pegawai",

@@ -5,6 +5,7 @@ New:
 - timerange normal
 Improved:
 - penyesuaian kelas jabatan jfu dan jft
+- improvisasi kecepatan tarik data pegawai, penyederhaaan tarik data
 Fixed:
 - penyesuaian timerange tmt pegawai
 - Pembersihan code view pegawai

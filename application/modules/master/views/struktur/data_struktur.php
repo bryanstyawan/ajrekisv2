@@ -519,16 +519,21 @@ $(document).ready(function(){
 		})
 	})
 
-	$("#select_jenis_jabatan").change(function(){  
+	$('#select_jenis_jabatan').change(function() {
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = $("#select_eselon_3").val();
+		var select_eselon_4      = $("#select_eselon_4").val();
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();		
 		var data_link = {
-						'data_1': $("#select_eselon_1").val(),
-						'data_2': $("#select_eselon_2").val(),
-						'data_3': $("#select_eselon_3").val(),
-						'data_4': $("#select_eselon_4").val(),
-						'data_5': $("#select_jenis_jabatan").val()
+						'data_1': select_eselon_1,
+						'data_2': select_eselon_2,
+						'data_3': select_eselon_3,
+						'data_4': select_eselon_4,
+						'data_5': select_jenis_jabatan
 		}
 		$.ajax({
-			url :"<?php echo site_url()?>/master/filter_data_eselon",
+			url :"<?php echo site_url()?>master/filter_data_eselon",
 			type:"post",
 			data: { data_sender : data_link},
 			beforeSend:function(){
@@ -541,7 +546,7 @@ $(document).ready(function(){
 		        					'<td colspan="8" class="text-center">Memuat Data</td>'
 		    				   '</tr>';
 		        $('#example1 tbody').append(newrec);
-			},			
+			},
 			success:function(msg){
 				$("#example1 tbody tr").remove();
 				$("#table_content").html(msg);
@@ -563,7 +568,7 @@ $(document).ready(function(){
 				});
 				setTimeout(function(){
 					$("#loadprosess").modal('hide');
-				}, 1000);
+				}, 500);
 			},
 			error:function(jqXHR,exception)
 			{

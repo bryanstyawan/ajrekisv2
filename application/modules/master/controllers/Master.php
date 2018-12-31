@@ -404,10 +404,11 @@ class Master extends CI_Controller {
 		$data_sender = $this->input->post('data_sender');
 		$data_sender = array
 						(
-							'eselon1' => $data_sender['data_1'],
-							'eselon2' => $data_sender['data_2'],
-							'eselon3' => $data_sender['data_3'],
-							'eselon4' => $data_sender['data_4']
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'kat_posisi' => $data_sender['data_5']
 						);
 
 		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
