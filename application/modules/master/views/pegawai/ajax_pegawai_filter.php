@@ -34,9 +34,24 @@
 							<td><?=$list[$i]->nip;?></td>
 							<td><?=$list[$i]->nama_pegawai;?></td>
 							<td><?=$list[$i]->nama_posisi;?></td>
-							<td><?=$list[$i]->posisi_class;?></td>
-              <td><?=$list[$i]->tmt;?></td>
-              <td></td>
+							<td>
+								<?php
+									if ($list[$i]->kat_posisi == 1) {
+										# code...
+										echo $list[$i]->posisi_class_raw;
+									}
+									elseif ($list[$i]->kat_posisi == 2) {
+										# code...
+										echo $list[$i]->posisi_class_jft;										
+									}
+									elseif ($list[$i]->kat_posisi == 4) {
+										# code...
+										echo $list[$i]->posisi_class_jfu;										
+									}									
+								?>
+							</td>
+							<td><?=$list[$i]->tmt;?></td>
+							<td></td>
 							<td>
 								<?php echo anchor('master/data_pegawai/ubah_pegawai/'.$list[$i]->id,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button>');?>&nbsp;&nbsp;
 								<button class="btn btn-primary btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>

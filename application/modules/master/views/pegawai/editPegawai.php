@@ -151,7 +151,7 @@
 				<div class="form-group">
 	                <label for="inputnama" class="col-md-2 control-label">TMT</label>
 	                <div class="col-md-9">
-	                	<input type="text" id="tmt" name="tmt" class="form-control timerange" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask value="<?php if($pegawai != ''){ echo $pegawai[0]->tmt_jabatan;}?>">
+	                	<input type="text" id="tmt" name="tmt" class="form-control timerange-normal" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask value="<?php if($pegawai != ''){ echo $pegawai[0]->tmt_jabatan;}?>">
 	                </div>
 	            </div>
 

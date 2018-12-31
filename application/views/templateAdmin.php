@@ -137,6 +137,13 @@ $(document).ready(function()
         daysOfWeekHighlighted: "0,6"
     });
 
+    $('.timerange-normal').datepicker({
+        maxDate: new Date,
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        daysOfWeekHighlighted: "0,6"
+    });    
+
     $(".timerange").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
 
     $("#noti-tab").click(function(){

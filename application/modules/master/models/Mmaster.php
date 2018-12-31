@@ -132,7 +132,10 @@ class Mmaster extends CI_Model {
 					a.nip,
 					a.nama_pegawai,
 					COALESCE(b.kat_posisi,'-') as kat_posisi,					
-					COALESCE(b.nama_posisi,'-') as nama_posisi,
+					COALESCE(b.nama_posisi,'-') as nama_posisi, 
+					COALESCE(c.posisi_class,'-') as posisi_class_raw,
+					COALESCE(cls_jft.posisi_class,'-') as posisi_class_jft,
+					COALESCE(cls_jfu.posisi_class,'-') as posisi_class_jfu,															
 					COALESCE(es1.nama_eselon1,'-') as nama_eselon1,
 					COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
 					COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
@@ -155,6 +158,10 @@ class Mmaster extends CI_Model {
 				FROM mr_pegawai a
 				LEFT JOIN mr_posisi b ON b.id = a.posisi
 				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft = jft.id
+				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id				
+				LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu = jfu.id
+				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
 				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
 				LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
 				LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
@@ -583,7 +590,7 @@ class Mmaster extends CI_Model {
 	{
 		# code...
 		$sql = "SELECT a.*,
-						b.nama_posisi,
+						COALESCE(b.nama_posisi,'-') as nama_posisi,
 						COALESCE(es1.nama_eselon1,'-') as nama_eselon1,
 						COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
 						COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
@@ -605,9 +612,9 @@ class Mmaster extends CI_Model {
 						b.kat_posisi,
 						c.posisi_class
 				FROM mr_pegawai a
-				JOIN mr_posisi b ON b.id = a.posisi
-				JOIN mr_posisi_class c ON b.posisi_class = c.id
-				JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+				LEFT JOIN mr_posisi b ON b.id = a.posisi
+				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
 				LEFT OUTER JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
 				LEFT OUTER JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
 				LEFT OUTER JOIN mr_eselon4 es4 on es4.id_es4 = a.es4

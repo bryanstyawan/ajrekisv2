@@ -1,8 +1,19 @@
 v2.0.0-Alpha    
+2018-12-31
+==========
+New:
+- timerange normal
+Improved:
+- penyesuaian kelas jabatan jfu dan jft
+Fixed:
+- penyesuaian timerange tmt pegawai
+- Pembersihan code view pegawai
+
+v2.0.0-Alpha    
 2018-12-23
 ==========
 New:
-- Penambahan Lepas jabatan
+- Lepas jabatan
 Improved:
 Fixed:
 
@@ -10,7 +21,7 @@ v2.0.0-Alpha
 2018-12-20
 ==========
 New:
-- Penambahan fitur melihat detail pegawai (status aktif / tidak aktif (hapus))
+- fitur melihat detail pegawai (status aktif / tidak aktif (hapus))
 Improved:
 - Penyesuaian filter organisasi
 Fixed:
@@ -32,7 +43,7 @@ v2.0.0-Alpha
 2018-12-17
 ==========
 New:
-- Penambahan Progress Kuantitas SKP di penilaian kinerja/skp bawahan
+- Progress Kuantitas SKP di penilaian kinerja/skp bawahan
 Improved:
 - Pemindahan posisi layout 'Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?' dari posisi bawah ke atas di penilaian kinerja/skp bawahan
 - Pemindahan posisi layout close di penilaian kinerja/skp bawahan
@@ -58,9 +69,9 @@ v2.0.0-Alpha
 2018-12-11
 ==========
 New:
-- Penambahan progres bar untuk mengetahui statistik skp yang tersedia di master skp [Jabatan struktural]
-- Penambahan nama posisi di master skp [Jabatan struktural]
-- Penambahan Informasi pegawai di penilaian skp bulanan
+- progres bar untuk mengetahui statistik skp yang tersedia di master skp [Jabatan struktural]
+- nama posisi di master skp [Jabatan struktural]
+- Informasi pegawai di penilaian skp bulanan
 Improved:
 Fixed:
 - Perbaikan notifikasi di halaman ganti password yang sebelumnya error
@@ -79,7 +90,7 @@ v2.0.0-Alpha
 2018-12-03
 ==========
 New:
-- Penambahan pemotongan tunjangan bawahan berdasarkan penilaian capaian skp oleh atasan di dashboard
+- pemotongan tunjangan bawahan berdasarkan penilaian capaian skp oleh atasan di dashboard
 Improved:
 - Penambahan daftar bawahan di dashboard untuk atasan
 - pembenahan struktur dashboard
@@ -93,7 +104,7 @@ v2.0.0-Alpha
 2018-11-28
 ==========
 New:
-- Penambahan tombol kembali pada ubah data pribadi
+- tombol kembali pada ubah data pribadi
 Improved:
 - Penambahan fitur hapus semua uraian tugas di master skp
 Fixed:
@@ -121,7 +132,7 @@ Improved:
 - Penilaian Prilaku, atasan dapat langsung menilai bawahan tanpa harus bawahan mengajukan penilaian Prilaku
 - Penilaian Prilaku, tambahan rekomendasi yang wajib diisi oleh atasan
 - Penilaian Prilaku, ada penanda jika sudah dilakukan penilaian
-- Penambahan lupa password (popup Informasi)
+- lupa password (popup Informasi)
 - Penambahan dan improvisasi Notification error + mempersingkat cooldown setelah proses transaksi di eselon 1,2,3,4
 Fixed:
 
