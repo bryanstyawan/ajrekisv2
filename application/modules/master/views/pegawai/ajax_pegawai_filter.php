@@ -47,7 +47,11 @@
 									elseif ($list[$i]->kat_posisi == 4) {
 										# code...
 										echo $list[$i]->posisi_class_jfu;										
-									}									
+									}
+									elseif ($list[$i]->kat_posisi == 6) {
+										# code...
+										echo $list[$i]->posisi_class_raw;										
+									}
 								?>
 							</td>
 							<td><?=$list[$i]->tmt;?></td>

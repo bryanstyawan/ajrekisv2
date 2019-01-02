@@ -9,6 +9,7 @@ Improved:
 Fixed:
 - penyesuaian timerange tmt pegawai
 - Pembersihan code view pegawai
+- penyimpanan tmt jabatan pegawai
 
 v2.0.0-Alpha    
 2018-12-23

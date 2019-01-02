@@ -156,7 +156,7 @@ class Data_pegawai extends CI_Controller {
 									);
 					$flag_lama = array
 							(
-								'id' => $get_masa_kerja_detail[1]->id
+								'id' => $get_masa_kerja_pegawai[1]->id
 							);
 
 					$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,$flag_lama);
