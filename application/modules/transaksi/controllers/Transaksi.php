@@ -23,7 +23,7 @@ class Transaksi extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
-		$flag                         = array('tahun'      =>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));
+		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));
 		$data['urtug']                = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'approve',1);
 		$data['tr_belum_diperiksa']   = $this->mtrx->status_pekerjaan('0',$this->session->userdata('sesUser'));
 		$data['tr_disetujui']         = $this->mtrx->status_pekerjaan('1',$this->session->userdata('sesUser'));
@@ -34,8 +34,8 @@ class Transaksi extends CI_Controller {
 		$data['tr_banding']           = $this->mtrx->status_pekerjaan('6',$this->session->userdata('sesUser'));
 		$data['tr_banding_ditolak']   = $this->mtrx->status_pekerjaan('7',$this->session->userdata('sesUser'));
 		$data['hari_kerja']           = $this->mtrx->get_hari_kerja();
+		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
 		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-
 		if ($data['member'] != 0) {
 			// code...
 			for ($i=0; $i < count($data['member']); $i++) {

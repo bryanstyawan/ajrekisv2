@@ -1,4 +1,5 @@
 <?php
+$infoPegawai   = $this->Globalrules->get_info_pegawai($id,'id');
 $nama_pegawai  = "";
 $nama_jabatan  = "";
 $nama_eselon1  = "";
@@ -7,6 +8,7 @@ $nama_eselon3  = "";
 $nama_eselon4  = "";
 $nip           = "";
 $kelas_jabatan = "";
+$kat_posisi    = "";
 if ($infoPegawai != 0 || $infoPegawai != '') {
     # code...
     $nama_pegawai  = $infoPegawai[0]->nama_pegawai;
@@ -17,6 +19,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $nama_eselon4  = $infoPegawai[0]->nama_eselon4;
     $nip           = $infoPegawai[0]->nip;
     $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
+    $kat_posisi    = $infoPegawai[0]->kat_posisi;
 }
 ?>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
@@ -236,10 +239,19 @@ if ($member != 0) {
                             $pk_status           = "";
                             $keterangan          = "";
 
-                            $kegiatan            = $list[$i]->kegiatan;
-                            if ($list[$i]->id_skp_master != '') {
+                            if ($kat_posisi == 1) {
                                 # code...
-                                $kegiatan            = $list[$i]->kegiatan_skp;
+                                if ($list[$i]->id_skp_master != '') {
+                                    # code...
+                                    $kegiatan = $list[$i]->kegiatan_skp;
+                                }                                
+                            }
+                            elseif ($kat_posisi == 4) {
+                                # code...
+                                if ($list[$i]->id_skp_jfu != '') {
+                                    # code...
+                                    $kegiatan = $list[$i]->kegiatan_skp_jfu;
+                                }                                
                             }
                             $AK_target           = $list[$i]->AK_target;
                             $target_qty          = $list[$i]->target_qty;
@@ -518,35 +530,14 @@ function approve_skp(id,status,status_edit) {
                     beforeSend:function(){
                         $("#loadprosess").modal('show');
                     },
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
-                    },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal melakukan transaksi '
-                        });
-                    }
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
         }
@@ -576,7 +567,7 @@ function detail_skp(id) {
     $("#loadprosess").modal('show');                                                    
     setTimeout(function(){
         window.location.href = "<?php echo base_url().'index.php/skp/skp_member_detail/'?>"+id;
-    }, 1500);                               
+    }, 500);                               
 }
 
 $(document).ready(function()
@@ -596,7 +587,6 @@ $(document).ready(function()
         status      = $("#status_tolak").val();
         status_edit = $("#status_edit_tolak").val();
 
-        console.log(alasan.length);
         if (alasan.length <= 0)
         {
             // $("#tolak_skp_data").modal('hide');
@@ -619,32 +609,11 @@ $(document).ready(function()
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
+                    ajax_status(obj);
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal melakukan transaksi '
-                    });
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
                 }
             })
         }
@@ -681,32 +650,11 @@ $(document).ready(function()
             },
             success:function(msg){
                 var obj = jQuery.parseJSON (msg);
-                if (obj.status == 1)
-                {
-                    Lobibox.notify('success', {
-                        msg: obj.text
-                        });
-                    setTimeout(function(){
-                        $("#loadprosess").modal('hide');
-                        setTimeout(function(){
-                            location.reload();
-                        }, 1500);
-                    }, 5000);
-                }
-                else
-                {
-                    Lobibox.notify('success', {
-                        msg: obj.text
-                        });
-                    setTimeout(function(){
-                        $("#loadprosess").modal('hide');
-                    }, 5000);
-                }
+                ajax_status(obj);
             },
-            error:function(){
-                Lobibox.notify('error', {
-                    msg: 'Gagal Menambah Pekerjaan'
-                });
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
             }
         })
     })

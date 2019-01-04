@@ -63,6 +63,7 @@ class Mtrx extends CI_Model
 			 		   	b.kegiatan as `uraian_tugas`,
 					   	COALESCE(c.nama,'-') as `target_output_name`,
 					   	d.kegiatan as `kegiatan_skp`,
+						jfu.uraian_tugas as `kegiatan_skp_jfu`,													   
 						COALESCE(
 						(
 							SELECT SUM(aa.frekuensi_realisasi)
@@ -76,6 +77,7 @@ class Mtrx extends CI_Model
 				JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
 				LEFT OUTER JOIN mr_skp_satuan c ON b.target_output = c.id
 				LEFT OUTER JOIN mr_skp_master d ON b.id_skp_master = d.id_skp
+				LEFT OUTER JOIN mr_jabatan_fungsional_umum_uraian_tugas jfu ON b.id_skp_jfu = jfu.id				
 				WHERE a.tanggal_mulai LIKE '%".date('Y-m')."%'
 				AND a.tanggal_selesai LIKE '%".date('Y-m')."%'
 				AND a.status_pekerjaan = '".$status."'

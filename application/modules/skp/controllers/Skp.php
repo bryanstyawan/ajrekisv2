@@ -26,13 +26,14 @@ class Skp extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Setup SKP';
-		$data['subtitle'] = '';
-		$data['list']     = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'10');
-		$data['content']  = 'skp/skp_pegawai';
-		$data['who_is']   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
-		$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
-		$data['jenis']    = $this->Allcrud->listData('mr_skp_jenis');
+		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Setup SKP';
+		$data['subtitle']    = '';
+		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'10');
+		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
+		$data['content']     = 'skp/skp_pegawai';
+		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
+		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
+		$data['jenis']       = $this->Allcrud->listData('mr_skp_jenis');
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -323,7 +324,7 @@ class Skp extends CI_Controller {
 		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
 		$data['subtitle']    = '';
 		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),11);
-		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($id,'id');
+		$data['id']          = $id;
 		$data['member']   	 = $this->mskp->get_member($this->session->userdata('sesPosisi'));
 		if ($data['member'] != 0) {
 			// code...
@@ -1134,8 +1135,30 @@ class Skp extends CI_Controller {
 			}
 			elseif ($kat_posisi == 4) {
 				# code...
-				if ($check_posisi[0]['id_jfu']) {
+				if ($check_posisi[0]['id_jfu'] != '') {
 					# code...
+					$check_jfu = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $check_posisi[0]['id_jfu']))->result_array();
+					if ($check_jfu != array()) {
+						# code...
+						for ($i=0; $i < count($check_jfu); $i++) { 
+							# code...
+							$check_data = $this->mskp->check_pekerjaan_pegawai_jfu($id_pegawai,$check_jfu[$i]['id'],$tahun);
+							if ($check_data == false) {
+								# code...
+								$data = array(
+									'id_pegawai'     => $id_pegawai,
+									'id_posisi'      => $posisi,
+									'tahun'          => date('Y'),
+									'id_skp_master'  => '',
+									'id_skp_jfu'     => $check_jfu[$i]['id'],
+									'id_skp_jft'     => '',									
+									'status'         => '6',
+									'audit_priority' => ''
+								);
+								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+							}							
+						}
+					}		
 				}
 				else {
 					# code...
@@ -1559,7 +1582,17 @@ class Skp extends CI_Controller {
 			for ($i=0; $i < count($data['list_skp']); $i++) {
 				# code...
 						$counter                = 15 + $i;
-						$kegiatan               = $data['list_skp'][$i]->kegiatan;if ($data['list_skp'][$i]->id_skp_master) $kegiatan=$data['list_skp'][$i]->kegiatan_skp;
+						$kegiatan               = $data['list_skp'][$i]->kegiatan;
+
+						if ($data['infoPegawai'][0]->kat_posisi == 1) {
+							# code...
+							if ($data['list_skp'][$i]->id_skp_master) $kegiatan=$data['list_skp'][$i]->kegiatan_skp;							
+						}
+						elseif ($data['infoPegawai'][0]->kat_posisi == 4) {
+							# code...
+							if ($data['list_skp'][$i]->id_skp_jfu) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jfu;							
+						}
+
 						$ak_target              = $data['list_skp'][$i]->AK_target;if ($data['list_skp'][$i]->AK_target == 0) $ak_target='-';
 						$target_qty             = $data['list_skp'][$i]->target_qty;
 						$target_kualitasmutu    = $data['list_skp'][$i]->target_kualitasmutu;
@@ -1745,7 +1778,16 @@ class Skp extends CI_Controller {
 		    for ($i=0; $i < count($data['list_skp']); $i++) {
 		        # code...
 						$counter                = 15 + $i;
-						$kegiatan               = $data['list_skp'][$i]->kegiatan;if ($data['list_skp'][$i]->id_skp_master) $kegiatan=$data['list_skp'][$i]->kegiatan_skp;
+						$kegiatan               = $data['list_skp'][$i]->kegiatan;
+						if ($data['infoPegawai'][0]->kat_posisi == 1) {
+							# code...
+							if ($data['list_skp'][$i]->id_skp_master) $kegiatan=$data['list_skp'][$i]->kegiatan_skp;							
+						}
+						elseif ($data['infoPegawai'][0]->kat_posisi == 4) {
+							# code...
+							if ($data['list_skp'][$i]->id_skp_jfu) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jfu;							
+						}
+						
 						$ak_target              = $data['list_skp'][$i]->AK_target;if ($data['list_skp'][$i]->AK_target == 0) $ak_target='-';
 						$target_qty             = $data['list_skp'][$i]->target_qty;
 						$target_kualitasmutu    = $data['list_skp'][$i]->target_kualitasmutu;

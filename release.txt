@@ -1,4 +1,16 @@
 v2.0.0-Alpha    
+2019-01-3
+==========
+New:
+Improved:
+- Syncronisasi skp jfu ke target skp
+- penyesuaian skp jfu dan struktural disemua yang berhubungan dengan uraian tugas (transaksi, skp, cetak skp)
+- penyederhaaan prosess ajax di target skp
+- penyederhaaan prosess ajax di transaksi
+Fixed:
+- penyesuaian nama yang muncul di approval skp
+
+v2.0.0-Alpha    
 2018-12-31
 ==========
 New:

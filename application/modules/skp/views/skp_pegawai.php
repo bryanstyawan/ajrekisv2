@@ -1,3 +1,4 @@
+<input type="hidden" id="oid_kat_posisi" value="<?=$info_posisi[0]['kat_posisi'];?>">
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <style type="text/css">
 #table_skp>thead>tr>th
@@ -138,12 +139,22 @@
                             $arrow_up            = "";
                             $arrow_down          = "";
 
-
-                            $kegiatan            = $list[$i]->kegiatan;
-                            if ($list[$i]->id_skp_master != '') {
-                                # code...
-                                $kegiatan            = $list[$i]->kegiatan_skp;
+                            $kegiatan            = $list[$i]->kegiatan;                            
+                            if($info_posisi[0]['kat_posisi'] == 1)
+                            {
+                                if ($list[$i]->id_skp_master != '') {
+                                    # code...
+                                    $kegiatan            = $list[$i]->kegiatan_skp;
+                                }
                             }
+                            elseif ($info_posisi[0]['kat_posisi'] == 4) {
+                                # code...
+                                if ($list[$i]->id_skp_jfu != '') {
+                                    # code...
+                                    $kegiatan            = $list[$i]->kegiatan_skp_jfu;
+                                }                                
+                            }
+
                             $AK_target           = $list[$i]->AK_target;
                             $target_qty          = $list[$i]->target_qty;
                             $target_output       = $list[$i]->target_output_name;
@@ -360,6 +371,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Angka Kredit Bagi PNS yang memangku jabatan fungsional tertentu</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="nak_target" name="nak_target" class="form-control">
@@ -494,6 +506,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Angka Kredit Bagi PNS yang memangku jabatan fungsional tertentu</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="ak_target" name="ak_target" class="form-control">
@@ -618,11 +631,20 @@ function edit(id,before,after) {
             $('.modal-dialog').attr('class','modal-dialog modal-lg');
             $("#ubah_dataskp").modal('show');
 
-            $("#nkegiatan").val(response['kegiatan']);
-            if (response['id_skp_master'] != '')
-            {
-                $("#nkegiatan").val(response['kegiatan_skp']);
+            if ($("#oid_kat_posisi").val() == 1) {
+                // $("#nkegiatan").val(response['kegiatan']);
+                if (response['id_skp_master'] != '')
+                {
+                    $("#nkegiatan").val(response['kegiatan_skp']);
+                }                
+            } else {
+                // $("#nkegiatan").val(response['kegiatan']);
+                if (response['id_skp_jfu'] != '')
+                {
+                    $("#nkegiatan").val(response['kegiatan_skp_jfu']);
+                }                                
             }
+            
             $("#njenis").val(response['jenis_skp']);
             $("#nperjanjian_kerja").val(response['PK']);
             $("#nak_target").val(response['ak_target']);
@@ -638,7 +660,7 @@ function edit(id,before,after) {
             $("#oid").val(response['skp_id']);
             setTimeout(function(){
                 $("#loadprosess").modal('hide');
-            }, 1000);
+            }, 500);
         }
     );
 }
@@ -656,35 +678,14 @@ function del(id) {
                     beforeSend:function(){
                         $("#loadprosess").modal('show');
                     },
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
-                    },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal melakukan transaksi '
-                        });
-                    }
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
         }
@@ -697,37 +698,15 @@ function arrow_up(id) {
         url :"<?php echo site_url();?>/skp/change_priority/"+id+"/up",
         type:"post",
         beforeSend:function(){
-            $("#editData").modal('hide');
             $("#loadprosess").modal('show');
         },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            if (obj.status == 1)
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                }, 5000);
-            }
-            else
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })
 }
@@ -738,37 +717,15 @@ function arrow_down(id) {
         url :"<?php echo site_url();?>/skp/change_priority/"+id+"/down",
         type:"post",
         beforeSend:function(){
-            $("#editData").modal('hide');
             $("#loadprosess").modal('show');
         },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            if (obj.status == 1)
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 500);
-                }, 1000);
-            }
-            else
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })
 }
@@ -904,44 +861,22 @@ $(document).ready(function()
                     type:"post",
                     data:{data_sender : data_sender},
                     beforeSend:function(){
-                        $("#editData").modal('hide');
                         $("#loadprosess").modal('show');
                     },
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
-                    },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal Menambah Pekerjaan'
-                        });
-                    }
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
         }
     })
 
-        $("#btn_save_skp_tambah").click(function() {
+    $("#btn_save_skp_tambah").click(function() {
         // body...
         var kegiatan      = $('#kegiatan').val();
         var pk            = $('#perjanjian_kerja').val();
@@ -1057,38 +992,16 @@ $(document).ready(function()
                     type:"post",
                     data:{data_sender : data_sender},
                     beforeSend:function(){
-                        $("#editData").modal('hide');
                         $("#loadprosess").modal('show');
                     },
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
-                    },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal Menambah Pekerjaan'
-                        });
-                    }
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
         }

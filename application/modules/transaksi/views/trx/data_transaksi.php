@@ -369,11 +369,20 @@ if ($member != 0) {
                                         # code...
                                         for ($i=0; $i < count($tr_disetujui); $i++) {
                                             # code...
+                                            $kegiatan = "";
+                                            if ($infoPegawai[0]->kat_posisi == 1) {
+                                                # code...
+                                                $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
+                                            }
+                                            elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                # code...
+                                                $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
+                                            }                                            
                                 ?>
                                             <tr>
                                                 <td><?=$tr_disetujui[$i]->tanggal_mulai;?>&nbsp;<?=$tr_disetujui[$i]->jam_mulai;?></td>
                                                 <td><?=$tr_disetujui[$i]->tanggal_selesai;?>&nbsp;<?=$tr_disetujui[$i]->jam_selesai;?></td>
-                                                <td><a href=""><?=$tr_disetujui[$i]->kegiatan_skp;?></a></td>
+                                                <td><?=$kegiatan;?></td>
                                                 <td><?=$tr_disetujui[$i]->nama_pekerjaan;?></td>
                                                 <td><?=$tr_disetujui[$i]->frekuensi_realisasi.' '.$tr_disetujui[$i]->target_output_name;?></td>
                                                 <td><?=$tr_disetujui[$i]->target_skp;?></td>
@@ -478,11 +487,21 @@ if ($member != 0) {
                                                             for ($i=0; $i < count($urtug); $i++) {
                                                                 # code...
                                                                 $x++;
-                                                                $kegiatan            = $urtug[$i]->kegiatan;
-                                                                if ($urtug[$i]->id_skp_master != '') {
+                                                                if ($infoPegawai[0]->kat_posisi == 1) {
                                                                     # code...
-                                                                    $kegiatan            = $urtug[$i]->kegiatan_skp;
+                                                                    if ($urtug[$i]->id_skp_master != '') {
+                                                                        # code...
+                                                                        $kegiatan = $urtug[$i]->kegiatan_skp;
+                                                                    }                                                                    
                                                                 }
+                                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                                    # code...
+                                                                    if ($urtug[$i]->id_skp_jfu != '') {
+                                                                        # code...
+                                                                        $kegiatan = $urtug[$i]->kegiatan_skp_jfu;
+                                                                    }                                                                       
+                                                                }
+
                                                     ?>
                                                             <option value="<?php echo $urtug[$i]->skp_id;?>"><?php echo $x.". ".$kegiatan;?></option>
                                                     <?
@@ -649,12 +668,20 @@ if ($member != 0) {
                                         # code...
                                         for ($i=0; $i < count($tr_keberatan_ditolak); $i++) {
                                             # code...
+                                            $kegiatan = "";
+                                            if ($infoPegawai[0]->kat_posisi == 1) {
+                                                # code...
+                                                $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
+                                            }
+                                            elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                # code...
+                                                $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
+                                            }                                                                              
                                 ?>
                                             <tr>
                                                 <td><?=$tr_keberatan_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_mulai;?></td>
                                                 <td><?=$tr_keberatan_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_selesai;?></td>
-                                                <td><?=$tr_keberatan_ditolak[$i]->jam_selesai;?></td>
-                                                <td><?=$tr_keberatan_ditolak[$i]->uraian_tugas;?></td>
+                                                <td><?=$kegiatan;?></td>
                                                 <td><?=$tr_keberatan_ditolak[$i]->nama_pekerjaan;?></td>
                                                 <td><?=$tr_keberatan_ditolak[$i]->output_pekerjaan;?></td>
                                                 <td>
@@ -1286,40 +1313,19 @@ function approve(id) {
         callback: function ($this, type) {
             if (type === 'yes'){
                 $.ajax({
-                    url :"<?php echo site_url()?>/transaksi/approve/"+id,
+                    url :"<?php echo site_url()?>transaksi/approve/"+id,
                     type:"post",
                     beforeSend:function(){
                     $("#loadprosess").modal('show');
                     },
-                            success:function(msg){
-                                var obj = jQuery.parseJSON (msg);
-                                if (obj.status == 1)
-                                {
-                                    Lobibox.notify('success', {
-                                        msg: obj.text
-                                        });
-                                    setTimeout(function(){
-                                        $("#loadprosess").modal('hide');
-                                        setTimeout(function(){
-                                            location.reload();
-                                        }, 1500);
-                                    }, 5000);
-                                }
-                                else
-                                {
-                                    Lobibox.notify('success', {
-                                        msg: obj.text
-                                        });
-                                    setTimeout(function(){
-                                        $("#loadprosess").modal('hide');
-                                    }, 5000);
-                                }
-                    },
-                    error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal melakukan transaksi '
-                    });
-                    }
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
         }
@@ -1472,13 +1478,12 @@ function view_option(id,i) {
                     });
                 setTimeout(function(){
                     $("#loadprosess").modal('hide');
-                }, 5000);
+                }, 500);
             }
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal melakukan operasi'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })
 }
@@ -1491,40 +1496,19 @@ function del(id) {
         callback: function ($this, type) {
             if (type === 'yes'){
                 $.ajax({
-                    url :"<?php echo site_url()?>/transaksi/get_delele_transaksi/"+id,
+                    url :"<?php echo site_url()?>transaksi/get_delele_transaksi/"+id,
                     type:"post",
                     beforeSend:function(){
                         $("#loadprosess").modal('show');
-                    },
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
-                    },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal Melakukan Hapus data'
-                        });
-                    }
+                    },					
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
         }
@@ -1534,79 +1518,38 @@ function del(id) {
 function send_data_revisi(data_sender,param) {
     // body...
     $.ajax({
-        url :"<?php echo site_url();?>/transaksi/revisi/"+param,
+        url :"<?php echo site_url();?>transaksi/revisi/"+param,
         type:"post",
         data:{data_sender : data_sender},
         beforeSend:function(){
-            $("#editData").modal('hide');
             $("#loadprosess").modal('show');
-        },
+        },					
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            if (obj.status == 1)
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                }, 5000);
-            }
-            else
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal melakukan transaksi'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })
 }
 
 function send_data_tambah_without_file(data_sender) {
     $.ajax({
-        url :"<?php echo site_url();?>/transaksi/add_pekerjaan_without_file/",
+        url :"<?php echo site_url();?>transaksi/add_pekerjaan_without_file/",
         type:"post",
         data:{data_sender : data_sender},
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },					
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            if (obj.status == 1)
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                }, 5000);
-
-            }
-            else
-            {
-                Lobibox.notify('warning', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -1616,7 +1559,7 @@ function send_data_tambah(data_sender) {
     var form_data  = new FormData();
     form_data.append('file', file_pendukung);
     $.ajax({
-        url: '<?php echo site_url();?>/transaksi/upload_file_pendukung/', // point to server-side PHP script
+        url: '<?php echo site_url();?>transaksi/upload_file_pendukung/', // point to server-side PHP script
         // dataType: 'json',  // what to expect back from the PHP script, if anything
         cache: false,
         contentType: false,
@@ -1624,11 +1567,10 @@ function send_data_tambah(data_sender) {
         data: form_data,
         type: 'post',
         beforeSend:function(){
-            $("#editData").modal('hide');
             $("#loadprosess").modal('show');
             Lobibox.notify('info', {
                 msg: 'Menyiapkan data untuk upload file'
-                });
+            });
         },
         success: function(msg1){
             var obj1 = jQuery.parseJSON (msg1);
@@ -1636,39 +1578,17 @@ function send_data_tambah(data_sender) {
             if (obj1.status == 1)
             {
                 $.ajax({
-                    url :"<?php echo site_url();?>/transaksi/add_pekerjaan/"+obj1.id,
+                    url :"<?php echo site_url();?>transaksi/add_pekerjaan/"+obj1.id,
                     type:"post",
                     data:{data_sender : data_sender},
                     success:function(msg){
                         var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-
-                        }
-                        else
-                        {
-                            Lobibox.notify('warning', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
+						ajax_status(obj);
                     },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal Menambah Pekerjaan'
-                        });
-                    }
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
                 })
             }
             else
@@ -1681,10 +1601,9 @@ function send_data_tambah(data_sender) {
                 }, 5000);
             }
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     });
 }
@@ -1692,41 +1611,19 @@ function send_data_tambah(data_sender) {
 function send_data_tolak(data_sender,param) {
     // body...
     $.ajax({
-        url :"<?php echo site_url();?>/transaksi/tolak/"+param,
+        url :"<?php echo site_url();?>transaksi/tolak/"+param,
         type:"post",
         data:{data_sender : data_sender},
         beforeSend:function(){
-            $("#editData").modal('hide');
             $("#loadprosess").modal('show');
         },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            if (obj.status == 1)
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                }, 5000);
-            }
-            else
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal melakukan transaksi'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })
 }
@@ -1862,7 +1759,7 @@ $(document).ready(function()
 
         var id = $("#urtug").val();
         $.ajax({
-            url :"<?php echo site_url()?>/transaksi/get_detail_skp",
+            url :"<?php echo site_url()?>transaksi/get_detail_skp",
             type:"post",
             data:"id="+id,
             beforeSend:function(){
@@ -1899,15 +1796,14 @@ $(document).ready(function()
         urtug              = $("#urtug").val();
         tgl_mulai          = change_format_date($("#tgl_mulai").val(),'yyyy-mm-dd');
         tgl_selesai        = change_format_date($("#tgl_selesai").val(),'yyyy-mm-dd');
-        // console.log(tgl_mulai);
-        // console.log(tgl_selesai);        
+
         jam_mulai          = $("#jam_mulai").val();
         jam_selesai        = $("#jam_selesai").val();
         tgl_server         = current_date();
         ket_pekerjaan      = $("#ket_pekerjaan").val();
         kuantitas          = $("#kuantitas").val();
         file_pendukung     = $('#file_pendukung').prop('files')[0];
-        // console.log(tgl_server);
+
         waktu_mulai        = tgl_mulai+" "+jam_mulai;
         waktu_selesai      = tgl_selesai+" "+jam_selesai;
 
@@ -2029,16 +1925,17 @@ $(document).ready(function()
                                 }
                                 else
                                 {
-                                    if (param_out_skp != 'Frekuensi')
-                                    {
-                                        Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-                                        {
-                                            msg: "Wajib menyertakan file pendukung sebagai bukti realisasi"
-                                        });                                        
-                                    }
-                                    else {
-                                        send_data_tambah(data_sender);
-                                    }                                    
+                                    send_data_tambah(data_sender);                                    
+                                    // if (param_out_skp != 'Frekuensi')
+                                    // {
+                                    //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+                                    //     {
+                                    //         msg: "Wajib menyertakan file pendukung sebagai bukti realisasi"
+                                    //     });                                        
+                                    // }
+                                    // else {
+                                    //     send_data_tambah(data_sender);
+                                    // }                                    
                                 }
                             }
                             else 
@@ -2067,41 +1964,19 @@ $(document).ready(function()
         }
         else {
             $.ajax({
-                url :"<?php echo site_url();?>/transaksi/keberatan",
+                url :"<?php echo site_url();?>transaksi/keberatan",
                 type:"post",
                 data:{data_sender : data_sender},
                 beforeSend:function(){
-                    $("#editData").modal('hide');
                     $("#loadprosess").modal('show');
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
+                    ajax_status(obj);
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal melakukan transaksi'
-                    });
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
                 }
             })
         }
@@ -2114,41 +1989,19 @@ $(document).ready(function()
                                 'komentar'    : $("#textarea_komentar_banding").val()
                             };
         $.ajax({
-            url :"<?php echo site_url();?>/transaksi/banding",
+            url :"<?php echo site_url();?>transaksi/banding",
             type:"post",
             data:{data_sender : data_sender},
             beforeSend:function(){
-                $("#editData").modal('hide');
                 $("#loadprosess").modal('show');
             },
             success:function(msg){
                 var obj = jQuery.parseJSON (msg);
-                if (obj.status == 1)
-                {
-                    Lobibox.notify('success', {
-                        msg: obj.text
-                        });
-                    setTimeout(function(){
-                        $("#loadprosess").modal('hide');
-                        setTimeout(function(){
-                            location.reload();
-                        }, 1500);
-                    }, 5000);
-                }
-                else
-                {
-                    Lobibox.notify('success', {
-                        msg: obj.text
-                        });
-                    setTimeout(function(){
-                        $("#loadprosess").modal('hide');
-                    }, 5000);
-                }
+                ajax_status(obj);
             },
-            error:function(){
-                Lobibox.notify('error', {
-                    msg: 'Gagal melakukan transaksi'
-                });
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
             }
         })
     });

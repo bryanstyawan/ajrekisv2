@@ -1,8 +1,4 @@
 <?php
-		// echo '<pre>';
-		// print_r(date("d-m-y",strtotime($infoPegawai[0]->tmt_golongan)));
-		// echo '</pre>';
-		// die();		
 $nama_pegawai  = "";
 $nama_jabatan  = "";
 $nama_eselon1  = "";
@@ -14,6 +10,7 @@ $kelas_jabatan = "";
 $pangkat       = "";
 $ruang         = "";
 $tmt_golongan  = "";
+$kat_posisi    = "";
 
 $nama_pegawai_atasan  = "";
 $nama_jabatan_atasan  = "";
@@ -50,6 +47,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $nip           = $infoPegawai[0]->nip;
     $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
     $pangkat       = $infoPegawai[0]->nama_pangkat;
+    $kat_posisi    = $infoPegawai[0]->kat_posisi;
     if($infoPegawai[0]->nama_pangkat != '-')$pangkat      = $infoPegawai[0]->nama_pangkat;else $pangkat                                        = '-';
     if($infoPegawai[0]->nama_golongan != '-')$ruang       = '('.$infoPegawai[0]->nama_golongan.'/'.$infoPegawai[0]->nama_ruang.')';else $ruang = '';
     if($infoPegawai[0]->tmt_golongan != '-')$tmt_golongan = ', '.date("d-m-Y",strtotime($infoPegawai[0]->tmt_golongan));else $tmt_golongan = '';
@@ -420,7 +418,17 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                             $arrow_up               = "";
                             $arrow_down             = "";
                             $tingkat_efisiensi      = "";
-                            $kegiatan               = $list_skp[$i]->kegiatan;if($list_skp[$i]->id_skp_master) $kegiatan=$list_skp[$i]->kegiatan_skp;
+                            $kegiatan               = $list_skp[$i]->kegiatan;
+
+                            if ($kat_posisi == 1) {
+                                # code...
+                                if($list_skp[$i]->id_skp_master) $kegiatan=$list_skp[$i]->kegiatan_skp;                                
+                            }
+                            elseif ($kat_posisi == 4) {
+                                # code...
+                                if($list_skp[$i]->id_skp_jfu) $kegiatan=$list_skp[$i]->kegiatan_skp_jfu;                                                                
+                            }
+
 
                             if ($list_skp[$i]->PK == 1)$pk_status = "Ya";
                             else $pk_status = "Tidak";

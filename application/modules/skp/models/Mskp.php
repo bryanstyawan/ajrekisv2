@@ -250,6 +250,16 @@ class Mskp extends CI_Model
 										cc.id_skp = a.id_skp_master
 								),'-'
 							) AS `kegiatan_skp`,
+							COALESCE(
+								(
+									SELECT
+										jfu.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu`,							
 							COALESCE(d.nama,'-') as `target_output_name`
 							".$SELECT."
 					FROM mr_skp_pegawai a
@@ -353,6 +363,16 @@ class Mskp extends CI_Model
 										cc.id_skp = a.id_skp_master
 								),'-'
 							) AS `kegiatan_skp`,
+							COALESCE(
+								(
+									SELECT
+										jfu.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu`,							
 							COALESCE(d.nama,'-') as `target_output_name`,
 							COALESCE(
 								(
@@ -458,6 +478,44 @@ class Mskp extends CI_Model
 			return false;
 		}
 	}
+
+	public function check_pekerjaan_pegawai_jfu($id_pegawai,$kegiatan,$tahun)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_skp_pegawai a
+				WHERE a.id_pegawai  = '".$id_pegawai."'
+				AND a.tahun         = '".$tahun."'
+				AND a.id_skp_jfu = '".$kegiatan."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result()[0];
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public function check_pekerjaan_pegawai_jft($id_pegawai,$kegiatan,$tahun)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_skp_pegawai a
+				WHERE a.id_pegawai  = '".$id_pegawai."'
+				AND a.tahun         = '".$tahun."'
+				AND a.id_skp_jft = '".$kegiatan."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result()[0];
+		}
+		else
+		{
+			return false;
+		}
+	}	
 
 	public function get_data_evaluator($id,$tahun)
 	{

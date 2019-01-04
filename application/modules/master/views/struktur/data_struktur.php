@@ -877,6 +877,9 @@ function del(id){
 				$.ajax({
 					url :"<?php echo site_url()?>/master/data_struktur/delStruktur/"+id,
 					type:"post",
+                    beforeSend:function(){
+                        $("#loadprosess").modal('show');
+                    },
 					success:function(msg){
 						var obj = jQuery.parseJSON (msg);
 						ajax_status(obj);
