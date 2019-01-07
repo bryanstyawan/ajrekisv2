@@ -1,5 +1,20 @@
 v2.0.0-Alpha    
-2019-01-3
+2019-01-04
+==========
+New:
+Improved:
+- Menu Transaksi, File pendukung tidak wajib di isi
+- Aktivitas Kinerja Anggota di tampilkan semua data
+- penambahan fungsi datatable no-paging
+Fixed:
+- memunculkan notif angka di nama pegawai tanda approval target
+- Perubahan nama Simpan Evaluator menjadi Ajukan Penilaian di Penilaian Prilaku
+- Perubahan default tampilan data transaksi dari tambah data kinerja ke tahap belum diperiksa
+- filter eselon 2 di data pegawai
+- nilai AK di penilaian skp hanya ada di jft
+
+v2.0.0-Alpha    
+2019-01-03
 ==========
 New:
 Improved:

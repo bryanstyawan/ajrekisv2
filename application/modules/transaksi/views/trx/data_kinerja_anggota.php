@@ -157,7 +157,7 @@ if ($pegawai != 0 || $pegawai != '') {
                     <div id="home" class="tab-pane fade in active" style="padding-top: 15px;">
                         <div class="col-lg-12">
                             <h2>Belum diperiksa</h2>
-                            <table id="example1" class="table table-bordered table-striped table-view">
+                            <table id="example1" class="table table-bordered table-striped table-view-no-paging">
                               <thead>
                             <tr>
                               <th>

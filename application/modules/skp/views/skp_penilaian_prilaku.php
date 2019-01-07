@@ -202,7 +202,7 @@
         </div>
         <div class="box-body">
             <div class="col-md-12">
-                <button class="btn btn-default pull-right" id="btn-save-eval">Simpan Evaluator</button>
+                <button class="btn btn-default pull-right" id="btn-save-eval">Ajukan Penilai</button>
             </div>
         </div>
     </div>
@@ -600,38 +600,15 @@ $(document).ready(function()
                         data:{data_sender : data_sender},                                                
                         type:"post",
                         beforeSend:function(){
-                            // $("#form_penilaian").modal('hide');
-                            $("#loadprosess").modal('show');                                                
-                        },                        
-                        success:function(msg)
-                        {
-                            var obj = jQuery.parseJSON (msg);             
-                            if (obj.status == 1) 
-                            {
-                                Lobibox.notify('success', {
-                                    msg: obj.text
-                                    });
-                                setTimeout(function(){ 
-                                    $("#loadprosess").modal('hide');
-                                    setTimeout(function(){
-                                        location.reload();
-                                    }, 1500);                                                                   
-                                }, 5000);                
-                            }
-                            else
-                            {
-                                Lobibox.notify('warning', {
-                                    msg: obj.text
-                                    });
-                                setTimeout(function(){ 
-                                    $("#loadprosess").modal('hide');                                
-                                }, 5000);                                                                           
-                            }           
+                            $("#loadprosess").modal('show');
                         },
-                        error:function(){
-                            Lobibox.notify('error', {
-                                msg: 'Gagal melakukan Operasi'
-                            });
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);
                         }
                     })
                 }
@@ -669,33 +646,12 @@ $(document).ready(function()
                     $("#loadprosess").modal('show');                                                
                 },
                 success:function(msg){
-                    var obj = jQuery.parseJSON (msg);             
-                    if (obj.status == 1) 
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){ 
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);                                                                   
-                        }, 5000);                
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){ 
-                            $("#loadprosess").modal('hide');                                
-                        }, 5000);                                                                           
-                    }           
+                    var obj = jQuery.parseJSON (msg);
+                    ajax_status(obj);
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: ''
-                    });
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);
                 }
             }) 
         }
@@ -746,12 +702,11 @@ function send_penilaian_prilaku(id,id_pegawai) {
             console.log(obj[0]);      
             setTimeout(function(){ 
                 $("#loadprosess").modal('hide');                                
-            }, 1000);           
+            }, 500);           
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);
         }
     })
 }
@@ -792,13 +747,12 @@ function remove_list_evaluator_sync(PARAM) {
                     });
                 setTimeout(function(){ 
                     $("#loadprosess").modal('hide');                                
-                }, 5000);                                                                           
+                }, 500);                                                                           
             }           
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: ''
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);
         }
     })     
 }
@@ -815,7 +769,6 @@ function open_view_modal(params,arg) {
         },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);             
-            console.log(obj.text[0].nama);
             if (obj.status == 1) 
             {
                 $("#indikator_title").html(obj.text[0].nama);
@@ -835,13 +788,12 @@ function open_view_modal(params,arg) {
                     });
                 setTimeout(function(){ 
                     $("#loadprosess").modal('hide');                                
-                }, 5000);                                                                           
+                }, 500);                                                                           
             }           
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: ''
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);
         }
     })    
 }

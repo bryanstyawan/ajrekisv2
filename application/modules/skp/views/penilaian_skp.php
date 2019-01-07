@@ -23,6 +23,7 @@ $nama_eselon3  = "";
 $nama_eselon4  = "";
 $nip           = "";
 $kelas_jabatan = "";
+$kat_posisi    = "";
 if ($infoPegawai != 0 || $infoPegawai != '') {
     # code...
     $nama_pegawai  = $infoPegawai[0]->nama_pegawai;
@@ -33,6 +34,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $nama_eselon4  = $infoPegawai[0]->nama_eselon4;
     $nip           = $infoPegawai[0]->nip;
     $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
+    $kat_posisi    = $infoPegawai[0]->kat_posisi;
 }
 ?>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
@@ -326,7 +328,14 @@ if ($member != 0) {
                         <td><?=$pk_status;?></td>
                         <td><?=$jenis_skp;?></td>
                         <!-- <td><?=$AK_target;?></td> -->
-                        <td>100</td>
+                        <td>
+                            <?php
+                            if ($kat_posisi != 2) {
+                                # code...
+                                echo '-';
+                            } 
+                            ?>
+                        </td>
                         <td><?=$target_qty." ".$target_output;?></td>
                         <td><?=$target_kualitasmutu;?></td>
                         <td><?=$target_waktu_bln." bln";?></td>

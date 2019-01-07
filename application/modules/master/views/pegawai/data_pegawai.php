@@ -422,10 +422,11 @@ $(document).ready(function(){
 	})
 
 	$("#select_eselon_2").change(function(){
-		var select_eselon_1 = $("#select_eselon_1").val();
-		var select_eselon_2 = $("#select_eselon_2").val();
-		var select_eselon_3 = '';
-		var select_eselon_4 = '';
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = '';
+		var select_eselon_4      = '';
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
         $('#select_eselon_3').find('option').remove();
         $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------'));
         $('#select_eselon_4').find('option').remove();
@@ -451,7 +452,8 @@ $(document).ready(function(){
 	        					'data_1' : select_eselon_1,
 				                'data_2' : select_eselon_2,
 				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4
+				                'data_4' : select_eselon_4,
+								'data_5' : select_jenis_jabatan
 				}
 				$.ajax({
 					url :"<?php echo site_url()?>/master/filter_data_pegawai",
@@ -488,6 +490,127 @@ $(document).ready(function(){
 			}
 		})
 	})
+
+	$("#select_eselon_3").change(function(){
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = $("#select_eselon_3").val();;
+		var select_eselon_4      = '';
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
+        $('#select_eselon_3').find('option').remove();
+        $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------'));
+        $('#select_eselon_4').find('option').remove();
+        $('#select_eselon_4').append($("<option></option>").attr("value", '').text('------------NONE------------'));
+		$.ajax({
+			url :"<?php echo site_url()?>/master/data_eselon3/cariEs3_filter/filter_data_pegawai",
+			type:"post",
+			data:"select_eselon_3="+select_eselon_3,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#halaman_header").html("");
+				$("#halaman_footer").html("");
+				$('.table-view').dataTable().fnDestroy();
+				$(".table-view tbody tr").remove();
+				var newrec  = '<tr">' +
+		        					'<td colspan="8" class="text-center">Memuat Data</td>'
+		    				   '</tr>';
+		        $('.table-view tbody').append(newrec);
+			},
+			success:function(msg){
+				$("#isi_select_eselon_3").html(msg);
+				var data_link = {
+	        					'data_1' : select_eselon_1,
+				                'data_2' : select_eselon_2,
+				                'data_3' : select_eselon_3,
+				                'data_4' : select_eselon_4,
+								'data_5' : select_jenis_jabatan
+				}
+				$.ajax({
+					url :"<?php echo site_url()?>/master/filter_data_pegawai",
+					type:"post",
+					data: { data_sender : data_link},
+					success:function(msg){
+						$(".table-view tbody tr").remove();
+						$("#table_content").html(msg);
+				        $(".table-view").DataTable({
+							"oLanguage": {
+								"sSearch": "Pencarian :",
+								"sSearchPlaceholder" : "Ketik untuk mencari",
+								"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+								"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+								"sZeroRecords": "Data tidak ditemukan"
+							},
+							"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+									"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+									"<'row'<'col-sm-12'tr>>" +
+									"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+							"bSort": false
+							// "dom": '<"top"f>rt'
+							// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+						});
+						setTimeout(function(){
+							$("#loadprosess").modal('hide');
+						}, 500);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})
+			}
+		})
+	})
+
+	$("#select_eselon_4").change(function(){
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = $("#select_eselon_3").val();
+		var select_eselon_4      = $("#select_eselon_4").val();;
+		var select_jenis_jabatan = $("#select_jenis_jabatan").val();
+        $('#select_eselon_3').find('option').remove();
+        $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------'));
+        $('#select_eselon_4').find('option').remove();
+        $('#select_eselon_4').append($("<option></option>").attr("value", '').text('------------NONE------------'));
+		var data_link = {
+						'data_1' : select_eselon_1,
+						'data_2' : select_eselon_2,
+						'data_3' : select_eselon_3,
+						'data_4' : select_eselon_4,
+						'data_5' : select_jenis_jabatan
+		}
+		$.ajax({
+			url :"<?php echo site_url()?>/master/filter_data_pegawai",
+			type:"post",
+			data: { data_sender : data_link},
+			success:function(msg){
+				$(".table-view tbody tr").remove();
+				$("#table_content").html(msg);
+				$(".table-view").DataTable({
+					"oLanguage": {
+						"sSearch": "Pencarian :",
+						"sSearchPlaceholder" : "Ketik untuk mencari",
+						"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+						"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+						"sZeroRecords": "Data tidak ditemukan"
+					},
+					"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+							"<'row'<'col-sm-12'tr>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+					"bSort": false
+					// "dom": '<"top"f>rt'
+					// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+				});
+				setTimeout(function(){
+					$("#loadprosess").modal('hide');
+				}, 500);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})
+	})		
 })
 
 function del(id){

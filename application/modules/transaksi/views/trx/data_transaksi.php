@@ -91,10 +91,10 @@ if ($member != 0) {
 
             <div class="container col-lg-12" style="padding-top: 20px;">
                 <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li>
                         <a data-toggle="tab" href="#menu4"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Tambah Data Kinerja</a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a data-toggle="tab" href="#home">
                             Tahap Belum diperiksa&nbsp;&nbsp;
                             <sup>
@@ -177,7 +177,7 @@ if ($member != 0) {
                 </ul>
 
                 <div class="tab-content">
-                    <div id="home" class="tab-pane fade" style="padding-top: 15px;">
+                    <div id="home" class="tab-pane fade in active" style="padding-top: 15px;">
                         <div class="col-lg-12">
                             <h2>Tahap Belum diperiksa</h2>
                             <table id="table_belum_diperiksa" class="table table-bordered table-striped table-view">
@@ -463,7 +463,7 @@ if ($member != 0) {
                         </div>
                     </div>
 
-                    <div id="menu4" class="tab-pane fade in active">
+                    <div id="menu4" class="tab-pane fade">
                         <div class="col-lg-12">
                             <h2 class="text-center" style="background-color: #FF0000;color: #fff;">EQUAL WORK DESERVES EQUAL PAY</h2>
 
@@ -2001,7 +2001,7 @@ $(document).ready(function()
             },
             error:function(jqXHR,exception)
             {
-                ajax_catch(jqXHR,exception);					
+                ajax_catch(jqXHR,exception);
             }
         })
     });

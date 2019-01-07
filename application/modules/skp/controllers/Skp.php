@@ -309,10 +309,25 @@ class Skp extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
 		$data['subtitle'] = '';
-		$data['bawahan']      = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-		$data['member']   = $this->mskp->get_member($this->session->userdata('sesPosisi'));
+		$data['bawahan']  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 		$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
 		$data['content']  = 'skp/skp_approval_target';
+		$data['member']   = $this->mskp->get_member($this->session->userdata('sesPosisi'));
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id))->num_rows();
+				if ($get_data) {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = 0;
+				}
+			}
+		}		
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -325,6 +340,8 @@ class Skp extends CI_Controller {
 		$data['subtitle']    = '';
 		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),11);
 		$data['id']          = $id;
+		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
+		$data['content']     = 'skp/skp_approval_pegawai';		
 		$data['member']   	 = $this->mskp->get_member($this->session->userdata('sesPosisi'));
 		if ($data['member'] != 0) {
 			// code...
@@ -341,8 +358,6 @@ class Skp extends CI_Controller {
 				}
 			}
 		}
-		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
-		$data['content']     = 'skp/skp_approval_pegawai';
 		$this->load->view('templateAdmin',$data);
 	}
 

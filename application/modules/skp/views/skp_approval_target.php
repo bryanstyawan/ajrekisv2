@@ -27,20 +27,31 @@ if ($member != 0) {
             <h3 class="box-title">Anggota</h3>
         </div>
         <div class="box-body no-padding" style="display: block;">
-            <ul class="nav nav-pills nav-stacked contact-id">
+        <ul class="nav nav-pills nav-stacked contact-id">
                 <?php
-                    if($bawahan != 0){
-                        $i = "";
-                ?>
-                <?php
-                        foreach($bawahan as $bawahan){
-                            $i++;
-                ?>
-                            <li style="cursor: pointer;" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$bawahan->id;?>')"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$bawahan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$bawahan->nama_pegawai;?>"></input></li>                                    
-              <?php
-                        }
-                    }
-              ?>            
+                  $i = "";
+                  for ($i=0; $i < count($member); $i++) {
+                    // code...
+                      $flag_counter = "";
+                      // if ($member[$i]->counter_belum_diperiksa == 0) {
+                      //   // code...
+                      //   $flag_counter = "display:none;";
+                      // }
+                    ?>
+                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>')">
+                          <a class="contact-name">
+                            <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
+                            <sup style="<?=$flag_counter;?>">
+                                <span class="notif-count pull-right">
+                                <span><?=$member[$i]->counter_belum_diperiksa;?></span>
+                                </span>
+                            </sup>
+                          </a>
+                          <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$member[$i]->nama_pegawai;?>"></input>
+                        </li>
+                    <?php
+                  }
+              ?>
             </ul>
         </div>
     </div>

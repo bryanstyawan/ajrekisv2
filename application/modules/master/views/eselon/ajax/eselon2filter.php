@@ -58,11 +58,11 @@ $(document).ready(function(){
 			success:function(msg){
 				$("#isi_select_eselon_3").html(msg);
 				var data_link = {
-	        					'data_1' : select_eselon_1,
-				                'data_2' : select_eselon_2,
-				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4,
-	        					'data_5': select_jenis_jabatan							
+	        					'data_1': select_eselon_1,
+	        					'data_2': select_eselon_2,
+	        					'data_3': select_eselon_3,
+	        					'data_4': select_eselon_4,
+	        					'data_5': select_jenis_jabatan
 				}				
 				$.ajax({
 					url :"<?php echo site_url()?><?=$param1;?>/<?=$param;?>",
