@@ -1,7 +1,7 @@
 <style>
     .label-info-pegawai
     {
-        padding: 10px 0px;
+        padding: 10px 10px;
     }
 </style>
 <?php
@@ -16,7 +16,7 @@ if ($hari_kerja == 0) {
 }
 
 $trigger_cs_layout_transaksi = "";
-if ($member != 0) {
+if ($member != array()) {
     // code...
     $trigger_cs_layout_transaksi = "col-xs-9";
 }
@@ -26,1270 +26,1342 @@ else {
 }
 
 ?>
-<input type="hidden" id="trigger_msg" value="<?=$trigger_msg_hari_aktif;?>">
-<style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
+    <input type="hidden" id="trigger_msg" value="<?=$trigger_msg_hari_aktif;?>">
+    <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 
-<?php
-if ($member != 0) {
-    # code...
-?>
+    <?php
+    if ($member != array()) {
+        # code...
+    ?>
 
-<div class="col-md-3">
-    <div class="box box-solid" id="isi_kontak" style="">
+    <div class="col-md-3">
+        <div class="box box-solid" id="isi_kontak" style="">
 
-        <div class="box-header with-border">
-            <h3 class="box-title">Anggota</h3>
-        </div>
-        <div class="box-body no-padding" style="display: block;">
-            <ul class="nav nav-pills nav-stacked contact-id">
-                <?php
-                    $i = "";
-                    for ($i=0; $i < count($member); $i++) {
-                        // code...
-                        $flag_counter = "";
-                        if ($member[$i]->counter_belum_diperiksa == 0) {
+            <div class="box-header with-border">
+                <h3 class="box-title">Anggota</h3>
+            </div>
+            <div class="box-body no-padding" style="display: block;">
+                <ul class="nav nav-pills nav-stacked contact-id">
+                    <?php
+                        $i = "";
+                        for ($i=0; $i < count($member); $i++) {
                             // code...
-                            $flag_counter = "display:none;";
+                            $flag_counter = "";
+                            if ($member[$i]->counter_belum_diperiksa == 0) {
+                                // code...
+                                $flag_counter = "display:none;";
+                            }
+                            
+                            $flag_struktural = '';
+                            if ($member[$i]->b_kat_posisi == 1) {
+                                # code...
+                                $flag_struktural = 'background:#dddfff;';
+                            }
+                    ?>
+                            <li style="cursor: pointer;<?=$flag_struktural;?>" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>','<?=$i;?>')">
+                                <a class="contact-name">
+                                    <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
+                                    <sup style="<?=$flag_counter;?>">
+                                        <span class="notif-count pull-right">
+                                            <span><?=$member[$i]->counter_belum_diperiksa;?></span>
+                                        </span>
+                                    </sup>
+                                </a>
+                                <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$member[$i]->nama_pegawai;?>"></input>
+                            </li>
+                        <?php
                         }
-                        
-                        $flag_struktural = '';
-                        if ($member[$i]->b_kat_posisi == 1) {
-                            # code...
-                            $flag_struktural = 'background:#dddfff;';
-                        }
-                ?>
-                        <li style="cursor: pointer;<?=$flag_struktural;?>" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>','<?=$i;?>')">
-                            <a class="contact-name">
-                                <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
-                                <sup style="<?=$flag_counter;?>">
-                                    <span class="notif-count pull-right">
-                                        <span><?=$member[$i]->counter_belum_diperiksa;?></span>
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+
+<section id="view_main">
+    <div class="<?=$trigger_cs_layout_transaksi;?>">
+        <div class="box">
+            <div class="box-header">
+                <div class ="box-tools">
+                </div>
+            </div>
+            <div class="box-body">
+
+
+                <div class="container col-lg-12" style="padding-top: 20px;">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a data-toggle="tab" href="#menu4"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Tambah Data Kinerja</a>
+                        </li>
+                        <li class="active">
+                            <a data-toggle="tab" href="#home">
+                                Tahap Belum diperiksa&nbsp;&nbsp;
+                                <sup>
+                                    <span id="counter_proses_head" class="notif-count">
+                                        <span id="counter_proses"></span>
                                     </span>
                                 </sup>
                             </a>
-                            <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$member[$i]->nama_pegawai;?>"></input>
                         </li>
-                    <?php
-                    }
-                ?>
-            </ul>
-        </div>
-    </div>
-</div>
-<?php
-}
-?>
+                        <li>
+                            <a data-toggle="tab" href="#menu1">
+                                Tahap Revisi
+                                <sup>
+                                    <span id="counter_revisi_head" class="notif-count">
+                                        <span id="counter_revisi"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu2">
+                                Tahap Disetujui
+                                <sup>
+                                    <span id="counter_disetujui_head" class="notif-count">
+                                        <span id="counter_disetujui"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu3">
+                                Tahap Ditolak
+                                <sup>
+                                    <span id="counter_tolak_head" class="notif-count">
+                                        <span id="counter_tolak"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu5">
+                                Tahap Keberatan
+                                <sup>
+                                    <span id="counter_keberatan_head" class="notif-count">
+                                        <span id="counter_keberatan"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu6">
+                                Tahap Keberatan Ditolak
+                                <sup>
+                                    <span id="counter_keberatan_ditolak_head" class="notif-count">
+                                        <span id="counter_keberatan_ditolak"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu7">
+                                Tahap Banding
+                                <sup>
+                                    <span id="counter_banding_head" class="notif-count">
+                                        <span id="counter_banding"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu8">
+                                Tahap Banding Ditolak
+                                <sup>
+                                    <span id="counter_banding_ditolak_head" class="notif-count">
+                                        <span id="counter_banding_ditolak"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                    </ul>
 
-<div class="<?=$trigger_cs_layout_transaksi;?>">
-    <div class="box">
-        <div class="box-header">
-            <div class ="box-tools">
-            </div>
-        </div>
-        <div class="box-body">
-
-
-            <div class="container col-lg-12" style="padding-top: 20px;">
-                <ul class="nav nav-tabs">
-                    <li>
-                        <a data-toggle="tab" href="#menu4"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Tambah Data Kinerja</a>
-                    </li>
-                    <li class="active">
-                        <a data-toggle="tab" href="#home">
-                            Tahap Belum diperiksa&nbsp;&nbsp;
-                            <sup>
-                                <span id="counter_proses_head" class="notif-count">
-                                    <span id="counter_proses"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu1">
-                            Tahap Revisi
-                            <sup>
-                                <span id="counter_revisi_head" class="notif-count">
-                                    <span id="counter_revisi"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu2">
-                            Tahap Disetujui
-                            <sup>
-                                <span id="counter_disetujui_head" class="notif-count">
-                                    <span id="counter_disetujui"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu3">
-                            Tahap Ditolak
-                            <sup>
-                                <span id="counter_tolak_head" class="notif-count">
-                                    <span id="counter_tolak"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu5">
-                            Tahap Keberatan
-                            <sup>
-                                <span id="counter_keberatan_head" class="notif-count">
-                                    <span id="counter_keberatan"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu6">
-                            Tahap Keberatan Ditolak
-                            <sup>
-                                <span id="counter_keberatan_ditolak_head" class="notif-count">
-                                    <span id="counter_keberatan_ditolak"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu7">
-                            Tahap Banding
-                            <sup>
-                                <span id="counter_banding_head" class="notif-count">
-                                    <span id="counter_banding"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="tab" href="#menu8">
-                            Tahap Banding Ditolak
-                            <sup>
-                                <span id="counter_banding_ditolak_head" class="notif-count">
-                                    <span id="counter_banding_ditolak"></span>
-                                </span>
-                            </sup>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="tab-content">
-                    <div id="home" class="tab-pane fade in active" style="padding-top: 15px;">
-                        <div class="col-lg-12">
-                            <h2>Tahap Belum diperiksa</h2>
-                            <table id="table_belum_diperiksa" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Realisasi Target SKP</th>
-                                        <th>Target SKP</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_belum_diperiksa != 0)
-                                    {
-                                        # code...
-                                        $active_keberatan = "";
-                                        $active_banding = "";
-                                        if ($hari_kerja != 0) {
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active" style="padding-top: 15px;">
+                            <div class="col-lg-12">
+                                <h2>Tahap Belum diperiksa</h2>
+                                <table id="table_belum_diperiksa" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Realisasi Target SKP</th>
+                                            <th>Target SKP</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_belum_diperiksa != 0)
+                                        {
                                             # code...
-                                            // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_keberatan))
-                                            // {
-                                            //     # code...
-                                            //     $active_keberatan = "hide_keberatan";
-                                            // }
-                                            // else
-                                            // {
-                                            //     $active_keberatan = "show_keberatan";
-                                            // }
-
-                                            // if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_keberatan))
-                                            // {
-                                            //     # code...
-                                            //     $active_keberatan = "hide_keberatan";
-                                            // }
-                                            // else
-                                            // {
-                                            //     $active_keberatan = "show_keberatan";
-                                            // }
-
-
-                                            // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_banding))
-                                            // {
-                                            //     # code...
-                                            //     $active_banding = "hide_banding";
-                                            //     if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_banding))
-                                            //     {
-                                            //         # code...
-                                            //         $active_banding = "hide_banding";
-                                            //     }
-                                            // }
-                                            // else
-                                            // {
-                                            //     $active_banding = "show_banding";
-                                            // }
-                                        }
-                                        for ($i=0; $i < count($tr_belum_diperiksa); $i++) {
-                                            # code...
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_belum_diperiksa[$i]->tanggal_selesai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_selesai;?></td>
-                                                <td><a href=""><?=$tr_belum_diperiksa[$i]->kegiatan_skp;?></a></td>
-                                                <td><?=$tr_belum_diperiksa[$i]->realisasi_skp;?></td>
-                                                <td><?=$tr_belum_diperiksa[$i]->target_skp;?></td>
-                                                <td><?=$tr_belum_diperiksa[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_belum_diperiksa[$i]->frekuensi_realisasi.' '.$tr_belum_diperiksa[$i]->target_output_name;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_belum_diperiksa[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_belum_diperiksa[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                        if ($active_keberatan == 'show_keberatan') {
-                                                            # code...
-                                                    ?>
-                                                        <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>&nbsp;&nbsp;
-                                                    <?php
-                                                        }
-                                                    ?>
-                                                    <?php
-                                                        if ($active_banding == 'show_banding') {
-                                                            # code...
-                                                    ?>
-                                                        <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="banding('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>&nbsp;&nbsp;
-                                                    <?php
-                                                        }
-                                                    ?>
-                                                    <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_belum_diperiksa[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp;
-                                                    <button class="btn btn-danger btn-xs" onclick="del('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
-                                                </td>
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="menu1" class="tab-pane fade" style="padding-top: 15px;">
-                        <div class="col-lg-12">
-                            <h2>Tahap Revisi</h2>
-                            <table id="table_revisi" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Komentar Atasan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_revisi != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_revisi); $i++) {
-                                            # code...
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_revisi[$i]->tanggal_mulai;?>&nbsp;<?=$tr_revisi[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_revisi[$i]->tanggal_selesai;?>&nbsp;<?=$tr_revisi[$i]->jam_selesai;?></td>
-                                                <td><?=$tr_revisi[$i]->uraian_tugas;?></td>
-                                                <td><?=$tr_revisi[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_revisi[$i]->frekuensi_realisasi.' '.$tr_revisi[$i]->target_output_name;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_revisi[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_revisi[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_revisi[$i]->komentar_pemeriksa;?></td>
-                                                <td>
-                                                    <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_revisi[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Revisi</button>');?>
-                                                    <button class="btn btn-danger btn-xs" onclick="del('<?=$tr_revisi[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
-                                                </td>
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="menu2" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2>Tahap Disetujui</h2>
-                            <table id="table_disetujui" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>Target SKP</th>
-                                        <th>File Pendukung</th>
-                                        <th>Menit Efektif</th>
-                                        <!-- <th>Tunjangan</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_disetujui != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_disetujui); $i++) {
-                                            # code...
-                                            $kegiatan = "";
-                                            if ($infoPegawai[0]->kat_posisi == 1) {
+                                            $active_keberatan = "";
+                                            $active_banding = "";
+                                            if ($hari_kerja != 0) {
                                                 # code...
-                                                $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
+                                                // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_keberatan))
+                                                // {
+                                                //     # code...
+                                                //     $active_keberatan = "hide_keberatan";
+                                                // }
+                                                // else
+                                                // {
+                                                //     $active_keberatan = "show_keberatan";
+                                                // }
+
+                                                // if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_keberatan))
+                                                // {
+                                                //     # code...
+                                                //     $active_keberatan = "hide_keberatan";
+                                                // }
+                                                // else
+                                                // {
+                                                //     $active_keberatan = "show_keberatan";
+                                                // }
+
+
+                                                // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_banding))
+                                                // {
+                                                //     # code...
+                                                //     $active_banding = "hide_banding";
+                                                //     if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_banding))
+                                                //     {
+                                                //         # code...
+                                                //         $active_banding = "hide_banding";
+                                                //     }
+                                                // }
+                                                // else
+                                                // {
+                                                //     $active_banding = "show_banding";
+                                                // }
                                             }
-                                            elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                            for ($i=0; $i < count($tr_belum_diperiksa); $i++) {
                                                 # code...
-                                                $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
-                                            }                                            
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_disetujui[$i]->tanggal_mulai;?>&nbsp;<?=$tr_disetujui[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_disetujui[$i]->tanggal_selesai;?>&nbsp;<?=$tr_disetujui[$i]->jam_selesai;?></td>
-                                                <td><?=$kegiatan;?></td>
-                                                <td><?=$tr_disetujui[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_disetujui[$i]->frekuensi_realisasi.' '.$tr_disetujui[$i]->target_output_name;?></td>
-                                                <td><?=$tr_disetujui[$i]->target_skp;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_disetujui[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_disetujui[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_disetujui[$i]->menit_efektif;?></td>
-                                                <!-- <td>Rp. <?=number_format($tr_disetujui[$i]->tunjangan);?></td> -->
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="menu3" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2>Tahap Ditolak</h2>
-                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Alasan Ditolak</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_tolak != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_tolak); $i++) {
-                                            # code...
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_tolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_tolak[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_tolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_tolak[$i]->jam_selesai;?></td>
-                                                <td><a href=""><?=$tr_tolak[$i]->kegiatan_skp;?></a></td>
-                                                <td><?=$tr_tolak[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_tolak[$i]->frekuensi_realisasi.' '.$tr_tolak[$i]->target_output_name;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_tolak[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_tolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_tolak[$i]->alasan_ditolak;?></td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?=$tr_tolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>
-                                                </td>
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div id="menu4" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2 class="text-center" style="background-color: #FF0000;color: #fff;">EQUAL WORK DESERVES EQUAL PAY</h2>
-
-                            <div class="box-header with-border">
-                                <div class="col-lg-12 text-center">
-                                    <h2 class="box-title pull-left">Tambah Pekerjaan Baru</h2>
-                                </div>
-                            </div><!-- /.box-header -->
-                            <div class="box box-default">
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Uraian Tugas</label>
-                                            <select class="form-control tour-step step1" name="urtug" id="urtug">
-                                                    <option value="">Pilih Uraian Tugas</option>
-
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_belum_diperiksa[$i]->tanggal_selesai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_selesai;?></td>
+                                                    <td><a href=""><?=$tr_belum_diperiksa[$i]->kegiatan_skp;?></a></td>
+                                                    <td><?=$tr_belum_diperiksa[$i]->realisasi_skp;?></td>
+                                                    <td><?=$tr_belum_diperiksa[$i]->target_skp;?></td>
+                                                    <td><?=$tr_belum_diperiksa[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_belum_diperiksa[$i]->frekuensi_realisasi.' '.$tr_belum_diperiksa[$i]->target_output_name;?></td>
+                                                    <td>
                                                     <?php
-                                                        if ($urtug) {
+                                                        $link = "";
+                                                        if ($tr_belum_diperiksa[$i]->file_pendukung != '') {
                                                             # code...
-                                                            $x = "";
-                                                            for ($i=0; $i < count($urtug); $i++) {
-                                                                # code...
-                                                                $x++;
-                                                                if ($infoPegawai[0]->kat_posisi == 1) {
-                                                                    # code...
-                                                                    if ($urtug[$i]->id_skp_master != '') {
-                                                                        # code...
-                                                                        $kegiatan = $urtug[$i]->kegiatan_skp;
-                                                                    }                                                                    
-                                                                }
-                                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                                    # code...
-                                                                    if ($urtug[$i]->id_skp_jfu != '') {
-                                                                        # code...
-                                                                        $kegiatan = $urtug[$i]->kegiatan_skp_jfu;
-                                                                    }                                                                       
-                                                                }
-
                                                     ?>
-                                                            <option value="<?php echo $urtug[$i]->skp_id;?>"><?php echo $x.". ".$kegiatan;?></option>
-                                                    <?
-                                                            }
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_belum_diperiksa[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
                                                         }
                                                     ?>
-                                            </select>
-                                            <input type="hidden" id="flag_urtug" name="flag_urtug">
-                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                            if ($active_keberatan == 'show_keberatan') {
+                                                                # code...
+                                                        ?>
+                                                            <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>&nbsp;&nbsp;
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        <?php
+                                                            if ($active_banding == 'show_banding') {
+                                                                # code...
+                                                        ?>
+                                                            <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="banding('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>&nbsp;&nbsp;
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                        <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_belum_diperiksa[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp;
+                                                        <button class="btn btn-danger btn-xs" onclick="del('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
+                                                    </td>
+                                                </tr>
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="menu1" class="tab-pane fade" style="padding-top: 15px;">
+                            <div class="col-lg-12">
+                                <h2>Tahap Revisi</h2>
+                                <table id="table_revisi" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Komentar Atasan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_revisi != 0)
+                                        {
+                                            # code...
+                                            for ($i=0; $i < count($tr_revisi); $i++) {
+                                                # code...
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_revisi[$i]->tanggal_mulai;?>&nbsp;<?=$tr_revisi[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_revisi[$i]->tanggal_selesai;?>&nbsp;<?=$tr_revisi[$i]->jam_selesai;?></td>
+                                                    <td><?=$tr_revisi[$i]->uraian_tugas;?></td>
+                                                    <td><?=$tr_revisi[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_revisi[$i]->frekuensi_realisasi.' '.$tr_revisi[$i]->target_output_name;?></td>
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_revisi[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_revisi[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_revisi[$i]->komentar_pemeriksa;?></td>
+                                                    <td>
+                                                        <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_revisi[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Revisi</button>');?>
+                                                        <button class="btn btn-danger btn-xs" onclick="del('<?=$tr_revisi[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
+                                                    </td>
+                                                </tr>
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="menu2" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Disetujui</h2>
+                                <table id="table_disetujui" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>Target SKP</th>
+                                            <th>File Pendukung</th>
+                                            <th>Menit Efektif</th>
+                                            <!-- <th>Tunjangan</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_disetujui != 0)
+                                        {
+                                            # code...
+                                            for ($i=0; $i < count($tr_disetujui); $i++) {
+                                                # code...
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
+                                                }                                            
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_disetujui[$i]->tanggal_mulai;?>&nbsp;<?=$tr_disetujui[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_disetujui[$i]->tanggal_selesai;?>&nbsp;<?=$tr_disetujui[$i]->jam_selesai;?></td>
+                                                    <td><?=$kegiatan;?></td>
+                                                    <td><?=$tr_disetujui[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_disetujui[$i]->frekuensi_realisasi.' '.$tr_disetujui[$i]->target_output_name;?></td>
+                                                    <td><?=$tr_disetujui[$i]->target_skp;?></td>
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_disetujui[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_disetujui[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_disetujui[$i]->menit_efektif;?></td>
+                                                    <!-- <td>Rp. <?=number_format($tr_disetujui[$i]->tunjangan);?></td> -->
+                                                </tr>
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="menu3" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Ditolak</h2>
+                                <table id="table_ditolak" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Ditolak</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_tolak != 0)
+                                        {
+                                            # code...
+                                            for ($i=0; $i < count($tr_tolak); $i++) {
+                                                # code...
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_tolak[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_tolak[$i]->kegiatan_skp_jfu;
+                                                }                                                                                            
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_tolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_tolak[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_tolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_tolak[$i]->jam_selesai;?></td>
+                                                    <td><?=$kegiatan;?></td>
+                                                    <td><?=$tr_tolak[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_tolak[$i]->frekuensi_realisasi.' '.$tr_tolak[$i]->target_output_name;?></td>
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_tolak[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_tolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_tolak[$i]->alasan_ditolak;?></td>
+                                                    <td>
+                                                        <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?=$tr_tolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>
+                                                    </td>
+                                                </tr>
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-                                        <div class="form-group col-md-6">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Tanggal Mulai</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input type="text" id="tgl_mulai" name="tgl_mulai" class="form-control timerange" >
-                                            </div>
-                                        </div>
+                        <div id="menu4" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2 class="text-center" style="background-color: #FF0000;color: #fff;">EQUAL WORK DESERVES EQUAL PAY</h2>
 
-                                        <div class="form-group col-md-6">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Tanggal Selesai</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input type="text" id="tgl_selesai" name="tgl_selesai" class="form-control timerange" >
-                                            </div>
-                                        </div>
+                                <div class="box-header with-border">
+                                    <div class="col-lg-12 text-center">
+                                        <h2 class="box-title pull-left">Tambah Pekerjaan Baru</h2>
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box box-default">
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Uraian Tugas</label>
+                                                <select class="form-control tour-step step1" name="urtug" id="urtug">
+                                                        <option value="">Pilih Uraian Tugas</option>
 
-                                        <div class="form-group col-md-6">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Jam Mulai</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input type="text" id="jam_mulai" name="jam_mulai" class="form-control timemasking" data-inputmask="'mask': ['99:99']" data-mask>
-                                            </div>
-                                        </div>
+                                                        <?php
+                                                            if ($urtug) {
+                                                                # code...
+                                                                $x = "";
+                                                                for ($i=0; $i < count($urtug); $i++) {
+                                                                    # code...
+                                                                    $x++;
+                                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                                        # code...
+                                                                        if ($urtug[$i]->id_skp_master != '') {
+                                                                            # code...
+                                                                            $kegiatan = $urtug[$i]->kegiatan_skp;
+                                                                        }                                                                    
+                                                                    }
+                                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                                        # code...
+                                                                        if ($urtug[$i]->id_skp_jfu != '') {
+                                                                            # code...
+                                                                            $kegiatan = $urtug[$i]->kegiatan_skp_jfu;
+                                                                        }                                                                       
+                                                                    }
 
-                                        <div class="form-group col-md-6">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Jam Selesai</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input type="text" id="jam_selesai" name="jam_selesai" class="form-control timemasking" data-inputmask="'mask': ['99:99']" data-mask>
+                                                        ?>
+                                                                <option value="<?php echo $urtug[$i]->skp_id;?>"><?php echo $x.". ".$kegiatan;?></option>
+                                                        <?
+                                                                }
+                                                            }
+                                                        ?>
+                                                </select>
+                                                <input type="hidden" id="flag_urtug" name="flag_urtug">
                                             </div>
-                                        </div>
 
-                                        <div class="form-group col-md-12">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Keterangan Pekerjaan <b class="pull-right">*</b></label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <textarea id="ket_pekerjaan" name="ket_pekerjaan" class="form-control"></textarea>
+                                            <div class="form-group col-md-6">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Tanggal Mulai</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <input type="text" id="tgl_mulai" name="tgl_mulai" class="form-control timerange" >
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group col-md-6">
-                                            <input type="hidden" id="hdn_param_out_skp">
-                                            <input type="hidden" id="hdn_param_qty_skp">
-                                            <input type="hidden" id="hdn_param_realisasi_qty_skp">
-                                            <label style="color: #000;font-weight: 400;font-size: 19px;">Kuantitas</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input type="number" id="kuantitas" name="kuantitas" class="form-control">
-                                                <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span>
+                                            <div class="form-group col-md-6">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Tanggal Selesai</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <input type="text" id="tgl_selesai" name="tgl_selesai" class="form-control timerange" >
+                                                </div>
                                             </div>
-                                            <div>
-                                                <span class="input-group-addon"><label id="param_realisasi_qty_skp">Realisasi : </label></span>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group col-md-6">
-                                            <div class="col-lg-12">
-                                                <label class="pull-left" style="color: #000;font-weight: 400;font-size: 19px;">File Pendukung</label>
-                                                <label class="pull-right" style="color: #000;font-weight: 400;font-size: 14px;">Maksimal 3MB (pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png)</label>
+                                            <div class="form-group col-md-6">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Jam Mulai</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <input type="text" id="jam_mulai" name="jam_mulai" class="form-control timemasking" data-inputmask="'mask': ['99:99']" data-mask>
+                                                </div>
                                             </div>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <input type="file" id="file_pendukung" name="file_pendukung" class="form-control">
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group col-md-12">
-                                            <div class="row">
-                                                <div class="col-md-6 pull-right">
-                                                    <span class="input-group-btn">
-                                                        <a class="btn btn-app pull-right" id="btn_save" <?=$trigger_disable_hari_aktif;?> style="<?=$trigger_css_hari_aktif;?>"><i class="fa fa-save"></i> Simpan</a>
-                                                    </span>
+                                            <div class="form-group col-md-6">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Jam Selesai</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <input type="text" id="jam_selesai" name="jam_selesai" class="form-control timemasking" data-inputmask="'mask': ['99:99']" data-mask>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Keterangan Pekerjaan <b class="pull-right">*</b></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <textarea id="ket_pekerjaan" name="ket_pekerjaan" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <input type="hidden" id="hdn_param_out_skp">
+                                                <input type="hidden" id="hdn_param_qty_skp">
+                                                <input type="hidden" id="hdn_param_realisasi_qty_skp">
+                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Kuantitas</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <input type="number" id="kuantitas" name="kuantitas" class="form-control">
+                                                    <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span>
+                                                </div>
+                                                <div>
+                                                    <span class="input-group-addon"><label id="param_realisasi_qty_skp">Realisasi : </label></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <div class="col-lg-12">
+                                                    <label class="pull-left" style="color: #000;font-weight: 400;font-size: 19px;">File Pendukung</label>
+                                                    <label class="pull-right" style="color: #000;font-weight: 400;font-size: 14px;">Maksimal 3MB (pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png)</label>
+                                                </div>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                    <input type="file" id="file_pendukung" name="file_pendukung" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6 pull-right">
+                                                        <span class="input-group-btn">
+                                                            <a class="btn btn-app pull-right" id="btn_save" <?=$trigger_disable_hari_aktif;?> style="<?=$trigger_css_hari_aktif;?>"><i class="fa fa-save"></i> Simpan</a>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-
-
                         </div>
-                    </div>
 
-                    <div id="menu5" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2>Tahap Keberatan</h2>
-                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Alasan Keberatan</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_keberatan != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_keberatan); $i++) {
+                        <div id="menu5" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Keberatan</h2>
+                                <table id="table_ditolak" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Keberatan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_keberatan != 0)
+                                        {
                                             # code...
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_keberatan[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_keberatan[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan[$i]->jam_selesai;?></td>
-                                                <td><?=$tr_keberatan[$i]->uraian_tugas;?></td>
-                                                <td><?=$tr_keberatan[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_keberatan[$i]->output_pekerjaan;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_keberatan[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_keberatan[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_keberatan[$i]->komentar_keberatan;?></td>
-                                            </tr>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="menu6" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2>Tahap Keberatan Ditolak</h2>
-                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Alasan Keberatan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_keberatan_ditolak != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_keberatan_ditolak); $i++) {
-                                            # code...
-                                            $kegiatan = "";
-                                            if ($infoPegawai[0]->kat_posisi == 1) {
+                                            for ($i=0; $i < count($tr_keberatan); $i++) {
                                                 # code...
-                                                $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_keberatan[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jfu;
+                                                }                                                                   
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_keberatan[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_keberatan[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan[$i]->jam_selesai;?></td>
+                                                    <td><?=$kegiatan;?></td>
+                                                    <td><?=$tr_keberatan[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_keberatan[$i]->frekuensi_realisasi.' '.$tr_keberatan[$i]->target_output_name;?></td>                                                    
+                                                    <!-- <td><?=$tr_keberatan[$i]->output_pekerjaan;?></td> -->
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_keberatan[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_keberatan[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_keberatan[$i]->komentar_keberatan;?></td>
+                                                </tr>
+                                    <?php
                                             }
-                                            elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="menu6" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Keberatan Ditolak</h2>
+                                <table id="table_ditolak" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Keberatan</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_keberatan_ditolak != 0)
+                                        {
+                                            # code...
+                                            for ($i=0; $i < count($tr_keberatan_ditolak); $i++) {
                                                 # code...
-                                                $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
-                                            }                                                                              
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_keberatan_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_keberatan_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_selesai;?></td>
-                                                <td><?=$kegiatan;?></td>
-                                                <td><?=$tr_keberatan_ditolak[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_keberatan_ditolak[$i]->output_pekerjaan;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_keberatan_ditolak[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_keberatan_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_keberatan_ditolak[$i]->alasan_ditolak;?></td>
-                                                <td>
-                                                    <button class="btn btn-xs" onclick="banding('<?=$tr_keberatan_ditolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>
-                                                </td>
-                                            </tr>
-                                <?php
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
+                                                }                                                                              
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_keberatan_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_keberatan_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_selesai;?></td>
+                                                    <td><?=$kegiatan;?></td>
+                                                    <td><?=$tr_keberatan_ditolak[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_keberatan_ditolak[$i]->frekuensi_realisasi.' '.$tr_keberatan_ditolak[$i]->target_output_name;?></td>
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_keberatan_ditolak[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_keberatan_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_keberatan_ditolak[$i]->alasan_ditolak;?></td>
+                                                    <td>
+                                                        <button class="btn btn-xs" onclick="banding('<?=$tr_keberatan_ditolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>
+                                                    </td>
+                                                </tr>
+                                    <?php
+                                            }
                                         }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div id="menu7" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2>Tahap Banding</h2>
-                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Alasan Banding</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_banding != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_banding); $i++) {
+                        <div id="menu7" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Banding</h2>
+                                <table id="table_ditolak" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Banding</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_banding != 0)
+                                        {
                                             # code...
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_banding[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_banding[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding[$i]->jam_selesai;?></td>
-                                                <td><?=$tr_banding[$i]->uraian_tugas;?></td>
-                                                <td><?=$tr_banding[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_banding[$i]->output_pekerjaan;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_banding[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_banding[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_banding[$i]->komentar_banding;?></td>
-                                            </tr>
-                                <?php
+                                            for ($i=0; $i < count($tr_banding); $i++) {
+                                                # code...
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_banding[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_banding[$i]->kegiatan_skp_jfu;
+                                                }                                                
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_banding[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_banding[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding[$i]->jam_selesai;?></td>
+                                                    <td><?=$kegiatan;?></td>
+                                                    <td><?=$tr_banding[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_banding[$i]->frekuensi_realisasi.' '.$tr_banding[$i]->target_output_name;?></td>
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_banding[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_banding[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_banding[$i]->komentar_banding;?></td>
+                                                </tr>
+                                    <?php
+                                            }
                                         }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div id="menu8" class="tab-pane fade">
-                        <div class="col-lg-12">
-                            <h2>Tahap Banding Ditolak</h2>
-                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal, Jam Mulai</th>
-                                        <th>Tanggal, Jam Selesai</th>
-                                        <th>Uraian Tugas</th>
-                                        <th>Keterangan Pekerjaan</th>
-                                        <th>Output Kuantitas</th>
-                                        <th>File Pendukung</th>
-                                        <th>Alasan Banding Ditolak</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_content">
-                                <?php
-                                    if ($tr_banding_ditolak != 0)
-                                    {
-                                        # code...
-                                        for ($i=0; $i < count($tr_banding_ditolak); $i++) {
+                        <div id="menu8" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Banding Ditolak</h2>
+                                <table id="table_ditolak" class="table table-bordered table-striped table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Banding Ditolak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    <?php
+                                        if ($tr_banding_ditolak != 0)
+                                        {
                                             # code...
-                                ?>
-                                            <tr>
-                                                <td><?=$tr_banding_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_mulai;?></td>
-                                                <td><?=$tr_banding_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_selesai;?></td>
-                                                <td><?=$tr_banding_ditolak[$i]->uraian_tugas;?></td>
-                                                <td><?=$tr_banding_ditolak[$i]->nama_pekerjaan;?></td>
-                                                <td><?=$tr_banding_ditolak[$i]->output_pekerjaan;?></td>
-                                                <td>
-                                                <?php
-                                                    $link = "";
-                                                    if ($tr_banding_ditolak[$i]->file_pendukung != '') {
-                                                        # code...
-                                                ?>
-                                                    <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_banding_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
-                                                <?php
-                                                    }
-                                                ?>
-                                                </td>
-                                                <td><?=$tr_banding_ditolak[$i]->komentar_tolak_banding;?></td>
-                                            </tr>
-                                <?php
+                                            for ($i=0; $i < count($tr_banding_ditolak); $i++) {
+                                                # code...
+                                    ?>
+                                                <tr>
+                                                    <td><?=$tr_banding_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_mulai;?></td>
+                                                    <td><?=$tr_banding_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_selesai;?></td>
+                                                    <td><?=$tr_banding_ditolak[$i]->uraian_tugas;?></td>
+                                                    <td><?=$tr_banding_ditolak[$i]->nama_pekerjaan;?></td>
+                                                    <td><?=$tr_banding_ditolak[$i]->output_pekerjaan;?></td>
+                                                    <td>
+                                                    <?php
+                                                        $link = "";
+                                                        if ($tr_banding_ditolak[$i]->file_pendukung != '') {
+                                                            # code...
+                                                    ?>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_banding_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    </td>
+                                                    <td><?=$tr_banding_ditolak[$i]->komentar_tolak_banding;?></td>
+                                                </tr>
+                                    <?php
+                                            }
                                         }
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="view_bawahan" class="col-lg-9" style="display:none;">
+    <div class="box">
+        <div class="box-header">
+			<h3 class="box-title heading-hr text-center col-lg-12">
+                INFORMASI PEGAWAI
+                <div class="box-tools pull-left">
+                    <button class="btn btn-block btn-success" id="btn-backtomain"><i class="fa fa-arrow-circle-o-left"></i></button>
+                </div>
+            </h3>																				        
+        </div>
+        <div class="box-body">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <div id="lbl_image"></div>
+                    </div>
+
+                    <div class="col-md-10 label-info-pegawai">
+                        <div class="col-md-6 label-info-pegawai">
+                            <label>Pimpinan Tinggi Madya (Eselon I) :</label>
+                            <span id="lbl_eselon1"></span>
+                        </div>
+
+                        <div class="col-md-6 label-info-pegawai">
+                            <label>Pimpinan Tinggi Pratama (Eselon II) :</label>
+                            <span id="lbl_eselon2"></span>
+                        </div>
+
+                        <div class="col-md-6 label-info-pegawai">
+                            <label>Administrator (Eselon III) :</label>
+                            <span id="lbl_eselon3"></span>
+                        </div>
+
+                        <div class="col-md-6 label-info-pegawai">
+                            <label>Pengawas (Eselon IV) :</label>
+                            <span id="lbl_eselon4"></span>
+                        </div>
+
+                        <div class="col-md-6 label-info-pegawai">
+                            <label>NIP:</label>
+                            <span id="lbl_nip"></span>
+                        </div>
+
+                        <div class="col-md-6 label-info-pegawai">
+                            <label>Nama:</label>
+                            <span id="lbl_nama"></span>
                         </div>
                     </div>
 
                 </div>
-            </div>
+                <div class="row" style="padding-top:25px;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home_atasan">
+                                Tahap Anda Periksa&nbsp;&nbsp;
+                                <sup>
+                                    <span id="counter_atasan_proses_head" class="notif-count">
+                                        <span id="counter_atasan_proses"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu1_atasan">
+                                Tahap Revisi
+                                <sup>
+                                    <span id="counter_atasan_revisi_head" class="notif-count">
+                                        <span id="counter_atasan_revisi"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu2_atasan">
+                                Tahap Anda Setujui
+                                <sup>
+                                    <span id="counter_atasan_disetujui_head" class="notif-count">
+                                        <span id="counter_atasan_disetujui"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu3_atasan">
+                                Tahap Anda Tolak
+                                <sup>
+                                    <span id="counter_atasan_tolak_head" class="notif-count">
+                                        <span id="counter_atasan_tolak"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu5_atasan">
+                                Tahap Keberatan
+                                <sup>
+                                    <span id="counter_atasan_keberatan_head" class="notif-count">
+                                        <span id="counter_atasan_keberatan"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu6_atasan">
+                                Tahap Keberatan Anda Tolak
+                                <sup>
+                                    <span id="counter_atasan_keberatan_ditolak_head" class="notif-count">
+                                        <span id="counter_atasan_keberatan_ditolak"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu7_atasan">
+                                Tahap Banding
+                                <sup>
+                                    <span id="counter_atasan_banding_head" class="notif-count">
+                                        <span id="counter_atasan_banding"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#menu8_atasan">
+                                Tahap Banding Ditolak
+                                <sup>
+                                    <span id="counter_atasan_banding_ditolak_head" class="notif-count">
+                                        <span id="counter_atasan_banding_ditolak"></span>
+                                    </span>
+                                </sup>
+                            </a>
+                        </li>
+                    </ul>
 
-        </div>
-    </div>
-</div>
-
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="keberatan_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Komentar Keberatan</h4>
-                </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-                    <form id="editForm" name="addForm">
-
-                        <label style="color: #000;font-weight: 400;font-size: 19px;">Komentar</label>
-                        <div class="form-group"><div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-star"></i></span>
-                            <textarea class="form-control" id="textarea_komentar_keberatan" name="textarea_komentar_keberatan"></textarea>
-                            <input type="hidden" id="oid_keberatan" name="oid_keberatan" >
+                    <div class="tab-content">
+                        <div id="home_atasan" class="tab-pane fade in active" style="padding-top: 15px;">
+                            <div class="col-lg-12">
+                                <h2>Tahap Anda Periksa</h2>
+                                <table id="table_belum_diperiksa_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Realisasi Target SKP</th>
+                                            <th>Target SKP</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content_belum_diperiksa_atasan">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                    </form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-                    <input type="submit" class="btn btn-primary" value="Simpan" id="btn_keberatan"/>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="banding_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Komentar Banding</h4>
-                </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-                    <form id="editForm" name="addForm">
-
-                        <label style="color: #000;font-weight: 400;font-size: 19px;">Komentar</label>
-                        <div class="form-group"><div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-star"></i></span>
-                            <textarea class="form-control" id="textarea_komentar_banding" name="textarea_komentar_banding"></textarea>
-                            <input type="hidden" id="oid_banding" name="oid_banding" >
+                        <div id="menu1_atasan" class="tab-pane fade" style="padding-top: 15px;">
+                            <div class="col-lg-12">
+                                <h2>Tahap Revisi</h2>
+                                <table id="table_revisi_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Komentar Atasan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                    </form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-                    <input type="submit" class="btn btn-primary" value="Simpan" id="btn_banding"/>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="view_option_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body" style="background-color: #fff!important;">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="hidden" value="" id="oid_pegawai">
-                            <div class="col-lg-6">
-                                <input type="submit" class="btn btn-primary btn-lg pull-right" value="Detail Transaksi" id="btn_detail_transaksi_pegawai_spesific"/>
-                            </div>
-                            <div class="col-lg-6">
-                                <input type="submit" class="btn btn-primary btn-lg pull-left" value="Approval" id="btn_approval_pegawai_spesific"/>
+                        <div id="menu2_atasan" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Anda Setuju</h2>
+                                <table id="table_disetujui_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>Target SKP</th>
+                                            <th>File Pendukung</th>
+                                            <th>Menit Efektif</th>
+                                            <!-- <th>Tunjangan</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
+                        <div id="menu3_atasan" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Anda Tolak</h2>
+                                <table id="table_ditolak_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Direvisi</th>                                            
+                                            <th>Alasan Ditolak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content"</tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="menu5_atasan" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Keberatan</h2>
+                                <table id="table_keberatan_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Revisi</th>
+                                            <th>Alasan Ditolak</th>
+                                            <th>Alasan Keberatan</th>
+                                            <th>Aksi</th>                                                                                        
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="menu6_atasan" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Keberatan Anda Tolak</h2>
+                                <table id="table_keberatan_ditolak_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Revisi</th>
+                                            <th>Alasan Ditolak</th>
+                                            <th>Alasan Keberatan</th>
+                                            <th>Alasan Keberatan Ditolak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="menu7_atasan" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Banding</h2>
+                                <table id="table_banding_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai - Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Ditolak</th>
+                                            <th>Alasan Keberatan</th>
+                                            <th>Alasan Keberatan Ditolak</th>
+                                            <th>Alasan Banding</th>                                            
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div id="menu8_atasan" class="tab-pane fade">
+                            <div class="col-lg-12">
+                                <h2>Tahap Banding Ditolak</h2>
+                                <table id="table_banding_ditolak_atasan" class="table table-bordered table-striped table-view1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal, Jam Mulai</th>
+                                            <th>Tanggal, Jam Selesai</th>
+                                            <th>Uraian Tugas</th>
+                                            <th>Keterangan Pekerjaan</th>
+                                            <th>Output Kuantitas</th>
+                                            <th>File Pendukung</th>
+                                            <th>Alasan Banding Ditolak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_content"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;text-align: -webkit-center;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
+</section>
 
+<section>
 <div class="example-modal">
-    <div class="modal modal-success fade" id="modal-info-pegawai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="left:0px;">
+    <div class="modal modal-success fade" id="keberatan_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="box-content">
 
-            <div class="modal-dialog modal-lg" style="width:95%;left:0px;overflow-y: initial !important;">
-                <div class="modal-content" style="height:635px;">
-                    <div class="modal-header"><h3 class="heading-hr text-center"><i class="icon-user"></i>INFORMASI PEGAWAI</h3></div>
-                    <div class="modal-body" style="background-color: #fff!important;color:#000!important;height:500px;overflow-y: auto;">
-                        <div class="container-fluid">
-                            <div class="row">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Komentar Keberatan</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: #fff!important;">
+                        <form id="editForm" name="addForm">
 
-                                <div class="col-md-2">
-                                    <div id="lbl_image"></div>
+                            <label style="color: #000;font-weight: 400;font-size: 19px;">Komentar</label>
+                            <div class="form-group"><div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <textarea class="form-control" id="textarea_komentar_keberatan" name="textarea_komentar_keberatan"></textarea>
+                                <input type="hidden" id="oid_keberatan" name="oid_keberatan" >
                                 </div>
-
-                                <div class="col-md-10 label-info-pegawai">
-                                    <div class="col-md-6 label-info-pegawai">
-                                    <label>Pimpinan Tinggi Madya (Eselon I) :</label>
-                                    <span id="lbl_eselon1"></span>
-                                    </div>
-
-                                    <div class="col-md-6 label-info-pegawai">
-                                    <label>Pimpinan Tinggi Pratama (Eselon II) :</label>
-                                    <span id="lbl_eselon2"></span>
-                                    </div>
-
-                                    <div class="col-md-6 label-info-pegawai">
-                                    <label>Administrator (Eselon III) :</label>
-                                    <span id="lbl_eselon3"></span>
-                                    </div>
-
-                                    <div class="col-md-6 label-info-pegawai">
-                                    <label>Pengawas (Eselon IV) :</label>
-                                    <span id="lbl_eselon4"></span>
-                                    </div>
-
-                                    <div class="col-md-6 label-info-pegawai">
-                                    <label>NIP:</label>
-                                    <span id="lbl_nip"></span>
-                                    </div>
-
-                                    <div class="col-md-6 label-info-pegawai">
-                                    <label>Nama:</label>
-                                    <span id="lbl_nama"></span>
-                                    </div>
-                                </div>
-
-                                </div>
-                                <div class="row" style="padding-top:25px;">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a data-toggle="tab" href="#home_atasan">
-                                            Tahap Anda Periksa&nbsp;&nbsp;
-                                            <sup>
-                                                <span id="counter_proses_head" class="notif-count">
-                                                    <span id="counter_proses"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu1_atasan">
-                                            Tahap Revisi
-                                            <sup>
-                                                <span id="counter_revisi_head" class="notif-count">
-                                                    <span id="counter_revisi"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu2_atasan">
-                                            Tahap Anda Setujui
-                                            <sup>
-                                                <span id="counter_disetujui_head" class="notif-count">
-                                                    <span id="counter_disetujui"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu3_atasan">
-                                            Tahap Anda Tolak
-                                            <sup>
-                                                <span id="counter_tolak_head" class="notif-count">
-                                                    <span id="counter_tolak"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu5_atasan">
-                                            Tahap Keberatan
-                                            <sup>
-                                                <span id="counter_keberatan_head" class="notif-count">
-                                                    <span id="counter_keberatan"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu6_atasan">
-                                            Tahap Keberatan Anda Tolak
-                                            <sup>
-                                                <span id="counter_keberatan_ditolak_head" class="notif-count">
-                                                    <span id="counter_keberatan_ditolak"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu7_atasan">
-                                            Tahap Banding
-                                            <sup>
-                                                <span id="counter_banding_head" class="notif-count">
-                                                    <span id="counter_banding"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="tab" href="#menu8_atasan">
-                                            Tahap Banding Ditolak
-                                            <sup>
-                                                <span id="counter_banding_ditolak_head" class="notif-count">
-                                                    <span id="counter_banding_ditolak"></span>
-                                                </span>
-                                            </sup>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div class="tab-content">
-                                    <div id="home_atasan" class="tab-pane fade in active" style="padding-top: 15px;">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Anda Periksa</h2>
-                                            <table id="table_belum_diperiksa_atasan" class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Realisasi Target SKP</th>
-                                                        <th>Target SKP</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content_belum_diperiksa_atasan">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="menu1_atasan" class="tab-pane fade" style="padding-top: 15px;">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Revisi</h2>
-                                            <table id="table_revisi_atasan" class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Komentar Atasan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="menu2_atasan" class="tab-pane fade">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Anda Setuju</h2>
-                                            <table id="table_disetujui_atasan" class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>Target SKP</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Menit Efektif</th>
-                                                        <!-- <th>Tunjangan</th> -->
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="menu3_atasan" class="tab-pane fade">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Anda Tolak</h2>
-                                            <table id="table_ditolak_atasan" class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Alasan Ditolak</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content"</tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="menu5_atasan" class="tab-pane fade">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Keberatan</h2>
-                                            <table id="table_keberatan_atasan" class="table table-bordered table-striped table-view">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Alasan Keberatan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="menu6_atasan" class="tab-pane fade">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Keberatan Anda Tolak</h2>
-                                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Alasan Keberatan</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="menu7_atasan" class="tab-pane fade">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Banding</h2>
-                                            <table id="table_banding_atasan" class="table table-bordered table-striped table-view">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Alasan Banding</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-
-                                    <div id="menu8" class="tab-pane fade">
-                                        <div class="col-lg-12">
-                                            <h2>Tahap Banding Anda Tolak</h2>
-                                            <table id="table_ditolak" class="table table-bordered table-striped table-view">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Tanggal, Jam Mulai</th>
-                                                        <th>Tanggal, Jam Selesai</th>
-                                                        <th>Uraian Tugas</th>
-                                                        <th>Keterangan Pekerjaan</th>
-                                                        <th>Output Kuantitas</th>
-                                                        <th>File Pendukung</th>
-                                                        <th>Alasan Banding Ditolak</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table_content"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                </div>
-
                             </div>
-                        </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+                        <input type="submit" class="btn btn-primary" value="Simpan" id="btn_keberatan"/>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-<div class="example-modal">
-<div class="modal modal-success fade" id="revisi_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
+    <div class="example-modal">
+    <div class="modal modal-success fade" id="tolak_data_keberatan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Komentar Revisi</h4>
-                </div>
-            	<div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="addForm">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Alasan Tolak Keberatan</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: #fff!important;">
+                        <form id="editForm" name="addForm">
 
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Komentar</label>
-						<div class="form-group"><div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    <textarea class="form-control" id="textarea_komentar_revisi" name="textarea_komentar_revisi"></textarea>
-							<input type="hidden" id="oid_revisi" name="oid_revisi" >
-							</div>
-						</div>
+                            <label style="color: #000;font-weight: 400;font-size: 19px;">Alasan</label>
+                            <div class="form-group"><div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <textarea class="form-control" id="textarea_alasan_tolak_keberatan" name="textarea_alasan_tolak_keberatan"></textarea>
+                                <input type="hidden" id="oid_tolak_keberatan" name="oid_tolak_keberatan" >
+                                </div>
+                            </div>
 
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="btn_revisi"/>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+                        <input type="submit" class="btn btn-primary" value="Simpan" id="btn_tolak_keberatan"/>
 
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div>
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="tolak_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Alasan Tolak Pekerjaan</h4>
-                </div>
-            	<div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="addForm">
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Alasan</label>
-						<div class="form-group"><div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    <textarea class="form-control" id="textarea_alasan_tolak" name="textarea_alasan_tolak"></textarea>
-							<input type="hidden" id="oid_tolak" name="oid_tolak" >
-							</div>
-						</div>
-
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="btn_tolak"/>
-
+                    </div>
                 </div>
             </div>
         </div>
-	</div>
-</div>
-</div>
+    </div>
+    </div>    
+
+    <div class="example-modal">
+    <div class="modal modal-success fade" id="banding_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Komentar Banding</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: #fff!important;">
+                        <form id="editForm" name="addForm">
+
+                            <label style="color: #000;font-weight: 400;font-size: 19px;">Komentar</label>
+                            <div class="form-group"><div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <textarea class="form-control" id="textarea_komentar_banding" name="textarea_komentar_banding"></textarea>
+                                <input type="hidden" id="oid_banding" name="oid_banding" >
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+                        <input type="submit" class="btn btn-primary" value="Simpan" id="btn_banding"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="example-modal">
+    <div class="modal modal-success fade" id="view_option_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" style="background-color: #fff!important;">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <input type="hidden" value="" id="oid_pegawai">
+                                <div class="col-lg-6">
+                                    <input type="submit" class="btn btn-primary btn-lg pull-right" value="Detail Transaksi" id="btn_detail_transaksi_pegawai_spesific"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="submit" class="btn btn-primary btn-lg pull-left" value="Approval" id="btn_approval_pegawai_spesific"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;text-align: -webkit-center;">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="example-modal">
+    <div class="modal modal-success fade" id="revisi_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Komentar Revisi</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: #fff!important;">
+                        <form id="editForm" name="addForm">
+
+                            <label style="color: #000;font-weight: 400;font-size: 19px;">Komentar</label>
+                            <div class="form-group"><div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <textarea class="form-control" id="textarea_komentar_revisi" name="textarea_komentar_revisi"></textarea>
+                                <input type="hidden" id="oid_revisi" name="oid_revisi" >
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+                        <input type="submit" class="btn btn-primary" value="Simpan" id="btn_revisi"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="example-modal">
+    <div class="modal modal-success fade" id="tolak_data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Alasan Tolak Pekerjaan</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: #fff!important;">
+                        <form id="editForm" name="addForm">
+
+                            <label style="color: #000;font-weight: 400;font-size: 19px;">Alasan</label>
+                            <div class="form-group"><div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                                <textarea class="form-control" id="textarea_alasan_tolak" name="textarea_alasan_tolak"></textarea>
+                                <input type="hidden" id="oid_tolak" name="oid_tolak" >
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
+                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
+                        <input type="submit" class="btn btn-primary" value="Simpan" id="btn_tolak"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
 
 <!-- DataTables -->
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -1316,7 +1388,7 @@ function approve(id) {
                     url :"<?php echo site_url()?>transaksi/approve/"+id,
                     type:"post",
                     beforeSend:function(){
-                    $("#loadprosess").modal('show');
+                        $("#loadprosess").modal('show');
                     },
 					success:function(msg){
 						var obj = jQuery.parseJSON (msg);
@@ -1365,10 +1437,15 @@ function view_option(id,i) {
         type:"post",
         beforeSend:function(){
             $("#loadprosess").modal('show');
+            $('.table-view1').dataTable().fnDestroy();
+            $(".table-view1 tbody tr").remove();
+            var newrec  = '<tr">' +
+                                '<td colspan="5" class="text-center">Memuat Data</td>'
+                            '</tr>';
+            $('.table-view1 tbody').append(newrec);            
         },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            console.log(obj.data.tr_belum_diperiksa);
             if (obj.status == 1)
             {
                 link_image = '';
@@ -1394,14 +1471,23 @@ function view_option(id,i) {
                 $("#lbl_nip").html(obj.data.infoPegawai[0].nip);
                 $("#lbl_image").html('<img style="width: 160px;height: 160px;" src="'+link_image+'">');
 
+				$(".table-view1 tbody tr").remove();               
                 if (obj.data.tr_belum_diperiksa != 0)
                 {
+                    $("#counter_atasan_proses").html(obj.data.tr_belum_diperiksa.length);                    
                     for (var i = 0; i < obj.data.tr_belum_diperiksa.length; i++)
                     {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu;
+                        }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].kegiatan_skp+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].realisasi_skp+"</td>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].target_skp+"</td>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].nama_pekerjaan+"</td>"+
@@ -1419,12 +1505,20 @@ function view_option(id,i) {
 
                 if (obj.data.tr_revisi != 0)
                 {
+                    $("#counter_atasan_revisi").html(obj.data.tr_revisi.length);                    
                     for (var i = 0; i < obj.data.tr_revisi.length; i++)
                     {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jfu;
+                        }                        
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_revisi[i].tanggal_mulai+"&nbsp;"+obj.data.tr_revisi[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_revisi[i].tanggal_selesai+"&nbsp;"+obj.data.tr_revisi[i].jam_selesai+"</td>"+
-                        "<td>"+obj.data.tr_revisi[i].kegiatan_skp+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
                         "<td>"+obj.data.tr_revisi[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_revisi[i].target_output_name+"</td>"+
                         "<td>"+obj.data.tr_revisi[i].nama_pekerjaan+"</td>"+
                         "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_revisi[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
@@ -1436,12 +1530,20 @@ function view_option(id,i) {
 
                 if (obj.data.tr_disetujui != 0)
                 {
+                    $("#counter_atasan_disetujui").html(obj.data.tr_disetujui.length);                    
                     for (var i = 0; i < obj.data.tr_disetujui.length; i++)
                     {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
+                        }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_disetujui[i].tanggal_mulai+"&nbsp;"+obj.data.tr_disetujui[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_disetujui[i].tanggal_selesai+"&nbsp;"+obj.data.tr_disetujui[i].jam_selesai+"</td>"+
-                        "<td>"+obj.data.tr_disetujui[i].kegiatan_skp+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
                         "<td>"+obj.data.tr_disetujui[i].nama_pekerjaan+"</td>"+
                         "<td>"+obj.data.tr_disetujui[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_disetujui[i].target_output_name+"</td>"+
                         "<td>"+obj.data.tr_disetujui[i].target_skp+"</td>"+
@@ -1454,22 +1556,149 @@ function view_option(id,i) {
 
                 if (obj.data.tr_tolak != 0)
                 {
+                    $("#counter_atasan_tolak").html(obj.data.tr_tolak.length);                    
+                      
                     for (var i = 0; i < obj.data.tr_tolak.length; i++)
                     {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jfu;
+                        }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_tolak[i].tanggal_selesai+"&nbsp;"+obj.data.tr_tolak[i].jam_selesai+"</td>"+
                         "<td>"+obj.data.tr_tolak[i].tanggal_mulai+"&nbsp;"+obj.data.tr_tolak[i].jam_mulai+"</td>"+
-                        "<td>"+obj.data.tr_tolak[i].kegiatan_skp+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
                         "<td>"+obj.data.tr_tolak[i].nama_pekerjaan+"</td>"+
                         "<td>"+obj.data.tr_tolak[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_tolak[i].target_output_name+"</td>"+
                         "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_disetujui[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
-                        "<td>"+obj.data.tr_tolak[i].alasan_ditolak+"</td>"+
+                        "<td>"+obj.data.tr_tolak[i].komentar_pemeriksa+"</td>"+
+                        "<td>"+obj.data.tr_tolak[i].alasan_ditolak+"</td>"+                        
                         "</tr>";
                         $('#table_ditolak_atasan tbody').append(row_data);
                     }
                 }
 
-                $("#modal-info-pegawai").modal('show');
+                if (obj.data.tr_keberatan != 0)
+                {
+                    $("#counter_atasan_keberatan").html(obj.data.tr_keberatan.length);                      
+                    for (var i = 0; i < obj.data.tr_keberatan.length; i++)
+                    {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jfu;
+                        }
+                        row_data = "<tr>"+
+                        "<td>"+obj.data.tr_keberatan[i].tanggal_selesai+"&nbsp;"+obj.data.tr_keberatan[i].jam_selesai+"</td>"+
+                        "<td>"+obj.data.tr_keberatan[i].tanggal_mulai+"&nbsp;"+obj.data.tr_keberatan[i].jam_mulai+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
+                        "<td>"+obj.data.tr_keberatan[i].nama_pekerjaan+"</td>"+
+                        "<td>"+obj.data.tr_keberatan[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_keberatan[i].target_output_name+"</td>"+
+                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_keberatan[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                        "<td>"+obj.data.tr_keberatan[i].komentar_pemeriksa+"</td>"+
+                        "<td>"+obj.data.tr_keberatan[i].alasan_ditolak+"</td>"+
+                        "<td>"+obj.data.tr_keberatan[i].komentar_keberatan+"</td>"+
+                        "<td>"+
+                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_keberatan[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
+                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-danger btn-xs' onclick='reject_keberatan("+obj.data.tr_keberatan[i].id_pekerjaan+")'><i class='fa fa-close'></i>&nbsp;Tolak</a></div><br>"+
+                        "</td>"+
+                        "</tr>";
+                        $('#table_keberatan_atasan tbody').append(row_data);
+                    }
+                }
+
+                if (obj.data.tr_keberatan_ditolak != 0)
+                {
+                    $("#counter_atasan_keberatan_ditolak").html(obj.data.tr_keberatan_ditolak.length);                      
+                    for (var i = 0; i < obj.data.tr_keberatan_ditolak.length; i++)
+                    {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu;
+                        }
+                        row_data = "<tr>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].tanggal_selesai+"&nbsp;"+obj.data.tr_keberatan_ditolak[i].jam_selesai+"</td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].tanggal_mulai+"&nbsp;"+obj.data.tr_keberatan_ditolak[i].jam_mulai+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].nama_pekerjaan+"</td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_keberatan_ditolak[i].target_output_name+"</td>"+
+                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_keberatan_ditolak[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].komentar_pemeriksa+"</td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].alasan_ditolak+"</td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].komentar_keberatan+"</td>"+
+                        "<td>"+obj.data.tr_keberatan_ditolak[i].komentar_tolak_keberatan+"</td>"+                        
+                        "</tr>";
+                        $('#table_keberatan_ditolak_atasan tbody').append(row_data);
+                    }
+                }
+
+                if (obj.data.tr_banding != 0)
+                {
+                    $("#counter_atasan_banding").html(obj.data.tr_banding.length);                      
+                    for (var i = 0; i < obj.data.tr_banding.length; i++)
+                    {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_banding[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_banding[i].kegiatan_skp_jfu;
+                        }
+                        row_data = "<tr>"+
+                        "<td>"+obj.data.tr_banding[i].tanggal_mulai+"&nbsp;"+" Sampai "+obj.data.tr_banding[i].tanggal_selesai+"&nbsp;"+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
+                        "<td>"+obj.data.tr_banding[i].nama_pekerjaan+"</td>"+
+                        "<td>"+obj.data.tr_banding[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_banding[i].target_output_name+"</td>"+
+                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_banding[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                        "<td>"+obj.data.tr_banding[i].alasan_ditolak+"</td>"+
+                        "<td>"+obj.data.tr_banding[i].komentar_keberatan+"</td>"+
+                        "<td>"+obj.data.tr_banding[i].komentar_tolak_keberatan+"</td>"+
+                        "<td>"+obj.data.tr_banding[i].komentar_banding+"</td>"+
+                        "<td></td>"+                                                                        
+                        "</tr>";    
+                        $('#table_banding_atasan tbody').append(row_data);
+                    }
+                }
+
+                if (obj.data.tr_banding_ditolak != 0)
+                {
+                    $("#counter_atasan_banding_ditolak").html(obj.data.tr_banding_ditolak.length);                      
+                    for (var i = 0; i < obj.data.tr_banding_ditolak.length; i++)
+                    {
+                        kegiatan = '';
+                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp;
+                        }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu;
+                        }
+                        row_data = "<tr>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].tanggal_mulai+"&nbsp;"+" Sampai "+obj.data.tr_banding_ditolak[i].tanggal_selesai+"&nbsp;"+"</td>"+
+                        "<td>"+kegiatan+"</td>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].nama_pekerjaan+"</td>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_banding_ditolak[i].target_output_name+"</td>"+
+                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_banding_ditolak[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].alasan_ditolak+"</td>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].komentar_keberatan+"</td>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].komentar_tolak_keberatan+"</td>"+
+                        "<td>"+obj.data.tr_banding_ditolak[i].komentar_banding+"</td>"+
+                        "<td></td>"+                                                                        
+                        "</tr>";    
+                        $('#table_banding_ditolak_atasan tbody').append(row_data);
+                    }
+                }                                                          
+
+
+                $("#view_bawahan").css({"display": ""})
+                $("#view_main").css({"display": "none"})
             }
             else
             {
@@ -1628,6 +1857,12 @@ function send_data_tolak(data_sender,param) {
     })
 }
 
+function reject_keberatan(id) {
+    // body...
+    $("#tolak_data_keberatan").modal('show');
+    $("#oid_tolak_keberatan ").val(id);
+}
+
 $(document).ready(function()
 {
     trigger_msg = $("#trigger_msg").val();
@@ -1738,6 +1973,14 @@ $(document).ready(function()
     if (counter_banding_ditolak   == 0)$("#counter_banding_ditolak").css("display","none");
 
     $("[data-mask]").inputmask();
+
+    $("#btn-backtomain").click(function(){
+        $("#loadprosess").modal('show');        
+        $("#view_bawahan").css({"display": "none"})
+        $("#view_main").css({"display": ""})        
+        $("#loadprosess").modal('hide');        
+    })
+
     $("#urtug").change(function(){
         var urtug = $("#urtug option:selected").text();
         var str = new String(urtug);
@@ -1925,7 +2168,7 @@ $(document).ready(function()
                                 }
                                 else
                                 {
-                                    send_data_tambah(data_sender);                                    
+                                    send_data_tambah_without_file(data_sender);                                    
                                     // if (param_out_skp != 'Frekuensi')
                                     // {
                                     //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
@@ -1981,6 +2224,40 @@ $(document).ready(function()
             })
         }
     });
+
+    $("#btn_tolak_keberatan").click(function()
+    {
+
+        var data_sender = {
+                                'id_pekerjaan': $("#oid_tolak_keberatan").val(),
+                                'komentar'    : $("#textarea_alasan_tolak_keberatan").val()
+                        };
+
+        if ($("#textarea_alasan_tolak_keberatan").val().length <= 0) {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                    msg: "Alasan wajib diisi."
+            });
+        }
+        else {
+            $.ajax({
+                url :"<?php echo site_url();?>transaksi/tolak_keberatan",
+                type:"post",
+                data:{data_sender : data_sender},
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                },
+                success:function(msg){
+                    var obj = jQuery.parseJSON (msg);
+                    ajax_status(obj);
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
+                }
+            })
+        }
+    });    
 
     $("#btn_banding").click(function()
     {

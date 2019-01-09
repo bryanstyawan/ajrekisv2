@@ -146,9 +146,18 @@ class Mtrx extends CI_Model
 	{
 		# code...
 		$sql = "SELECT a.*,
-						COALESCE(c.nama,'-') as `target_output_name`
+						COALESCE(c.nama,'-') as `target_output_name`,
+						COALESCE(b.target_qty,0) as `target_qty`,
+						COALESCE(
+						(
+							SELECT SUM(aa.frekuensi_realisasi)
+							FROM tr_capaian_pekerjaan aa
+							WHERE aa.id_pegawai = a.id_pegawai
+							AND aa.id_uraian_tugas = a.id_uraian_tugas
+							AND aa.status_pekerjaan = '1'
+						),0) as `realisasi_skp`												
 				FROM tr_capaian_pekerjaan a
-				JOIN mr_skp_pegawai b
+				LEFT JOIN mr_skp_pegawai b
 				ON a.id_uraian_tugas = b.skp_id
 				LEFT OUTER JOIN mr_skp_satuan c
 				ON b.target_output = c.id
@@ -242,8 +251,8 @@ class Mtrx extends CI_Model
 				ON b.posisi_class = c.id
 				WHERE a.es1 = '".$es1."'
 				AND a.es2 = '".$es2."'
-				AND a.id_role = 4
 				AND a.status = 1
+				AND b.kat_posisi = 1
 				AND c.posisi_class < '17'
 				AND c.posisi_class > '13'";
 		$query = $this->db->query($sql);

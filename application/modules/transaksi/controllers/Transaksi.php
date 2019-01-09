@@ -41,6 +41,7 @@ class Transaksi extends CI_Controller {
 			for ($i=0; $i < count($data['member']); $i++) {
 				// code...
 				$get_data = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+				// $get_data = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();				
 				if ($get_data) {
 					// code...
 					$data['member'][$i]->counter_belum_diperiksa = $get_data;
@@ -192,7 +193,7 @@ class Transaksi extends CI_Controller {
 		$res_data                = "";
 		$text_status             = "";
 		$config['upload_path']   = FCPATH.'/public/file_pendukung/';
-		$config['allowed_types'] = 'pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png';
+		$config['allowed_types'] = 'pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png|ppt|pptx';
 		$config['max_size']      = '3000';
 		$data                    = "";
         $this->load->library('upload', $config);
@@ -581,10 +582,14 @@ class Transaksi extends CI_Controller {
 			if ($get_data_transact[0]->status_pekerjaan != 1) {
 				# code...
 				$this->Globalrules->notif_message();
-				$data['title']     = 'Transaksi';
-				$data['content']   = 'transaksi/trx/data_edit_pekerjaan';
-				$data['urtug']     = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'approve',1);
-				$data['pekerjaan'] = $get_data_transact;
+				$data['title']       = 'Transaksi';
+				$data['content']     = 'transaksi/trx/data_edit_pekerjaan';
+				$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
+				$data['urtug']       = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'approve',1);
+				$data['pekerjaan']   = $get_data_transact;
+				// echo "<pre>";
+				// print_r($data['pekerjaan']);die();
+				// echo "</pre>";die();
 				$this->load->view('templateAdmin',$data);
 			}
 			else
@@ -797,7 +802,8 @@ class Transaksi extends CI_Controller {
 		if ($get_pegawai != 0) {
 			# code...
 			$get_pegawai_es2 = $this->mtrx->get_pegawai_es2($get_pegawai[0]->es1,$get_pegawai[0]->es2);
-			if ($get_pegawai_es2 != 0) {
+			if ($get_pegawai_es2 != 0) 
+			{
 				# code...
 				$data        = array
 								(
@@ -1271,6 +1277,7 @@ class Transaksi extends CI_Controller {
 		$data['tr_keberatan']         = $this->mtrx->status_pekerjaan('4',$id_pegawai);
 		$data['tr_keberatan_ditolak'] = $this->mtrx->status_pekerjaan('5',$id_pegawai);
 		$data['tr_banding']           = $this->mtrx->status_pekerjaan('6',$id_pegawai);
+		$data['banding']              = $this->mtrx->get_kinerja_banding($this->session->userdata('sesUser'),$id_pegawai);
 		$data['tr_banding_ditolak']   = $this->mtrx->status_pekerjaan('7',$id_pegawai);
 		$res = array
 					(

@@ -166,10 +166,10 @@ if ($member != 0) {
                   for ($i=0; $i < count($member); $i++) {
                     // code...
                       $flag_counter = "";
-                      // if ($member[$i]->counter_belum_diperiksa == 0) {
-                      //   // code...
-                      //   $flag_counter = "display:none;";
-                      // }
+                      if ($member[$i]->counter_belum_diperiksa == 0) {
+                        // code...
+                        $flag_counter = "display:none;";
+                      }
                     ?>
                         <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>')">
                           <a class="contact-name">

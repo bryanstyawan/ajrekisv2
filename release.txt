@@ -1,4 +1,16 @@
 v2.0.0-Alpha    
+2019-01-09
+==========
+New:
+- table-view1 untuk datatable
+Improved:
+- Perubahan tatak letak target dan realisasi di halaman dashboard
+- penambahan format ppt dan pptx di upload data transaksi
+- Perubahan sistem transaksi di detail transaksi pegawai, meninggalkan sistem pop up untuk melihat detail pegawai 
+Fixed:
+- memunculkan notif angka di nama pegawai tanda approval target
+
+v2.0.0-Alpha    
 2019-01-04
 ==========
 New:

@@ -94,7 +94,7 @@ $this->load->view('dashboard_component/php_logic_component');
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'%'),
         'value_php' => $skp['persentase_target_realisasi']->persentase,
         'title'     => 'CAPAIAN SKP',
-        'html'      => "<label>".$skp['persentase_target_realisasi']->total_target_kuantitas.' / '.$skp['persentase_target_realisasi']->total_realisasi_kuantitas."</label>"));                                        
+        'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
     ?>
 </div>
 
