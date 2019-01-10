@@ -63,7 +63,7 @@ else {
                                     <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                                     <sup style="<?=$flag_counter;?>">
                                         <span class="notif-count pull-right">
-                                            <span><?=$member[$i]->counter_belum_diperiksa;?></span>
+                                            <span><?=$member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;?></span>
                                         </span>
                                     </sup>
                                 </a>
@@ -913,7 +913,7 @@ else {
                             <a data-toggle="tab" href="#menu1_atasan">
                                 Tahap Revisi
                                 <sup>
-                                    <span id="counter_atasan_revisi_head" class="notif-count">
+                                    <span id="counter_atasan_revisi_head" class="notif-count-transparent">
                                         <span id="counter_atasan_revisi"></span>
                                     </span>
                                 </sup>
@@ -923,7 +923,7 @@ else {
                             <a data-toggle="tab" href="#menu2_atasan">
                                 Tahap Anda Setujui
                                 <sup>
-                                    <span id="counter_atasan_disetujui_head" class="notif-count">
+                                    <span id="counter_atasan_disetujui_head" class="notif-count-transparent">
                                         <span id="counter_atasan_disetujui"></span>
                                     </span>
                                 </sup>
@@ -933,7 +933,7 @@ else {
                             <a data-toggle="tab" href="#menu3_atasan">
                                 Tahap Anda Tolak
                                 <sup>
-                                    <span id="counter_atasan_tolak_head" class="notif-count">
+                                    <span id="counter_atasan_tolak_head" class="notif-count-transparent">
                                         <span id="counter_atasan_tolak"></span>
                                     </span>
                                 </sup>
@@ -953,7 +953,7 @@ else {
                             <a data-toggle="tab" href="#menu6_atasan">
                                 Tahap Keberatan Anda Tolak
                                 <sup>
-                                    <span id="counter_atasan_keberatan_ditolak_head" class="notif-count">
+                                    <span id="counter_atasan_keberatan_ditolak_head" class="notif-count-transparent">
                                         <span id="counter_atasan_keberatan_ditolak"></span>
                                     </span>
                                 </sup>
@@ -963,7 +963,7 @@ else {
                             <a data-toggle="tab" href="#menu7_atasan">
                                 Tahap Banding
                                 <sup>
-                                    <span id="counter_atasan_banding_head" class="notif-count">
+                                    <span id="counter_atasan_banding_head" class="notif-count-transparent">
                                         <span id="counter_atasan_banding"></span>
                                     </span>
                                 </sup>
@@ -973,7 +973,7 @@ else {
                             <a data-toggle="tab" href="#menu8_atasan">
                                 Tahap Banding Ditolak
                                 <sup>
-                                    <span id="counter_atasan_banding_ditolak_head" class="notif-count">
+                                    <span id="counter_atasan_banding_ditolak_head" class="notif-count-transparent">
                                         <span id="counter_atasan_banding_ditolak"></span>
                                     </span>
                                 </sup>

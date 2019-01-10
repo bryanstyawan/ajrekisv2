@@ -68,16 +68,23 @@ Last edit : 19/07/2016
 	public function get_transact($id_pegawai,$status,$bulan,$tahun)
 	{
 		$sql = "SELECT a.id_pegawai,
-							(e.tunjangan/2) AS tunjangan_kinerja_sistem,
-							a.status_pekerjaan,
-							MONTH(a.tanggal_mulai) AS `month`,
-							(b.jml_hari_aktif*b.jml_menit_perhari) AS menit_efektif_sistem,
-							SUM(a.menit_efektif) AS menit_efektif,
-							Count(a.status_pekerjaan) AS count_status_pekerjaan,
-							SUM(a.tunjangan) AS tunjangan_kinerja,
-							((SUM(a.menit_efektif)/(b.jml_hari_aktif*b.jml_menit_perhari))*100) AS prosentase,
-              IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,(e.tunjangan / 2),SUM(a.tunjangan)) AS real_tunjangan_kinerja,
-              IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,100,((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100)) AS real_prosentase,
+						(
+							CASE d.kat_posisi
+								WHEN 1 THEN (e.tunjangan/2)
+								WHEN 2 THEN (cls_jft.tunjangan/2)
+								WHEN 4 THEN (cls_jfu.tunjangan/2)
+							END								
+						) as tunjangan_kinerja_sistem,
+--						(e.tunjangan/2) AS tunjangan_kinerja_sistem,
+						a.status_pekerjaan,
+						MONTH(a.tanggal_mulai) AS `month`,
+						(b.jml_hari_aktif*b.jml_menit_perhari) AS menit_efektif_sistem,
+						SUM(a.menit_efektif) AS menit_efektif,
+						Count(a.status_pekerjaan) AS count_status_pekerjaan,
+						SUM(a.tunjangan) AS tunjangan_kinerja,
+						((SUM(a.menit_efektif)/(b.jml_hari_aktif*b.jml_menit_perhari))*100) AS prosentase,
+						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,((CASE d.kat_posisi WHEN 1 THEN (e.tunjangan)WHEN 2 THEN (cls_jft.tunjangan)WHEN 4 THEN (cls_jfu.tunjangan)END) / 2),SUM(a.tunjangan)) AS real_tunjangan_kinerja,
+						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,100,((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100)) AS real_prosentase,
 							COALESCE((
 									SELECT IF(COALESCE(aa.keterangan,'-')='-','-','Tugas Belajar')
 									FROM mr_tugas_belajar aa
@@ -97,10 +104,14 @@ Last edit : 19/07/2016
 									AND cc.bulan = ".$bulan."
 							 ),'0') AS tunjangan_disiplin
 				FROM tr_capaian_pekerjaan a
-				JOIN mr_hari_aktif b ON b.bulan = MONTH(a.tanggal_mulai)
-				JOIN mr_pegawai c ON a.id_pegawai = c.id
-				JOIN mr_posisi d ON c.posisi = d.id
-				JOIN mr_posisi_class e ON e.id = d.posisi_class
+				LEFT JOIN mr_hari_aktif b ON b.bulan = MONTH(a.tanggal_mulai)
+				LEFT JOIN mr_pegawai c ON a.id_pegawai = c.id
+				LEFT JOIN mr_posisi d ON c.posisi = d.id
+				LEFT JOIN mr_posisi_class e ON e.id = d.posisi_class
+				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON d.id_jft  = jft.id
+				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
+				LEFT JOIN mr_jabatan_fungsional_umum jfu ON d.id_jfu      = jfu.id
+				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
 				WHERE a.status_pekerjaan = ".$status."
 				AND MONTH(a.tanggal_mulai) = ".$bulan."
 				AND YEAR(a.tanggal_mulai) = ".$tahun."

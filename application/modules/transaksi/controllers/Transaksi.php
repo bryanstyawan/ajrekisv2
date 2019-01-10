@@ -40,8 +40,8 @@ class Transaksi extends CI_Controller {
 			// code...
 			for ($i=0; $i < count($data['member']); $i++) {
 				// code...
-				$get_data = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-				// $get_data = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();				
+				$get_data           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+				$get_data_keberatan = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
 				if ($get_data) {
 					// code...
 					$data['member'][$i]->counter_belum_diperiksa = $get_data;
@@ -50,6 +50,15 @@ class Transaksi extends CI_Controller {
 					// code...
 					$data['member'][$i]->counter_belum_diperiksa = 0;
 				}
+
+				if ($get_data_keberatan) {
+					// code...
+					$data['member'][$i]->counter_keberatan = $get_data_keberatan;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_keberatan = 0;
+				}				
 			}
 		}
 
@@ -122,7 +131,7 @@ class Transaksi extends CI_Controller {
 			$res_data = 0;
 		}
 
-		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/kinerja_anggota/0/',$res_data_id,'approval');
+		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');
 		$res = array
 					(
@@ -174,7 +183,7 @@ class Transaksi extends CI_Controller {
 			$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
 		}
 
-		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/kinerja_anggota/0/',$id_pekerjaan,'approval');
+		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$id_pekerjaan,'approval');
 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');
 		$res = array
 					(
@@ -658,7 +667,7 @@ class Transaksi extends CI_Controller {
 		$flag        = array('id_pekerjaan'=>$data_sender['oid']);
 		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 
-		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/kinerja_anggota/0/',$data_sender['oid'],'approval');
+		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$data_sender['oid'],'approval');
 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan telah diubah');
 		$res         = array
 					(
@@ -748,7 +757,7 @@ class Transaksi extends CI_Controller {
 		$flag        = array('id_pekerjaan'=>$data_sender['id_pekerjaan']);
 		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 
-		$this->notify_capaian_kerja(' telah mengajukan keberatan','transaksi/kinerja_anggota/4/',$data_sender['id_pekerjaan'],'approval');
+		$this->notify_capaian_kerja(' telah mengajukan keberatan','transaksi/home/',$data_sender['id_pekerjaan'],'approval');
 		$text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
 		$res = array
 					(
@@ -818,7 +827,7 @@ class Transaksi extends CI_Controller {
 				$flag        = array('id_pekerjaan'=>$data_sender['id_pekerjaan']);
 				$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 				$text_status = "Status pekerjaan telah diubah";
-				$this->notify_capaian_kerja(' telah mengajukan banding','transaksi/kinerja_anggota/0/',$data_sender['id_pekerjaan'],'approval-es2');
+				$this->notify_capaian_kerja(' telah mengajukan banding','transaksi/home/',$data_sender['id_pekerjaan'],'approval-es2');
 			}
 			else
 			{

@@ -13,41 +13,45 @@ class Mlogin extends CI_Model {
 	{
 		$secured_pass = md5($pass);
 		$sql = "SELECT a.*, 
-					   b.nama_posisi, 
-					   b.posisi_class,
-					   b.atasan,
-					   c.nama_role, 
-					   es1.nama_eselon1, 
-					   es2.nama_eselon2, 
-					   es3.nama_eselon3, 
-					   es4.nama_eselon4, 
-					   es1.id_es1, 
-					   es2.id_es2, 
-					   es3.id_es3, 
-					   es4.id_es4,
-					   d.tunjangan,
-					   d.posisi_class as `grade`
-		FROM mr_pegawai a 
-		JOIN mr_posisi b 
-		ON b.id       = a.posisi 
-		JOIN user_role c 
-		ON a.id_role  = c.id_role
-		LEFT JOIN mr_eselon4 es4
-		ON es4.id_es4 = a.es4
-		LEFT JOIN mr_eselon3 es3
-		ON es3.id_es3 = es4.id_es3
-		LEFT JOIN mr_eselon2 es2
-		ON es2.id_es2 = es3.id_es2
-		LEFT JOIN mr_eselon1 es1
-		ON es1.id_es1 = es2.id_es1
-		JOIN mr_posisi_class d
-		ON b.posisi_class = d.id		
-		WHERE a.nip = '$nip' 
-		AND a.password = '$secured_pass'
-		AND a.status='1' 
-		ORDER BY a.id ASC
-		LIMIT 1
-		";
+					c.nama_role, 
+					es1.nama_eselon1, 
+					es2.nama_eselon2, 
+					es3.nama_eselon3, 
+					es4.nama_eselon4, 
+					es1.id_es1, 
+					es2.id_es2, 
+					es3.id_es3, 
+					es4.id_es4,
+					b.atasan,					
+					b.kat_posisi,					
+					COALESCE(b.nama_posisi,'-') as nama_posisi_raw,										
+					COALESCE(d.posisi_class,'-') as grade_raw,
+					COALESCE(d.tunjangan,'-') as tunjangan_raw,					
+					COALESCE(jft.nama_jabatan,'-') as nama_posisi_jft,					
+					COALESCE(cls_jft.posisi_class,'-') as grade_jft,
+					COALESCE(cls_jft.tunjangan,'-') as tunjangan_jft,					
+					COALESCE(jfu.nama_jabatan,'-') as nama_posisi_jfu,										
+					COALESCE(cls_jfu.posisi_class,'-') as grade_jfu,
+					COALESCE(cls_jfu.tunjangan,'-') as tunjangan_jfu										
+--					d.tunjangan,
+--					d.posisi_class as `grade`
+				FROM mr_pegawai a 
+				LEFT JOIN mr_posisi b ON b.id                             = a.posisi
+				LEFT JOIN mr_posisi_class d ON b.posisi_class             = d.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft  = jft.id
+				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
+				LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu      = jfu.id
+				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id
+				LEFT JOIN user_role c ON a.id_role                        = c.id_role
+				LEFT JOIN mr_eselon4 es4 ON es4.id_es4                    = a.es4
+				LEFT JOIN mr_eselon3 es3 ON es3.id_es3                    = es4.id_es3
+				LEFT JOIN mr_eselon2 es2 ON es2.id_es2                    = es3.id_es2
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = es2.id_es1
+				WHERE a.nip = '$nip' 
+				AND a.password = '$secured_pass'
+				AND a.status='1' 
+				ORDER BY a.id ASC
+				LIMIT 1";
 		$query = $this->db->query($sql);
 		if($query->num_rows() == 1)
 		{

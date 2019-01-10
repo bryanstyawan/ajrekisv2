@@ -1,6 +1,6 @@
 <input type="hidden" id="member_section_oid">
-<h2 class="text-center">Penilaian SKP / Kinerja Bulanan</h2>
 <div style="display:none;" id="member_section_area">
+    <h2 class="text-center">Penilaian SKP / Kinerja Bulanan</h2>
     <div class="col-md-12">
         <div class="container-fluid">
             <div class="box">

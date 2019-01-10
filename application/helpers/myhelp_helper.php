@@ -76,7 +76,8 @@
 							$baris->url_pages == 'transaksi/kinerja_anggota/6' ||
 							$baris->url_pages == 'skp/approval_target_skp' ||
 							$baris->url_pages == 'skp/penilaian_skp' ||
-							$baris->url_pages == 'skp/approval_target_skp'
+							$baris->url_pages == 'skp/approval_target_skp' || 
+							$baris->url_pages == 'transaksi/approval_tugas_tambahan_dan_kreativitas'
 
 						)
 					{

@@ -4,11 +4,11 @@
             <i class="<?=$icon['name'];?>" style="<?=$icon['style'];?>"><?=$icon['value'];?></i>
         </div>
         <div class="inner">
-            <h3><?=$value_php;?></h3>
             <?=$html;?>            
         </div>
-        <div class="inner col-lg-7">
+        <div class="inner col-lg-12">
             <p><?=$title;?></p>
+            <h3><?=$value_php;?></h3>            
         </div>
     </div>
 </div>    

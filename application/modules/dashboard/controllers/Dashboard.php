@@ -15,7 +15,6 @@ class Dashboard extends CI_Controller {
 		error_reporting(E_ALL ^ E_WARNING);
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-
 		$data['title']              = '';
 		$data['content']            = 'vdashboard';
 		$data['belum_diperiksa']    = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
@@ -43,6 +42,11 @@ class Dashboard extends CI_Controller {
 
 			}
 		}
+
+		// echo "<pre>";
+		// print_r($data['data_transaksi']);		
+		// echo "</pre>";
+		// die();
 		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
 		if ($data['member'] != 0) {

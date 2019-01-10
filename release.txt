@@ -3,12 +3,19 @@ v2.0.0-Alpha
 ==========
 New:
 - table-view1 untuk datatable
+- layout counter notify selain (belum diperiksa + keberatan)
 Improved:
 - Perubahan tatak letak target dan realisasi di halaman dashboard
 - penambahan format ppt dan pptx di upload data transaksi
 - Perubahan sistem transaksi di detail transaksi pegawai, meninggalkan sistem pop up untuk melihat detail pegawai 
+- posisi untuk strukturan, jft dan jfu saat login
+- Perubahan Layout dashboard dan perbaikan tulisan+icon
+- counter Persetujuan atasan (belum diperiksa+keberatan) di transaksi
 Fixed:
 - memunculkan notif angka di nama pegawai tanda approval target
+- Persetujuan tugas tambahan dan kreativitas hanya di atasan
+- Perbaikan header Penilaian SKP / Kinerja Bulanan didashboard
+- Perbaikan nilai tunjangan di dashboard (laporan)
 
 v2.0.0-Alpha    
 2019-01-04

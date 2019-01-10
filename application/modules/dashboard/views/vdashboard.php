@@ -64,7 +64,7 @@ $this->load->view('dashboard_component/php_logic_component');
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
+        'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_realisasi_menit_efektif',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
@@ -72,30 +72,30 @@ $this->load->view('dashboard_component/php_logic_component');
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
         'html'      => ''));                
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
+        'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
         'value_php' => number_format($data_transaksi[0]->real_tunjangan_kinerja),
         'title'     => 'TUNJANGAN',
         'html'      => ''));
+        $this->load->view('dashboard_component/common_component',array(
+            'class'     => 'col-lg-3 col-xs-8',
+            'id'        => '',
+            'color_box' => 'background-color: #d2d6de !important;',
+            'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
+            'value_php' => 0,
+            'title'     => 'FINGERPRINT',
+            'html'      => ''));        
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
-        'id'        => '',
-        'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
-        'value_php' => 0,
-        'title'     => 'FINGERPRINT',
-        'html'      => ''));
-    $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-3 col-xs-8',
+        'class'     => 'col-lg-12 col-xs-8',
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'%'),
         'value_php' => $skp['persentase_target_realisasi']->persentase,
         'title'     => 'CAPAIAN SKP',
         'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
-    ?>
+?>
 </div>
 
 <?php
