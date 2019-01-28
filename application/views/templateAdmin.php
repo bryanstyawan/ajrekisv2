@@ -317,7 +317,7 @@ function ajax_status(obj,arg)
     }
     else
     {
-        Lobibox.notify('success', {
+        Lobibox.notify('warning', {
             msg: obj.text
             });
         setTimeout(function(){

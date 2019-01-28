@@ -2,6 +2,19 @@ v2.0.0-Alpha
 2019-01-09
 ==========
 New:
+Improved:
+Fixed:
+- uraian tugas bawahan di penilaian bawahan
+- Perbaikan layout penilaian bawahan, hari aktif, eselon1, pegawai
+- perbaikan crud di eselon1, hari aktif, datapegawai
+- perbaikan counter transaksi bawahan di penilaian atasan
+
+
+
+v2.0.0-Alpha    
+2019-01-09
+==========
+New:
 - table-view1 untuk datatable
 - layout counter notify selain (belum diperiksa + keberatan)
 Improved:

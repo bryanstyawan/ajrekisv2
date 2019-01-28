@@ -18,31 +18,85 @@ class Data_hari extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function store($arg=NULL,$oid=NULL)
+	{
+		# code...
+		$res_data    = 0;
+		$text_status = '';
+		$data_sender = array();
+		if ($arg == NULL) {
+			# code...
+			$data_sender = $this->input->post('data_sender');
+			$data_sender['tgl_awal_keberatan']  = date('Y-m-d', strtotime(str_replace('-','-',$data_sender['tgl_awal_keberatan'])));
+			$data_sender['tgl_akhir_keberatan'] = date('Y-m-d', strtotime(str_replace('-','-',$data_sender['tgl_akhir_keberatan'])));
+			$data_sender['tgl_awal_banding']    = date('Y-m-d', strtotime(str_replace('-','-',$data_sender['tgl_awal_banding'])));
+			$data_sender['tgl_akhir_banding']   = date('Y-m-d', strtotime(str_replace('-','-',$data_sender['tgl_akhir_banding'])));
+		}
+		else {
+			# code...
+			$data_sender['crud'] = $arg;
+			$data_sender['oid']  = $oid;
+		}
+
+		// $data_store        = $this->Globalrules->trigger_insert_update($data_sender['crud']);
+		if ($data_sender['crud'] == 'insert') {
+			# code...
+			$get_data    = $this->Allcrud->getData('mr_hari_aktif',array('bulan'=>$data_sender['bulan'],'tahun'=>$data_sender['tahun']))->row();
+			if ($get_data != '' || $get_data  != 0) {
+				// code...
+				$text_status = "Data hari aktif untuk bulan ".$data_sender['bulan']." Dan Tahun ".$data_sender['tahun']." Telah ada, Ditolak oleh sistem.";
+				$res_data 	 = 0;
+			}
+			else 
+			{
+				$data_store = array(
+					'bulan'               => $data_sender['bulan'],
+					'tahun'               => $data_sender['tahun'],
+					'jml_hari_aktif'      => $data_sender['hari'],
+					'jml_menit_perhari'   => $data_sender['menit'],
+					'tgl_awal_keberatan'  => $data_sender['tgl_awal_keberatan'],
+					'tgl_akhir_keberatan' => $data_sender['tgl_akhir_keberatan'],
+					'tgl_awal_banding'    => $data_sender['tgl_awal_banding'],
+					'tgl_akhir_banding'   => $data_sender['tgl_akhir_banding']
+				);
+				$res_data    = $this->Allcrud->addData('mr_hari_aktif',$data_store);
+				$text_status = $this->Globalrules->check_status_res($res_data,'Data hari aktif telah berhasil ditambahkan.');
+			}			
+
+		} elseif ($data_sender['crud'] == 'update') {
+			# code...			
+			$data_store['nama_eselon1'] = $data_sender['es1'];
+			            $res_data       = $this->Allcrud->editData('mr_eselon1',$data_store,array('id_es1'=>$data_sender['oid']));
+			            $text_status    = $this->Globalrules->check_status_res($res_data,'Data Eselon 1 telah berhasil diubah.');
+		} elseif ($data_sender['crud'] == 'delete') {
+			# code...
+			$res_data    = $this->Allcrud->delData('mr_eselon1',array('id_es1'=>$data_sender['oid']));
+			$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 1 telah berhasil dihapus.');
+		}
+
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}
+
 	public function addHari_aktif(){
 		$this->Globalrules->session_rule();
-		$text_status 	= "";
-		$res_data			= "";
-		$flag 				= array('bulan'=>$this->input->post('bulan'),'tahun'=>$this->input->post('tahun'));
-		$get_data    	= $this->Allcrud->getData('mr_hari_aktif',$flag)->row();
+		$text_status = "";
+		$res_data    = "";
+		$flag        = array('bulan'=>$this->input->post('bulan'),'tahun'=>$this->input->post('tahun'));
+		$get_data    = $this->Allcrud->getData('mr_hari_aktif',$flag)->row();
 		if ($get_data != '' || $get_data  != 0) {
 			// code...
 			$text_status = "Data hari aktif untuk bulan ".$this->input->post('bulan')." Dan Tahun ".$this->input->post('Tahun')." Telah ada, Ditolak oleh sistem.";
 			$res_data 	 = 2;
 		}
-		else {
+		else 
+		{
 			// code...
-			$add = array(
-				'bulan'               =>$this->input->post('bulan'),
-				'tahun'               =>$this->input->post('tahun'),
-				'jml_hari_aktif'      =>$this->input->post('hari'),
-				'jml_menit_perhari'   =>$this->input->post('menit'),
-				'tgl_awal_keberatan'  =>$this->input->post('tgl_awal_keberatan'),
-				'tgl_akhir_keberatan' =>$this->input->post('tgl_akhir_keberatan'),
-				'tgl_awal_banding'    =>$this->input->post('tgl_awal_banding'),
-				'tgl_akhir_banding'   =>$this->input->post('tgl_akhir_banding')
-			);
-			$res_data			= $this->Allcrud->addData('mr_hari_aktif',$add);
-			$text_status 	= "Data Berhasil Ditambahkan";
+
 		}
 
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);

@@ -447,7 +447,8 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
 
-                    console.table(obj.data.infoPegawai);
+                    console.table(obj.data.skp.list_skp);
+
                     MONTHS = [];
                     VALUES = [];
                     for(i=0;i<obj.data.menit_efektif_year.length;i++)
@@ -479,6 +480,7 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                             $('#table_progress_skp tbody').remove();                                         
                             for(i=0;i<obj.data.skp.list_skp.length;i++)
                             {
+                                console.log(obj.data.skp.list_skp[i].kegiatan_skp_jfu);
                                 realisasi_qty  = 0;
                                 persentase_qty = 0;
                                 if(obj.data.skp.list_skp[i].realisasi_kuantitas == null)
@@ -490,13 +492,22 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
                                     persentase_qty = (obj.data.skp.list_skp[i].realisasi_kuantitas/obj.data.skp.list_skp[i].target_qty)*100;
                                 }
 
+                                kegiatan = "";
+                                if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                    kegiatan = obj.data.skp.list_skp[i].kegiatan_skp;
+                                }
+                                else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                    kegiatan = obj.data.skp.list_skp[i].kegiatan_skp_jfu;
+                                }
+
+
                                 $('#table_progress_skp').append('<tr class="child-urtug">'+
                                     '<td>'+
                                         '<span><i class="fa fa-dot-circle-o"></i></span>'+
                                     '</td>'+
-                                    '<td>'+obj.data.skp.list_skp[i].kegiatan+'</td>'+
+                                    '<td style="max-width:30%;">'+kegiatan+'</td>'+
                                     '<td>'+
-                                        '<div class="col-md-6">'+
+                                        '<div class="col-md-12">'+
                                             '<div class="progress-group">'+
                                                 '<span class="progress-text">Progress SKP</span>'+
                                                 '<span class="progress-number"><b id="progress_bar_persentase">'+Math.round(persentase_qty)+'</b>/100 %</span>'+

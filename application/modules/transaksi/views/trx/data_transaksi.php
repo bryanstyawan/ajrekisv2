@@ -914,7 +914,7 @@ else {
                                 Tahap Revisi
                                 <sup>
                                     <span id="counter_atasan_revisi_head" class="notif-count-transparent">
-                                        <span id="counter_atasan_revisi"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_revisi"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -924,7 +924,7 @@ else {
                                 Tahap Anda Setujui
                                 <sup>
                                     <span id="counter_atasan_disetujui_head" class="notif-count-transparent">
-                                        <span id="counter_atasan_disetujui"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_disetujui"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -934,7 +934,7 @@ else {
                                 Tahap Anda Tolak
                                 <sup>
                                     <span id="counter_atasan_tolak_head" class="notif-count-transparent">
-                                        <span id="counter_atasan_tolak"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_tolak"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -944,7 +944,7 @@ else {
                                 Tahap Keberatan
                                 <sup>
                                     <span id="counter_atasan_keberatan_head" class="notif-count">
-                                        <span id="counter_atasan_keberatan"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_keberatan"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -954,7 +954,7 @@ else {
                                 Tahap Keberatan Anda Tolak
                                 <sup>
                                     <span id="counter_atasan_keberatan_ditolak_head" class="notif-count-transparent">
-                                        <span id="counter_atasan_keberatan_ditolak"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_keberatan_ditolak"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -964,7 +964,7 @@ else {
                                 Tahap Banding
                                 <sup>
                                     <span id="counter_atasan_banding_head" class="notif-count-transparent">
-                                        <span id="counter_atasan_banding"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_banding"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -974,7 +974,7 @@ else {
                                 Tahap Banding Ditolak
                                 <sup>
                                     <span id="counter_atasan_banding_ditolak_head" class="notif-count-transparent">
-                                        <span id="counter_atasan_banding_ditolak"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_banding_ditolak"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -1443,6 +1443,7 @@ function view_option(id,i) {
                                 '<td colspan="5" class="text-center">Memuat Data</td>'
                             '</tr>';
             $('.table-view1 tbody').append(newrec);            
+            $('.counter_atasan_notify').html('');
         },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);

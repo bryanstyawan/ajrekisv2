@@ -1,25 +1,17 @@
 <input type="hidden" id="member_section_oid">
 <div style="display:none;" id="member_section_area">
     <h2 class="text-center">Penilaian SKP / Kinerja Bulanan</h2>
-    <div class="col-md-12">
+
+    <div class="col-lg-12">
         <div class="container-fluid">
-            <div class="box">
+            <div class="box" style="background-color: transparent;border-top: transparent;box-shadow: none;">
                 <div class="box-body">
                     <a class="btn btn-danger pull-right" onclick="view_option('main')"><i class="fa fa-close"></i></a>
-                </div>
-                <div class="box-footer">
-                    <h4 class="text-center">Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?</h4>
-                    <a class="btn btn-info pull-right" onclick="approve_good_kinerja('yes')">
-                        <i class="fa fa-check"></i> Ya
-                    </a>                                        
-                    <a class="btn btn-danger pull-left" onclick="approve_good_kinerja('no')">
-                        <i class="fa fa-close"></i> Tidak
-                    </a>                                                            
                 </div>                
             </div>
-        </div>
+        </div>    
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-8">
         <div class="container-fluid">
             <div class="box">
                 <div class="box-header">
@@ -77,34 +69,36 @@
 
     </div>
 
-    <div class="col-md-6" style="height:415px;max-height: 415px;margin-bottom:25px;">
-        <!-- LINE CHART -->
+    <div class="col-md-4">
         <div class="container-fluid">
             <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Pencapaian Menit Efektif <?=date('Y');?></h3>
+                <div class="box-body">
+                    <h4 class="text-center">Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?</h4>                
                 </div>
-                <div class="box-body chart-responsive" style="height: 371px;">
-                    <canvas id="canvas_member_menif_efektif"></canvas>
-                </div>
-                <!-- /.box-body -->
-            </div>        
+                <div class="box-footer">
+                    <a class="btn btn-info pull-right" onclick="approve_good_kinerja('yes')">
+                        <i class="fa fa-check"></i> Ya
+                    </a>                                        
+                    <a class="btn btn-danger pull-left" onclick="approve_good_kinerja('no')">
+                        <i class="fa fa-close"></i> Tidak
+                    </a>                                                            
+                </div>                
+            </div>
         </div>
-        <!-- /.box -->
-    </div>
+    </div>    
 
-    <div class="col-md-6" style="height:415px;max-height: 415px;margin-bottom:25px;">
+    <div class="col-md-12">
         <!-- LINE CHART -->
         <div class="container-fluid">
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Uraian Tugas per <?=date('Y');?></h3>
                 </div>
-                <div class="box-body chart-responsive" style="height: 371px;">
+                <div class="box-body chart-responsive">
                     <table class="table table-bordered table-striped table-view" id="table_progress_skp">
                         <thead>
                             <th>No</th>
-                            <th>Uraian Tugas/Kegiatan Tugas Jabatan</th>
+                            <th style="max-width:30%;width: 750px!important;">Uraian Tugas/Kegiatan Tugas Jabatan</th>
                             <th>Progress</th>
                         </thead>
                         <tbody></tbody>
@@ -114,7 +108,23 @@
             </div>        
         </div>
         <!-- /.box -->
-    </div>    
+    </div> 
+
+    <div class="col-md-9">
+        <!-- LINE CHART -->
+        <div class="container-fluid">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Pencapaian Menit Efektif <?=date('Y');?></h3>
+                </div>
+                <div class="box-body chart-responsive">
+                    <canvas id="canvas_member_menif_efektif"></canvas>
+                </div>
+                <!-- /.box-body -->
+            </div>        
+        </div>
+        <!-- /.box -->
+    </div>   
 
 </div>
 

@@ -3,6 +3,23 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/dropzone-work/jquery.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/dropzone-work/dropzone.min.js"></script>
 <!-- Profile Image -->
+<div class="example-modal">
+    <div class="modal modal-success fade" id="modal-detail-jabatan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header"><h3 class="heading-hr text-center"><i class="icon-user"></i>Jabatan</h3></div>
+                    <div class="modal-body" style="background-color: #fff!important;color:#000!important;">
+                        <div class="container-fluid" id="get-datatable">
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="col-md-3">
   	<div class="box box-primary">
         <div class="box-body box-profile">
@@ -139,12 +156,12 @@
 	            </div>
 
 				<div class="form-group">
-					<label for="jab" class="col-md-2 control-label">Jabatan</label>
+					<label class="col-md-2 control-label">Jabatan</label>
 					<div class="col-md-9">
-					  <select name="inputjabatan" id="inputjabatan" class="form-control">
-						<option value="<?php if($pegawai != ''){echo $pegawai[0]->posisi;}?>"><?php if($pegawai != ''){echo $pegawai[0]->nama_posisi;}?></option>
-						</select>
+						<input class="form-control form-control-detail" id="f_jabatan" type="text" disabled="" value="<?=$jabatan[0]['nama_posisi'];?>">
+						<input class="form-control form-control-detail" id="f_jabatan_id" type="hidden" value="<?=$jabatan[0]['id'];?>">							
 					</div>
+					<a class="btn btn-default" id="f_jabatan_btn"><i class="fa fa-search"></i></a>
 				</div>
 
 
@@ -450,6 +467,27 @@ $(document).ready(function()
 		})
   })
 
+  $("#f_jabatan_btn").click(function(){
+		var es1 = $("#ees1").val();
+		var es2 = $("#ees2").val();
+		var es3 = $("#ees3").val();
+		var es4 = $("#ees4").val();
+		$.ajax({
+			url :"<?php echo site_url();?>/master/data_pegawai/cariJabatan",
+			type:"post",
+			data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#get-datatable").html('');				
+			},			
+			success:function(msg){
+				$("#get-datatable").html(msg);
+				$("#loadprosess").modal('hide');								
+				$("#modal-detail-jabatan").modal('show');				
+			}
+		})
+	})	  
+
 	$("#ees1").change(function(){
 		$("#ees2").html("<option value=0>None</option>");
 		$("#ees3").html("<option value=0>None</option>");
@@ -533,7 +571,7 @@ $(document).ready(function()
 		var ees1         = $("#ees1").val();
 		var inputnip     = $("#inputnip").val();
 		var inputnama    = $("#inputnama").val();
-		var inputjabatan = $("#inputjabatan").val();
+		var inputjabatan = $("#f_jabatan_id").val();
 		var tmt          = $("#tmt").val();
 
 		if (ees1.length <= 0)
