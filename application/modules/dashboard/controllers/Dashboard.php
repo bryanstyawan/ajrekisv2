@@ -43,10 +43,6 @@ class Dashboard extends CI_Controller {
 			}
 		}
 
-		// echo "<pre>";
-		// print_r($data['data_transaksi']);		
-		// echo "</pre>";
-		// die();
 		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
 		if ($data['member'] != 0) {

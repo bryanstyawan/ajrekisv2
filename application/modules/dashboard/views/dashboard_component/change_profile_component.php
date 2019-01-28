@@ -110,7 +110,7 @@
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Email</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                    <input type="email" id="profile-email" name="profile-email" class="form-control" value="<?=$infoPegawai[0]->email;?>">
+                                                    <input type="email" id="profile-email" name="profile-email" class="form-control" value="<?=($infoPegawai != 0) ? $infoPegawai[0]->email : '' ;?>">
                                                 </div>
                                             </div>
 
@@ -118,7 +118,7 @@
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Nomor Telepon</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                    <input type="number" id="profile-telepon" name="profile-telepon" class="form-control" value="<?=$infoPegawai[0]->no_hp;?>">
+                                                    <input type="number" id="profile-telepon" name="profile-telepon" class="form-control" value="<?=($infoPegawai != 0) ? $infoPegawai[0]->no_hp : '' ;?>">
                                                 </div>
                                             </div>
                                             
@@ -126,7 +126,7 @@
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Alamat</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                    <textarea class="form-control" id="profile-alamat" name="profile-alamat"><?=$infoPegawai[0]->alamat;?></textarea>
+                                                    <textarea class="form-control" id="profile-alamat" name="profile-alamat"><?=($infoPegawai != 0) ? $infoPegawai[0]->alamat : '' ;;?></textarea>
                                                 </div>
                                             </div>                                            
 
@@ -140,13 +140,20 @@
                                                             # code...
                                                             for ($i=0; $i < count($agama); $i++) { 
                                                                 # code...
-                                                                if ($agama[$i]['nama_agama'] == $nama_agama) {
+                                                                if ($infoPegawai != 0) {
                                                                     # code...
-                                                                    $selected = 'selected';
+                                                                    if ($agama[$i]['nama_agama'] == $nama_agama) {
+                                                                        # code...
+                                                                        $selected = 'selected';
+                                                                    }
+                                                                    else {
+                                                                        # code...
+                                                                        $selected = '';
+                                                                    }                                                                    
                                                                 }
                                                                 else {
                                                                     # code...
-                                                                    $selected = '';
+                                                                    $selected = '';                                                                    
                                                                 }
                                                     ?>
                                                                 <option value="<?=$agama[$i]['id_agama'];?>" <?=$selected;?>><?=$agama[$i]['nama_agama'];?></option>
@@ -167,14 +174,22 @@
                                                             # code...
                                                             for ($i=0; $i < count($golongan); $i++) { 
                                                                 # code...
-                                                                if ($golongan[$i]['id'] == $infoPegawai[0]->golongan) {
+                                                                if ($infoPegawai != 0) {
                                                                     # code...
-                                                                    $selected = 'selected';
+                                                                    if ($golongan[$i]['id'] == $infoPegawai[0]->golongan) {
+                                                                        # code...
+                                                                        $selected = 'selected';
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $selected = '';
+                                                                    }                                                                    
                                                                 }
-                                                                else
-                                                                {
+                                                                else {
+                                                                    # code...
                                                                     $selected = '';
                                                                 }
+
                                                     ?>
                                                                 <option value="<?=$golongan[$i]['id'];?>" <?=$selected;?>><?=$golongan[$i]['nama_pangkat'];?></option>                                                                
                                                     <?php
@@ -189,7 +204,7 @@
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">TMT Golongan/Pangkat</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                    <input type="text" id="profile-tmt-golongan" name="profile-tmt-golongan" class="form-control timerange" value="<?php if($infoPegawai[0]->tmt_golongan == 0 || $infoPegawai[0]->tmt_golongan == ''){echo '';}else echo date("d-m-y",strtotime($infoPegawai[0]->tmt_golongan));?>">
+                                                    <input type="text" id="profile-tmt-golongan" name="profile-tmt-golongan" class="form-control timerange" value="<?php if($infoPegawai != 0){if($infoPegawai[0]->tmt_golongan == 0 || $infoPegawai[0]->tmt_golongan == ''){echo '';}else {echo date("d-m-y",strtotime($infoPegawai[0]->tmt_golongan));}}else{echo '';} ?>">
                                                 </div>
                                             </div>                                            
 

@@ -6,6 +6,7 @@
 		$id          = $CI->session->userdata('sesUser');
 		$role        = $CI->session->userdata('sesRole');
 		$posisi      = $CI->session->userdata('sesIdPos');
+		$id_posisi   = $CI->session->userdata('sesPosisi');
 		$infoPegawai = $CI->Globalrules->get_info_pegawai();
 		$induk       = $CI->db->query(" SELECT config_menu.*,
 												config_menu_akses.id_akses
@@ -39,88 +40,96 @@
 		$CI->load->view('templates/header/head');
 		$CI->load->view('templates/header/navigation');				
 
-		foreach($induk->result() as $row)
-		{
-			$y = $CI->db->query("SELECT 
-										COUNT(config_menu_akses.id_menu) as jml
-								FROM config_menu
-								INNER JOIN config_menu_akses
-								WHERE id_parent = '".$row->id_menu."'
-								AND flag=1
-								AND id_role = '".$role."'
-								AND baca=1"
-								)->row();
-			$x = $y->jml;
-			if ($x !=0)
+		if ($id_posisi != 0) {
+			# code...
+
+			foreach($induk->result() as $row)
 			{
-				$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu));								
-
-				$anak = $CI->db->query(" SELECT config_menu.*,
-												config_menu_akses.id_akses
-										FROM config_menu
-										INNER JOIN config_menu_akses
-										ON config_menu.id_menu=config_menu_akses.id_menu
-										WHERE id_parent=$row->id_menu
-										AND flag=1
-										AND id_role=$role
-										AND baca=1
-										ORDER BY prioritas ASC, nama_menu ASC"
-									);
-				foreach($anak->result() as $baris)
+				$y = $CI->db->query("SELECT 
+											COUNT(config_menu_akses.id_menu) as jml
+									FROM config_menu
+									INNER JOIN config_menu_akses
+									WHERE id_parent = '".$row->id_menu."'
+									AND flag=1
+									AND id_role = '".$role."'
+									AND baca=1"
+									)->row();
+				$x = $y->jml;
+				if ($x !=0)
 				{
-					$style_ul = "";
-					$change_name = $baris->nama_menu;
-					if (
-							$baris->url_pages == 'transaksi/kinerja_anggota/0' ||
-							$baris->url_pages == 'transaksi/kinerja_anggota/4' ||
-							$baris->url_pages == 'transaksi/kinerja_anggota/6' ||
-							$baris->url_pages == 'skp/approval_target_skp' ||
-							$baris->url_pages == 'skp/penilaian_skp' ||
-							$baris->url_pages == 'skp/approval_target_skp' || 
-							$baris->url_pages == 'transaksi/approval_tugas_tambahan_dan_kreativitas'
+					$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu));								
 
-						)
+					$anak = $CI->db->query(" SELECT config_menu.*,
+													config_menu_akses.id_akses
+											FROM config_menu
+											INNER JOIN config_menu_akses
+											ON config_menu.id_menu=config_menu_akses.id_menu
+											WHERE id_parent=$row->id_menu
+											AND flag=1
+											AND id_role=$role
+											AND baca=1
+											ORDER BY prioritas ASC, nama_menu ASC"
+										);
+					foreach($anak->result() as $baris)
 					{
-						# code...
-						$get_menu_activy = $CI->db->query("SELECT a.*
-															FROM mr_pegawai a
-															JOIN mr_posisi b
-															ON a.posisi = b.id
-															WHERE b.atasan = '".$posisi."'");
+						$style_ul = "";
+						$change_name = $baris->nama_menu;
+						if (
+								$baris->url_pages == 'transaksi/kinerja_anggota/0' ||
+								$baris->url_pages == 'transaksi/kinerja_anggota/4' ||
+								$baris->url_pages == 'transaksi/kinerja_anggota/6' ||
+								$baris->url_pages == 'skp/approval_target_skp' ||
+								$baris->url_pages == 'skp/penilaian_skp' ||
+								$baris->url_pages == 'skp/approval_target_skp' || 
+								$baris->url_pages == 'transaksi/approval_tugas_tambahan_dan_kreativitas'
 
-						if (count($get_menu_activy->result()) != 0)
+							)
 						{
-							$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));								
-						}
-					}
-					else
-					{
-						if (count($anak->result()) > 7) {
 							# code...
-							$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6'));
+							$get_menu_activy = $CI->db->query("SELECT a.*
+																FROM mr_pegawai a
+																JOIN mr_posisi b
+																ON a.posisi = b.id
+																WHERE b.atasan = '".$posisi."'");
+
+							if (count($get_menu_activy->result()) != 0)
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));								
+							}
 						}
 						else
 						{
-							$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));
+							if (count($anak->result()) > 7) {
+								# code...
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6'));
+							}
+							else
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));
+							}
 						}
-					}
 
+					}
+					$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));
+					$CI->load->view('templates/header/close_tag',array('tag'=>'li'));								
 				}
-				$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));
-				$CI->load->view('templates/header/close_tag',array('tag'=>'li'));								
+				else
+				{
+					$CI->load->view('templates/header/parent1',array('icon'=>$row->icon,'name'=>$row->nama_menu,'url_pages'=>$row->url_pages));												
+				}
 			}
-			else
-			{
-				$CI->load->view('templates/header/parent1',array('icon'=>$row->icon,'name'=>$row->nama_menu,'url_pages'=>$row->url_pages));												
-			}
+
 		}
 		$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));
 		$CI->load->view('templates/header/close_tag',array('tag'=>'div'));
 		$CI->load->view('templates/header/open_tag',array('tag'=>'div','class'=>'navbar-custom-menu hidden-xs'));
 		$CI->load->view('templates/header/open_tag',array('tag'=>'ul','class'=>'nav navbar-nav pull-right'));
-		$CI->load->view('templates/header/message');
-		$CI->load->view('templates/header/notification',array('counter'=>$count_notify,'notify_result'=>$notify->result()));												
-		$CI->load->view('templates/header/user',array('infoPegawai'=>$infoPegawai));				
+		if ($id_posisi != 0) {
+			# code...
+			$CI->load->view('templates/header/message');
+			$CI->load->view('templates/header/notification',array('counter'=>$count_notify,'notify_result'=>$notify->result()));																		
+		}	
+		$CI->load->view('templates/header/user',array('infoPegawai'=>$infoPegawai));		
 		$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));		
 		$CI->load->view('templates/header/close_tag',array('tag'=>'div'));				
 		$CI->load->view('templates/header/close_tag',array('tag'=>'nav'));				

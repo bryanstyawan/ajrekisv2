@@ -42,6 +42,12 @@ $this->load->view('dashboard_component/style_component');
 $this->load->view('dashboard_component/php_logic_component');
 ?>
 
+<?php
+if ($this->session->userdata('sesPosisi') != 0) 
+{
+    # code...
+?>
+
 <div class="col-md-12 tour-step tour1" id="main-dashboard">
     <div class="row">
     <?php
@@ -97,7 +103,6 @@ $this->load->view('dashboard_component/php_logic_component');
         'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
 ?>
 </div>
-
 <?php
 $this->load->view('dashboard_component/bawahan_component');
 $this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
@@ -123,6 +128,17 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
     'header'       => 'Realisasi Menit Kerja Efektif',
     'id_datatable' => 'get-datatable1'));
 ?>
+
+<?php
+}
+else {
+    # code...
+?>
+    <h1 class="text-center" style="margin-bottom: 416px;">Harap hubungi CALL CENTER <b>SIKERJA</b> atau Bagian Pengembangan karir</h1>
+<?php
+}
+?>
+
 
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/knob/jquery.knob.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxcore.js"></script>

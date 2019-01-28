@@ -1,5 +1,5 @@
 v2.0.0-Alpha    
-2019-01-09
+2019-01-28
 ==========
 New:
 Improved:
@@ -8,6 +8,7 @@ Fixed:
 - Perbaikan layout penilaian bawahan, hari aktif, eselon1, pegawai
 - perbaikan crud di eselon1, hari aktif, datapegawai
 - perbaikan counter transaksi bawahan di penilaian atasan
+- perbaikan pegawai yang tidak mendapat posisi jabatan
 
 
 

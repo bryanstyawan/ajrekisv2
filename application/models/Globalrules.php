@@ -386,6 +386,9 @@ class Globalrules extends CI_Model
 	public function data_summary_skp_pegawai($id)
 	{
 		# code...
+		$_atasan_id = $this->list_atasan($this->session->userdata('sesPosisi'));
+		$_atasan_id = ($_atasan_id == 0) ? 0 : $_atasan_id[0]->id;
+		// print_r($_atasan_id);die();
 		$data['tugas_tambahan']        = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),NULL);
 		$data['kreativitas']           = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),'kreativitas');
 		$data['tr_tugas_tambahan']     = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan');
@@ -395,7 +398,8 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_peer']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_bawahan'] = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
 		$data['infoPegawai']           = $this->get_info_pegawai($id,'id');
-		$data['atasan']                = $this->get_info_pegawai($this->list_atasan($this->session->userdata('sesPosisi'))[0]->id,'id');
+
+		$data['atasan']                = $this->get_info_pegawai($_atasan_id,'id');
 		if ($data['atasan'] != 0) {
 			$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
 		}
