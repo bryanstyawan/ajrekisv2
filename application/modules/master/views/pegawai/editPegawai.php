@@ -158,8 +158,8 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">Jabatan</label>
 					<div class="col-md-9">
-						<input class="form-control form-control-detail" id="f_jabatan" type="text" disabled="" value="<?=$jabatan[0]['nama_posisi'];?>">
-						<input class="form-control form-control-detail" id="f_jabatan_id" type="hidden" value="<?=$jabatan[0]['id'];?>">							
+						<input class="form-control form-control-detail" id="f_jabatan" type="text" disabled="" value="<?=($jabatan != array()) ? $jabatan[0]['nama_posisi'] : "";?>">
+						<input class="form-control form-control-detail" id="f_jabatan_id" type="hidden" value="<?=($jabatan) ? $jabatan[0]['id'] : "";?>">							
 					</div>
 					<a class="btn btn-default" id="f_jabatan_btn"><i class="fa fa-search"></i></a>
 				</div>
