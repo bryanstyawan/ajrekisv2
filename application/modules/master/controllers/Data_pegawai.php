@@ -49,6 +49,7 @@ class Data_pegawai extends CI_Controller {
 		$data['masa_kerja']        = $this->Mmaster->get_masa_kerja_id_pegawai($id,'ASC');
 		$data['eselon1']           = $this->Allcrud->listData('mr_eselon1');
 		$data['status_masa_kerja'] = $this->Allcrud->listData('mr_masa_kerja_status')->result_array();
+		$data['oid'] 			   = $id; 
 		$this->load->view('templateAdmin',$data);
 	}
 

@@ -147,6 +147,13 @@
                                     $kegiatan            = $list[$i]->kegiatan_skp;
                                 }
                             }
+                            elseif ($info_posisi[0]['kat_posisi'] == 2) {
+                                # code...
+                                if ($list[$i]->id_skp_jft != '') {
+                                    # code...
+                                    $kegiatan            = $list[$i]->kegiatan_skp_jft;
+                                }                                
+                            }                            
                             elseif ($info_posisi[0]['kat_posisi'] == 4) {
                                 # code...
                                 if ($list[$i]->id_skp_jfu != '') {
@@ -310,7 +317,7 @@
                             ?>
                         </td>
                         <td style="<?=$style_td;?>">
-                            <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah</button>
+                            <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
                             &nbsp;
                             <?php 
                             if ($list[$i]->PK == 1) {
@@ -350,7 +357,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Formulir Sasaran Kerja Pegawai</h4>
+                        <h1 class="modal-title">Formulir Sasaran Kerja Pegawai</h1>
                     </div>
                     <div class="modal-body" style="background-color: #fff!important;">
 
@@ -365,13 +372,20 @@
                                             <input type="hidden" id="oid" name="oid" class="form-control" >
                                             <input type="hidden" id="before" name="before" class="form-control" >
                                             <input type="hidden" id="after" name="after" class="form-control" >
-                                            <textarea id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled"></textarea>
+                                            <textarea style="font-size: 25px;" id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled"></textarea>
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-md-12">
+                                    <?php
+                                        $only_jft = "";
+                                        if ($this->session->userdata('kat_posisi') != 2) {
+                                            # code...
+                                            $only_jft = "style='display:none;'";
+                                        }
+                                    ?>
+
+                                    <div class="form-group col-md-12" <?=$only_jft;?>>
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Angka Kredit Bagi PNS yang memangku jabatan fungsional tertentu</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="nak_target" name="nak_target" class="form-control">
@@ -390,6 +404,31 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group col-md-12">
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis Output</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                <select class="form-control tour-step step1" name="nsatuan" id="nsatuan">
+                                                        <option value="">Pilih Satuan</option>
+                                                    <?php $x=1;
+                                                        foreach($satuan->result() as $row){?>
+                                                        <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option>
+                                                    <?php $x++;}    ?>
+                                                </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kuantitas Per Tahun</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                            <input type="number" id="njumlah" name="njumlah" class="form-control" min="0">
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group col-md-6" style="display: none;">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis SKP</label>
                                         <div class="input-group">
@@ -404,31 +443,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-md-6">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kuantitas</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Wajib diisi</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="njumlah" name="njumlah" class="form-control" maxlength="100">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis Output</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Wajib diisi</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <select class="form-control tour-step step1" name="nsatuan" id="nsatuan">
-                                                        <option value="">Pilih Satuan</option>
-                                                    <?php $x=1;
-                                                        foreach($satuan->result() as $row){?>
-                                                        <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option>
-                                                    <?php $x++;}    ?>
-                                                </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-12" style="display:none;">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kualitas Mutu</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
@@ -437,11 +452,12 @@
                                     </div>
 
                                     <div class="form-group col-md-12">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Waktu (Bulan)</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Wajib diisi</label>
-                                        <div class="input-group">
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Waktu</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
+                                        <div class="input-group col-lg-12">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="nwaktu" name="nwaktu" class="form-control" >
+                                            <input type="number" id="nwaktu" name="nwaktu" class="form-control" >                                            
+                                            <span class="input-group-addon"><label id="param_qty_skp" style="font-size: 15px;">Bulan</label></span>                                            
                                         </div>
                                     </div>
 
@@ -541,7 +557,7 @@
 
                                     <div class="form-group col-md-6">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kuantitas</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Wajib diisi</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="jumlah" name="jumlah" class="form-control" maxlength="100">
@@ -550,7 +566,7 @@
 
                                     <div class="form-group col-md-6">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis Output</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Wajib diisi</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                 <select class="form-control tour-step step1" name="satuan" id="satuan">
@@ -573,7 +589,7 @@
 
                                     <div class="form-group col-md-12">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Target Waktu (Bulan)</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Wajib diisi</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="waktu" name="waktu" class="form-control" >
@@ -637,7 +653,15 @@ function edit(id,before,after) {
                 {
                     $("#nkegiatan").val(response['kegiatan_skp']);
                 }                
-            } else {
+            } 
+            else if($("#oid_kat_posisi").val() == 2) {
+                // $("#nkegiatan").val(response['kegiatan']);
+                if (response['id_skp_jft'] != '')
+                {
+                    $("#nkegiatan").val(response['kegiatan_skp_jft']);
+                }                                
+            }
+            else if($("#oid_kat_posisi").val() == 4) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_jfu'] != '')
                 {
@@ -810,13 +834,6 @@ $(document).ready(function()
             {
                 Lobibox.alert('warning', {
                     msg: 'Batas waktu (Bulan) Minimal 1'
-                });
-                $(this).css({"pointer-events":""});
-            }
-            else if(jumlah > 100)
-            {
-                Lobibox.alert('warning', {
-                    msg: 'Batas Target Kuantitas Maksimal 100'
                 });
                 $(this).css({"pointer-events":""});
             }

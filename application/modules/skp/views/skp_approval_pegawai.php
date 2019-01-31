@@ -246,6 +246,13 @@ if ($member != 0) {
                                     $kegiatan = $list[$i]->kegiatan_skp;
                                 }                                
                             }
+                            elseif ($kat_posisi == 2) {
+                                # code...
+                                if ($list[$i]->id_skp_jft != '') {
+                                    # code...
+                                    $kegiatan = $list[$i]->kegiatan_skp_jft;
+                                }                                
+                            }                            
                             elseif ($kat_posisi == 4) {
                                 # code...
                                 if ($list[$i]->id_skp_jfu != '') {
@@ -253,6 +260,7 @@ if ($member != 0) {
                                     $kegiatan = $list[$i]->kegiatan_skp_jfu;
                                 }                                
                             }
+
                             $AK_target           = $list[$i]->AK_target;
                             $target_qty          = $list[$i]->target_qty;
                             $target_output       = $list[$i]->target_output_name;

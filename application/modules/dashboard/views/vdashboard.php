@@ -190,7 +190,15 @@ else {
     }
 
     /** ----------------------------------------------------------------------- */    
-    $(document).ready(function(){        
+    $(document).ready(function()
+    {
+        Lobibox.window({
+            title  : 'Informasi',
+            content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+
+                      '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">1. Tentukan TARGET SKP (Masuk ke Menu SKP -> Target SKP -> Ubah Target ).</h3></div>'+
+                      '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">2. Meminta persetujuan atasan (Approval Target SKP).</h3></div>'+
+                      '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">3. Setelah target SKP disetujui, pegawai baru dapat mengisi sikerja (klik data transaksi/tambah data sikerja) dengan uraian tugas sesuai jabatan.</h3></div>'                                              
+        });        
         $('#gaugeContainer').jqxGauge({
                     ranges: [{ startValue: 0, endValue: 25, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
                             { startValue: 25, endValue: 50, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },

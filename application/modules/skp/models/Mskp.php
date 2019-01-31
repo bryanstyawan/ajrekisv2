@@ -259,7 +259,17 @@ class Mskp extends CI_Model
 									WHERE
 										jfu.id = a.id_skp_jfu
 								),'-'
-							) AS `kegiatan_skp_jfu`,							
+							) AS `kegiatan_skp_jfu`,
+							COALESCE(
+								(
+									SELECT
+										jft.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft`,														
 							COALESCE(d.nama,'-') as `target_output_name`
 							".$SELECT."
 					FROM mr_skp_pegawai a
@@ -372,7 +382,17 @@ class Mskp extends CI_Model
 									WHERE
 										jfu.id = a.id_skp_jfu
 								),'-'
-							) AS `kegiatan_skp_jfu`,							
+							) AS `kegiatan_skp_jfu`,
+							COALESCE(
+								(
+									SELECT
+										jft.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft`,														
 							COALESCE(d.nama,'-') as `target_output_name`,
 							COALESCE(
 								(

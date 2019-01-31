@@ -1147,6 +1147,35 @@ class Skp extends CI_Controller {
 			}
 			elseif ($kat_posisi == 2) {
 				# code...
+				if ($check_posisi[0]['id_jft'] != '') {
+					# code...
+					$check_jft = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $check_posisi[0]['id_jft']))->result_array();
+					if ($check_jft != array()) {
+						# code...
+						for ($i=0; $i < count($check_jft); $i++) { 
+							# code...
+							$check_data = $this->mskp->check_pekerjaan_pegawai_jft($id_pegawai,$check_jft[$i]['id'],$tahun);
+							if ($check_data == false) {
+								# code...
+								$data = array(
+									'id_pegawai'     => $id_pegawai,
+									'id_posisi'      => $posisi,
+									'tahun'          => date('Y'),
+									'id_skp_master'  => '',
+									'id_skp_jfu'     => '',
+									'id_skp_jft'     => $check_jft[$i]['id'],									
+									'status'         => '6',
+									'audit_priority' => ''
+								);
+								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+							}							
+						}
+					}		
+				}
+				else {
+					# code...
+					// echo "cannot sync";
+				}				
 			}
 			elseif ($kat_posisi == 4) {
 				# code...
@@ -1603,6 +1632,10 @@ class Skp extends CI_Controller {
 							# code...
 							if ($data['list_skp'][$i]->id_skp_master) $kegiatan=$data['list_skp'][$i]->kegiatan_skp;							
 						}
+						elseif ($data['infoPegawai'][0]->kat_posisi == 2) {
+							# code...
+							if ($data['list_skp'][$i]->id_skp_jft) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jft;							
+						}						
 						elseif ($data['infoPegawai'][0]->kat_posisi == 4) {
 							# code...
 							if ($data['list_skp'][$i]->id_skp_jfu) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jfu;							
@@ -1798,6 +1831,10 @@ class Skp extends CI_Controller {
 							# code...
 							if ($data['list_skp'][$i]->id_skp_master) $kegiatan=$data['list_skp'][$i]->kegiatan_skp;							
 						}
+						elseif ($data['infoPegawai'][0]->kat_posisi == 2) {
+							# code...
+							if ($data['list_skp'][$i]->id_skp_jft) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jft;							
+						}						
 						elseif ($data['infoPegawai'][0]->kat_posisi == 4) {
 							# code...
 							if ($data['list_skp'][$i]->id_skp_jfu) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jfu;							

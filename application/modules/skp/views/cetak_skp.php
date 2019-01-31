@@ -424,6 +424,10 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                 # code...
                                 if($list_skp[$i]->id_skp_master) $kegiatan=$list_skp[$i]->kegiatan_skp;                                
                             }
+                            elseif ($kat_posisi == 2) {
+                                # code...
+                                if($list_skp[$i]->id_skp_jft) $kegiatan=$list_skp[$i]->kegiatan_skp_jft;
+                            }                                                        
                             elseif ($kat_posisi == 4) {
                                 # code...
                                 if($list_skp[$i]->id_skp_jfu) $kegiatan=$list_skp[$i]->kegiatan_skp_jfu;                                                                

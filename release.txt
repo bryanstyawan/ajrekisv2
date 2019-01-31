@@ -1,4 +1,24 @@
 v2.0.0-Alpha    
+2019-01-31
+==========
+New:
+- Universal security
+- guide Information
+- Syncronisasi Jabatan jft dari organisasi ke pegawai
+- API kinerja
+Improved:
+- Target SKP, Pemindahan posisi jenis output dan target kuantitas
+- Target SKP, Kualitas mutu disembunyikan
+- Target SKP, Perubahan layout target waktu
+Fixed:
+- Ubah data pegawai
+- Target SKP, Ubah menjadi Ubah target
+- Target SKP, target kuantitas menjadi target kuantitas per tahun
+- Target SKP, Penyesuaian font size
+- aplikasi sikerja menjadi Masuk Aplikasi SIkerja
+- target kuantitas kembali seperti semula, tidak ada batasan kuantitas
+
+v2.0.0-Alpha    
 2019-01-28
 ==========
 New:
@@ -9,8 +29,6 @@ Fixed:
 - perbaikan crud di eselon1, hari aktif, datapegawai
 - perbaikan counter transaksi bawahan di penilaian atasan
 - perbaikan pegawai yang tidak mendapat posisi jabatan
-
-
 
 v2.0.0-Alpha    
 2019-01-09

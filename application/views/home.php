@@ -58,7 +58,7 @@
                                 <?php
                                     if ($this->session->userdata('login')) {
                                         // code...
-                                        echo "<b>Aplikasi Sikerja</b>";
+                                        echo "<b>Masuk Aplikasi Sikerja</b>";
                                     }
                                     else {
                                         // code...

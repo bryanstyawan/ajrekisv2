@@ -2,13 +2,14 @@
 
 	function menu_header()
 	{
-		$CI          =& get_instance();
-		$id          = $CI->session->userdata('sesUser');
-		$role        = $CI->session->userdata('sesRole');
-		$posisi      = $CI->session->userdata('sesIdPos');
-		$id_posisi   = $CI->session->userdata('sesPosisi');
-		$infoPegawai = $CI->Globalrules->get_info_pegawai();
-		$induk       = $CI->db->query(" SELECT config_menu.*,
+		$CI            = & get_instance();
+		$id            = $CI->session->userdata('sesUser');
+		$role          = $CI->session->userdata('sesRole');
+		$posisi        = $CI->session->userdata('sesIdPos');
+		$id_posisi     = $CI->session->userdata('sesPosisi');
+		$id_kat_posisi = $CI->session->userdata('kat_posisi');
+		$infoPegawai   = $CI->Globalrules->get_info_pegawai();
+		$induk         = $CI->db->query(" SELECT config_menu.*,
 												config_menu_akses.id_akses
 										FROM config_menu
 										INNER JOIN config_menu_akses
@@ -94,6 +95,9 @@
 
 							if (count($get_menu_activy->result()) != 0)
 							{
+								if ($id_kat_posisi == 1) {
+									# code...
+								}
 								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));								
 							}
 						}

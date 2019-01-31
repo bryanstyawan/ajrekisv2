@@ -92,10 +92,10 @@ else {
 
                 <div class="container col-lg-12" style="padding-top: 20px;">
                     <ul class="nav nav-tabs">
-                        <li>
+                        <li class="active">
                             <a data-toggle="tab" href="#menu4"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Tambah Data Kinerja</a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a data-toggle="tab" href="#home">
                                 Tahap Belum diperiksa&nbsp;&nbsp;
                                 <sup>
@@ -178,7 +178,7 @@ else {
                     </ul>
 
                     <div class="tab-content">
-                        <div id="home" class="tab-pane fade in active" style="padding-top: 15px;">
+                        <div id="home" class="tab-pane fade" style="padding-top: 15px;">
                             <div class="col-lg-12">
                                 <h2>Tahap Belum diperiksa</h2>
                                 <table id="table_belum_diperiksa" class="table table-bordered table-striped table-view">
@@ -242,11 +242,24 @@ else {
                                             }
                                             for ($i=0; $i < count($tr_belum_diperiksa); $i++) {
                                                 # code...
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jft;
+                                                }                                                                                            
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jfu;
+                                                }                                                                                           
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_mulai;?></td>
                                                     <td><?=$tr_belum_diperiksa[$i]->tanggal_selesai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_selesai;?></td>
-                                                    <td><a href=""><?=$tr_belum_diperiksa[$i]->kegiatan_skp;?></a></td>
+                                                    <td><?=$kegiatan;?></td>
                                                     <td><?=$tr_belum_diperiksa[$i]->realisasi_skp;?></td>
                                                     <td><?=$tr_belum_diperiksa[$i]->target_skp;?></td>
                                                     <td><?=$tr_belum_diperiksa[$i]->nama_pekerjaan;?></td>
@@ -314,11 +327,24 @@ else {
                                             # code...
                                             for ($i=0; $i < count($tr_revisi); $i++) {
                                                 # code...
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_revisi[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_revisi[$i]->kegiatan_skp_jft;
+                                                }                                                                                            
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_revisi[$i]->kegiatan_skp_jfu;
+                                                }                                                                      
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_revisi[$i]->tanggal_mulai;?>&nbsp;<?=$tr_revisi[$i]->jam_mulai;?></td>
                                                     <td><?=$tr_revisi[$i]->tanggal_selesai;?>&nbsp;<?=$tr_revisi[$i]->jam_selesai;?></td>
-                                                    <td><?=$tr_revisi[$i]->uraian_tugas;?></td>
+                                                    <td><?=$kegiatan;?></td>
                                                     <td><?=$tr_revisi[$i]->nama_pekerjaan;?></td>
                                                     <td><?=$tr_revisi[$i]->frekuensi_realisasi.' '.$tr_revisi[$i]->target_output_name;?></td>
                                                     <td>
@@ -375,6 +401,10 @@ else {
                                                     # code...
                                                     $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
                                                 }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jft;
+                                                }                                                                                            
                                                 elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                     # code...
                                                     $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
@@ -437,6 +467,10 @@ else {
                                                     # code...
                                                     $kegiatan = $tr_tolak[$i]->kegiatan_skp;
                                                 }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_tolak[$i]->kegiatan_skp_jft;
+                                                }                                                                                            
                                                 elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                     # code...
                                                     $kegiatan = $tr_tolak[$i]->kegiatan_skp_jfu;
@@ -473,7 +507,7 @@ else {
                             </div>
                         </div>
 
-                        <div id="menu4" class="tab-pane fade">
+                        <div id="menu4" class="tab-pane fade in active">
                             <div class="col-lg-12">
                                 <h2 class="text-center" style="background-color: #FF0000;color: #fff;">EQUAL WORK DESERVES EQUAL PAY</h2>
 
@@ -504,6 +538,13 @@ else {
                                                                             $kegiatan = $urtug[$i]->kegiatan_skp;
                                                                         }                                                                    
                                                                     }
+                                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                                        # code...
+                                                                        if ($urtug[$i]->id_skp_jft != '') {
+                                                                            # code...
+                                                                            $kegiatan = $urtug[$i]->kegiatan_skp_jft;
+                                                                        }                                                                       
+                                                                    }                                                                    
                                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                                         # code...
                                                                         if ($urtug[$i]->id_skp_jfu != '') {
@@ -632,6 +673,10 @@ else {
                                                     # code...
                                                     $kegiatan = $tr_keberatan[$i]->kegiatan_skp;
                                                 }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jft;
+                                                }                                                
                                                 elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                     # code...
                                                     $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jfu;
@@ -693,6 +738,10 @@ else {
                                                     # code...
                                                     $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
                                                 }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jft;
+                                                }                                                
                                                 elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                     # code...
                                                     $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
@@ -755,6 +804,10 @@ else {
                                                     # code...
                                                     $kegiatan = $tr_banding[$i]->kegiatan_skp;
                                                 }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_banding[$i]->kegiatan_skp_jft;
+                                                }                                                                                                
                                                 elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                     # code...
                                                     $kegiatan = $tr_banding[$i]->kegiatan_skp_jfu;
@@ -809,11 +862,24 @@ else {
                                             # code...
                                             for ($i=0; $i < count($tr_banding_ditolak); $i++) {
                                                 # code...
+                                                $kegiatan = "";
+                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                    # code...
+                                                    $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp;
+                                                }
+                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    # code...
+                                                    $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jft;
+                                                }                                                                                            
+                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                    # code...
+                                                    $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jfu;
+                                                }                                                
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_banding_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_mulai;?></td>
                                                     <td><?=$tr_banding_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_selesai;?></td>
-                                                    <td><?=$tr_banding_ditolak[$i]->uraian_tugas;?></td>
+                                                    <td><?=$kegiatan;?></td>
                                                     <td><?=$tr_banding_ditolak[$i]->nama_pekerjaan;?></td>
                                                     <td><?=$tr_banding_ditolak[$i]->output_pekerjaan;?></td>
                                                     <td>
@@ -852,7 +918,7 @@ else {
 			<h3 class="box-title heading-hr text-center col-lg-12">
                 INFORMASI PEGAWAI
                 <div class="box-tools pull-left">
-                    <button class="btn btn-block btn-success" id="btn-backtomain"><i class="fa fa-arrow-circle-o-left"></i></button>
+                    <button class="btn btn-block btn-success" id="btn-backtomain"><i class="fa fa-arrow-circle-o-left"></i> Kembali</button>
                 </div>
             </h3>																				        
         </div>
@@ -1482,6 +1548,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu;
                         }
@@ -1513,6 +1582,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_revisi[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jfu;
                         }                        
@@ -1538,6 +1610,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_disetujui[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
                         }
@@ -1565,6 +1640,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_tolak[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jfu;
                         }
@@ -1591,6 +1669,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_keberatan[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jfu;
                         }
@@ -1622,6 +1703,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu;
                         }
@@ -1650,6 +1734,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_banding[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_banding[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_banding[i].kegiatan_skp_jfu;
                         }
@@ -1678,6 +1765,9 @@ function view_option(id,i) {
                         if (obj.data.infoPegawai[0].kat_posisi == 1) {
                             kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp;
                         }
+                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jft;
+                        }                        
                         else if (obj.data.infoPegawai[0].kat_posisi == 4) {
                             kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu;
                         }

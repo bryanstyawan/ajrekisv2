@@ -611,48 +611,45 @@ $(document).ready(function()
 		}
 		else
 		{
+			var f_es1                 = $("#ees1").val();
+			var f_es2                 = $("#ees2").val();
+			var f_es3                 = $("#ees3").val();
+			var f_es4                 = $("#ees4").val();
+			
+			var f_nip                 = $("#inputnip").val();
+			var f_nama                = $("#inputnama").val();
+			var f_jabatan             = $("#f_jabatan_id").val();
+			var f_tmt                 = $("#tmt").val();		
+
+			data_sender = {
+					'crud'    : 'update', 					
+					'es1'     : f_es1,
+					'es2'     : f_es2,
+					'es3'     : f_es3,
+					'es4'     : f_es4,
+					'nip'     : f_nip,
+					'nama'    : f_nama,
+					'jabatan' : f_jabatan,
+					'tmt'     : f_tmt,
+					'oid' : '<?=$oid;?>'
+				}
+
 			$.ajax({
-				url :"<?php echo site_url()?>/master/data_pegawai/save_pegawai",
+				url :"<?php echo site_url()?>/master/data_pegawai/store",
 				type:"post",
-				data:$("#form_pegawai").serialize(),
+				data: { data_sender : data_sender},
 				beforeSend:function(){
 					$("#loadprosess").modal('show');
 				},
 				success:function(msg){
-					if (msg == 1)
-					{
-						var flag_crud = $("#flag_crud").val();
-						if (flag_crud == 'add')
-						{
-							Lobibox.notify('success', {
-								msg: 'Data Berhasil Ditambahkan'
-							});
-						}
-						else
-						{
-							Lobibox.notify('success', {
-								msg: 'Data Berhasil Dirubah'
-							});
-						}
-
-
-						setTimeout(function(){
-							$("#loadprosess").modal('hide');
-			              	setTimeout(function(){
-								window.location.href = "<?php echo site_url()?>/master/data_pegawai/";
-			                	// location.reload();
-			              	}, 1500);
-						}, 5000);
-
-
-					}
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
 				},
-				error:function(){
-					Lobibox.notify('error', {
-						msg: 'Terjadi kesalahan, Gagal melakukan perintah.'
-					});
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
 				}
-			})
+			})				
 		}
 	})
 })
