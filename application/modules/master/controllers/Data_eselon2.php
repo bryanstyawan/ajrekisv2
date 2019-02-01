@@ -19,6 +19,56 @@ class Data_eselon2 extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function store($arg=NULL,$oid=NULL)
+	{
+		# code...
+		$res_data    = 0;
+		$text_status = '';
+		$data_sender = array();
+		if ($arg == NULL) {
+			# code...
+			$data_sender = $this->input->post('data_sender');
+		}
+		else {
+			# code...
+			$data_sender['crud'] = $arg;
+			$data_sender['oid']  = $oid;
+		}
+		
+		// $data_store        = $this->Globalrules->trigger_insert_update($data_sender['crud']);
+		if ($data_sender['crud'] == 'insert') {
+			# code...
+			$data_store['id_es1'] = $data_sender['es1'];
+			$data_store['nama_eselon2'] = $data_sender['es2'];
+			            $res_data       = $this->Allcrud->addData('mr_eselon2',$data_store);
+			            $text_status    = $this->Globalrules->check_status_res($res_data,'Data Eselon 2 telah berhasil ditambahkan.');
+		} elseif ($data_sender['crud'] == 'update') {
+			# code...			
+			$data_store['id_es1'] = $data_sender['es1'];
+			$data_store['nama_eselon2'] = $data_sender['es2'];
+			            $res_data       = $this->Allcrud->editData('mr_eselon2',$data_store,array('id_es2'=>$data_sender['oid']));
+			            $text_status    = $this->Globalrules->check_status_res($res_data,'Data Eselon 2 telah berhasil diubah.');
+		} elseif ($data_sender['crud'] == 'delete') {
+			# code...
+			$res_data    = $this->Allcrud->delData('mr_eselon2',array('id_es2'=>$data_sender['oid']));
+			$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 2 telah berhasil dihapus.');
+		}
+
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}
+
+	public function get_data_eselon($id){
+		$this->Globalrules->session_rule();						
+		$flag = array('id_es2'=>$id);
+		$q    = $this->Allcrud->getData('mr_eselon2',$flag)->row();
+		echo json_encode($q);
+	}
+
 	public function addEselon2(){
 		$this->Globalrules->session_rule();						
 		$add = array(

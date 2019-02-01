@@ -126,37 +126,6 @@ $(document).ready(function(){
 			})
 		}
 	})
-
-	$("#edit").click(function(){
-		var es1= $("#nes1").val();
-		if (es1.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 1 tidak boleh kosong."
-			});
-		}
-		else
-		{
-			$.ajax({
-				url :"<?php echo site_url();?>/master/data_eselon1/peditEselon1",
-				type:"post",
-				data:$("#editForm").serialize(),
-				beforeSend:function(){
-					$("#editData").modal('hide');
-					$("#loadprosess").modal('show');
-				},
-				success:function(msg){
-					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj);
-				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			})
-		}
-	})
 })
 
 function edit(id)
