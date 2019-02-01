@@ -14,6 +14,8 @@ Fixed:
 - Kecepatan transisi slider
 - clean string variabel nip untuk API kinerja summary
 - fix Kategori posisi di target skp
+- fix minimum Angka Kredit di target SKP (by Eric)
+- fix angka di depan Jenis Output di target SKP (by Eric)
 
 v2.0.0-Alpha    
 2019-01-31

@@ -47,6 +47,7 @@
 </div>
 
 
+<!-- Modal Dialog sebelumnya -->
 <!-- <div class="example-modal">
 <div class="modal modal-success fade" id="newData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="box-content">
@@ -222,7 +223,7 @@ $(document).ready(function(){
 		$("#viewdata").css({"display": ""})		
 	})
 
-	// Script Lama
+	// Script sebelumnya
 	// $("#es1").change(function(){
 	// 	var es1 = $("#es1").val();
 	// 	$.ajax({
@@ -366,6 +367,7 @@ $(document).ready(function(){
 })
 
 function edit(id){
+	// Script Edit sebelumnya
 	// $("#loadprosess").modal('show');
 	// $.getJSON('<?php echo site_url() ?>/master/data_eselon3/editEselon3/'+id,
 	// 	function( response ) {

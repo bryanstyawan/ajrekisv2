@@ -443,7 +443,8 @@
                                                         <option value="">Pilih Satuan</option>
                                                     <?php $x=1;
                                                         foreach($satuan->result() as $row){?>
-                                                        <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option>
+                                                        <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
+                                                        <!-- <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option> -->
                                                     <?php $x++;}    ?>
                                                 </select>
                                         </div>
@@ -555,7 +556,7 @@
                                         <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Angka Kredit Bagi PNS yang memangku jabatan fungsional tertentu</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="ak_target" name="ak_target" class="form-control">
+                                            <input type="number" id="ak_target" name="ak_target" class="form-control" min="0" max="500">
                                         </div>
                                     </div>
 
@@ -603,7 +604,8 @@
                                                         <option value="">Pilih Satuan</option>
                                                     <?php $x=1;
                                                         foreach($satuan->result() as $row){?>
-                                                        <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option>
+                                                        <!-- <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option> -->
+                                                        <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
                                                     <?php $x++;}    ?>
                                                 </select>
                                         </div>

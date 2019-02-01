@@ -322,7 +322,7 @@ $(document).ready(function(){
 	})
 
 
-	// Script Lama
+	// Script sebelumnya
 	// $("#es1").change(function(){
 	// 	var es1 = $("#es1").val();
 	// 	$.ajax({

@@ -149,6 +149,7 @@ $(document).ready(function(){
 	})
 })
 function edit(id){
+	// Script Edit sebelumnya
 	// $("#loadprosess").modal('show');
 	// $.getJSON('<?php echo site_url() ?>/master/data_eselon2/editEselon2/'+id,
 	// 	function( response ) {
