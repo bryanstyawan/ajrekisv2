@@ -3,13 +3,16 @@ v2.0.0-Alpha
 ==========
 New:
 - image slider
+- Upgrading from 3.1.9 to 3.1.10
 Improved:
 - Update slider
+- Perubahan versi dari v.2 ke v.4
 Fixed:
 - Pengaturan hak akses atasan dan bawahan
 - Mengabaikan filter tahun di master skp
 - Kecepatan transisi slider
 - clean string variabel nip untuk API kinerja summary
+- fix Kategori posisi di target skp
 
 v2.0.0-Alpha    
 2019-01-31

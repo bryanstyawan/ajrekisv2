@@ -1,4 +1,4 @@
-<input type="hidden" id="oid_kat_posisi" value="<?=$info_posisi[0]['kat_posisi'];?>">
+<input type="hidden" id="oid_kat_posisi" value="<?=$this->session->userdata('kat_posisi');?>">
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <style type="text/css">
 #table_skp>thead>tr>th
@@ -60,6 +60,12 @@
 .break-label
 {
     padding-bottom: 13px;
+}
+
+.input-controll
+{
+    height: 55px;
+    font-size: 22px;    
 }
 </style>
 
@@ -278,7 +284,7 @@
                             }
                             else
                             {
-                                $status       = "Open";
+                                $status       = "Open"; 
                                 $style_status = "";
                                 if ($list[$i]->edit_status == 3) {
                                     # code...
@@ -349,6 +355,29 @@
     </div>
 </div>
 
+<div class="example-modal">
+    <div class="modal modal-success fade" id="modal_calc_target" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="box-content">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title">Perhitungan Target</h1>
+                    </div>
+                    <div class="modal-body" style="background-color: #fff!important;">
+
+                        <div class="box box-default">
+                            <div class="box-body">
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>                                                                                                                
 
 <div class="example-modal">
     <div class="modal modal-success fade" id="ubah_dataskp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -367,12 +396,13 @@
 
                                     <div class="form-group col-md-12">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Kegiatan Tugas Jabatan</label>
-                                        <div class="input-group">
+                                        <h3 id="header_kegiatan" style="border: 1px solid #d2d6de;padding: 10px;"></h3>                                        
+                                        <div class="input-group" style="display:none;">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="hidden" id="oid" name="oid" class="form-control" >
                                             <input type="hidden" id="before" name="before" class="form-control" >
                                             <input type="hidden" id="after" name="after" class="form-control" >
-                                            <textarea style="font-size: 25px;" id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled"></textarea>
+                                            <input type="hidden" style="font-size: 25px;" id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled">
                                         </div>
                                     </div>
 
@@ -388,7 +418,7 @@
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="nak_target" name="nak_target" class="form-control">
+                                            <input type="number" id="nak_target" name="nak_target" class="form-control" min="0" max="500">
                                         </div>
                                     </div>
 
@@ -396,11 +426,11 @@
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Perjanjian Kerja</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <select class="form-control tour-step step1" name="nperjanjian_kerja" id="nperjanjian_kerja">
-                                                        <option value="">Pilih Satuan</option>
-                                                        <option value="1">Ya</option>
-                                                        <option value="0">Tidak</option>
-                                                </select>
+                                            <select class="form-control tour-step step1" name="nperjanjian_kerja" id="nperjanjian_kerja">
+                                                    <option value="">Pilih Satuan</option>
+                                                    <option value="1">Ya</option>
+                                                    <option value="0">Tidak</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -409,7 +439,7 @@
                                         <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <select class="form-control tour-step step1" name="nsatuan" id="nsatuan">
+                                                <select class="form-control tour-step step1 input-controll" name="nsatuan" id="nsatuan">
                                                         <option value="">Pilih Satuan</option>
                                                     <?php $x=1;
                                                         foreach($satuan->result() as $row){?>
@@ -424,10 +454,10 @@
                                         <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="njumlah" name="njumlah" class="form-control" min="0">
+                                            <input type="number" class="form-control input-controll" id="njumlah" name="njumlah" min="0">
+                                            <span class="input-group-addon"><a class="btn btn-primary" id="btn-calc">Hitung Target</a></span>                                            
                                         </div>
                                     </div>
-
 
                                     <div class="form-group col-md-6" style="display: none;">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis SKP</label>
@@ -447,7 +477,7 @@
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kualitas Mutu</label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="text" id="nkualitas_mutu" name="nkualitas_mutu" class="form-control"  value="100" maxlength="100" disabled="disabled">
+                                            <input type="text" id="nkualitas_mutu" name="nkualitas_mutu" class="form-control input-controll"  value="100" maxlength="100" disabled="disabled">
                                         </div>
                                     </div>
 
@@ -456,7 +486,7 @@
                                         <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
                                         <div class="input-group col-lg-12">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="nwaktu" name="nwaktu" class="form-control" >                                            
+                                            <input type="number" id="nwaktu" name="nwaktu" class="form-control input-controll" min="0" max="12">                                            
                                             <span class="input-group-addon"><label id="param_qty_skp" style="font-size: 15px;">Bulan</label></span>                                            
                                         </div>
                                     </div>
@@ -651,6 +681,7 @@ function edit(id,before,after) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_master'] != '')
                 {
+                    $("#header_kegiatan").html(response['kegiatan_skp']);                    
                     $("#nkegiatan").val(response['kegiatan_skp']);
                 }                
             } 
@@ -658,6 +689,7 @@ function edit(id,before,after) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_jft'] != '')
                 {
+                    $("#header_kegiatan").html(response['kegiatan_skp_jft']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jft']);
                 }                                
             }
@@ -665,6 +697,7 @@ function edit(id,before,after) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_jfu'] != '')
                 {
+                    $("#header_kegiatan").html(response['kegiatan_skp_jfu']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jfu']);
                 }                                
             }
@@ -764,6 +797,16 @@ function kegiatan_es3(params) {
 
 $(document).ready(function()
 {
+    $("#btn-calc").click(function() {
+        $('#modal_calc_target').attr('class', 'modal fade bs-example-modal-lg')
+                            .attr('aria-labelledby','myLargeModalLabel');
+        $('.modal_calc_target').attr('class','modal-dialog modal-lg');        
+        $("#modal_calc_target").modal('show');
+    })
+
+
+
+    
     $("#addDataSKP").click(function(){
         // body...
         $('#tambah_dataskp').attr('class', 'modal fade bs-example-modal-lg')

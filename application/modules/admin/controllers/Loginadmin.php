@@ -11,7 +11,7 @@ class Loginadmin extends CI_Controller {
 	public function index()
 	{
 		// echo CI_VERSION;die();
-		error_reporting(E_ALL ^ E_WARNING);				
+		// error_reporting(E_ALL ^ E_WARNING);				
 		$this->load->view('loginAdmin');
 	}
 
