@@ -97,8 +97,20 @@
 							{
 								if ($id_kat_posisi == 1) {
 									# code...
-								}
-								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));								
+									if (
+											$baris->url_pages == 'transaksi/kinerja_anggota/0' ||
+											$baris->url_pages == 'transaksi/kinerja_anggota/4' ||
+											$baris->url_pages == 'transaksi/kinerja_anggota/6' ||
+											$baris->url_pages == 'skp/approval_target_skp' ||
+											$baris->url_pages == 'skp/penilaian_skp' ||
+											$baris->url_pages == 'skp/approval_target_skp' || 
+											$baris->url_pages == 'transaksi/approval_tugas_tambahan_dan_kreativitas'
+
+										)
+									{
+										$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));
+									}									
+								}								
 							}
 						}
 						else

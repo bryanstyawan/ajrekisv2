@@ -35,6 +35,7 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
     public function summary_get()
     {
         $nip   = $this->get('nip');
+        $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
         $users = $this->m_api->get_transact($nip,1,date('m'),date('Y'));
         if ($users != 0)
         {

@@ -76,7 +76,18 @@
 
     <section id="main-slider">
         <div class="owl-carousel">
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/1.jpg);background-size: 100% 100%;height: 555px;">
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/langkah-langkah.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/selamat_datang.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -87,40 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/2.jpg);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/1.jpg);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/1.jpg);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/1.jpg);background-size: 100% 100%;height: 555px;">
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/ada_apa_dengan_sikerja.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">

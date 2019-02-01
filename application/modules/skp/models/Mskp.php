@@ -486,7 +486,6 @@ class Mskp extends CI_Model
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai  = '".$id_pegawai."'
-				AND a.tahun         = '".$tahun."'
 				AND a.id_skp_master = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

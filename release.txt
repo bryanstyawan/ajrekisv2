@@ -1,4 +1,17 @@
 v2.0.0-Alpha    
+2019-02-01
+==========
+New:
+- image slider
+Improved:
+- Update slider
+Fixed:
+- Pengaturan hak akses atasan dan bawahan
+- Mengabaikan filter tahun di master skp
+- Kecepatan transisi slider
+- clean string variabel nip untuk API kinerja summary
+
+v2.0.0-Alpha    
 2019-01-31
 ==========
 New:
