@@ -1,4 +1,12 @@
 v2.0.0-Alpha    
+2019-02-04
+==========
+New:
+Improved:
+Fixed:
+- fix warna kolom kuantitas di target SKP (by Eric)
+
+v2.0.0-Alpha    
 2019-02-01
 ==========
 New:

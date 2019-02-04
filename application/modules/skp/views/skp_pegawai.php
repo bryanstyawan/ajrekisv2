@@ -306,7 +306,18 @@
                         </td>
                         <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
                         <td style="<?=$style_td;?>"><?=$AK_target;?></td>
-                        <td style="<?=$style_td;?>"><?=$target_qty;?></td>
+                        <?php
+                            if ($list[$i]->status > 2) {
+                        ?>
+                                <td style="background-color:#00a7d0;color: #fff;border-bottom: 1px solid #fff;border-top: 1px solid #fff;"><?=$target_qty;?></td>
+                        <?php 
+                            }
+                            else {
+                        ?>
+                                <td style="<?=$style_td;?>"><?=$target_qty;?></td>
+                        <?php
+                            }
+                        ?>
                         <td style="<?=$style_td;?>"><?=$target_output;?></td>
                         <td style="<?=$style_td;?>"><?=$target_kualitasmutu;?></td>
                         <td style="<?=$style_td;?>"><?=$target_waktu_bln;?></td>
