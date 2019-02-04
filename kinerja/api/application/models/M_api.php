@@ -4,7 +4,24 @@ class M_api extends CI_Model {
 
     public function __construct () {
 		parent::__construct();
-    }
+	}
+	
+	public function get_pegawai($nip=NULL)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_pegawai a
+				WHERE a.nip = '".$nip."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}		
+	}
     
 	public function get_transact($nip=NULL,$status=NULL,$bulan=NULL,$tahun=NULL)
 	{

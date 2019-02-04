@@ -32,31 +32,70 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
 		$this->load->model ('m_api', '', TRUE);        
     }
 
-    public function summary_get()
+    public function summary_post()
     {
-        $nip   = $this->get('nip');
+        $nip   = $this->input->post('nip');
+        $month = $this->input->post('bulan');
+        $year  = $this->input->post('tahun');                
         $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
-        $users = $this->m_api->get_transact($nip,1,date('m'),date('Y'));
+        $bulan = htmlspecialchars($month, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
+        $year  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
+        $users = $this->m_api->get_pegawai($nip);
         if ($users != 0)
         {
-            // Set the response and exit
-            $data = array
+            $transact = $this->m_api->get_transact($nip,1,date('m'),date('Y'));            
+
+            $res_pegawai = array
+            (
+                'nip'                    => $users[0]->nip,
+                'nama'                   => $users[0]->nama_pegawai,
+            );
+
+            if ($transact != 0) {
+                # code...
+
+                $res_data_tr = array
+                            (
+                                'tanggal'                => $transact[0]->tanggal_mulai,
+                                'tunjangan'              => $transact[0]->real_tunjangan_kinerja,
+                                'menit_kerja'            => $transact[0]->menit_efektif,
+                                'persentase_menit_kerja' => round($transact[0]->real_prosentase)
+                            );
+
+                $data = array
                         (
-                            'tanggal'                => $users[0]->tanggal_mulai,
-                            'tunjangan'              => $users[0]->real_tunjangan_kinerja,
-                            'nip'                    => $users[0]->nip,
-                            'nama'                   => $users[0]->nama_pegawai,
-                            'menit_kerja'            => $users[0]->menit_efektif,
-                            'persentase_menit_kerja' => round($users[0]->real_prosentase)
+                            'res_pegawai' => $res_pegawai,
+                            'res_data'    => $res_data_tr 
                         );
-            $this->response($data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+
+                $res_data = array(
+                                    'status' => TRUE,
+                                    'data'   => $data
+                                );
+                $this->response($res_data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code                
+            }
+            else {
+                # code...
+                $data = array
+                        (
+                            'res_pegawai' => $res_pegawai,
+                            'res_data'    => '' 
+                        );
+
+                $res_data = array(
+                                    'status' => FALSE,
+                                    'data'   => $data
+                                );
+                $this->response($res_data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code                                
+            }
+
         }
         else
         {
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'No users were found'
+                'data'   => ''
             ], \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
         }
     }

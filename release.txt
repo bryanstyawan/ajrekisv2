@@ -1,4 +1,14 @@
 v2.0.0-Alpha    
+2019-02-04
+==========
+New:
+- design progress bar untuk ajax
+Improved:
+Fixed:
+- API kinerja berdasarkan bulan, tahun. 
+- API kinerja status
+
+v2.0.0-Alpha    
 2019-02-01
 ==========
 New:

@@ -62,6 +62,21 @@
 {
   padding-left: 10px;
 }
+
+.progress {
+  background: red;
+  display: block;
+  height: 20px;
+  text-align: center;
+  transition: width .3s;
+  width: 0;
+}
+
+.progress.hide {
+  opacity: 0;
+  transition: opacity 1.3s;
+}
+
 </style>
 <script type="text/javascript">
 /*********************************************************************************************/
@@ -480,6 +495,7 @@ function ajax_catch(jqXHR,exception) {
                         <div style="margin-top: 320px;">
                             <div class="loadme-rotateplane"></div>
                             <div class="loadme-mask"></div>
+                            <!-- <div class="progress"></div>                             -->
                         </div>
                     </div>
                 </div>

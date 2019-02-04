@@ -472,6 +472,31 @@ $(document).ready(function(){
 						'data_5': select_jenis_jabatan
 		}
 		$.ajax({
+			xhr: function () {
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener("progress", function (evt) {
+					if (evt.lengthComputable) {
+						var percentComplete = evt.loaded / evt.total;
+						console.log(percentComplete);
+						$('.progress').css({
+							width: percentComplete * 100 + '%'
+						});
+						if (percentComplete === 1) {
+							$('.progress').addClass('hide');
+						}
+					}
+				}, false);
+				xhr.addEventListener("progress", function (evt) {
+					if (evt.lengthComputable) {
+						var percentComplete = evt.loaded / evt.total;
+						console.log(percentComplete);
+						$('.progress').css({	
+							width: percentComplete * 100 + '%'
+						});
+					}
+				}, false);
+				return xhr;
+			},			
 			url :"<?php echo site_url()?>master/filter_data_pegawai",
 			type:"post",
 			data: { data_sender : data_link},
