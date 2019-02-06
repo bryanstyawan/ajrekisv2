@@ -1,4 +1,20 @@
 v2.0.0-Alpha    
+2019-02-06
+==========
+New:
+- Controller Tunjangan Profesi
+- Controller Tugas Belajar
+Improved:
+- Validasi Tunjangan Profesi
+Fixed:
+- Combobox Tahun di Cetak SKP
+- Combobox Tahun di Target SKP
+- Indikator Penilaian Perilaku
+- ScrollBar di box Approval SKP
+- Index.php Approval SKP
+- Perbaikan get_data_pegawai_nip
+
+v2.0.0-Alpha    
 2019-02-04
 ==========
 New:

@@ -108,7 +108,16 @@
             <div class="col-md-3">
                 <label style="color: #000;font-weight: 400;font-size: 19px;display: -webkit-inline-box;">
                     Tahun&nbsp;:&nbsp;&nbsp;
-                    <select class="form-control input-sm" name="tahun" id="tahun"></select>
+                    <select class="form-control input-sm" name="tahun" id="tahun">
+                        <?php
+                            $now=date('Y');
+                            $past=$now-5;
+                            for ($a=$past;$a<=$now+5;$a++)
+                            {
+                                 echo "<option value='$a'>$a</option>";
+                            }
+                        ?>
+                    </select>
                 </label>
             </div>
         </div>

@@ -235,7 +235,7 @@ $(document).ready(function(){
 			}
 
 			$.ajax({
-				url :"<?php echo site_url()?>/master/add_tunjangan_profesi",
+				url :"<?php echo site_url()?>/master/tunjangan_profesi/add_tunjangan_profesi",
 				type:"post",
 				data:{ data_sender : data_sender},
 				beforeSend:function(){
@@ -249,7 +249,7 @@ $(document).ready(function(){
 						Lobibox.notify('success', {
 							msg: 'Data Berhasil Ditambahkan. Mohon tunggu, sedang memuat data.'
 						});
-						$("#isi").load('master/ajax_tunjangan_profesi');
+						$("#isi").load('master/tunjangan_profesi/ajax_tunjangan_profesi');
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
 						}, 5000);
@@ -318,7 +318,7 @@ $(document).ready(function(){
 			}
 
 			$.ajax({
-				url :"<?php echo site_url();?>/master/edit_tunjangan_profesi_end",
+				url :"<?php echo site_url();?>/master/tunjangan_profesi/edit_tunjangan_profesi_end",
 				type:"post",
 				data:{ data_sender : data_sender},
 				beforeSend:function(){
@@ -329,7 +329,7 @@ $(document).ready(function(){
 					Lobibox.notify('success', {
 						msg: 'Data Berhasil Dirubah. Mohon tunggu, sedang memuat data.'
 						});
-					$("#isi").load('master/ajax_tunjangan_profesi');
+					$("#isi").load('master/tunjangan_profesi/ajax_tunjangan_profesi');
 					setTimeout(function(){ 
 						$("#loadprosess").modal('hide');								
 					}, 5000);
@@ -349,7 +349,7 @@ $(document).ready(function(){
 function edit(id)
 {
 	$("#loadprosess").modal('show');									
-	$.getJSON('<?php echo site_url() ?>/master/edit_tunjangan_profesi/'+id,
+	$.getJSON('<?php echo site_url() ?>/master/tunjangan_profesi/edit_tunjangan_profesi/'+id,
 		function( response ) {
 			$("#editData").modal('show');
 			$("#oid").val(response['id']);
@@ -410,7 +410,7 @@ function del(id){
 		 callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/del_tunjangan_profesi/"+id,
+					url :"<?php echo site_url()?>/master/tunjangan_profesi/del_tunjangan_profesi/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');				
@@ -419,7 +419,7 @@ function del(id){
 						Lobibox.notify('success', {
 							msg: 'Data Berhasil Dihapus. Mohon tunggu, sedang memuat data.'
 						});
-						$("#isi").load('master/ajax_tunjangan_profesi');
+						$("#isi").load('master/tunjangan_profesi/ajax_tunjangan_profesi');
 						setTimeout(function(){ 
 							$("#loadprosess").modal('hide');								
 						}, 3000);			

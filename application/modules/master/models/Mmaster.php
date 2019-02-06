@@ -654,13 +654,14 @@ class Mmaster extends CI_Model {
 						es3.nama_eselon3,
 						es4.nama_eselon4
 			FROM mr_pegawai a
-			JOIN mr_posisi b ON b.id = a.posisi
-			JOIN mr_posisi_class c ON b.posisi_class = c.id
-			JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
-			JOIN mr_eselon2 es2 ON es2.id_es2 = a.es2
-			JOIN mr_eselon3 es3 ON es3.id_es3 = a.es3
-			JOIN mr_eselon4 es4 ON es4.id_es4 = a.es4
+			LEFT JOIN mr_posisi b ON b.id = a.posisi
+			LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+			LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+			LEFT JOIN mr_eselon2 es2 ON es2.id_es2 = a.es2
+			LEFT JOIN mr_eselon3 es3 ON es3.id_es3 = a.es3
+			LEFT JOIN mr_eselon4 es4 ON es4.id_es4 = a.es4
 			WHERE a.nip = '".$id."'";
+			// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -781,7 +782,7 @@ class Mmaster extends CI_Model {
 						b.nama_pegawai,
 						b.nip
 				FROM mr_tunjangan_profesi a
-				JOIN mr_pegawai b
+				LEFT JOIN mr_pegawai b
 				ON a.id_pegawai = b.id
 				ORDER BY b.nama_pegawai ASC,
 							a.tgl_selesai ASC";

@@ -196,7 +196,15 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-star"></i></span>
-                        <select name="es1" id="es1" class="form-control"><option value="">Tahun</option>
+                        <select name="f_tahun" id="f_tahun" class="form-control">
+                        <?php
+                            $now=date('Y');
+                            $past=$now-5;
+                            for ($a=$past;$a<=$now+5;$a++)
+                            {
+                                 echo "<option value='$a'>$a</option>";
+                            }
+                        ?>
                         </select>
                     </div>
                 </div>

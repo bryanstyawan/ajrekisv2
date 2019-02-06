@@ -207,7 +207,7 @@ if ($member != 0) {
                 </label>
             </div>
         </div>
-        <div class="box-body">
+        <div class="box-body" style="overflow:auto;">
             <table id="table_skp" class="table table-bordered table-striped table-view">
                 <thead>
                     <tr>

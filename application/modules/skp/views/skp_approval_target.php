@@ -70,7 +70,7 @@ function detail_skp(id) {
     // body...
     $("#loadprosess").modal('show');                                                    
     setTimeout(function(){
-        window.location.href = "<?php echo base_url().'index.php/skp/skp_member_detail/'?>"+id;
+        window.location.href = "<?php echo base_url().'skp/skp_member_detail/'?>"+id;
     }, 1500);                               
 }
 

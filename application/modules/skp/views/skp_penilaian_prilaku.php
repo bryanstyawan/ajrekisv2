@@ -434,21 +434,21 @@
 
                                     <div class="col-lg-6">
 
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">91-100</label>
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">91-100 (Amat Baik)</label>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <p id="indikator_91_100"></p>
                                             </div>
                                         </div>                                                                                                                        
 
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">61-75</label>
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">61-75 (Cukup)</label>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <p id="indikator_61_75"></p>
                                             </div>
                                         </div>
 
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">50 ke bawah</label>
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">50 ke bawah (Buruk)</label>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <p id="indikator_50_kebawah"></p>
@@ -458,14 +458,14 @@
                                     </div>
                                     <div class="col-lg-6">
 
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">76-90</label>
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">76-90 (Baik)</label>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <p id="indikator_76_90"></p>
                                             </div>
                                         </div>                                        
 
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">51-60</label>
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">51-60 (Kurang)</label>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <p id="indikator_51_60"></p>
