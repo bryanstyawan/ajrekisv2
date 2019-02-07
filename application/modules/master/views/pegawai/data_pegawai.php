@@ -132,11 +132,6 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
-				<!-- <a href="<?php echo site_url()?>/master/data_pegawai/tambah_pegawai">
-					<h3 class="box-title pull-right">
-						<button class="btn btn-block btn-primary"><i class="fa fa-plus-square"></i> Tambah Pegawai</button>
-					</h3>
-				</a> -->
 				<h3 class="box-title pull-right">
 					<button class="btn btn-block btn-primary" onclick="main_form('insert','NULL')"><i class="fa fa-plus-square"></i> Tambah Pegawai</button>
 				</h3>				
@@ -214,7 +209,8 @@
 								<td><?=$list[$i]->tmt;?></td>
 								<td></td>
 								<td>
-									<?php echo anchor('master/data_pegawai/ubah_pegawai/'.$list[$i]->id,'<button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>');?>&nbsp;&nbsp;
+									<!-- <?php echo anchor('master/data_pegawai/ubah_pegawai/'.$list[$i]->id,'<button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>');?>&nbsp;&nbsp; -->
+									<button class="btn btn-warning btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;									
 									<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>
 								</td>
 							</tr>
@@ -809,14 +805,150 @@ $(document).ready(function(){
 	})		
 })
 
+function edit(id)
+{
+	$.ajax({
+		url :"<?php echo site_url()?>/master/data_pegawai/get_data_pegawai/"+id,		
+		type:"post",
+		beforeSend:function(){
+			$("#loadprosess").modal('show');
+		},
+		success:function(msg){
+			var obj = jQuery.parseJSON (msg);
+			console.log(obj);
+			$(".form-control-detail").val('');
+			$("#form_section").css({"display": ""})
+			$("#view_section").css({"display": "none"})
+			$("#form_section > div > div > div.box-header > h3").html("Ubah Data Pegawai");
+			$("#crud").val('update');
+			$("#oid").val(obj.pegawai[0].id);
+			$("#f_es1").val(obj.pegawai[0].es1);
+
+			if (obj.pegawai != 0) {
+
+				if (obj.list_eselon2.length != 0) 
+				{
+					var toAppend = '<option value=""> - - - </option>';				
+					for (index = 0; index < obj.list_eselon2.length; index++) 
+					{
+						_text = "";
+						if (obj.list_eselon2[index].id_es2 == obj.pegawai[0].es2) {
+							_text = "selected";
+						}
+
+						toAppend += '<option value="'+obj.list_eselon2[index].id_es2+'" '+_text+'>'+obj.list_eselon2[index].nama_eselon2+'</option>';					
+					}
+					$('#f_es2').append(toAppend);					
+				}
+								
+				if (obj.list_eselon3.length != 0) 
+				{
+					var toAppend1 = '<option value=""> - - - </option>';					
+					for (index = 0; index < obj.list_eselon3.length; index++) 
+					{
+						_text = "";
+						if (obj.list_eselon3[index].id_es3 == obj.pegawai[0].es3) {
+							_text = "selected";
+						}
+
+						toAppend1 += '<option value="'+obj.list_eselon3[index].id_es3+'" '+_text+'>'+obj.list_eselon3[index].nama_eselon3+'</option>';					
+					}
+					$('#f_es3').append(toAppend1);					
+				}
+
+				if (obj.list_eselon4.length != 0) 
+				{
+					var toAppend2 = '<option value=""> - - - </option>';					
+					for (index = 0; index < obj.list_eselon4.length; index++) 
+					{
+						_text = "";
+						if (obj.list_eselon4[index].id_es4 == obj.pegawai[0].es4) {
+							_text = "selected";
+						}
+
+						toAppend2 += '<option value="'+obj.list_eselon4[index].id_es4+'" '+_text+'>'+obj.list_eselon4[index].nama_eselon4+'</option>';					
+					}
+					$('#f_es4').append(toAppend2);					
+				}
+
+
+
+				$("#f_nip").val(obj.pegawai[0].nip);
+				$("#f_nama").val(obj.pegawai[0].nama_pegawai);
+
+				if (obj.jabatan_raw != '') {
+					$("#f_jabatan_id").val(obj.jabatan_raw[0].id);
+					if (obj.jabatan_raw[0].kat_posisi == 1) {
+						$("#f_jabatan").val(obj.jabatan_raw[0].nama_posisi);										
+					}
+					else if (obj.jabatan_raw[0].kat_posisi == 2) {
+						$("#f_jabatan").val(obj.jabatan_jft[0].nama_jabatan);					
+					}
+					else if (obj.jabatan_raw[0].kat_posisi == 4) {
+						$("#f_jabatan").val(obj.jabatan_jfu[0].nama_jabatan);					
+					}														
+				}
+
+				$("#f_tmt").val(obj.pegawai[0].tmt_jabatan);				
+
+			}
+
+			$("#loadprosess").modal('hide');				
+		},
+		error:function(jqXHR,exception)
+		{
+			ajax_catch(jqXHR,exception);					
+		}
+	})
+}
+
 function del(id){
+    LobiboxBase = {
+        //DO NOT change this value. Lobibox depended on it
+        bodyClass       : 'lobibox-open',
+        //DO NOT change this object. Lobibox is depended on it
+        modalClasses : {
+            'error'     : 'lobibox-error',
+            'success'   : 'lobibox-success',
+            'info'      : 'lobibox-info',
+            'warning'   : 'lobibox-warning',
+            'confirm'   : 'lobibox-confirm',
+            'progress'  : 'lobibox-progress',
+            'prompt'    : 'lobibox-prompt',
+            'default'   : 'lobibox-default',
+            'window'    : 'lobibox-window'
+        },
+        buttons: {
+            ok: {
+                'class': 'lobibox-btn lobibox-btn-default',
+                text: 'OK',
+                closeOnClick: true
+            },
+            cancel: {
+                'class': 'lobibox-btn lobibox-btn-cancel',
+                text: 'Cancel',
+                closeOnClick: true
+            },
+            yes: {
+                'class': 'lobibox-btn lobibox-btn-yes',
+                text: 'Ya',
+                closeOnClick: true
+            },
+            no: {
+                'class': 'lobibox-btn lobibox-btn-no',
+                text: 'Tidak',
+                closeOnClick: true
+            }
+        }
+    }
+
 	Lobibox.confirm({
 		title: "Konfirmasi",
 		msg: "Anda yakin akan menghapus data ini ?",
 		callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/data_pegawai/delPegawai/"+id,
+					url :"<?php echo site_url()?>/master/data_pegawai/store/delete/"+id,					
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
@@ -827,12 +959,12 @@ function del(id){
 					},
 					error:function(jqXHR,exception)
 					{
-						ajax_catch(jqXHR,exception);
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
 		}
-	})
+    })
 }
 
 function main_form(params,id) {
@@ -945,15 +1077,13 @@ $(document).ready(function(){
 		var f_es2                 = $("#f_es2").val();
 		var f_es3                 = $("#f_es3").val();
 		var f_es4                 = $("#f_es4").val();
-		
 		var f_nip                 = $("#f_nip").val();
 		var f_nama                = $("#f_nama").val();
 		var f_jabatan             = $("#f_jabatan_id").val();
 		var f_tmt                 = $("#f_tmt").val();
-
 		var f_password_new        = $("#f_password_new").val();
 		var f_password_new_repeat = $("#f_password_new_repeat").val();
-
+		var oid                   = $("#oid").val();
 		var crud                  = $("#crud").val();
 		if (f_es1.length <= 0)
 		{

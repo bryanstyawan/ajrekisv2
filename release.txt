@@ -1,18 +1,30 @@
 v2.0.0-Alpha    
+2019-02-07
+==========
+New:
+Improved:
+Fixed:
+- Perbaikan get_info_pegawai di Globalrules (penentuan kelas jabatan di struktural, jft, jfu)
+- penentuan kelas jabatan untuk struktural, jft, jfu
+- default agama menjadi kosong
+- Perbaikan Ubah data pegawai
+- Fix layout
+
+v2.0.0-Alpha    
 2019-02-06
 ==========
 New:
-- Controller Tunjangan Profesi
-- Controller Tugas Belajar
+- Controller Tunjangan Profesi (by Eric)
+- Controller Tugas Belajar (by Eric)
 Improved:
-- Validasi Tunjangan Profesi
+- Validasi Tunjangan Profesi (by Eric)
 Fixed:
-- Combobox Tahun di Cetak SKP
-- Combobox Tahun di Target SKP
-- Indikator Penilaian Perilaku
-- ScrollBar di box Approval SKP
-- Index.php Approval SKP
-- Perbaikan get_data_pegawai_nip
+- Combobox Tahun di Cetak SKP (by Eric)
+- Combobox Tahun di Target SKP (by Eric)
+- Indikator Penilaian Perilaku (by Eric)
+- ScrollBar di box Approval SKP (by Eric)
+- Index.php Approval SKP (by Eric)
+- Perbaikan get_data_pegawai_nip (by Eric)
 
 v2.0.0-Alpha    
 2019-02-04

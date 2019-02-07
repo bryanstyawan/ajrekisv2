@@ -187,7 +187,7 @@ $(document).click(function(e) {
 
 </script>
 </head>
-<body class="hold-transition skin-red-kemendagri sidebar-mini">
+<body class="hold-transition skin-red-kemendagri sidebar-mini" style="padding-right: 0px!important;">
     <div class="wrapper">
 
         <header class="main-header" style="position:fixed;width:100%;">

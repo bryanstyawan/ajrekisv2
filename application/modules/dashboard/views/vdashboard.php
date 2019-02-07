@@ -32,7 +32,18 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $nama_eselon3  = $infoPegawai[0]->nama_eselon3;
     $nama_eselon4  = $infoPegawai[0]->nama_eselon4;
     $nip           = $infoPegawai[0]->nip;
-    $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
+    if ($infoPegawai[0]->kat_posisi == 1) {
+        # code...
+        $kelas_jabatan = $infoPegawai[0]->grade_raw;        
+    }
+    elseif ($infoPegawai[0]->kat_posisi == 2) {
+        # code...
+        $kelas_jabatan = $infoPegawai[0]->grade_jft;                
+    }
+    elseif ($infoPegawai[0]->kat_posisi == 4) {
+        # code...
+        $kelas_jabatan = $infoPegawai[0]->grade_jfu;        
+    }
     $nama_agama    = $infoPegawai[0]->nama_agama;
 }
 ?>

@@ -27,6 +27,58 @@ class Data_pegawai extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function get_data_pegawai($id){
+		$this->Globalrules->session_rule();						
+
+		$data['pegawai'] = $this->Allcrud->getData('mr_pegawai',array('id'=>$id))->result_array();
+		if ($data['pegawai'] != array()) {
+			# code...
+			$data['list_eselon2'] = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data['pegawai'][0]['es1']))->result_array();
+			$data['list_eselon3'] = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data['pegawai'][0]['es2']))->result_array();
+			$data['list_eselon4'] = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data['pegawai'][0]['es3']))->result_array();
+			$data['jabatan_raw']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi']))->result_array();
+			if ($data['jabatan_raw'] != array()) {
+				# code...
+				$data['jabatan_jfu']  = $this->Allcrud->getData('mr_jabatan_fungsional_umum',array('id'=>$data['jabatan_raw'][0]['id_jfu']))->result_array();
+				$data['jabatan_jft']  = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu',array('id'=>$data['jabatan_raw'][0]['id_jft']))->result_array();								
+			}
+			else {
+				# code...
+				$data['jabatan_jfu'] = array();
+				$data['jabatan_jft'] = array();
+			}
+		}
+		echo json_encode($data);
+	}		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	public function tambah_pegawai()
 	{
 		# code...
@@ -53,7 +105,7 @@ class Data_pegawai extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function store($param=NULL)
+	public function store($param=NULL,$oid=NULL)
 	{
 		# code...
 		$res_data    = 0;
@@ -66,43 +118,50 @@ class Data_pegawai extends CI_Controller {
 		}
 		else {
 			# code...
-			$data_store = array
-			(
-				'es1'          => $data_sender['es1'],
-				'es2'          => $data_sender['es2'],
-				'es3'          => $data_sender['es3'],
-				'es4'          => $data_sender['es4'],
-				'nip'          => $data_sender['nip'],				
-				'nama_pegawai' => $data_sender['nama'],				
-				'posisi'       => $data_sender['jabatan'],
-				'tmt_jabatan'  => $data_sender['tmt'],
-				'local'		   => '0'
-			);			
-			if ($data_sender['crud'] == 'insert') {
+			if ($param == NULL) {
 				# code...
-				$data_store['password']   = md5($data_sender['password']);
-				$data_store['status']     = 1;
-				$data_store['id_role']    = 2;
-				$data_store['user_input'] = date('y-m-d');
-				$id_pegawai  = $this->Allcrud->addData_with_return_id('mr_pegawai',$data_store);
-				if ($id_pegawai != 0)$res_data = 1;
-				$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil ditambah.');
+				$data_sender = $this->input->post('data_sender');
 			}
-			elseif ($data_sender['crud'] == 'update') {
+			else {
 				# code...
-				$data_store['user_input'] = date('y-m-d');
-				$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$data_sender['oid']));
-				$id_pegawai  = $data_sender['oid'];
-				$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil diubah.');
+				$data_sender['crud'] = $param;
+				$data_sender['oid']  = $oid;
 			}
-			elseif ($data_sender['crud'] == 'delete') {
-				# code...
-				$res_data    = $this->Allcrud->delData('mr_pegawai',array('id' => $data_sender['oid']));				
-				$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil dihapus.');											
-			}
+
 
 			if ($data_sender['crud'] != 'delete') {
 				# code...
+				$data_store = array
+				(
+					'es1'          => $data_sender['es1'],
+					'es2'          => $data_sender['es2'],
+					'es3'          => $data_sender['es3'],
+					'es4'          => $data_sender['es4'],
+					'nip'          => $data_sender['nip'],				
+					'nama_pegawai' => $data_sender['nama'],				
+					'posisi'       => $data_sender['jabatan'],
+					'tmt_jabatan'  => $data_sender['tmt'],
+					'local'		   => '0'
+				);
+
+				if ($data_sender['crud'] == 'insert') {
+					# code...
+					$data_store['password']   = md5($data_sender['password']);
+					$data_store['status']     = 1;
+					$data_store['id_role']    = 2;
+					$data_store['user_input'] = date('y-m-d');
+					$id_pegawai  = $this->Allcrud->addData_with_return_id('mr_pegawai',$data_store);
+					if ($id_pegawai != 0)$res_data = 1;
+					$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil ditambah.');
+				}
+				elseif ($data_sender['crud'] == 'update') {
+					# code...
+					$data_store['user_input'] = date('y-m-d');
+					$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$data_sender['oid']));
+					$id_pegawai  = $data_sender['oid'];
+					$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil diubah.');
+				}			
+				
 				$get_masa_kerja_pegawai = $this->Mmaster->get_masa_kerja_id_pegawai($id_pegawai,'DESC');
 				if ($get_masa_kerja_pegawai == 0) {
 					# code...
@@ -169,8 +228,22 @@ class Data_pegawai extends CI_Controller {
 						}
 					}
 				}				
-			}
 
+
+
+
+
+
+
+			}
+			else {
+				# code...
+				if ($data_sender['crud'] == 'delete') {
+					# code...
+					$res_data    = $this->Allcrud->delData('mr_pegawai',array('id' => $data_sender['oid']));				
+					$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil dihapus.');											
+				}				
+			}
 
 		}
 

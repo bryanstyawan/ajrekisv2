@@ -188,11 +188,24 @@ class Globalrules extends CI_Model
 						COALESCE(agm.nama_agama,'-') as nama_agama,
 						COALESCE(gol.ruang,'-') as nama_ruang,
 						COALESCE(gol.nama_pangkat,'-') as nama_pangkat,
-						COALESCE(gol.golongan,'-') as nama_golongan
+						COALESCE(gol.golongan,'-') as nama_golongan,
+						COALESCE(b.nama_posisi,'-') as nama_posisi_raw,										
+						COALESCE(c.posisi_class,'-') as grade_raw,
+						COALESCE(c.tunjangan,'-') as tunjangan_raw,					
+						COALESCE(jft.nama_jabatan,'-') as nama_posisi_jft,					
+						COALESCE(cls_jft.posisi_class,'-') as grade_jft,
+						COALESCE(cls_jft.tunjangan,'-') as tunjangan_jft,					
+						COALESCE(jfu.nama_jabatan,'-') as nama_posisi_jfu,										
+						COALESCE(cls_jfu.posisi_class,'-') as grade_jfu,
+						COALESCE(cls_jfu.tunjangan,'-') as tunjangan_jfu						
 				FROM mr_pegawai a
-				JOIN mr_posisi b ON b.id = a.posisi
-				JOIN mr_posisi_class c ON b.posisi_class = c.id
-				JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+				LEFT JOIN mr_posisi b ON b.id = a.posisi
+				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft  = jft.id
+				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
+				LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu      = jfu.id
+				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
 				LEFT OUTER JOIN mr_eselon2 es2 ON es2.id_es2 = a.es2
 				LEFT OUTER JOIN mr_eselon3 es3 ON es3.id_es3 = a.es3
 				LEFT OUTER JOIN mr_eselon4 es4 ON es4.id_es4 = a.es4
