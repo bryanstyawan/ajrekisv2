@@ -633,10 +633,14 @@ class Skp extends CI_Controller {
 				$id              = $this->session->userdata('sesUser');
 				$data['penilai'] = 0;
 			}
+			$id = $param;			
 		}
 
-		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($id,'id');
+		$data['infoPegawai1'] = $this->Globalrules->get_info_pegawai($id,'id');
 		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),'1','realisasi');
+		// echo "<pre>";
+		// print_r($data['infoPegawai1']);die();				
+		// echo"</pre>";
 		$data['content']     = 'skp/penilaian_skp';
 		$this->load->view('templateAdmin',$data);
 	}

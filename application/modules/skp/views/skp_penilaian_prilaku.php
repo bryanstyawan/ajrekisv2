@@ -150,25 +150,22 @@
                     <?php
 
                         $atasan_temp = "";
-                        if ($evaluator == 0) {
+                        if ($evaluator != 0) {
                             # code...
-                            foreach($atasan1 as $atasan1){
-                                $i++;
-                                $atasan_temp = $atasan1->nama_pegawai;
-                    ?>
-                                <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="local"></li>
-                    <?php
+                            if ($atasan1 != 0) {
+                                # code...
+                                foreach($atasan1 as $atasan1){
+                                    $i++;
+                                    $atasan_temp = $atasan1->nama_pegawai;
+                        ?>
+                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="local"></li>
+                        <?php
+                                }                                
                             }
                         }
                         else
                         {
-                            foreach($atasan1 as $atasan1){
-                                $i++;
-                                $atasan_temp = $atasan1->nama_pegawai;
-                    ?>
-                                <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="server"></li>
-                    <?php
-                            }                            
+
                         }
 
                         if ($evaluator != 0) {

@@ -24,17 +24,20 @@ $nama_eselon4  = "";
 $nip           = "";
 $kelas_jabatan = "";
 $kat_posisi    = "";
+// echo "<pre>";
+// print_r($infoPegawai);die();				
+// echo"</pre>";
 if ($infoPegawai != 0 || $infoPegawai != '') {
     # code...
-    $nama_pegawai  = $infoPegawai[0]->nama_pegawai;
-    $nama_jabatan  = $infoPegawai[0]->nama_jabatan;
-    $nama_eselon1  = $infoPegawai[0]->nama_eselon1;
-    $nama_eselon2  = $infoPegawai[0]->nama_eselon2;
-    $nama_eselon3  = $infoPegawai[0]->nama_eselon3;
-    $nama_eselon4  = $infoPegawai[0]->nama_eselon4;
-    $nip           = $infoPegawai[0]->nip;
-    $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
-    $kat_posisi    = $infoPegawai[0]->kat_posisi;
+    $nama_pegawai  = $infoPegawai1[0]->nama_pegawai;
+    $nama_jabatan  = $infoPegawai1[0]->nama_jabatan;
+    $nama_eselon1  = $infoPegawai1[0]->nama_eselon1;
+    $nama_eselon2  = $infoPegawai1[0]->nama_eselon2;
+    $nama_eselon3  = $infoPegawai1[0]->nama_eselon3;
+    $nama_eselon4  = $infoPegawai1[0]->nama_eselon4;
+    $nip           = $infoPegawai1[0]->nip;
+    $kelas_jabatan = $infoPegawai1[0]->kelas_jabatan;
+    $kat_posisi    = $infoPegawai1[0]->kat_posisi;
 }
 ?>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
@@ -289,11 +292,33 @@ if ($member != 0) {
                             $aspek_kuantitas        = "";
                             $aspek_kualitas         = "";
 
-                            $kegiatan               = $list[$i]->kegiatan;
-                            if ($list[$i]->id_skp_master != '') {
-                                # code...
-                                $kegiatan            = $list[$i]->kegiatan_skp;
+                            $kegiatan               = "";
+                            if($infoPegawai1[0]->kat_posisi == 1)
+                            {
+                                if ($list[$i]->id_skp_master != '') {
+                                    # code...
+                                    $kegiatan = $list[$i]->kegiatan_skp;
+                                }
                             }
+                            elseif ($infoPegawai1[0]->kat_posisi == 2) {
+                                # code...
+                                if ($list[$i]->id_skp_jft != '') {
+                                    # code...
+                                    $kegiatan = $list[$i]->kegiatan_skp_jft;
+                                }                                
+                            }                            
+                            elseif ($infoPegawai1[0]->kat_posisi == 4) {
+                                # code...
+                                if ($list[$i]->id_skp_jfu != '') {
+                                    # code...
+                                    $kegiatan = $list[$i]->kegiatan_skp_jfu;
+                                }                                
+                            }
+
+                            // if ($list[$i]->id_skp_master != '') {
+                            //     # code...
+                            //     $kegiatan            = $list[$i]->kegiatan_skp;
+                            // }
                             $AK_target              = $list[$i]->AK_target;
                             $target_qty             = $list[$i]->target_qty;
                             $target_output          = $list[$i]->target_output_name;
