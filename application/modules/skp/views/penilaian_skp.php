@@ -253,8 +253,8 @@ if ($member != 0) {
                     <tr>
                         <th rowspan="2">No</th>
                         <th rowspan="2">Kegiatan tugas jabatan</th>
-                        <th rowspan="2">Perjanjian Kerja</th>
-                        <th rowspan="2">Jenis SKP</th>
+                        <!-- <th rowspan="2">Perjanjian Kerja</th> -->
+                        <!-- <th rowspan="2">Jenis SKP</th> -->
                         <th rowspan="2">AK</th>
                         <th colspan="4">Target</th>
                         <th colspan="4">Realisasi</th>
@@ -350,9 +350,9 @@ if ($member != 0) {
                     <tr>
                         <td><span class="col-md-12 text-center"><?=$i+1;?></span></td>
                         <td style="text-align: -webkit-left;"><?=$kegiatan;?></td>
-                        <td><?=$pk_status;?></td>
-                        <td><?=$jenis_skp;?></td>
-                        <!-- <td><?=$AK_target;?></td> -->
+                        <!-- <td><?=$pk_status;?></td> -->
+                        <!-- <td><?=$jenis_skp;?></td> -->
+                        <td><?=$AK_target;?></td>
                         <td>
                             <?php
                             if ($kat_posisi != 2) {
