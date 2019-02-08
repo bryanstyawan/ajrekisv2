@@ -231,6 +231,7 @@ if ($member != 0) {
                 </thead>
                 <tbody>
                     <?php
+                    $kegiatan = "";
                     if ($list!=0) {
                         # code...
                         for ($i=0; $i < count($list); $i++) {
@@ -239,31 +240,39 @@ if ($member != 0) {
                             $pk_status           = "";
                             $keterangan          = "";
 
-                            if ($kat_posisi == 1) {
-                                # code...
-                                if ($list[$i]->id_skp_master != '') {
+                            if($list[$i]->kegiatan == '')
+                            {
+                                if ($kat_posisi == 1) {
                                     # code...
-                                    $kegiatan = $list[$i]->kegiatan_skp;
-                                }                                
-                            }
-                            elseif ($kat_posisi == 2) {
-                                # code...
-                                if ($list[$i]->id_skp_jft != '') {
+                                    if ($list[$i]->id_skp_master != '') {
+                                        # code...
+                                        $kegiatan = $list[$i]->kegiatan_skp;
+                                    }                                
+                                }
+                                elseif ($kat_posisi == 2) {
                                     # code...
-                                    $kegiatan = $list[$i]->kegiatan_skp_jft;
-                                }                                
-                            }                            
-                            elseif ($kat_posisi == 4) {
-                                # code...
-                                if ($list[$i]->id_skp_jfu != '') {
+                                    if ($list[$i]->id_skp_jft != '') {
+                                        # code...
+                                        $kegiatan = $list[$i]->kegiatan_skp_jft;
+                                    }                                
+                                }                            
+                                elseif ($kat_posisi == 4) {
+                                    # code...
+                                    if ($list[$i]->id_skp_jfu != '') {
+                                        # code...
+                                        $kegiatan = $list[$i]->kegiatan_skp_jfu;
+                                    }                                
+                                }
+                                else {
                                     # code...
                                     $kegiatan = $list[$i]->kegiatan_skp_jfu;
-                                }                                
+                                }
                             }
                             else {
                                 # code...
-                                $kegiatan = "";
+                                $kegiatan = $list[$i]->kegiatan;
                             }
+
 
                             $AK_target           = $list[$i]->AK_target;
                             $target_qty          = $list[$i]->target_qty;
