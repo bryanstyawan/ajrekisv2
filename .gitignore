@@ -38,3 +38,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 .ftpconfig
 id_rsa
 .ftpignore
+findit
+finditxx
