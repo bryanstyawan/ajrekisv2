@@ -260,6 +260,10 @@ if ($member != 0) {
                                     $kegiatan = $list[$i]->kegiatan_skp_jfu;
                                 }                                
                             }
+                            else {
+                                # code...
+                                $kegiatan = "";
+                            }
 
                             $AK_target           = $list[$i]->AK_target;
                             $target_qty          = $list[$i]->target_qty;
