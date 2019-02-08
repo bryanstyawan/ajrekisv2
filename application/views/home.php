@@ -39,13 +39,17 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="<?=base_url();?>"><img src="<?php echo base_url();?>assets_home/logo.png" alt="logo" style="height: 58px;width: 140px;"></a>
-                    <a class="navbar-brand" href="tel:0213450038">
+                    <a class="navbar-brand" href="tel:0213524543">
                         <label class="col-lg-6" style="cursor: pointer;">Kontak</label>
-                        <label class="col-lg-8" style="cursor: pointer;color: #fee328;"><i class="fa fa-phone"></i>&nbsp; (021) 3450038</label>
+                        <label class="col-lg-9" style="cursor: pointer;color: #000000;">
+                            <i class="fa fa-phone"></i>&nbsp; (021) 3524543<br>
+                            <i class="fa fa-phone"></i>&nbsp; 087884576154
+                        </label>
+                        
                     </a>
-                    <a class="navbar-brand" href="tel:0213450038">
+                    <a class="navbar-brand" href="tel:0213524543">
                         <label class="col-lg-6" style="cursor: pointer;">Layanan</label>
-                        <label class="col-lg-9" style="cursor: pointer;color: #fee328;"><i class="glyphicon glyphicon-envelope"></i>&nbsp; sikerja@kemendagri.go.id</label>
+                        <label class="col-lg-9" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp; sikerja@kemendagri.go.id</label>
                     </a>
                 </div>
 
@@ -258,7 +262,9 @@
                               <strong>Kementerian Dalam Negeri, Biro Kepegawaian, Lt 3 Gedung D</strong><br>
                               Jl. Medan Merdeka Utara No. 7, RT. 5/RW. 2, Gambir, Kota Jakarta Pusat<br>
                               Daerah Khusus Ibukota Jakarta<br>
-                              <abbr title="Phone">Telp:</abbr> (021) 3450038 <abbr title="Phone">Ext:</abbr> 2349 & 2355
+                              <abbr title="Phone">Telp:</abbr> (021) 3450038 <abbr title="Phone">Ext:</abbr> 2349 & 2355<br>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (021) 3524543<br>
+                              <abbr title="Whatsapp">Whatsapp:</abbr> 087884576154<br>
                               Email : sikerja@kemendagri.go.id
                             </address>
                         </div>
@@ -289,10 +295,10 @@
                 </div>
                 <div class="col-sm-7 text-center">
                     <ul class="social-icons">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="http://www.facebook.com/sikerja.kemendagri"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="http://twitter.com/sikerja"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="http://www.instagram.com/sikerjakemendagri/"><i class="fa fa-instagram"></i></a></li>
+                        <!-- <li><a href="#"><i class="fa fa-youtube"></i></a></li> -->
                         <!-- <li><a href="#"><i class="fa fa-google-plus"></i></a></li> -->
                         <!-- <li><a href="#"><i class="fa fa-behance"></i></a></li> -->
                         <!-- <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
