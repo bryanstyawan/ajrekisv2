@@ -39,6 +39,7 @@ class Tunjangan_profesi extends CI_Controller {
 			# code...
 
 			$get_tunjangan_profesi_pegawai = $this->Mmaster->get_tunjangan_profesi_pegawai($check_nip[0]->id,'DESC');
+			// print_r($get_tunjangan_profesi_pegawai);die();
 			if ($get_tunjangan_profesi_pegawai != 0)
 			{
 				# code...
@@ -75,8 +76,23 @@ class Tunjangan_profesi extends CI_Controller {
 						# code...
 						$RES = 1;
 					}
+				}
+			}
+			else
+			{
+				$data = array
+					(
+						'id_pegawai'  => $check_nip[0]->id,
+						'tgl_mulai'   => date('Y-m-d',strtotime($data_sender['tgl_mulai'])),
+						'tgl_selesai' => '9999-01-01',
+						'tunjangan'   => $data_sender['tunjangan']
+					);
+				$RES = $this->Allcrud->addData('mr_tunjangan_profesi',$data);
+				if ($RES == TRUE) {
+					# code...
+				$RES = 1;
 				}	
-			}	
+			}
 		}
 		else
 		{
@@ -103,6 +119,7 @@ class Tunjangan_profesi extends CI_Controller {
 			if ($get_tunjangan_profesi_pegawai != 0)
 			{
 				# code...
+				// print_r($get_tunjangan_profesi_pegawai);die();
 				if (count($get_tunjangan_profesi_pegawai) > 1) {
 					# code...
 					$data_last = array
@@ -120,13 +137,14 @@ class Tunjangan_profesi extends CI_Controller {
 					(
 						'id_pegawai'  => $check_nip[0]->id,
 						'tgl_mulai'   => date('Y-m-d',strtotime($data_sender['tgl_mulai'])),
-						'tgl_selesai' => date('Y-m-d',strtotime($data_sender['tgl_selesai'])),
+						'tgl_selesai' => '9999-01-01',
 						'tunjangan'   => $data_sender['tunjangan']
 					);
-
-			$flag = array(
-							'id' => $data_sender['oid']
-						 );
+			
+			$flag = array
+					(
+						'id' => $data_sender['oid']
+					);
 			$this->Allcrud->editData('mr_tunjangan_profesi',$data,$flag);
 			$RES = 1;
 		}

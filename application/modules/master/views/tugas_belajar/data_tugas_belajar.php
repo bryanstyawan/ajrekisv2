@@ -124,7 +124,7 @@
 						<div class="form-group">
 							<div class="input-group">
 		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>		                    
-			                    <input type="text" id="nnip" name="nnip" class="form-control" placeholder="NIP">
+			                    <input type="text" id="nnip" name="nnip" class="form-control" placeholder="NIP" disabled>
 			                    <input type="hidden" id="oid" name="oid" class="form-control">
 							</div>
 						</div>
@@ -242,7 +242,7 @@ $(document).ready(function(){
 			}
 
 			$.ajax({
-				url :"<?php echo site_url()?>/master/add_tugas_belajar",
+				url :"<?php echo site_url()?>/master/tugas_belajar/add_tugas_belajar",
 				type:"post",
 				data:{ data_sender : data_sender},
 				beforeSend:function(){
@@ -332,7 +332,7 @@ $(document).ready(function(){
 			}
 
 			$.ajax({
-				url :"<?php echo site_url();?>/master/edit_tugas_belajar_end",
+				url :"<?php echo site_url();?>/master/tugas_belajar/edit_tugas_belajar_end",
 				type:"post",
 				data:{ data_sender : data_sender},
 				beforeSend:function(){
@@ -363,13 +363,17 @@ $(document).ready(function(){
 function edit(id)
 {
 	$("#loadprosess").modal('show');									
-	$.getJSON('<?php echo site_url() ?>/master/edit_tugas_belajar/'+id,
+	$.getJSON('<?php echo site_url() ?>/master/tugas_belajar/edit_tugas_belajar/'+id,
 		function( response ) {
 			$("#editData").modal('show');
 			$("#oid").val(response['id']);
 			$("#nnip").val(response['nip']);
-			$("#ntgl_mulai").val(response['tgl_mulai']);
-			$("#ntgl_selesai").val(response['tgl_selesai']);
+			var start = response['tgl_mulai'];
+			var end = response['tgl_selesai'];
+			var c_start = start.split('-').reverse().join('-');
+			var c_end = end.split('-').reverse().join('-');
+			$("#ntgl_mulai").val(c_start);
+			$("#ntgl_selesai").val(c_end);
 			$("#nketerangan").val(response['keterangan']);									
 			setTimeout(function(){ 
 				$("#loadprosess").modal('hide');								
@@ -424,7 +428,7 @@ function del(id){
 		 callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/del_tugas_belajar/"+id,
+					url :"<?php echo site_url()?>/master/tugas_belajar/del_tugas_belajar/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');				

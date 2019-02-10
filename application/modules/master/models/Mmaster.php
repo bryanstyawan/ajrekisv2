@@ -754,16 +754,34 @@ class Mmaster extends CI_Model {
 		}
 	}
 
-	public function get_tugas_belajar_id($id)
+	public function get_data_tugas_belajar_id($id)
 	{
 		# code...
 		$sql = "SELECT a.*,
 						b.nama_pegawai,
 						b.nip
 				FROM mr_tugas_belajar a
-				JOIN mr_pegawai b
+				LEFT JOIN mr_pegawai b
 				ON a.id_pegawai = b.id
 				WHERE a.id = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	public function get_tugas_belajar_pegawai($id, $SORT)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_tugas_belajar a
+				WHERE a.id_pegawai = '".$id."'
+				ORDER BY a.tgl_mulai ".$SORT."";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -818,23 +836,6 @@ class Mmaster extends CI_Model {
 		}
 	}
 
-	public function get_last_pic($id)
-	{
-		# code...
-		$sql = "SELECT a.*
-				FROM mr_pegawai_photo a
-				WHERE a.id_pegawai = '".$id."'";
-		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
 	public function get_tunjangan_profesi_pegawai($id,$SORT)
 	{
 		# code...
@@ -852,6 +853,25 @@ class Mmaster extends CI_Model {
 			return 0;
 		}
 	}
+
+	public function get_last_pic($id)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_pegawai_photo a
+				WHERE a.id_pegawai = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	
 
 	public function get_data_jfu($id=NULL)
 	{

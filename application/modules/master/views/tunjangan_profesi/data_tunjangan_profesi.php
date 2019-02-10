@@ -122,7 +122,7 @@
 						<div class="form-group">
 							<div class="input-group">
 		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>		                    
-			                    <input type="text" id="nnip" name="nnip" class="form-control" placeholder="NIP">
+			                    <input type="text" id="nnip" name="nnip" class="form-control" placeholder="NIP" disabled>
 			                    <input type="hidden" id="oid" name="oid" class="form-control">
 							</div>
 						</div>
@@ -282,7 +282,7 @@ $(document).ready(function(){
 		var nip         = $("#nnip").val();
 		var tgl_mulai   = $("#ntgl_mulai").val();
 		var tgl_selesai = $("#ntgl_selesai").val();
-		var tunjangan  = $("#ntunjangan").val();	
+		var tunjangan   = $("#ntunjangan").val();	
 		var oid 		= $("#oid").val();
 
 		if (nip.length <= 0) 
@@ -354,8 +354,12 @@ function edit(id)
 			$("#editData").modal('show');
 			$("#oid").val(response['id']);
 			$("#nnip").val(response['nip']);
-			$("#ntgl_mulai").val(response['tgl_mulai']);
-			$("#ntgl_selesai").val(response['tgl_selesai']);
+			var start = response['tgl_mulai'];
+			var end = response['tgl_selesai'];
+			var c_start = start.split('-').reverse().join('-');
+			var c_end = end.split('-').reverse().join('-');
+			$("#ntgl_mulai").val(c_start);
+			$("#ntgl_selesai").val(c_end);
 			$("#ntunjangan").val(response['tunjangan']);									
 			setTimeout(function(){ 
 				$("#loadprosess").modal('hide');								

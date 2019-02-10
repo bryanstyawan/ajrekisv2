@@ -1,4 +1,15 @@
 v2.0.0-Alpha    
+2019-02-11
+==========
+New:
+Improved:
+- CRUD Tugas Belajar
+- CRUD Tunjangan Profesi
+Fixed:
+- View Tugas Belajar
+- View Tunjangan Profesi
+
+v2.0.0-Alpha    
 2019-02-08
 ==========
 New:
