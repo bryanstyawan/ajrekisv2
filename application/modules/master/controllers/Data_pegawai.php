@@ -19,7 +19,6 @@ class Data_pegawai extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
-		// print_r($data['list'][0]->id_pegawai);die();
 		if ($data['list'] != 0) {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
