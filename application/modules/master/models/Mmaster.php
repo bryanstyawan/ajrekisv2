@@ -74,23 +74,15 @@ class Mmaster extends CI_Model {
 		$sql_3      = "";
 		$sql_4      = "";
 		$sql_5      = "";		
-		$select_opt = "	COALESCE(
-									(SELECT 
-											pic.photo
-										FROM mr_pegawai_photo pic
-										WHERE pic.id_pegawai = a.id
-										AND pic.main_pic = 1
-									),'-'
-								) AS photo,
-								a.local,
-        						a.es1,
-        						a.es2,
-        						a.es3,
-        						a.es4,
-        						a.id,
-        						b.id AS `id_posisi`,
-        						b.kat_posisi,
-        						c.posisi_class,";
+		$select_opt = " a.local,
+						a.es1,
+						a.es2,
+						a.es3,
+						a.es4,
+						a.id,
+						b.id AS `id_posisi`,
+						b.kat_posisi,
+						c.posisi_class,";
 		if ($flag == 'default')
 		{
 			# code...
@@ -139,6 +131,7 @@ class Mmaster extends CI_Model {
 					a.id as id_pegawai,
 					a.nip,
 					a.nama_pegawai,
+					a.photo AS photo,
 					COALESCE(b.kat_posisi,'-') as kat_posisi,					
 					COALESCE(b.nama_posisi,'-') as nama_posisi, 
 					COALESCE(c.posisi_class,'-') as posisi_class_raw,
