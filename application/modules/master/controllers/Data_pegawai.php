@@ -19,6 +19,23 @@ class Data_pegawai extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
+		// print_r($data['list'][0]->id_pegawai);die();
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$data['list'][$i]->tmt = 'test';							
+				$get_data_tmt = $this->Mmaster->get_tmt_pegawai($data['list'][$i]->id_pegawai);
+				if ($get_data_tmt != 0) {
+					# code...
+					$data['list'][$i]->tmt = $get_data_tmt[0]->tmt;
+				}
+				else
+				{
+					$data['list'][$i]->tmt = '-';					
+				}
+			}
+		}																		
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
 		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));

@@ -420,8 +420,18 @@ class Master extends CI_Controller {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
+				$data['list'][$i]->tmt = 'test';							
+				$get_data_tmt = $this->Mmaster->get_tmt_pegawai($data['list'][$i]->id_pegawai);
+				if ($get_data_tmt != 0) {
+					# code...
+					$data['list'][$i]->tmt = $get_data_tmt[0]->tmt;
+				}
+				else
+				{
+					$data['list'][$i]->tmt = '-';					
+				}
 			}
-		}
+		}															
 		$this->load->view('master/pegawai/ajax_pegawai_filter',$data);
 	}
 

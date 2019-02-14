@@ -149,20 +149,6 @@ class Mmaster extends CI_Model {
 				".$sql_4."
 				".$sql_5."				
 				ORDER BY ".$order_by."";
-				
-			// 	COALESCE (
-			// 		(
-			// 			SELECT
-			// 				tmt.StartDate
-			// 			FROM
-			// 				mr_masa_kerja tmt
-			// 			WHERE tmt.EndDate <> '9999-01-01'
-			// 			AND tmt.id_pegawai = a.id
-			// 			ORDER BY tmt.EndDate ASC
-			// 			LIMIT 1
-			// 		),
-			// 		'-'
-			// ) AS tmt				
 		$query = $this->db->query($sql);
 		// print_r($sql);die();
 		if($query->num_rows() > 0)
@@ -176,25 +162,14 @@ class Mmaster extends CI_Model {
 	}
 
 	public function get_tmt_pegawai($param)
-	{
+	{		
 		# code...
-		$sql_1 = "";
-		$sql_2 = "";
-		$sql_3 = "";
-		$sql_4 = "";
-
-		if ($param['eselon4'] == '') {
-			# code...
-			$sql_4 = "";
-		}
-		else $sql_4 = "AND a.eselon4 = '".$param['eselon4']."'";
-
-		$sql = "SELECT a.nama_posisi,
-					   a.id
-				FROM mr_posisi a
-				WHERE a.kat_posisi = 1
-				".$sql_4."
-				";
+		$sql = "SELECT tmt.StartDate as tmt
+ 				FROM mr_masa_kerja tmt
+				WHERE tmt.EndDate <> '9999-01-01'
+				AND tmt.id_pegawai = '".$param."'
+				ORDER BY tmt.EndDate ASC
+				LIMIT 1";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
