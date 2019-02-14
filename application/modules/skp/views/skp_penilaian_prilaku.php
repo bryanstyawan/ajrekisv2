@@ -94,13 +94,12 @@
             <ul class="nav nav-pills nav-stacked contact-id">
                 <?php
                     if($peer != 0){
-                        $i = "";
+                        $i = 0;
                 ?>
                     <div class="box-header with-border">
                         <h3 class="box-title"><i>PEER</i></h3>
                     </div>                    
                 <?php
-                        $i = count($atasan);
                         foreach($peer as $peer){
                             $i++;
                             if ($this->session->userdata('sesNama') != $peer->nama_pegawai) 
