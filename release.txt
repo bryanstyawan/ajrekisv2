@@ -1,4 +1,12 @@
 v2.0.0-Alpha    
+2019-02-14
+==========
+New:
+Improved:
+Fixed:
+- remove sub query pegawai (photo,tmt)
+
+v2.0.0-Alpha    
 2019-02-11
 ==========
 New:
