@@ -416,6 +416,12 @@ class Master extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+			}
+		}
 		$this->load->view('master/pegawai/ajax_pegawai_filter',$data);
 	}
 

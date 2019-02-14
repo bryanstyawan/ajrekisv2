@@ -415,11 +415,7 @@ class Globalrules extends CI_Model
 		$data['atasan']                = $this->get_info_pegawai($_atasan_id,'id');
 		// print_r($data['atasan']);die();
 		if ($data['atasan'] != 0) {
-			if($data['atasan'] != array())
-			{
-				$atasan1 = $this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi')));
-				$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
-			}
+			$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
 		}
 		else $data['atasan_penilai']   = 0;
 		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,date('Y'),'1','realisasi');
@@ -485,7 +481,7 @@ class Globalrules extends CI_Model
 			    FROM mr_posisi a
 			    JOIN mr_pegawai b
 			    ON a.atasan = b.posisi
-			    WHERE a.id = '$posisi'
+			    WHERE a.id = '".$posisi."'
 			    AND b.status = 1";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

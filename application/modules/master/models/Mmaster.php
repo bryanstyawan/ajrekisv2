@@ -50,22 +50,7 @@ class Mmaster extends CI_Model {
 		return $this->db->get();
 	}
 
-	// public function dataUser($flag,$num,$offset){
-	// 	$this->db->where($flag);
-	// 	$this->db->select("a.*, b.nama_posisi, c.nama_role, d.nama_agama, es1.nama_eselon1, es2.nama_eselon2, es3.nama_eselon3, es4.nama_eselon4, es1.id_es1, es2.id_es2, es3.id_es3, es4.id_es4 ");
-	// 	$this->db->from('mr_pegawai a');
-	// 	$this->db->join('mr_posisi b','b.id=a.posisi');
-	// 	$this->db->join('user_role c','a.id_role=c.id_role');
-	// 	$this->db->join('mr_agama d','a.agama=d.id_agama');
-	// 	$this->db->join('mr_eselon4 es4','es4.id_es4=a.es4');
-	// 	$this->db->join('mr_eselon3 es3','es3.id_es3=es4.id_es3');
-	// 	$this->db->join('mr_eselon2 es2','es2.id_es2=es3.id_es2');
-	// 	$this->db->join('mr_eselon1 es1','es1.id_es1=es2.id_es1');
-	// 	$this->db->order_by("id ASC");
-	// 	// $this->db->limit($num,$offset);
-	// 	return $this->db->get();
-	// }
-
+	//2019-02-14
 	public function data_pegawai($flag=NULL,$order_by=NULL)
 	{
 		# code...
@@ -143,19 +128,7 @@ class Mmaster extends CI_Model {
 					COALESCE(es4.nama_eselon4,'-') as nama_eselon4,
 					".$select_opt."
 					b.atasan,
-					COALESCE (
-								(
-									SELECT
-										tmt.StartDate
-									FROM
-										mr_masa_kerja tmt
-									WHERE tmt.EndDate <> '9999-01-01'
-									AND tmt.id_pegawai = a.id
-									ORDER BY tmt.EndDate ASC
-									LIMIT 1
-								),
-								'-'
-						) AS tmt
+					'2019-02-01' as tmt
 				FROM mr_pegawai a
 				LEFT JOIN mr_posisi b ON b.id = a.posisi
 				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
@@ -176,6 +149,20 @@ class Mmaster extends CI_Model {
 				".$sql_4."
 				".$sql_5."				
 				ORDER BY ".$order_by."";
+				
+			// 	COALESCE (
+			// 		(
+			// 			SELECT
+			// 				tmt.StartDate
+			// 			FROM
+			// 				mr_masa_kerja tmt
+			// 			WHERE tmt.EndDate <> '9999-01-01'
+			// 			AND tmt.id_pegawai = a.id
+			// 			ORDER BY tmt.EndDate ASC
+			// 			LIMIT 1
+			// 		),
+			// 		'-'
+			// ) AS tmt				
 		$query = $this->db->query($sql);
 		// print_r($sql);die();
 		if($query->num_rows() > 0)
@@ -187,6 +174,71 @@ class Mmaster extends CI_Model {
 			return 0;
 		}
 	}
+
+	public function get_tmt_pegawai($param)
+	{
+		# code...
+		$sql_1 = "";
+		$sql_2 = "";
+		$sql_3 = "";
+		$sql_4 = "";
+
+		if ($param['eselon4'] == '') {
+			# code...
+			$sql_4 = "";
+		}
+		else $sql_4 = "AND a.eselon4 = '".$param['eselon4']."'";
+
+		$sql = "SELECT a.nama_posisi,
+					   a.id
+				FROM mr_posisi a
+				WHERE a.kat_posisi = 1
+				".$sql_4."
+				";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
 
 	public function grade($id){
 		$this->db->where('kat_posisi',$id);
