@@ -413,8 +413,13 @@ class Globalrules extends CI_Model
 		$data['infoPegawai']           = $this->get_info_pegawai($id,'id');
 
 		$data['atasan']                = $this->get_info_pegawai($_atasan_id,'id');
+		// print_r($data['atasan']);die();
 		if ($data['atasan'] != 0) {
-			$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
+			if($data['atasan'] != array())
+			{
+				$atasan1 = $this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi')));
+				$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
+			}
 		}
 		else $data['atasan_penilai']   = 0;
 		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,date('Y'),'1','realisasi');
