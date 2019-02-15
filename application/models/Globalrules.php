@@ -426,7 +426,7 @@ class Globalrules extends CI_Model
 		$data['summary_prilaku_skp']['disiplin']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->disiplin,$data['nilai_prilaku_peer'][0]->disiplin,$data['nilai_prilaku_bawahan'][0]->disiplin);
 		$data['summary_prilaku_skp']['kerjasama']           = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kerjasama,$data['nilai_prilaku_peer'][0]->kerjasama,$data['nilai_prilaku_bawahan'][0]->kerjasama);
 		$data['summary_prilaku_skp']['kepemimpinan']        = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan);
-		$data['summary_prilaku_skp']['status']              = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->status,$data['nilai_prilaku_peer'][0]->status,$data['nilai_prilaku_bawahan'][0]->status,'status',count($data['evaluator']));
+		$data['summary_prilaku_skp']['status']              = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->status,$data['nilai_prilaku_peer'][0]->status,$data['nilai_prilaku_bawahan'][0]->status,'status',($data['evaluator'] == 0) ? 1 : count($data['evaluator']));
 		$data['summary_prilaku_skp']['jumlah']              = $data['summary_prilaku_skp']['orientasi_pelayanan'] + $data['summary_prilaku_skp']['integritas'] + $data['summary_prilaku_skp']['komitmen'] + $data['summary_prilaku_skp']['disiplin'] + $data['summary_prilaku_skp']['kerjasama'] + $data['summary_prilaku_skp']['kepemimpinan'];
 		$data['summary_prilaku_skp']['rata_rata']           = $data['summary_prilaku_skp']['jumlah'] / 6;
 		$data['summary_prilaku_skp']['nilai_prilaku_kerja'] = ($data['summary_prilaku_skp']['rata_rata']*40)/100;
