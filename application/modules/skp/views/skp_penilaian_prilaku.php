@@ -226,7 +226,7 @@
                     $disiplin            = $this->Globalrules->get_penilaian_prilaku($nilai_prilaku_atasan[0]->disiplin,$nilai_prilaku_peer[0]->disiplin,$nilai_prilaku_bawahan[0]->disiplin);
                     $kerjasama           = $this->Globalrules->get_penilaian_prilaku($nilai_prilaku_atasan[0]->kerjasama,$nilai_prilaku_peer[0]->kerjasama,$nilai_prilaku_bawahan[0]->kerjasama);
                     $kepemimpinan        = $this->Globalrules->get_penilaian_prilaku($nilai_prilaku_atasan[0]->kepemimpinan,$nilai_prilaku_peer[0]->kepemimpinan,$nilai_prilaku_bawahan[0]->kepemimpinan);
-                    $status              = $this->Globalrules->get_penilaian_prilaku($nilai_prilaku_atasan[0]->status,$nilai_prilaku_peer[0]->status,$nilai_prilaku_bawahan[0]->status,'status',count($evaluator1));                    
+                    $status              = $this->Globalrules->get_penilaian_prilaku($nilai_prilaku_atasan[0]->status,$nilai_prilaku_peer[0]->status,$nilai_prilaku_bawahan[0]->status,'status',($evaluator1 == 0) ? 0 : count($evaluator1));                    
                 ?>
                     <tr>
                         <td>Orientasi Pelayanan</td>
