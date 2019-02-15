@@ -462,9 +462,10 @@ class Globalrules extends CI_Model
 			# code...
 			$data['summary_skp']['total_aspek'] = 0;		
 		}
+		$list_skp_count = ($data['list_skp'] == 0) ? 1 : count($data['list_skp']);
 		$data['persentase_target_realisasi']                  = $this->mskp->get_persentase_target_realisasi();
 		$data['summary_skp']['tugas_tambahan']                = $this->nilai_tugas_tambahan($data['tugas_tambahan']);
-		$data['summary_skp']['total']                         = $data['summary_skp']['total_aspek']/count($data['list_skp']) + $data['summary_skp']['tugas_tambahan'] + $data['kreativitas'];
+		$data['summary_skp']['total']                         = $data['summary_skp']['total_aspek']/$list_skp_count) + $data['summary_skp']['tugas_tambahan'] + $data['kreativitas'];
 		$data['summary_skp']['nilai_sasaran_kinerja_pegawai'] = ($data['summary_skp']['total']*60)/100;
 /**********************************************************************************************************/
 		$data['summary_skp_dan_prilaku']                        = $data['summary_skp']['nilai_sasaran_kinerja_pegawai'] + $data['summary_prilaku_skp']['nilai_prilaku_kerja'];
