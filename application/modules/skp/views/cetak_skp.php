@@ -500,7 +500,8 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                         $total = 0;
                     }
 
-                    $total = ($total/count($list_skp)) + $summary_skp['tugas_tambahan'] + $kreativitas;
+                    $list_skp_count = ($list_skp == 0) ? 1 : count($list_skp);                    
+                    $total = ($total/$list_skp_count) + $summary_skp['tugas_tambahan'] + $kreativitas;
                     ?>
                 </tbody>
                 <?php
