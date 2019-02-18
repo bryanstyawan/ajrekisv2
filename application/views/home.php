@@ -49,7 +49,7 @@
                     </a>
                     <a class="navbar-brand" href="tel:0213524543">
                         <label class="col-lg-6" style="cursor: pointer;">Layanan</label>
-                        <label class="col-lg-9" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp; sikerja@kemendagri.go.id</label>
+                        <label class="col-lg-10" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp; kemendagri.sikerja@gmail.com</label>
                     </a>
                 </div>
 
@@ -265,7 +265,7 @@
                               <abbr title="Phone">Telp:</abbr> (021) 3450038 <abbr title="Phone">Ext:</abbr> 2349 & 2355<br>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (021) 3524543<br>
                               <abbr title="Whatsapp">Whatsapp:</abbr> 087884576154<br>
-                              Email : sikerja@kemendagri.go.id
+                              Email : kemendagri.sikerja@gmail.com
                             </address>
                         </div>
                     </div>
