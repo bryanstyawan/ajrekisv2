@@ -131,6 +131,10 @@ class Data_pegawai extends CI_Controller {
 		$jabatan     = $this->input->post('jabatan');
 		if ($param == 'password') {
 			# code...
+			$data_store['password']   = md5('usersikerja');
+			$data_store['user_update'] = date('y-m-d');
+			$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$oid));
+			$text_status = $this->Globalrules->check_status_res($res_data,'Password Pegawai telah berhasil diubah.');			
 		}
 		else {
 			# code...

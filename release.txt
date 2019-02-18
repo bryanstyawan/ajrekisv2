@@ -1,4 +1,12 @@
 v2.0.0-Alpha    
+2019-02-18
+==========
+New:
+- Tombol Password Standar di master pegawai
+Improved:
+Fixed:
+
+v2.0.0-Alpha    
 2019-02-15
 ==========
 New:

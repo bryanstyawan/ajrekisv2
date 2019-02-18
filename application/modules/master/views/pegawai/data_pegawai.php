@@ -208,10 +208,10 @@
 								</td>
 								<td><?=$list[$i]->tmt;?></td>
 								<td></td>
-								<td>
-									<!-- <?php echo anchor('master/data_pegawai/ubah_pegawai/'.$list[$i]->id,'<button class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></button>');?>&nbsp;&nbsp; -->
-									<button class="btn btn-warning btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;									
-									<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>
+								<td class="text-center">
+									<button class="btn btn-warning btn-xs" style="margin-bottom: 5px;" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah Data</button>&nbsp;&nbsp;									
+									<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus Data</button>&nbsp;&nbsp;
+									<button class="btn btn-primary btn-xs" style="margin-bottom: 5px;" onclick="change_password('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Default Password</button>									
 								</td>
 							</tr>
 						<?php
@@ -966,6 +966,72 @@ function del(id){
 		}
     })
 }
+
+function change_password(id){
+    LobiboxBase = {
+        //DO NOT change this value. Lobibox depended on it
+        bodyClass       : 'lobibox-open',
+        //DO NOT change this object. Lobibox is depended on it
+        modalClasses : {
+            'error'     : 'lobibox-error',
+            'success'   : 'lobibox-success',
+            'info'      : 'lobibox-info',
+            'warning'   : 'lobibox-warning',
+            'confirm'   : 'lobibox-confirm',
+            'progress'  : 'lobibox-progress',
+            'prompt'    : 'lobibox-prompt',
+            'default'   : 'lobibox-default',
+            'window'    : 'lobibox-window'
+        },
+        buttons: {
+            ok: {
+                'class': 'lobibox-btn lobibox-btn-default',
+                text: 'OK',
+                closeOnClick: true
+            },
+            cancel: {
+                'class': 'lobibox-btn lobibox-btn-cancel',
+                text: 'Cancel',
+                closeOnClick: true
+            },
+            yes: {
+                'class': 'lobibox-btn lobibox-btn-yes',
+                text: 'Ya',
+                closeOnClick: true
+            },
+            no: {
+                'class': 'lobibox-btn lobibox-btn-no',
+                text: 'Tidak',
+                closeOnClick: true
+            }
+        }
+    }
+
+	Lobibox.confirm({
+		title: "Konfirmasi",
+		msg: "Password Standar adalah 'usersikerja', Lanjutkan ?",
+		callback: function ($this, type) {
+			if (type === 'yes'){
+				$.ajax({
+					url :"<?php echo site_url()?>/master/data_pegawai/store/password/"+id,					
+					type:"post",
+					beforeSend:function(){
+						$("#loadprosess").modal('show');
+					},
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})
+			}
+		}
+    })
+}
+
 
 function main_form(params,id) {
 	if (params == 'insert') {
