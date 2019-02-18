@@ -49,7 +49,7 @@
                     </a>
                     <a class="navbar-brand" href="tel:0213524543">
                         <label class="col-lg-6" style="cursor: pointer;">Layanan</label>
-                        <label class="col-lg-10" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp; kemendagri.sikerja@gmail.com</label>
+                        <label class="col-lg-10" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp;  kemendagri.sikerja@gmail.com</label>
                     </a>
                 </div>
 
