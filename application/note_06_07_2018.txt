@@ -1,0 +1,62 @@
+note : selesaikan dulu sampai rekap baru kerjakan
+
+
+
+
+
+1. Master SKP | Tombol Master Skp tidak muncul ketika filter eselon 3-4 [done]
+2. Validasi Unggah urtug skp [done]
+4. kegiatan tugas jabatan di setup skp tidak bisa diubah [done]
+5. di setup skp, target biaya hanya untuk eselon 2 selain itu di blok [done]
+6. tambahkan kata bulan di target waktu [done]
+8. tambahkan keterangan alasan ketika atasan menolak target skp dan masuk juga kedalam notify [done]
+7. tambahkan keterangan ketika approve atau tolak di setup skp [done]
+10. box notify harus hilang ketika user klik sembarang tempat
+11. apabila keterangan pekerjaan kosong, maka tidak bisa save [done]
+12. jika jenis output dari urtug itu laporan atua dokumen maka harus upload bukti. jika jenis output frekuentsi maka tidak perlu [done]
+13. Prilaku (nilai prestasi kerja) dengan bobot 40% dan nilai capaian skp dengan bobot 60%. keduanya dijumlahkan.
+14. Nilai tugas tambahan dan kreativitas harus link di cetak SKP [done]
+16. Persetujuan Tugas Tambahan dan  kreativitas hanya untuk atasan 
+17. untuk bawahan, ganti dari 'penilaian skp' menjadi 'hasil penilaian skp'[done]
+20. untuk notify biasa, ketika pemberitahuan di klik. maka counter akan berkurang [done]
+21. Apabila pegawai telah dilakukan penilaian prilaku, maka diberi tanda.
+22. setup skp, harus menentukan jenis laporan [done]
+25. ada bug di penilaian prilaku ketika menghapus pemilih
+
+
+
+
+
+
+
+3. misalkan nama jabatan 'penata laporan kegiatan' ada di setiap komponen. maka urtug akan dimelekat disetiap bagian
+9. super admin dapat blast message keseluruh pegawai
+12. detail transaksi bawahan untuk approve belum aktif
+13. Dashboard, tambahkan prosentasi capaian skp
+15. tambahkan keterangan ketika approve atau tolak di tugas tambahan dan kreativitas
+18. Penilai Prilaku untuk Dosen masih belum fix.
+19. Lihat Semua Pemberitahuan belum jalan.
+22. penilaian skp, setelah melakukan 
+23. di penilaian prilaku, jika seandainya di sub bagian hanya 1 orang berarti ambil anggota dari bagian tersebut.
+24. di penilaian prilaku, ada pembatasan dalam pemilihan peer
+26. tambahkan progress bar jika ada upload file
+27. realisasi skp tidak boleh maksimal dari target skp, jadi harus ada verifikasi 
+
+
+
+
+
+
+
+
+
+
+iron mask - magic sky requiem
+
+
+Transaksi
+1147
+1135
+1152
+1149
+1133

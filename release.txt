@@ -1,0 +1,419 @@
+v2.0.0-Alpha    
+2019-02-15
+==========
+New:
+Improved:
+Fixed:
+- counttable penilaian skp
+
+v2.0.0-Alpha    
+2019-02-14
+==========
+New:
+Improved:
+Fixed:
+- remove sub query pegawai (photo,tmt)
+- remove tiny bug (penilaian skp)
+
+v2.0.0-Alpha    
+2019-02-11
+==========
+New:
+Improved:
+- CRUD Tugas Belajar
+- CRUD Tunjangan Profesi
+Fixed:
+- View Tugas Belajar
+- View Tunjangan Profesi
+
+v2.0.0-Alpha    
+2019-02-08
+==========
+New:
+Improved:
+Fixed:
+- approval untuk penambahan skp
+
+v2.0.0-Alpha    
+2019-02-07
+==========
+New:
+Improved:
+Fixed:
+- Perbaikan get_info_pegawai di Globalrules (penentuan kelas jabatan di struktural, jft, jfu)
+- penentuan kelas jabatan untuk struktural, jft, jfu
+- default agama menjadi kosong
+- Perbaikan Ubah data pegawai
+- Fix layout
+- Uraian tugas di penilaian skp
+- Info pegawai di penilaian skp
+- Error di penilaian Prilaku ketika staff tidak ada atasan (resign, pensiun dll)
+- Hapus PK dan jenis skp di penilaian skp
+
+
+v2.0.0-Alpha    
+2019-02-06
+==========
+New:
+- Controller Tunjangan Profesi (by Eric)
+- Controller Tugas Belajar (by Eric)
+Improved:
+- Validasi Tunjangan Profesi (by Eric)
+Fixed:
+- Combobox Tahun di Cetak SKP (by Eric)
+- Combobox Tahun di Target SKP (by Eric)
+- Indikator Penilaian Perilaku (by Eric)
+- ScrollBar di box Approval SKP (by Eric)
+- Index.php Approval SKP (by Eric)
+- Perbaikan get_data_pegawai_nip (by Eric)
+
+v2.0.0-Alpha    
+2019-02-04
+==========
+New:
+- design progress bar untuk ajax
+Improved:
+Fixed:
+- API kinerja berdasarkan bulan, tahun. 
+- API kinerja status
+
+v2.0.0-Alpha    
+2019-02-01
+==========
+New:
+- image slider
+- Upgrading from 3.1.9 to 3.1.10
+Improved:
+- Update slider
+- Perubahan versi dari v.2 ke v.4
+- Perubahan metode penyimpanan di Form Eselon 2, 3, 4 (by Eric)
+Fixed:
+- Pengaturan hak akses atasan dan bawahan
+- Mengabaikan filter tahun di master skp
+- Kecepatan transisi slider
+- clean string variabel nip untuk API kinerja summary
+- fix Kategori posisi di target skp
+- fix minimum Angka Kredit di target SKP (by Eric)
+- fix angka di depan Jenis Output di target SKP (by Eric)
+
+v2.0.0-Alpha    
+2019-01-31
+==========
+New:
+- Universal security
+- guide Information
+- Syncronisasi Jabatan jft dari organisasi ke pegawai
+- API kinerja
+Improved:
+- Target SKP, Pemindahan posisi jenis output dan target kuantitas
+- Target SKP, Kualitas mutu disembunyikan
+- Target SKP, Perubahan layout target waktu
+Fixed:
+- Ubah data pegawai
+- Target SKP, Ubah menjadi Ubah target
+- Target SKP, target kuantitas menjadi target kuantitas per tahun
+- Target SKP, Penyesuaian font size
+- aplikasi sikerja menjadi Masuk Aplikasi SIkerja
+- target kuantitas kembali seperti semula, tidak ada batasan kuantitas
+
+v2.0.0-Alpha    
+2019-01-28
+==========
+New:
+Improved:
+Fixed:
+- uraian tugas bawahan di penilaian bawahan
+- Perbaikan layout penilaian bawahan, hari aktif, eselon1, pegawai
+- perbaikan crud di eselon1, hari aktif, datapegawai
+- perbaikan counter transaksi bawahan di penilaian atasan
+- perbaikan pegawai yang tidak mendapat posisi jabatan
+
+v2.0.0-Alpha    
+2019-01-09
+==========
+New:
+- table-view1 untuk datatable
+- layout counter notify selain (belum diperiksa + keberatan)
+Improved:
+- Perubahan tatak letak target dan realisasi di halaman dashboard
+- penambahan format ppt dan pptx di upload data transaksi
+- Perubahan sistem transaksi di detail transaksi pegawai, meninggalkan sistem pop up untuk melihat detail pegawai 
+- posisi untuk strukturan, jft dan jfu saat login
+- Perubahan Layout dashboard dan perbaikan tulisan+icon
+- counter Persetujuan atasan (belum diperiksa+keberatan) di transaksi
+Fixed:
+- memunculkan notif angka di nama pegawai tanda approval target
+- Persetujuan tugas tambahan dan kreativitas hanya di atasan
+- Perbaikan header Penilaian SKP / Kinerja Bulanan didashboard
+- Perbaikan nilai tunjangan di dashboard (laporan)
+
+v2.0.0-Alpha    
+2019-01-04
+==========
+New:
+Improved:
+- Menu Transaksi, File pendukung tidak wajib di isi
+- Aktivitas Kinerja Anggota di tampilkan semua data
+- penambahan fungsi datatable no-paging
+Fixed:
+- memunculkan notif angka di nama pegawai tanda approval target
+- Perubahan nama Simpan Evaluator menjadi Ajukan Penilaian di Penilaian Prilaku
+- Perubahan default tampilan data transaksi dari tambah data kinerja ke tahap belum diperiksa
+- filter eselon 2 di data pegawai
+- nilai AK di penilaian skp hanya ada di jft
+
+v2.0.0-Alpha    
+2019-01-03
+==========
+New:
+Improved:
+- Syncronisasi skp jfu ke target skp
+- penyesuaian skp jfu dan struktural disemua yang berhubungan dengan uraian tugas (transaksi, skp, cetak skp)
+- penyederhaaan prosess ajax di target skp
+- penyederhaaan prosess ajax di transaksi
+Fixed:
+- penyesuaian nama yang muncul di approval skp
+
+v2.0.0-Alpha    
+2018-12-31
+==========
+New:
+- timerange normal
+Improved:
+- penyesuaian kelas jabatan jfu dan jft
+- improvisasi kecepatan tarik data pegawai, penyederhaaan tarik data
+Fixed:
+- penyesuaian timerange tmt pegawai
+- Pembersihan code view pegawai
+- penyimpanan tmt jabatan pegawai
+
+v2.0.0-Alpha    
+2018-12-23
+==========
+New:
+- Lepas jabatan
+Improved:
+Fixed:
+
+v2.0.0-Alpha    
+2018-12-20
+==========
+New:
+- fitur melihat detail pegawai (status aktif / tidak aktif (hapus))
+Improved:
+- Penyesuaian filter organisasi
+Fixed:
+- Perbaikan penempelan id jfu di organisasi
+- Perbaikan posisi di organisasi (edit)
+
+v2.0.0-Alpha    
+2018-12-19
+==========
+New:
+Improved:
+- improvisasi kecepatan tarik data organisasi, penyederhaaan tarik data
+Fixed:
+- Pembenahan tambah dan update organisasi
+- Pembenahan timeout progress ketika selesai melakukan pencarian
+- Perbaikan tombol pilih untuk jabatan jfu dan jft di organisasi
+
+v2.0.0-Alpha    
+2018-12-17
+==========
+New:
+- Progress Kuantitas SKP di penilaian kinerja/skp bawahan
+Improved:
+- Pemindahan posisi layout 'Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?' dari posisi bawah ke atas di penilaian kinerja/skp bawahan
+- Pemindahan posisi layout close di penilaian kinerja/skp bawahan
+Fixed:
+- Pembersihan Character excel yang bermasalah sehingga menyebabkan file excel yang diunduh menjadi corrupt di cetak skp, unduh template master skp, unduh template jfu, unduh template jft
+
+v2.0.0-Alpha    
+2018-12-13
+==========
+New:
+- Menampilkan angka kredit di Uraian tugas JFT
+- Perbaikan penyimpanan data untuk output, keterangan, angka kredit di jft
+- Penambahan statistik pencapaian menit kerja efektif bawahan di penilaian skp / kinerja bulanan
+- Penambahan judul header di penilaian skp / kinerja bulanan
+- Penambahan Menu sources (untuk data js dan css) di Konfigurasi
+Improved:
+- buka akses untuk mendapatkan menit efektif pertahun untuk semua pegawai
+- Penyesuaian session_rule dan notif_message di halaman ubah pasword
+Fixed:
+
+
+v2.0.0-Alpha    
+2018-12-11
+==========
+New:
+- progres bar untuk mengetahui statistik skp yang tersedia di master skp [Jabatan struktural]
+- nama posisi di master skp [Jabatan struktural]
+- Informasi pegawai di penilaian skp bulanan
+Improved:
+Fixed:
+- Perbaikan notifikasi di halaman ganti password yang sebelumnya error
+
+v2.0.0-Alpha    
+2018-12-6
+==========
+New:
+- layout dasar grafik di penilaian skp bulanan
+Improved:
+- Pembenahan session_rule dan notif_message dari allcrud ke Globalrules, implementasi ke semua controller
+- master skp [jabatan struktural] sekarang hanya menampilkan data struktural saja
+Fixed:
+
+v2.0.0-Alpha    
+2018-12-03
+==========
+New:
+- pemotongan tunjangan bawahan berdasarkan penilaian capaian skp oleh atasan di dashboard
+Improved:
+- Penambahan daftar bawahan di dashboard untuk atasan
+- pembenahan struktur dashboard
+- Penambahan pemotongan tunjangan bawahan berdasarkan penilaian capaian skp oleh atasan di Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin 
+- Menghapus Kelas Jabatan di Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin 
+- Penambahan fungsi hapus data jabatan fungsional umum (jabatan + uraian tugas) di master jabatan fungsional umum
+- penyederhaaan prosess ajax di master jabatan fungsional umum
+Fixed:
+
+v2.0.0-Alpha    
+2018-11-28
+==========
+New:
+- tombol kembali pada ubah data pribadi
+Improved:
+- Penambahan fitur hapus semua uraian tugas di master skp
+Fixed:
+
+v2.0.0-Alpha    
+2018-11-27
+==========
+New:
+- master output SKP
+Improved:
+- improve redirect process ajax
+- penyederhaaan prosess ajax di organisasi
+- penambahan hapus di list master jabatan fungsional tertentu
+- penyederhaaan prosess ajax di jabatan fungsional tertentu
+- penambahan keterangan dan output di jabatan fungsional tertentu
+Fixed:
+- perbaikan counter di approval skp bawahan
+
+v2.0.0-Alpha    
+2018-11-22
+==========
+New:
+Improved:
+- return 0 to return array() di list_bawahan
+- Penilaian Prilaku, atasan dapat langsung menilai bawahan tanpa harus bawahan mengajukan penilaian Prilaku
+- Penilaian Prilaku, tambahan rekomendasi yang wajib diisi oleh atasan
+- Penilaian Prilaku, ada penanda jika sudah dilakukan penilaian
+- lupa password (popup Informasi)
+- Penambahan dan improvisasi Notification error + mempersingkat cooldown setelah proses transaksi di eselon 1,2,3,4
+Fixed:
+
+
+v2.0.0-Alpha    
+2018-11-9
+==========
+New:
+Improved:
+- layouting header - helper 
+Fixed:
+- datatable Struktur Organisasi
+
+v2.0.0-Alpha    
+2018-11-5
+==========
+New:
+Improved:
+Fixed:
+- fixing frezee ketika menyimpan tambah skp pegawai dalam keadaan kosong
+- remarks skp hanya ditampilkan ketika ada penolakan data skp dari atasan
+
+v2.0.0-Alpha    
+2018-11-5
+==========
+New:
+- master jft
+Improved:
+- master jfu (tahun)
+- sync master jft to organisasi
+Fixed:
+
+
+v2.0.0-Alpha    
+2018-10-31
+==========
+New:
+Improved:
+Fixed:
+- Fixing bug pengajuan setup skp
+
+
+v2.0.0-Alpha    
+2018-10-24
+==========
+New:
+Improved:
+- [dashboard]modal pekerjaan belum diperiksa
+- [dashboard]modal Realisasi menit kerja efektif
+- [dashboard]sync Jabatan Fungsional Umum - Organisasi
+Fixed:
+- uppercase pekerjaan belum diperiksa, Realisasi, Tunjangan, fingerprint, capaian skp di dashboard
+
+
+v2.0.0-Alpha    
+2018-10-22
+==========
+New:
+- Master 
+    * Eselon 1
+    * Eselon 2
+    * Eselon 3
+    * Eselon 4
+    * Struktur Organisasi
+    * Pegawai
+    * Kategori Posisi
+    * Grade Posisi
+    * Hari Aktif
+    * Tugas Belajar
+    * Tunjangan Profesi
+    * Golongan
+    * Jurusan Pendidikan
+    * Akademik
+    * Jabatan Fungsional Umum
+- Rekapitulasi
+    * Data Kinerja
+    * Tunjangan Kinerja Aspek Produktivitas & Aspek Kinerja
+    * Import Tunjangan Kinerja Aspek Produktivitas & Aspek Kinerja
+- Transaksi
+    * Transaksi
+        # link SKP (Realisasi)
+    * Tugas tambahan dan kreativitas
+        # link SKP (Realisasi)
+    * Persetujuan tugas tambahan dan kreativitas
+- SKP
+    * Master SKP
+    * Setup SKP
+    * Penilaian Prilaku
+    * Cetak SKP
+- Konfigurasi
+    * Management Menu & Submenu
+    * Akses Menu
+    * Role
+- Pesan 
+- Dashboard
+    * Informasi Pegawai
+    * Ubah data Pribadi
+    * Persentase menit kerja
+    * Chart Pencapaian ment efektif per tahun
+- Other
+    * Notification
+Improved:
+0
+Fixed:
+0
+Error:
