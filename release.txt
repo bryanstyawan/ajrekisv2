@@ -1,4 +1,12 @@
 v2.0.0-Alpha    
+2019-02-20
+==========
+New:
+Improved:
+Fixed:
+- Hapus SKP master (skp pegawai)
+
+v2.0.0-Alpha    
 2019-02-18
 ==========
 New:
