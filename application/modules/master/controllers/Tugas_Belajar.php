@@ -6,137 +6,86 @@ class Tugas_Belajar extends CI_Controller {
 	public function __construct () {
 		parent::__construct();
 		$this->load->model ('Mmaster', '', TRUE);
-    }
+  }
     
-    public function tugas_belajar()
+  public function index()
 	{
-		# code...
-		$this->Globalrules->session_rule();
-		$data['title']   = 'Data Tugas Belajar';
-		$data['content'] = 'master/tugas_belajar/data_tugas_belajar';
-		$data['list']    = $this->Mmaster->get_data_tugas_belajar();
-		$this->load->view('templateAdmin',$data);
+			# code...
+			$this->Globalrules->session_rule();
+			$data['title']   = 'Data Tugas Belajar';
+			$data['content'] = 'master/tugas_belajar/data_tugas_belajar';
+			$data['list']    = $this->Mmaster->get_data_tugas_belajar();
+			$this->load->view('templateAdmin',$data);
 	}
 
-	public function add_tugas_belajar()
+	public function store($arg=NULL,$oid=NULL)
 	{
-		# code...
-		$data_sender = $this->input->post('data_sender');
-		$check_nip = $this->Mmaster->get_data_pegawai_nip($data_sender['nip']);
-		$RES = '';
-		if ($check_nip != 0) {
 			# code...
-			$get_tugas_belajar_pegawai = $this->Mmaster->get_tugas_belajar_pegawai($check_nip[0]->id,'DESC');
-			// print_r($get_tugas_belajar_pegawai);die();
-			if ($get_tugas_belajar_pegawai != 0)
-			{
-				$tgl_selesai_tugas = $get_tugas_belajar_pegawai[0]->tgl_selesai;
-				if (date('Y-m-d',strtotime($data_sender['tgl_mulai'])) < $tgl_selesai_tugas) 
-				{
-					$status = array
-					(
-						'text'   => 'Karyawan masih belum menyelesaikan tugas belajar',
-						'status' => '0'
-					);
-					$RES = $status;	
-				}
-				else
-				{
-					$data = array
-					(
-						'id_pegawai'  => $check_nip[0]->id,
-						'tgl_mulai'   => date('Y-m-d',strtotime($data_sender['tgl_mulai'])),
-						'tgl_selesai' => date('Y-m-d',strtotime($data_sender['tgl_selesai'])),
-						'keterangan'  => $data_sender['keterangan']
-					);
-					$RES = $this->Allcrud->addData('mr_tugas_belajar',$data);
-					if ($RES == TRUE) {
-						# code...
-						$RES = 1;
-					}
-				}
+			$res_data    = 0;
+			$text_status = '';
+			$data_sender = array();
+			if ($arg == NULL) {
+				# code...
+				$data_sender = $this->input->post('data_sender');
 			}
-			else
-			{
-				$data = array
-					(
-						'id_pegawai'  => $check_nip[0]->id,
-						'tgl_mulai'   => date('Y-m-d',strtotime($data_sender['tgl_mulai'])),
-						'tgl_selesai' => date('Y-m-d',strtotime($data_sender['tgl_selesai'])),
-						'keterangan'  => $data_sender['keterangan']
-					);
-				$RES = $this->Allcrud->addData('mr_tugas_belajar',$data);
-				if ($RES == TRUE) {
+			else {
+				# code...
+				$data_sender['crud'] = $arg;
+				$data_sender['oid']  = $oid;
+			}
+
+			
+				// $data_store        = $this->Globalrules->trigger_insert_update($data_sender['crud']);
+				if ($data_sender['crud'] == 'insert') {
 					# code...
-					$RES = 1;
+					$check_nip = $this->Mmaster->get_data_pegawai_nip($data_sender['nip']);
+					if ($check_nip != 0) {
+						$get_tugas_belajar_pegawai = $this->Mmaster->get_tugas_belajar_pegawai($check_nip[0]->id,'DESC');
+						$tgl_selesai_tugas = $get_tugas_belajar_pegawai[0]->tgl_selesai;
+						if (date('Y-m-d',strtotime($data_sender['tgl_mulai'])) > $tgl_selesai_tugas) 
+						{
+							$data_store['id_pegawai'] = $check_nip[0]->id;
+							$data_store['tgl_mulai'] = date('Y-m-d',strtotime($data_sender['tgl_mulai']));
+							$data_store['tgl_selesai'] = date('Y-m-d',strtotime($data_sender['tgl_selesai']));
+							$data_store['keterangan'] = $data_sender['keterangan'];
+							$res_data       = $this->Allcrud->addData('mr_tugas_belajar',$data_store);
+							$text_status    = $this->Globalrules->check_status_res($res_data,'Data Tugas Belajar telah berhasil ditambahkan.');
+						}
+						else
+						{
+							$res_data       = '2';
+							$text_status    = $this->Globalrules->check_status_res($res_data,'Karyawan masih belum menyelesaikan tugas belajar.');
+						}
+					}
+				} elseif ($data_sender['crud'] == 'update') {
+					# code...			
+					$data_store['id_pegawai'] = $check_nip[0]->id;
+					$data_store['tgl_mulai'] = date('Y-m-d',strtotime($data_sender['tgl_mulai']));
+					$data_store['tgl_selesai'] = date('Y-m-d',strtotime($data_sender['tgl_selesai']));
+					$data_store['keterangan'] = $data_sender['keterangan'];
+					$res_data       = $this->Allcrud->editData('mr_tugas_belajar',$data_store,array('id'=>$data_sender['oid']));
+					$text_status    = $this->Globalrules->check_status_res($res_data,'Data Tugas Belajar telah berhasil diubah.');
+				} elseif ($data_sender['crud'] == 'delete') {
+					# code...
+					$res_data    = $this->Allcrud->delData('mr_tugas_belajar',array('id'=>$data_sender['oid']));
+					$text_status = $this->Globalrules->check_status_res($res_data,'Data Tugas Belajar telah berhasil dihapus.');
 				}
-			}
-		}
-		else
-		{
-			$status = array
-					(
-						'text'   => 'NIP tidak ditemukan',
-						'status' => 'error'
-					);
-			$RES = $status;
-		}
 
-		echo json_encode($RES);
+					$res = array
+								(
+									'status' => $res_data,
+									'text'   => $text_status
+								);
+					echo json_encode($res);		
 	}
 
-	public function edit_tugas_belajar_end()
-	{
-		# code...
-		$data_sender = $this->input->post('data_sender');
-		$check_nip = $this->Mmaster->get_data_pegawai_nip($data_sender['nip']);
-		$RES = '';
-		if ($check_nip != 0) {
-			# code...
-			$data = array
-					(
-						'id_pegawai'  => $check_nip[0]->id,
-						'tgl_mulai'   => date('Y-m-d',strtotime($data_sender['tgl_mulai'])),
-						'tgl_selesai' => date('Y-m-d',strtotime($data_sender['tgl_selesai'])),
-						'keterangan'  => $data_sender['keterangan']
-					);
-
-			$flag = array(
-							'id' => $data_sender['oid']
-						);
-			$this->Allcrud->editData('mr_tugas_belajar',$data,$flag);
-			$RES = 1;
-		}
-		else
-		{
-			$status = array
-					(
-						'text'   => 'NIP tidak ditemukan',
-						'status' => 'error'
-					);
-			$RES = $status;
-		}
-
-		echo json_encode($RES);
+	public function get_data_tugas_belajar($id){
+		$this->Globalrules->session_rule();						
+		$flag = array('id'=>$id);
+		$q    = $this->Allcrud->getData('mr_tugas_belajar',$flag)->result_array();
+		$pegawai = $this->Mmaster->get_data_pegawai($q[0]['id_pegawai']);
+		$q[0]['nip'] = $pegawai[0]->nip;
+		// print_r($q[0]['nip']);die();
+		echo json_encode($q);
 	}
-
-	public function edit_tugas_belajar($id){
-		$this->Globalrules->session_rule();
-		$res = $this->Mmaster->get_data_tugas_belajar_id($id);
-		if ($res != 0) {
-			# code...
-			echo json_encode($res[0]);
-		}
-	}
-
-	public function ajax_tugas_belajar(){
-		$data['list']    = $this->Mmaster->get_data_tugas_belajar();
-		$this->load->view('master/tugas_belajar/ajax_tugas_belajar',$data);
-	}
-
-	public function del_tugas_belajar($id){
-		$this->Globalrules->session_rule();
-		$flag = array('id' => $id);
-		$this->Allcrud->delData('mr_tugas_belajar',$flag);
-    }
 }

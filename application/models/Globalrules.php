@@ -250,7 +250,7 @@ class Globalrules extends CI_Model
 		}
 		elseif ($res_data == 2) {
 		// code...
-				$text_status = $text_status;
+			$text_status = $text_status;
 		}
 		else
 		{
