@@ -7,8 +7,10 @@ class Tugas_Belajar extends CI_Controller {
 		parent::__construct();
 		$this->load->model ('Mmaster', '', TRUE);
   }
-    
-  public function index()
+  
+// By Eric
+// Last Edited : 20-02-2019
+public function index()
 	{
 			# code...
 			$this->Globalrules->session_rule();
@@ -18,7 +20,9 @@ class Tugas_Belajar extends CI_Controller {
 			$this->load->view('templateAdmin',$data);
 	}
 
-	public function store($arg=NULL,$oid=NULL)
+// By Eric
+// Last Edited : 20-02-2019
+public function store($arg=NULL,$oid=NULL)
 	{
 			# code...
 			$res_data    = 0;
@@ -79,7 +83,10 @@ class Tugas_Belajar extends CI_Controller {
 					echo json_encode($res);		
 	}
 
-	public function get_data_tugas_belajar($id){
+// By Eric
+// Last Edited : 20-02-2019
+public function get_data_tugas_belajar($id)
+	{
 		$this->Globalrules->session_rule();						
 		$flag = array('id'=>$id);
 		$q    = $this->Allcrud->getData('mr_tugas_belajar',$flag)->result_array();

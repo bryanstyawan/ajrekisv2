@@ -3,8 +3,13 @@ v2.0.0-Alpha
 ==========
 New:
 Improved:
+<<<<<<< HEAD
 - Block warna untuk transaksi kuantitas
 Fixed:
+=======
+Fixed:
+- Hapus SKP master (skp pegawai)
+>>>>>>> b30b3a483b36228e156a8a7c357315327e4132bb
 
 v2.0.0-Alpha    
 2019-02-18

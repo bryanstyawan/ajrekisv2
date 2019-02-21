@@ -920,6 +920,7 @@ class Skp extends CI_Controller {
 	{
 		# code...
 		$res_data    = $this->Allcrud->delData('mr_skp_master',array('posisi'=>$id));
+		$res_data    = $this->Allcrud->delData('mr_skp_pegawai',array('id_posisi'=>$id));		
 		$text_status = $this->Globalrules->check_status_res($res_data,'Data Uraian Tugas berhasil dihapus.');
 		$res         = array
 					(
