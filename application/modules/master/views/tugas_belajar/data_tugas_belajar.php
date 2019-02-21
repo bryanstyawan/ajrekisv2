@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="col-xs-12" id="viewdata">
 	<div class="box">
         <div class="box-header">
 			<h3 class  ="box-title pull-right"><button class="btn btn-block btn-primary" id="addData"><i class="fa fa-plus-square"></i> Tambah Tugas Belajar</button></h3>
@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div class="example-modal">
+<!-- <div class="example-modal">
 	<div class="modal modal-success fade" id="newData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="box-content">
 	        <div class="modal-dialog">
@@ -163,6 +163,57 @@
             </div>
         </div>
 	</div>
+</div> -->
+
+<div class="col-lg-12" id="formdata" style="display:none;">
+	<div class="box">
+		<div class="box-header">
+			<h3 class="box-title" id="formdata-title"></h3>
+			<div class="box-tools pull-right"><button class="btn btn-block btn-danger" id="closeData"><i class="fa fa-close"></i></button></div>				
+		</div>
+		<div class="box-body">
+			<div class="row">
+				<input class="form-control" type="hidden" id="oid">
+				<input class="form-control" type="hidden" id="crud">					
+				<div class="col-md-6">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-star"></i></span>
+						<input type="text" id="f_nip" name="f_nip" class="form-control" placeholder="NIP">
+					</div>
+				</div>
+
+				<label style="color: #000;font-weight: 400;font-size: 19px;">Dari Tanggal</label>
+					<div class="form-group">
+						<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-star"></i></span>
+						<input type="text" id="f_tgl_mulai" name="f_tgl_mulai" class="form-control timerange" placeholder="Dari Tanggal">
+						</div>
+					</div>							
+
+				<label style="color: #000;font-weight: 400;font-size: 19px;">Sampai Tanggal</label>
+					<div class="form-group">
+						<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-star"></i></span>
+						<input type="text" id="f_tgl_selesai" name="f_tgl_selesai" class="form-control timerange" placeholder="Sampai Tanggal">
+						</div>
+					</div>														
+
+				<label style="color: #000;font-weight: 400;font-size: 19px;">Keterangan</label>
+					<div class="form-group">
+						<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-star"></i></span>
+							<textarea id="f_keterangan" name="f_keterangan" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div><!-- /.box-body -->
+		<div class="box-footer">
+			<a class="btn btn-success pull-right" id="btn-trigger-controll"><i class="fa fa-save"></i>&nbsp; Simpan</a>
+		</div>
+	</div><!-- /.box -->
 </div>
 </div>
 
@@ -194,164 +245,85 @@ $(function () {
 });
 
 $(document).ready(function(){
-	$("#addData").click(function(){
-		$("#newData").modal('show');
+	// $("#addData").click(function(){
+	// 	$("#newData").modal('show');
+	// })
+
+	$("#addData").click(function()
+	{
+		$(".form-control").val('');
+		$("#formdata").css({"display": ""})
+		$("#viewdata").css({"display": "none"})
+		$("#formdata-title").html("Tambah Data");
+		$("#crud").val('insert');
 	})
 
-	$("#add").click(function(){
-		var nip         = $("#nip").val();
-		var tgl_mulai   = $("#tgl_mulai").val();
-		var tgl_selesai = $("#tgl_selesai").val();
-		var keterangan  = $("#keterangan").val();				
-		if (nip.length <= 0) 
+	$("#closeData").click(function(){
+		$("#formdata").css({"display": "none"})
+		$("#viewdata").css({"display": ""})		
+	})
+
+	$("#btn-trigger-controll").click(function(){
+		var oid           = $("#oid").val();
+		var crud          = $("#crud").val();
+		var f_nip         = $("#f_nip").val();
+		var f_tgl_mulai   = $("#f_tgl_mulai").val();
+		var f_tgl_selesai = $("#f_tgl_selesai").val();
+		var f_keterangan  = $("#f_keterangan").val();
+		var data_sender = "";
+		if (f_nip.length <= 0) 
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
 			{
 				msg: "Data NIP tidak boleh kosong."
 			});
 		}
-		else if (tgl_mulai.length <= 0) 
+		else if (f_tgl_mulai.length <= 0) 
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
 			{
 				msg: "Data Tanggal Mulai tidak boleh kosong."
 			});
 		}
-		else if (tgl_selesai.length <= 0) 
+		else if (f_tgl_selesai.length <= 0) 
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
 			{
 				msg: "Data Tanggal Selesai tidak boleh kosong."
 			});
 		}		
-		else if (keterangan.length <= 0) 
+		else if (f_keterangan.length <= 0) 
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
 			{
 				msg: "Data Keterangan tidak boleh kosong."
 			});
-		}		
+		}
 		else
 		{
-
 			var data_sender = {
-        					'nip' 			: nip,
-			                'tgl_mulai' 	: tgl_mulai,
-			                'tgl_selesai' 	: tgl_selesai,
-			                'keterangan' 	: keterangan							
+							'oid' 			: oid,
+							'crud'			: crud,
+        					'nip' 			: f_nip,
+			                'tgl_mulai' 	: f_tgl_mulai,
+			                'tgl_selesai' 	: f_tgl_selesai,
+			                'keterangan' 	: f_keterangan							
 			}
 
 			$.ajax({
-				url :"<?php echo site_url()?>/master/tugas_belajar/add_tugas_belajar",
-				type:"post",
-				data:{ data_sender : data_sender},
+				url : "<?php echo site_url()?>master/Tugas_Belajar/store",
+				type: "post",
+				data: {data_sender:data_sender},
 				beforeSend:function(){
-					$("#newData").modal('hide');
-					$("#loadprosess").modal('show');				
+					$("#loadprosess").modal('show');
 				},
-				success:function(msg)
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
+				},
+				error:function(jqXHR,exception)
 				{
-					if (msg == 1) 
-					{
-						Lobibox.notify('success', {
-							msg: 'Data Berhasil Ditambahkan. Mohon tunggu, sedang memuat data.'
-						});
-						$("#isi").load('master/ajax_tugas_belajar');
-						setTimeout(function(){ 
-							$("#loadprosess").modal('hide');								
-						}, 5000);
-					}
-					else
-					{
-						var json = jQuery.parseJSON(msg);
-						Lobibox.alert("error", //AVAILABLE TYPES: "error", "info", "success", "warning"
-						{
-							msg: json.text
-						});
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Penambahan data'
-						});						
-						setTimeout(function(){ 
-							$("#loadprosess").modal('hide');								
-						}, 5000);						
-					}
-				},
-				error:function(){
-					Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Penambahan data'
-					});
-				}
-			})
-		}
-	})
-
-	$("#edit").click(function(){
-		var nip         = $("#nnip").val();
-		var tgl_mulai   = $("#ntgl_mulai").val();
-		var tgl_selesai = $("#ntgl_selesai").val();
-		var keterangan  = $("#nketerangan").val();	
-		var oid 		= $("#oid").val();
-
-		if (nip.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data NIP tidak boleh kosong."
-			});
-		}
-		else if (tgl_mulai.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Tanggal Mulai tidak boleh kosong."
-			});
-		}
-		else if (tgl_selesai.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Tanggal Selesai tidak boleh kosong."
-			});
-		}		
-		else if (keterangan.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Keterangan tidak boleh kosong."
-			});
-		}		
-		else
-		{
-
-			var data_sender = {
-							'oid'			: oid,
-        					'nip' 			: nip,
-			                'tgl_mulai' 	: tgl_mulai,
-			                'tgl_selesai' 	: tgl_selesai,
-			                'keterangan' 	: keterangan							
-			}
-
-			$.ajax({
-				url :"<?php echo site_url();?>/master/tugas_belajar/edit_tugas_belajar_end",
-				type:"post",
-				data:{ data_sender : data_sender},
-				beforeSend:function(){
-					$("#editData").modal('hide');
-					$("#loadprosess").modal('show');								
-				},
-				success:function(){
-					Lobibox.notify('success', {
-						msg: 'Data Berhasil Dirubah. Mohon tunggu, sedang memuat data.'
-						});
-					$("#isi").load('master/ajax_tugas_belajar');
-					setTimeout(function(){ 
-						$("#loadprosess").modal('hide');								
-					}, 5000);
-				},
-				error:function(){
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Perubahan data'
-						});
+					ajax_catch(jqXHR,exception);					
 				}
 			})
 		}
@@ -360,26 +332,55 @@ $(document).ready(function(){
 
 
 
-function edit(id)
-{
-	$("#loadprosess").modal('show');									
-	$.getJSON('<?php echo site_url() ?>/master/tugas_belajar/edit_tugas_belajar/'+id,
-		function( response ) {
-			$("#editData").modal('show');
-			$("#oid").val(response['id']);
-			$("#nnip").val(response['nip']);
-			var start = response['tgl_mulai'];
-			var end = response['tgl_selesai'];
+function edit(id) {
+	// $("#loadprosess").modal('show');									
+	// $.getJSON('<?php echo site_url() ?>/master/tugas_belajar/edit_tugas_belajar/'+id,
+	// 	function( response ) {
+	// 		$("#editData").modal('show');
+	// 		$("#oid").val(response['id']);
+	// 		$("#nnip").val(response['nip']);
+	// 		var start = response['tgl_mulai'];
+	// 		var end = response['tgl_selesai'];
+	// 		var c_start = start.split('-').reverse().join('-');
+	// 		var c_end = end.split('-').reverse().join('-');
+	// 		$("#ntgl_mulai").val(c_start);
+	// 		$("#ntgl_selesai").val(c_end);
+	// 		$("#nketerangan").val(response['keterangan']);									
+	// 		setTimeout(function(){ 
+	// 			$("#loadprosess").modal('hide');								
+	// 		}, 1000);			
+	// 	}
+	// );
+	$.ajax({
+		url :"<?php echo site_url();?>master/tugas_belajar/get_data_tugas_belajar/"+id,
+		type:"post",
+		beforeSend:function(){
+			$("#loadprosess").modal('show');
+		},
+		success:function(msg){
+			var obj = jQuery.parseJSON (msg);
+			console.log();
+			$(".form-control-detail").val('');
+			$("#formdata").css({"display": ""});
+			$("#viewdata").css({"display": "none"});
+			$("#formdata-title").html("Ubah Data");
+			$("#crud").val('update');
+			$("#oid").val(obj[0].id);
+			$("#f_nip").val(obj[0].nip);
+			var start = obj[0].tgl_mulai;
+			var end = obj[0].tgl_selesai;
 			var c_start = start.split('-').reverse().join('-');
 			var c_end = end.split('-').reverse().join('-');
-			$("#ntgl_mulai").val(c_start);
-			$("#ntgl_selesai").val(c_end);
-			$("#nketerangan").val(response['keterangan']);									
-			setTimeout(function(){ 
-				$("#loadprosess").modal('hide');								
-			}, 1000);			
+			$("#f_tgl_mulai").val(c_start);
+			$("#f_tgl_selesai").val(c_end);
+			$("#f_keterangan").val(obj[0].keterangan);
+			$("#loadprosess").modal('hide');				
+		},
+		error:function(jqXHR,exception)
+		{
+			ajax_catch(jqXHR,exception);					
 		}
-	);
+	})
 }
 
 function del(id){
@@ -419,38 +420,31 @@ function del(id){
                 text: 'Tidak',
                 closeOnClick: true
             }
-        }        
+        }
     }
-    
-	 Lobibox.confirm({
-		 title: "Konfirmasi",
-		 msg: "Anda yakin akan menghapus data ini ?",
-		 callback: function ($this, type) {
+
+	Lobibox.confirm({
+		title: "Konfirmasi",
+		msg: "Anda yakin akan menghapus data ini ?",
+		callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/tugas_belajar/del_tugas_belajar/"+id,
+					url : "<?php echo site_url()?>master/tugas_belajar/store/delete/"+id,
 					type:"post",
 					beforeSend:function(){
-						$("#loadprosess").modal('show');				
-					},					
-					success:function(){
-						Lobibox.notify('success', {
-							msg: 'Data Berhasil Dihapus. Mohon tunggu, sedang memuat data.'
-						});
-						$("#isi").load('master/ajax_tugas_belajar');
-						setTimeout(function(){ 
-							$("#loadprosess").modal('hide');								
-						}, 3000);			
+						$("#loadprosess").modal('show');
 					},
-					error:function(){
-						Lobibox.notify('error', {
-							msg: 'Gagal Melakukan Hapus data'
-						});
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
-  	  	}
+		}
     })
-				
 }
 </script>

@@ -79,59 +79,6 @@ class Data_eselon3 extends CI_Controller {
 		$this->load->view('master/eselon/ajaxEselon3',$data);
 	}
 
-	public function addEselon3(){
-		$this->Globalrules->session_rule();								
-		$add = array(
-			'id_es2'       => $this->input->post('es2'),
-			'nama_eselon3' =>$this->input->post('es3')
-		);
-		$res_data    = $this->Allcrud->addData('mr_eselon3',$add);
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 3 telah berhasil ditambahkan.');
-		$res         = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);												
-	}
-
-	public function editEselon3($id){
-		$this->Globalrules->session_rule();							
-		$flag = array('id_es3'=>$id);
-		$q    = $this->Mmaster->getEs3($flag)->row();
-		echo json_encode($q);
-	}
-
-	public function peditEselon3(){
-		$this->Globalrules->session_rule();								
-		$flag = array('id_es3'=>$this->input->post('oid'));
-		$edit = array(
-			'id_es2'       => $this->input->post('nes2'),
-			'nama_eselon3' =>$this->input->post('nes3')
-		);
-		$res_data    = $this->Allcrud->editData('mr_eselon3',$edit,$flag);
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 3 telah berhasil diubah.');
-		$res         = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);												
-	}
-
-	public function delEselon3($id){
-		$this->Globalrules->session_rule();								
-		$flag        = array('id_es3' => $id);
-		$res_data    = $this->Allcrud->delData('mr_eselon3',$flag);
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data Eselon 3 telah berhasil dihapus.');
-		$res         = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);												
-	}
-
 	public function cariEs3(){
 		$this->Globalrules->session_rule();								
 		$flag        = array('id_es2'=>$this->input->post('es2'));

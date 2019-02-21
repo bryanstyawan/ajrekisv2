@@ -46,123 +46,6 @@
 	</div>
 </div>
 
-
-<!-- Modal Dialog sebelumnya -->
-<!-- <div class="example-modal">
-<div class="modal modal-success fade" id="newData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Eselon 3</h4>
-              	</div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="addForm" name="addForm">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon I</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <select name="es1" id="es1" class="form-control"><option value="">Pilih Eselon 1</option>
-								<?php foreach($es1->result() as $row){?>
-									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-								<?php }?>
-								</select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon II</label>
-						<div id="isies2">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <select name="es2" id="es2" class="form-control"><option value="">Pilih Eselon 2</option></select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon III</label>
-						<div class="form-group">
-							<div class="input-group">
-		                    	<span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    	<input type="text" id="es3" name="es3" class="form-control" placeholder="Nama Eselon 3" maxlength="100">
-							</div>
-						</div>
-
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="add"/>
-
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div>
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Eselon 3</h4>
-                </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="addForm">
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon I</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <select name="nes1" id="nes1" class="form-control">
-								<?php foreach($es1->result() as $row){?>
-									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-								<?php }?>
-								</select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon II</label>
-						<div id="nisies2">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <select name="nes2" id="nes2" class="form-control">
-									<?php foreach($es2->result() as $row){?>
-										<option value="<?php echo $row->id_es2;?>"><?php echo $row->nama_eselon2;?></option>
-									<?php }?>
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon III</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <input type="text" id="nes3" name="nes3" class="form-control" placeholder="Nama Eselon 3" maxlength="100">
-								<input type="hidden" id="oid" name="oid" >
-							</div>
-						</div>
-
-
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="edit"/>
-
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div> -->
-
 <div class="col-lg-12" id="formdata" style="display:none;">
 	<div class="box">
 		<div class="box-header">
@@ -177,17 +60,16 @@
 					<div class="form-group">
 						<label>Eselon 1</label>
 			            <select id="f_es1" class="form-control">
+							<option selected>------Pilih Salah Satu------</option>						
 							<?php foreach($es1->result() as $row){?>
 							<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-						<?php }?>
+							<?php }?>
 						</select>
 					</div>
 					<div class="form-group">
 						<label>Eselon 2</label>
 			            <select id="f_es2" class="form-control">
-							<?php foreach($es2->result() as $row){?>
-							<option value="<?php echo $row->id_es2;?>"><?php echo $row->nama_eselon2;?></option>
-						<?php }?>
+							<option selected>------Pilih Salah Satu------</option>						
 						</select>
 					</div>
 					<div class="form-group">
@@ -223,42 +105,26 @@ $(document).ready(function(){
 		$("#viewdata").css({"display": ""})		
 	})
 
-	// Script sebelumnya
-	// $("#es1").change(function(){
-	// 	var es1 = $("#es1").val();
-	// 	$.ajax({
-	// 		url :"<?php echo site_url()?>/master/data_eselon2/cariEs2",
-	// 		type:"post",
-	// 		data:"es1="+es1,
-	// 		beforeSend:function(){
-	// 			$("#loadprosess").modal('show');
-	// 		},
-	// 		success:function(msg){
-	// 			$("#isies2").html(msg);
-	// 			setTimeout(function(){
-	// 				$("#loadprosess").modal('hide');
-	// 			}, 5000);
-	// 		}
-	// 	})
-	// })
-
-	// $("#nes1").change(function(){
-	// 	var nes1 = $("#nes1").val();
-	// 	$.ajax({
-	// 		url :"<?php echo site_url()?>/master/data_eselon2/cariEs2edit",
-	// 		type:"post",
-	// 		data:"nes1="+nes1,
-	// 		beforeSend:function(){
-	// 			$("#loadprosess").modal('show');
-	// 		},
-	// 		success:function(msg){
-	// 			$("#nisies2").html(msg);
-	// 			setTimeout(function(){
-	// 				$("#loadprosess").modal('hide');
-	// 			}, 5000);
-	// 		}
-	// 	})
-	// })
+	$("#f_es1").change(function(){
+		$("#f_es2").html("<option value=''>------Pilih Salah Satu------</option>");
+		$("#f_es3").html("<option value=''>------Pilih Salah Satu------</option>");
+		$("#f_es4").html("<option value=''>------Pilih Salah Satu------</option>");
+		var es1 = $(this).val();
+		$.ajax({
+			url :"<?php echo site_url();?>master/data_eselon2/formEselon2",
+			type:"post",
+			data:"nes1="+es1,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success:function(hasil){
+				$("#f_es2").html(hasil);
+				setTimeout(function(){
+					$("#loadprosess").modal('hide');
+				}, 500);
+			}
+		})
+	})	
 
 	$("#btn-trigger-controll").click(function(){
 		var oid         = $("#oid").val();
@@ -366,22 +232,8 @@ $(document).ready(function(){
 	})
 })
 
-function edit(id){
-	// Script Edit sebelumnya
-	// $("#loadprosess").modal('show');
-	// $.getJSON('<?php echo site_url() ?>/master/data_eselon3/editEselon3/'+id,
-	// 	function( response ) {
-	// 		$("#editData").modal('show');
-	// 		$("#nes1").val(response['id_es1']);
-	// 		$("#nes2").val(response['id_es2']);
-	// 		$("#nes3").val(response['nama_eselon3']);
-	// 		$("#oid").val(response['id_es3']);
-	// 		setTimeout(function(){
-	// 			$("#loadprosess").modal('hide');
-	// 		}, 1000);
-	// 	}
-	// );
-
+function edit(id)
+{
 	$.ajax({
 		url :"<?php echo site_url();?>master/data_eselon3/get_data_eselon/"+id,
 		type:"post",

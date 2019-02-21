@@ -48,145 +48,6 @@
   	</div><!-- /.box -->
 </div>
 
-
-<!-- Modal Dialog Sebelumnya -->
-<!-- <div class="example-modal">
-<div class="modal modal-success fade" id="newData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Eselon 4</h4>
-                  </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="addForm" name="addForm">
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon I</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <select name="es1" id="es1" class="form-control"><option value="">Pilih Eselon 1</option>
-								<?php foreach($es1->result() as $row){?>
-									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-								<?php }?>
-								</select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon II</label>
-						<div id="isies2">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <select class="form-control"><option value="">Pilih Eselon 2</option></select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon III</label>
-						<div id="isies3">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <select class="form-control"><option value="">Pilih Eselon 3</option></select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon IV</label>
-						<div class="form-group">
-							<div class="input-group">
-	                    		<span class="input-group-addon"><i class="fa fa-star"></i></span>
-	                    		<input type="text" id="es4" name="es4" class="form-control" placeholder="Nama Eselon 4" maxlength="100">
-							</div>
-						</div>
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="add"/>
-
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div>
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Eselon 4</h4>
-              	</div>
-            	<div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="addForm">
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon I</label>
-						<div class="form-group">
-							<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <select name="nes1" id="nes1" class="form-control">
-								<?php foreach($es1->result() as $row){?>
-									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-								<?php }?>
-								</select>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon II</label>
-						<div id="nisies2">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <select name="nes2" id="nes2" class="form-control">
-									<?php foreach($es2->result() as $row){?>
-										<option value="<?php echo $row->id_es2;?>"><?php echo $row->nama_eselon2;?></option>
-									<?php }?>
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon III</label>
-						<div id="nisies3">
-							<div class="form-group">
-								<div class="input-group">
-				                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <select name="nes3" id="nes3" class="form-control">
-									<?php foreach($es3->result() as $row){?>
-										<option value="<?php echo $row->id_es3;?>"><?php echo $row->nama_eselon3;?></option>
-									<?php }?>
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Eselon IV</label>
-						<div class="form-group"><div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    <input type="text" id="nes4" name="nes4" class="form-control" placeholder="Nama Eselon 4" maxlength="100">
-							<input type="hidden" id="oid" name="oid" >
-							</div>
-						</div>
-
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="edit"/>
-
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div> -->
-
 <div class="col-lg-12" id="formdata" style="display:none;">
 	<div class="box">
 		<div class="box-header">
@@ -201,25 +62,29 @@
 					<div class="form-group">
 						<label>Eselon 1</label>
 			            <select id="f_es1" class="form-control">
-							<?php foreach($es1->result() as $row){?>
-							<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-						<?php }?>
+							<option selected>------Pilih Salah Satu------</option>
+							<?php 
+								foreach($es1->result() as $row)
+								{
+							?>
+									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
+							<?php 
+								}
+							?>
 						</select>
 					</div>
 					<div class="form-group">
 						<label>Eselon 2</label>
 			            <select id="f_es2" class="form-control">
-							<?php foreach($es2->result() as $row){?>
-							<option value="<?php echo $row->id_es2;?>"><?php echo $row->nama_eselon2;?></option>
-						<?php }?>
+							<option selected>------Pilih Salah Satu------</option>
 						</select>
 					</div>
+				</div>
+				<div class="col-md-6">					
 					<div class="form-group">
 						<label>Eselon 3</label>
 			            <select id="f_es3" class="form-control">
-							<?php foreach($es3->result() as $row){?>
-							<option value="<?php echo $row->id_es3;?>"><?php echo $row->nama_eselon3;?></option>
-						<?php }?>
+							<option selected>------Pilih Salah Satu------</option>
 						</select>
 					</div>
 					<div class="form-group">
@@ -255,6 +120,49 @@ $(document).ready(function(){
 		$("#viewdata").css({"display": ""})		
 	})
 
+	$("#f_es1").change(function(){
+		$("#f_es2").html("<option value=''>------Pilih Salah Satu------</option>");
+		$("#f_es3").html("<option value=''>------Pilih Salah Satu------</option>");
+		$("#f_es4").html("<option value=''>------Pilih Salah Satu------</option>");
+		var es1 = $(this).val();
+		$.ajax({
+			url :"<?php echo site_url();?>master/data_eselon2/formEselon2",
+			type:"post",
+			data:"nes1="+es1,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success:function(hasil){
+				$("#f_es2").html(hasil);
+				setTimeout(function(){
+					$("#loadprosess").modal('hide');
+				}, 500);
+			}
+		})
+	})	
+
+	$("#f_es2").change(function(){
+		$("#f_es3").html("<option value=''>------Pilih Salah Satu------</option>");
+		$("#f_es4").html("<option value=''>------Pilih Salah Satu------</option>");
+		$("#f_jabatan").val('');
+		$("#f_jabatan_id").val('');				
+		var es2 = $(this).val();
+		$.ajax({
+			url :"<?php echo site_url();?>/master/data_eselon3/formEselon3",
+			type:"post",
+			data:"nes2="+es2,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success:function(hasil){
+				$("#f_es3").html(hasil);
+				setTimeout(function(){
+					$("#loadprosess").modal('hide');
+				}, 500);
+			}
+		})
+	})
+
 	$("#btn-trigger-controll").click(function(){
 		var oid         = $("#oid").val();
 		var crud        = $("#crud").val();
@@ -275,13 +183,6 @@ $(document).ready(function(){
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
 			{
 				msg: "Data Eselon 2 tidak boleh kosong."
-			});
-		}
-		else if (f_es3.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 3 tidak boleh kosong."
 			});
 		}
 		else if (f_es4.length <= 0)
@@ -320,175 +221,9 @@ $(document).ready(function(){
 			})
 		}
 	})
-
-
-	// Script sebelumnya
-	// $("#es1").change(function(){
-	// 	var es1 = $("#es1").val();
-	// 	$.ajax({
-	// 		url :"<?php echo site_url()?>/master/data_eselon2/cariEs2",
-	// 		type:"post",
-	// 		data:"es1="+es1,
-	// 		beforeSend:function(){
-	// 			$("#loadprosess").modal('show');
-	// 		},
-	// 		success:function(msg){
-	// 			$("#isies2").html(msg);
-	// 			setTimeout(function(){
-	// 				$("#loadprosess").modal('hide');
-	// 			}, 5000);
-	// 		}
-	// 	})
-	// })
-
-	// $("#nes1").change(function(){
-	// 	var nes1 = $("#nes1").val();
-	// 	$.ajax({
-	// 		url :"<?php echo site_url()?>/master/data_eselon2/cariEs2edit",
-	// 		type:"post",
-	// 		data:"nes1="+nes1,
-	// 		beforeSend:function(){
-	// 			$("#loadprosess").modal('show');
-	// 		},
-	// 		success:function(msg){
-	// 			$("#nisies2").html(msg);
-	// 			setTimeout(function(){
-	// 				$("#loadprosess").modal('hide');
-	// 			}, 5000);
-	// 		}
-	// 	})
-	// })
-
-
-	// $("#add").click(function(){
-	// 	var es1= $("#es1").val();
-	// 	var es2= $("#es2").val();
-	// 	var es3= $("#es3").val();
-	// 	var es4= $("#es4").val();
-
-	// 	if (es1.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 1 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else if (es2.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 2 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else if (es3.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 3 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else if (es4.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 4 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else
-	// 	{
-	// 		$.ajax({
-	// 			url :"<?php echo site_url()?>/master/data_eselon4/addEselon4",
-	// 			type:"post",
-	// 			data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4,
-	// 			beforeSend:function(){
-	// 				$("#newData").modal('hide');
-	// 				$("#loadprosess").modal('show');
-	// 			},
-	// 			success:function(msg){
-	// 				var obj = jQuery.parseJSON (msg);
-	// 				ajax_status(obj);
-	// 			},
-	// 			error:function(jqXHR,exception)
-	// 			{
-	// 				ajax_catch(jqXHR,exception);					
-	// 			}
-	// 		})
-	// 	}
-	// })
-
-	// $("#edit").click(function(){
-	// 	var es1= $("#nes1").val();
-	// 	var es2= $("#nes2").val();
-	// 	var es3= $("#nes3").val();
-	// 	var es4= $("#nes4").val();
-
-	// 	if (es1.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 1 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else if (es2.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 2 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else if (es3.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 3 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else if (es4.length <= 0)
-	// 	{
-	// 		Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-	// 		{
-	// 			msg: "Data Eselon 4 tidak boleh kosong."
-	// 		});
-	// 	}
-	// 	else
-	// 	{
-	// 		$.ajax({
-	// 			url :"<?php echo site_url();?>/master/data_eselon4/peditEselon4",
-	// 			type:"post",
-	// 			data:$("#editForm").serialize(),
-	// 			beforeSend:function(){
-	// 				$("#editData").modal('hide');
-	// 				$("#loadprosess").modal('show');
-	// 			},
-	// 			success:function(msg){
-	// 				var obj = jQuery.parseJSON (msg);
-	// 				ajax_status(obj);
-	// 			},
-	// 			error:function(jqXHR,exception)
-	// 			{
-	// 				ajax_catch(jqXHR,exception);					
-	// 			}
-	// 		})
-	// 	}
-	// })
 })
 
 function edit(id){
-	// Script Edit Data Lama
-	// $.getJSON('<?php echo site_url() ?>/master/data_eselon4/editEselon4/'+id,
-	// 	function( response ) {
-	// 		$("#editData").modal('show');
-	// 		$("#nes1").val(response['id_es1']);
-	// 		$("#nes2").val(response['id_es2']);
-	// 		$("#nes3").val(response['id_es3']);
-	// 		$("#nes4").val(response['nama_eselon4']);
-	// 		$("#oid").val(response['id_es4']);
-	// 		setTimeout(function(){
-	// 			$("#loadprosess").modal('hide');
-	// 		}, 1000);
-	// 	}
-	// );
-
 	$.ajax({
 		url :"<?php echo site_url();?>master/data_eselon4/get_data_eselon/"+id,
 		type:"post",

@@ -148,20 +148,8 @@ $(document).ready(function(){
 		}
 	})
 })
-function edit(id){
-	// Script Edit sebelumnya
-	// $("#loadprosess").modal('show');
-	// $.getJSON('<?php echo site_url() ?>/master/data_eselon2/editEselon2/'+id,
-	// 	function( response ) {
-	// 		$("#editData").modal('show');
-	// 		$("#nes1").val(response['id_es1']);
-	// 		$("#nes2").val(response['nama_eselon2']);
-	// 		$("#oid").val(response['id_es2']);
-	// 		setTimeout(function(){
-	// 			$("#loadprosess").modal('hide');
-	// 		}, 1000);
-	// 	}
-	// );
+function edit(id)
+{
 	$.ajax({
 		url :"<?php echo site_url();?>master/data_eselon2/get_data_eselon/"+id,
 		type:"post",

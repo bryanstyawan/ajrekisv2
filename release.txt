@@ -1,10 +1,21 @@
 v2.0.0-Alpha    
+2019-02-21
+==========
+New:
+Improved:
+Fixed:
+- clean code eselon 2, eselon 3, eselon 4
+- Perbaikan filter data eselon 4 untuk mencari eselon 2 dan eselon 3
+- Perbaikan filter data eselon 3 untuk mencari eselon 2 
+
+v2.0.0-Alpha    
 2019-02-20
 ==========
 New:
 Improved:
 Fixed:
 - Hapus SKP master (skp pegawai)
+- Block warna untuk transaksi kuantitas
 
 v2.0.0-Alpha    
 2019-02-18

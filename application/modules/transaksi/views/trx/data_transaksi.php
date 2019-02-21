@@ -603,29 +603,37 @@ else {
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-6">
-                                                <input type="hidden" id="hdn_param_out_skp">
-                                                <input type="hidden" id="hdn_param_qty_skp">
-                                                <input type="hidden" id="hdn_param_realisasi_qty_skp">
-                                                <label style="color: #000;font-weight: 400;font-size: 19px;">Kuantitas</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                    <input type="number" id="kuantitas" name="kuantitas" class="form-control">
-                                                    <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span>
+                                            <div class="form-group col-md-12" style="background-color:#00a7d0">
+                                                <div class="form-group col-md-12">
+                                                    <label style="color: #fff;font-weight: 400;font-size: 19px;">*Diisi jika sudah ada output</label>
                                                 </div>
-                                                <div>
-                                                    <span class="input-group-addon"><label id="param_realisasi_qty_skp">Realisasi : </label></span>
-                                                </div>
-                                            </div>
 
-                                            <div class="form-group col-md-6">
-                                                <div class="col-lg-12">
-                                                    <label class="pull-left" style="color: #000;font-weight: 400;font-size: 19px;">File Pendukung</label>
-                                                    <label class="pull-right" style="color: #000;font-weight: 400;font-size: 14px;">Maksimal 3MB (pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png)</label>
+                                                <div class="form-group col-md-6">
+                                                    <input type="hidden" id="hdn_param_out_skp">
+                                                    <input type="hidden" id="hdn_param_qty_skp">
+                                                    <input type="hidden" id="hdn_param_realisasi_qty_skp">
+                                                    <label style="color: #fff;font-weight: 400;font-size: 19px;">Kuantitas</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                        <input type="number" id="kuantitas" name="kuantitas" class="form-control">
+                                                        <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="input-group-addon"><label id="param_realisasi_qty_skp">Realisasi : </label></span>
+                                                    </div>
                                                 </div>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                    <input type="file" id="file_pendukung" name="file_pendukung" class="form-control">
+
+                                                <div class="form-group col-md-6">
+                                                    <div class="col-lg-12">
+                                                        <label class="pull-left" style="color: #fff;font-weight: 400;font-size: 19px;">File Pendukung</label>
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+                                                        <input type="file" id="file_pendukung" name="file_pendukung" class="form-control">
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <label class="pull-right" style="color: #fff;font-weight: 400;font-size: 14px;">*Maksimal 3MB (pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png)</label>
+                                                    </div>
                                                 </div>
                                             </div>
 
