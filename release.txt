@@ -1,15 +1,21 @@
 v2.0.0-Alpha    
+2019-02-21
+==========
+New:
+Improved:
+- Block warna untuk transaksi kuantitas (ganti warna kuning) (By Eric)
+- New CRUD dan View Tugas Belajar (By Eric)
+- New CRUD dan View Tunjangan Profesi (By Eric)
+Fixed:
+
+v2.0.0-Alpha    
 2019-02-20
 ==========
 New:
 Improved:
-<<<<<<< HEAD
 - Block warna untuk transaksi kuantitas
 Fixed:
-=======
-Fixed:
 - Hapus SKP master (skp pegawai)
->>>>>>> b30b3a483b36228e156a8a7c357315327e4132bb
 
 v2.0.0-Alpha    
 2019-02-18
