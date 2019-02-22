@@ -179,12 +179,7 @@ class Globalrules extends CI_Model
 						es2.nama_eselon2,
 						es3.nama_eselon3,
 						es4.nama_eselon4,
-						COALESCE((SELECT aa.photo
-									FROM mr_pegawai_photo aa
-									WHERE aa.id_pegawai = a.id
-									AND aa.main_pic = 1
-									AND aa.local = a.local
-								),'-') as photo,
+						COALESCE(a.photo,'-') as photo,
 						COALESCE(agm.nama_agama,'-') as nama_agama,
 						COALESCE(gol.ruang,'-') as nama_ruang,
 						COALESCE(gol.nama_pangkat,'-') as nama_pangkat,
@@ -212,6 +207,7 @@ class Globalrules extends CI_Model
 				LEFT OUTER JOIN mr_agama agm on agm.id_agama = a.id_agama				
 				LEFT OUTER JOIN mr_golongan gol ON gol.id = a.golongan				
 				WHERE ".$sql."";
+				// NOTE ==> Kolom Posisi_class pada mr_posisi dan ID pada mr_POSISI_CLASS
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

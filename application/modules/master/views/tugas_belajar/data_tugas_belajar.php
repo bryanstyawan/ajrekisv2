@@ -53,118 +53,6 @@
     </div>
 </div>
 
-<!-- <div class="example-modal">
-	<div class="modal modal-success fade" id="newData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="box-content">
-	        <div class="modal-dialog">
-	            <div class="modal-content">
-	                <div class="modal-header">
-	                    <h4 class="modal-title">Form Tugas Belajar</h4>
-	                  </div>
-	                <div class="modal-body" style="background-color: #fff!important;">
-						<form id="addForm" name="addForm">
-							<label style="color: #000;font-weight: 400;font-size: 19px;">NIP</label>
-							<div class="form-group">
-								<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-				                    <input type="text" id="nip" name="nip" class="form-control" placeholder="NIP">
-								</div>
-							</div>
-
-							<label style="color: #000;font-weight: 400;font-size: 19px;">Dari Tanggal</label>
-							<div class="form-group">
-								<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <input type="text" id="tgl_mulai" name="tgl_mulai" class="form-control timerange" placeholder="Dari Tanggal">
-								</div>
-							</div>							
-
-							<label style="color: #000;font-weight: 400;font-size: 19px;">Sampai Tanggal</label>
-							<div class="form-group">
-								<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    <input type="text" id="tgl_selesai" name="tgl_selesai" class="form-control timerange" placeholder="Sampai Tanggal">
-								</div>
-							</div>														
-
-
-							<label style="color: #000;font-weight: 400;font-size: 19px;">Keterangan</label>
-							<div class="form-group">
-								<div class="input-group">
-			                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-			                    	<textarea id="keterangan" name="keterangan" class="form-control"></textarea>
-								</div>
-							</div>
-
-						</form>
-	                </div>
-	                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-	                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-						<input type="submit" class="btn btn-primary" value="Simpan" id="add"/>
-	                    
-	                </div>
-	            </div>
-	        </div>
-		</div>
-	</div>
-</div>
-
-<div class="example-modal">
-<div class="modal modal-success fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-		
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Form Tugas Belajar</h4>
-                  </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="addForm">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">NIP</label>
-						<div class="form-group">
-							<div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>		                    
-			                    <input type="text" id="nnip" name="nnip" class="form-control" placeholder="NIP" disabled>
-			                    <input type="hidden" id="oid" name="oid" class="form-control">
-							</div>
-						</div>
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Dari Tanggal</label>
-						<div class="form-group">
-							<div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    <input type="text" id="ntgl_mulai" name="ntgl_mulai" class="form-control timerange" placeholder="Dari Tanggal">
-							</div>
-						</div>							
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Sampai Tanggal</label>
-						<div class="form-group">
-							<div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    <input type="text" id="ntgl_selesai" name="ntgl_selesai" class="form-control timerange" placeholder="Sampai Tanggal">
-							</div>
-						</div>														
-
-
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Keterangan</label>
-						<div class="form-group">
-							<div class="input-group">
-		                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
-		                    	<textarea id="nketerangan" name="nketerangan" class="form-control"></textarea>
-							</div>
-						</div>
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="edit"/>
-                    
-                </div>
-            </div>
-        </div>
-	</div>
-</div> -->
-
 <div class="col-lg-12" id="formdata" style="display:none;">
 	<div class="box">
 		<div class="box-header">
@@ -248,7 +136,9 @@ $(document).ready(function(){
 	// $("#addData").click(function(){
 	// 	$("#newData").modal('show');
 	// })
-
+	
+	// By Eric
+  	// Last Edited : 20-02-2019
 	$("#addData").click(function()
 	{
 		$(".form-control").val('');
@@ -331,7 +221,8 @@ $(document).ready(function(){
 })      
 
 
-
+// By Eric
+// Last Edited : 20-02-2019
 function edit(id) {
 	// $("#loadprosess").modal('show');									
 	// $.getJSON('<?php echo site_url() ?>/master/tugas_belajar/edit_tugas_belajar/'+id,
@@ -383,6 +274,8 @@ function edit(id) {
 	})
 }
 
+// By Eric
+// Last Edited : 20-02-2019
 function del(id){
     LobiboxBase = {
         //DO NOT change this value. Lobibox depended on it
