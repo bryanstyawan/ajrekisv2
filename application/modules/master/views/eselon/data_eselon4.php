@@ -238,11 +238,38 @@ function edit(id){
 			$("#viewdata").css({"display": "none"})
 			$("#formdata > div > div > div.box-header > h3").html("Ubah Data");		
 			$("#crud").val('update');
-			$("#oid").val(obj.id_es4);
-			$("#f_es1").val(obj.id_es1);
-			$("#f_es2").val(obj.id_es2);
-			$("#f_es3").val(obj.id_es3);
-			$("#f_es4").val(obj.nama_eselon4);				
+			$("#oid").val(obj.list[0].id_es4);
+			$("#f_es1").val(obj.list[0].id_es1);
+			if (obj.es2.length != 0) 
+			{
+				var toAppend1 = '<option value=""> - - - </option>';					
+				for (index = 0; index < obj.es2.length; index++) 
+				{
+					_text = "";
+					if (obj.es2[index].id_es2 == obj.list[0].id_es2) {
+						_text = "selected";
+					}
+
+					toAppend1 += '<option value="'+obj.es2[index].id_es2+'" '+_text+'>'+obj.es2[index].nama_eselon2+'</option>';					
+				}
+				$('#f_es2').append(toAppend1);					
+			}			
+
+			if (obj.es3.length != 0) 
+			{
+				var toAppend1 = '<option value=""> - - - </option>';					
+				for (index = 0; index < obj.es3.length; index++) 
+				{
+					_text = "";
+					if (obj.es3[index].id_es3 == obj.list[0].id_es3) {
+						_text = "selected";
+					}
+
+					toAppend1 += '<option value="'+obj.es3[index].id_es3+'" '+_text+'>'+obj.es3[index].nama_eselon3+'</option>';					
+				}
+				$('#f_es3').append(toAppend1);					
+			}			
+			$("#f_es4").val(obj.list[0].nama_eselon4);				
 			$("#loadprosess").modal('hide');				
 		},
 		error:function(jqXHR,exception)

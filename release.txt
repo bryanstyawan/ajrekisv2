@@ -4,6 +4,7 @@ New:
 Improved:
 Fixed:
 - Filter eselon 2 di master eselon 3
+- Filter eselon 2 & 3 di master eselon 4
 
 v2.0.0-Alpha    
 2019-02-21

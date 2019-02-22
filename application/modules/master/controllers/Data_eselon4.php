@@ -70,9 +70,18 @@ class Data_eselon4 extends CI_Controller {
 	//2019-02-01
 	public function get_data_eselon($id){
 		$this->Globalrules->session_rule();						
-		$flag = array('id_es4'=>$id);
-		$q    = $this->Allcrud->getData('mr_eselon4',$flag)->row();
-		echo json_encode($q);
+		$data['list']    = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$id))->result_array();
+		if ($data['list'] != array()) {
+			# code...
+			$data['es2']    = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data['list'][0]['id_es1']))->result_array();
+			$data['es3']    = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data['list'][0]['id_es2']))->result_array();						
+		}		
+		else
+		{
+			$data['es2']    = 0;
+			$data['es3']    = 0;						
+		}		
+		echo json_encode($data);
 	}
 
 	public function cariEs4(){
