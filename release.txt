@@ -1,3 +1,10 @@
+v4.0.0-Beta    
+2019-02-22
+New:
+Improved:
+Fixed:
+- Filter eselon 2 di master eselon 3
+
 v2.0.0-Alpha    
 2019-02-21
 New:
