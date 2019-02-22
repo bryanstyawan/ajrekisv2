@@ -69,7 +69,6 @@
 					<div class="form-group">
 						<label>Eselon 2</label>
 			            <select id="f_es2" class="form-control">
-							<option selected>------Pilih Salah Satu------</option>						
 						</select>
 					</div>
 					<div class="form-group">
@@ -182,54 +181,6 @@ $(document).ready(function(){
 			})
 		}
 	})
-
-	$("#add").click(function(){
-		var es1= $("#es1").val();
-		var es2= $("#es2").val();
-		var es3= $("#es3").val();
-
-		if (es1.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 1 tidak boleh kosong."
-			});
-		}
-		else if (es2.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 2 tidak boleh kosong."
-			});
-		}
-		else if (es3.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 3 tidak boleh kosong."
-			});
-		}
-		else
-		{
-			$.ajax({
-				url :"<?php echo site_url()?>/master/data_eselon3/addEselon3",
-				type:"post",
-				data:"es1="+es1+"&es2="+es2+"&es3="+es3,
-				beforeSend:function(){
-					$("#newData").modal('hide');
-					$("#loadprosess").modal('show');
-				},
-				success:function(msg){
-					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj);
-				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			})
-		}
-	})
 })
 
 function edit(id)
@@ -242,16 +193,30 @@ function edit(id)
 		},
 		success:function(msg){
 			var obj = jQuery.parseJSON (msg);
-			console.log();
+			console.log(obj);
 			$(".form-control-detail").val('');
 			$("#formdata").css({"display": ""})
 			$("#viewdata").css({"display": "none"})
 			$("#formdata > div > div > div.box-header > h3").html("Ubah Data");		
 			$("#crud").val('update');
-			$("#oid").val(obj.id_es3);
-			$("#f_es1").val(obj.id_es1);
-			$("#f_es2").val(obj.id_es2);
-			$("#f_es3").val(obj.nama_eselon3);				
+			$("#oid").val(obj.list[0].id_es3);
+			$("#f_es1").val(obj.list[0].id_es1);
+			if (obj.es2.length != 0) 
+			{
+				var toAppend1 = '<option value=""> - - - </option>';					
+				for (index = 0; index < obj.es2.length; index++) 
+				{
+					_text = "";
+					if (obj.es2[index].id_es2 == obj.list[0].id_es2) {
+						_text = "selected";
+					}
+
+					toAppend1 += '<option value="'+obj.es2[index].id_es2+'" '+_text+'>'+obj.es2[index].nama_eselon2+'</option>';					
+				}
+				$('#f_es2').append(toAppend1);					
+			}			
+			// $("#f_es2").val(obj.list[0].id_es2);
+			$("#f_es3").val(obj.list[0].nama_eselon3);				
 			$("#loadprosess").modal('hide');				
 		},
 		error:function(jqXHR,exception)

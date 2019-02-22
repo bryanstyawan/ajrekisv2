@@ -65,11 +65,21 @@ class Data_eselon3 extends CI_Controller {
 		echo json_encode($res);		
 	}
 
+	// By Bryan
+	// Last Edited :2019-02-22
 	public function get_data_eselon($id){
 		$this->Globalrules->session_rule();						
 		$flag = array('id_es3'=>$id);
-		$q    = $this->Allcrud->getData('mr_eselon3',$flag)->row();
-		echo json_encode($q);
+		$data['list']    = $this->Allcrud->getData('mr_eselon3',$flag)->result_array();		
+		if ($data['list'] != array()) {
+			# code...
+			$data['es2']    = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data['list'][0]['id_es1']))->result_array();			
+		}		
+		else
+		{
+			$data['es2']    = 0;			
+		}
+		echo json_encode($data);
 	}
 
 	public function ajaxEselon3(){
