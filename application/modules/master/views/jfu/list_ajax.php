@@ -1,7 +1,7 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/datatables/dataTables.bootstrap.css'; ?>");</style>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<table class="table table-bordered table-striped table-view">
+<table id="table-view-jfu" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>No</th>
@@ -44,7 +44,7 @@
 </table>
 <script>
     $(document).ready(function(){        
-        $(".table-view").DataTable({
+        $("#table-view-jfu").DataTable({
             "oLanguage": {
                 "sSearch": "Pencarian :",
                 "sSearchPlaceholder" : "Ketik untuk mencari",
@@ -69,6 +69,6 @@ function get_data(arg)
     $("#id_jfu").val(arg);            
     $("#jabatan").val($("#nama_jabatan_"+arg).val());
     $("#grade").val($("#posisi_kelas_"+arg).val());            
-    $("#modal-detail-jfu").modal('hide');    
+    $("#modal-datatable").modal('hide');    
 }    
 </script>

@@ -1,13 +1,11 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/datatables/dataTables.bootstrap.css'; ?>");</style>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<table id="table-view-jft" class="table table-bordered table-striped">
+<table id="htable-view-id" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>No</th>
-            <th>Nama Jabatan</th>
-            <th>Kelas Jabatan</th>
-            <th>Tunjangan</th>
+            <th>Atasan</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -24,16 +22,10 @@
                         <input type="hidden" id="oid_<?=$list[$i]->id;?>" value="<?=$list[$i]->id;?>">
                     </td>
                     <td>
-                        <?=$list[$i]->nama_jabatan;?>
-                        <input type="hidden" id="nama_jabatan_<?=$list[$i]->id;?>" value="<?=$list[$i]->nama_jabatan;?>">                        
+                        <?=$list[$i]->nama_posisi;?>
                     </td>
                     <td>
-                        <?=$list[$i]->posisi_class;?>
-                        <input type="hidden" id="posisi_kelas_<?=$list[$i]->id;?>" value="<?=$list[$i]->posisi_class;?>">                        
-                    </td>
-                    <td><?=number_format($list[$i]->tunjangan,0);?></td>								
-                    <td>
-                        <a class="btn btn-success" onclick="get_data('<?php echo $list[$i]->id;?>')"><i class="fa fa-check"></i> Pilih<input type="hidden" value="<?=$i+1;?>"></a>
+                        <a class="btn btn-success" onclick="get_data('<?php echo $list[$i]->id;?>','<?=$list[$i]->nama_posisi;?>')"><i class="fa fa-check"></i> Pilih</a>
                     </td>
                 </tr>
     <?php
@@ -43,8 +35,9 @@
     </tbody>
 </table>
 <script>
-    $(document).ready(function(){        
-        $("#table-view-jft").DataTable({
+    $(document).ready(function(){
+        $('#htable-view-id').dataTable().fnDestroy();                
+        $("#htable-view-id").DataTable({
             "oLanguage": {
                 "sSearch": "Pencarian :",
                 "sSearchPlaceholder" : "Ketik untuk mencari",
@@ -63,13 +56,16 @@
         });
     });
 
-function get_data(arg) 
+function get_data(arg,param)  
 {
-    $("#id_jft").val(arg);
+    $("#atasan").html('');    
+    $("#atasan").html('<option selected value='+arg+'>'+param+'</option>');    
+
+    $("#id_jft").val('');
     $("#id_jfu").val('');            
-    $("#jabatan").val($("#nama_jabatan_"+arg).val());
-    $("#grade").val($("#posisi_kelas_"+arg).val());            
-    $("#modal-datatable").modal('hide');    
+    $("#jabatan").val('');
+    $("#grade").val('');    
+    $("#modal-datatable").modal('hide');
 }
 
 </script>

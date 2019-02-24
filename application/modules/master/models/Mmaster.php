@@ -410,11 +410,22 @@ class Mmaster extends CI_Model {
 		$sql_3 = "";
 		$sql_4 = "";
 
-		if ($param['eselon4'] == '') {
+		if ($param['eselon3'] == '') {
 			# code...
-			$sql_4 = "";
+			if ($param['eselon2'] == '') {
+				# code...
+				$sql_4 = "";
+			}
+			else $sql_4 = "AND a.eselon2 = '".$param['eselon2']."'";			
 		}
-		else $sql_4 = "AND a.eselon4 = '".$param['eselon4']."'";
+		else
+		{
+			if ($param['eselon4'] == '') {
+				# code...
+				$sql_4 = "";
+			}
+			else $sql_4 = "AND a.eselon4 = '".$param['eselon4']."'";
+		}
 
 		$sql = "SELECT a.nama_posisi,
 					   a.id
@@ -699,7 +710,7 @@ class Mmaster extends CI_Model {
 		# code...
 		$sql = "SELECT a.*,
 						b.nama_posisi,
-						c.nama as `status_masakerja`
+						COALESCE(c.nama,'AKTIF') as `status_masakerja`
 			FROM mr_masa_kerja a
 			LEFT JOIN mr_posisi b ON a.id_posisi = b.id
 			LEFT JOIN mr_masa_kerja_status c ON a.status_masa_kerja = c.id

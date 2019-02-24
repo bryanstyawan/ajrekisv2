@@ -1,19 +1,17 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/datatables/dataTables.bootstrap.css'; ?>");</style>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<table id="table-view-jft" class="table table-bordered table-striped">
+<table id="htable-view-id" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>No</th>
-            <th>Nama Jabatan</th>
-            <th>Kelas Jabatan</th>
-            <th>Tunjangan</th>
+            <th>Nama Eselon IV</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
     <?php
-        if ($list != 0) {
+        if ($list != array()) {
             # code...
             for ($i=0; $i < count($list); $i++) { 
                 # code...
@@ -21,19 +19,13 @@
                 <tr>
                     <td>
                         <?=$i+1;?>
-                        <input type="hidden" id="oid_<?=$list[$i]->id;?>" value="<?=$list[$i]->id;?>">
+                        <input type="hidden" id="oid_<?=$list[$i]['id_es4'];?>" value="<?=$list[$i]['id_es4'];?>">
                     </td>
                     <td>
-                        <?=$list[$i]->nama_jabatan;?>
-                        <input type="hidden" id="nama_jabatan_<?=$list[$i]->id;?>" value="<?=$list[$i]->nama_jabatan;?>">                        
+                        <?=$list[$i]['nama_eselon4'];?>
                     </td>
                     <td>
-                        <?=$list[$i]->posisi_class;?>
-                        <input type="hidden" id="posisi_kelas_<?=$list[$i]->id;?>" value="<?=$list[$i]->posisi_class;?>">                        
-                    </td>
-                    <td><?=number_format($list[$i]->tunjangan,0);?></td>								
-                    <td>
-                        <a class="btn btn-success" onclick="get_data('<?php echo $list[$i]->id;?>')"><i class="fa fa-check"></i> Pilih<input type="hidden" value="<?=$i+1;?>"></a>
+                        <a class="btn btn-success" onclick="get_data('<?php echo $list[$i]['id_es4'];?>','<?=$list[$i]['nama_eselon4'];?>')"><i class="fa fa-check"></i> Pilih</a>
                     </td>
                 </tr>
     <?php
@@ -43,8 +35,9 @@
     </tbody>
 </table>
 <script>
-    $(document).ready(function(){        
-        $("#table-view-jft").DataTable({
+    $(document).ready(function(){
+        $('#htable-view-id').dataTable().fnDestroy();                
+        $("#htable-view-id").DataTable({
             "oLanguage": {
                 "sSearch": "Pencarian :",
                 "sSearchPlaceholder" : "Ketik untuk mencari",
@@ -63,12 +56,16 @@
         });
     });
 
-function get_data(arg) 
+function get_data(arg,param) 
 {
-    $("#id_jft").val(arg);
+    $("#es4").html('');    
+    $("#es4").html('<option selected value='+arg+'>'+param+'</option>');    
+    $("#atasan").html('');  
+
+    $("#id_jft").val('');
     $("#id_jfu").val('');            
-    $("#jabatan").val($("#nama_jabatan_"+arg).val());
-    $("#grade").val($("#posisi_kelas_"+arg).val());            
+    $("#jabatan").val('');
+    $("#grade").val('');      
     $("#modal-datatable").modal('hide');    
 }
 

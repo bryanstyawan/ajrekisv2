@@ -31,24 +31,17 @@
 					?>
 				</td>
 				<td>
-					<button class="btn btn-primary btn-xs" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;
-
+					<button class="btn btn-primary btn-xs" onclick="view_form('<?php echo $list[$i]->id;?>','editdata')"><i class="fa fa-edit"></i></button>&nbsp;&nbsp;					
 					<?php
 						if($list[$i]->counter_skp == 0)
 						{
 					?>
 							<?php
-								if ($list[$i]->counter_pegawai < 1) {
+								if ($list[$i]->counter_pegawai > 0) {
 									# code...
 							?>
-									<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
+									<button class="btn btn-danger btn-xs" onclick="view_form('<?php echo $list[$i]->id;?>','deletedata')"><i class="fa fa-trash"></i></button>
 							<?php
-								}
-								else {
-									# code...
-							?>
-									<button class="btn btn-danger btn-xs" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i></button>											
-							<?php														
 								}
 							?>
 					<?php
