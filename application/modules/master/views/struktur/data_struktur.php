@@ -264,7 +264,7 @@ isset($class_posisi);
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"></span>
-							<select name="es1" id="es1" style="height: 45px;" class="form-control" disabled="disabled"><option value="">Pilih Eselon I</option>
+							<select name="f_es1" id="f_es1" style="height: 45px;" class="form-control" disabled="disabled"><option value="">Pilih Eselon I</option>
 								<?php foreach($es1->result() as $row){?>
 									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
 								<?php }?>														
@@ -274,35 +274,29 @@ isset($class_posisi);
 					</div>
 
 					<label style="color: #000;font-weight: 400;font-size: 19px;">Pimpinan Tinggi Pratama (Eselon II)</label>
-					<div id="isies2">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"></span>
-								<select class="form-control" style="height: 45px;" id="es2" disabled="disabled"><option value="">Pilih Eselon II</option></select>
-								<a class="input-group-addon btn btn-primary btn-md" onclick="get_eselon(2)" id="btn-get-es2"><i class="fa fa-search"></i>&nbsp;</a>								
-							</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"></span>
+							<select class="form-control" style="height: 45px;" id="f_es2" disabled="disabled"><option value="">Pilih Eselon II</option></select>
+							<a class="input-group-addon btn btn-primary btn-md" onclick="get_eselon(2)" id="btn-get-es2"><i class="fa fa-search"></i>&nbsp;</a>								
 						</div>
 					</div>
 
 					<label style="color: #000;font-weight: 400;font-size: 19px;">Administrator (Eselon III)</label>
-					<div id="isies3">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"></span>
-								<select class="form-control" style="height: 45px;" id="es3" disabled="disabled"><option value="">Pilih Eselon III</option></select>
-								<a class="input-group-addon btn btn-primary btn-md" onclick="get_eselon(3)" id="btn-get-es3"><i class="fa fa-search"></i>&nbsp;</a>								
-							</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"></span>
+							<select class="form-control" style="height: 45px;" id="f_es3" disabled="disabled"><option value="">Pilih Eselon III</option></select>
+							<a class="input-group-addon btn btn-primary btn-md" onclick="get_eselon(3)" id="btn-get-es3"><i class="fa fa-search"></i>&nbsp;</a>								
 						</div>
 					</div>
 
 					<label style="color: #000;font-weight: 400;font-size: 19px;">Pengawas (Eselon IV)</label>
-					<div id="isies4">
-						<div class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon"></span>
-								<select class="form-control" id="es4" style="height: 45px;" disabled="disabled"><option value="">Pilih Eselon IV</option></select>
-								<a class="input-group-addon btn btn-primary btn-md" onclick="get_eselon(4)" id="btn-get-es4"><i class="fa fa-search"></i>&nbsp;</a>
-							</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"></span>
+							<select class="form-control" id="f_es4" style="height: 45px;" disabled="disabled"><option value="">Pilih Eselon IV</option></select>
+							<a class="input-group-addon btn btn-primary btn-md" onclick="get_eselon(4)" id="btn-get-es4"><i class="fa fa-search"></i>&nbsp;</a>
 						</div>
 					</div>
 				</div>
@@ -311,7 +305,7 @@ isset($class_posisi);
 					<div class="form-group">
 						<div class="input-group">
 							<span class="input-group-addon"></span>
-							<select name="atasan" id="atasan" class="form-control" style="height: 45px;" disabled="disabled"><option value=0>Pilih Atasan</option></select>
+							<select name="f_atasan" id="f_atasan" class="form-control" style="height: 45px;" disabled="disabled"><option value=0>Pilih Atasan</option></select>
 							<a class="input-group-addon btn btn-primary btn-md" onclick="get_atasan()"><i class="fa fa-search"></i>&nbsp;</a>							
 						</div>
 					</div>
@@ -389,10 +383,10 @@ $(function () {
 
 $(document).ready(function(){
 	$("#kat").change(function(){
-		$('#es1 option[value=""]').attr('selected', 'selected');
-		$('#es2 option[value=""]').attr('selected', 'selected');
-		$('#es3 option[value=""]').attr('selected', 'selected');
-		$('#es4 option[value=""]').attr('selected', 'selected');
+		$('#f_es1 option[value=""]').attr('selected', 'selected');
+		$('#f_es2 option[value=""]').attr('selected', 'selected');
+		$('#f_es3 option[value=""]').attr('selected', 'selected');
+		$('#f_es4 option[value=""]').attr('selected', 'selected');
 		if (this.value == 4 || this.value == 2) {
 			$('#grade').prop('disabled', true);
 			$('#input-jabatan > input').prop('disabled', true);			
@@ -430,46 +424,24 @@ $(document).ready(function(){
 		else if($("#kat").val() == 4)
 		{
 			$.ajax({
-			url :"<?php echo site_url()?>master/jabatan_fungsional_umum/res_data/datatable",
-			type:"post",
-			beforeSend:function(){
-				$("#loadprosess").modal('show');
-			},
-			success:function(msg){
-				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan Fungsional Umum");								
-				$("#get-datatable").html(msg);					
-				$("#modal-datatable").modal('show');				
-				$("#loadprosess").modal('hide');							
-			},
-			error:function(jqXHR,exception)
-			{
-				ajax_catch(jqXHR,exception);					
-			}
-		})		
+				url :"<?php echo site_url()?>master/jabatan_fungsional_umum/res_data/datatable",
+				type:"post",
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan Fungsional Umum");								
+					$("#get-datatable").html(msg);					
+					$("#modal-datatable").modal('show');				
+					$("#loadprosess").modal('hide');							
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
+			})		
 		}
 	})			
-
-	$("#es1").change(function(){
-		var es1 = $("#es1").val();
-		$.ajax({
-			url :"<?php echo site_url()?>/master/data_eselon2/cariEs2",
-			type:"post",
-			data:"es1="+es1,
-			beforeSend:function(){
-				$("#loadprosess").modal('show');
-			},
-			success:function(msg){
-				$("#isies2").html(msg);
-				setTimeout(function(){
-					$("#loadprosess").modal('hide');
-				}, 500);
-			},
-			error:function(jqXHR,exception)
-			{
-				ajax_catch(jqXHR,exception);					
-			}
-		})
-	})
 
 	$('#select_jenis_jabatan').change(function() {
 		var select_eselon_1      = $("#select_eselon_1").val();
@@ -679,9 +651,9 @@ $(document).ready(function(){
 		})
 	})
 
-	$("#atasan").focus(function(){
+	$("#f_atasan").focus(function(){
 		var kat = $('#kat').val();
-		var es1 = $('#es1').val();
+		var es1 = $('#f_es1').val();
 
 		if (kat.length <= 0 || es1.length <= 0)
 		{
@@ -701,12 +673,12 @@ $(document).ready(function(){
 	})
 
 	$("#btn-trigger-controll").click(function(){
-		var es1     = $("#es1").val();
-		var es2     = $("#es2").val();
-		var es3     = $("#es3").val();
-		var es4     = $("#es4").val();
+		var es1     = $("#f_es1").val();
+		var es2     = $("#f_es2").val();
+		var es3     = $("#f_es3").val();
+		var es4     = $("#f_es4").val();
 		var grade   = $("#grade").val();
-		var atasan  = $("#atasan").val();
+		var atasan  = $("#f_atasan").val();
 		var kat     = $("#kat").val();
 		var jabatan = $("#jabatan").val();
 		var crud    = $("#crud").val();
@@ -779,12 +751,12 @@ $(document).ready(function(){
 })
 
 function add_struktur() {
-	var es1     = $("#es1").val();
-	var es2     = $("#es2").val();
-	var es3     = $("#es3").val();
-	var es4     = $("#es4").val();
+	var es1     = $("#f_es1").val();
+	var es2     = $("#f_es2").val();
+	var es3     = $("#f_es3").val();
+	var es4     = $("#f_es4").val();
 	var grade   = $("#grade").val();
-	var atasan  = $("#atasan").val();
+	var atasan  = $("#f_atasan").val();
 	var kat     = $("#kat").val();
 	var jabatan = $("#jabatan").val();
 	var id_jfu  = $("#id_jfu").val();
@@ -814,16 +786,16 @@ function add_struktur() {
 function get_atasan()
 {
 	var kat = $('#kat').val();
-	var es1 = $('#es1').val();
-	var es2 = $('#es2').val();
-	var es3 = $('#es3').val();
-	var es4 = $('#es4').val();			
+	var es1 = $('#f_es1').val();
+	var es2 = $('#f_es2').val();
+	var es3 = $('#f_es3').val();
+	var es4 = $('#f_es4').val();			
 
 	data_sender = {
-			'es1' : $("#es1").val(),
-			'es2' : $("#es2").val(),
-			'es3' : $("#es3").val(),
-			'es4' : $("#es4").val(),
+			'es1' : $("#f_es1").val(),
+			'es2' : $("#f_es2").val(),
+			'es3' : $("#f_es3").val(),
+			'es4' : $("#f_es4").val(),
 			'kat' : $("#kat").val(),							
 		}					
 
@@ -868,24 +840,24 @@ function get_eselon(arg) {
 	{
 		data_sender = {
 			'arg' : arg,			
-			'es1' : $("#es1").val()			
+			'es1' : $("#f_es1").val()			
 		}		
 	}
 	else if(arg == 3) 
 	{
 		data_sender = {
 			'arg' : arg,			
-			'es1' : $("#es1").val(),
-			'es2' : $("#es2").val()						
+			'es1' : $("#f_es1").val(),
+			'es2' : $("#f_es2").val()						
 		}		
 	}
 	else if(arg == 4) 
 	{
 		data_sender = {
 			'arg' : arg,			
-			'es1' : $("#es1").val(),
-			'es2' : $("#es2").val(),
-			'es3' : $("#es3").val()	
+			'es1' : $("#f_es1").val(),
+			'es2' : $("#f_es2").val(),
+			'es3' : $("#f_es3").val()	
 		}				
 	}		
 
@@ -961,12 +933,14 @@ function view_form(id,arg) {
 				$("#section_filter").hide();								
 				$("#crud").val('update');
 				$("#oid").val(response['id']);			
-				$("#es1").val(response['eselon1']);
-				$("#es2").append('<option value="'+response['eselon2']+'" selected>'+response['nama_eselon2']+'</option>');
-				$("#es3").append('<option value="'+response['eselon3']+'" selected>'+response['nama_eselon3']+'</option>');
-				$("#es4").append('<option value="'+response['eselon4']+'" selected>'+response['nama_eselon4']+'</option>');
+				$("#f_es1").val(response['eselon1']);
+				$("#f_es2").append('<option value="'+response['eselon2']+'" selected>'+response['nama_eselon2']+'</option>');
+				$("#f_es3").append('<option value="'+response['eselon3']+'" selected>'+response['nama_eselon3']+'</option>');
+				$("#f_es4").append('<option value="'+response['eselon4']+'" selected>'+response['nama_eselon4']+'</option>');
 				$("#kat").val(response['kat_posisi']);
-				$("#atasan").append('<option value="'+response['atasan']+'" selected>'+response['posisi_atasan']+'</option>');
+				$("#id_jfu").val(response['id_jfu']);
+				$("#id_jft").val(response['id_jft']);								
+				$("#f_atasan").append('<option value="'+response['atasan']+'" selected>'+response['posisi_atasan']+'</option>');
 				$("#grade").append('<option value="'+response['id_posisi_class']+'" selected>'+response['id_posisi_class']+'</option>');
 				$("#jabatan").val(response['nama_posisi']);
 			}

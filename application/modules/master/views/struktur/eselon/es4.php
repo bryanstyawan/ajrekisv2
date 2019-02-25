@@ -58,9 +58,9 @@
 
 function get_data(arg,param) 
 {
-    $("#es4").html('');    
-    $("#es4").html('<option selected value='+arg+'>'+param+'</option>');    
-    $("#atasan").html('');  
+    $("#f_es4").html('');    
+    $("#f_es4").html('<option selected value='+arg+'>'+param+'</option>');    
+    $("#f_atasan").html('');  
 
     $("#id_jft").val('');
     $("#id_jfu").val('');            

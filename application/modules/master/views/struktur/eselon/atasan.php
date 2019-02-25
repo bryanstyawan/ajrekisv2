@@ -58,8 +58,8 @@
 
 function get_data(arg,param)  
 {
-    $("#atasan").html('');    
-    $("#atasan").html('<option selected value='+arg+'>'+param+'</option>');    
+    $("#f_atasan").html('');    
+    $("#f_atasan").html('<option selected value='+arg+'>'+param+'</option>');    
 
     $("#id_jft").val('');
     $("#id_jfu").val('');            
