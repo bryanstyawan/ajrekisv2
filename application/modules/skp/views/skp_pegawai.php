@@ -388,8 +388,33 @@
     </div>
 </div>                                                                                                                
 
+
+<!-- <div class="box">
+		<div class="box-header">
+			<h3 class="box-title" id="formdata-title"></h3>
+			<div class="box-tools pull-right"><button class="btn btn-block btn-danger" id="closeData"><i class="fa fa-close"></i></button></div>				
+		</div>
+		<div class="box-body">
+			<div class="row">
+				<input class="form-control" type="hidden" id="oid">
+				<input class="form-control" type="hidden" id="crud">					
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Eselon 1</label>
+						<input type="text" class="form-control" id="f_es1" placeholder="Eselon 1">
+					</div>
+				</div>
+			</div>
+
+		</div>/.box-body
+		<div class="box-footer">
+			<a class="btn btn-success pull-right" id="btn-trigger-controll"><i class="fa fa-save"></i>&nbsp; Simpan</a>
+		</div>
+	</div>/.box
+</div> -->
+
 <div class="example-modal">
-    <div class="modal modal-success fade" id="ubah_dataskp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal modal-success fade" id="formdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="box-content">
 
             <div class="modal-dialog">
@@ -402,16 +427,19 @@
                         <div class="box box-default">
                             <div class="box-body">
                                 <div class="row">
+                                    
+                                    <input type="hidden" id="oid" name="oid" class="form-control" >
+                                    <input type="hidden" id="crud" name="crud" class="form-control" >
 
-                                    <div class="form-group col-md-12">
+                                    <div class="form-group col-md-12" >
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Kegiatan Tugas Jabatan</label>
-                                        <h3 id="header_kegiatan" style="border: 1px solid #d2d6de;padding: 10px;"></h3>                                        
-                                        <div class="input-group" style="display:none;">
+                                        <!-- <h3 id="header_kegiatan" style="border: 1px solid #d2d6de;padding: 10px;"></h3>                                         -->
+                                        <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="hidden" id="oid" name="oid" class="form-control" >
                                             <input type="hidden" id="before" name="before" class="form-control" >
                                             <input type="hidden" id="after" name="after" class="form-control" >
-                                            <input type="hidden" style="font-size: 25px;" id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled">
+                                            <!-- <input type="hidden" style="font-size: 25px;" id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled"> -->
+                                            <textarea id="nkegiatan" name="nkegiatan" class="form-control"></textarea>
                                         </div>
                                     </div>
 
@@ -449,11 +477,10 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                 <select class="form-control tour-step step1 input-controll" name="nsatuan" id="nsatuan">
-                                                        <option value="">Pilih Satuan</option>
+                                                    <option value="">Pilih Satuan</option>
                                                     <?php $x=1;
                                                         foreach($satuan->result() as $row){?>
                                                         <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
-                                                        <!-- <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option> -->
                                                     <?php $x++;}    ?>
                                                 </select>
                                         </div>
@@ -465,7 +492,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" class="form-control input-controll" id="njumlah" name="njumlah" min="0">
-                                            <span class="input-group-addon"><a class="btn btn-primary" id="btn-calc">Hitung Target</a></span>                                            
+                                            <!-- <span class="input-group-addon"><a class="btn btn-primary" id="btn-calc">Hitung Target</a></span>                                             -->
                                         </div>
                                     </div>
 
@@ -474,7 +501,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                 <select class="form-control tour-step step1" name="njenis" id="njenis">
-                                                        <option value="">Pilih Satuan</option>
+                                                    <option value="">Pilih Satuan</option>
                                                     <?php $x=1;
                                                         foreach($jenis->result() as $row){?>
                                                         <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option>
@@ -537,141 +564,7 @@
     </div>
 </div>
 
-<div class="example-modal">
-    <div class="modal modal-success fade" id="tambah_dataskp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="box-content">
 
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Formulir Sasaran Kerja Pegawai</h4>
-                    </div>
-                    <div class="modal-body" style="background-color: #fff!important;">
-
-                        <div class="box box-default">
-                            <div class="box-body">
-                                <div class="row">
-
-                                    <div class="form-group col-md-12">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Kegiatan Tugas Jabatan</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <textarea id="kegiatan" name="kegiatan" class="form-control"></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">*Angka Kredit Bagi PNS yang memangku jabatan fungsional tertentu</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="ak_target" name="ak_target" class="form-control" min="0" max="500">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6" style="display: none;">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Perjanjian Kerja</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <select class="form-control tour-step step1" name="perjanjian_kerja" id="perjanjian_kerja">
-                                                        <option value="">Pilih Satuan</option>
-                                                        <option value="1">Ya</option>
-                                                        <option value="0">Tidak</option>
-                                                </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6" style="display: none;">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis SKP</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <select class="form-control tour-step step1" name="jenis" id="jenis">
-                                                        <option value="">Pilih Satuan</option>
-                                                    <?php $x=1;
-                                                        foreach($jenis->result() as $row){?>
-                                                        <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option>
-                                                    <?php $x++;}    ?>
-                                                </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kuantitas</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="jumlah" name="jumlah" class="form-control" maxlength="100">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-6">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Jenis Output</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                <select class="form-control tour-step step1" name="satuan" id="satuan">
-                                                        <option value="">Pilih Satuan</option>
-                                                    <?php $x=1;
-                                                        foreach($satuan->result() as $row){?>
-                                                        <!-- <option value="<?php echo $row->id;?>"><?php echo $x.". ".$row->nama;?></option> -->
-                                                        <option value="<?php echo $row->id;?>"><?php echo $row->nama;?></option>
-                                                    <?php $x++;}    ?>
-                                                </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Kualitas Mutu</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="text" id="kualitas_mutu" name="kualitas_mutu" class="form-control"  value="100" maxlength="100" disabled="disabled">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Waktu (Bulan)</label>
-                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;"></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="waktu" name="waktu" class="form-control" >
-                                        </div>
-                                    </div>
-
-
-                                    <?php
-                                        $param_eselon_2 = "";
-                                        $style_eselon_2 = "";
-                                        if ($this->session->userdata('sesEs3') != 0) {
-                                            # code...
-                                            $param_eselon_2 = "disabled='disabled'";
-                                            $style_eselon_2 = "style='display:none;'";
-                                        }
-                                    ?>
-                                    <div class="form-group col-md-12" <?=$style_eselon_2;?>>
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Target Biaya</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                            <input type="number" id="biaya" name="biaya" class="form-control" <?=$param_eselon_2;?>>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                        <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-                        <input type="submit" class="btn btn-primary" value="Simpan" id="btn_save_skp_tambah"/>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <!-- DataTables -->
@@ -679,20 +572,23 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+
+
 function edit(id,before,after) {
     // body...
     $.getJSON('<?php echo site_url() ?>/skp/get_detail_skp/'+id,
         function( response ) {
-            $('#ubah_dataskp').attr('class', 'modal fade bs-example-modal-lg')
+            $('#formdata').attr('class', 'modal fade bs-example-modal-lg')
                                 .attr('aria-labelledby','myLargeModalLabel');
             $('.modal-dialog').attr('class','modal-dialog modal-lg');
-            $("#ubah_dataskp").modal('show');
-
+            $("#formdata").modal('show');
+            $("#crud").val('update');
+            
             if ($("#oid_kat_posisi").val() == 1) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_master'] != '')
                 {
-                    $("#header_kegiatan").html(response['kegiatan_skp']);                    
+                    // $("#header_kegiatan").html(response['kegiatan_skp']);                    
                     $("#nkegiatan").val(response['kegiatan_skp']);
                 }                
             } 
@@ -700,7 +596,7 @@ function edit(id,before,after) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_jft'] != '')
                 {
-                    $("#header_kegiatan").html(response['kegiatan_skp_jft']);                    
+                    // $("#header_kegiatan").html(response['kegiatan_skp_jft']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jft']);
                 }                                
             }
@@ -708,7 +604,7 @@ function edit(id,before,after) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 if (response['id_skp_jfu'] != '')
                 {
-                    $("#header_kegiatan").html(response['kegiatan_skp_jfu']);                    
+                    // $("#header_kegiatan").html(response['kegiatan_skp_jfu']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jfu']);
                 }                                
             }
@@ -820,14 +716,17 @@ $(document).ready(function()
     
     $("#addDataSKP").click(function(){
         // body...
-        $('#tambah_dataskp').attr('class', 'modal fade bs-example-modal-lg')
+        $('#formdata').attr('class', 'modal fade bs-example-modal-lg')
                             .attr('aria-labelledby','myLargeModalLabel');
         $('.modal-dialog').attr('class','modal-dialog modal-lg');
-        $("#tambah_dataskp").modal('show');
+        $("#formdata").modal('show');
+        $("#crud").val('insert');
     })
 
     $("#btn_save_skp_edit").click(function() {
         // body...
+        var oid           = $("#oid").val();
+		var crud          = $("#crud").val();
         var kegiatan      = $('#nkegiatan').val();
         var pk            = $('#nperjanjian_kerja').val();
         var ak_target     = $('#nak_target').val();
@@ -915,6 +814,7 @@ $(document).ready(function()
             else
             {
                 var data_sender = {
+                                        'kegiatan'      : kegiatan,
                                         'pk'            : pk,
                                         'jenis_skp'     : jenis,
                                         'ak_target'     : ak_target,
@@ -927,37 +827,60 @@ $(document).ready(function()
                                         'before'        : before,
                                         'after'         : after
                                 };
-                $.ajax({
-                    url :"<?php echo site_url();?>/skp/edit_skp_pegawai",
-                    type:"post",
-                    data:{data_sender : data_sender},
-                    beforeSend:function(){
-                        $("#loadprosess").modal('show');
-                    },
-					success:function(msg){
-						var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-					},
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-                })
+
+                if (crud == 'update') 
+                {
+                    $.ajax({
+                        url :"<?php echo site_url();?>/skp/edit_skp_pegawai",
+                        type:"post",
+                        data:{data_sender : data_sender},
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
+                else if (crud == 'insert') 
+                {
+                    $.ajax({
+                        url :"<?php echo site_url();?>/skp/ad_skp_pegawai_pk",
+                        type:"post",
+                        data:{data_sender : data_sender},
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
             }
         }
     })
 
     $("#btn_save_skp_tambah").click(function() {
         // body...
-        var kegiatan      = $('#kegiatan').val();
-        var pk            = $('#perjanjian_kerja').val();
-        var ak_target     = $('#ak_target').val();
-        var jenis         = $('#jenis').val();
-        var jumlah        = $('#jumlah').val();
-        var kualitas_mutu = $('#kualitas_mutu').val();
-        var satuan        = $('#satuan').val();
-        var waktu         = $('#waktu').val();
-        var biaya         = $('#biaya').val();
+        var kegiatan      = $('#nkegiatan').val();
+        var pk            = $('#nperjanjian_kerja').val();
+        var ak_target     = $('#nak_target').val();
+        var jenis         = $('#njenis').val();
+        var jumlah        = $('#njumlah').val();
+        var kualitas_mutu = $('#nkualitas_mutu').val();
+        var satuan        = $('#nsatuan').val();
+        var waktu         = $('#nwaktu').val();
+        var biaya         = $('#nbiaya').val();
 
         $(this).css({"pointer-events":"none"});
         if (kegiatan.length <= 0)

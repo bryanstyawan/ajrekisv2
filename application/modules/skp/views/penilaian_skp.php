@@ -237,7 +237,7 @@ if ($member != 0) {
 ?>
 
 
-<div class="col-xs-10">
+<div class="col-xs-10" style="overflow:auto;">
     <div class="box">
         <div class="box-header">
             <div class="col-md-3">
@@ -259,8 +259,9 @@ if ($member != 0) {
                         <th colspan="4">Target</th>
                         <th colspan="4">Realisasi</th>
                         <th rowspan="2">Penghitungan</th>
+                        <!-- <th rowspan="2">Aspek</th> -->
                         <th rowspan="2">Nilai Capaian SKP</th>
-                        <th rowspan="2"></th>
+                        <!-- <th rowspan="2"></th> -->
                     </tr>
                     <tr>
                         <th>Kuan - Output</th>
@@ -293,6 +294,7 @@ if ($member != 0) {
                             $aspek_kualitas         = "";
 
                             $kegiatan               = "";
+
                             if($infoPegawai1[0]->kat_posisi == 1)
                             {
                                 if ($list[$i]->id_skp_master != '') {
@@ -353,14 +355,14 @@ if ($member != 0) {
                         <!-- <td><?=$pk_status;?></td> -->
                         <!-- <td><?=$jenis_skp;?></td> -->
                         <td><?=$AK_target;?></td>
-                        <td>
+                        <!-- <td>
                             <?php
                             if ($kat_posisi != 2) {
                                 # code...
                                 echo '-';
                             } 
                             ?>
-                        </td>
+                        </td> -->
                         <td><?=$target_qty." ".$target_output;?></td>
                         <td><?=$target_kualitasmutu;?></td>
                         <td><?=$target_waktu_bln." bln";?></td>
@@ -391,7 +393,7 @@ if ($member != 0) {
                         <td><?=$target_waktu_bln." bln";?></td>
                         <!-- <td><?="2 bln";?></td>                         -->
                         <td><?=number_format($realisasi_biaya,2);?></td>
-                        <td><?=number_format($perhitungan['aspek'],2);?></td>
+                        <!-- <td><?=number_format($perhitungan['aspek'],2);?></td> -->
                         <td><?=number_format($perhitungan['nilai_capaian_skp'],2);?></td>
                         <td><?=$this->Globalrules->nilai_capaian_skp(number_format($perhitungan['nilai_capaian_skp'],2));?></td>
                     </tr>
