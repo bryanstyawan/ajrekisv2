@@ -54,10 +54,9 @@
 									}
 								?>
 							</td>
-							<td><?=$list[$i]->tmt;?></td>
-							<td></td>
+							<td></td>							
 							<td class="text-center">
-								<button class="btn btn-warning btn-xs" style="margin-bottom: 5px;" onclick="edit('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah Data</button>&nbsp;&nbsp;									
+								<button class="btn btn-warning btn-xs" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah Data</button>&nbsp;&nbsp;									
 								<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus Data</button>&nbsp;&nbsp;
 								<button class="btn btn-primary btn-xs" style="margin-bottom: 5px;" onclick="change_password('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Default Password</button>									
 							</td>

@@ -17,6 +17,8 @@ class Master extends CI_Controller {
 		$this->load->view('templateAdmin');
 	}
 
+	// Edited : Bryan
+	// Last Edited : 2019-02-21
 	public function filter_data_eselon($param=NULL)
 	{
 		# code...
@@ -397,7 +399,8 @@ class Master extends CI_Controller {
 		$this->load->view('master/struktur/ajaxCariGrade',$data);
 	}
 
-
+// Last Edit : Bryan
+// 2019-02-19
 	public function filter_data_pegawai()
 	{
 		# code...
@@ -416,22 +419,22 @@ class Master extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) { 
-				# code...
-				$data['list'][$i]->tmt = 'test';							
-				$get_data_tmt = $this->Mmaster->get_tmt_pegawai($data['list'][$i]->id_pegawai);
-				if ($get_data_tmt != 0) {
-					# code...
-					$data['list'][$i]->tmt = $get_data_tmt[0]->tmt;
-				}
-				else
-				{
-					$data['list'][$i]->tmt = '-';					
-				}
-			}
-		}															
+		// if ($data['list'] != 0) {
+		// 	# code...
+		// 	for ($i=0; $i < count($data['list']); $i++) { 
+		// 		# code...
+		// 		$data['list'][$i]->tmt = 'test';							
+		// 		$get_data_tmt = $this->Mmaster->get_tmt_pegawai($data['list'][$i]->id_pegawai);
+		// 		if ($get_data_tmt != 0) {
+		// 			# code...
+		// 			$data['list'][$i]->tmt = $get_data_tmt[0]->tmt;
+		// 		}
+		// 		else
+		// 		{
+		// 			$data['list'][$i]->tmt = '-';					
+		// 		}
+		// 	}
+		// }															
 		$this->load->view('master/pegawai/ajax_pegawai_filter',$data);
 	}
 

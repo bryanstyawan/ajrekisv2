@@ -3,13 +3,15 @@ v4.0.0-Beta
 New:
 Improved:
 - Penyeragaman variabel di struktur organisasi
+- Format Baru untuk Master Pegawai (crud)
+- TMT di master pegawai
 Fixed:
 - Ubah Data Master organisasi (JFU & JFT), (data skp jft & jfu hilang setelah ubah data)
 
 v4.0.0-Beta    
 2019-02-22
 New:
-- Format Baru untuk master struktur organisasi
+- Format Baru untuk master struktur organisasi (CRUD)
 - Untuk Jabatan JFU, dapat memilih eselon4 dan atasan berdasarkan eselon 2 (tanpa harus memilih eselon 3)
 Improved:
 Fixed:

@@ -19,22 +19,7 @@ class Data_pegawai extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) { 
-				# code...
-				$data['list'][$i]->tmt = 'test';							
-				$get_data_tmt = $this->Mmaster->get_tmt_pegawai($data['list'][$i]->id_pegawai);
-				if ($get_data_tmt != 0) {
-					# code...
-					$data['list'][$i]->tmt = $get_data_tmt[0]->tmt;
-				}
-				else
-				{
-					$data['list'][$i]->tmt = '-';					
-				}
-			}
-		}																		
+																		
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
 		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
@@ -47,6 +32,7 @@ class Data_pegawai extends CI_Controller {
 		$this->Globalrules->session_rule();						
 
 		$data['pegawai'] = $this->Allcrud->getData('mr_pegawai',array('id'=>$id))->result_array();
+		$data['tmt_pegawai'] = $this->Mmaster->get_masa_kerja_id_pegawai($id,'DESC');
 		if ($data['pegawai'] != array()) {
 			# code...
 			$data['list_eselon2'] = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data['pegawai'][0]['es1']))->result_array();
@@ -148,7 +134,6 @@ class Data_pegawai extends CI_Controller {
 				$data_sender['oid']  = $oid;
 			}
 
-
 			if ($data_sender['crud'] != 'delete') {
 				# code...
 				$data_store = array
@@ -166,7 +151,6 @@ class Data_pegawai extends CI_Controller {
 
 				if ($data_sender['crud'] == 'insert') {
 					# code...
-					$data_store['password']   = md5($data_sender['password']);
 					$data_store['status']     = 1;
 					$data_store['id_role']    = 2;
 					$data_store['user_input'] = date('y-m-d');
@@ -176,7 +160,7 @@ class Data_pegawai extends CI_Controller {
 				}
 				elseif ($data_sender['crud'] == 'update') {
 					# code...
-					$data_store['user_input'] = date('y-m-d');
+					$data_store['user_update'] = date('y-m-d');
 					$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$data_sender['oid']));
 					$id_pegawai  = $data_sender['oid'];
 					$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil diubah.');
