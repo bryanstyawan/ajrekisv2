@@ -808,7 +808,7 @@ class Mskp extends CI_Model
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
 				AND a.tahun = '".$year."'
-				AND a.target_qty IS NULL";
+				AND (a.target_qty IS NULL OR a.target_qty = '')";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -828,7 +828,7 @@ class Mskp extends CI_Model
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
 				AND a.tahun = '".$year."'
-				AND a.target_qty IS NOT NULL";
+				AND (a.target_qty IS NOT NULL OR a.target_qty <> '')";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
