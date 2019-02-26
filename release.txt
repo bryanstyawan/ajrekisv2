@@ -7,19 +7,27 @@ Improved:
 - New CRUD dan View Akademik (By Eric)
 Fixed:
 - Controller Tugas Belajar & Tunjangan Profesi (By Eric)
+- Target skp yang belum dan sudah di set (report) di master pegawai
+- Rekap Pegawai (SKP) di Master Pegawai
+Improved:
+- penyederhaaan layout master pegawai
+Fixed:
+- Perbaikan Foto (upload dan tarik data)
 
 v4.0.0-Beta    
 2019-02-25
 New:
 Improved:
 - Penyeragaman variabel di struktur organisasi
+- Format Baru untuk Master Pegawai (crud)
+- TMT di master pegawai
 Fixed:
 - Ubah Data Master organisasi (JFU & JFT), (data skp jft & jfu hilang setelah ubah data)
 
 v4.0.0-Beta    
 2019-02-22
 New:
-- Format Baru untuk master struktur organisasi
+- Format Baru untuk master struktur organisasi (CRUD)
 - Untuk Jabatan JFU, dapat memilih eselon4 dan atasan berdasarkan eselon 2 (tanpa harus memilih eselon 3)
 Improved:
 Fixed:

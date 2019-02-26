@@ -18,18 +18,9 @@
             }
             else
             {
-                if ($infoPegawai[0]->local == 1) {
-                    # code...
-    ?>
-                    <img class="icn_user" src="<?php echo base_url() . 'public/images/pegawai/'.$infoPegawai[0]->photo;?>">
-    <?php
-                }
-                else
-                {
-    ?>
-                    <img class="icn_user" src="http://sikerja.kemendagri.go.id/images/demo/users/<?=$infoPegawai[0]->photo;?>">
-    <?php
-                }
+?>
+                <img class="icn_user" src="<?php echo base_url() . 'public/images/pegawai/'.$infoPegawai[0]->photo;?>">
+<?php
             }
         }
         else

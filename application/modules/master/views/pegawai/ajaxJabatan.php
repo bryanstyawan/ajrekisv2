@@ -44,7 +44,7 @@ function get_data(arg,id)
 {
     $("#f_jabatan").val(arg);
     $("#f_jabatan_id").val(id);
-    $("#modal-detail-jabatan").modal('hide');    
+    $("#modal-datatable").modal('hide');    
 }
 
 </script>
