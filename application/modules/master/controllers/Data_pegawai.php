@@ -716,7 +716,7 @@ class Data_pegawai extends CI_Controller {
 				}
 				else
 				{
-					$set_status = "SKP tidak tersedia";					
+					$set_status = "Pegawai Belum Pernah membuka target skp atau SKP tidak tersedia";					
 				}
 
 
