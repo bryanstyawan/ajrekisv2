@@ -594,6 +594,11 @@ class Data_pegawai extends CI_Controller {
 		# code...
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 300);		
+		if ($kat_posisi == '-') {
+			# code...
+			$kat_posisi = '';
+		}
+
 		$data_sender = $this->input->post('data_sender');
 		$data_sender = array
 						(
@@ -668,9 +673,6 @@ class Data_pegawai extends CI_Controller {
 		$this->excel->getActiveSheet(2)->setCellValue('d4', $data_eselon_3);
 		$this->excel->getActiveSheet(2)->setCellValue('d5', $data_eselon_4);		
 
-
-
-
 		$this->excel->getActiveSheet()->setTitle('Rekapitulasi Pegawai');
 		$this->excel->getActiveSheet()->getStyle('b7:h7')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 		$this->excel->getActiveSheet(2)->setCellValue('b7', 'NO');
@@ -696,19 +698,7 @@ class Data_pegawai extends CI_Controller {
 				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->empty_skp);
 				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->nonempty_skp);
 				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->empty_skp+$data['list'][$i]->nonempty_skp);				
-			// 	for ($i=1; $i <= 7; $i++) {
-			// 		# code...
-			// 		$this->excel->getActiveSheet(1)->setCellValue($this->Globalrules->data_alphabet($i).'14', $i);
-			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'14')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'12')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'13')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'14')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-			// 		$this->excel->getActiveSheet()->getStyle($this->Globalrules->data_alphabet($i).'12')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-			// 		$this->excel->getActiveSheet()->getStyle($this->Globalrules->data_alphabet($i).'13')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-			// 		$this->excel->getActiveSheet()->getStyle($this->Globalrules->data_alphabet($i).'14')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-			// }
+
 		    }
 		}
 

@@ -1054,6 +1054,10 @@ function print_excel() {
 	var es3        = $("#select_eselon_3").val();
 	var es4        = $("#select_eselon_4").val();
 	var kat_posisi = $("#select_jenis_jabatan").val();
+	if (kat_posisi == '') {
+		kat_posisi = '-';
+	}
+
 	window.open('<?=base_url();?>master/data_pegawai/print_pegawai/'+kat_posisi+'/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");	
 	// window.location.href = "<?=base_url();?>master/data_pegawai/print_pegawai/"+kat_posisi+"/"+es1+"/"+es2+"/"+es3+"/"+es4";	
 
