@@ -662,6 +662,8 @@ class Data_pegawai extends CI_Controller {
 		$this->excel->getActiveSheet(1)->getColumnDimension('g')->setWidth('20');
 		$this->excel->getActiveSheet(1)->getColumnDimension('h')->setWidth('20');
 
+		$this->excel->getActiveSheet(1)->getColumnDimension('j')->setWidth('31');		
+
 
 		$this->excel->getActiveSheet(2)->setCellValue('b2', 'ESELON I :');
 		$this->excel->getActiveSheet(2)->setCellValue('b3', 'ESELON II :');
@@ -682,13 +684,41 @@ class Data_pegawai extends CI_Controller {
 		$this->excel->getActiveSheet(2)->setCellValue('f7', 'Jabatan Struktural Akdemik');
 		$this->excel->getActiveSheet(2)->setCellValue('g7', 'Belum Set Target SKP');
 		$this->excel->getActiveSheet(2)->setCellValue('h7', 'Sudah Set Target SKP');
-		$this->excel->getActiveSheet(2)->setCellValue('i7', 'Total SKP');																
+		$this->excel->getActiveSheet(2)->setCellValue('i7', 'Total SKP');
+		$this->excel->getActiveSheet(2)->setCellValue('j7', 'Total SKP');																		
 		if ($data['list'] != 0) {
 		    # code...
 		    $counter = "";
 		    for ($i=0; $i < count($data['list']); $i++) {
 		        # code...
 				$counter                = 8 + $i;
+				$set_status             = "";
+
+				$total_skp = $data['list'][$i]->empty_skp + $data['list'][$i]->nonempty_skp;
+				if($total_skp != 0)
+				{
+					if ($data['list'][$i]->nonempty_skp == 0) {
+						# code...
+						$set_status = "Belum set target SKP";
+					}
+					else
+					{
+						if ($data['list'][$i]->nonempty_skp == $total_skp) {
+							# code...
+							$set_status = "Telah Mengisi seluruh target SKP";							
+						}
+						else
+						{
+							$set_status = "Proses Mengisi target SKP";							
+						}
+
+					}
+				}
+				else
+				{
+					$set_status = "SKP tidak tersedia";					
+				}
+
 
 				$this->excel->getActiveSheet(2)->setCellValue('b'.$counter, $i+1);
 				$this->excel->getActiveSheet(2)->setCellValue('c'.$counter, '`'.$data['list'][$i]->nip);
@@ -697,8 +727,8 @@ class Data_pegawai extends CI_Controller {
 				$this->excel->getActiveSheet(2)->setCellValue('f'.$counter, '');
 				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->empty_skp);
 				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->nonempty_skp);
-				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->empty_skp+$data['list'][$i]->nonempty_skp);				
-
+				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, ($data['list'][$i]->empty_skp + $data['list'][$i]->nonempty_skp));				
+				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $set_status);
 		    }
 		}
 

@@ -133,7 +133,7 @@
 		<div class="box">
 			<div class="box-header">
 				<h3 class="box-title pull-left">
-					<button class="btn btn-block btn-primary" onclick="print_excel()"><i class="fa fa-print"></i> CETAK</button>
+					<button class="btn btn-block btn-primary" onclick="print_excel()"><i class="fa fa-print"></i> CETAK REKAP SKP</button>
 				</h3>											
 				<h3 class="box-title pull-right">
 					<button class="btn btn-block btn-primary" onclick="main_form('insert','NULL')"><i class="fa fa-plus-square"></i> TAMBAH PEGAWAI</button>				
