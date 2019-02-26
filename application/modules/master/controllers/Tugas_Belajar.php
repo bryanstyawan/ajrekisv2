@@ -21,7 +21,7 @@ class Tugas_Belajar extends CI_Controller {
 	}
 
 	// By Eric
-	// Last Edited : 20-02-2019
+	// Last Edited : 26-02-2019
 	public function store($arg=NULL,$oid=NULL)
 	{
 		# code...
@@ -38,7 +38,8 @@ class Tugas_Belajar extends CI_Controller {
 			$data_sender['oid']  = $oid;
 		}
 
-		
+		if (date('Y-m-d',strtotime($data_sender['tgl_mulai'])) < date('Y-m-d',strtotime($data_sender['tgl_selesai']))) 
+		{
 			// $data_store        = $this->Globalrules->trigger_insert_update($data_sender['crud']);
 			if ($data_sender['crud'] == 'insert') {
 				# code...
@@ -46,8 +47,9 @@ class Tugas_Belajar extends CI_Controller {
 				if ($check_nip != 0) {
 					$get_tugas_belajar_pegawai = $this->Mmaster->get_tugas_belajar_pegawai($check_nip[0]->id,'DESC');
 					if ($get_tugas_belajar_pegawai != 0) {
-						$tgl_selesai_tugas = $get_tugas_belajar_pegawai[0]->tgl_selesai;
-						if (date('Y-m-d',strtotime($data_sender['tgl_mulai'])) < $tgl_selesai_tugas) 
+						$tgl_selesai_last = $get_tugas_belajar_pegawai[0]->tgl_selesai;
+						$tgl_selesai_input = date('Y-m-d',strtotime($data_sender['tgl_mulai']));
+						if ($tgl_selesai_input < $tgl_selesai_last) 
 						{
 							$res_data       = '2';
 							$text_status    = $this->Globalrules->check_status_res($res_data,'Karyawan masih belum menyelesaikan tugas belajar.');
@@ -85,6 +87,11 @@ class Tugas_Belajar extends CI_Controller {
 				$res_data    = $this->Allcrud->delData('mr_tugas_belajar',array('id'=>$data_sender['oid']));
 				$text_status = $this->Globalrules->check_status_res($res_data,'Data Tugas Belajar telah berhasil dihapus.');
 			}
+		}
+		else {
+			$res_data       = '2';
+			$text_status    = $this->Globalrules->check_status_res($res_data,'Tanggal Selesai salah.');
+		}
 
 		$res = array
 					(

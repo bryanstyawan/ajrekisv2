@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="col-xs-12" id="viewdata">
 	<div class="box">
         <div class="box-header">
 			<h3 class="box-title pull-right">
@@ -39,94 +39,77 @@
 	</div><!-- /.box -->
 </div>
 
-<div class="example-modal">
-<div class="modal modal-success fade" id="newData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-		
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Tambah Data</h4>
-                  </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="addForm" name="addForm">
-						<div class="form-group">
-							<div class="input-group">
-                    			<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                    			<input type="text" id="golongan" name="golongan" class="form-control" placeholder="Golongan">
-							</div>
-							<div class="input-group">
-                    			<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                    			<input type="text" id="ruang" name="ruang" class="form-control" placeholder="Ruang">
-							</div>
-							<div class="input-group">
-                    			<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                    			<input type="text" id="add_nama_pangkat" name="add_nama_pangkat" class="form-control" placeholder="Nama Pangkat">
-							</div>														
+<div class="col-lg-12" id="formdata" style="display:none;">
+	<div class="box">
+		<div class="box-header">
+			<h3 class="box-title" id="formdata-title"></h3>
+			<div class="box-tools pull-right"><button class="btn btn-block btn-danger" id="closeData"><i class="fa fa-close"></i></button></div>				
+		</div>
+		<div class="box-body">
+			<div class="row">
+				<input class="form-control" type="hidden" id="oid">
+				<input class="form-control" type="hidden" id="crud">					
+				<div class="col-md-6">
+					<div class="form-group">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Golongan</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
+							<input type="text" id="golongan" name="golongan" class="form-control" placeholder="Golongan">
 						</div>
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="add"/>
-                    
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
+					</div>
+					<div class="form-group">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Ruang</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
+							<input type="text" id="ruang" name="ruang" class="form-control" placeholder="Ruang">
+						</div>
+					</div>
+					<div class="form-group">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nama Pangkat</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
+							<input type="text" id="nama_pangkat" name="nama_pangkat" class="form-control" placeholder="Nama Pangkat">
+						</div>														
+					</div>
+				</div>
+			</div>
+
+		</div><!-- /.box-body -->
+		<div class="box-footer">
+			<a class="btn btn-success pull-right" id="btn-trigger-controll"><i class="fa fa-save"></i>&nbsp; Simpan</a>
+		</div>
+	</div><!-- /.box -->
 </div>
 
-<div class="example-modal">
-<div class="modal modal-success fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="box-content">
-		
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Data</h4>
-                  </div>
-                <div class="modal-body" style="background-color: #fff!important;">
-					<form id="editForm" name="addForm">
-						<div class="input-group">
-                			<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                			<input type="text" id="edit_golongan" name="edit_golongan" class="form-control" placeholder="Golongan">
-						</div>
-						<div class="input-group">
-                			<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                			<input type="text" id="edit_ruang" name="edit_ruang" class="form-control" placeholder="Ruang">
-						</div>
-						<div class="input-group">
-                			<span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
-                			<input type="text" id="edit_nama_pangkat" name="edit_nama_pangkat" class="form-control" placeholder="Nama Pangkat">
-							<input type="hidden" id="oid" name="oid" class="form-control">                			
-						</div>														
-					</form>
-                </div>
-                <div class="modal-footer" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                    <a href="#" class="btn btn-danger" data-dismiss="modal">Keluar</a>
-					<input type="submit" class="btn btn-primary" value="Simpan" id="edit"/>
-                    
-                </div>
-            </div>
-        </div>
-	</div>
-</div>
-</div>            
+
 <!-- DataTables -->
-	<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-	<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
-	$("#addData").click(function(){
-		$("#newData").modal('show');
-		$("#agama").focus();
+	//By Eric
+	//Last Edit : 26-02-2019
+	$("#addData").click(function()
+	{
+		$(".form-control").val('');
+		$("#formdata").css({"display": ""})
+		$("#viewdata").css({"display": "none"})
+		$("#formdata-title").html("Tambah Data");		
+		$("#crud").val('insert');
 	})
-	$("#add").click(function(){
+
+	$("#closeData").click(function(){
+		$("#formdata").css({"display": "none"})
+		$("#viewdata").css({"display": ""})		
+	})	
+
+	$("#btn-trigger-controll").click(function(){
+		var oid          = $("#oid").val();
+		var crud         = $("#crud").val();
 		var golongan     = $("#golongan").val();
 		var ruang        = $('#ruang').val();
-		var nama_pangkat = $('#add_nama_pangkat').val();
-		
+		var nama_pangkat = $('#nama_pangkat').val();
+		var data_sender  = "";
 		if (golongan.length <= 0) 
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
@@ -151,125 +134,137 @@ $(document).ready(function(){
 		else
 		{
 			data_sender = {
-							'golongan' 		: golongan,
-							'ruang'	   		: ruang,
-							'nama_pangkat'	: nama_pangkat
-						  };
-	//		alert(data_sender);
-			$.ajax({
-				url :"<?php echo site_url()?>/master/data_golongan/addGolongan",
-				type:"post",
-		        data: { data_sender:data_sender},
-				beforeSend:function(){
-					$("#newData").modal('hide');
-				},
-				success:function(){
-					Lobibox.notify('success', {
-						msg: 'Data Berhasil Ditambahkan'
-					});
-	              	setTimeout(function(){
-	                	location.reload();
-	              	}, 1500);
-				},
-				error:function(){
-						Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Penambahan data'
-						});
-						}
-			})
-		}
-	})
+				'oid'          : oid,
+				'crud'         : crud,
+				'golongan'     : golongan,
+				'ruang'	   	   : ruang,
+				'nama_pangkat' : nama_pangkat
+			}
 
-	$("#edit").click(function(){
-	    var golongan     = $("#edit_golongan").val();
-		var ruang        = $('#edit_ruang').val();
-		var nama_pangkat = $('#edit_nama_pangkat').val();
-		
-		if (golongan.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Golongan tidak boleh kosong."
-			});
-		}
-		else if (ruang.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Ruang tidak boleh kosong."
-			});
-		}
-		else if (nama_pangkat.length <= 0) 
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Nama Pangkat tidak boleh kosong."
-			});
-		}
-		else
-		{
-    		$.ajax({
-    			url :"<?php echo site_url();?>/master/data_golongan/peditgolongan",
-    			type:"post",
-    			data:$("#editForm").serialize(),
-    			beforeSend:function(){
-    				$("#editData").modal('hide');
-    			},
-    			success:function(){
-    				Lobibox.notify('success', {
-						msg: 'Data Berhasil Dirubah'
-					});
-	              	setTimeout(function(){
-	                	location.reload();
-	              	}, 1500);
-    			},
-    			error:function(){
-    					Lobibox.notify('error', {
-    					msg: 'Gagal Melakukan Perubahan data'
-    					});
+			$.ajax({
+				url : "<?php echo site_url()?>master/data_golongan/store",
+				type: "post",
+				data: {data_sender:data_sender},
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
 				}
-    		})
+			})
 		}
 	})
 })
 function edit(id){
-	$.getJSON('<?php echo site_url() ?>/master/data_golongan/edit_golongan/'+id,
-		function( response ) {
-			$("#editData").modal('show');
-			$("#edit_golongan").val(response['golongan']);
-			$("#edit_ruang").val(response['ruang']);			
-			$("#edit_nama_pangkat").val(response['nama_pangkat']);						
-			$("#oid").val(response['id']);
+	// $.getJSON('<?php echo site_url() ?>/master/data_golongan/edit_golongan/'+id,
+	// 	function( response ) {
+	// 		$("#editData").modal('show');
+	// 		$("#edit_golongan").val(response['golongan']);
+	// 		$("#edit_ruang").val(response['ruang']);			
+	// 		$("#edit_nama_pangkat").val(response['nama_pangkat']);						
+	// 		$("#oid").val(response['id']);
+	// 	}
+	// );
+	
+	//By Eric
+	//Last Edited : 26-02-2019
+	$.ajax({
+		url :"<?php echo site_url();?>master/data_golongan/get_data_golongan/"+id,
+		type:"post",
+		beforeSend:function(){
+			$("#loadprosess").modal('show');
+		},
+		success:function(msg){
+			var obj = jQuery.parseJSON (msg);
+			console.log();
+			$(".form-control-detail").val('');
+			$("#formdata").css({"display": ""})
+			$("#viewdata").css({"display": "none"})
+			$("#formdata > div > div > div.box-header > h3").html("Ubah Data");		
+			$("#crud").val('update');
+			$("#oid").val(obj.id);
+			$("#golongan").val(obj.golongan);
+			$("#ruang").val(obj.ruang);
+			$("#nama_pangkat").val(obj.nama_pangkat);
+			$("#loadprosess").modal('hide');				
+		},
+		error:function(jqXHR,exception)
+		{
+			ajax_catch(jqXHR,exception);					
 		}
-	);
+	})
 }
+
+//By Eric
+//Last Edited : 26-02-2019
 function del(id){
-	 Lobibox.confirm({
-		 title: "Konfirmasi",
-		 msg: "Anda yakin akan menghapus data ini ?",
-		 callback: function ($this, type) {
+    LobiboxBase = {
+        //DO NOT change this value. Lobibox depended on it
+        bodyClass       : 'lobibox-open',
+        //DO NOT change this object. Lobibox is depended on it
+        modalClasses : {
+            'error'     : 'lobibox-error',
+            'success'   : 'lobibox-success',
+            'info'      : 'lobibox-info',
+            'warning'   : 'lobibox-warning',
+            'confirm'   : 'lobibox-confirm',
+            'progress'  : 'lobibox-progress',
+            'prompt'    : 'lobibox-prompt',
+            'default'   : 'lobibox-default',
+            'window'    : 'lobibox-window'
+        },
+        buttons: {
+            ok: {
+                'class': 'lobibox-btn lobibox-btn-default',
+                text: 'OK',
+                closeOnClick: true
+            },
+            cancel: {
+                'class': 'lobibox-btn lobibox-btn-cancel',
+                text: 'Cancel',
+                closeOnClick: true
+            },
+            yes: {
+                'class': 'lobibox-btn lobibox-btn-yes',
+                text: 'Ya',
+                closeOnClick: true
+            },
+            no: {
+                'class': 'lobibox-btn lobibox-btn-no',
+                text: 'Tidak',
+                closeOnClick: true
+            }
+        }
+    }
+
+	Lobibox.confirm({
+		title: "Konfirmasi",
+		msg: "Anda yakin akan menghapus data ini ?",
+		callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/data_golongan/delgolongan/"+id,
+					url : "<?php echo site_url()?>master/data_golongan/store/delete/"+id,
 					type:"post",
-					success:function(){
-						Lobibox.notify('success', {
-							msg: 'Data Berhasil Dihapus'
-						});
-    	              	setTimeout(function(){
-    	                	location.reload();
-    	              	}, 1500);
+					beforeSend:function(){
+						$("#loadprosess").modal('show');
 					},
-					error:function(){
-					Lobibox.notify('error', {
-					msg: 'Gagal Melakukan Hapus data'
-					});
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
-    }
-                })
-				
+		}
+    })
 }
 
 $(function () {
