@@ -7,6 +7,7 @@ class Data_pegawai extends CI_Controller {
 		parent::__construct();
 		$this->load->model ('Mmaster', '', TRUE);
 		$this->load->model ('skp/mskp', '', TRUE);		
+		$this->load->library('Excel');		
 	}
 
 	public function index()
@@ -586,5 +587,147 @@ class Data_pegawai extends CI_Controller {
 						'text'   => $text_status
 					);
 		echo json_encode($res);
+	}
+
+	public function print_pegawai($kat_posisi=NULL,$es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL)
+	{
+		# code...
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', 300);		
+		$data_sender = $this->input->post('data_sender');
+		$data_sender = array
+						(
+							'eselon1'    => $es1,
+							'eselon2'    => $es2,
+							'eselon3'    => $es3,
+							'eselon4'    => $es4,
+							'kat_posisi' => $kat_posisi
+						);
+
+		$data_eselon_1 = $this->Allcrud->getData('mr_eselon1',array('id_es1'=>$es1))->result_array();
+		$data_eselon_2 = $this->Allcrud->getData('mr_eselon2',array('id_es2'=>$es2))->result_array();		
+		$data_eselon_3 = $this->Allcrud->getData('mr_eselon3',array('id_es3'=>$es3))->result_array();
+		$data_eselon_4 = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$es4))->result_array();		
+
+
+		$data_eselon_1 = ($data_eselon_1 != array()) ? $data_eselon_1[0]['nama_eselon1'] : '-' ;
+		$data_eselon_2 = ($data_eselon_2 != array()) ? $data_eselon_2[0]['nama_eselon2'] : '-' ;
+		$data_eselon_3 = ($data_eselon_3 != array()) ? $data_eselon_3[0]['nama_eselon3'] : '-' ;
+		$data_eselon_4 = ($data_eselon_4 != array()) ? $data_eselon_4[0]['nama_eselon4'] : '-' ;						
+
+		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
+																		a.es3 ASC,
+																		a.es4 ASC,
+																		b.kat_posisi asc,
+																		b.atasan ASC');
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
+				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				if ($get_empty_skp != array()) {
+					# code...
+					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->empty_skp = 0;					
+				}
+
+				if ($get_nonempty_skp != array()) {
+					# code...
+					$data['list'][$i]->nonempty_skp = $get_nonempty_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->nonempty_skp = 0;					
+				}				
+			}
+		}
+
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+
+		$this->excel->getActiveSheet(1)->getColumnDimension('b')->setWidth('5');
+		$this->excel->getActiveSheet(1)->getColumnDimension('c')->setWidth('22');
+		$this->excel->getActiveSheet(1)->getColumnDimension('d')->setWidth('44');
+		$this->excel->getActiveSheet(1)->getColumnDimension('e')->setWidth('72');
+		$this->excel->getActiveSheet(1)->getColumnDimension('f')->setWidth('72');
+		$this->excel->getActiveSheet(1)->getColumnDimension('g')->setWidth('20');
+		$this->excel->getActiveSheet(1)->getColumnDimension('h')->setWidth('20');
+
+
+		$this->excel->getActiveSheet(2)->setCellValue('b2', 'ESELON I :');
+		$this->excel->getActiveSheet(2)->setCellValue('b3', 'ESELON II :');
+		$this->excel->getActiveSheet(2)->setCellValue('b4', 'ESELON III :');
+		$this->excel->getActiveSheet(2)->setCellValue('b5', 'ESELON IV :');
+		
+		$this->excel->getActiveSheet(2)->setCellValue('d2', $data_eselon_1);
+		$this->excel->getActiveSheet(2)->setCellValue('d3', $data_eselon_2);
+		$this->excel->getActiveSheet(2)->setCellValue('d4', $data_eselon_3);
+		$this->excel->getActiveSheet(2)->setCellValue('d5', $data_eselon_4);		
+
+
+
+
+		$this->excel->getActiveSheet()->setTitle('Rekapitulasi Pegawai');
+		$this->excel->getActiveSheet()->getStyle('b7:h7')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$this->excel->getActiveSheet(2)->setCellValue('b7', 'NO');
+		$this->excel->getActiveSheet(2)->setCellValue('c7', 'NIP');
+		$this->excel->getActiveSheet(2)->setCellValue('d7', 'NAMA PEGAWAI');
+		$this->excel->getActiveSheet(2)->setCellValue('e7', 'JABATAN');
+		$this->excel->getActiveSheet(2)->setCellValue('f7', 'Jabatan Struktural Akdemik');
+		$this->excel->getActiveSheet(2)->setCellValue('g7', 'Belum Set Target SKP');
+		$this->excel->getActiveSheet(2)->setCellValue('h7', 'Sudah Set Target SKP');
+		$this->excel->getActiveSheet(2)->setCellValue('i7', 'Total SKP');																
+		if ($data['list'] != 0) {
+		    # code...
+		    $counter = "";
+		    for ($i=0; $i < count($data['list']); $i++) {
+		        # code...
+				$counter                = 8 + $i;
+
+				$this->excel->getActiveSheet(2)->setCellValue('b'.$counter, $i+1);
+				$this->excel->getActiveSheet(2)->setCellValue('c'.$counter, '`'.$data['list'][$i]->nip);
+				$this->excel->getActiveSheet(2)->setCellValue('d'.$counter, $data['list'][$i]->nama_pegawai);
+				$this->excel->getActiveSheet(2)->setCellValue('e'.$counter, $data['list'][$i]->nama_posisi);
+				$this->excel->getActiveSheet(2)->setCellValue('f'.$counter, '');
+				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->empty_skp);
+				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->nonempty_skp);
+				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->empty_skp+$data['list'][$i]->nonempty_skp);				
+			// 	for ($i=1; $i <= 7; $i++) {
+			// 		# code...
+			// 		$this->excel->getActiveSheet(1)->setCellValue($this->Globalrules->data_alphabet($i).'14', $i);
+			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'13')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'14')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'12')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'13')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			// 		$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet($i).'14')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			// 		$this->excel->getActiveSheet()->getStyle($this->Globalrules->data_alphabet($i).'12')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+			// 		$this->excel->getActiveSheet()->getStyle($this->Globalrules->data_alphabet($i).'13')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+			// 		$this->excel->getActiveSheet()->getStyle($this->Globalrules->data_alphabet($i).'14')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+			// }
+		    }
+		}
+
+		ob_clean();
+
+		$filename='Rekapitulasi Pegawai - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
+		//header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+		exit();
+		redirect('master/data_pegawai/', false);		
+		// echo "<pre>";
+		// print_r($data['list']);die();		
+		// echo "</pre>";
 	}
 }

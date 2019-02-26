@@ -2,7 +2,9 @@ v4.0.0-Beta
 2019-02-26
 New:
 - Target skp yang belum dan sudah di set (report) di master pegawai
+- Rekap Pegawai (SKP) di Master Pegawai
 Improved:
+- penyederhaaan layout master pegawai
 Fixed:
 - Perbaikan Foto (upload dan tarik data)
 

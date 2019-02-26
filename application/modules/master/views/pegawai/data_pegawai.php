@@ -132,24 +132,24 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
+				<h3 class="box-title pull-left">
+					<button class="btn btn-block btn-primary" onclick="print_excel()"><i class="fa fa-print"></i> CETAK</button>
+				</h3>											
 				<h3 class="box-title pull-right">
-					<button class="btn btn-block btn-primary" onclick="main_form('insert','NULL')"><i class="fa fa-plus-square"></i> Tambah Pegawai</button>
+					<button class="btn btn-block btn-primary" onclick="main_form('insert','NULL')"><i class="fa fa-plus-square"></i> TAMBAH PEGAWAI</button>				
 				</h3>				
-			</div><!-- /.box-header -->
+			</div>
 			<div class="box-body" id="isi">
 				<div>
 					<table class="table table-bordered table-striped table-view">
 					<thead>
 						<tr>
-							<th style="max-width: 80px; width: 80px!important;">Foto</th>
 							<th>NIP</th>
 							<th>Nama</th>
-							<th>Jabatan</th>
-							<th>Kelas Jabatan</th>
-							<!-- <th>Status</th> -->
+							<th>Jabatan (Kelas Jabatan)</th>
+							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>
 							<th>Belum Set Target SKP</th>
 							<th>Sudah Set Target SKP</th>							
-							<!-- <th>History Jabatan</th>							 -->
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -165,31 +165,21 @@
 								if ($list[$i]->photo == '-') {
 								# code...
 									$data_link_a = "none";
-									$data_link_text = "Tidak ada Foto";
+									$data_link_text = "TIDAK ADA FOTO";
 								}
 								else
 								{
-									if ($list[$i]->local == '1') {
-										# code...
-										$data_link_text = "Lihat Foto";
-										$data_link_a = base_url() . 'public/images/pegawai/'.$list[$i]->photo;
-									}
-									else
-									{
-										$data_link_text = "Lihat Foto";
-										$data_link_a = 'http://sikerja.kemendagri.go.id/images/demo/users/'.$list[$i]->photo;
-									}
+									$data_link_text = "LIHAT FOTO";
+									$data_link_a = base_url() . 'public/images/pegawai/'.$list[$i]->photo;
 								}
 						?>
 							<tr>
-								<td>
-									<a href="#" class="btn btn-success btn-xs" onclick="preview_image('<?=$id;?>','<?=$data_link_a;?>')"><i class="fa fa-search-plus"></i>&nbsp;<?=$data_link_text;?></a>
-								</td>
 								<td><?=$list[$i]->nip;?></td>
-								<td><?=$list[$i]->nama_pegawai;?></td>
-								<td><?=$list[$i]->nama_posisi;?></td>
+								<td><span class="label label-danger"><?=$list[$i]->id;?></span>&nbsp;<?=$list[$i]->nama_pegawai;?></td>
 								<td>
-									<?php
+									<?=$list[$i]->nama_posisi;?>
+									<b>(
+										<?php
 										if ($list[$i]->kat_posisi == 1) {
 											# code...
 											echo $list[$i]->posisi_class_raw;
@@ -206,15 +196,17 @@
 											# code...
 											echo $list[$i]->posisi_class_raw;										
 										}																		
-									?>
+									?>										
+									)</b>
 								</td>
-								<!-- <td></td> -->
+								<td></td>
 								<td><?=$list[$i]->empty_skp;?></td>
 								<td><?=$list[$i]->nonempty_skp;?></td>																
 								<td class="text-center">
-									<button class="btn btn-warning btn-xs" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah Data</button>&nbsp;&nbsp;									
-									<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus Data</button>&nbsp;&nbsp;
-									<button class="btn btn-primary btn-xs" style="margin-bottom: 5px;" onclick="change_password('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Default Password</button>									
+									<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> UBAH DATA</button>
+									<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> HAPUS DATA</button>
+									<button class="btn btn-primary btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="change_password('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> DEFAULT PASSWORD</button>									
+									<a href="#" class="btn btn-success btn-xs col-lg-12" onclick="preview_image('<?=$id;?>','<?=$data_link_a;?>')"><i class="fa fa-search-plus"></i>&nbsp;<?=$data_link_text;?></a>									
 								</td>
 							</tr>
 						<?php
@@ -1054,6 +1046,17 @@ function main_form(params,id) {
 			}
 		})		
 	}
+}
+
+function print_excel() {
+	var es1        = $("#select_eselon_1").val();
+	var es2        = $("#select_eselon_2").val();	
+	var es3        = $("#select_eselon_3").val();
+	var es4        = $("#select_eselon_4").val();
+	var kat_posisi = $("#select_jenis_jabatan").val();
+	window.open('<?=base_url();?>master/data_pegawai/print_pegawai/'+kat_posisi+'/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");	
+	// window.location.href = "<?=base_url();?>master/data_pegawai/print_pegawai/"+kat_posisi+"/"+es1+"/"+es2+"/"+es3+"/"+es4";	
+
 }
 
 $(document).ready(function(){
