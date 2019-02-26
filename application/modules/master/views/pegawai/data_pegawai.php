@@ -146,7 +146,9 @@
 							<th>Nama</th>
 							<th>Jabatan</th>
 							<th>Kelas Jabatan</th>
-							<th>Status</th>
+							<!-- <th>Status</th> -->
+							<th>Belum Set Target SKP</th>
+							<th>Sudah Set Target SKP</th>							
 							<!-- <th>History Jabatan</th>							 -->
 							<th>Action</th>
 						</tr>
@@ -206,7 +208,9 @@
 										}																		
 									?>
 								</td>
-								<td></td>
+								<!-- <td></td> -->
+								<td><?=$list[$i]->empty_skp;?></td>
+								<td><?=$list[$i]->nonempty_skp;?></td>																
 								<td class="text-center">
 									<button class="btn btn-warning btn-xs" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah Data</button>&nbsp;&nbsp;									
 									<button class="btn btn-danger btn-xs" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus Data</button>&nbsp;&nbsp;

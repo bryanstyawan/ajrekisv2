@@ -6,6 +6,7 @@ class Data_pegawai extends CI_Controller {
 	public function __construct () {
 		parent::__construct();
 		$this->load->model ('Mmaster', '', TRUE);
+		$this->load->model ('skp/mskp', '', TRUE);		
 	}
 
 	public function index()
@@ -19,6 +20,31 @@ class Data_pegawai extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
+				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				if ($get_empty_skp != array()) {
+					# code...
+					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->empty_skp = 0;					
+				}
+
+				if ($get_nonempty_skp != array()) {
+					# code...
+					$data['list'][$i]->nonempty_skp = $get_nonempty_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->nonempty_skp = 0;					
+				}				
+			}
+		}
 																		
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
@@ -437,40 +463,7 @@ class Data_pegawai extends CI_Controller {
 	    if($this->upload->do_upload('userfile')){
 			$token        = $this->input->post('token_foto');
 			$image        = $this->upload->data('file_name');
-			$pegawai      = $this->Mmaster->get_data_pegawai($token);
-			$get_last_pic = $this->Mmaster->get_last_pic($token);
-			if ($get_last_pic != 0) {
-				# code...
-				for ($i=0; $i < count($get_last_pic); $i++) {
-					$data_last_pic = array
-									(
-										'main_pic' => '0',
-										'expired'  => date('Y-m-d',strtotime($this->input->post('tmt') . "+7 days"))
-									);
-
-					$flag = array
-							(
-								'id' => $get_last_pic[0]->id
-							);
-					$this->Allcrud->editData('mr_pegawai_photo',$data_last_pic,$flag);
-				}
-			}
-
-			$data_pegawai = array
-							(
-								'local'          => '1',
-							);
-			$this->Mmaster->save_pegawai($data_pegawai,$token,'edit');
-
-			$data_insert = array
-							(
-								'id_pegawai' => $token,
-								'nip'        => $pegawai[0]->nip,
-								'photo'      => $image,
-								'local'		 => '1',
-								'main_pic'	 => '1'
-					        );
-			$this->Allcrud->addData('mr_pegawai_photo',$data_insert);
+			$this->Allcrud->editData('mr_pegawai',array('photo'=>$image),array('id'=>$token));
         }
 
 		echo $this->upload->display_errors();
@@ -480,49 +473,34 @@ class Data_pegawai extends CI_Controller {
 	{
 		# code...
         $config['upload_path']   = FCPATH.'/public/images/pegawai/';
-        $config['allowed_types'] = 'gif|jpg|png|ico';
-        $this->load->library('upload',$config);
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+		$this->load->library('upload',$config);
+		$token        = $this->session->userdata('sesUser');
+		$get_data     = $this->Allcrud->getData('mr_pegawai',array('id'=>$token))->result_array();
+		$path_to_file = $config['upload_path'].$get_data[0]['photo'];
+		if ($get_data[0]['photo'] != '' || $get_data[0]['photo'] != NULL) {
+			# code...
+			$param_file_exists = 0;
+			if (file_exists($path_to_file)) {
+				# code...
+				$param_file_exists = 1;
+				if(unlink($path_to_file)) {
+					// echo 'deleted successfully';
+				}
+				else {
+					echo 'errors occured';
+				}							
+			}
+			else {
+				# code...
+				$param_file_exists = 0;				
+			}				
+		}		
 
         if($this->upload->do_upload('userfile')){
-			$token        = $this->session->userdata('sesUser');
-			$image        = $this->upload->data('file_name');
-			$pegawai      = $this->Mmaster->get_data_pegawai($token);
-			$get_last_pic = $this->Mmaster->get_last_pic($token);
-			if ($get_last_pic != 0) {
-				# code...
-				for ($i=0; $i < count($get_last_pic); $i++) {
-					# code...
-					$data_last_pic = array
-									(
-										'main_pic' => '0',
-										'expired'  => date('Y-m-d',strtotime($this->input->post('tmt') . "+7 days"))
-									);
-
-					$flag = array
-							(
-								'id' => $get_last_pic[$i]->id
-							);
-					$this->Allcrud->editData('mr_pegawai_photo',$data_last_pic,$flag);
-				}
-			}
-
-			$data_pegawai = array
-							(
-								'local'          => '1',
-							);
-			$this->Mmaster->save_pegawai($data_pegawai,$token,'edit');
-
-			$data_insert = array
-							(
-								'id_pegawai' => $token,
-								'nip'        => $pegawai[0]->nip,
-								'photo'      => $image,
-								'local'		 => '1',
-								'main_pic'	 => '1'
-					        );
-			$this->Allcrud->addData('mr_pegawai_photo',$data_insert);
+			$image        = $this->upload->data('file_name');			
+			$this->Allcrud->editData('mr_pegawai',array('photo'=>$image),array('id'=>$token));
         }
-
 		echo $this->upload->display_errors();
 	}
 

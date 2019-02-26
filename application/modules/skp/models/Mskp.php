@@ -582,18 +582,9 @@ class Mskp extends CI_Model
 	public function get_request_eval($id,$tahun)
 	{
 		# code...
-		$sql = "SELECT a.*,
+		$sql = "SELECT 	a.*,
 						a.status as `status_prilaku`,
-					   b.*,
-						COALESCE(
-									(
-										SELECT aa.photo
-										FROM mr_pegawai_photo aa
-										WHERE aa.id_pegawai = b.id
-										AND aa.main_pic = 1
-										AND aa.local = b.local
-									),'-'
-								) as photo,
+						b.*,
 						a.id as evaluator_id
 				FROM mr_skp_penilaian_prilaku a
 				JOIN mr_pegawai b
@@ -614,17 +605,8 @@ class Mskp extends CI_Model
 	public function get_detail_skp_penilaian($id)
 	{
 		# code...
-		$sql = "SELECT a.*,
-					   b.*,
-						COALESCE(
-									(
-										SELECT aa.photo
-										FROM mr_pegawai_photo aa
-										WHERE aa.id_pegawai = b.id
-										AND aa.main_pic = 1
-										AND aa.local = b.local
-									),'-'
-								) as photo,
+		$sql = "SELECT 	a.*,
+					   	b.*,
 						a.id as evaluator_id
 				FROM mr_skp_penilaian_prilaku a
 				JOIN mr_pegawai b
@@ -801,8 +783,7 @@ class Mskp extends CI_Model
 	public function get_indikator_prilaku($id)
 	{
 		# code...
-		$sql = "SELECT b.nama,
-						a.* 
+		$sql = "SELECT a.*,b.nama 
 				FROM mr_penilaian_prilaku_indikator a
 				JOIN mr_penilaian_prilaku_unsur b
 				ON a.id_penilaian_prilaku_unsur = b.id
@@ -817,4 +798,46 @@ class Mskp extends CI_Model
 			return 0;
 		}
 	}
+	
+
+	public function get_counter_empty_target_skp($id)
+	{
+		# code...
+		$year = date("Y");
+		$sql = "SELECT count(a.id_pegawai) as counter
+				FROM mr_skp_pegawai a
+				WHERE a.id_pegawai = '".$id."'
+				AND a.tahun = '".$year."'
+				AND a.target_qty IS NULL";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}
+	}
+	
+	public function get_counter_nonempty_target_skp($id)
+	{
+		# code...
+		$year = date("Y");
+		$sql = "SELECT count(a.id_pegawai) as counter
+				FROM mr_skp_pegawai a
+				WHERE a.id_pegawai = '".$id."'
+				AND a.tahun = '".$year."'
+				AND a.target_qty IS NOT NULL";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}
+	}	
+	
 }

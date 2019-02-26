@@ -6,7 +6,7 @@ class Master extends CI_Controller {
 	public function __construct () {
 		parent::__construct();
 		$this->load->model ('Mmaster', '', TRUE);
-
+		$this->load->model ('skp/mskp', '', TRUE);
 	}
 
 	public function index()
@@ -419,22 +419,31 @@ class Master extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
-		// if ($data['list'] != 0) {
-		// 	# code...
-		// 	for ($i=0; $i < count($data['list']); $i++) { 
-		// 		# code...
-		// 		$data['list'][$i]->tmt = 'test';							
-		// 		$get_data_tmt = $this->Mmaster->get_tmt_pegawai($data['list'][$i]->id_pegawai);
-		// 		if ($get_data_tmt != 0) {
-		// 			# code...
-		// 			$data['list'][$i]->tmt = $get_data_tmt[0]->tmt;
-		// 		}
-		// 		else
-		// 		{
-		// 			$data['list'][$i]->tmt = '-';					
-		// 		}
-		// 	}
-		// }															
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
+				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				if ($get_empty_skp != array()) {
+					# code...
+					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->empty_skp = 0;					
+				}
+
+				if ($get_nonempty_skp != array()) {
+					# code...
+					$data['list'][$i]->nonempty_skp = $get_nonempty_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->nonempty_skp = 0;					
+				}				
+			}
+		}
 		$this->load->view('master/pegawai/ajax_pegawai_filter',$data);
 	}
 
