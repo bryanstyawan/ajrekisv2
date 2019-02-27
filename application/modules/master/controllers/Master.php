@@ -423,8 +423,9 @@ class Master extends CI_Controller {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
-				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
-				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				$get_empty_skp                = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
+				$get_nonempty_skp             = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
 				if ($get_empty_skp != array()) {
 					# code...
 					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
@@ -441,6 +442,15 @@ class Master extends CI_Controller {
 				else
 				{
 					$data['list'][$i]->nonempty_skp = 0;					
+				}				
+
+				if ($get_data_struktur_organisasi != array()) {
+					# code...
+					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+				}
+				else
+				{
+					$data['list'][$i]->posisi_akademik_name = '-';					
 				}				
 			}
 		}

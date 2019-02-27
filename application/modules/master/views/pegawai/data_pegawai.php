@@ -199,7 +199,7 @@
 									?>										
 									)</b>
 								</td>
-								<td></td>
+								<td><?=$list[$i]->posisi_akademik_name;?></td>
 								<td><?=$list[$i]->empty_skp;?></td>
 								<td><?=$list[$i]->nonempty_skp;?></td>																
 								<td class="text-center">
@@ -314,6 +314,16 @@
 								<input type="text" id="f_tmt" name="f_tmt" class="form-control form-control-detail timerange-normal" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask> 
 							</div>
 						</div>
+
+						<hr>
+						<div class="form-group">
+							<label class="col-md-2 control-label">Jabatan Akademik</label>
+							<div class="col-md-9">
+								<input class="form-control form-control-detail" id="f_jabatan_akademik" type="text" disabled="">
+								<input class="form-control form-control-detail" id="f_jabatan_akademik_id" type="hidden">							
+							</div>
+							<a class="btn btn-default" id="f_jabatan_akademik_btn"><i class="fa fa-search"></i></a>
+						</div>						
 
 					</div>
 				</div>
@@ -1155,7 +1165,29 @@ $(document).ready(function(){
 				$("#modal-datatable").modal('show');				
 			}
 		})
-	})	
+	})
+
+	$("#f_jabatan_akademik_btn").click(function(){
+		var es1 = $("#f_es1").val();
+		var es2 = $("#f_es2").val();
+		var es3 = $("#f_es3").val();
+		var es4 = $("#f_es4").val();
+		$.ajax({
+			url :"<?php echo site_url();?>/master/data_pegawai/cari_jabatan_struktur_akademik",
+			type:"post",
+			data:"es1="+es1+"&es2="+es2+"&es3="+es3+"&es4="+es4,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#get-datatable").html('');				
+			},			
+			success:function(msg){
+				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan");				
+				$("#get-datatable").html(msg);
+				$("#loadprosess").modal('hide');								
+				$("#modal-datatable").modal('show');				
+			}
+		})
+	})		
 
 	$("#btn-trigger-controll").click(function(){
 		var f_es1                 = $("#f_es1").val();
@@ -1165,6 +1197,7 @@ $(document).ready(function(){
 		var f_nip                 = $("#f_nip").val();
 		var f_nama                = $("#f_nama").val();
 		var f_jabatan             = $("#f_jabatan_id").val();
+		var f_jabatan_akademik    = $("#f_jabatan_akademik_id").val();		
 		var f_tmt                 = $("#f_tmt").val();
 		var oid                   = $("#oid").val();
 		var crud                  = $("#crud").val();
@@ -1208,16 +1241,17 @@ $(document).ready(function(){
 			data_sender = "";
 			flag_status = 0;
 			data_sender = {
-					'crud'   : crud,
-					'oid'    : oid,
-					'es1'    : f_es1,
-					'es2'    : f_es2,
-					'es3'    : f_es3,
-					'es4'    : f_es4,
-					'nip'    : f_nip,
-					'nama'   : f_nama,
-					'jabatan': f_jabatan,
-					'tmt'    : f_tmt
+					'crud'   			: crud,
+					'oid'    			: oid,
+					'es1'    			: f_es1,
+					'es2'    			: f_es2,
+					'es3'    			: f_es3,
+					'es4'    			: f_es4,
+					'nip'    			: f_nip,
+					'nama'   			: f_nama,
+					'jabatan' 			: f_jabatan,
+					'jabatan_akademik'  : f_jabatan_akademik,
+					'tmt'    			: f_tmt
 				}				
 			
 			$.ajax({
