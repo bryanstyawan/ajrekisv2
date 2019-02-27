@@ -952,7 +952,7 @@ function main_form(params,id) {
 			},
 			success:function(msg){
 				var obj = jQuery.parseJSON (msg);
-				console.log(obj);
+				// console.log(obj.jabatan_akademik[0].nama_posisi);
 				$(".form-control-detail").val('');
 				$("#form_section").css({"display": ""})
 				$("#view_section").css({"display": "none"})
@@ -1046,6 +1046,9 @@ function main_form(params,id) {
 					$('#table_tmt').append(toAppend_tmt);										
 					// console.table(obj.tmt_pegawai);
 
+					// obj.jabatan_akademik[0].nama_posisi
+					$("#f_jabatan_akademik").val(obj.jabatan_akademik[0].nama_posisi);
+					$("#f_jabatan_akademik_id").val(obj.pegawai[0].posisi_akademik);									
 				}
 
 				$("#loadprosess").modal('hide');				

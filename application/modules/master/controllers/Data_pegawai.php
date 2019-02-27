@@ -76,6 +76,7 @@ class Data_pegawai extends CI_Controller {
 			$data['list_eselon3'] = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data['pegawai'][0]['es2']))->result_array();
 			$data['list_eselon4'] = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data['pegawai'][0]['es3']))->result_array();
 			$data['jabatan_raw']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi']))->result_array();
+			$data['jabatan_akademik']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi_akademik']))->result_array();			
 			if ($data['jabatan_raw'] != array()) {
 				# code...
 				$data['jabatan_jfu']  = $this->Allcrud->getData('mr_jabatan_fungsional_umum',array('id'=>$data['jabatan_raw'][0]['id_jfu']))->result_array();
