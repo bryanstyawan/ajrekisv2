@@ -253,6 +253,18 @@ class Data_struktur extends CI_Controller {
 						);
 			$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL_TERTENTU($data_var);
 		}
+		elseif($data_sender['kat'] == 6)
+		{
+			$data_var = array(
+							'eselon4'    => $data_sender['es4'],
+							'eselon3'    => $data_sender['es3'],
+							'eselon2'    => $data_sender['es2'],
+							'eselon1'    => $data_sender['es1'],
+							'kat_posisi' => 1
+						);
+			$data_sql = $this->Mmaster->cari_atasan_STRUKTURAL($data_var);
+		}
+
 		$data['list'] = $data_sql;
 		$this->load->view('master/struktur/eselon/atasan',$data);		
 	}

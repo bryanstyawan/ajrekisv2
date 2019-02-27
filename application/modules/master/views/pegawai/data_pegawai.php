@@ -952,7 +952,7 @@ function main_form(params,id) {
 			},
 			success:function(msg){
 				var obj = jQuery.parseJSON (msg);
-				// console.log(obj.jabatan_akademik[0].nama_posisi);
+				console.log(obj.jabatan_akademik);
 				$(".form-control-detail").val('');
 				$("#form_section").css({"display": ""})
 				$("#view_section").css({"display": "none"})
@@ -1031,7 +1031,7 @@ function main_form(params,id) {
 					toAppend_tmt = "";
 					$('#table_tmt').html('');															
 					for (let index = 0; index < obj.tmt_pegawai.length; index++) {
-						console.log(obj.tmt_pegawai[index].nama_posisi);
+						// console.log(obj.tmt_pegawai[index].nama_posisi);
 						if (obj.tmt_pegawai[index].nama_posisi != null) {
 							toAppend_tmt += '<tr>'+
 												'<td>'+obj.tmt_pegawai[index].nama_posisi+'</td>'+
@@ -1047,7 +1047,15 @@ function main_form(params,id) {
 					// console.table(obj.tmt_pegawai);
 
 					// obj.jabatan_akademik[0].nama_posisi
-					$("#f_jabatan_akademik").val(obj.jabatan_akademik[0].nama_posisi);
+					jabatan_akademik = '';
+					if (obj.jabatan_akademik == '') {
+						jabatan_akademik = '-';
+					}
+					else
+					{
+						jabatan_akademik = obj.jabatan_akademik[0].nama_posisi;
+					}
+					$("#f_jabatan_akademik").val(jabatan_akademik);
 					$("#f_jabatan_akademik_id").val(obj.pegawai[0].posisi_akademik);									
 				}
 
