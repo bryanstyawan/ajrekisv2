@@ -21,7 +21,7 @@
                 }
                 else
                 {
-                    $photo_sender = '<img class="icn_user" src="http://sikerja.kemendagri.go.id/images/demo/users/'.$row_notify->photo_sender.'">';
+                    $photo_sender = '<img class="icn_user" src="'.base_url() . 'public/images/pegawai/'.$row_notify->photo_sender.'">';                    
                 }
 
                 if ($row_notify->status_log == 'notify') {

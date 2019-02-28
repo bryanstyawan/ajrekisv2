@@ -1,4 +1,12 @@
 v4.0.0-Beta    
+2019-02-28
+New:
+Improved:
+Fixed:
+- Uraian Tugas di transaksi dan skp
+- Foto di pemberitahuan
+
+v4.0.0-Beta    
 2019-02-27
 New:
 - Struktur Akademik
