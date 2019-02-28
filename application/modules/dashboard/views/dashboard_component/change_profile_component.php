@@ -25,8 +25,6 @@
                         }
                         else
                         {
-                            if ($infoPegawai[0]->local == 1) {
-                                # code...
                 ?>
                             <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
                                 <img style="width: 160px;height: 160px;border-radius:50%;" src="<?php echo base_url() . 'public/images/pegawai/'.$infoPegawai[0]->photo;?>">
@@ -35,18 +33,6 @@
                                 </div>
                             </div>
                 <?php
-                            }
-                            else
-                            {
-                ?>
-                            <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
-                                <img style="width: 160px;height: 160px;border-radius:50%;" src="http://sikerja.kemendagri.go.id/images/demo/users/<?php echo $infoPegawai[0]->photo;?>">
-                                <div class="dz-message" style="margin: 2em 0;">
-                                    <span> Klik atau Drop File Foto disini</span>
-                                </div>
-                            </div>
-                <?php
-                            }
                         }
                     }
                     else

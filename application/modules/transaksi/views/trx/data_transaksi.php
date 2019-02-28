@@ -536,21 +536,33 @@ else {
                                                                         if ($urtug[$i]->id_skp_master != '') {
                                                                             # code...
                                                                             $kegiatan = $urtug[$i]->kegiatan_skp;
-                                                                        }                                                                    
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            $kegiatan = $urtug[$i]->kegiatan;                                                                            
+                                                                        }                                                                                                                                            
                                                                     }
                                                                     elseif ($infoPegawai[0]->kat_posisi == 2) {
                                                                         # code...
                                                                         if ($urtug[$i]->id_skp_jft != '') {
                                                                             # code...
                                                                             $kegiatan = $urtug[$i]->kegiatan_skp_jft;
-                                                                        }                                                                       
+                                                                        }                                   
+                                                                        else
+                                                                        {
+                                                                            $kegiatan = $urtug[$i]->kegiatan;                                                                            
+                                                                        }                                                                                                            
                                                                     }                                                                    
                                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                                         # code...
                                                                         if ($urtug[$i]->id_skp_jfu != '') {
                                                                             # code...
                                                                             $kegiatan = $urtug[$i]->kegiatan_skp_jfu;
-                                                                        }                                                                       
+                                                                        }            
+                                                                        else
+                                                                        {
+                                                                            $kegiatan = $urtug[$i]->kegiatan;                                                                            
+                                                                        }                                                           
                                                                     }
 
                                                         ?>

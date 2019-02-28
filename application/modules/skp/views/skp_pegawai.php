@@ -586,27 +586,42 @@ function edit(id,before,after) {
             
             if ($("#oid_kat_posisi").val() == 1) {
                 // $("#nkegiatan").val(response['kegiatan']);
-                if (response['id_skp_master'] != '')
+                if (response['id_skp_master'] != null)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp']);                    
                     $("#nkegiatan").val(response['kegiatan_skp']);
                 }                
+                else
+                {
+                    $("#nkegiatan").val(response['kegiatan']);                    
+                }                                                
             } 
             else if($("#oid_kat_posisi").val() == 2) {
                 // $("#nkegiatan").val(response['kegiatan']);
-                if (response['id_skp_jft'] != '')
+                if (response['id_skp_jft'] != null)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp_jft']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jft']);
+                }
+                else
+                {
+                    $("#nkegiatan").val(response['kegiatan']);                    
                 }                                
             }
             else if($("#oid_kat_posisi").val() == 4) {
                 // $("#nkegiatan").val(response['kegiatan']);
-                if (response['id_skp_jfu'] != '')
+                // console.log(response['kegiatan']);
+                // console.log(response['id_skp_jfu']);                                
+                if (response['id_skp_jfu'] != null)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp_jfu']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jfu']);
-                }                                
+                }
+                else
+                {
+
+                    $("#nkegiatan").val(response['kegiatan']);                    
+                }                                                                                
             }
             
             $("#njenis").val(response['jenis_skp']);

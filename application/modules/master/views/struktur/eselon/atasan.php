@@ -61,10 +61,10 @@ function get_data(arg,param)
     $("#f_atasan").html('');    
     $("#f_atasan").html('<option selected value='+arg+'>'+param+'</option>');    
 
-    $("#id_jft").val('');
-    $("#id_jfu").val('');            
-    $("#jabatan").val('');
-    $("#grade").val('');    
+    // $("#id_jft").val('');
+    // $("#id_jfu").val('');            
+    // $("#jabatan").val('');
+    // $("#grade").val('');    
     $("#modal-datatable").modal('hide');
 }
 
