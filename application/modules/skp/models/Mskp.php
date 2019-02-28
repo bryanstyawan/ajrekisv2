@@ -5,7 +5,7 @@ class Mskp extends CI_Model
 		parent::__construct();
 	}
 
-	public function get_data_skp_pegawai($id_pegawai,$tahun,$param_status,$priority=NULL)
+	public function get_data_skp_pegawai($id_pegawai,$id_posisi=NULL,$tahun,$param_status,$priority=NULL)
 	{
 		# code...
 		$query_1 = "";
@@ -281,6 +281,7 @@ class Mskp extends CI_Model
 					ON a.target_output = d.id
 					WHERE a.tahun = '".$tahun."'
 					AND a.id_pegawai = '".$id_pegawai."'
+					AND a.id_posisi = '".$id_posisi."'					
 					AND a.status <> '99'
 					".$query_1."
 					ORDER BY a.PK DESC, a.audit_priority ASC";

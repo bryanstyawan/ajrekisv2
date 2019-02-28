@@ -543,7 +543,7 @@ class Mmaster extends CI_Model {
 			# code...
 			$sql_5 = "";
 		}
-		else $sql_5 = "AND b.id = '".$arg."'";		
+		else $sql_5 = "AND (b.id = '1' OR b.id = '6')";		
 
 
 		if ($param['eselon1'] == '') {
@@ -582,7 +582,7 @@ class Mmaster extends CI_Model {
 							WHERE aa.posisi = a.id
 						),'0') as counter_pegawai   						
 				FROM mr_posisi a
-				JOIN mr_kat_posisi b
+				LEFT JOIN mr_kat_posisi b
 				ON b.id = a.kat_posisi
 				LEFT JOIN mr_eselon1 es1
 				ON a.eselon1 = es1.id_es1

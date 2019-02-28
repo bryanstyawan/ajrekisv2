@@ -182,7 +182,7 @@
                             $target_output       = $list[$i]->target_output_name;
                             $target_kualitasmutu = $list[$i]->target_kualitasmutu;
                             $target_waktu_bln    = $list[$i]->target_waktu_bln;
-                            $target_biaya        = $list[$i]->target_biaya;
+                            $target_biaya        = number_format($list[$i]->target_biaya,0);
                             $jenis_skp           = $list[$i]->nama_jenis_skp;
 
                             if (count($list) == 1) {
@@ -250,7 +250,7 @@
 
                                 if ($list[$i]->target_biaya != $list[$i]->edit_target_biaya) {
                                     # code...
-                                    $target_biaya = "<span class='data-before'>".$list[$i]->target_biaya."</span> <i class='fa fa-angle-double-right'></i> <span class='data-after'>".$list[$i]->edit_target_biaya."</span>";
+                                    $target_biaya = "<span class='data-before'>".number_format($list[$i]->target_biaya,0)."</span> <i class='fa fa-angle-double-right'></i> <span class='data-after'>".number_format($list[$i]->edit_target_biaya,0)."</span>";
                                 }
                             }
 
@@ -320,7 +320,7 @@
                         <td style="<?=$style_td;?>"><?=$target_kualitasmutu;?></td>
                         <td style="<?=$style_td;?>"><?=$target_waktu_bln;?></td>
                         <td style="<?=$style_td;?>">bln</td>
-                        <td style="<?=$style_td;?>"><?=number_format($target_biaya);?></td>
+                        <td style="<?=$style_td;?>"><?=$target_biaya;?></td>
                         <td style="<?=$style_td;?>">
                             <?php
                                 if ($list[$i]->status != 1) {
@@ -726,11 +726,9 @@ $(document).ready(function()
         $("#modal_calc_target").modal('show');
     })
 
-
-
-    
     $("#addDataSKP").click(function(){
         // body...
+        $('.form-control').val('');        
         $('#formdata').attr('class', 'modal fade bs-example-modal-lg')
                             .attr('aria-labelledby','myLargeModalLabel');
         $('.modal-dialog').attr('class','modal-dialog modal-lg');
