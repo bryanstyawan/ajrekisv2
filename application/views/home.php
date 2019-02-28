@@ -15,6 +15,7 @@
     <link href="<?php echo base_url();?>assets_home/css/prettyPhoto.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets_home/css/main.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets_home/css/responsive.css" rel="stylesheet">
+    <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/lobibox/dist/css/Lobibox.min.css'; ?>");</style>    
     <!--[if lt IE 9]>
     <script src="<?php echo base_url();?>assets_home/js/html5shiv.js"></script>
     <script src="<?php echo base_url();?>assets_home/js/respond.min.js"></script>
@@ -323,5 +324,18 @@
     <script src="<?php echo base_url();?>assets_home/js/jquery.inview.min.js"></script>
     <script src="<?php echo base_url();?>assets_home/js/wow.min.js"></script>
     <script src="<?php echo base_url();?>assets_home/js/main.js"></script>
+    <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/lobibox/js/Lobibox.js"></script>
+    <script>
+
+        $(document).ready(function()
+        {
+            Lobibox.window({
+                title  : 'Pesan',
+                content: '<div class="row" style="margin: 1px;"><h2>Terima Kasih Telah Menggunakan SIKERJA 3.0</h2></div>'+
+                '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">Selamat Datang di era SIKERJA 4.0 (Terintegrasi SKP)</h3></div>'                
+            });
+        });
+        
+    </script>
 </body>
 </html>

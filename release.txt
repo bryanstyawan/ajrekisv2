@@ -1,10 +1,14 @@
 v4.0.0-Beta    
 2019-02-28
 New:
+- Ucapan 'Selamat datang' di home
 Improved:
+- SKP Struktur Akademik di Master SKP
 Fixed:
 - Uraian Tugas di transaksi dan skp
 - Foto di pemberitahuan
+- Target SKP per pegawai dan posisi
+- Target Biaya (string ke number)
 
 v4.0.0-Beta    
 2019-02-27
