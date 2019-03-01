@@ -24,7 +24,7 @@ class Transaksi extends CI_Controller {
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
 		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));
-		$data['urtug']                = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'approve',1);
+		$data['urtug']                = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'approve',1);
 		$data['tr_belum_diperiksa']   = $this->mtrx->status_pekerjaan('0',$this->session->userdata('sesUser'));
 		$data['tr_disetujui']         = $this->mtrx->status_pekerjaan('1',$this->session->userdata('sesUser'));
 		$data['tr_tolak']             = $this->mtrx->status_pekerjaan('2',$this->session->userdata('sesUser'));
@@ -594,7 +594,7 @@ class Transaksi extends CI_Controller {
 				$data['title']       = 'Transaksi';
 				$data['content']     = 'transaksi/trx/data_edit_pekerjaan';
 				$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
-				$data['urtug']       = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'approve',1);
+				$data['urtug']       = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'approve',1);
 				$data['pekerjaan']   = $get_data_transact;
 				// echo "<pre>";
 				// print_r($data['pekerjaan']);die();
