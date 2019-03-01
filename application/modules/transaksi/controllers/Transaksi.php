@@ -61,6 +61,9 @@ class Transaksi extends CI_Controller {
 				}				
 			}
 		}
+		// echo "<pre>";
+		// print_r($data);die();		
+		// echo "</pre>";
 
 		$this->load->view('templateAdmin',$data);
 	}

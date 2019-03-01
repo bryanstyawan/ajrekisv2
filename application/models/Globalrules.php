@@ -392,7 +392,7 @@ class Globalrules extends CI_Model
 		return $nilai_skp;
 	}
 
-	public function data_summary_skp_pegawai($id)
+	public function data_summary_skp_pegawai($id,$_id_posisi)
 	{
 		# code...
 		$_atasan_id = $this->list_atasan($this->session->userdata('sesPosisi'));
@@ -414,7 +414,7 @@ class Globalrules extends CI_Model
 			$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
 		}
 		else $data['atasan_penilai']   = 0;
-		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,date('Y'),'1','realisasi');
+		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
 /**********************************************************************************************************/
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
 		$data['summary_prilaku_skp']['orientasi_pelayanan'] = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->orientasi_pelayanan,$data['nilai_prilaku_peer'][0]->orientasi_pelayanan,$data['nilai_prilaku_bawahan'][0]->orientasi_pelayanan);
