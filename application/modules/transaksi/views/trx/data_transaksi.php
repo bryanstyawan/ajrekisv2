@@ -1565,15 +1565,23 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_belum_diperiksa.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp;
+                        if (obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft == null && obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu == null && obj.data.tr_belum_diperiksa[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_belum_diperiksa[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu;
+                            }
                         }
+
+
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
@@ -1599,15 +1607,21 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_revisi.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp;
+                        if (obj.data.tr_revisi[i].kegiatan_skp_jft == null && obj.data.tr_revisi[i].kegiatan_skp_jfu == null && obj.data.tr_revisi[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_revisi[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jfu;
-                        }                        
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_revisi[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jfu;
+                            }
+                        }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_revisi[i].tanggal_mulai+"&nbsp;"+obj.data.tr_revisi[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_revisi[i].tanggal_selesai+"&nbsp;"+obj.data.tr_revisi[i].jam_selesai+"</td>"+
@@ -1627,14 +1641,21 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_disetujui.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp;
+                        if (obj.data.tr_disetujui[i].kegiatan_skp_jft == null && obj.data.tr_disetujui[i].kegiatan_skp_jfu == null && obj.data.tr_disetujui[i].kegiatan_skp == null) 
+                        {
+                            kegiatan = obj.data.tr_disetujui[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_disetujui[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_disetujui[i].tanggal_mulai+"&nbsp;"+obj.data.tr_disetujui[i].jam_mulai+"</td>"+
@@ -1657,14 +1678,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_tolak.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp;
+                        if (obj.data.tr_tolak[i].kegiatan_skp_jft == null && obj.data.tr_tolak[i].kegiatan_skp_jfu == null && obj.data.tr_tolak[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_tolak[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_tolak[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_tolak[i].tanggal_selesai+"&nbsp;"+obj.data.tr_tolak[i].jam_selesai+"</td>"+
@@ -1686,14 +1713,21 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_keberatan.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp;
+                        if (obj.data.tr_keberatan[i].kegiatan_skp_jft == null && obj.data.tr_keberatan[i].kegiatan_skp_jfu == null && obj.data.tr_keberatan[i].kegiatan_skp == null) 
+                        {
+                            kegiatan = obj.data.tr_keberatan[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_keberatan[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_keberatan[i].tanggal_selesai+"&nbsp;"+obj.data.tr_keberatan[i].jam_selesai+"</td>"+
@@ -1720,14 +1754,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_keberatan_ditolak.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp;
+                        if (obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft == null && obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu == null && obj.data.tr_keberatan_ditolak[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_keberatan_ditolak[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_keberatan_ditolak[i].tanggal_selesai+"&nbsp;"+obj.data.tr_keberatan_ditolak[i].jam_selesai+"</td>"+
@@ -1751,14 +1791,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_banding.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_banding[i].kegiatan_skp;
+                        if (obj.data.tr_banding[i].kegiatan_skp_jft == null && obj.data.tr_banding[i].kegiatan_skp_jfu == null && obj.data.tr_banding[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_banding[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_banding[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_banding[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_banding[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_banding[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_banding[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_banding[i].tanggal_mulai+"&nbsp;"+" Sampai "+obj.data.tr_banding[i].tanggal_selesai+"&nbsp;"+"</td>"+
@@ -1782,14 +1828,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_banding_ditolak.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp;
+                        if (obj.data.tr_banding_ditolak[i].kegiatan_skp_jft == null && obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu == null && obj.data.tr_banding_ditolak[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_banding_ditolak[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_banding_ditolak[i].tanggal_mulai+"&nbsp;"+" Sampai "+obj.data.tr_banding_ditolak[i].tanggal_selesai+"&nbsp;"+"</td>"+
