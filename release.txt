@@ -4,6 +4,7 @@ New:
 Improved:
 Fixed:
 - Check posisi di Target SKP
+- check uraian tugas di semua modul
 
 v4.0.0-Beta    
 2019-02-28
