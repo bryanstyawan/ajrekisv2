@@ -25,8 +25,9 @@ class Data_pegawai extends CI_Controller {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
-				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
-				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				$get_empty_skp                = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
+				$get_nonempty_skp             = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
 				if ($get_empty_skp != array()) {
 					# code...
 					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
@@ -43,6 +44,15 @@ class Data_pegawai extends CI_Controller {
 				else
 				{
 					$data['list'][$i]->nonempty_skp = 0;					
+				}
+				
+				if ($get_data_struktur_organisasi != array()) {
+					# code...
+					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+				}
+				else
+				{
+					$data['list'][$i]->posisi_akademik_name = '-';					
 				}				
 			}
 		}
@@ -62,10 +72,11 @@ class Data_pegawai extends CI_Controller {
 		$data['tmt_pegawai'] = $this->Mmaster->get_masa_kerja_id_pegawai($id,'DESC');
 		if ($data['pegawai'] != array()) {
 			# code...
-			$data['list_eselon2'] = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data['pegawai'][0]['es1']))->result_array();
-			$data['list_eselon3'] = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data['pegawai'][0]['es2']))->result_array();
-			$data['list_eselon4'] = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data['pegawai'][0]['es3']))->result_array();
-			$data['jabatan_raw']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi']))->result_array();
+			$data['list_eselon2']      = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data['pegawai'][0]['es1']))->result_array();
+			$data['list_eselon3']      = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data['pegawai'][0]['es2']))->result_array();
+			$data['list_eselon4']      = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data['pegawai'][0]['es3']))->result_array();
+			$data['jabatan_raw']       = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi']))->result_array();
+			$data['jabatan_akademik']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi_akademik']))->result_array();			
 			if ($data['jabatan_raw'] != array()) {
 				# code...
 				$data['jabatan_jfu']  = $this->Allcrud->getData('mr_jabatan_fungsional_umum',array('id'=>$data['jabatan_raw'][0]['id_jfu']))->result_array();
@@ -165,15 +176,16 @@ class Data_pegawai extends CI_Controller {
 				# code...
 				$data_store = array
 				(
-					'es1'          => $data_sender['es1'],
-					'es2'          => $data_sender['es2'],
-					'es3'          => $data_sender['es3'],
-					'es4'          => $data_sender['es4'],
-					'nip'          => $data_sender['nip'],				
-					'nama_pegawai' => $data_sender['nama'],				
-					'posisi'       => $data_sender['jabatan'],
-					'tmt_jabatan'  => $data_sender['tmt'],
-					'local'		   => '0'
+					'es1'                   => $data_sender['es1'],
+					'es2'                   => $data_sender['es2'],
+					'es3'                   => $data_sender['es3'],
+					'es4'                   => $data_sender['es4'],
+					'nip'                   => $data_sender['nip'],				
+					'nama_pegawai'          => $data_sender['nama'],				
+					'posisi'                => $data_sender['jabatan'],
+					'posisi_akademik'       => $data_sender['jabatan_akademik'],					
+					'tmt_jabatan'           => $data_sender['tmt'],
+					'local'		          	=> '0'
 				);
 
 				if ($data_sender['crud'] == 'insert') {
@@ -558,6 +570,69 @@ class Data_pegawai extends CI_Controller {
 		$this->load->view('master/pegawai/ajaxjabatan',$data);
 	}
 
+	public function cari_jabatan_struktur_akademik()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		if($this->input->post('es4') != NULL || $this->input->post('nes4') != NULL){
+			if($this->input->post('es4') == NULL){
+				$flag = array(
+					'eselon4'    => $this->input->post('nes4'),
+					'kat_posisi' => 6
+				);
+			}else{
+				$flag = array(
+					'eselon4'    => $this->input->post('es4'),
+					'kat_posisi' => 6
+				);
+			}
+		}elseif($this->input->post('es3') != NULL || $this->input->post('nes3') != NULL){
+			if($this->input->post('es3') == NULL){
+				$flag = array(
+					'eselon3'    => $this->input->post('nes3'),
+					'eselon4'    => 0,
+					'kat_posisi' => 6
+				);
+			}else{
+				$flag = array(
+					'eselon3'    => $this->input->post('es3'),
+					'eselon4'    => 0,
+					'kat_posisi' => 6
+				);
+			}
+		}elseif($this->input->post('es2') != NULL || $this->input->post('nes2') != NULL){
+			if($this->input->post('es2') == NULL){
+				$flag = array(
+					'eselon2'    => $this->input->post('nes2'),
+					'eselon3'    => 0,
+					'kat_posisi' => 6
+				);
+			}else{
+				$flag = array(
+					'eselon2'    => $this->input->post('es2'),
+					'eselon3'    => 0,
+					'kat_posisi' => 6
+				);
+			}
+		}else{
+			if($this->input->post('es1') == NULL){
+				$flag = array(
+					'eselon1'    => $this->input->post('nes1'),
+					'eselon2'    => 0,
+					'kat_posisi' => 6
+				);
+			}else{
+				$flag = array(
+					'eselon1'    => $this->input->post('es1'),
+					'eselon2'    => 0,
+					'kat_posisi' => 6
+				);
+			}
+		}
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',$flag);
+		$this->load->view('master/pegawai/ajax_jabatan_struktur_akademik',$data);		
+	}
+
 	public function masa_kerja_pegawai_id($id)
 	{
 		// code...
@@ -716,7 +791,7 @@ class Data_pegawai extends CI_Controller {
 				}
 				else
 				{
-					$set_status = "SKP tidak tersedia";					
+					$set_status = "Pegawai Belum Pernah membuka target skp atau SKP tidak tersedia";					
 				}
 
 

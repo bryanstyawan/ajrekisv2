@@ -28,7 +28,7 @@ class Skp extends CI_Controller {
 		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
 		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Setup SKP';
 		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'10');
+		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'10');
 		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
 		$data['content']     = 'skp/skp_pegawai';
 		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
@@ -338,7 +338,7 @@ class Skp extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
 		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),11);
+		$data['list']        = $this->mskp->get_data_skp_pegawai($id,NULL,date('Y'),11);
 		$data['id']          = $id;
 		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
 		$data['content']     = 'skp/skp_approval_pegawai';		
@@ -548,7 +548,7 @@ class Skp extends CI_Controller {
 			}
 		}
 
-		$res_data_2 = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),'none',$priority);
+		$res_data_2 = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),NULL,date('Y'),'none',$priority);
 		if ($res_data_2) {
 			# code...
 			if ($param == 'up') {
@@ -590,7 +590,7 @@ class Skp extends CI_Controller {
 		if ($pk == 1)  $param_pk = 'PK';
 		else $param_pk = 'non_PK';
 
-		$data_list   = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),date('Y'),$param_pk);
+		$data_list   = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),NULL,date('Y'),$param_pk);
 
 		if ($data_list != 0) {
 			# code...
@@ -637,7 +637,7 @@ class Skp extends CI_Controller {
 		}
 
 		$data['infoPegawai1'] = $this->Globalrules->get_info_pegawai($id,'id');
-		$data['list']        = $this->mskp->get_data_skp_pegawai($id,date('Y'),'1','realisasi');
+		$data['list']        = $this->mskp->get_data_skp_pegawai($id,NULL,date('Y'),'1','realisasi');
 		// echo "<pre>";
 		// print_r($data['infoPegawai1']);die();				
 		// echo"</pre>";

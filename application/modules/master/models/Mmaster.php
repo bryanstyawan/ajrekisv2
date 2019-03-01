@@ -116,6 +116,7 @@ class Mmaster extends CI_Model {
 					a.id as id_pegawai,
 					a.nip,
 					a.nama_pegawai,
+					a.posisi_akademik,
 					a.photo AS photo,
 					COALESCE(b.kat_posisi,'-') as kat_posisi,					
 					COALESCE(b.nama_posisi,'-') as nama_posisi, 
@@ -140,9 +141,7 @@ class Mmaster extends CI_Model {
 				LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
 				LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
 				LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4
-				-- LEFT JOIN mr_pegawai_photo aa ON aa.id_pegawai = a.id
 				WHERE a. STATUS = '1'
-				-- AND aa.main_pic = 1
 				".$sql_1."
 				".$sql_2."
 				".$sql_3."
@@ -385,7 +384,7 @@ class Mmaster extends CI_Model {
 		$sql = "SELECT a.nama_posisi,
 						a.id
 				FROM mr_posisi a
-				WHERE a.kat_posisi = ".$param['kat_posisi']."
+				WHERE (a.kat_posisi = ".$param['kat_posisi']." OR a.kat_posisi = 6)
 				".$sql_1."
 				".$sql_2."
 				".$sql_3."
@@ -430,7 +429,7 @@ class Mmaster extends CI_Model {
 		$sql = "SELECT a.nama_posisi,
 					   a.id
 				FROM mr_posisi a
-				WHERE a.kat_posisi = 1
+				WHERE (a.kat_posisi = 1 OR a.kat_posisi = 6)				
 				".$sql_4."
 				";
 		$query = $this->db->query($sql);
@@ -456,14 +455,15 @@ class Mmaster extends CI_Model {
 			# code...
 			$sql_2 = "";
 		}
-		else $sql_4 = "AND a.eselon2 = '".$param['eselon2']."'";
+		else $sql_2 = "AND a.eselon2 = '".$param['eselon2']."'";
 
 		$sql = "SELECT a.nama_posisi,
 						a.id
 				FROM mr_posisi a
-				WHERE a.kat_posisi = 1
+				WHERE (a.kat_posisi = 1 OR a.kat_posisi = 6)				
 				".$sql_2."
 				";
+
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -543,7 +543,7 @@ class Mmaster extends CI_Model {
 			# code...
 			$sql_5 = "";
 		}
-		else $sql_5 = "AND b.id = '".$arg."'";		
+		else $sql_5 = "AND (b.id = '1' OR b.id = '6')";		
 
 
 		if ($param['eselon1'] == '') {
@@ -582,7 +582,7 @@ class Mmaster extends CI_Model {
 							WHERE aa.posisi = a.id
 						),'0') as counter_pegawai   						
 				FROM mr_posisi a
-				JOIN mr_kat_posisi b
+				LEFT JOIN mr_kat_posisi b
 				ON b.id = a.kat_posisi
 				LEFT JOIN mr_eselon1 es1
 				ON a.eselon1 = es1.id_es1
@@ -1003,4 +1003,21 @@ class Mmaster extends CI_Model {
 			return 0;
 		}
 	}			
+
+	public function get_data_struktur_organisasi($id=NULL)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_posisi a
+				WHERE a.id = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}
+	}				
 }

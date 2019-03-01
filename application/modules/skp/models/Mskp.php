@@ -5,7 +5,7 @@ class Mskp extends CI_Model
 		parent::__construct();
 	}
 
-	public function get_data_skp_pegawai($id_pegawai,$tahun,$param_status,$priority=NULL)
+	public function get_data_skp_pegawai($id_pegawai,$id_posisi=NULL,$tahun,$param_status,$priority=NULL)
 	{
 		# code...
 		$query_1 = "";
@@ -281,6 +281,7 @@ class Mskp extends CI_Model
 					ON a.target_output = d.id
 					WHERE a.tahun = '".$tahun."'
 					AND a.id_pegawai = '".$id_pegawai."'
+					AND a.id_posisi = '".$id_posisi."'					
 					AND a.status <> '99'
 					".$query_1."
 					ORDER BY a.PK DESC, a.audit_priority ASC";
@@ -808,7 +809,7 @@ class Mskp extends CI_Model
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
 				AND a.tahun = '".$year."'
-				AND a.target_qty IS NULL";
+				AND (a.target_qty IS NULL OR a.target_qty = '')";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -828,7 +829,7 @@ class Mskp extends CI_Model
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
 				AND a.tahun = '".$year."'
-				AND a.target_qty IS NOT NULL";
+				AND (a.target_qty IS NOT NULL OR a.target_qty <> '')";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

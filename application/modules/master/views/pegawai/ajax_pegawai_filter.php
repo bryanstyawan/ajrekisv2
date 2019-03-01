@@ -43,7 +43,7 @@
 									?>										
 									)</b>
 								</td>
-								<td></td>
+								<td><?=$list[$i]->posisi_akademik_name;?></td>
 								<td><?=$list[$i]->empty_skp;?></td>
 								<td><?=$list[$i]->nonempty_skp;?></td>																
 								<td class="text-center">

@@ -21,18 +21,10 @@
 										ORDER BY prioritas asc"
 									);
 		$notify       = $CI->db->query("SELECT a.*,
-												COALESCE(
-															(
-																SELECT bb.photo
-																FROM mr_pegawai aa
-																JOIN mr_pegawai_photo bb
-																ON    aa.id       = bb.id_pegawai
-																WHERE aa.id       = a.sender
-																AND   bb.main_pic = 1
-																AND   aa.local    = bb.local
-															),'-'
-														) as photo_sender
+												COALESCE(sender.photo,'-') as photo_sender
 										FROM log_notifikasi a
+										LEFT JOIN mr_pegawai sender
+										ON sender.id = a.sender										
 										WHERE a.receiver    = '".$id."'
 										AND   a.status_read = 0
 										ORDER BY a.id DESC"
