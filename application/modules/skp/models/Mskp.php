@@ -481,12 +481,13 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function check_pekerjaan_pegawai($id_pegawai,$kegiatan,$tahun)
+	public function check_pekerjaan_pegawai($id_pegawai,$kegiatan,$tahun,$posisi)
 	{
 		# code...
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai  = '".$id_pegawai."'
+				AND a.id_posisi = '".$posisi."'
 				AND a.id_skp_master = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
@@ -499,13 +500,14 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function check_pekerjaan_pegawai_jfu($id_pegawai,$kegiatan,$tahun)
+	public function check_pekerjaan_pegawai_jfu($id_pegawai,$kegiatan,$tahun,$posisi)
 	{
 		# code...
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai  = '".$id_pegawai."'
 				AND a.tahun         = '".$tahun."'
+				AND a.id_posisi         = '".$posisi."'				
 				AND a.id_skp_jfu = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
@@ -518,14 +520,15 @@ class Mskp extends CI_Model
 		}
 	}
 	
-	public function check_pekerjaan_pegawai_jft($id_pegawai,$kegiatan,$tahun)
+	public function check_pekerjaan_pegawai_jft($id_pegawai,$kegiatan,$tahun,$posisi)
 	{
 		# code...
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
-				WHERE a.id_pegawai  = '".$id_pegawai."'
-				AND a.tahun         = '".$tahun."'
-				AND a.id_skp_jft = '".$kegiatan."'";
+				WHERE a.id_pegawai      = '".$id_pegawai."'
+				AND a.tahun             = '".$tahun."'
+				AND a.id_posisi         = '".$posisi."'				
+				AND a.id_skp_jft        = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

@@ -1,6 +1,13 @@
 v4.0.0-Beta    
 2019-02-28
 New:
+Improved:
+Fixed:
+- Check posisi di Target SKP
+
+v4.0.0-Beta    
+2019-02-28
+New:
 - Ucapan 'Selamat datang' di home
 Improved:
 - SKP Struktur Akademik di Master SKP
