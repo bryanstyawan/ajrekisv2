@@ -9,6 +9,16 @@ class Mskp extends CI_Model
 	{
 		# code...
 		$query_1 = "";
+		$query_2 = "";
+
+		if ($id_posisi == NULL) {
+			# code...
+			$query_2 = '';
+		}
+		else
+		{
+			$query_2 = "AND a.id_posisi = '".$id_posisi."'";
+		}
 		$SELECT = "";
 		if ($param_status == 10) {
 			# code...
@@ -281,7 +291,7 @@ class Mskp extends CI_Model
 					ON a.target_output = d.id
 					WHERE a.tahun = '".$tahun."'
 					AND a.id_pegawai = '".$id_pegawai."'
-					AND a.id_posisi = '".$id_posisi."'					
+					".$query_2."					
 					AND a.status <> '99'
 					".$query_1."
 					ORDER BY a.PK DESC, a.audit_priority ASC";
