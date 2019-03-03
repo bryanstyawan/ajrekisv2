@@ -843,19 +843,11 @@ class Skp extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$data_sender = array
-						(
-							'eselon1' => $this->session->userdata('sesEs1'),
-							'eselon2' => '',
-							'eselon3' => '',
-							'eselon4' => ''
-						);
-		$data                 = $this->get_data_master_skp($data_sender);
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Master SKP';
 		$data['subtitle']     = '';
 		$data['content']      = 'skp/master_skp';
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
+		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['class_posisi'] = $this->Mmaster->get_posisi_class();
 		$data['katpos']       = $this->Allcrud->listData('mr_kat_posisi');
 		$this->load->view('templateAdmin',$data);

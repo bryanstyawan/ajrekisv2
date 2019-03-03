@@ -399,6 +399,10 @@ class Master extends CI_Controller {
 		$this->load->view('master/struktur/ajaxCariGrade',$data);
 	}
 
+
+
+
+	
 // Last Edit : Bryan
 // 2019-02-19
 	public function filter_data_pegawai()

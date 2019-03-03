@@ -1,5 +1,13 @@
 v4.0.0-Beta    
-2019-02-28
+2019-03-01
+New:
+- Template Filter Eselon 
+Improved:
+- Perubahan Besar Filter Eselon dan data di pegawai, organisasi, Master SKP
+Fixed:
+
+v4.0.0-Beta    
+2019-03-01
 New:
 Improved:
 Fixed:

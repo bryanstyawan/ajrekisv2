@@ -82,6 +82,19 @@ class Data_eselon3 extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	//By : Bryan
+	//Last Edited : 2019-03-02	
+	public function dropdown_es3($param=NULL,$param1=NULL)
+	{
+		# code...
+		$this->Globalrules->session_rule();								
+		$flag                    = array('id_es2'=>$this->input->post('select_eselon_2'));
+		$data['select_eselon_3'] = $this->Allcrud->getData('mr_eselon3',$flag);
+		$data['param']           = $param;
+		$data['param1']          = $param1;					
+		$this->load->view('templates/filter/eselon3',$data);				
+	}	
+
 	public function ajaxEselon3(){
 		$this->Globalrules->session_rule();							
 		$data['list']       = $this->Mmaster->eselon3();
@@ -94,18 +107,7 @@ class Data_eselon3 extends CI_Controller {
 		$flag        = array('id_es2'=>$this->input->post('es2'));
 		$data['es3'] = $this->Allcrud->getData('mr_eselon3',$flag);
 		$this->load->view('master/eselon/ajax/eselon3',$data);
-	}
-
-	public function cariEs3_filter($param=NULL,$param1=NULL)
-	{
-		# code...
-		$this->Globalrules->session_rule();								
-		$flag                    = array('id_es2'=>$this->input->post('select_eselon_2'));
-		$data['select_eselon_3'] = $this->Allcrud->getData('mr_eselon3',$flag);
-		$data['param']           = $param;
-		$data['param1']          = $param1;					
-		$this->load->view('master/eselon/ajax/eselon3filter',$data);				
-	}				
+	}			
 
 	public function formEselon3(){
 		$this->Globalrules->session_rule();								
