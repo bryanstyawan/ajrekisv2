@@ -9,6 +9,16 @@ class Mskp extends CI_Model
 	{
 		# code...
 		$query_1 = "";
+		$query_2 = "";
+
+		if ($id_posisi == NULL) {
+			# code...
+			$query_2 = '';
+		}
+		else
+		{
+			$query_2 = "AND a.id_posisi = '".$id_posisi."'";
+		}
 		$SELECT = "";
 		if ($param_status == 10) {
 			# code...
@@ -281,7 +291,7 @@ class Mskp extends CI_Model
 					ON a.target_output = d.id
 					WHERE a.tahun = '".$tahun."'
 					AND a.id_pegawai = '".$id_pegawai."'
-					AND a.id_posisi = '".$id_posisi."'					
+					".$query_2."					
 					AND a.status <> '99'
 					".$query_1."
 					ORDER BY a.PK DESC, a.audit_priority ASC";
@@ -481,12 +491,13 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function check_pekerjaan_pegawai($id_pegawai,$kegiatan,$tahun)
+	public function check_pekerjaan_pegawai($id_pegawai,$kegiatan,$tahun,$posisi)
 	{
 		# code...
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai  = '".$id_pegawai."'
+				AND a.id_posisi = '".$posisi."'
 				AND a.id_skp_master = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
@@ -499,13 +510,14 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function check_pekerjaan_pegawai_jfu($id_pegawai,$kegiatan,$tahun)
+	public function check_pekerjaan_pegawai_jfu($id_pegawai,$kegiatan,$tahun,$posisi)
 	{
 		# code...
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai  = '".$id_pegawai."'
 				AND a.tahun         = '".$tahun."'
+				AND a.id_posisi         = '".$posisi."'				
 				AND a.id_skp_jfu = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
@@ -518,14 +530,15 @@ class Mskp extends CI_Model
 		}
 	}
 	
-	public function check_pekerjaan_pegawai_jft($id_pegawai,$kegiatan,$tahun)
+	public function check_pekerjaan_pegawai_jft($id_pegawai,$kegiatan,$tahun,$posisi)
 	{
 		# code...
 		$sql = "SELECT a.*
 				FROM mr_skp_pegawai a
-				WHERE a.id_pegawai  = '".$id_pegawai."'
-				AND a.tahun         = '".$tahun."'
-				AND a.id_skp_jft = '".$kegiatan."'";
+				WHERE a.id_pegawai      = '".$id_pegawai."'
+				AND a.tahun             = '".$tahun."'
+				AND a.id_posisi         = '".$posisi."'				
+				AND a.id_skp_jft        = '".$kegiatan."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

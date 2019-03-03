@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller {
 		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
 		$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
 		$data['history_golongan']   = $this->mdashboard->get_history_golongan();
-		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'));
+		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 		$data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));
 		if ($data['data_transaksi']) {
 			# code...

@@ -528,12 +528,23 @@ else {
                                 }
 
                                 kegiatan = "";
-                                if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                                    kegiatan = obj.data.skp.list_skp[i].kegiatan_skp;
+                                if (obj.data.skp.list_skp[i].id_skp_jfu == null && obj.data.skp.list_skp[i].id_skp_jft == null && obj.data.skp.list_skp[i].id_skp_master == null) 
+                                {
+                                    kegiatan = obj.data.skp.list_skp[i].kegiatan;                                    
                                 }
-                                else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                                    kegiatan = obj.data.skp.list_skp[i].kegiatan_skp_jfu;
+                                else
+                                {
+                                    if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                        kegiatan = obj.data.skp.list_skp[i].kegiatan_skp;
+                                    }
+                                    if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                        kegiatan = obj.data.skp.list_skp[i].kegiatan_skp_jft;
+                                    }                                
+                                    else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                        kegiatan = obj.data.skp.list_skp[i].kegiatan_skp_jfu;
+                                    }
                                 }
+
 
 
                                 $('#table_progress_skp').append('<tr class="child-urtug">'+

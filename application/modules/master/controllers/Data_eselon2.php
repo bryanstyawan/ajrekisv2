@@ -79,6 +79,20 @@ class Data_eselon2 extends CI_Controller {
 		$this->load->view('master/pegawai/eselon2',$data);
 	}	
 
+	//By : Bryan
+	//Last Edited : 2019-03-02	
+	public function dropdown_es2($param=NULL,$param1=NULL)
+	{
+		# code...
+		$this->Globalrules->session_rule();								
+		$flag                    = array('id_es1'=>$this->input->post('select_eselon_1'));
+		$data['select_eselon_2'] = $this->Allcrud->getData('mr_eselon2',$flag);
+		$data['param']           = $param;
+		$data['param1']          = $param1;		
+		$this->load->view('templates/filter/eselon2',$data);		
+	}						
+
+
 
 
 
@@ -109,16 +123,4 @@ class Data_eselon2 extends CI_Controller {
 		$data['nes2'] = $this->Allcrud->getData('mr_eselon2',$flag);
 		$this->load->view('master/eselon/ajax/eselon2edit',$data);
 	}
-
-	//soon, ini akan dhapus		
-	public function cariEs2_filter($param=NULL,$param1=NULL)
-	{
-		# code...
-		$this->Globalrules->session_rule();								
-		$flag                    = array('id_es1'=>$this->input->post('select_eselon_1'));
-		$data['select_eselon_2'] = $this->Allcrud->getData('mr_eselon2',$flag);
-		$data['param']           = $param;
-		$data['param1']          = $param1;		
-		$this->load->view('master/eselon/ajax/eselon2filter',$data);		
-	}						
 }

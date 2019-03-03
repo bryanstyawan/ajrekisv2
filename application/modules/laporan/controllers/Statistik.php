@@ -21,13 +21,22 @@ class Statistik extends CI_Controller {
 	public function get_statistik($oid)
 	{
 		# code...
+		$id_posisi = "";
+		$get_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$oid))->result_array();
+		if ($get_pegawai != array()) {
+			# code...
+			$id_posisi = $get_pegawai[0]['posisi'];
+		} else {
+			# code...
+			$id_posisi = '';
+		}		
 		$data['belum_diperiksa']    = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$oid,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
 		$data['disetujui']          = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>1,'id_pegawai'=>$oid,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
 		$data['tolak']              = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$oid,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
 		$data['revisi']             = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$oid,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
 		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai($oid,'id');
 		$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$oid))->result_array();
-		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($oid);
+		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($oid,$id_posisi);
 		$data['data_transaksi']     = $this->mlaporan->get_transact($oid,1,date('m'),date('Y'));
 		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($oid);
 		$res = array

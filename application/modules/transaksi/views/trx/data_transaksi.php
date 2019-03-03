@@ -243,18 +243,24 @@ else {
                                             for ($i=0; $i < count($tr_belum_diperiksa); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_belum_diperiksa[$i]->kegiatan_skp == '' && $tr_belum_diperiksa[$i]->kegiatan_skp_jfu == '' && $tr_belum_diperiksa[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_belum_diperiksa[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jft;
-                                                }                                                                                            
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jfu;
-                                                }                                                                                           
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
+                                                }                                  
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_mulai;?></td>
@@ -328,18 +334,24 @@ else {
                                             for ($i=0; $i < count($tr_revisi); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_revisi[$i]->kegiatan_skp == '' && $tr_revisi[$i]->kegiatan_skp_jfu == '' && $tr_revisi[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_revisi[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_revisi[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_revisi[$i]->kegiatan_skp_jft;
-                                                }                                                                                            
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_revisi[$i]->kegiatan_skp_jfu;
-                                                }                                                                      
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_revisi[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_revisi[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_revisi[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
+                                                }                                
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_revisi[$i]->tanggal_mulai;?>&nbsp;<?=$tr_revisi[$i]->jam_mulai;?></td>
@@ -397,18 +409,24 @@ else {
                                             for ($i=0; $i < count($tr_disetujui); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_disetujui[$i]->kegiatan_skp == '' && $tr_disetujui[$i]->kegiatan_skp_jfu == '' && $tr_disetujui[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
+                                                    $kegiatan = $tr_disetujui[$i]->uraian_tugas;                                                    
+                                                } else {
+                                                    # code...
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
                                                 }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
-                                                    # code...
-                                                    $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jft;
-                                                }                                                                                            
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
-                                                }                                            
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_disetujui[$i]->tanggal_mulai;?>&nbsp;<?=$tr_disetujui[$i]->jam_mulai;?></td>
@@ -463,18 +481,24 @@ else {
                                             for ($i=0; $i < count($tr_tolak); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_tolak[$i]->kegiatan_skp == '' && $tr_tolak[$i]->kegiatan_skp_jfu == '' && $tr_tolak[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_tolak[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_tolak[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_tolak[$i]->kegiatan_skp_jft;
-                                                }                                                                                            
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_tolak[$i]->kegiatan_skp_jfu;
-                                                }                                                                                            
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_tolak[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_tolak[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_tolak[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
+                                                }                                                               
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_tolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_tolak[$i]->jam_mulai;?></td>
@@ -689,17 +713,23 @@ else {
                                             for ($i=0; $i < count($tr_keberatan); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_keberatan[$i]->kegiatan_skp == '' && $tr_keberatan[$i]->kegiatan_skp_jfu == '' && $tr_keberatan[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_keberatan[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_keberatan[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jft;
-                                                }                                                
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jfu;
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
                                                 }                                                                   
                                     ?>
                                                 <tr>
@@ -754,17 +784,23 @@ else {
                                             for ($i=0; $i < count($tr_keberatan_ditolak); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_keberatan_ditolak[$i]->kegiatan_skp == '' && $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu == '' && $tr_keberatan_ditolak[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_keberatan_ditolak[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jft;
-                                                }                                                
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
                                                 }                                                                              
                                     ?>
                                                 <tr>
@@ -820,18 +856,24 @@ else {
                                             for ($i=0; $i < count($tr_banding); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_banding[$i]->kegiatan_skp == '' && $tr_banding[$i]->kegiatan_skp_jfu == '' && $tr_banding[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_banding[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_banding[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_banding[$i]->kegiatan_skp_jft;
-                                                }                                                                                                
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_banding[$i]->kegiatan_skp_jfu;
-                                                }                                                
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
+                                                }        
                                     ?>
                                                 <tr>
                                                     <td><?=$tr_banding[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding[$i]->jam_mulai;?></td>
@@ -883,17 +925,23 @@ else {
                                             for ($i=0; $i < count($tr_banding_ditolak); $i++) {
                                                 # code...
                                                 $kegiatan = "";
-                                                if ($infoPegawai[0]->kat_posisi == 1) {
+                                                if ($tr_banding_ditolak[$i]->kegiatan_skp == '' && $tr_banding_ditolak[$i]->kegiatan_skp_jfu == '' && $tr_banding_ditolak[$i]->kegiatan_skp_jft == '') {
                                                     # code...
-                                                    $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp;
-                                                }
-                                                elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                    $kegiatan = $tr_banding_ditolak[$i]->uraian_tugas;                                                    
+                                                } else {
                                                     # code...
-                                                    $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jft;
-                                                }                                                                                            
-                                                elseif ($infoPegawai[0]->kat_posisi == 4) {
-                                                    # code...
-                                                    $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jfu;
+                                                    if ($infoPegawai[0]->kat_posisi == 1) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jft;
+                                                    }                                                                                            
+                                                    elseif ($infoPegawai[0]->kat_posisi == 4) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jfu;
+                                                    }                                                                                                
                                                 }                                                
                                     ?>
                                                 <tr>
@@ -1565,15 +1613,23 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_belum_diperiksa.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp;
+                        if (obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft == null && obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu == null && obj.data.tr_belum_diperiksa[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_belum_diperiksa[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_belum_diperiksa[i].kegiatan_skp_jfu;
+                            }
                         }
+
+
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
@@ -1599,15 +1655,21 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_revisi.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp;
+                        if (obj.data.tr_revisi[i].kegiatan_skp_jft == null && obj.data.tr_revisi[i].kegiatan_skp_jfu == null && obj.data.tr_revisi[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_revisi[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jfu;
-                        }                        
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_revisi[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_revisi[i].kegiatan_skp_jfu;
+                            }
+                        }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_revisi[i].tanggal_mulai+"&nbsp;"+obj.data.tr_revisi[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_revisi[i].tanggal_selesai+"&nbsp;"+obj.data.tr_revisi[i].jam_selesai+"</td>"+
@@ -1627,14 +1689,21 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_disetujui.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp;
+                        if (obj.data.tr_disetujui[i].kegiatan_skp_jft == null && obj.data.tr_disetujui[i].kegiatan_skp_jfu == null && obj.data.tr_disetujui[i].kegiatan_skp == null) 
+                        {
+                            kegiatan = obj.data.tr_disetujui[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_disetujui[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_disetujui[i].tanggal_mulai+"&nbsp;"+obj.data.tr_disetujui[i].jam_mulai+"</td>"+
@@ -1657,14 +1726,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_tolak.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp;
+                        if (obj.data.tr_tolak[i].kegiatan_skp_jft == null && obj.data.tr_tolak[i].kegiatan_skp_jfu == null && obj.data.tr_tolak[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_tolak[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_tolak[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_tolak[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_tolak[i].tanggal_selesai+"&nbsp;"+obj.data.tr_tolak[i].jam_selesai+"</td>"+
@@ -1686,14 +1761,21 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_keberatan.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp;
+                        if (obj.data.tr_keberatan[i].kegiatan_skp_jft == null && obj.data.tr_keberatan[i].kegiatan_skp_jfu == null && obj.data.tr_keberatan[i].kegiatan_skp == null) 
+                        {
+                            kegiatan = obj.data.tr_keberatan[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_keberatan[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_keberatan[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_keberatan[i].tanggal_selesai+"&nbsp;"+obj.data.tr_keberatan[i].jam_selesai+"</td>"+
@@ -1720,14 +1802,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_keberatan_ditolak.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp;
+                        if (obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft == null && obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu == null && obj.data.tr_keberatan_ditolak[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_keberatan_ditolak[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_keberatan_ditolak[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_keberatan_ditolak[i].tanggal_selesai+"&nbsp;"+obj.data.tr_keberatan_ditolak[i].jam_selesai+"</td>"+
@@ -1751,14 +1839,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_banding.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_banding[i].kegiatan_skp;
+                        if (obj.data.tr_banding[i].kegiatan_skp_jft == null && obj.data.tr_banding[i].kegiatan_skp_jfu == null && obj.data.tr_banding[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_banding[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_banding[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_banding[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_banding[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_banding[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_banding[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_banding[i].tanggal_mulai+"&nbsp;"+" Sampai "+obj.data.tr_banding[i].tanggal_selesai+"&nbsp;"+"</td>"+
@@ -1782,14 +1876,20 @@ function view_option(id,i) {
                     for (var i = 0; i < obj.data.tr_banding_ditolak.length; i++)
                     {
                         kegiatan = '';
-                        if (obj.data.infoPegawai[0].kat_posisi == 1) {
-                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp;
+                        if (obj.data.tr_banding_ditolak[i].kegiatan_skp_jft == null && obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu == null && obj.data.tr_banding_ditolak[i].kegiatan_skp == null) {
+                            kegiatan = obj.data.tr_banding_ditolak[i].uraian_tugas;                            
                         }
-                        else if (obj.data.infoPegawai[0].kat_posisi == 2) {
-                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jft;
-                        }                        
-                        else if (obj.data.infoPegawai[0].kat_posisi == 4) {
-                            kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu;
+                        else
+                        {
+                            if (obj.data.infoPegawai[0].kat_posisi == 1) {
+                                kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp;
+                            }
+                            else if (obj.data.infoPegawai[0].kat_posisi == 2) {
+                                kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jft;
+                            }                        
+                            else if (obj.data.infoPegawai[0].kat_posisi == 4) {
+                                kegiatan = obj.data.tr_banding_ditolak[i].kegiatan_skp_jfu;
+                            }
                         }
                         row_data = "<tr>"+
                         "<td>"+obj.data.tr_banding_ditolak[i].tanggal_mulai+"&nbsp;"+" Sampai "+obj.data.tr_banding_ditolak[i].tanggal_selesai+"&nbsp;"+"</td>"+

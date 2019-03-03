@@ -295,6 +295,7 @@ if ($member != 0) {
 
                             $kegiatan               = "";
 
+                            $kegiatan            = $list[$i]->kegiatan;
                             if($infoPegawai1[0]->kat_posisi == 1)
                             {
                                 if ($list[$i]->id_skp_master != '') {
@@ -675,7 +676,7 @@ function detail_skp(id) {
     // body...
     $("#loadprosess").modal('show');
     setTimeout(function(){
-        window.location.href = "<?php echo base_url().'index.php/skp/penilaian_skp/'?>"+id;
+        window.location.href = "<?php echo base_url().'skp/penilaian_skp/'?>"+id;
     }, 1500);
 }
 function edit(id,before,after) {

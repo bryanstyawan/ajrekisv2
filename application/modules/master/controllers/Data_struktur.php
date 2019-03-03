@@ -15,63 +15,8 @@ class Data_struktur extends CI_Controller {
 		$data['content']      = 'master/struktur/data_struktur';
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
 		$data['class_posisi'] = $this->Mmaster->get_posisi_class();
 		$data['katpos']       = $this->Allcrud->listData('mr_kat_posisi');
-		$data_sender = array
-						(
-							'eselon1' => $this->session->userdata('sesEs1'), 
-							'eselon2' => '', 
-							'eselon3' => '', 
-							'eselon4' => ''																					
-						);			
-		$data['list']         = $this->Mmaster->get_struktur_organisasi($data_sender,1);		
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) {
-				# code...
-				if($data['list'][$i]->kat_posisi == 1)
-				{
-					$get_summary_urtug = $this->mskp->get_summary_master_skp($data['list'][$i]->id);
-					if ($get_summary_urtug != 0) {
-						# code...
-						$data['list'][$i]->counter_skp = $get_summary_urtug;
-					}
-					else
-					{
-						$data['list'][$i]->counter_skp = 0;
-					}
-				}
-				elseif ($data['list'][$i]->kat_posisi == 2) {
-					# code...
-					$get_data = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $data['list'][$i]->id_jft));
-					if($get_data->result_array() != array())
-					{					
-						$data['list'][$i]->counter_skp = count($get_data->result_array());
-					}
-					else {	
-						# code...
-						$data['list'][$i]->counter_skp = 0;
-					}					
-				}
-				elseif ($data['list'][$i]->kat_posisi == 4) {
-					# code...
-					$get_data = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $data['list'][$i]->id_jfu));
-					if($get_data->result_array() != array())
-					{					
-						$data['list'][$i]->counter_skp = count($get_data->result_array());
-					}
-					else {	
-						# code...
-						$data['list'][$i]->counter_skp = 0;
-					}					
-				}				
-				else {
-					# code...
-					$data['list'][$i]->counter_skp = 0;					
-				}
-			}
-		}	
 		$this->load->view('templateAdmin',$data);
 	}
 

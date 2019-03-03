@@ -15,51 +15,9 @@ class Data_pegawai extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$data['title']        = 'Data Pegawai';
 		$data['content']      = 'master/pegawai/data_pegawai';
-		$flag                 = array();
-		$data['list']         = $this->Mmaster->data_pegawai('default','a.es2 ASC,
-																		a.es3 ASC,
-																		a.es4 ASC,
-																		b.kat_posisi asc,
-																		b.atasan ASC');
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) { 
-				# code...
-				$get_empty_skp                = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
-				$get_nonempty_skp             = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
-				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
-				if ($get_empty_skp != array()) {
-					# code...
-					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
-				}
-				else
-				{
-					$data['list'][$i]->empty_skp = 0;					
-				}
-
-				if ($get_nonempty_skp != array()) {
-					# code...
-					$data['list'][$i]->nonempty_skp = $get_nonempty_skp[0]->counter;
-				}
-				else
-				{
-					$data['list'][$i]->nonempty_skp = 0;					
-				}
-				
-				if ($get_data_struktur_organisasi != array()) {
-					# code...
-					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
-				}
-				else
-				{
-					$data['list'][$i]->posisi_akademik_name = '-';					
-				}				
-			}
-		}
-																		
+		$flag                 = array();																		
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
 		$data['es1']          = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']          = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
 		$data['role']         = $this->Allcrud->listData('user_role');
 		$data['agama']        = $this->Allcrud->listData('mr_agama');
 		$this->load->view('templateAdmin',$data);

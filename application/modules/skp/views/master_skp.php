@@ -9,85 +9,17 @@ isset($class_posisi);
 
 			<div class="box-body">
 				<div class="container-fluid">
-					<div class="row col-xs-6">
-
-			            <h4>Pimpinan Tinggi Madya (Eselon I) :</h4>
-						<div class="input-group">
-							<span class="input-group-addon">
-								<i class="fa fa-calendar"></i>
-			                </span>		
-			                <select class="form-control filter_data_eselon" name="select_eselon_1" id="select_eselon_1">
-			                	<option value="">------Pilih Salah Satu------</option>		                
-								<?php foreach($es1->result() as $row){?>
-									<option value="<?php echo $row->id_es1;?>"><?php echo $row->nama_eselon1;?></option>
-								<?php }?>
-			                </select>                								
-			            </div>
-						<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es1" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
-							25%
-						</progress>		            		            
-
-			            <h4>Administrator (Eselon III) :</h4>
-						<div id="isi_select_eselon_3">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-calendar"></i>
-				                </span>		
-				                <select class="form-control select_eselon_child_global select_eselon_child_global_2" name="select_eselon_3" id="select_eselon_3">
-				                	<option value="">------------NONE------------</option>		                
-				                </select>                								
-				            </div>		            
-							<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es3" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
-								25%
-							</progress>		            		            		            
-						</div>			                			            
-					</div>
-
+					<?=$this->load->view('templates/filter/eselon',array('eselon1'=>$es1,'jenis_jabatan_stat'=>'off'));?>
+					
 					<div class="row col-xs-6 pull-right">
 
-			            <h4>Pimpinan Tinggi Pratama (Eselon II) :</h4>
-						<div id="isi_select_eselon_2">			                
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-calendar"></i>
-				                </span>		
-				                <select class="form-control select_eselon_child_global" name="select_eselon_2" id="select_eselon_2">
-				                	<option value="">------------NONE------------</option>		                
-				                	<?php
-				                		if (count($es2->result()) != 0) {
-				                			# code...
-				                			$data_list = $es2->result();
-				                			for ($i=0; $i < count($data_list); $i++) { 
-				                			# code...
-				                	?>
-											<option value="<?=$data_list[$i]->id_es2;?>"><?=$data_list[$i]->nama_eselon2;?></option>				                	
-				                	<?php
-				                			}
-				                		}
-				                	?>				                	
-				                </select>                								
-				            </div>
-							<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es2" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
-								25%
-							</progress>
-						</div>		            
-
-			            <h4>Pengawas (Eselon IV) :</h4>
-						<div id="isi_select_eselon_4">
-							<div class="input-group">
-								<span class="input-group-addon">
-									<i class="fa fa-calendar"></i>
-				                </span>		
-				                <select class="form-control select_eselon_child_global select_eselon_child_global_2 select_eselon_child_global_3" name="select_eselon_4" id="select_eselon_4">
-				                	<option value="">------------NONE------------</option>		                
-				                </select>                								
-				            </div>		            
-							<progress class="progress progress-striped progress-animated" id="prg_progress_bar_es4" style="width: 473px;margin-bottom: 0px;visibility: hidden;" value="0" max="100">
-								25%
-							</progress>		            		            		            
-						</div>			                			            
-
 					</div>				
+
+					<div class="row col-xs-12">
+						<div class="box-title pull-right">
+							<button class="btn btn-block btn-primary" id="btn_filter"><i class="fa fa-search"></i> FILTER DATA</button>											
+						</div>											
+					</div>					
 				</div>
 			</div>
 		</div>
@@ -99,24 +31,24 @@ isset($class_posisi);
     		<div class="box-body" id="isi">
 				<div class="col-lg-12">
 					<div class="col-lg-6">
-						<span class="col-lg-12">Total Jabatan Strukral : <span id="span_struktural"><?=count($list);?></span></span>
-						<span class="col-lg-12">Total SKP yang telah tersedia : <span id="span_counter_ready"><?=$data_counter['ready'];?></span></span>						
+						<span class="col-lg-12">Total Jabatan Strukral : <span id="span_struktural"></span></span>
+						<span class="col-lg-12">Total SKP yang telah tersedia : <span id="span_counter_ready"></span></span>						
 					</div>
 					<div class="col-md-6">
 						<!-- /.progress-group -->
 						<div class="progress-group">
 							<span class="progress-text">Progress SKP</span>
-							<span class="progress-number"><b id="progress_bar_persentase"><?=round(($data_counter['ready']/count($list)*100));?></b>/100</span>
+							<span class="progress-number"><b id="progress_bar_persentase">0</b>/100</span>
 
 							<div class="progress sm">
-							<div class="progress-bar progress-bar-red" id="progress_bar_style" style="width: <?=round(($data_counter['ready']/count($list)*100));?>%"></div>
+							<div class="progress-bar progress-bar-red" id="progress_bar_style" style="width: %"></div>
 							</div>
 						</div>
 					</div>					
 				</div>
 		    	<div id="halaman_header" class="pull-right" style="margin-top: 40px;margin-left: 76%;">
 		    	</div>
-		        <table id="example1" class="table table-bordered table-striped" style="font-size:12px;">
+		        <table class="table table-bordered table-striped table-view" style="font-size:12px;">
 		         	<thead>
 				        <tr>
 				          <th>No</th>
@@ -131,47 +63,6 @@ isset($class_posisi);
 				        </tr>
 					</thead>
 					<tbody id="table_content">
-						<?php
-							if ($list != 0) 
-							{
-								# code...
-								for ($i=0; $i < count($list); $i++) { 
-									# code...
-						?>
-									<tr>
-										<td><?=$i+1;?></td>
-										<td><?=$list[$i]->nama_eselon1;?></td>
-										<td><?=$list[$i]->nama_eselon2;?></td>
-										<td><?=$list[$i]->nama_eselon3;?></td>
-										<td><?=$list[$i]->nama_eselon4;?></td>
-										<td><?=$list[$i]->nama_kat_posisi;?></td>
-										<td><?=$list[$i]->nama_posisi;?></td>
-										<td>
-											<?php
-												if ($list[$i]->is_master_skp == 'ready') {
-													# code...
-											?>
-													<label class="btn btn-success btn-xs" style="pointer-events: none;">Uraian Telah tersedia</label>
-											<?php
-												}
-											?>
-										</td>
-										<td>
-											<button class="btn btn-primary btn-xs" onclick="show_skp('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> SKP</button>&nbsp;&nbsp;
-											<?php
-												if ($list[$i]->is_master_skp == 'ready') {
-													# code...
-											?>
-												<button class="btn btn-danger btn-xs" onclick="delete_all_urtug('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> Hapus Semua Uraian Tugas</button>&nbsp;&nbsp;
-											<?php
-												}
-											?>																						
-										</td>
-									</tr>			
-						<?php
-								}
-							}
-						?>
 					</tbody>
 			  	</table>
 		    	<div id="halaman_footer" class="pull-right">				  
@@ -446,192 +337,67 @@ isset($class_posisi);
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>            
 <script>
 
-$(function () {
-
-	$("#select_eselon_1").val('<?=$this->session->userdata('sesEs1');?>');	
-    $("#example1").DataTable({
-		"oLanguage": {
-			"sSearch": "Pencarian :",
-			"sSearchPlaceholder" : "Ketik untuk mencari",
-			"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-			"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-			"sZeroRecords": "Data tidak ditemukan"	
-		},
-		"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
-				"<'row'<'col-sm-5'i><'col-sm-7'p>>" +			
-				"<'row'<'col-sm-12'tr>>" +
-				"<'row'<'col-sm-5'i><'col-sm-7'p>>" 
-
-		// "dom": '<"top"f>rt'
-		// "dom": '<"top"fl>rt<"bottom"ip><"clear">'			
-	});
-});
-
 $(document).ready(function(){
-
-
-	$("#es1").change(function(){
-		var es1 = $("#es1").val();
+	$('#btn_filter').click(function() {
+		var select_eselon_1      = $("#select_eselon_1").val();
+		var select_eselon_2      = $("#select_eselon_2").val();
+		var select_eselon_3      = $("#select_eselon_3").val();
+		var select_eselon_4      = $("#select_eselon_4").val();
+		var data_link = {
+						'data_1': select_eselon_1,
+						'data_2': select_eselon_2,
+						'data_3': select_eselon_3,
+						'data_4': select_eselon_4
+		}
 		$.ajax({
-			url :"<?php echo site_url()?>/master/data_eselon2/cariEs2",
+			url :"<?php echo site_url()?>skp/filter_data_master_skp",
 			type:"post",
-			data:"es1="+es1,
+			data: { data_sender : data_link},
 			beforeSend:function(){
-				$("#loadprosess").modal('show');				
-			},			
+				$("#loadprosess").modal('show');
+				$("#halaman_header").html("");
+				$("#halaman_footer").html("");
+				$('.table-view').dataTable().fnDestroy();
+				$(".table-view tbody tr").remove();
+				var newrec  = '<tr">' +
+		        					'<td colspan="5" class="text-center">Memuat Data</td>'
+		    				   '</tr>';
+		        $('.table-view tbody').append(newrec);
+			},						
 			success:function(msg){
-				$("#isies2").html(msg);
+				$("#example1 tbody tr").remove();    												
+				$("#table_content").html(msg);
+				$("#example1").DataTable({
+					"oLanguage": {
+						"sSearch": "Pencarian :",
+						"sSearchPlaceholder" : "Ketik untuk mencari",
+						"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+						"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+						"sZeroRecords": "Data tidak ditemukan"	
+					},
+					"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>" +			
+							"<'row'<'col-sm-12'tr>>" +
+							"<'row'<'col-sm-5'i><'col-sm-7'p>>" 
+
+					// "dom": '<"top"f>rt'
+					// "dom": '<"top"fl>rt<"bottom"ip><"clear">'			
+				});
 				setTimeout(function(){ 
 					$("#loadprosess").modal('hide');								
-				}, 2000);				
+				}, 500);									
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
 			}
-		})
+		})		
 	})
 
-	$("#nes1").change(function(){
-		var es1 = $("#nes1").val();
-		$.ajax({
-			url :"<?php echo site_url()?>/master/data_eselon2/cariEs2edit",
-			type:"post",
-			data:"nes1="+es1,
-			success:function(msg){
-				$("#nisies2").html(msg);
-			}
-		})
-	})
-
-	$("#select_eselon_1").change(function(){
-		var select_eselon_1 = $(this).val();
-		var select_eselon_2 = '';		
-		var select_eselon_3 = '';				
-		var select_eselon_4 = '';			
-        $('#select_eselon_2').find('option').remove();    
-        $('#select_eselon_2').append($("<option></option>").attr("value", '').text('------------NONE------------')); 	 
-        $('#select_eselon_3').find('option').remove();    
-        $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------')); 	         
-        $('#select_eselon_4').find('option').remove();    
-        $('#select_eselon_4').append($("<option></option>").attr("value", '').text('------------NONE------------')); 	 					
-		$.ajax({
-			url :"<?php echo site_url()?>/master/data_eselon2/cariEs2_filter/filter_data_master_skp/skp",
-			type:"post",
-			data:"select_eselon_1="+select_eselon_1,
-			beforeSend:function(){
-				$("#loadprosess").modal('show');				
-				$("#halaman_header").html("");
-				$("#halaman_footer").html("");
-				$('#example1').dataTable().fnDestroy();	        
-				$("#example1 tbody tr").remove();    		
-				var newrec  = '<tr">' +
-		        					'<td colspan="8" class="text-center">Memuat Data</td>'
-		    				   '</tr>';		
-		        $('#example1 tbody').append(newrec);    				   				
-			},			
-			success:function(msg){
-				$("#isi_select_eselon_2").html(msg);
-				var data_link = {
-	        					'data_1' : select_eselon_1,
-				                'data_2' : select_eselon_2,
-				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4							
-				}				
-				$.ajax({
-					url :"<?php echo site_url()?>skp/filter_data_master_skp",
-					type:"post",
-					data: { data_sender : data_link},
-					success:function(msg){
-						$("#example1 tbody tr").remove();    												
-						$("#table_content").html(msg);
-				        $("#example1").DataTable({
-							"oLanguage": {
-								"sSearch": "Pencarian :",
-								"sSearchPlaceholder" : "Ketik untuk mencari",
-								"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-								"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-								"sZeroRecords": "Data tidak ditemukan"	
-							},
-							"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
-									"<'row'<'col-sm-5'i><'col-sm-7'p>>" +			
-									"<'row'<'col-sm-12'tr>>" +
-									"<'row'<'col-sm-5'i><'col-sm-7'p>>" 
-
-							// "dom": '<"top"f>rt'
-							// "dom": '<"top"fl>rt<"bottom"ip><"clear">'			
-						});
-						setTimeout(function(){ 
-							$("#loadprosess").modal('hide');								
-						}, 500);									
-					}
-				})
-
-			}
-		})
-	})
-
-	$("#select_eselon_2").change(function(){
-		var select_eselon_1 = $("#select_eselon_1").val();
-		var select_eselon_2 = $("#select_eselon_2").val();		
-		var select_eselon_3 = '';				
-		var select_eselon_4 = '';							 
-        $('#select_eselon_3').find('option').remove();    
-        $('#select_eselon_3').append($("<option></option>").attr("value", '').text('------------NONE------------')); 	         
-        $('#select_eselon_4').find('option').remove();    
-        $('#select_eselon_4').append($("<option></option>").attr("value", '').text('------------NONE------------')); 	 		
-		$.ajax({
-			url :"<?php echo site_url()?>/master/data_eselon3/cariEs3_filter/filter_data_master_skp/skp",
-			type:"post",
-			data:"select_eselon_2="+select_eselon_2,
-			beforeSend:function(){
-				$("#loadprosess").modal('show');				
-				$("#halaman_header").html("");
-				$("#halaman_footer").html("");
-				$('#example1').dataTable().fnDestroy();	        
-				$("#example1 tbody tr").remove();    		
-				var newrec  = '<tr">' +
-		        					'<td colspan="8" class="text-center">Memuat Data</td>'
-		    				   '</tr>';		
-		        $('#example1 tbody').append(newrec);    				   				
-			},									
-			success:function(msg){
-				$("#isi_select_eselon_3").html(msg);
-				var data_link = {
-	        					'data_1' : select_eselon_1,
-				                'data_2' : select_eselon_2,
-				                'data_3' : select_eselon_3,
-				                'data_4' : select_eselon_4							
-				}				
-				$.ajax({
-					url :"<?php echo site_url()?>skp/filter_data_master_skp",
-					type:"post",
-					data: { data_sender : data_link},
-					success:function(msg){
-						$("#example1 tbody tr").remove();    												
-						$("#table_content").html(msg);
-				        $("#example1").DataTable({
-							"oLanguage": {
-								"sSearch": "Pencarian :",
-								"sSearchPlaceholder" : "Ketik untuk mencari",
-								"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-								"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-								"sZeroRecords": "Data tidak ditemukan"	
-							},
-							"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
-									"<'row'<'col-sm-5'i><'col-sm-7'p>>" +			
-									"<'row'<'col-sm-12'tr>>" +
-									"<'row'<'col-sm-5'i><'col-sm-7'p>>",
-							"bSort": false						 
-							// "dom": '<"top"f>rt'
-							// "dom": '<"top"fl>rt<"bottom"ip><"clear">'			
-						});
-						setTimeout(function(){ 
-							$("#loadprosess").modal('hide');								
-						}, 500);									
-					}
-				})
-			}
-		})
-	})	
-
-
+	$("#closeData").click(function(){
+		$("#form_section").css({"display": "none"})
+		$("#view_section").css({"display": ""})		
+	})		
 })
 
 function show_skp(id) {
