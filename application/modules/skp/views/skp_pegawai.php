@@ -105,7 +105,7 @@
             <div class ="box-tools">
                 <h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addDataSKP"><i class="fa fa-plus-square"></i> Tambah SKP Pegawai</button></h3>                
             </div>
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
                 <label style="color: #000;font-weight: 400;font-size: 19px;display: -webkit-inline-box;">
                     Tahun&nbsp;:&nbsp;&nbsp;
                     <select class="form-control input-sm" name="tahun" id="tahun">
@@ -119,7 +119,7 @@
                         ?>
                     </select>
                 </label>
-            </div>
+            </div> -->
         </div>
         <div class="box-body">
             <table id="table_skp" class="table table-bordered table-striped table-view" style="font-size: 12px;">

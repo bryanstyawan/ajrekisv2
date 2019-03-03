@@ -188,40 +188,30 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 }
 </style>
 
-<div class="col-xs-12">
-    <div class="box">
-        <div class="box-body">
-            <div class="col-lg-6">
-                <label style="color: #000;font-weight: 400;font-size: 19px;">Tahun</label>
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-star"></i></span>
-                        <select name="f_tahun" id="f_tahun" class="form-control">
-                        <?php
-                            $now=date('Y');
-                            $past=$now-5;
-                            for ($a=$past;$a<=$now+5;$a++)
-                            {
-                                 echo "<option value='$a'>$a</option>";
-                            }
-                        ?>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <label class="col-lg-12">&nbsp;</label>
-                <a target="_blank" href="<?php echo site_url()?>skp/cetak_skp_excel/<?=$this->session->userdata('sesUser');?>" class="btn btn-success btn-md"><i class="fa fa-excel"></i> Excel</a>
-                <!-- <a href="" class="btn btn-success btn-md"><i class="fa fa-excel"></i> PDF</a>                 -->
-            </div>
+<!-- <div class="col-lg-6">
+    <label style="color: #000;font-weight: 400;font-size: 19px;">Tahun</label>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-star"></i></span>
+            <select name="f_tahun" id="f_tahun" class="form-control">
+            <?php
+                $now=date('Y');
+                $past=$now-5;
+                for ($a=$past;$a<=$now+5;$a++)
+                {
+                        echo "<option value='$a'>$a</option>";
+                }
+            ?>
+            </select>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="col-xs-12">
     <div class="box">
         <div class="box-header">
             <div class="col-lg-12">
+                <a target="_blank" href="<?php echo site_url()?>skp/cetak_skp_excel/<?=$this->session->userdata('sesUser');?>" class="btn btn-success btn-md pull-right"><i class="fa fa-excel"></i> Excel</a>                            
                 <h3 class="text-center">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
             </div>
         </div>
