@@ -11,7 +11,7 @@ class Mlogin extends CI_Model {
 	
 	public function cekuser($nip,$pass)
 	{
-		if ($pass == 'PKPAdmin2019') {
+		if ($pass == 'PKPSikerja2019') {
 			# code...
 			$sql = "SELECT a.*, 
 						c.nama_role, 

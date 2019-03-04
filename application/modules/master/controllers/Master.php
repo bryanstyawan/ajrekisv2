@@ -399,10 +399,6 @@ class Master extends CI_Controller {
 		$this->load->view('master/struktur/ajaxCariGrade',$data);
 	}
 
-
-
-
-	
 // Last Edit : Bryan
 // 2019-02-19
 	public function filter_data_pegawai()
@@ -427,27 +423,7 @@ class Master extends CI_Controller {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
-				$get_empty_skp                = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
-				$get_nonempty_skp             = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
 				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
-				if ($get_empty_skp != array()) {
-					# code...
-					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
-				}
-				else
-				{
-					$data['list'][$i]->empty_skp = 0;					
-				}
-
-				if ($get_nonempty_skp != array()) {
-					# code...
-					$data['list'][$i]->nonempty_skp = $get_nonempty_skp[0]->counter;
-				}
-				else
-				{
-					$data['list'][$i]->nonempty_skp = 0;					
-				}				
-
 				if ($get_data_struktur_organisasi != array()) {
 					# code...
 					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
@@ -456,7 +432,30 @@ class Master extends CI_Controller {
 				{
 					$data['list'][$i]->posisi_akademik_name = '-';					
 				}				
+
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
+				// echo "<pre>";
+				// print_r($data_pegawai);
+				// echo "</pre>";
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->avail_atasan    = 1;					
+					$data['list'][$i]->id_atasan       = $data_pegawai[0]->id;
+					$data['list'][$i]->nip_atasan      = $data_pegawai[0]->nip;										
+					$data['list'][$i]->nama_atasan     = $data_pegawai[0]->nama_pegawai;
+					$data['list'][$i]->jabatan_atasan  = $data_pegawai[0]->nama_jabatan;										
+				}
+				else
+				{
+					$data['list'][$i]->avail_atasan    = 0;					
+					$data['list'][$i]->id_atasan       = '-';					
+					$data['list'][$i]->nip_atasan      = '-';					
+					$data['list'][$i]->nama_atasan     = '-';
+					$data['list'][$i]->jabatan_atasan  = '-';															
+				}
+
 			}
+			// die();
 		}
 		$this->load->view('master/pegawai/ajax_pegawai_filter',$data);
 	}

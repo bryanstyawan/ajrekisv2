@@ -93,9 +93,7 @@ $(document).ready(function(){
 			},
 			success:function(msg){
 				$("#isi_select_eselon_2").html(msg);
-				setTimeout(function(){
-					$("#loadprosess").modal('hide');
-				}, 500);				
+                $("#loadprosess").modal('hide');				
 			}
 		})
 	})

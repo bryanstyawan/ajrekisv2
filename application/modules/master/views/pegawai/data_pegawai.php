@@ -69,12 +69,13 @@
 					<table class="table table-bordered table-striped table-view">
 					<thead>
 						<tr>
-							<th>NIP</th>
-							<th>Nama</th>
-							<th>Jabatan (Kelas Jabatan)</th>
-							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>
-							<th>Belum Set Target SKP</th>
-							<th>Sudah Set Target SKP</th>							
+							<th>(ID) NIP</th>
+							<th>Nama Pegawai</th>	
+							<th>Jabatan (Kelas Jabatan)</th>													
+							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>							
+							<th>Data Atasan</th>																												
+							<th></th>							
+							<th></th>
 							<th>Action</th>
 						</tr>
 					</thead>

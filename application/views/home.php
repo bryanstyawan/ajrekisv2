@@ -59,7 +59,7 @@
                         <li class="scroll active"><a href="#home">Home</a></li>
                         <li class="scroll"><a href="#about">Tentang Sikerja</a></li>
                         <li class="scroll">
-                            <a href="<?=base_url().'/admin';?>">
+                            <a href="<?=base_url().'admin';?>">
                                 <?php
                                     if ($this->session->userdata('login')) {
                                         // code...
@@ -168,7 +168,7 @@
                         </div>
                     </div> -->
 
-                    <a href="<?=base_url().'/admin';?>" class="btn btn-primary" href="#">Masuk</a>
+                    <a href="<?=base_url().'admin';?>" class="btn btn-primary" href="#">Masuk</a>
 
                 </div>
             </div>
