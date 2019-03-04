@@ -1576,7 +1576,8 @@ function view_option(id,i) {
             var newrec  = '<tr">' +
                                 '<td colspan="5" class="text-center">Memuat Data</td>'
                             '</tr>';
-            $('.table-view1 tbody').append(newrec);            
+            $('.table-view1 tbody').append(newrec);       
+            $('.notif-count').html('');     
             $('.counter_atasan_notify').html('');
         },
         success:function(msg){
@@ -1589,13 +1590,7 @@ function view_option(id,i) {
                 }
                 else
                 {
-                    if (obj.data.infoPegawai[0].local == 1) {
-                        link_image = "<?php echo base_url();?>'public/images/pegawai/'+obj.data.infoPegawai[0].photo+''";
-                    }
-                    else
-                    {
-                        link_image = "http://sikerja.kemendagri.go.id/images/demo/users/"+obj.data.infoPegawai[0].photo;
-                    }
+                    link_image = "<?php echo base_url();?>public/images/pegawai/"+obj.data.infoPegawai[0].photo;
                 }
                 $("#loadprosess").modal('hide');
                 $("#lbl_eselon1").html(obj.data.infoPegawai[0].nama_eselon1);

@@ -395,9 +395,10 @@ class Globalrules extends CI_Model
 	public function data_summary_skp_pegawai($id,$_id_posisi)
 	{
 		# code...
+		$data_atasan_real = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();		
+
 		$_atasan_id = $this->list_atasan($this->session->userdata('sesPosisi'));
 		$_atasan_id = ($_atasan_id == 0) ? 0 : $_atasan_id[0]->id;
-		// print_r($_atasan_id);die();
 		$data['tugas_tambahan']        = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),NULL);
 		$data['kreativitas']           = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),'kreativitas');
 		$data['tr_tugas_tambahan']     = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan');
@@ -408,12 +409,58 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_bawahan'] = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
 		$data['infoPegawai']           = $this->get_info_pegawai($id,'id');
 
-		$data['atasan']                = $this->get_info_pegawai($_atasan_id,'id');
-		// print_r($data['atasan']);die();
-		if ($data['atasan'] != 0) {
-			$data['atasan_penilai']      = $this->get_info_pegawai($this->list_atasan($this->list_atasan($this->session->userdata('sesPosisi'))[0]->posisi)[0]->id,'id');
+		if ($data_atasan_real != array()) {
+			# code...
+			if ($data_atasan_real[0]['atasan'] != 0) {
+				# code...
+				$data['atasan']                = $this->get_info_pegawai($_atasan_id,'id');
+			}
+			else
+			{
+				$data['atasan']                = 0;
+			}
 		}
-		else $data['atasan_penilai']   = 0;
+		else
+		{
+			$data['atasan_penilai'] = 0;	
+		}
+
+		if ($data['atasan'] != 0) 
+		{
+			if ($data_atasan_real != array()) {
+				# code...
+				if ($data_atasan_real[0]['atasan'] != 0) {
+					# code...
+					$check_atasan_again = $this->Allcrud->getData('mr_posisi',array('id' => $data['atasan'][0]->posisi))->result_array();
+					if($check_atasan_again != array())
+					{
+						if ($check_atasan_again[0]['atasan'] == 0) {
+							# code...
+							$data['atasan_penilai'] = 0;
+						}
+						else
+						{
+							$data['atasan_penilai'] = $this->get_info_pegawai($_atasan_id,'id');							
+						}
+					}
+				}
+				else
+				{
+					$data['atasan_penilai'] = 0;
+				}
+			}
+			else
+			{
+				$data['atasan_penilai'] = 0;	
+			}
+		}
+		else
+		{
+			$data['atasan_penilai'] = 0;			
+		}
+		// echo "<pre>";
+		// print_r($data['atasan_penilai']);die();
+		// echo "</pre>";
 		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
 /**********************************************************************************************************/
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
