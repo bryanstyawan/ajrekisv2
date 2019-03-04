@@ -1,6 +1,15 @@
 v4.0.0-Beta    
 2019-03-01
 New:
+Improved:
+Fixed:
+- Atasan es1 (eselon 1 tidak ada atasan)
+- Foto pegawai transaksi
+- Datatable master skp
+
+v4.0.0-Beta    
+2019-03-01
+New:
 - Template Filter Eselon 
 Improved:
 - Perubahan Besar Filter Eselon dan data di pegawai, organisasi, Master SKP

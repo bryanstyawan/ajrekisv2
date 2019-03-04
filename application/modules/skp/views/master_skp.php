@@ -365,9 +365,9 @@ $(document).ready(function(){
 		        $('.table-view tbody').append(newrec);
 			},						
 			success:function(msg){
-				$("#example1 tbody tr").remove();    												
+				$(".table-view tbody tr").remove();    												
 				$("#table_content").html(msg);
-				$("#example1").DataTable({
+				$(".table-view").DataTable({
 					"oLanguage": {
 						"sSearch": "Pencarian :",
 						"sSearchPlaceholder" : "Ketik untuk mencari",
