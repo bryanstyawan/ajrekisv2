@@ -5,6 +5,7 @@ Improved:
 - Menampilkan Nama Pegawai dipencarian atasan
 - Filter Pegawai
 - Pemisahan pencarian jumlah skp pegawai
+- Tambah Komponen di pencarian Jabatan (pegawai)
 Fixed:
 - Filter Eselon
 - Perubahan Password Universal

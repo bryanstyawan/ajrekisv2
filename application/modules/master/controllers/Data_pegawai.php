@@ -92,6 +92,7 @@ class Data_pegawai extends CI_Controller {
 					'local'		          	=> '0'
 				);
 
+				// $data_store = $this->Globalrules->trigger_insert_update($data_sender['crud']);				
 				if ($data_sender['crud'] == 'insert') {
 					# code...
 					$data_store['status']     = 1;
@@ -334,7 +335,23 @@ class Data_pegawai extends CI_Controller {
 				);
 			}
 		}
-		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',$flag);
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',$flag)->result_array();
+		if ($data['jabatan'] != array()) {
+			# code...
+			for ($i=0; $i < count($data['jabatan']); $i++) { 
+				# code...
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['jabatan'][$i]['id'],'posisi');				
+				$data['jabatan'][$i]['nama_atasan'] = '';				
+				$data_eselon_1 = $this->Allcrud->getData('mr_eselon1',array('id_es1'=>$data['jabatan'][$i]['eselon1']))->result_array();
+				$data_eselon_2 = $this->Allcrud->getData('mr_eselon2',array('id_es2'=>$data['jabatan'][$i]['eselon2']))->result_array();
+				$data_eselon_3 = $this->Allcrud->getData('mr_eselon3',array('id_es3'=>$data['jabatan'][$i]['eselon3']))->result_array();
+				$data_eselon_4 = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$data['jabatan'][$i]['eselon4']))->result_array();												
+				$data['jabatan'][$i]['nama_eselon1'] = ($data_eselon_1 != array()) ? $data_eselon_1[0]['nama_eselon1'] : '' ;
+				$data['jabatan'][$i]['nama_eselon2'] = ($data_eselon_2 != array()) ? $data_eselon_2[0]['nama_eselon2'] : '' ;
+				$data['jabatan'][$i]['nama_eselon3'] = ($data_eselon_3 != array()) ? $data_eselon_3[0]['nama_eselon3'] : '' ;
+				$data['jabatan'][$i]['nama_eselon4'] = ($data_eselon_4 != array()) ? $data_eselon_4[0]['nama_eselon4'] : '' ;																
+			}
+		}
 		$this->load->view('master/pegawai/ajaxjabatan',$data);
 	}
 

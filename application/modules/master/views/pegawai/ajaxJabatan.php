@@ -5,18 +5,31 @@
     <thead>
         <tr>
             <th>Nama Jabatan</th>
+            <th>Komponen</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-	<?php foreach($jabatan->result() as $row){?>
-		<tr>
-			<td><?php echo $row->nama_posisi;?></td>
-			<td>
-				<a class="btn btn-success" onclick="get_data('<?php echo $row->nama_posisi;?>',<?php echo $row->id;?>)"><i class="fa fa-check"></i> Pilih</a>			
-			</td>						
-		</tr>
-	<?php }?>
+        <?php
+            if ($jabatan != array()) 
+            {
+                # code...
+                for ($i=0; $i < count($jabatan); $i++) { 
+                    # code...
+        ?>
+            <tr>
+                <td><?=$jabatan[$i]['nama_posisi'];?></td>
+                <td>
+                    <?=$jabatan[$i]['nama_eselon4'];?>&nbsp;<?=$jabatan[$i]['nama_eselon3'];?>&nbsp;<?=$jabatan[$i]['nama_eselon2'];?>&nbsp;<?=$jabatan[$i]['nama_eselon1'];?>
+                </td>                
+                <td>
+                    <a class="btn btn-success" onclick="get_data('<?=$jabatan[$i]['nama_posisi'];?>',<?=$jabatan[$i]['id'];?>)"><i class="fa fa-check"></i> Pilih</a>			
+                </td>						
+            </tr>        
+        <?php
+                }
+            }
+        ?>
     </tbody>
 </table>
 <script>
