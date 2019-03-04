@@ -13,7 +13,7 @@ class Home extends CI_Controller
 
 	public function index()
 	{
-			redirect('home/main');
+		$this->main();
 	}
 
 	public function main()

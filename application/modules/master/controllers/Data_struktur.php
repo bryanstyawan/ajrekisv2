@@ -211,6 +211,14 @@ class Data_struktur extends CI_Controller {
 		}
 
 		$data['list'] = $data_sql;
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->id,'posisi');				
+				$data['list'][$i]->nama_pegawai = $data_pegawai[0]->nama_pegawai;
+			}
+		}
 		$this->load->view('master/struktur/eselon/atasan',$data);		
 	}
 }

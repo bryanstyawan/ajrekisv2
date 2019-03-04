@@ -49,60 +49,6 @@ class Data_pegawai extends CI_Controller {
 		echo json_encode($data);
 	}		
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	public function tambah_pegawai()
-	{
-		# code...
-		$data['title']      = '<b>Pegawai</b> <i class="fa fa-angle-double-right"></i> Tambah Pegawai';
-		$data['content']    = 'master/pegawai/editPegawai';
-		$data['flag_crud']  = 'add';
-		$data['pegawai']    = '';
-		$data['masa_kerja'] = 0;
-		$data['eselon1']    = $this->Allcrud->listData('mr_eselon1');
-		$this->load->view('templateAdmin',$data);
-	}
-
-	public function ubah_pegawai($id){
-		$this->Globalrules->session_rule();
-		$data['title']             = '<b>Pegawai</b> <i class="fa fa-angle-double-right"></i> Ubah Pegawai';
-		$data['content']           = 'master/pegawai/editPegawai';
-		$data['flag_crud']         = 'edit';
-		$data['pegawai']           = $this->Mmaster->get_data_pegawai($id);
-		$data['jabatan']           = $this->Allcrud->getData('mr_posisi',array('id'=> $data['pegawai'][0]->posisi))->result_array();
-		$data['masa_kerja']        = $this->Mmaster->get_masa_kerja_id_pegawai($id,'ASC');
-		$data['eselon1']           = $this->Allcrud->listData('mr_eselon1');
-		$data['status_masa_kerja'] = $this->Allcrud->listData('mr_masa_kerja_status')->result_array();
-		$data['oid'] 			   = $id; 
-		$this->load->view('templateAdmin',$data);
-	}
-
 	public function store($param=NULL,$oid=NULL)
 	{
 		# code...
@@ -229,13 +175,6 @@ class Data_pegawai extends CI_Controller {
 						}
 					}
 				}				
-
-
-
-
-
-
-
 			}
 			else {
 				# code...
@@ -256,123 +195,6 @@ class Data_pegawai extends CI_Controller {
 		echo json_encode($res);											
 	}
 
-	public function save_pegawai()
-	{
-		# code...
-		$jabatan         = $this->input->post('inputjabatan');
-		$oid             = $this->input->post('oidPegawai');
-		$flag_crud       = $this->input->post('flag_crud');
-		$id_pegawai      = "";
-		$data_masa_kerja = "";
-		$data            = array
-							(
-								'es1'          => $this->input->post('ees1'),
-								'es2'          => $this->input->post('ees2'),
-								'es3'          => $this->input->post('ees3'),
-								'es4'          => $this->input->post('ees4'),
-								'posisi'       => $jabatan,
-								'nip'          => $this->input->post('inputnip'),
-								'nama_pegawai' => $this->input->post('inputnama'),
-								'tmt_jabatan'  => $this->input->post('tmt'),
-								'local'		   => '0'
-							);
-
-		if ($this->input->post('inputpass') != '') {
-			// code...
-			$data['password'] = md5($this->input->post('inputpass'));
-		}
-
-		if ($flag_crud == 'add')
-		{
-			# code...
-			$data['id_role'] = "2";
-			$data['status']	 = '1';
-			
-			$id_pegawai = $this->Mmaster->save_pegawai($data,NULL,$flag_crud);
-		}
-		elseif ($flag_crud == 'edit')
-		{
-			# code...
-			$id_pegawai      = $oid;
-			$get_data_pegawai = $this->Mmaster->get_data_pegawai($oid);
-			$this->Mmaster->save_pegawai($data,$oid,$flag_crud);
-		}
-
-
-		$get_masa_kerja_pegawai = $this->Mmaster->get_masa_kerja_id_pegawai($id_pegawai,'DESC');
-		if ($get_masa_kerja_pegawai == 0) {
-			# code...
-			// echo "path 1";die();
-			$data_masa_kerja = array
-							(
-								'id_pegawai'        => $id_pegawai,
-								'StartDate'         => $this->input->post('tmt'),
-								'EndDate'           => '9999-01-01',
-								'id_posisi'         => $jabatan,
-								'status_masa_kerja' => 'A'
-							);
-			$this->Allcrud->addData('mr_masa_kerja',$data_masa_kerja);
-			$RES = 1;
-		}
-		else
-		{
-			$get_masa_kerja_detail = $this->Mmaster->get_masa_kerja($id_pegawai,$jabatan);
-
-			if ($get_masa_kerja_detail == 0) {
-				# code...
-				$data_masa_kerja_lama = array
-								(
-									'EndDate'    => date('Y-m-d',strtotime($this->input->post('tmt') . "-1 days"))
-								);
-
-				$flag = array
-						(
-							'id' => $get_masa_kerja_pegawai[0]->id
-						);
-				$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,$flag);
-
-				$data_masa_kerja_baru = array
-								(
-									'id_pegawai' => $id_pegawai,
-									'StartDate'  => $this->input->post('tmt'),
-									'EndDate'    => '9999-01-01',
-									'id_posisi'  => $jabatan,
-								);
-				$this->Allcrud->addData('mr_masa_kerja',$data_masa_kerja_baru);
-				$RES = 1;
-			}
-			else
-			{
-				$data_masa_kerja = array
-								(
-									'StartDate'    => $this->input->post('tmt')
-								);
-				$flag = array
-						(
-							'id' => $get_masa_kerja_detail[0]->id
-						);
-				$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja,$flag);
-
-				if (count($get_masa_kerja_pegawai) > 1) {
-					# code...
-					$data_masa_kerja_lama = array
-									(
-										'EndDate'    => date('Y-m-d',strtotime($this->input->post('tmt') . "-1 days"))
-									);
-					$flag_lama = array
-							(
-								'id' => $get_masa_kerja_pegawai[1]->id
-							);
-
-					$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,$flag_lama);
-				}
-				$RES = 1;
-			}
-		}
-		// $RES = 1;
-		echo json_encode($RES);
-	}
-
 	public function ajaxPegawai(){
 		$this->Globalrules->session_rule();
 		$flag          = array('es1.id_es1'=>'1');
@@ -380,18 +202,6 @@ class Data_pegawai extends CI_Controller {
 		$data['es1']   = $this->Allcrud->listData('mr_eselon1');
 		$data['agama'] = $this->Allcrud->listData('mr_agama');
 		$this->load->view('master/pegawai/ajaxPegawai',$data);
-	}
-
-	public function delPegawai($id){
-		$this->Globalrules->session_rule();
-		$res_data    = $this->Allcrud->delData('mr_pegawai',array('id' => $id));
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil dihapus.');		
-		$res         = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);									
 	}
 
 	public function delete_masa_kerja($id){

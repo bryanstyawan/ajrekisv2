@@ -13,7 +13,9 @@ isset($class_posisi);
 					<?=$this->load->view('templates/filter/eselon',array('eselon1'=>$es1,'jenis_jabatan_stat'=>'on'));?>
 
 					<div class="row col-xs-6 pull-right">
-
+						<div class="box-title pull-right">
+							<button class="btn btn-block btn-primary" onclick="view_form(0,'adddata')"><i class="fa fa-plus-square"></i> TAMBAH JABATAN</button>
+						</div>
 					</div>
 
 					<div class="row col-xs-12">
@@ -30,7 +32,6 @@ isset($class_posisi);
 <div class="col-xs-12" id="section_view">
 	<div class="box">
     	<div class="box-header">
-			<h3 class="box-title pull-right"><button class="btn btn-block btn-primary" onclick="view_form(0,'adddata')"><i class="fa fa-plus-square"></i> Tambah Jabatan</button></h3>
     		<div class="box-body" id="isi">
 		    	</div>
 		        <table class="table table-bordered table-striped table-view" style="font-size:12px;">

@@ -1,5 +1,21 @@
+v4.0.0
+2019-03-04
+New:
+Improved:
+- Menampilkan Nama Pegawai dipencarian atasan
+- Filter Pegawai
+- Pemisahan pencarian jumlah skp pegawai
+Fixed:
+- Filter Eselon
+- Perubahan Password Universal
+- Hilangkan redirect di home
+- Clean code Pegawai
+- Pemindahan Posisi tombol tambah struktur organisasi
+- Perbaikan Base_url
+- Menghilangkan settimeout filter eselon
+
 v4.0.0-Beta    
-2019-03-01
+2019-03-03
 New:
 Improved:
 Fixed:

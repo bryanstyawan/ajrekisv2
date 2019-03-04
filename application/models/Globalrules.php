@@ -166,6 +166,10 @@ class Globalrules extends CI_Model
 			# code...
 			$sql = "a.nama_pegawai = '".$id."'";
 		}
+		elseif ($param == 'posisi') {
+			# code...
+			$sql = "b.id = '".$id."' AND a.status = 1";
+		}		
 
 		$sql = "SELECT  a.*,
 						COALESCE(a.tmt_golongan,'-') as tmt_golongan,

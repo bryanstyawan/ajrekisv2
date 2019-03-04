@@ -5,6 +5,7 @@
     <thead>
         <tr>
             <th>No</th>
+            <th>Nama Pegawai</th>
             <th>Atasan</th>
             <th>Action</th>
         </tr>
@@ -21,6 +22,9 @@
                         <?=$i+1;?>
                         <input type="hidden" id="oid_<?=$list[$i]->id;?>" value="<?=$list[$i]->id;?>">
                     </td>
+                    <td>
+                        <?=$list[$i]->nama_pegawai;?>
+                    </td>                    
                     <td>
                         <?=$list[$i]->nama_posisi;?>
                     </td>

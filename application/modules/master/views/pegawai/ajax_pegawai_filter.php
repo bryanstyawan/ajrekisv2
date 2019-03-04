@@ -18,9 +18,14 @@
 								}
 						?>
 							<tr>
-								<td><?=$list[$i]->nip;?></td>
-								<td><span class="label label-danger"><?=$list[$i]->id;?></span>&nbsp;<?=$list[$i]->nama_pegawai;?></td>
 								<td>
+									(<b><?=$list[$i]->id;?></b>)
+									<?=$list[$i]->nip;?>
+								</td>
+								<td>
+									<?=$list[$i]->nama_pegawai;?>
+								</td>
+								<td>																																			
 									<?=$list[$i]->nama_posisi;?>
 									<b>(
 										<?php
@@ -43,9 +48,23 @@
 									?>										
 									)</b>
 								</td>
-								<td><?=$list[$i]->posisi_akademik_name;?></td>
-								<td><?=$list[$i]->empty_skp;?></td>
-								<td><?=$list[$i]->nonempty_skp;?></td>																
+								<td><?=$list[$i]->posisi_akademik_name;?></td>								
+								<td>
+									<?php
+										if ($list[$i]->avail_atasan == 1) {
+											# code...
+									?>
+											<?=$list[$i]->nama_atasan;?>&nbsp;(<b><?=$list[$i]->jabatan_atasan;?></b>)
+									<?php
+										}
+										else
+										{
+											echo "N/A";
+										}
+									?>								
+								</td>								
+								<td></td>
+								<td></td>								
 								<td class="text-center">
 									<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> UBAH DATA</button>
 									<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> HAPUS DATA</button>

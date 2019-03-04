@@ -41,12 +41,10 @@ $("#select_eselon_3").change(function(){
 			},
 			success:function(msg){
 				$("#isi_select_eselon_4").html(msg);
-				setTimeout(function(){
-					$("#loadprosess").modal('hide');
-				}, 500);				
+				$("#loadprosess").modal('hide');
 			}
 		})
 	})
 	
 })
-	</script>
+</script>
