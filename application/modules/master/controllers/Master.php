@@ -463,6 +463,9 @@ class Master extends CI_Controller {
 			}
 			// die();
 		}
+		// echo "<pre>";
+		// print_r($data['list']);die();
+		// echo "</pre>";		
 		$this->load->view('master/pegawai/ajax_pegawai_filter',$data);
 	}
 
