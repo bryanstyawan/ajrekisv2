@@ -1,4 +1,15 @@
 v4.0.0
+2019-03-05
+New:
+Improved:
+- like in getdata (allcrud)
+- Verifikasi Tambah Jabatan
+Fixed:
+- Pencarian Jabatan + atasan
+- Filter jenis jabatan di struktur organisasi
+
+
+v4.0.0
 2019-03-04
 New:
 Improved:

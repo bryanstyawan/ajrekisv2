@@ -38,8 +38,46 @@ class Data_struktur extends CI_Controller {
 							);
 		if ($this->input->post('crud') == 'insert') {
 			# code...
-			$res_data    = $this->Allcrud->addData('mr_posisi',$add);
-			$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil ditambahkan.');			
+			$verify_jabatan = "";
+			$is_valid       = "";
+			if ($this->input->post('kat') != 1 && $this->input->post('kat') != 6) {
+				# code...
+				$valid         = array(
+					'eselon1'      => $this->input->post('es1'),
+					'eselon2'      => $this->input->post('es2'),
+					'eselon3'      => $this->input->post('es3'),
+					'eselon4'      => $this->input->post('es4'),
+					'atasan'       => $this->input->post('atasan'),					
+					'kat_posisi'   => $this->input->post('kat'),
+					'id_jfu'       => $this->input->post('id_jfu'),
+					'id_jft'       => $this->input->post('id_jft')			
+				);			
+				$verify_jabatan = $this->Allcrud->getData('mr_posisi',$valid)->result_array();
+			}			
+			else {
+				# code...
+				$valid         = array(
+					'eselon1'      => $this->input->post('es1'),
+					'eselon2'      => $this->input->post('es2'),
+					'eselon3'      => $this->input->post('es3'),
+					'eselon4'      => $this->input->post('es4'),
+					'nama_posisi'  => strtoupper($this->input->post('jabatan')),					
+					'kat_posisi'   => $this->input->post('kat')			
+				);			
+				$verify_jabatan = $this->Allcrud->getData('mr_posisi',$valid)->result_array();				
+			}
+
+			if ($verify_jabatan != array()) {
+				# code...
+				$res_data    = 0;
+				$text_status = "Jabatan Telah ada";				
+			}
+			else
+			{
+				$res_data    = $this->Allcrud->addData('mr_posisi',$add);
+				$text_status = $this->Globalrules->check_status_res($res_data,'Data Struktur telah berhasil ditambahkan.');
+			}
+			// $valid_like = array('nama_posisi'=>strtoupper($this->input->post('jabatan')));			
 		}
 		else {
 			# code...
@@ -216,7 +254,14 @@ class Data_struktur extends CI_Controller {
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
 				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->id,'posisi');				
-				$data['list'][$i]->nama_pegawai = $data_pegawai[0]->nama_pegawai;
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->nama_pegawai = $data_pegawai[0]->nama_pegawai;					
+				}
+				else
+				{
+					$data['list'][$i]->nama_pegawai = "-";					
+				}
 			}
 		}
 		$this->load->view('master/struktur/eselon/atasan',$data);		

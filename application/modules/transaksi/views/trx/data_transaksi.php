@@ -555,6 +555,7 @@ else {
                                                                 for ($i=0; $i < count($urtug); $i++) {
                                                                     # code...
                                                                     $x++;
+                                                                    $kegiatan = $urtug[$i]->kegiatan;                                                                    
                                                                     if ($infoPegawai[0]->kat_posisi == 1) {
                                                                         # code...
                                                                         if ($urtug[$i]->id_skp_master != '') {

@@ -434,9 +434,6 @@ class Master extends CI_Controller {
 				}				
 
 				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
-				// echo "<pre>";
-				// print_r($data_pegawai);
-				// echo "</pre>";
 				if ($data_pegawai != 0) {
 					# code...
 					$data['list'][$i]->avail_atasan    = 1;					
@@ -453,6 +450,15 @@ class Master extends CI_Controller {
 					$data['list'][$i]->nama_atasan     = '-';
 					$data['list'][$i]->jabatan_atasan  = '-';															
 				}
+
+				// $data_eselon_1 = $this->Allcrud->getData('mr_eselon1',array('id_es1'=>$data['list'][$i]['eselon1']))->result_array();
+				// $data_eselon_2 = $this->Allcrud->getData('mr_eselon2',array('id_es2'=>$data['list'][$i]['eselon2']))->result_array();
+				// $data_eselon_3 = $this->Allcrud->getData('mr_eselon3',array('id_es3'=>$data['list'][$i]['eselon3']))->result_array();
+				// $data_eselon_4 = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$data['list'][$i]['eselon4']))->result_array();												
+				// $data['list'][$i]->nama_eselon1 = ($data_eselon_1 != array()) ? $data_eselon_1[0]['nama_eselon1'] : '' ;
+				// $data['list'][$i]->nama_eselon2 = ($data_eselon_2 != array()) ? $data_eselon_2[0]['nama_eselon2'] : '' ;
+				// $data['list'][$i]->nama_eselon3 = ($data_eselon_3 != array()) ? $data_eselon_3[0]['nama_eselon3'] : '' ;
+				// $data['list'][$i]->nama_eselon4 = ($data_eselon_4 != array()) ? $data_eselon_4[0]['nama_eselon4'] : '' ;				
 
 			}
 			// die();

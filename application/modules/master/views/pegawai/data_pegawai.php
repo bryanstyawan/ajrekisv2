@@ -143,7 +143,7 @@
 							<a class="btn btn-default" onclick="get_eselon(3)"><i class="fa fa-search"></i></a>							
 						</div>
 						<div class="form-group">
-							<label class="col-md-2 control-label">Eselon 4</label>
+							<label class="col-md-2 control-label">Eselon IV</label>
 							<div class="col-md-9">
 								<select name="f_es4" id="f_es4" class="form-control form-control-detail" disabled="disabled">
 								</select>
@@ -174,6 +174,7 @@
 								<input class="form-control form-control-detail" id="f_jabatan_id" type="hidden">							
 							</div>
 							<a class="btn btn-default" id="f_jabatan_btn"><i class="fa fa-search"></i></a>
+							<a class="btn btn-default" id="f_jabatan_btn_reset"><i class="fa"></i></a>							
 						</div>
 
 

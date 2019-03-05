@@ -543,7 +543,17 @@ class Mmaster extends CI_Model {
 			# code...
 			$sql_5 = "";
 		}
-		else $sql_5 = "AND (b.id = '1' OR b.id = '6')";		
+		else
+		{
+			if ($arg == 1 || $arg == 6) {
+				# code...
+				$sql_5 = "AND (a.kat_posisi = '1' OR a.kat_posisi = '6')";				
+			}
+			else
+			{
+				$sql_5 = "AND a.kat_posisi = '".$arg."'";				
+			}
+		} 		
 
 
 		if ($param['eselon1'] == '') {
@@ -598,7 +608,6 @@ class Mmaster extends CI_Model {
 				".$sql_4."
 				".$sql_5."
 				";
-				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
