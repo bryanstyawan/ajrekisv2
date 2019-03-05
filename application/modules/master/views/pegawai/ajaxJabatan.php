@@ -6,6 +6,7 @@
         <tr>
             <th>Nama Jabatan</th>
             <th>Komponen</th>
+            <th>Atasan</th>            
             <th>Action</th>
         </tr>
     </thead>
@@ -20,8 +21,16 @@
             <tr>
                 <td><?=$jabatan[$i]['nama_posisi'];?></td>
                 <td>
-                    <?=$jabatan[$i]['nama_eselon4'];?>&nbsp;<?=$jabatan[$i]['nama_eselon3'];?>&nbsp;<?=$jabatan[$i]['nama_eselon2'];?>&nbsp;<?=$jabatan[$i]['nama_eselon1'];?>
-                </td>                
+                    <!-- <span class="label label-danger"><?=$jabatan[$i]['id_eselon4'];?></span> -->
+                    <?=$jabatan[$i]['nama_eselon4'];?>&nbsp;
+                    <!-- <span class="label label-danger"><?=$jabatan[$i]['id_eselon3'];?></span> -->
+                    <?=$jabatan[$i]['nama_eselon3'];?>&nbsp;
+                    <!-- <span class="label label-danger"><?=$jabatan[$i]['id_eselon2'];?></span> -->
+                    <?=$jabatan[$i]['nama_eselon2'];?>&nbsp;
+                    <!-- <span class="label label-danger"><?=$jabatan[$i]['id_eselon1'];?></span> -->
+                    <?=$jabatan[$i]['nama_eselon1'];?>
+                </td> 
+                <td><?=$jabatan[$i]['jabatan_atasan'];?>&nbsp;(<b><?=$jabatan[$i]['nama_atasan'];?></b>)</td>               
                 <td>
                     <a class="btn btn-success" onclick="get_data('<?=$jabatan[$i]['nama_posisi'];?>',<?=$jabatan[$i]['id'];?>)"><i class="fa fa-check"></i> Pilih</a>			
                 </td>						

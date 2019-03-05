@@ -31,8 +31,12 @@ class Allcrud extends CI_Model {
 		return $query;
 	}
 
-	public function getData($table,$flag){
+	public function getData($table,$flag,$like=NULL){
 		$this->db->where($flag);
+		if ($like != NULL) {
+			# code...
+			$this->db->like($like);			
+		}
 		return $this->db->get($table);
 	}
 
