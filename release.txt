@@ -4,10 +4,12 @@ New:
 Improved:
 - like in getdata (allcrud)
 - Verifikasi Tambah Jabatan
+- Komponen di filter pegawai
+- Tombol refresh jabatan di master pegawai
 Fixed:
 - Pencarian Jabatan + atasan
 - Filter jenis jabatan di struktur organisasi
-
+- Menu di Kategori Posisi Struktur Akademik
 
 v4.0.0
 2019-03-04

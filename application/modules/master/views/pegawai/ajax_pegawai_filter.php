@@ -63,7 +63,12 @@
 										}
 									?>								
 								</td>								
-								<td></td>
+								<td>
+									<?=($list[$i]->nama_eselon4 != '-') ? $list[$i]->nama_eselon4 : '' ;?>
+									<?=($list[$i]->nama_eselon3 != '-') ? $list[$i]->nama_eselon3 : '' ;?>
+									<?=($list[$i]->nama_eselon2 != '-') ? $list[$i]->nama_eselon2 : '' ;?>
+									<?=($list[$i]->nama_eselon1 != '-') ? $list[$i]->nama_eselon1 : '' ;?>
+								</td>
 								<td></td>								
 								<td class="text-center">
 									<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> UBAH DATA</button>

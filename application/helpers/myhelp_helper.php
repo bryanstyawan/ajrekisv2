@@ -83,11 +83,10 @@
 																FROM mr_pegawai a
 																JOIN mr_posisi b
 																ON a.posisi = b.id
-																WHERE b.atasan = '".$posisi."'");
-
+																WHERE b.atasan = '".$id_posisi."'");
 							if (count($get_menu_activy->result()) != 0)
 							{
-								if ($id_kat_posisi == 1) {
+								if ($id_kat_posisi == 1 || $id_kat_posisi == 6) {
 									# code...
 									if (
 											$baris->url_pages == 'transaksi/kinerja_anggota/0' ||

@@ -74,7 +74,7 @@
 							<th>Jabatan (Kelas Jabatan)</th>													
 							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>							
 							<th>Data Atasan</th>																												
-							<th></th>							
+							<th>Komponen</th>							
 							<th></th>
 							<th>Action</th>
 						</tr>
@@ -169,12 +169,12 @@
 
 						<div class="form-group">
 							<label class="col-md-2 control-label">Jabatan</label>
-							<div class="col-md-9">
+							<div class="col-md-8">
 								<input class="form-control form-control-detail" id="f_jabatan" type="text" disabled="">
 								<input class="form-control form-control-detail" id="f_jabatan_id" type="hidden">							
 							</div>
 							<a class="btn btn-default" id="f_jabatan_btn"><i class="fa fa-search"></i></a>
-							<a class="btn btn-default" id="f_jabatan_btn_reset"><i class="fa"></i></a>							
+							<a class="btn btn-default" id="f_jabatan_btn_reset"><i class="fa fa-refresh"></i></a>							
 						</div>
 
 
@@ -736,6 +736,11 @@ $(document).ready(function(){
 		$("#f_jabatan").val('');
 		$("#f_jabatan_id").val('');
 	})		
+
+	$("#f_jabatan_btn_reset").click(function() {
+		$("#f_jabatan").val('');
+		$("#f_jabatan_id").val('');		
+	})
 
 	$("#f_jabatan_btn").click(function(){
 		var es1 = $("#f_es1").val();
