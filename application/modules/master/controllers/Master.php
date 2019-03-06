@@ -77,6 +77,18 @@ class Master extends CI_Controller {
 						$data['list'][$i]->counter_skp = 0;
 					}					
 				}				
+				elseif($data['list'][$i]->kat_posisi == 6)
+				{
+					$get_summary_urtug = $this->mskp->get_summary_master_skp($data['list'][$i]->id);
+					if ($get_summary_urtug != 0) {
+						# code...
+						$data['list'][$i]->counter_skp = $get_summary_urtug;
+					}
+					else
+					{
+						$data['list'][$i]->counter_skp = 0;
+					}
+				}				
 				else {
 					# code...
 					$data['list'][$i]->counter_skp = 0;					

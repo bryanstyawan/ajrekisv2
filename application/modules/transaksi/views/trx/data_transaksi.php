@@ -425,7 +425,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_disetujui[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_disetujui[$i]->kegiatan_skp;
+                                                    }                                                                                                                                                    
                                                 }
                                     ?>
                                                 <tr>
@@ -497,7 +501,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_tolak[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_tolak[$i]->kegiatan_skp;
+                                                    }                                                                                                                                                    
                                                 }                                                               
                                     ?>
                                                 <tr>
@@ -589,6 +597,17 @@ else {
                                                                             $kegiatan = $urtug[$i]->kegiatan;                                                                            
                                                                         }                                                           
                                                                     }
+                                                                    if ($infoPegawai[0]->kat_posisi == 6) {
+                                                                        # code...
+                                                                        if ($urtug[$i]->id_skp_master != '') {
+                                                                            # code...
+                                                                            $kegiatan = $urtug[$i]->kegiatan_skp;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            $kegiatan = $urtug[$i]->kegiatan;                                                                            
+                                                                        }                                                                                                                                            
+                                                                    }                                                                    
 
                                                         ?>
                                                                 <option value="<?php echo $urtug[$i]->skp_id;?>"><?php echo $x.". ".$kegiatan;?></option>
@@ -730,7 +749,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_keberatan[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }
+                                                    if ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan[$i]->kegiatan_skp;
+                                                    }                                                                                                                                                    
                                                 }                                                                   
                                     ?>
                                                 <tr>
@@ -801,6 +824,10 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp_jfu;
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_keberatan_ditolak[$i]->kegiatan_skp;
                                                     }                                                                                                
                                                 }                                                                              
                                     ?>
@@ -873,7 +900,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_banding[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }                                             
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding[$i]->kegiatan_skp;
+                                                    }                                                                                                       
                                                 }        
                                     ?>
                                                 <tr>
@@ -942,7 +973,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_banding_ditolak[$i]->kegiatan_skp;
+                                                    }                                                                                                                                                    
                                                 }                                                
                                     ?>
                                                 <tr>

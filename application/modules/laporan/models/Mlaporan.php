@@ -84,25 +84,7 @@ Last edit : 19/07/2016
 						SUM(a.tunjangan) AS tunjangan_kinerja,
 						((SUM(a.menit_efektif)/(b.jml_hari_aktif*b.jml_menit_perhari))*100) AS prosentase,
 						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,((CASE d.kat_posisi WHEN 1 THEN (e.tunjangan)WHEN 2 THEN (cls_jft.tunjangan)WHEN 4 THEN (cls_jfu.tunjangan)END) / 2),SUM(a.tunjangan)) AS real_tunjangan_kinerja,
-						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,100,((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100)) AS real_prosentase,
-							COALESCE((
-									SELECT IF(COALESCE(aa.keterangan,'-')='-','-','Tugas Belajar')
-									FROM mr_tugas_belajar aa
-									WHERE aa.id_pegawai = a.id_pegawai
-									AND (a.tanggal_mulai BETWEEN aa.tgl_mulai AND aa.tgl_selesai)
-							 ),'-') AS tugas_belajar,
-							COALESCE((
-									SELECT bb.tunjangan
-									FROM mr_tunjangan_profesi bb
-									WHERE bb.id_pegawai = a.id_pegawai
-									AND bb.tgl_selesai LIKE '%9999-01-01%'
-							 ),'0') AS tunjangan_profesi,
-							COALESCE((
-									SELECT cc.total/2
-									FROM tr_import_tunkir_produktivitas_disiplin cc
-									WHERE cc.nip = c.nip
-									AND cc.bulan = ".$bulan."
-							 ),'0') AS tunjangan_disiplin
+						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,100,((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100)) AS real_prosentase
 				FROM tr_capaian_pekerjaan a
 				LEFT JOIN mr_hari_aktif b ON b.bulan = MONTH(a.tanggal_mulai)
 				LEFT JOIN mr_pegawai c ON a.id_pegawai = c.id
@@ -116,7 +98,26 @@ Last edit : 19/07/2016
 				AND MONTH(a.tanggal_mulai) = ".$bulan."
 				AND YEAR(a.tanggal_mulai) = ".$tahun."
 				AND a.id_pegawai = ".$id_pegawai."
-        AND b.tahun = '".$tahun."'";
+				AND b.tahun = '".$tahun."'";
+				
+			// 	COALESCE((
+			// 		SELECT IF(COALESCE(aa.keterangan,'-')='-','-','Tugas Belajar')
+			// 		FROM mr_tugas_belajar aa
+			// 		WHERE aa.id_pegawai = a.id_pegawai
+			// 		AND (a.tanggal_mulai BETWEEN aa.tgl_mulai AND aa.tgl_selesai)
+			//  ),'-') AS tugas_belajar,
+			// COALESCE((
+			// 		SELECT bb.tunjangan
+			// 		FROM mr_tunjangan_profesi bb
+			// 		WHERE bb.id_pegawai = a.id_pegawai
+			// 		AND bb.tgl_selesai LIKE '%9999-01-01%'
+			//  ),'0') AS tunjangan_profesi,
+			// COALESCE((
+			// 		SELECT cc.total/2
+			// 		FROM tr_import_tunkir_produktivitas_disiplin cc
+			// 		WHERE cc.nip = c.nip
+			// 		AND cc.bulan = ".$bulan."
+			//  ),'0') AS tunjangan_disiplin				
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

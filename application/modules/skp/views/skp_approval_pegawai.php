@@ -254,6 +254,13 @@ if ($member != 0) {
                                         $kegiatan = $list[$i]->kegiatan_skp_jfu;
                                     }                                
                                 }
+                                elseif ($kat_posisi == 6) {
+                                    # code...
+                                    if ($list[$i]->id_skp_master != '') {
+                                        # code...
+                                        $kegiatan = $list[$i]->kegiatan_skp;
+                                    }                                
+                                }                                
                                 else {
                                     # code...
                                     $kegiatan = $list[$i]->kegiatan_skp_jfu;
