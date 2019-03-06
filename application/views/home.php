@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>        
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/selamat_datang.jpg);background-size: 100% 100%;height: 555px;">
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/NYEPIbaru.gif);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">

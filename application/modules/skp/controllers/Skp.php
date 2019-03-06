@@ -491,6 +491,19 @@ class Skp extends CI_Controller {
 		echo json_encode($res_data);
 	}
 
+	public function active_skp_master($id,$stat)
+	{
+		# code...
+		$res_data  = $this->Allcrud->editData('mr_skp_master',array('status' => $stat),array('id_skp' => $id));
+		$text_status = $this->Globalrules->check_status_res($res_data,"Status telah diubah.");
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);				
+	}
+
 	public function delete_skp($id)
 	{
 		# code...

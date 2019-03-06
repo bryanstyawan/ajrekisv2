@@ -302,69 +302,99 @@
                                     $style_tr     = "background-color: #FFC107;color: #fff;";
                                 }
                             }
-                    ?>
-                    <tr style="<?=$style_tr;?>">
-                        <td style="<?=$style_td;?>">
-                            <span class="col-md-12 pull-left" style="display: none;">
-                                <a href="#" class="col-md-12" style="<?=$arrow_up;?><?=$style_tr;?>" onclick="arrow_up('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-up"></i></a>
-                            </span>
-                            <span class="col-md-12 text-center"><?=$i+1;?></span>
-                            <span class="col-md-12 pull-left" style="display: none;">
-                                <a href="#" class="col-md-12" style="<?=$arrow_down;?><?=$style_tr;?>" onclick="arrow_down('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-down"></i></a>
-                            </span>
-                        </td>
-                        <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
-                        <td style="<?=$style_td;?>"><?=$AK_target;?></td>
-                        <td style="<?=$style_td;?>"><?=$target_qty;?></td>
-                        <td style="<?=$style_td;?>"><?=$target_output;?></td>
-                        <td style="<?=$style_td;?>"><?=$target_kualitasmutu;?></td>
-                        <td style="<?=$style_td;?>"><?=$target_waktu_bln;?></td>
-                        <td style="<?=$style_td;?>">bln</td>
-                        <td style="<?=$style_td;?>"><?=$target_biaya;?></td>
-                        <td style="<?=$style_td;?>">
-                            <?php
-                                if ($list[$i]->status != 1) {
+                            
+                            $flag_show = 1;
+                            if($info_posisi[0]['kat_posisi'] == 1)
+                            {
+                                if ($list[$i]->kegiatan_skp_status != 1) {
                                     # code...
-                            ?>
-                                    <b><?=$list[$i]->remarks;?></b>                            
-                            <?php
+                                    $style_tr     = "display:none;";       
+                                    $flag_show = 0;
                                 }
-                            ?>
-                        </td>
-                        <td style="<?=$style_td;?>">
-                            <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
-                            &nbsp;
-                            <?php
-                                if ($list[$i]->id_skp_master == NULL || $list[$i]->id_skp_jfu == NULL || $list[$i]->id_skp_jft == NULL) {
+                            }
+                            elseif ($info_posisi[0]['kat_posisi'] == 2) {
+                                # code...
+                                if ($list[$i]->kegiatan_skp_jfu_status != 1) {
                                     # code...
-                                    if ($list[$i]->status != 1) {
-                                        # code...
-                            ?>
-                                        <button class="btn btn-danger btn-xs" style="margin-top:10px;" onclick="del('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Hapus Target</button>                            
-                            <?                                        
-                                    }
-                                }
-                            ?>
-                            <?php 
-                            // if ($list[$i]->PK == 1) {
-                            //     # code...
-                            //     if ($who_is == 'eselon 2') {
-                            //         # code...
-                            ?>
-                                    <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es2('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 3</button> -->
-                            <?php
-                            //     }
-                            //     elseif ($who_is == 'eselon 3') {
-                            //         # code...
-                            ?>
-                                     <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es3('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 4</button> -->
-                            <?php                                    
-                            //     }                                
-                            // }
-                            ?>                            
-                        </td>
-                    </tr>
-                    <?php
+                                    $style_tr     = "display:none;";
+                                    $flag_show = 0;                                                                        
+                                }                                
+                            }                            
+                            elseif ($info_posisi[0]['kat_posisi'] == 4) {
+                                # code...
+                                if ($list[$i]->kegiatan_skp_jfu_status != 1) {
+                                    # code...
+                                    $style_tr     = "display:none;";                                    
+                                    $flag_show = 0;                                    
+                                }                                
+                            }                      
+                            
+                            if ($flag_show == 1) {
+                                # code...
+                                ?>
+                                <tr style="<?=$style_tr;?>">
+                                    <td style="<?=$style_td;?>">
+                                        <span class="col-md-12 pull-left" style="display: none;">
+                                            <a href="#" class="col-md-12" style="<?=$arrow_up;?><?=$style_tr;?>" onclick="arrow_up('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-up"></i></a>
+                                        </span>
+                                        <span class="col-md-12 text-center"><?=$i+1;?></span>
+                                        <span class="col-md-12 pull-left" style="display: none;">
+                                            <a href="#" class="col-md-12" style="<?=$arrow_down;?><?=$style_tr;?>" onclick="arrow_down('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-down"></i></a>
+                                        </span>
+                                    </td>
+                                    <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
+                                    <td style="<?=$style_td;?>"><?=$AK_target;?></td>
+                                    <td style="<?=$style_td;?>"><?=$target_qty;?></td>
+                                    <td style="<?=$style_td;?>"><?=$target_output;?></td>
+                                    <td style="<?=$style_td;?>"><?=$target_kualitasmutu;?></td>
+                                    <td style="<?=$style_td;?>"><?=$target_waktu_bln;?></td>
+                                    <td style="<?=$style_td;?>">bln</td>
+                                    <td style="<?=$style_td;?>"><?=$target_biaya;?></td>
+                                    <td style="<?=$style_td;?>">
+                                        <?php
+                                            if ($list[$i]->status != 1) {
+                                                # code...
+                                        ?>
+                                                <b><?=$list[$i]->remarks;?></b>                            
+                                        <?php
+                                            }
+                                        ?>
+                                    </td>
+                                    <td style="<?=$style_td;?>">
+                                        <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
+                                        &nbsp;
+                                        <?php
+                                            if ($list[$i]->id_skp_master == NULL || $list[$i]->id_skp_jfu == NULL || $list[$i]->id_skp_jft == NULL) {
+                                                # code...
+                                                if ($list[$i]->status != 1) {
+                                                    # code...
+                                        ?>
+                                                    <button class="btn btn-danger btn-xs" style="margin-top:10px;" onclick="del('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Hapus Target</button>                            
+                                        <?                                        
+                                                }
+                                            }
+                                        ?>
+                                        <?php 
+                                        // if ($list[$i]->PK == 1) {
+                                        //     # code...
+                                        //     if ($who_is == 'eselon 2') {
+                                        //         # code...
+                                        ?>
+                                                <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es2('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 3</button> -->
+                                        <?php
+                                        //     }
+                                        //     elseif ($who_is == 'eselon 3') {
+                                        //         # code...
+                                        ?>
+                                                 <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es3('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 4</button> -->
+                                        <?php                                    
+                                        //     }                                
+                                        // }
+                                        ?>                            
+                                    </td>
+                                </tr>
+                                <?php                                
+                            }
                         }
                     }
                     ?>
