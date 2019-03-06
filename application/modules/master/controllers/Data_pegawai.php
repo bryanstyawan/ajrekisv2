@@ -495,7 +495,8 @@ class Data_pegawai extends CI_Controller {
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
 				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
-				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);				
+				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);
+				$get_approval_skp = $this->mskp->get_counter_approval_skp($data['list'][$i]->id);								
 				if ($get_empty_skp != array()) {
 					# code...
 					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
@@ -513,6 +514,15 @@ class Data_pegawai extends CI_Controller {
 				{
 					$data['list'][$i]->nonempty_skp = 0;					
 				}				
+
+				if ($get_approval_skp != array()) {
+					# code...
+					$data['list'][$i]->approval_skp = $get_approval_skp[0]->counter;
+				}
+				else
+				{
+					$data['list'][$i]->approval_skp = 0;					
+				}								
 			}
 		}
 
@@ -550,7 +560,8 @@ class Data_pegawai extends CI_Controller {
 		$this->excel->getActiveSheet(2)->setCellValue('g7', 'Belum Set Target SKP');
 		$this->excel->getActiveSheet(2)->setCellValue('h7', 'Sudah Set Target SKP');
 		$this->excel->getActiveSheet(2)->setCellValue('i7', 'Total SKP');
-		$this->excel->getActiveSheet(2)->setCellValue('j7', 'Total SKP');																		
+		$this->excel->getActiveSheet(2)->setCellValue('j7', 'Yang Telah diApprove');		
+		$this->excel->getActiveSheet(2)->setCellValue('k7', 'Status SKP');																		
 		if ($data['list'] != 0) {
 		    # code...
 		    $counter = "";
@@ -570,7 +581,14 @@ class Data_pegawai extends CI_Controller {
 					{
 						if ($data['list'][$i]->nonempty_skp == $total_skp) {
 							# code...
-							$set_status = "Telah Mengisi seluruh target SKP";							
+							if ($data['list'][$i]->approval_skp == $total_skp) {
+								# code...
+								$set_status = "Seluruh target SKP sudah diisi dan diapprove ";								
+							}							
+							else
+							{
+								$set_status = "Telah Mengisi seluruh target SKP";								
+							}
 						}
 						else
 						{
@@ -593,7 +611,8 @@ class Data_pegawai extends CI_Controller {
 				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->empty_skp);
 				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->nonempty_skp);
 				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, ($data['list'][$i]->empty_skp + $data['list'][$i]->nonempty_skp));				
-				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $set_status);
+				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $data['list'][$i]->approval_skp);				
+				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $set_status);
 		    }
 		}
 

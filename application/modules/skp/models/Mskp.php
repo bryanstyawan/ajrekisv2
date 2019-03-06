@@ -852,6 +852,26 @@ class Mskp extends CI_Model
 		{
 			return array();
 		}
+	}
+	
+	public function get_counter_approval_skp($id)
+	{
+		# code...
+		$year = date("Y");
+		$sql = "SELECT count(a.id_pegawai) as counter
+				FROM mr_skp_pegawai a
+				WHERE a.id_pegawai = '".$id."'
+				AND a.status = '1'				
+				AND a.tahun = '".$year."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}
 	}	
 	
 }

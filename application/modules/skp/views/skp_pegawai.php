@@ -453,6 +453,7 @@
 
                                     <div class="form-group col-md-12" <?=$only_jft;?>>
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">Untuk Koma, gunakan karakter titik.</label>                                        
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="nak_target" name="nak_target" class="form-control" min="0" max="500">

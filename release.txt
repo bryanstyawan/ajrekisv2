@@ -1,4 +1,13 @@
 v4.0.0
+2019-03-06
+New:
+Improved:
+- Penambahan jumlah target yang sudah diapprove di laporan skp pegawai
+Fixed:
+- Kelas Jabatan di approval skp dihilangkan
+- keterangan angka kredit untuk angka yang koma
+
+v4.0.0
 2019-03-05
 New:
 Improved:
