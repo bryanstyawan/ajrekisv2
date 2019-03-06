@@ -204,6 +204,7 @@ class Transaksi extends CI_Controller {
 		$file_pendukung          = "";
 		$res_data                = "";
 		$text_status             = "";
+		$nip                     = $this->session->userdata('sesNip');
 		$config['upload_path']   = FCPATH.'/public/file_pendukung/';
 		$config['allowed_types'] = 'pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png|ppt|pptx';
 		$config['max_size']      = '3000';
@@ -637,11 +638,15 @@ class Transaksi extends CI_Controller {
 		}
 
 		$data_sender['tunjangan'] = $menit_efektif_calc * (50/100) * $tunjangan_session;
-		return array(
+		$_res_data = array(
 						'hari_efektif'  => $data_sender['hari_efektif'],
 						'menit_efektif' => $data_sender['menit_efektif'],
 						'tunjangan'     => $data_sender['tunjangan']
 					);
+		// echo "<pre>";
+		// print_r($_res_data);die();		
+		// echo "</pre>";
+		return $_res_data;
 	}
 
 	public function edit_pekerjaan()

@@ -334,22 +334,33 @@
                         <td style="<?=$style_td;?>">
                             <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
                             &nbsp;
-                            <?php 
-                            if ($list[$i]->PK == 1) {
-                                # code...
-                                if ($who_is == 'eselon 2') {
+                            <?php
+                                if ($list[$i]->id_skp_master == NULL || $list[$i]->id_skp_jfu == NULL || $list[$i]->id_skp_jft == NULL) {
                                     # code...
+                                    if ($list[$i]->status != 1) {
+                                        # code...
+                            ?>
+                                        <button class="btn btn-danger btn-xs" style="margin-top:10px;" onclick="del('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Hapus Target</button>                            
+                            <?                                        
+                                    }
+                                }
+                            ?>
+                            <?php 
+                            // if ($list[$i]->PK == 1) {
+                            //     # code...
+                            //     if ($who_is == 'eselon 2') {
+                            //         # code...
                             ?>
                                     <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es2('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 3</button> -->
                             <?php
-                                }
-                                elseif ($who_is == 'eselon 3') {
-                                    # code...
+                            //     }
+                            //     elseif ($who_is == 'eselon 3') {
+                            //         # code...
                             ?>
-                                    <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es3('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 4</button> -->
+                                     <!-- <button class="btn btn-warning btn-xs" style="margin-top:5px;" onclick="kegiatan_es3('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Kegiatan Eselon 4</button> -->
                             <?php                                    
-                                }                                
-                            }
+                            //     }                                
+                            // }
                             ?>                            
                         </td>
                     </tr>
@@ -453,6 +464,7 @@
 
                                     <div class="form-group col-md-12" <?=$only_jft;?>>
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Angka Kredit</label>
+                                        <label class="pull-right" style="color: #000;font-weight: 400;font-size: 19px;">Untuk Koma, gunakan karakter titik.</label>                                        
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                             <input type="number" id="nak_target" name="nak_target" class="form-control" min="0" max="500">

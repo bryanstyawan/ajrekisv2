@@ -131,15 +131,6 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>
-                                    Kelas Jabatan:</label>
-                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $kelas_jabatan;?></span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
