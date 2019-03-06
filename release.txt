@@ -17,6 +17,7 @@ Fixed:
 - filter struktur Akademik di struktur organisasi (SKP)
 - Menghapus sementara subquery untuk tugas_belajar,tunjangan_profesi,tunjangan_disiplin
 - Tombol refresh jabatan struktur Akademik di master pegawai
+- flag_show = 0 dihilangkan di target skp (jft-ftu)
 
 v4.0.0
 2019-03-05
