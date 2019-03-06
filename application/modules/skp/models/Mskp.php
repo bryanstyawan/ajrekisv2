@@ -263,6 +263,16 @@ class Mskp extends CI_Model
 							COALESCE(
 								(
 									SELECT
+										cc.status
+									FROM
+										mr_skp_master cc
+									WHERE
+										cc.id_skp = a.id_skp_master
+								),'-'
+							) AS `kegiatan_skp_status`,							
+							COALESCE(
+								(
+									SELECT
 										jfu.uraian_tugas
 									FROM
 									mr_jabatan_fungsional_umum_uraian_tugas jfu
@@ -273,13 +283,33 @@ class Mskp extends CI_Model
 							COALESCE(
 								(
 									SELECT
+										jfu.status
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu_status`,							
+							COALESCE(
+								(
+									SELECT
 										jft.uraian_tugas
 									FROM
 									mr_jabatan_fungsional_tertentu_uraian_tugas jft
 									WHERE
 										jft.id = a.id_skp_jft
 								),'-'
-							) AS `kegiatan_skp_jft`,														
+							) AS `kegiatan_skp_jft`,	
+							COALESCE(
+								(
+									SELECT
+										jft.status
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft_status`,																					
 							COALESCE(d.nama,'-') as `target_output_name`
 							".$SELECT."
 					FROM mr_skp_pegawai a
@@ -734,7 +764,8 @@ class Mskp extends CI_Model
 		$sql = "SELECT a.*
 				FROM mr_skp_master a
 				WHERE ".$sql_1."
-				AND a.status = '1'";
+				ORDER BY a.status DESC";
+				// AND a.status = '1'				
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

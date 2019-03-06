@@ -23,7 +23,7 @@
 								?>								
 							</td>
 							<td>
-								<button class="btn btn-primary btn-xs" onclick="show_skp('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> SKP</button>&nbsp;&nbsp;								
+								<button class="btn btn-primary btn-xs" style="margin-bottom:10px;" onclick="show_skp('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> SKP</button>&nbsp;&nbsp;								
 								<?php
 									if ($list[$i]->is_master_skp == 'ready') {
 										# code...

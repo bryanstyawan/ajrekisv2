@@ -29,31 +29,27 @@
                 for ($i=0; $i < count($request_eval); $i++) { 
                     # code...
                     $data_link_a = "";
-                    if ($request_eval[$i]->local == '1') {
-                        # code...
-                        $data_link_a = base_url() . 'public/images/pegawai/'.$request_eval[$i]->photo;
-                    }
-                    else
-                    {
-                        $data_link_a = 'http://sikerja.kemendagri.go.id/images/demo/users/'.$request_eval[$i]->photo;
-                    }                    
+                    $data_link_a = base_url() . 'public/images/pegawai/'.$request_eval[$i]->photo; 
 
-                    $data_done = "";
+                    $data_done      = "";
+                    $data_done_span = "";
                     if ($request_eval[$i]->status_prilaku != NULL) {
                         # code...
                         if ($request_eval[$i]->status_prilaku == 1) {
                             # code...
-                            $data_done = "background-color: #4caf50;";                            
+                            $data_done      = "background-color: #4caf50;";                            
+                            $data_done_span = "color:#fff;";                            
                         }
                     }
                     else {
                         # code...
-                        $data_done = "";                        
+                        $data_done      = "";         
+                        $data_done_span = "";                                       
                     }
         ?>
                     <a class="btn btn-app" onclick="send_penilaian_prilaku(<?=$request_eval[$i]->evaluator_id;?>,<?=$request_eval[$i]->id_pegawai;?>)" style="<?=$data_done;?>">
                         <img src="<?=$data_link_a;?>" style="height: 100%">
-                        <span><?=$request_eval[$i]->nama_pegawai;?></span>                            
+                        <span style="<?=$data_done_span;?>"><?=$request_eval[$i]->nama_pegawai;?></span>                            
                     </a>                    
         <?php                    
                 }

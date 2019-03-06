@@ -158,7 +158,7 @@
                                     ?>    
                                 </td>
                                 <td>
-                                    <button class="btn btn-warning btn-xs" onclick="ubah_master_skp('<?=$list[$i]->id_skp;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah</button>                                    
+                                    <button class="btn btn-warning btn-xs" style="margin-bottom:10px;" onclick="ubah_master_skp('<?=$list[$i]->id_skp;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah</button>                                    
                                     <?php
                                     if ($list[$i]->status == 1) {
                                         # code...
@@ -285,7 +285,7 @@
 <script type="text/javascript">
 function ubah_master_skp(id) {
     // body...
-    $.getJSON('<?php echo site_url() ?>/skp/get_master_skp_id/'+id,
+    $.getJSON('<?php echo site_url() ?>skp/get_master_skp_id/'+id,
         function( response ) {
             $('#ubah_dataskp').attr('class', 'modal fade bs-example-modal-lg').attr('aria-labelledby','myLargeModalLabel');
             $('.modal-dialog').attr('class','modal-dialog modal-lg');        
@@ -302,6 +302,43 @@ function ubah_master_skp(id) {
     );
 }
 
+function active_skp(id,stat) {
+    // body...
+    txt_stat = "";
+    if (stat == 1) 
+    {
+        txt_stat = "Ingin aktifkan skp ini ?";
+    }
+    else
+    {
+        txt_stat = "Ingin nonaktifkan skp ini ?";        
+    }
+    Lobibox.confirm({
+        title   : "Konfirmasi",
+        msg     : txt_stat,
+        callback: function ($this, type) {
+            if (type === 'yes'){
+                $.ajax({
+                    url :"<?php echo site_url()?>skp/active_skp_master/"+id+"/"+stat,
+                    type:"post",
+                    beforeSend:function(){
+                        $("#loadprosess").modal('show');                
+                    },                                      
+                    success:function(msg){
+                        var obj = jQuery.parseJSON (msg);
+                        ajax_status(obj);
+                    },
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
+                    }
+                })
+            }
+        }
+    })       
+}
+
+
 function del(id) {
     // body...
     Lobibox.confirm({
@@ -310,39 +347,18 @@ function del(id) {
         callback: function ($this, type) {
             if (type === 'yes'){
                 $.ajax({
-                    url :"<?php echo site_url()?>/skp/delete_skp/"+id,
+                    url :"<?php echo site_url()?>skp/delete_skp/"+id,
                     type:"post",
                     beforeSend:function(){
                         $("#loadprosess").modal('show');                
                     },                                      
                     success:function(msg){
-                        var obj = jQuery.parseJSON (msg);             
-                        if (obj.status == 1) 
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){ 
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);                                                                   
-                            }, 5000);                
-                        }
-                        else
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){ 
-                                $("#loadprosess").modal('hide');                                
-                            }, 5000);                                                                           
-                        }                                               
+                        var obj = jQuery.parseJSON (msg);
+                        ajax_status(obj);
                     },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal melakukan transaksi '
-                        });
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
                     }
                 })
             }
@@ -353,40 +369,19 @@ function del(id) {
 function arrow_up(id) {
     // body...
     $.ajax({
-        url :"<?php echo site_url();?>/skp/change_priority/"+id+"/up",
+        url :"<?php echo site_url();?>skp/change_priority/"+id+"/up",
         type:"post",
         beforeSend:function(){
             $("#editData").modal('hide');
             $("#loadprosess").modal('show');                                                
         },
         success:function(msg){
-            var obj = jQuery.parseJSON (msg);             
-            if (obj.status == 1) 
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){ 
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);                                                                   
-                }, 5000);                
-            }
-            else
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){ 
-                    $("#loadprosess").modal('hide');                                
-                }, 5000);                                                                           
-            }           
+            var obj = jQuery.parseJSON (msg);
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })        
 }
@@ -394,40 +389,19 @@ function arrow_up(id) {
 function arrow_down(id) {
     // body...
     $.ajax({
-        url :"<?php echo site_url();?>/skp/change_priority/"+id+"/down",
+        url :"<?php echo site_url();?>skp/change_priority/"+id+"/down",
         type:"post",
         beforeSend:function(){
             $("#editData").modal('hide');
             $("#loadprosess").modal('show');                                                
         },
         success:function(msg){
-            var obj = jQuery.parseJSON (msg);             
-            if (obj.status == 1) 
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){ 
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 500);                                                                   
-                }, 1000);                
-            }
-            else
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){ 
-                    $("#loadprosess").modal('hide');                                
-                }, 5000);                                                                           
-            }           
+            var obj = jQuery.parseJSON (msg);
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Menambah Pekerjaan'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })            
 }
@@ -483,33 +457,12 @@ $(document).ready(function()
                     $("#loadprosess").modal('show');                                                
                 },
                 success:function(msg){
-                    var obj = jQuery.parseJSON (msg);             
-                    if (obj.status == 1) 
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){ 
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);                                                                   
-                        }, 5000);                
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){ 
-                            $("#loadprosess").modal('hide');                                
-                        }, 5000);                                                                           
-                    }           
+                    var obj = jQuery.parseJSON (msg);
+                    ajax_status(obj);
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal Menambah Pekerjaan'
-                    });
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
                 }
             })                
         }
@@ -547,33 +500,12 @@ $(document).ready(function()
                     $("#loadprosess").modal('show');                                                
                 },
                 success:function(msg){
-                    var obj = jQuery.parseJSON (msg);             
-                    if (obj.status == 1) 
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){ 
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);                                                                   
-                        }, 5000);                
-                    }
-                    else
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){ 
-                            $("#loadprosess").modal('hide');                                
-                        }, 5000);                                                                           
-                    }           
+                    var obj = jQuery.parseJSON (msg);
+                    ajax_status(obj);
                 },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal Menambah Pekerjaan'
-                    });
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
                 }
             })        
         }

@@ -2,12 +2,17 @@ v4.0.0
 2019-03-06
 New:
 - Hapus target skp yang bersumber dari penambahan skp pribadi (Yang sudah diapprove tidak bisa dihapus)
+- Aktivasi skp struktural
 Improved:
 - Penambahan jumlah target yang sudah diapprove di laporan skp pegawai
+- Penyesuaian target skp ketika ada aktivasi dari master skp (struktural, jfu dan jft)
 Fixed:
 - Kelas Jabatan di approval skp dihilangkan
 - keterangan angka kredit untuk angka yang koma
 - Tambah posisi di cetak laporan skp pegawai
+- jarak kolom button di master skp
+- Foto pegawai di penilaian prilaku
+- ubah slider di landing page untuk hari raya nyepi
 
 v4.0.0
 2019-03-05
