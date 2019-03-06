@@ -494,9 +494,9 @@ class Data_pegawai extends CI_Controller {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
 				# code...
-				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id);
-				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id);
-				$get_approval_skp = $this->mskp->get_counter_approval_skp($data['list'][$i]->id);								
+				$get_empty_skp    = $this->mskp->get_counter_empty_target_skp($data['list'][$i]->id,$data['list'][$i]->id_posisi);
+				$get_nonempty_skp = $this->mskp->get_counter_nonempty_target_skp($data['list'][$i]->id,$data['list'][$i]->id_posisi);
+				$get_approval_skp = $this->mskp->get_counter_approval_skp($data['list'][$i]->id,$data['list'][$i]->id_posisi);								
 				if ($get_empty_skp != array()) {
 					# code...
 					$data['list'][$i]->empty_skp = $get_empty_skp[0]->counter;
@@ -579,21 +579,38 @@ class Data_pegawai extends CI_Controller {
 					}
 					else
 					{
-						if ($data['list'][$i]->nonempty_skp == $total_skp) {
+						if ($data['list'][$i]->approval_skp != 0) {
 							# code...
-							if ($data['list'][$i]->approval_skp == $total_skp) {
-								# code...
-								$set_status = "Seluruh target SKP sudah diisi dan diapprove ";								
-							}							
-							else
-							{
-								$set_status = "Telah Mengisi seluruh target SKP";								
-							}
-						}
+							$set_status = "Sudah di approve";															
+						}							
 						else
 						{
-							$set_status = "Proses Mengisi target SKP";							
-						}
+							$set_status = "Belum di approve";							
+						}													
+						// if ($data['list'][$i]->nonempty_skp == $total_skp) {
+						// 	# code...
+						// 	// if ($data['list'][$i]->approval_skp == $total_skp) {
+						// 	// 	# code...
+						// 	// 	$set_status = "Seluruh target SKP sudah diisi dan diapprove ";								
+						// 	// }							
+						// 	// else
+						// 	// {
+						// 	// 	$set_status = "Telah Mengisi seluruh target SKP";								
+						// 	// }
+						// }
+						// else
+						// {
+						// 	// $set_status = "Proses Mengisi target SKP";														
+						// 	// if ($data['list'][$i]->approval_skp != 0) {
+						// 	// 	# code...
+						// 	// 	$set_status = "Proses Mengisi target SKP";															
+						// 	// }							
+						// 	// else
+						// 	// {
+						// 	// 	$set_status = "Proses Mengisi target SKP";							
+						// 	// }							
+
+						// }
 
 					}
 				}

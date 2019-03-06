@@ -814,13 +814,14 @@ class Mskp extends CI_Model
 	}
 	
 
-	public function get_counter_empty_target_skp($id)
+	public function get_counter_empty_target_skp($id,$id_posisi)
 	{
 		# code...
 		$year = date("Y");
 		$sql = "SELECT count(a.id_pegawai) as counter
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
+				AND a.id_posisi = '".$id_posisi."'
 				AND a.tahun = '".$year."'
 				AND (a.target_qty IS NULL OR a.target_qty = '')";
 		$query = $this->db->query($sql);
@@ -834,13 +835,14 @@ class Mskp extends CI_Model
 		}
 	}
 	
-	public function get_counter_nonempty_target_skp($id)
+	public function get_counter_nonempty_target_skp($id,$id_posisi)
 	{
 		# code...
 		$year = date("Y");
 		$sql = "SELECT count(a.id_pegawai) as counter
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
+				AND a.id_posisi = '".$id_posisi."'				
 				AND a.tahun = '".$year."'
 				AND (a.target_qty IS NOT NULL OR a.target_qty <> '')";
 		$query = $this->db->query($sql);
@@ -854,13 +856,14 @@ class Mskp extends CI_Model
 		}
 	}
 	
-	public function get_counter_approval_skp($id)
+	public function get_counter_approval_skp($id,$id_posisi)
 	{
 		# code...
 		$year = date("Y");
 		$sql = "SELECT count(a.id_pegawai) as counter
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai = '".$id."'
+				AND a.id_posisi = '".$id_posisi."'				
 				AND a.status = '1'				
 				AND a.tahun = '".$year."'";
 		$query = $this->db->query($sql);

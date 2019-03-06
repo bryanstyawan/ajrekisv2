@@ -6,6 +6,7 @@ Improved:
 Fixed:
 - Kelas Jabatan di approval skp dihilangkan
 - keterangan angka kredit untuk angka yang koma
+- Tambah posisi di cetak laporan skp pegawai
 
 v4.0.0
 2019-03-05

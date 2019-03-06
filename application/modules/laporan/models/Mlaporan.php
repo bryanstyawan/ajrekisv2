@@ -73,9 +73,9 @@ Last edit : 19/07/2016
 								WHEN 1 THEN (e.tunjangan/2)
 								WHEN 2 THEN (cls_jft.tunjangan/2)
 								WHEN 4 THEN (cls_jfu.tunjangan/2)
+								WHEN 6 THEN (e.tunjangan/2)								
 							END								
 						) as tunjangan_kinerja_sistem,
---						(e.tunjangan/2) AS tunjangan_kinerja_sistem,
 						a.status_pekerjaan,
 						MONTH(a.tanggal_mulai) AS `month`,
 						(b.jml_hari_aktif*b.jml_menit_perhari) AS menit_efektif_sistem,
