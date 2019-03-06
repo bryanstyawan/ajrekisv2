@@ -188,11 +188,12 @@
 						<hr>
 						<div class="form-group">
 							<label class="col-md-2 control-label">Jabatan Akademik</label>
-							<div class="col-md-9">
+							<div class="col-md-8">
 								<input class="form-control form-control-detail" id="f_jabatan_akademik" type="text" disabled="">
 								<input class="form-control form-control-detail" id="f_jabatan_akademik_id" type="hidden">							
 							</div>
 							<a class="btn btn-default" id="f_jabatan_akademik_btn"><i class="fa fa-search"></i></a>
+							<a class="btn btn-default" id="f_jabatan_akademik_btn_reset"><i class="fa fa-refresh"></i></a>							
 						</div>						
 
 					</div>
@@ -741,6 +742,11 @@ $(document).ready(function(){
 		$("#f_jabatan").val('');
 		$("#f_jabatan_id").val('');		
 	})
+
+	$("#f_jabatan_akademik_btn_reset").click(function() {
+		$("#f_jabatan_akademik").val('');
+		$("#f_jabatan_akademik_id").val('');		
+	})	
 
 	$("#f_jabatan_btn").click(function(){
 		var es1 = $("#f_es1").val();

@@ -13,6 +13,8 @@ Fixed:
 - jarak kolom button di master skp
 - Foto pegawai di penilaian prilaku
 - ubah slider di landing page untuk hari raya nyepi
+- Menghapus sementara subquery untuk tugas_belajar,tunjangan_profesi,tunjangan_disiplin
+- Tombol refresh jabatan struktur Akademik di master pegawai
 
 v4.0.0
 2019-03-05

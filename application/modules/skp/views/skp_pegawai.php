@@ -176,6 +176,13 @@
                                     $kegiatan            = $list[$i]->kegiatan_skp_jfu;
                                 }                                
                             }
+                            elseif($info_posisi[0]['kat_posisi'] == 6)
+                            {
+                                if ($list[$i]->id_skp_master != '') {
+                                    # code...
+                                    $kegiatan            = $list[$i]->kegiatan_skp;
+                                }
+                            }
 
                             $AK_target           = $list[$i]->AK_target;
                             $target_qty          = $list[$i]->target_qty;

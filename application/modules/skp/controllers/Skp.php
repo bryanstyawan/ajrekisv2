@@ -1231,6 +1231,27 @@ class Skp extends CI_Controller {
 			}
 			elseif ($kat_posisi == 6) {
 				# code...
+				$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
+				// print_r($bind_data);die();
+				if ($bind_data != 0) {
+					# code...
+					for ($i=0; $i < count($bind_data); $i++) {
+						# code...
+						$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
+						if ($check_data == false) {
+							# code...
+							$data = array(
+								'id_pegawai'     => $id_pegawai,
+								'id_posisi'      => $posisi,
+								'tahun'          => date('Y'),
+								'id_skp_master'  => $bind_data[$i]->id_skp,
+								'status'         => '6',
+								'audit_priority' => ''
+							);
+							$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+						}
+					}
+				}								
 			}
 		}
 	}

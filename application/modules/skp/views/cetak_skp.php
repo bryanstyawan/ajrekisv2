@@ -430,7 +430,10 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                 # code...
                                 if($list_skp[$i]->id_skp_jfu) $kegiatan=$list_skp[$i]->kegiatan_skp_jfu;                                                                
                             }
-
+                            elseif ($kat_posisi == 6) {
+                                # code...
+                                if($list_skp[$i]->id_skp_master) $kegiatan=$list_skp[$i]->kegiatan_skp;                                
+                            }
 
                             if ($list_skp[$i]->PK == 1)$pk_status = "Ya";
                             else $pk_status = "Tidak";
