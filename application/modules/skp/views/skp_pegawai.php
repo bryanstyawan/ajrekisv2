@@ -125,7 +125,7 @@
             <table id="table_skp" class="table table-bordered table-striped table-view" style="font-size: 12px;">
                 <thead>
                     <tr>
-                        <th rowspan="2">No</th>
+                        <th rowspan="2"></th>
                         <th rowspan="2">Kegiatan tugas jabatan</th>
                         <th style="max-width: 40px!important;width: 40px!important;" rowspan="2">AK</th>
                         <th colspan="6">Target</th>
@@ -315,7 +315,7 @@
                             {
                                 if ($list[$i]->kegiatan_skp_status != 1) {
                                     # code...
-                                    $style_tr     = "display:none;";       
+                                    // $style_tr     = "display:none;";       
                                     $flag_show = 0;
                                 }
                             }
@@ -323,18 +323,26 @@
                                 # code...
                                 if ($list[$i]->kegiatan_skp_jfu_status != 1) {
                                     # code...
-                                    $style_tr     = "display:none;";
-                                    $flag_show = 0;                                                                        
+                                    // $style_tr     = "display:none;";
+                                    // $flag_show = 0;                                                                        
                                 }                                
                             }                            
                             elseif ($info_posisi[0]['kat_posisi'] == 4) {
                                 # code...
                                 if ($list[$i]->kegiatan_skp_jfu_status != 1) {
                                     # code...
-                                    $style_tr     = "display:none;";                                    
-                                    $flag_show = 0;                                    
+                                    // $style_tr     = "display:none;";                                    
+                                    // $flag_show = 0;                                    
                                 }                                
-                            }                      
+                            }    
+                            if($info_posisi[0]['kat_posisi'] == 6)
+                            {
+                                if ($list[$i]->kegiatan_skp_status != 1) {
+                                    # code...
+                                    // $style_tr     = "display:none;";       
+                                    $flag_show = 0;
+                                }
+                            }                                              
                             
                             if ($flag_show == 1) {
                                 # code...
@@ -344,7 +352,8 @@
                                         <span class="col-md-12 pull-left" style="display: none;">
                                             <a href="#" class="col-md-12" style="<?=$arrow_up;?><?=$style_tr;?>" onclick="arrow_up('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-up"></i></a>
                                         </span>
-                                        <span class="col-md-12 text-center"><?=$i+1;?></span>
+                                        <!-- <span class="col-md-12 text-center"><?=$i+1;?></span> -->
+                                        <span class="col-md-12 text-center"><i class="fa fa-dot-circle-o"></i></span>
                                         <span class="col-md-12 pull-left" style="display: none;">
                                             <a href="#" class="col-md-12" style="<?=$arrow_down;?><?=$style_tr;?>" onclick="arrow_down('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-down"></i></a>
                                         </span>
@@ -371,7 +380,8 @@
                                         <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
                                         &nbsp;
                                         <?php
-                                            if ($list[$i]->id_skp_master == NULL || $list[$i]->id_skp_jfu == NULL || $list[$i]->id_skp_jft == NULL) {
+                                            if ($list[$i]->id_skp_master == NULL && $list[$i]->id_skp_jfu == NULL && $list[$i]->id_skp_jft == NULL) 
+                                            {
                                                 # code...
                                                 if ($list[$i]->status != 1) {
                                                     # code...
