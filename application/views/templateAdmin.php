@@ -205,9 +205,22 @@ $(document).click(function(e) {
               </h1>
             </section>
 			<section class="content">
-    			<div class="row">
-    			<?php $this->load->view($content);?>
-    			</div>
+                <?php
+                    if ($title == '') {
+                        # code...
+                ?>
+                    <?php $this->load->view($content);?>                
+                <?php
+                    }
+                    else
+                    {
+                ?>
+                    <div class="row">
+                        <?php $this->load->view($content);?>
+                    </div>                
+                <?php
+                    }
+                ?>
             </section>
         </div>
 

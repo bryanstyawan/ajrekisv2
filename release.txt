@@ -1,6 +1,13 @@
 v4.0.0
 2019-03-06
 New:
+- Coming Soon page
+Improved:
+Fixed:
+
+v4.0.0
+2019-03-06
+New:
 - Hapus target skp yang bersumber dari penambahan skp pribadi (Yang sudah diapprove tidak bisa dihapus)
 - Aktivasi skp struktural
 Improved:
