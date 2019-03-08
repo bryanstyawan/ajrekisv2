@@ -2,8 +2,13 @@ v4.0.0
 2019-03-06
 New:
 - Coming Soon page
+- Struktur Akademik di target skp
 Improved:
 Fixed:
+- Counter approval (Ubah (sebelumnya sudah diapprove) + pengajuan target skp baru)
+- Penyesuaian target skp ketika ada aktivasi dari master skp (struktural)
+- Permasalahan aktivasi ketika tambah skp baru (struktural)
+- Footer
 
 v4.0.0
 2019-03-06
