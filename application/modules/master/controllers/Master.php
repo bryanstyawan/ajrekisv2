@@ -443,7 +443,17 @@ class Master extends CI_Controller {
 				else
 				{
 					$data['list'][$i]->posisi_akademik_name = '-';					
-				}				
+				}			
+				
+				$get_data_struktur_organisasi1 = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_plt);				
+				if ($get_data_struktur_organisasi1 != array()) {
+					# code...
+					$data['list'][$i]->posisi_plt_name = $get_data_struktur_organisasi1[0]->nama_posisi;
+				}
+				else
+				{
+					$data['list'][$i]->posisi_plt_name = '-';					
+				}							
 
 				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
 				if ($data_pegawai != 0) {

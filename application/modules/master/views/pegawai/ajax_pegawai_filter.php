@@ -49,6 +49,7 @@
 									)</b>
 								</td>
 								<td><?=$list[$i]->posisi_akademik_name;?></td>								
+								<td><?=$list[$i]->posisi_plt_name;?></td>								
 								<td>
 									<?php
 										if ($list[$i]->avail_atasan == 1) {
@@ -68,8 +69,7 @@
 									<?=($list[$i]->nama_eselon3 != '-') ? $list[$i]->nama_eselon3 : '' ;?>
 									<?=($list[$i]->nama_eselon2 != '-') ? $list[$i]->nama_eselon2 : '' ;?>
 									<?=($list[$i]->nama_eselon1 != '-') ? $list[$i]->nama_eselon1 : '' ;?>
-								</td>
-								<td></td>								
+								</td>								
 								<td class="text-center">
 									<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> UBAH DATA</button>
 									<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> HAPUS DATA</button>

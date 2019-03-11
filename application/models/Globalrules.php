@@ -23,6 +23,12 @@ class Globalrules extends CI_Model
 		}
 	}
 
+	public function trigger_insert_update()
+	{
+		# code...
+		return array('audit_time' => date('Y-m-d H:i:s'), 'audit_user' => $this->session->userdata('sesNip'));
+	}	
+
 	public function notif_message()
 		{
 		$count_inbox = "";

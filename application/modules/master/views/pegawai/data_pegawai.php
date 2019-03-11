@@ -73,9 +73,9 @@
 							<th>Nama Pegawai</th>	
 							<th>Jabatan (Kelas Jabatan)</th>													
 							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>							
+							<th>PLH/PLT</th>							
 							<th>Data Atasan</th>																												
 							<th>Komponen</th>							
-							<th></th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -194,7 +194,18 @@
 							</div>
 							<a class="btn btn-default" id="f_jabatan_akademik_btn"><i class="fa fa-search"></i></a>
 							<a class="btn btn-default" id="f_jabatan_akademik_btn_reset"><i class="fa fa-refresh"></i></a>							
-						</div>						
+						</div>
+
+						<hr>
+						<div class="form-group">
+							<label class="col-md-2 control-label">PLT/PLH</label>
+							<div class="col-md-8">
+								<input class="form-control form-control-detail" id="f_jabatan_plt" type="text" disabled="">
+								<input class="form-control form-control-detail" id="f_jabatan_plt_id" type="hidden">							
+							</div>
+							<a class="btn btn-default" id="f_jabatan_plt_btn"><i class="fa fa-search"></i></a>
+							<a class="btn btn-default" id="f_jabatan_plt_btn_reset"><i class="fa fa-refresh"></i></a>							
+						</div>												
 
 					</div>
 				</div>
@@ -527,7 +538,7 @@ function main_form(params,id) {
 		$("#crud").val('insert');		
 	} else if(params == 'update') {
 		$.ajax({
-			url :"<?php echo site_url()?>/master/data_pegawai/get_data_pegawai/"+id,		
+			url :"<?php echo site_url()?>master/data_pegawai/get_data_pegawai/"+id,		
 			type:"post",
 			beforeSend:function(){
 				$("#loadprosess").modal('show');
@@ -638,7 +649,18 @@ function main_form(params,id) {
 						jabatan_akademik = obj.jabatan_akademik[0].nama_posisi;
 					}
 					$("#f_jabatan_akademik").val(jabatan_akademik);
-					$("#f_jabatan_akademik_id").val(obj.pegawai[0].posisi_akademik);									
+					$("#f_jabatan_akademik_id").val(obj.pegawai[0].posisi_akademik);
+
+					jabatan_plt = '';
+					if (obj.jabatan_plt == '') {
+						jabatan_plt = '-';
+					}
+					else
+					{
+						jabatan_plt = obj.jabatan_plt[0].nama_posisi;
+					}
+					$("#f_jabatan_plt").val(jabatan_plt);
+					$("#f_jabatan_plt_id").val(obj.pegawai[0].posisi_plt);														
 				}
 
 				$("#loadprosess").modal('hide');				
@@ -762,7 +784,7 @@ $(document).ready(function(){
 				$("#get-datatable").html('');				
 			},			
 			success:function(msg){
-				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan");				
+				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan Definitif");				
 				$("#get-datatable").html(msg);
 				$("#loadprosess").modal('hide');								
 				$("#modal-datatable").modal('show');				
@@ -784,13 +806,35 @@ $(document).ready(function(){
 				$("#get-datatable").html('');				
 			},			
 			success:function(msg){
-				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan");				
+				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan Struktural Akademik");				
 				$("#get-datatable").html(msg);
 				$("#loadprosess").modal('hide');								
 				$("#modal-datatable").modal('show');				
 			}
 		})
-	})		
+	})
+
+	$("#f_jabatan_plt_btn").click(function(){
+		var es1 = $("#f_es1").val();
+		var es2 = $("#f_es2").val();
+		var es3 = $("#f_es3").val();
+		var es4 = $("#f_es4").val();
+		$.ajax({
+			url :"<?php echo site_url();?>/master/data_pegawai/cari_jabatan_plt",
+			type:"post",
+			data:"es1="+es1,
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#get-datatable").html('');				
+			},			
+			success:function(msg){
+				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Jabatan PLT/PLH");				
+				$("#get-datatable").html(msg);
+				$("#loadprosess").modal('hide');								
+				$("#modal-datatable").modal('show');				
+			}
+		})
+	})			
 
 	$("#btn-trigger-controll").click(function(){
 		var f_es1                 = $("#f_es1").val();
@@ -801,6 +845,7 @@ $(document).ready(function(){
 		var f_nama                = $("#f_nama").val();
 		var f_jabatan             = $("#f_jabatan_id").val();
 		var f_jabatan_akademik    = $("#f_jabatan_akademik_id").val();		
+		var f_jabatan_plt         = $("#f_jabatan_plt_id").val();
 		var f_tmt                 = $("#f_tmt").val();
 		var oid                   = $("#oid").val();
 		var crud                  = $("#crud").val();
@@ -854,6 +899,7 @@ $(document).ready(function(){
 					'nama'   			: f_nama,
 					'jabatan' 			: f_jabatan,
 					'jabatan_akademik'  : f_jabatan_akademik,
+					'jabatan_plt' 	: f_jabatan_plt, 
 					'tmt'    			: f_tmt
 				}				
 			

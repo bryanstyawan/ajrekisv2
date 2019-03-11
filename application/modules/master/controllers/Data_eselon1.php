@@ -34,7 +34,7 @@ class Data_eselon1 extends CI_Controller {
 			$data_sender['oid']  = $oid;
 		}
 		
-		// $data_store        = $this->Globalrules->trigger_insert_update($data_sender['crud']);
+		$data_store        = $this->Globalrules->trigger_insert_update();
 		if ($data_sender['crud'] == 'insert') {
 			# code...
 			$data_store['nama_eselon1'] = $data_sender['es1'];

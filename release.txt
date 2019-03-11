@@ -1,4 +1,15 @@
 v4.0.0
+2019-03-11
+New:
+- Trigger update & insert
+- Jabatan PLT di data pegawai 
+Improved:
+- Menu (atasan - Bawahan)
+- Setting Menu (atasan - Bawahan)
+- Data history eselon1, eselon2, eselon3, eselon4, Pegawai, Struktur Organisasi 
+Fixed:
+
+v4.0.0
 2019-03-06
 New:
 - Coming Soon page
