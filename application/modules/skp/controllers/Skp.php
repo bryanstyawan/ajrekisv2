@@ -248,11 +248,11 @@ class Skp extends CI_Controller {
 			$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
 			if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
 				# code...
-				$data['status'] = 1;
+				$data_change['status'] = 1;
 			}
 			else {
 				# code...
-				$data['status'] = 0;
+				$data_change['status'] = 0;
 			}			
 
 			$flag        = array('skp_id'=>$data_sender['id']);
