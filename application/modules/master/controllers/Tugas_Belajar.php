@@ -14,7 +14,8 @@ class Tugas_Belajar extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		$data['title']   = 'Data Tugas Belajar';
+		$this->Globalrules->user_access_read();		
+		$data['title']   = 'Data Tugas Belajar test';
 		$data['content'] = 'master/tugas_belajar/data_tugas_belajar';
 		$data['list']    = $this->Mmaster->get_data_tugas_belajar();
 		$this->load->view('templateAdmin',$data);

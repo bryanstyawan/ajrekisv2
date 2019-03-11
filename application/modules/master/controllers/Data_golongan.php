@@ -11,6 +11,7 @@ class Data_golongan extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();								
+		$this->Globalrules->user_access_read();		
 		$data['title']   = 'Golongan PNS';
 		$data['content'] = 'master/golongan/data_golongan';
 		$data['list']    = $this->Allcrud->listData('mr_golongan');

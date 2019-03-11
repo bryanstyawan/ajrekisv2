@@ -23,6 +23,30 @@ class Globalrules extends CI_Model
 		}
 	}
 
+	public function user_access_read()
+	{
+		# code...
+			$uri_segment_1 = $this->uri->segments[1];
+			$uri_segment_2 = $this->uri->segments[2];
+			$menu          = $uri_segment_1."/".$uri_segment_2;
+			$role_id       = $this->session->userdata('sesRole');
+			$get_menu      = $this->Allcrud->getData('config_menu',array('uri' => $menu))->result_array();			
+			if ($menu != 'dashboard/soon') {
+				# code...
+				if ($get_menu != array()) {
+					# code...
+					$get_menu_access = $this->Allcrud->getData('config_menu_akses',array('id_menu' => $get_menu[0]['id_menu'], 'id_role' => $role_id))->result_array();					
+					if ($get_menu_access != array()) {
+						# code...
+						if ($get_menu_access[0]['baca'] == 0) {
+							# code...
+							redirect('dashboard/home');
+						}											
+					}
+				}
+			}
+	}
+
 	public function trigger_insert_update()
 	{
 		# code...

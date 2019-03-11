@@ -13,6 +13,7 @@ class Data_pegawai extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();	
 		$data['title']        = 'Data Pegawai';
 		$data['content']      = 'master/pegawai/data_pegawai';
 		$flag                 = array();																		

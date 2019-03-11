@@ -885,6 +885,7 @@ class Skp extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();		
 		$this->Globalrules->notif_message();
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Master SKP';
 		$data['subtitle']     = '';

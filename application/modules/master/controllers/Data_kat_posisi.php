@@ -11,6 +11,7 @@ class Data_kat_posisi extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();							
+		$this->Globalrules->user_access_read();		
 		$data['title']   = 'Kategori Posisi';
 		$data['content'] = 'master/kat_posisi/data_kat_posisi';
 		$data['list']    = $this->Allcrud->listData('mr_kat_posisi');

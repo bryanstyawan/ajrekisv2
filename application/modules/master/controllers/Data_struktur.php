@@ -11,6 +11,7 @@ class Data_struktur extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();								
+		$this->Globalrules->user_access_read();		
 		$data['title']        = 'Struktur Organisasi';
 		$data['content']      = 'master/struktur/data_struktur';
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');

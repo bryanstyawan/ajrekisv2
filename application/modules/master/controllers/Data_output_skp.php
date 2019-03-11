@@ -10,7 +10,8 @@ class Data_output_skp extends CI_Controller {
 	
 	public function index()
 	{
-		$this->Globalrules->session_rule();						
+		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();								
 		$data['title']   = 'Data Output SKP';
 		$data['content'] = 'master/output/index';
 		$data['list']    = $this->Allcrud->listData('mr_skp_satuan');

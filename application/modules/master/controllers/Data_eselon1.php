@@ -11,6 +11,7 @@ class Data_eselon1 extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();						
+		$this->Globalrules->user_access_read();
 		$data['title']      = '<b>Struktur Organisasi</b> <i class="fa fa-angle-double-right"></i> Data Eselon 1';
 		$data['content']    = 'master/eselon/data_eselon1';
 		$data['list']       = $this->Allcrud->listData('mr_eselon1');
