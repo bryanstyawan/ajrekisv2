@@ -11,6 +11,7 @@ class Data_eselon4 extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();								
+		$this->Globalrules->user_access_read();		
 		$data['title']      = '<b>Struktur Organisasi</b> <i class="fa fa-angle-double-right"></i> Data Eselon 4';
 		$data['content']    = 'master/eselon/data_eselon4';
 		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
@@ -35,7 +36,7 @@ class Data_eselon4 extends CI_Controller {
 			$data_sender['oid']  = $oid;
 		}
 		
-		// $data_store        = $this->Globalrules->trigger_insert_update($data_sender['crud']);
+		$data_store        = $this->Globalrules->trigger_insert_update();
 		if ($data_sender['crud'] == 'insert') {
 			# code...
 			$data_store['id_es1'] = $data_sender['es1'];

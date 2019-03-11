@@ -12,6 +12,7 @@ class Tunjangan_profesi extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();		
 		$data['title']   = 'Data Tunjangan Profesi';
 		$data['content'] = 'master/tunjangan_profesi/data_tunjangan_profesi';
 		$data['list']    = $this->Mmaster->get_data_tunjangan_profesi();

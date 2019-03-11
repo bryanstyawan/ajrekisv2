@@ -224,4 +224,13 @@ class Dashboard extends CI_Controller {
 						);
 		echo json_encode($res);		
 	}
+
+	public function soon()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$data['title']   = '';
+		$data['content'] = 'dashboard/soon/index';
+		$this->load->view('templateAdmin',$data);		
+	}	
 }

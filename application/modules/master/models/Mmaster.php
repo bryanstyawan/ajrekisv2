@@ -117,6 +117,7 @@ class Mmaster extends CI_Model {
 					a.nip,
 					a.nama_pegawai,
 					a.posisi_akademik,
+					a.posisi_plt,
 					a.photo AS photo,
 					COALESCE(b.kat_posisi,'-') as kat_posisi,					
 					COALESCE(b.nama_posisi,'-') as nama_posisi, 

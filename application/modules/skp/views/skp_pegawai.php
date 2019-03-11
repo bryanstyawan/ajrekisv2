@@ -315,8 +315,15 @@
                             {
                                 if ($list[$i]->kegiatan_skp_status != 1) {
                                     # code...
+                                    if ($list[$i]->id_skp_master == '') {
+                                        # code...
+                                        $flag_show = 1;                                        
+                                    }                                 
+                                    else
+                                    {
+                                        $flag_show = 0;
+                                    }   
                                     // $style_tr     = "display:none;";       
-                                    $flag_show = 0;
                                 }
                             }
                             elseif ($info_posisi[0]['kat_posisi'] == 2) {
@@ -335,12 +342,19 @@
                                     // $flag_show = 0;                                    
                                 }                                
                             }    
-                            if($info_posisi[0]['kat_posisi'] == 6)
+                            elseif($info_posisi[0]['kat_posisi'] == 6)
                             {
                                 if ($list[$i]->kegiatan_skp_status != 1) {
                                     # code...
+                                    if ($list[$i]->id_skp_master == '') {
+                                        # code...
+                                        $flag_show = 1;                                        
+                                    }                                 
+                                    else
+                                    {
+                                        $flag_show = 0;
+                                    }                                       
                                     // $style_tr     = "display:none;";       
-                                    $flag_show = 0;
                                 }
                             }                                              
                             
@@ -682,6 +696,18 @@ function edit(id,before,after) {
                     $("#nkegiatan").val(response['kegiatan']);                    
                 }                                                                                
             }
+            else if ($("#oid_kat_posisi").val() == 6) {
+                // $("#nkegiatan").val(response['kegiatan']);
+                if (response['id_skp_master'] != null)
+                {
+                    // $("#header_kegiatan").html(response['kegiatan_skp']);                    
+                    $("#nkegiatan").val(response['kegiatan_skp']);
+                }                
+                else
+                {
+                    $("#nkegiatan").val(response['kegiatan']);                    
+                }                                                
+            }             
             
             $("#njenis").val(response['jenis_skp']);
             $("#nperjanjian_kerja").val(response['PK']);

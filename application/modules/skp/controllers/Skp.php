@@ -164,7 +164,15 @@ class Skp extends CI_Controller {
 		$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
 		if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
 			# code...
-			$data['status'] = 1;
+			if ($this->session->userdata('kat_posisi') == 1 && $this->session->userdata('kat_posisi') == 6) {
+				# code...
+				$data['status'] = 1;				
+			}
+			else
+			{
+				$data['status'] = 0;
+			}
+
 		}
 		else {
 			# code...
@@ -248,11 +256,18 @@ class Skp extends CI_Controller {
 			$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
 			if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
 				# code...
-				$data['status'] = 1;
+				if ($this->session->userdata('kat_posisi') == 1 && $this->session->userdata('kat_posisi') == 6) {
+					# code...
+					$data['status'] = 1;				
+				}
+				else
+				{
+					$data['status'] = 0;
+				}
 			}
 			else {
 				# code...
-				$data['status'] = 0;
+				$data_change['status'] = 0;
 			}			
 
 			$flag        = array('skp_id'=>$data_sender['id']);
@@ -317,15 +332,29 @@ class Skp extends CI_Controller {
 			// code...
 			for ($i=0; $i < count($data['member']); $i++) {
 				// code...
-				$get_data = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id))->num_rows();
+				$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+				$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+				$urtug_belum_diperiksa = 0;
+				$urtug_pergantian      = 0;
 				if ($get_data) {
 					// code...
-					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+					$urtug_belum_diperiksa = $get_data;
 				}
 				else {
 					// code...
-					$data['member'][$i]->counter_belum_diperiksa = 0;
+					$urtug_belum_diperiksa = 0;
 				}
+
+				if ($get_data_temp) {
+					// code...
+					$urtug_pergantian = $get_data_temp;
+				}
+				else {
+					// code...
+					$urtug_pergantian = 0;
+				}				
+
+				$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
 			}
 		}		
 		$this->load->view('templateAdmin',$data);
@@ -336,26 +365,42 @@ class Skp extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
-		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($id,NULL,date('Y'),11);
-		$data['id']          = $id;
-		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
-		$data['content']     = 'skp/skp_approval_pegawai';		
+		$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
+		$id_posisi             = $infoPegawai[0]->posisi;		
+		$data['title']         = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
+		$data['subtitle']      = '';
+		$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
+		$data['id']            = $id;
+		$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
+		$data['content']       = 'skp/skp_approval_pegawai';		
 		$data['member']   	 = $this->mskp->get_member($this->session->userdata('sesPosisi'));
 		if ($data['member'] != 0) {
 			// code...
 			for ($i=0; $i < count($data['member']); $i++) {
 				// code...
-				$get_data = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id))->num_rows();
+				$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+				$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+				$urtug_belum_diperiksa = 0;
+				$urtug_pergantian      = 0;
 				if ($get_data) {
 					// code...
-					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+					$urtug_belum_diperiksa = $get_data;
 				}
 				else {
 					// code...
-					$data['member'][$i]->counter_belum_diperiksa = 0;
+					$urtug_belum_diperiksa = 0;
 				}
+
+				if ($get_data_temp) {
+					// code...
+					$urtug_pergantian = $get_data_temp;
+				}
+				else {
+					// code...
+					$urtug_pergantian = 0;
+				}				
+
+				$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
 			}
 		}
 		$this->load->view('templateAdmin',$data);
@@ -855,6 +900,7 @@ class Skp extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();		
 		$this->Globalrules->notif_message();
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Master SKP';
 		$data['subtitle']     = '';

@@ -11,6 +11,7 @@ class Data_struktur extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();								
+		$this->Globalrules->user_access_read();		
 		$data['title']        = 'Struktur Organisasi';
 		$data['content']      = 'master/struktur/data_struktur';
 		$data['jenis_posisi'] = $this->Allcrud->listData('mr_kat_posisi');
@@ -34,7 +35,9 @@ class Data_struktur extends CI_Controller {
 								'posisi_class' => $this->input->post('grade'),
 								'nama_posisi'  => strtoupper($this->input->post('jabatan')),
 								'id_jfu'       => $this->input->post('id_jfu'),
-								'id_jft'       => $this->input->post('id_jft'),			
+								'id_jft'       => $this->input->post('id_jft'),	
+								'audit_time' => date('Y-m-d H:i:s'), 
+								'audit_user' => $this->session->userdata('sesNip')		
 							);
 		if ($this->input->post('crud') == 'insert') {
 			# code...

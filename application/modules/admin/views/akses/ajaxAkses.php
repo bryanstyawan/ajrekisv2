@@ -3,10 +3,24 @@
 					<tbody>
 					<tr>
 						<th>Nama Menu</th>
-						<th>Create</th>
-						<th>Read</th>
-						<th>Update</th>
-						<th>Delete</th>
+						<th>
+							Atasan
+						</th>
+						<th>
+							Bawahan
+						</th>								
+						<th>
+							Create
+						</th>
+						<th>
+							Read
+						</th>
+						<th>
+							Update
+						</th>
+						<th>
+							Delete
+						</th>
 					</tr>
 					<?php treeview($id_role) ?>
 					</tbody>

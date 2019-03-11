@@ -10,7 +10,8 @@ class Jabatan_fungsional_tertentu extends CI_Controller {
 	
 	public function index()
 	{
-		$this->Globalrules->session_rule();						
+		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();								
 		$data['title']   = 'Master Jabatan Fungsional Tertentu';
 		$data['content'] = 'master/jft/index';
 		$data['list']    = $this->res_data();

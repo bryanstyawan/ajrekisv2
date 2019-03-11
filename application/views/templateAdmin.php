@@ -205,40 +205,53 @@ $(document).click(function(e) {
               </h1>
             </section>
 			<section class="content">
-    			<div class="row">
-    			<?php $this->load->view($content);?>
-    			</div>
+                <?php
+                    if ($title == '') {
+                        # code...
+                ?>
+                    <?php $this->load->view($content);?>                
+                <?php
+                    }
+                    else
+                    {
+                ?>
+                    <div class="row">
+                        <?php $this->load->view($content);?>
+                    </div>                
+                <?php
+                    }
+                ?>
             </section>
         </div>
 
-        <footer class="main-footer" style="margin-left:0px;background-color: #00a7d0;padding:15px;">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-4 text-center" style="font-size:20px;color:#00a7d0;">
-                        &nbsp;
-                    </div>
-                    <div class="col-lg-4 text-center" style="font-size:20px;color:#00a7d0;">
-                        <a href="" class="footer-icon"><i class="fa fa-chrome"></i></a>
-                        <a href="" class="footer-icon"><i class="fa fa-instagram"></i></a>
-                        <a href="" class="footer-icon"><i class="fa fa-twitter"></i></a>
-                        <a href="" class="footer-icon"><i class="fa fa-facebook"></i></a>
-                    </div>
+    </div>
+
+    <footer class="main-footer" style="margin-left:0px;background-color: #00a7d0;padding:15px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 text-center" style="font-size:20px;color:#00a7d0;">
+                    &nbsp;
                 </div>
-                <div class="row">
-                    <div class="col-lg-12" style="padding-top: 15px;">
-                        <div class="text-center" style="color:#fff;">
-                            <span>Copyright@2018 Biro Kepegawaian</span><span>Right Reserved</span>
-                            <br>
-                            <span>V.4.0-Alpha</span>
-                        </div>
+                <div class="col-lg-4 text-center" style="font-size:20px;color:#00a7d0;">
+                    <a href="" class="footer-icon"><i class="fa fa-chrome"></i></a>
+                    <a href="" class="footer-icon"><i class="fa fa-instagram"></i></a>
+                    <a href="" class="footer-icon"><i class="fa fa-twitter"></i></a>
+                    <a href="" class="footer-icon"><i class="fa fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="padding-top: 15px;">
+                    <div class="text-center" style="color:#fff;">
+                        <span>Copyright@2018 Biro Kepegawaian</span><span>Right Reserved</span>
+                        <br>
+                        <span>V.4.0-Alpha</span>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-        </footer>
-
-    </div>
+    </footer>
 
 <!-- jQuery UI 1.11.4 -->
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jQueryUI/jquery-ui.min.js"></script>

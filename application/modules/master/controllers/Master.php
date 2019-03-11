@@ -280,6 +280,7 @@ class Master extends CI_Controller {
 
 	public function jurusan_pendidikan(){
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();		
 		$data['title']   = 'Jurusan Pendidikan';
 		$data['content'] = 'master/jur_pendidikan/data_jur_pendidikan';
 		$data['list']    = $this->Allcrud->listData('mr_jur_pendidikan');
@@ -443,7 +444,17 @@ class Master extends CI_Controller {
 				else
 				{
 					$data['list'][$i]->posisi_akademik_name = '-';					
-				}				
+				}			
+				
+				$get_data_struktur_organisasi1 = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_plt);				
+				if ($get_data_struktur_organisasi1 != array()) {
+					# code...
+					$data['list'][$i]->posisi_plt_name = $get_data_struktur_organisasi1[0]->nama_posisi;
+				}
+				else
+				{
+					$data['list'][$i]->posisi_plt_name = '-';					
+				}							
 
 				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
 				if ($data_pegawai != 0) {
@@ -485,9 +496,7 @@ class Master extends CI_Controller {
 
 	public function grade($id_kat_posisi){
 		$this->Globalrules->session_rule();
-		if(!$this->session->userdata('login')){
-			redirect('admin/loginAdmin');
-		}
+		$this->Globalrules->user_access_read();
 		$data['title']	= 'Data Grade Posisi';
 		$data['content']= 'master/grade/data_grade';
 		$data['list']= $this->Allcrud->listData('mr_posisi_class');
@@ -573,16 +582,6 @@ class Master extends CI_Controller {
 		$flag = array('id'=>$this->input->post('oid'));
 		$ubah = array ('id_role'=>$this->input->post('nRole'));
 		$this->Allcrud->editData('mr_pegawai',$ubah,$flag);
-	}
-
-	public function tugas_belajar()
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$data['title']   = 'Data Tugas Belajar';
-		$data['content'] = 'master/tugas_belajar/data_tugas_belajar';
-		$data['list']    = $this->Mmaster->get_data_tugas_belajar();
-		$this->load->view('templateAdmin',$data);
 	}
 
 	public function add_tugas_belajar()

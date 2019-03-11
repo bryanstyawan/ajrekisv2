@@ -11,6 +11,7 @@ class Data_hari extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();		
 		$data['title']   = 'Data Hari Aktif';
 		$data['content'] = 'master/aktif/data_aktif';
 		$data['list']    = $this->Mmaster->activeDay();

@@ -13,6 +13,7 @@ class Data_pegawai extends CI_Controller {
 	public function index()
 	{
 		$this->Globalrules->session_rule();
+		$this->Globalrules->user_access_read();	
 		$data['title']        = 'Data Pegawai';
 		$data['content']      = 'master/pegawai/data_pegawai';
 		$flag                 = array();																		
@@ -34,7 +35,8 @@ class Data_pegawai extends CI_Controller {
 			$data['list_eselon3']      = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data['pegawai'][0]['es2']))->result_array();
 			$data['list_eselon4']      = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data['pegawai'][0]['es3']))->result_array();
 			$data['jabatan_raw']       = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi']))->result_array();
-			$data['jabatan_akademik']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi_akademik']))->result_array();			
+			$data['jabatan_akademik']  = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi_akademik']))->result_array();
+			$data['jabatan_plt']       = $this->Allcrud->getData('mr_posisi',array('id'=>$data['pegawai'][0]['posisi_plt']))->result_array();						
 			if ($data['jabatan_raw'] != array()) {
 				# code...
 				$data['jabatan_jfu']  = $this->Allcrud->getData('mr_jabatan_fungsional_umum',array('id'=>$data['jabatan_raw'][0]['id_jfu']))->result_array();
@@ -59,6 +61,7 @@ class Data_pegawai extends CI_Controller {
 		$jabatan     = $this->input->post('jabatan');
 		if ($param == 'password') {
 			# code...
+			$data_store        = $this->Globalrules->trigger_insert_update();			
 			$data_store['password']   = md5('usersikerja');
 			$data_store['user_update'] = date('y-m-d');
 			$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$oid));
@@ -87,9 +90,12 @@ class Data_pegawai extends CI_Controller {
 					'nip'                   => $data_sender['nip'],				
 					'nama_pegawai'          => $data_sender['nama'],				
 					'posisi'                => $data_sender['jabatan'],
-					'posisi_akademik'       => $data_sender['jabatan_akademik'],					
+					'posisi_akademik'       => $data_sender['jabatan_akademik'],
+					'posisi_plt'			=> $data_sender['jabatan_plt'], 					
 					'tmt_jabatan'           => $data_sender['tmt'],
-					'local'		          	=> '0'
+					'local'		          	=> '0',
+					'audit_time'            => date('Y-m-d H:i:s'), 
+					'audit_user'            => $this->session->userdata('sesNip')					
 				);
 
 				// $data_store = $this->Globalrules->trigger_insert_update($data_sender['crud']);				
@@ -421,6 +427,13 @@ class Data_pegawai extends CI_Controller {
 		}
 		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',$flag);
 		$this->load->view('master/pegawai/ajax_jabatan_struktur_akademik',$data);		
+	}
+
+	public function cari_jabatan_plt()
+	{
+		# code...
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('eselon1' =>$this->input->post('es1')));
+		$this->load->view('master/pegawai/ajax_jabatan_plt',$data);		
 	}
 
 	public function masa_kerja_pegawai_id($id)

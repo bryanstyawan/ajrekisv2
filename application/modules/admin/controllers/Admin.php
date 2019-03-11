@@ -202,27 +202,6 @@ class Admin extends CI_Controller
 		$this->Allcrud->editData('user_role',$edit,$flag);
 	}
 
-	public function akses($id_role)
-	{
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();				
-		$data['id_role']  = $id_role;
-		$data['title']    = 'Hak akses';
-		$data['content']  = 'admin/akses/data_akses';
-		$data['role']     = $this->Allcrud->listData('user_role');
-		$sub              = $this->Allcrud->getData('user_role',array('id_role'=>$id_role))->row();
-
-		if ($sub != "") {
-			# code...
-			$data['subtitle'] = $sub->nama_role;
-		}
-		else
-		{
-			$data['subtitle'] = "";			
-		}
-		$this->load->view('templateAdmin',$data);
-	}
-
 	public function generate($id)
 	{
 		$this->Globalrules->notif_message();				
@@ -244,7 +223,29 @@ class Admin extends CI_Controller
 			}
 		}
 	}
-	
+
+
+	public function akses($id_role)
+	{
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();				
+		$data['id_role']  = $id_role;
+		$data['title']    = 'Hak akses';
+		$data['content']  = 'admin/akses/data_akses';
+		$data['role']     = $this->Allcrud->listData('user_role');
+		$sub              = $this->Allcrud->getData('user_role',array('id_role'=>$id_role))->row();
+
+		if ($sub != "") {
+			# code...
+			$data['subtitle'] = $sub->nama_role;
+		}
+		else
+		{
+			$data['subtitle'] = "";			
+		}
+		$this->load->view('templateAdmin',$data);
+	}
+
 	public function create()
 	{
 		$this->Globalrules->notif_message();				
@@ -269,6 +270,56 @@ class Admin extends CI_Controller
 		$data['id_role'] = $this->input->post('role');
 		$this->load->view('akses/ajaxAkses',$data);
 	}
+
+	public function atasan()
+	{
+		$this->Globalrules->notif_message();				
+		$flag = array ('id_akses' => $this->input->post('id_akses'));
+		
+		if($this->input->post('nilai') == 0)
+		{
+			$this->Allcrud->editData(
+										'config_menu_akses',
+										array('atasan'=>1),
+										$flag
+									);
+		}
+		else
+		{
+			$this->Allcrud->editData(
+										'config_menu_akses',
+										array('atasan'=>0),
+										$flag
+									);
+		}
+		$data['id_role'] = $this->input->post('role');
+		$this->load->view('akses/ajaxAkses',$data);
+	}
+	
+	public function bawahan()
+	{
+		$this->Globalrules->notif_message();				
+		$flag = array ('id_akses' => $this->input->post('id_akses'));
+		
+		if($this->input->post('nilai') == 0)
+		{
+			$this->Allcrud->editData(
+										'config_menu_akses',
+										array('bawahan'=>1),
+										$flag
+									);
+		}
+		else
+		{
+			$this->Allcrud->editData(
+										'config_menu_akses',
+										array('bawahan'=>0),
+										$flag
+									);
+		}
+		$data['id_role'] = $this->input->post('role');
+		$this->load->view('akses/ajaxAkses',$data);
+	}	
 	
 	public function read(){
 		$this->Globalrules->notif_message();				
@@ -346,6 +397,15 @@ class Admin extends CI_Controller
 		$this->load->view('akses/ajaxAkses',$data);
 	}
 	
+
+
+
+
+
+
+
+
+
 	public function caries2()
 	{
 		$this->Globalrules->notif_message();				

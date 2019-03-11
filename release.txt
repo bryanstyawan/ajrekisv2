@@ -1,4 +1,32 @@
 v4.0.0
+2019-03-11
+New:
+- Trigger update & insert
+- Jabatan PLT di data pegawai 
+- read access
+- Transaksi PLT
+Improved:
+- Menu (atasan - Bawahan)
+- Setting Menu (atasan - Bawahan)
+- Data history eselon1, eselon2, eselon3, eselon4, Pegawai, Struktur Organisasi 
+Fixed:
+- Auto Approve skp
+- Uraian Tugas transaksi
+
+
+v4.0.0
+2019-03-06
+New:
+- Coming Soon page
+- Struktur Akademik di target skp
+Improved:
+Fixed:
+- Counter approval (Ubah (sebelumnya sudah diapprove) + pengajuan target skp baru)
+- Penyesuaian target skp ketika ada aktivasi dari master skp (struktural)
+- Permasalahan aktivasi ketika tambah skp baru (struktural)
+- Footer
+
+v4.0.0
 2019-03-06
 New:
 - Hapus target skp yang bersumber dari penambahan skp pribadi (Yang sudah diapprove tidak bisa dihapus)
