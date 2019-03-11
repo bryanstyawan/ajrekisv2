@@ -164,7 +164,15 @@ class Skp extends CI_Controller {
 		$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
 		if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
 			# code...
-			$data['status'] = 1;
+			if ($this->session->userdata('kat_posisi') == 1 && $this->session->userdata('kat_posisi') == 6) {
+				# code...
+				$data['status'] = 1;				
+			}
+			else
+			{
+				$data['status'] = 0;
+			}
+
 		}
 		else {
 			# code...
@@ -248,7 +256,14 @@ class Skp extends CI_Controller {
 			$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
 			if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
 				# code...
-				$data_change['status'] = 1;
+				if ($this->session->userdata('kat_posisi') == 1 && $this->session->userdata('kat_posisi') == 6) {
+					# code...
+					$data['status'] = 1;				
+				}
+				else
+				{
+					$data['status'] = 0;
+				}
 			}
 			else {
 				# code...
