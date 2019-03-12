@@ -1,6 +1,19 @@
 v4.0.0
 2019-03-11
 New:
+- TMT Jabatan PLT dan Jabatan Akademik
+- Nonaktif pegawai (pegawai)
+- Atasan plt dan atasan akademik
+- Penambahan Role user (Fullstack Developer)
+Improved:
+Fixed:
+- Auto Approve skp
+- Pencarian Jabatan akademik berdasarkan jenis jabatan akademik
+- Ketika jabatan kosong, akan dialihkan kehalaman lain
+
+v4.0.0
+2019-03-11
+New:
 - Trigger update & insert
 - Jabatan PLT di data pegawai 
 - read access
@@ -12,7 +25,6 @@ Improved:
 Fixed:
 - Auto Approve skp
 - Uraian Tugas transaksi
-
 
 v4.0.0
 2019-03-06

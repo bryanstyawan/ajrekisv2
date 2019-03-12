@@ -119,6 +119,7 @@ class Mmaster extends CI_Model {
 					a.posisi_akademik,
 					a.posisi_plt,
 					a.photo AS photo,
+					a.status,
 					COALESCE(b.kat_posisi,'-') as kat_posisi,					
 					COALESCE(b.nama_posisi,'-') as nama_posisi, 
 					COALESCE(c.posisi_class,'-') as posisi_class_raw,
@@ -737,6 +738,68 @@ class Mmaster extends CI_Model {
 		}
 	}
 
+	public function get_masa_kerja_id_pegawai_akademik($id,$SORT)
+	{
+		# code...
+		$sql = "SELECT a.*,
+						b.nama_posisi,
+						COALESCE(c.nama,'AKTIF') as `status_masakerja`
+			FROM mr_masa_kerja_akademik a
+			LEFT JOIN mr_posisi b ON a.id_posisi = b.id
+			LEFT JOIN mr_masa_kerja_status c ON a.status_masa_kerja = c.id
+			WHERE a.id_pegawai = '".$id."'
+			ORDER BY a.StartDate ".$SORT."";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
+
+	public function get_masa_kerja_id_pegawai_plt($id,$SORT)
+	{
+		# code...
+		$sql = "SELECT a.*,
+						b.nama_posisi,
+						COALESCE(c.nama,'AKTIF') as `status_masakerja`
+			FROM mr_masa_kerja_plt a
+			LEFT JOIN mr_posisi b ON a.id_posisi = b.id
+			LEFT JOIN mr_masa_kerja_status c ON a.status_masa_kerja = c.id
+			WHERE a.id_pegawai = '".$id."'
+			ORDER BY a.StartDate ".$SORT."";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}		
+
+	public function get_masa_kerja_akademik($id_pegawai,$id)
+	{
+		# code...
+		$sql = "SELECT a.*
+			FROM mr_masa_kerja_akademik a
+			WHERE a.id_pegawai = '".$id_pegawai."'
+			AND a.id_posisi = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
+
 	public function get_masa_kerja($id_pegawai,$id)
 	{
 		# code...
@@ -754,6 +817,24 @@ class Mmaster extends CI_Model {
 			return 0;
 		}
 	}
+
+	public function get_masa_kerja_plt($id_pegawai,$id)
+	{
+		# code...
+		$sql = "SELECT a.*
+			FROM mr_masa_kerja_plt a
+			WHERE a.id_pegawai = '".$id_pegawai."'
+			AND a.id_posisi = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
 
 	public function get_masa_kerja_id($id)
 	{

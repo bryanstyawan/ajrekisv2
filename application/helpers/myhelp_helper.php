@@ -23,6 +23,12 @@
 		{
 			$query_atasan_bawahan = "AND bawahan = 1";				
 		}
+
+		if ($role == 7) {
+			# code...
+			$query_atasan_bawahan = "AND atasan = 1";			
+		}
+
 		
 		$induk         = $CI->db->query(" SELECT config_menu.*,
 												config_menu_akses.id_akses
@@ -96,6 +102,62 @@
 					$CI->load->view('templates/header/parent1',array('icon'=>$row->icon,'name'=>$row->nama_menu,'url_pages'=>$row->url_pages));					
 				}
 			}
+
+		}
+		else
+		{
+			if ($role == 7) {
+				# code...
+				foreach($induk->result() as $row)
+				{
+					$y = $CI->db->query("SELECT 
+												COUNT(config_menu_akses.id_menu) as jml
+										FROM config_menu
+										INNER JOIN config_menu_akses
+										WHERE id_parent = '".$row->id_menu."'
+										AND flag=1
+										AND id_role = '".$role."'
+										$query_atasan_bawahan"
+										)->row();
+					$x = $y->jml;
+	
+					if ($x != 0) {
+						# code...
+						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu));
+						$anak = $CI->db->query(" SELECT config_menu.*,
+														config_menu_akses.id_akses
+												FROM config_menu
+												INNER JOIN config_menu_akses
+												ON config_menu.id_menu=config_menu_akses.id_menu
+												WHERE id_parent=$row->id_menu
+												AND flag=1
+												AND id_role=$role
+												$query_atasan_bawahan
+												ORDER BY prioritas ASC, nama_menu ASC"
+											);
+						foreach($anak->result() as $baris)
+						{
+							$change_name = $baris->nama_menu;						
+							if (count($anak->result()) > 7) {
+								# code...
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6'));
+							}
+							else
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));
+							}						
+						}
+						$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));
+						$CI->load->view('templates/header/close_tag',array('tag'=>'li'));																									
+					}
+					else
+					{
+						$CI->load->view('templates/header/parent1',array('icon'=>$row->icon,'name'=>$row->nama_menu,'url_pages'=>$row->url_pages));					
+					}
+									
+				}			
+			}
+
 
 		}
 		$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));

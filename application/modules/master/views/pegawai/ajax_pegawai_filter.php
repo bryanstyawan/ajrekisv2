@@ -55,14 +55,40 @@
 										if ($list[$i]->avail_atasan == 1) {
 											# code...
 									?>
-											<?=$list[$i]->nama_atasan;?>&nbsp;(<b><?=$list[$i]->jabatan_atasan;?></b>)
+											<b>[Definitif]</b> <?=$list[$i]->nama_atasan;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan;?></i>)
 									<?php
 										}
 										else
 										{
-											echo "N/A";
+											echo "<b>[Definitif]</b> N/A";
 										}
-									?>								
+									?>					
+									<hr>
+									<?php
+										if ($list[$i]->avail_atasan_akademik == 1) {
+											# code...
+									?>
+											<b>[Definitif]</b> <?=$list[$i]->nama_atasan_akademik;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_akademik;?></i>)
+									<?php
+										}
+										else
+										{
+											echo "<b>[Akademik]</b> N/A";
+										}
+									?>
+									<hr>
+									<?php
+										if ($list[$i]->avail_atasan_plt == 1) {
+											# code...
+									?>
+											<b>[PLT]</b> <?=$list[$i]->nama_atasan_plt;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_plt;?></i>)
+									<?php
+										}
+										else
+										{
+											echo "<b>[PLT]</b> N/A";
+										}
+									?>																					
 								</td>								
 								<td>
 									<?=($list[$i]->nama_eselon4 != '-') ? $list[$i]->nama_eselon4 : '' ;?>
@@ -73,6 +99,7 @@
 								<td class="text-center">
 									<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('update','<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> UBAH DATA</button>
 									<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="del('<?php echo $list[$i]->id;?>')"><i class="fa fa-trash"></i> HAPUS DATA</button>
+									<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="data_status('<?php echo $list[$i]->id;?>','<?=($list[$i]->status == 0) ? 1 : 0;?>')"><i class="fa fa-power-off"></i> <?=($list[$i]->status == 0) ? 'AKTIFKAN' : 'NONAKTIFKAN';?></button>									
 									<button class="btn btn-primary btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="change_password('<?php echo $list[$i]->id;?>')"><i class="fa fa-edit"></i> DEFAULT PASSWORD</button>									
 									<a href="#" class="btn btn-success btn-xs col-lg-12" onclick="preview_image('<?=$id;?>','<?=$data_link_a;?>')"><i class="fa fa-search-plus"></i>&nbsp;<?=$data_link_text;?></a>									
 								</td>

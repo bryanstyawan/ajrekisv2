@@ -15,51 +15,61 @@ class Dashboard extends CI_Controller {
 		error_reporting(E_ALL ^ E_WARNING);
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$data['title']              = '';
-		$data['content']            = 'vdashboard';
-		$data['belum_diperiksa']    = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-		$data['disetujui']          = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-		$data['tolak']              = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-		$data['revisi']             = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-		$data['agama']              = $this->Allcrud->listData('mr_agama')->result_array();
-		$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
-		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
-		$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
-		$data['history_golongan']   = $this->mdashboard->get_history_golongan();
-		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
-		$data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));
-		if ($data['data_transaksi']) {
+		// print_r($this->session->userdata('sesPosisi'));die();
+		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
-			$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
-			if ($get_data != array()) {
+			$data['title']              = '';
+			$data['content']            = 'vdashboard';
+			$data['belum_diperiksa']    = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+			$data['disetujui']          = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+			$data['tolak']              = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+			$data['revisi']             = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+			$data['agama']              = $this->Allcrud->listData('mr_agama')->result_array();
+			$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
+			$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
+			$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
+			$data['history_golongan']   = $this->mdashboard->get_history_golongan();
+			$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+			$data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));
+			if ($data['data_transaksi']) {
 				# code...
-				$data['data_transaksi'][0]->persentase_potongan    = $get_data[0]['persentase'];
-				      $real_tunjangan_kinerja                      = $data['data_transaksi'][0]->real_tunjangan_kinerja - ($data['data_transaksi'][0]->real_tunjangan_kinerja*($data['data_transaksi'][0]->persentase_potongan/100));
-				$data['data_transaksi'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;
+				$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
+				if ($get_data != array()) {
+					# code...
+					$data['data_transaksi'][0]->persentase_potongan    = $get_data[0]['persentase'];
+						  $real_tunjangan_kinerja                      = $data['data_transaksi'][0]->real_tunjangan_kinerja - ($data['data_transaksi'][0]->real_tunjangan_kinerja*($data['data_transaksi'][0]->persentase_potongan/100));
+					$data['data_transaksi'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;
+				}
+				else
+				{
+	
+				}
 			}
-			else
-			{
-
-			}
-		}
-
-		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
-		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
-		if ($data['member'] != 0) {
-			// code...
-			for ($i=0; $i < count($data['member']); $i++) {
+	
+			$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
+			$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
+			if ($data['member'] != 0) {
 				// code...
-				$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')))->num_rows();
-				if ($get_data) {
+				for ($i=0; $i < count($data['member']); $i++) {
 					// code...
-					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+					$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')))->num_rows();
+					if ($get_data) {
+						// code...
+						$data['member'][$i]->counter_belum_diperiksa = $get_data;
+					}
+					else {
+						// code...
+						$data['member'][$i]->counter_belum_diperiksa = 0;
+					}
 				}
-				else {
-					// code...
-					$data['member'][$i]->counter_belum_diperiksa = 0;
-				}
-			}
+			}					
+		}
+		else
+		{
+			$data['title']              = '';
+			$data['content']            = 'vdashboard_empty';			
 		}		
+
 		$this->load->view('templateAdmin',$data);
 	}
 
