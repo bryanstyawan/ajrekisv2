@@ -24,7 +24,7 @@
 			$query_atasan_bawahan = "AND bawahan = 1";				
 		}
 
-		if ($role == 7) {
+		if ($role == 7 || $role == 6) {
 			# code...
 			$query_atasan_bawahan = "AND atasan = 1";			
 		}
@@ -106,7 +106,7 @@
 		}
 		else
 		{
-			if ($role == 7) {
+			if ($role == 7 || $role == 6) {
 				# code...
 				foreach($induk->result() as $row)
 				{

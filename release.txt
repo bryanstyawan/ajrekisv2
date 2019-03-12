@@ -5,6 +5,7 @@ New:
 - Nonaktif pegawai (pegawai)
 - Atasan plt dan atasan akademik
 - Penambahan Role user (Fullstack Developer)
+- Pembatasan Login Akses
 Improved:
 Fixed:
 - Auto Approve skp
