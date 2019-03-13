@@ -9,6 +9,7 @@
 		$id_posisi     = $CI->session->userdata('sesPosisi');
 		$id_kat_posisi = $CI->session->userdata('kat_posisi');
 		$infoPegawai   = $CI->Globalrules->get_info_pegawai();
+		// print_r($infoPegawai[0]->posisi_akademik);
 		$query_atasan_bawahan = 0;
 		$get_bawahan = $CI->db->query("SELECT a.*
 											FROM mr_pegawai a
@@ -67,6 +68,12 @@
 									$query_atasan_bawahan"
 									)->row();
 				$x = $y->jml;
+
+				$flag_show_plt = 0;
+				if ($infoPegawai[0]->posisi_plt != '' || $infoPegawai[0]->posisi_plt != 0) {
+					# code...
+					$flag_show_plt = 1;
+				}
 
 				if ($x != 0) {
 					# code...

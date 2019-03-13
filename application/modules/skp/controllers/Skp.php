@@ -368,6 +368,116 @@ class Skp extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function approval_target_skp_plt()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		if ($get_data_pegawai != array()) 
+		{
+			# code...
+			if ($get_data_pegawai[0]['posisi_plt'] == '' || $get_data_pegawai[0]['posisi_plt'] == NULL) {
+				# code...
+				redirect('dashboard/home');
+			}
+			else
+			{
+				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
+				$data['subtitle'] = '';
+				$data['bawahan']  = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
+				$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
+				$data['content']  = 'skp/skp_approval_target_plt';
+				$data['member']   = $this->mskp->get_member($get_data_pegawai[0]['posisi_plt']);
+				if ($data['member'] != 0) {
+					// code...
+					for ($i=0; $i < count($data['member']); $i++) {
+						// code...
+						$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+						$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+						$urtug_belum_diperiksa = 0;
+						$urtug_pergantian      = 0;
+						if ($get_data) {
+							// code...
+							$urtug_belum_diperiksa = $get_data;
+						}
+						else {
+							// code...
+							$urtug_belum_diperiksa = 0;
+						}
+
+						if ($get_data_temp) {
+							// code...
+							$urtug_pergantian = $get_data_temp;
+						}
+						else {
+							// code...
+							$urtug_pergantian = 0;
+						}				
+
+						$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
+					}
+				}		
+				$this->load->view('templateAdmin',$data);
+			}
+		}
+	}
+	
+	public function approval_target_skp_akademik()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		if ($get_data_pegawai != array()) 
+		{
+			# code...
+			if ($get_data_pegawai[0]['posisi_akademik'] == '' || $get_data_pegawai[0]['posisi_akademik'] == NULL) {
+				# code...
+				redirect('dashboard/home');
+			}
+			else
+			{
+				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
+				$data['subtitle'] = '';
+				$data['bawahan']  = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_akademik']);
+				$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
+				$data['content']  = 'skp/skp_approval_target_akademik';
+				$data['member']   = $this->mskp->get_member($get_data_pegawai[0]['posisi_akademik']);
+				if ($data['member'] != 0) {
+					// code...
+					for ($i=0; $i < count($data['member']); $i++) {
+						// code...
+						$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+						$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+						$urtug_belum_diperiksa = 0;
+						$urtug_pergantian      = 0;
+						if ($get_data) {
+							// code...
+							$urtug_belum_diperiksa = $get_data;
+						}
+						else {
+							// code...
+							$urtug_belum_diperiksa = 0;
+						}
+
+						if ($get_data_temp) {
+							// code...
+							$urtug_pergantian = $get_data_temp;
+						}
+						else {
+							// code...
+							$urtug_pergantian = 0;
+						}				
+
+						$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
+					}
+				}		
+				$this->load->view('templateAdmin',$data);
+			}
+		}
+	}	
+
 	public function skp_member_detail($id)
 	{
 		# code...
@@ -413,6 +523,124 @@ class Skp extends CI_Controller {
 		}
 		$this->load->view('templateAdmin',$data);
 	}
+
+	public function skp_member_detail_plt($id)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		if ($get_data_pegawai != array()) 
+		{
+			# code...
+			if ($get_data_pegawai[0]['posisi_plt'] == '' || $get_data_pegawai[0]['posisi_plt'] == NULL) {
+				# code...
+				redirect('dashboard/home');
+			}
+			else
+			{
+
+				$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
+				$id_posisi             = $infoPegawai[0]->posisi;		
+				$data['title']         = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
+				$data['subtitle']      = '';
+				$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
+				$data['id']            = $id;
+				$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
+				$data['content']       = 'skp/skp_approval_pegawai_plt';		
+				$data['member']   	 = $this->mskp->get_member($get_data_pegawai[0]['posisi_plt']);
+				if ($data['member'] != 0) {
+					// code...
+					for ($i=0; $i < count($data['member']); $i++) {
+						// code...
+						$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+						$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+						$urtug_belum_diperiksa = 0;
+						$urtug_pergantian      = 0;
+						if ($get_data) {
+							// code...
+							$urtug_belum_diperiksa = $get_data;
+						}
+						else {
+							// code...
+							$urtug_belum_diperiksa = 0;
+						}
+
+						if ($get_data_temp) {
+							// code...
+							$urtug_pergantian = $get_data_temp;
+						}
+						else {
+							// code...
+							$urtug_pergantian = 0;
+						}				
+
+						$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
+					}
+				}
+				$this->load->view('templateAdmin',$data);
+			}
+		}
+	}
+	
+	public function skp_member_detail_akademik($id)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		if ($get_data_pegawai != array()) 
+		{
+			# code...
+			if ($get_data_pegawai[0]['posisi_akademik'] == '' || $get_data_pegawai[0]['posisi_akademik'] == NULL) {
+				# code...
+				redirect('dashboard/home');
+			}
+			else
+			{
+
+				$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
+				$id_posisi             = $infoPegawai[0]->posisi;		
+				$data['title']         = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
+				$data['subtitle']      = '';
+				$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
+				$data['id']            = $id;
+				$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
+				$data['content']       = 'skp/skp_approval_pegawai_akademik';		
+				$data['member']   	 = $this->mskp->get_member($get_data_pegawai[0]['posisi_akademik']);
+				if ($data['member'] != 0) {
+					// code...
+					for ($i=0; $i < count($data['member']); $i++) {
+						// code...
+						$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+						$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+						$urtug_belum_diperiksa = 0;
+						$urtug_pergantian      = 0;
+						if ($get_data) {
+							// code...
+							$urtug_belum_diperiksa = $get_data;
+						}
+						else {
+							// code...
+							$urtug_belum_diperiksa = 0;
+						}
+
+						if ($get_data_temp) {
+							// code...
+							$urtug_pergantian = $get_data_temp;
+						}
+						else {
+							// code...
+							$urtug_pergantian = 0;
+						}				
+
+						$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
+					}
+				}
+				$this->load->view('templateAdmin',$data);
+			}
+		}
+	}	
 
 	public function approve_and_reject_skp($id,$status_skp,$stat,$stat_edit)
 	{

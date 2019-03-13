@@ -1,5 +1,13 @@
 v4.0.0
-2019-03-11
+2019-03-13
+New:
+- PLT & Struktur Akademik (Target skp, Transaksi sikerja) 
+Improved:
+Fixed:
+- res config
+
+v4.0.0
+2019-03-12
 New:
 - TMT Jabatan PLT dan Jabatan Akademik
 - Nonaktif pegawai (pegawai)

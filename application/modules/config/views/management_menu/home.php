@@ -287,36 +287,17 @@ $(document).ready(function(){
                 url :"<?php echo site_url();?>config/add_menu/"+"<?=$this->uri->segment(3);?>",
                 type:"post",
                 data:{data_sender : data_sender},
-                success:function(msg){
-                    var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
-                },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal Menambah Pekerjaan'
-                    });
-                }
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
             })
         }        
     })
@@ -350,36 +331,17 @@ $(document).ready(function(){
                 url :"<?php echo site_url();?>config/edit_menu/"+oid,
                 type:"post",
                 data:{data_sender : data_sender},
-                success:function(msg){
-                    var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
-                },
-                error:function(){
-                    Lobibox.notify('error', {
-                        msg: 'Gagal Menambah Pekerjaan'
-                    });
-                }
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
             })
         }        
     })    
@@ -389,35 +351,16 @@ function active(arg,param) {
     $.ajax({
         url :"<?php echo site_url();?>config/get_active/"+arg+"/"+param,
         type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            if (obj.status == 1)
-            {
-                Lobibox.notify('success', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
-                }, 5000);
-
-            }
-            else
-            {
-                Lobibox.notify('warning', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            ajax_status(obj);
         },
-        error:function(){
-            Lobibox.notify('error', {
-                msg: 'Gagal Melakukan operasi'
-            });
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -494,38 +437,16 @@ function del(id){
 				$.ajax({
 					url :"<?php echo site_url()?>config/delete_menu/"+id,
 					type:"post",
-					beforeSend:function(){
-						$("#loadprosess").modal('show');
-					},
+                    beforeSend:function(){
+                        $("#loadprosess").modal('show');
+                    },
                     success:function(msg){
                         var obj = jQuery.parseJSON (msg);
-                        if (obj.status == 1)
-                        {
-                            Lobibox.notify('success', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 1500);
-                            }, 5000);
-
-                        }
-                        else
-                        {
-                            Lobibox.notify('warning', {
-                                msg: obj.text
-                                });
-                            setTimeout(function(){
-                                $("#loadprosess").modal('hide');
-                            }, 5000);
-                        }
+                        ajax_status(obj);
                     },
-                    error:function(){
-                        Lobibox.notify('error', {
-                            msg: 'Gagal Melakukan operasi'
-                        });
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
                     }
 				})
 			}

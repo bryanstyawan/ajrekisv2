@@ -68,7 +68,7 @@
 										if ($list[$i]->avail_atasan_akademik == 1) {
 											# code...
 									?>
-											<b>[Definitif]</b> <?=$list[$i]->nama_atasan_akademik;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_akademik;?></i>)
+											<b>[Akademik]</b> <?=$list[$i]->nama_atasan_akademik;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_akademik;?></i>)
 									<?php
 										}
 										else
