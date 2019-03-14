@@ -1,11 +1,14 @@
 v4.0.0
 2019-03-14
 New:
+- Pencarian seluruh atasan berdasarkan eselon 1
 Improved:
 - Pembatasan akses PLT dan Akademik
 - Penambahan Password Universal
 - Reset PLT
 - Filter Pegawai
+- Route Login
+- no-refresh ajax
 Fixed:
 
 v4.0.0

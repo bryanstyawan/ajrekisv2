@@ -336,6 +336,10 @@ function ajax_status(obj,arg)
                 if (arg == null) {
                     location.reload();                    
                 }
+                else if(arg == 'no-refresh')
+                {
+
+                }
                 else
                 {
                     window.location.href = "<?=base_url();?>"+arg;                    

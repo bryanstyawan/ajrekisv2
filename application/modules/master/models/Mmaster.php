@@ -351,6 +351,55 @@ class Mmaster extends CI_Model {
 	// 	}
 	// }
 
+	public function cari_atasan_all($param)
+	{
+		# code...
+		$sql_1 = "";
+		$sql_2 = "";
+		$sql_3 = "";
+		$sql_4 = "";
+
+		if ($param['eselon1'] == '') {
+			# code...
+			$sql_1 = "";
+		}
+		else $sql_1 = "AND a.eselon1 = '".$param['eselon1']."'";
+
+		if ($param['eselon2'] == '') {
+			# code...
+			$sql_2 = "";
+		}
+		else $sql_2 = "AND a.eselon2 = '".$param['eselon2']."'";
+
+		if ($param['eselon3'] == '') {
+			# code...
+			$sql_3 = "";
+		}
+		else $sql_3 = "AND a.eselon3 = '".$param['eselon3']."'";
+
+		if ($param['eselon4'] == '') {
+			# code...
+			$sql_4 = "";
+		}
+		else $sql_4 = "AND a.eselon4 = '".$param['eselon4']."'";
+
+		$sql = "SELECT a.nama_posisi,
+						a.id
+				FROM mr_posisi a
+				WHERE (a.kat_posisi = 1 OR a.kat_posisi = 6)
+				".$sql_1."
+				";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
+
 	public function cari_atasan_STRUKTURAL($param)
 	{
 		# code...

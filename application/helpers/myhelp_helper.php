@@ -9,7 +9,6 @@
 		$id_posisi     = $CI->session->userdata('sesPosisi');
 		$id_kat_posisi = $CI->session->userdata('kat_posisi');
 		$infoPegawai   = $CI->Globalrules->get_info_pegawai();
-		// print_r($infoPegawai[0]->posisi_plt);
 		$query_atasan_bawahan = 0;
 		$get_bawahan = $CI->db->query("SELECT a.*
 											FROM mr_pegawai a

@@ -587,7 +587,7 @@ function login() {
 					setTimeout(function(){
 						$("#loadprosess").modal('hide');
 						setTimeout(function(){
-							window.location.href = "<?=base_url();?>";							
+							window.location.href = "<?=base_url();?>admin";							
 						}, 500);
 					}, 500);
 				}
