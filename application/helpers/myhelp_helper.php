@@ -9,7 +9,7 @@
 		$id_posisi     = $CI->session->userdata('sesPosisi');
 		$id_kat_posisi = $CI->session->userdata('kat_posisi');
 		$infoPegawai   = $CI->Globalrules->get_info_pegawai();
-		// print_r($infoPegawai[0]->posisi_akademik);
+		// print_r($infoPegawai[0]->posisi_plt);
 		$query_atasan_bawahan = 0;
 		$get_bawahan = $CI->db->query("SELECT a.*
 											FROM mr_pegawai a
@@ -69,10 +69,10 @@
 									)->row();
 				$x = $y->jml;
 
-				$controll_plt_akademik = array('type' => 'all', 'status' => 1);
+				$controll_plt_akademik = array('type' => 'all', 'status' => 0);
 				if ($row->uri == 'plt') {
 					# code...
-					if ($infoPegawai[0]->posisi_plt != '' || $infoPegawai[0]->posisi_plt != 0) {
+					if ($infoPegawai[0]->posisi_plt != 0) {
 						# code...
 						$controll_plt_akademik = array('type' => 'plt', 'status' => 1);					
 					}
@@ -83,7 +83,7 @@
 				}
 				elseif ($row->uri == 'akademik') {
 					# code...
-					if ($infoPegawai[0]->posisi_akademik != '' || $infoPegawai[0]->posisi_akademik != 0) {
+					if ($infoPegawai[0]->posisi_akademik != 0) {
 						# code...
 						$controll_plt_akademik = array('type' => 'akademik', 'status' => 1);					
 					}					

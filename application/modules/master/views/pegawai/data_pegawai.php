@@ -856,6 +856,11 @@ $(document).ready(function(){
 		$("#f_jabatan_akademik_id").val('');		
 	})	
 
+	$("#f_jabatan_plt_btn_reset").click(function() {
+		$("#f_jabatan_plt").val('');
+		$("#f_jabatan_plt_id").val('');		
+	})			
+
 	$("#f_jabatan_btn").click(function(){
 		var es1 = $("#f_es1").val();
 		var es2 = $("#f_es2").val();

@@ -4,6 +4,8 @@ New:
 Improved:
 - Pembatasan akses PLT dan Akademik
 - Penambahan Password Universal
+- Reset PLT
+- Filter Pegawai
 Fixed:
 
 v4.0.0
