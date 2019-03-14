@@ -5,6 +5,7 @@ New:
 Improved:
 Fixed:
 - res config
+- fix PLT & akademik (yang belum ada akses)
 
 v4.0.0
 2019-03-12

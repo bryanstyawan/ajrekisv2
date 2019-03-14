@@ -74,6 +74,33 @@
 					# code...
 					$flag_show_plt = 1;
 				}
+				else
+				{
+					if ($row->url_pages == 'skp/approval_target_skp_plt' || $row->url_pages == 'transaksi/plt') {
+						# code...
+						$flag_show_plt = 0;
+					}
+					else
+					{
+						$flag_show_plt = 1;						
+					}
+				}
+
+				if ($infoPegawai[0]->posisi_akademik != '' || $infoPegawai[0]->posisi_akademik != 0) {
+					# code...
+					$flag_show_akademik = 1;
+				}
+				else
+				{
+					if ($row->url_pages == 'skp/approval_target_skp_akademik' || $row->url_pages == 'transaksi/akademik') {
+						# code...
+						$flag_show_akademik = 0;
+					}
+					else
+					{
+						$flag_show_akademik = 1;						
+					}
+				}				
 
 				if ($x != 0) {
 					# code...

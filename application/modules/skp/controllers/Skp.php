@@ -377,7 +377,7 @@ class Skp extends CI_Controller {
 		if ($get_data_pegawai != array()) 
 		{
 			# code...
-			if ($get_data_pegawai[0]['posisi_plt'] == '' || $get_data_pegawai[0]['posisi_plt'] == NULL) {
+			if ($get_data_pegawai[0]['posisi_plt'] == '' || $get_data_pegawai[0]['posisi_plt'] == NULL || $get_data_pegawai[0]['posisi_plt'] == 0) {
 				# code...
 				redirect('dashboard/home');
 			}
@@ -432,7 +432,7 @@ class Skp extends CI_Controller {
 		if ($get_data_pegawai != array()) 
 		{
 			# code...
-			if ($get_data_pegawai[0]['posisi_akademik'] == '' || $get_data_pegawai[0]['posisi_akademik'] == NULL) {
+			if ($get_data_pegawai[0]['posisi_akademik'] == '' || $get_data_pegawai[0]['posisi_akademik'] == NULL || $get_data_pegawai[0]['posisi_plt'] == 0) {
 				# code...
 				redirect('dashboard/home');
 			}
