@@ -69,42 +69,37 @@
 									)->row();
 				$x = $y->jml;
 
-				$flag_show_plt = 0;
-				if ($infoPegawai[0]->posisi_plt != '' || $infoPegawai[0]->posisi_plt != 0) {
+				$controll_plt_akademik = array('type' => 'all', 'status' => 1);
+				if ($row->uri == 'plt') {
 					# code...
-					$flag_show_plt = 1;
-				}
-				else
-				{
-					if ($row->url_pages == 'skp/approval_target_skp_plt' || $row->url_pages == 'transaksi/plt') {
+					if ($infoPegawai[0]->posisi_plt != '' || $infoPegawai[0]->posisi_plt != 0) {
 						# code...
-						$flag_show_plt = 0;
+						$controll_plt_akademik = array('type' => 'plt', 'status' => 1);					
 					}
 					else
 					{
-						$flag_show_plt = 1;						
-					}
+						$controll_plt_akademik = array('type' => 'plt', 'status' => 0);
+					}											
 				}
-
-				if ($infoPegawai[0]->posisi_akademik != '' || $infoPegawai[0]->posisi_akademik != 0) {
+				elseif ($row->uri == 'akademik') {
 					# code...
-					$flag_show_akademik = 1;
-				}
-				else
-				{
-					if ($row->url_pages == 'skp/approval_target_skp_akademik' || $row->url_pages == 'transaksi/akademik') {
+					if ($infoPegawai[0]->posisi_akademik != '' || $infoPegawai[0]->posisi_akademik != 0) {
 						# code...
-						$flag_show_akademik = 0;
-					}
+						$controll_plt_akademik = array('type' => 'akademik', 'status' => 1);					
+					}					
 					else
 					{
-						$flag_show_akademik = 1;						
-					}
+						$controll_plt_akademik = array('type' => 'akademik', 'status' => 0);
+					}											
 				}				
-
+				else
+				{
+					$controll_plt_akademik = array('type' => 'all', 'status' => 1);									
+				}
+				
 				if ($x != 0) {
 					# code...
-					$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu));
+					$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik));
 					$anak = $CI->db->query(" SELECT config_menu.*,
 													config_menu_akses.id_akses
 											FROM config_menu
@@ -140,6 +135,7 @@
 		}
 		else
 		{
+			$controll_plt_akademik = array('type' => 'all', 'status' => 1);			
 			if ($role == 7 || $role == 6) {
 				# code...
 				foreach($induk->result() as $row)
@@ -157,7 +153,7 @@
 	
 					if ($x != 0) {
 						# code...
-						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu));
+						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik));
 						$anak = $CI->db->query(" SELECT config_menu.*,
 														config_menu_akses.id_akses
 												FROM config_menu

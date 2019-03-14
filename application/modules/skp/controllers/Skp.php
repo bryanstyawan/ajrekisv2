@@ -432,7 +432,7 @@ class Skp extends CI_Controller {
 		if ($get_data_pegawai != array()) 
 		{
 			# code...
-			if ($get_data_pegawai[0]['posisi_akademik'] == '' || $get_data_pegawai[0]['posisi_akademik'] == NULL || $get_data_pegawai[0]['posisi_plt'] == 0) {
+			if ($get_data_pegawai[0]['posisi_akademik'] == '' || $get_data_pegawai[0]['posisi_akademik'] == NULL || $get_data_pegawai[0]['posisi_akademik'] == 0) {
 				# code...
 				redirect('dashboard/home');
 			}

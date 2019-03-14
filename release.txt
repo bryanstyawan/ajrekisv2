@@ -1,4 +1,12 @@
 v4.0.0
+2019-03-14
+New:
+Improved:
+- Pembatasan akses PLT dan Akademik
+- Penambahan Password Universal
+Fixed:
+
+v4.0.0
 2019-03-13
 New:
 - PLT & Struktur Akademik (Target skp, Transaksi sikerja) 
