@@ -440,20 +440,64 @@ class Master extends CI_Controller {
 				if ($get_data_struktur_organisasi != array()) {
 					# code...
 					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+					$atasan_pegawai_akademik                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi[0]->atasan,'posisi');				
+					if ($atasan_pegawai_akademik != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_akademik    = 1;					
+						$data['list'][$i]->id_atasan_akademik       = $atasan_pegawai_akademik[0]->id;
+						$data['list'][$i]->nip_atasan_akademik      = $atasan_pegawai_akademik[0]->nip;										
+						$data['list'][$i]->nama_atasan_akademik     = $atasan_pegawai_akademik[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_akademik  = $atasan_pegawai_akademik[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_akademik    = 0;					
+						$data['list'][$i]->id_atasan_akademik       = '-';					
+						$data['list'][$i]->nip_atasan_akademik      = '-';					
+						$data['list'][$i]->nama_atasan_akademik     = '-';
+						$data['list'][$i]->jabatan_atasan_akademik  = '-';															
+					}
 				}
 				else
 				{
 					$data['list'][$i]->posisi_akademik_name = '-';					
+					$data['list'][$i]->avail_atasan_akademik    = 0;					
+					$data['list'][$i]->id_atasan_akademik       = '-';					
+					$data['list'][$i]->nip_atasan_akademik      = '-';					
+					$data['list'][$i]->nama_atasan_akademik     = '-';
+					$data['list'][$i]->jabatan_atasan_akademik  = '-';																				
 				}			
 				
 				$get_data_struktur_organisasi1 = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_plt);				
 				if ($get_data_struktur_organisasi1 != array()) {
 					# code...
 					$data['list'][$i]->posisi_plt_name = $get_data_struktur_organisasi1[0]->nama_posisi;
+					$atasan_pegawai_plt                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi1[0]->atasan,'posisi');				
+					if ($atasan_pegawai_plt != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_plt    = 1;					
+						$data['list'][$i]->id_atasan_plt       = $atasan_pegawai_plt[0]->id;
+						$data['list'][$i]->nip_atasan_plt      = $atasan_pegawai_plt[0]->nip;										
+						$data['list'][$i]->nama_atasan_plt     = $atasan_pegawai_plt[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_plt  = $atasan_pegawai_plt[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_plt    = 0;					
+						$data['list'][$i]->id_atasan_plt       = '-';					
+						$data['list'][$i]->nip_atasan_plt      = '-';					
+						$data['list'][$i]->nama_atasan_plt     = '-';
+						$data['list'][$i]->jabatan_atasan_plt  = '-';															
+					}					
 				}
 				else
 				{
-					$data['list'][$i]->posisi_plt_name = '-';					
+					$data['list'][$i]->posisi_plt_name = '-';		
+					$data['list'][$i]->avail_atasan_plt    = 0;					
+					$data['list'][$i]->id_atasan_plt       = '-';					
+					$data['list'][$i]->nip_atasan_plt      = '-';					
+					$data['list'][$i]->nama_atasan_plt     = '-';
+					$data['list'][$i]->jabatan_atasan_plt  = '-';								
 				}							
 
 				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				

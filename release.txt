@@ -1,4 +1,40 @@
 v4.0.0
+2019-03-14
+New:
+- Pencarian seluruh atasan berdasarkan eselon 1
+Improved:
+- Pembatasan akses PLT dan Akademik
+- Penambahan Password Universal
+- Reset PLT
+- Filter Pegawai
+- Route Login
+- no-refresh ajax
+Fixed:
+
+v4.0.0
+2019-03-13
+New:
+- PLT & Struktur Akademik (Target skp, Transaksi sikerja) 
+Improved:
+Fixed:
+- res config
+- fix PLT & akademik (yang belum ada akses)
+
+v4.0.0
+2019-03-12
+New:
+- TMT Jabatan PLT dan Jabatan Akademik
+- Nonaktif pegawai (pegawai)
+- Atasan plt dan atasan akademik
+- Penambahan Role user (Fullstack Developer)
+- Pembatasan Login Akses
+Improved:
+Fixed:
+- Auto Approve skp
+- Pencarian Jabatan akademik berdasarkan jenis jabatan akademik
+- Ketika jabatan kosong, akan dialihkan kehalaman lain
+
+v4.0.0
 2019-03-11
 New:
 - Trigger update & insert
@@ -12,7 +48,6 @@ Improved:
 Fixed:
 - Auto Approve skp
 - Uraian Tugas transaksi
-
 
 v4.0.0
 2019-03-06

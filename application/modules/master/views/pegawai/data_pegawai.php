@@ -196,6 +196,13 @@
 							<a class="btn btn-default" id="f_jabatan_akademik_btn_reset"><i class="fa fa-refresh"></i></a>							
 						</div>
 
+						<div class="form-group">
+							<label class="col-md-2 control-label">TMT Akademik</label>
+							<div class="col-md-9">
+								<input type="text" id="f_tmt_akademik" name="f_tmt_akademik" class="form-control form-control-detail timerange-normal" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask> 
+							</div>
+						</div>						
+
 						<hr>
 						<div class="form-group">
 							<label class="col-md-2 control-label">PLT/PLH</label>
@@ -205,7 +212,14 @@
 							</div>
 							<a class="btn btn-default" id="f_jabatan_plt_btn"><i class="fa fa-search"></i></a>
 							<a class="btn btn-default" id="f_jabatan_plt_btn_reset"><i class="fa fa-refresh"></i></a>							
-						</div>												
+						</div>						
+
+						<div class="form-group">
+							<label class="col-md-2 control-label">TMT PLT</label>
+							<div class="col-md-9">
+								<input type="text" id="f_tmt_plt" name="f_tmt_plt" class="form-control form-control-detail timerange-normal" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask> 
+							</div>
+						</div>																		
 
 					</div>
 				</div>
@@ -398,6 +412,78 @@ function get_eselon(arg) {
 	console.table(data_sender);
 }
 
+function data_status(oid,status) {
+	var text = '';
+	if (status == 1) {
+		text = 'Aktifkan Pegawai ini';
+	} else {
+		text = 'Nonaktifkan Pegawai ini';
+	}
+
+    LobiboxBase = {
+        //DO NOT change this value. Lobibox depended on it
+        bodyClass       : 'lobibox-open',
+        //DO NOT change this object. Lobibox is depended on it
+        modalClasses : {
+            'error'     : 'lobibox-error',
+            'success'   : 'lobibox-success',
+            'info'      : 'lobibox-info',
+            'warning'   : 'lobibox-warning',
+            'confirm'   : 'lobibox-confirm',
+            'progress'  : 'lobibox-progress',
+            'prompt'    : 'lobibox-prompt',
+            'default'   : 'lobibox-default',
+            'window'    : 'lobibox-window'
+        },
+        buttons: {
+            ok: {
+                'class': 'lobibox-btn lobibox-btn-default',
+                text: 'OK',
+                closeOnClick: true
+            },
+            cancel: {
+                'class': 'lobibox-btn lobibox-btn-cancel',
+                text: 'Cancel',
+                closeOnClick: true
+            },
+            yes: {
+                'class': 'lobibox-btn lobibox-btn-yes',
+                text: 'Ya',
+                closeOnClick: true
+            },
+            no: {
+                'class': 'lobibox-btn lobibox-btn-no',
+                text: 'Tidak',
+                closeOnClick: true
+            }
+        }
+    }
+
+	Lobibox.confirm({
+		title: "Konfirmasi",
+		msg: text,
+		callback: function ($this, type) {
+			if (type === 'yes'){
+				$.ajax({
+					url :"<?php echo site_url()?>master/data_pegawai/store/data_status/"+oid+"/"+status,					
+					type:"post",
+					beforeSend:function(){
+						$("#loadprosess").modal('show');
+					},
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})
+			}
+		}
+    })	
+}
+
 function del(id){
     LobiboxBase = {
         //DO NOT change this value. Lobibox depended on it
@@ -444,7 +530,7 @@ function del(id){
 		callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>/master/data_pegawai/store/delete/"+id,					
+					url :"<?php echo site_url()?>master/data_pegawai/store/delete/"+id,					
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
@@ -770,6 +856,11 @@ $(document).ready(function(){
 		$("#f_jabatan_akademik_id").val('');		
 	})	
 
+	$("#f_jabatan_plt_btn_reset").click(function() {
+		$("#f_jabatan_plt").val('');
+		$("#f_jabatan_plt_id").val('');		
+	})			
+
 	$("#f_jabatan_btn").click(function(){
 		var es1 = $("#f_es1").val();
 		var es2 = $("#f_es2").val();
@@ -847,6 +938,8 @@ $(document).ready(function(){
 		var f_jabatan_akademik    = $("#f_jabatan_akademik_id").val();		
 		var f_jabatan_plt         = $("#f_jabatan_plt_id").val();
 		var f_tmt                 = $("#f_tmt").val();
+		var f_tmt_akademik 		  = $("#f_tmt_akademik").val();
+		var f_tmt_plt			  = $("#f_tmt_plt").val();				
 		var oid                   = $("#oid").val();
 		var crud                  = $("#crud").val();
 		if (f_es1.length <= 0)
@@ -899,8 +992,10 @@ $(document).ready(function(){
 					'nama'   			: f_nama,
 					'jabatan' 			: f_jabatan,
 					'jabatan_akademik'  : f_jabatan_akademik,
-					'jabatan_plt' 	: f_jabatan_plt, 
-					'tmt'    			: f_tmt
+					'jabatan_plt' 		: f_jabatan_plt, 
+					'tmt'    			: f_tmt,
+					'tmt_akademik'		: f_tmt_akademik,
+					'tmt_plt'    		: f_tmt_plt										
 				}				
 			
 			$.ajax({

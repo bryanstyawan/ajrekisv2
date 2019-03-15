@@ -56,6 +56,110 @@ class Mtrx extends CI_Model
 		}
 	}
 
+	public function get_pegawai_plt_id($id,$param=NULL)
+	{
+		# code...
+		$sql_1 = "";
+		if ($param == 'default') {
+			# code...
+			$sql_1 = "AND a.id = '".$id."'";
+		}
+		elseif ($param == 'atasan') {
+			# code...
+			$sql_1 = "AND b.id = '".$id."'";
+		}
+		elseif ($param == 'posisi') {
+			# code...
+			$sql_1 = "AND a.posisi = '".$id."'";
+		}
+		$sql = "SELECT
+					a.nip,
+					a.nama_pegawai,
+					b.nama_posisi,
+					a.es1,
+					a.es2,
+					a.es3,
+					a.es4,
+					a.id,
+					a.posisi_plt,
+					b.atasan,
+					b.id AS `id_posisi`,
+					b.kat_posisi,
+					c.posisi_class,
+					c.tunjangan
+				FROM
+					mr_pegawai a
+				JOIN mr_posisi b ON b.id = a.posisi_plt
+				JOIN mr_posisi_class c ON b.posisi_class = c.id
+				JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+				LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
+				LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
+				LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4
+				WHERE a. STATUS = '1'
+				".$sql_1."";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
+
+	public function get_pegawai_akademik_id($id,$param=NULL)
+	{
+		# code...
+		$sql_1 = "";
+		if ($param == 'default') {
+			# code...
+			$sql_1 = "AND a.id = '".$id."'";
+		}
+		elseif ($param == 'atasan') {
+			# code...
+			$sql_1 = "AND b.id = '".$id."'";
+		}
+		elseif ($param == 'posisi') {
+			# code...
+			$sql_1 = "AND a.posisi = '".$id."'";
+		}
+		$sql = "SELECT
+					a.nip,
+					a.nama_pegawai,
+					b.nama_posisi,
+					a.es1,
+					a.es2,
+					a.es3,
+					a.es4,
+					a.id,
+					a.posisi_akademik,
+					b.atasan,
+					b.id AS `id_posisi`,
+					b.kat_posisi,
+					c.posisi_class,
+					c.tunjangan
+				FROM
+					mr_pegawai a
+				JOIN mr_posisi b ON b.id = a.posisi_akademik
+				JOIN mr_posisi_class c ON b.posisi_class = c.id
+				JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+				LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
+				LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
+				LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4
+				WHERE a. STATUS = '1'
+				".$sql_1."";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}		
+
 	public function status_pekerjaan($status,$id_pegawai)
 	{
 		# code...

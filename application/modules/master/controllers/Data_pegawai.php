@@ -51,7 +51,7 @@ class Data_pegawai extends CI_Controller {
 		echo json_encode($data);
 	}		
 
-	public function store($param=NULL,$oid=NULL)
+	public function store($param=NULL,$oid=NULL,$status=NULL)
 	{
 		# code...
 		$res_data    = 0;
@@ -61,11 +61,18 @@ class Data_pegawai extends CI_Controller {
 		$jabatan     = $this->input->post('jabatan');
 		if ($param == 'password') {
 			# code...
-			$data_store        = $this->Globalrules->trigger_insert_update();			
-			$data_store['password']   = md5('usersikerja');
+			$data_store                = $this->Globalrules->trigger_insert_update();			
+			$data_store['password']    = md5('usersikerja');
 			$data_store['user_update'] = date('y-m-d');
-			$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$oid));
-			$text_status = $this->Globalrules->check_status_res($res_data,'Password Pegawai telah berhasil diubah.');			
+			$res_data                  = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$oid));
+			$text_status               = $this->Globalrules->check_status_res($res_data,'Password Pegawai telah berhasil diubah.');			
+		}
+		elseif ($param == 'data_status') {
+			# code...
+			$data_store                = $this->Globalrules->trigger_insert_update();			
+			$data_store['status']      = $status;
+			$res_data                  = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$oid));
+			$text_status               = $this->Globalrules->check_status_res($res_data,'Status Pegawai telah berhasil diubah.');						
 		}
 		else {
 			# code...
@@ -121,37 +128,38 @@ class Data_pegawai extends CI_Controller {
 					# code...
 					$data_masa_kerja = array
 									(
-										'id_pegawai'        => $id_pegawai,
-										'StartDate'         => $this->input->post('tmt'),
-										'EndDate'           => '9999-01-01',
-										'id_posisi'         => $jabatan,
-										'status_masa_kerja' => 'A'
+										'id_pegawai'            => $id_pegawai,
+										'StartDate'             => $data_sender['tmt'],
+										'EndDate'               => '9999-01-01',
+										'id_posisi'             => $data_sender['jabatan'],
+										'status_masa_kerja'     => 'A',
+										'audit_time'            => date('Y-m-d H:i:s'), 
+										'audit_user'            => $this->session->userdata('sesNip')
 									);
 					$this->Allcrud->addData('mr_masa_kerja',$data_masa_kerja);
 				}
 				else
 				{
-					$get_masa_kerja_detail = $this->Mmaster->get_masa_kerja($id_pegawai,$jabatan);
+					$get_masa_kerja_detail = $this->Mmaster->get_masa_kerja($id_pegawai,$data_sender['jabatan']);
 		
 					if ($get_masa_kerja_detail == 0) {
 						# code...
 						$data_masa_kerja_lama = array
 										(
-											'EndDate'    => date('Y-m-d',strtotime($this->input->post('tmt') . "-1 days"))
+											'EndDate'    => date('Y-m-d',strtotime($data_sender['tmt'] . "-1 days")),
+											'audit_time' => date('Y-m-d H:i:s'), 
+											'audit_user' => $this->session->userdata('sesNip')
 										);
-		
-						$flag = array
-								(
-									'id' => $get_masa_kerja_pegawai[0]->id
-								);
-						$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,$flag);
+						$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,array('id' => $get_masa_kerja_pegawai[0]->id));
 		
 						$data_masa_kerja_baru = array
 										(
-											'id_pegawai' => $id_pegawai,
-											'StartDate'  => $this->input->post('tmt'),
-											'EndDate'    => '9999-01-01',
-											'id_posisi'  => $jabatan,
+											'id_pegawai'            => $id_pegawai,
+											'StartDate'             => $data_sender['tmt'],
+											'EndDate'               => '9999-01-01',
+											'id_posisi'             => $data_sender['jabatan'],
+											'audit_time'            => date('Y-m-d H:i:s'), 
+											'audit_user'            => $this->session->userdata('sesNip')
 										);
 						$this->Allcrud->addData('mr_masa_kerja',$data_masa_kerja_baru);
 					}
@@ -159,29 +167,150 @@ class Data_pegawai extends CI_Controller {
 					{
 						$data_masa_kerja = array
 										(
-											'StartDate'    => $this->input->post('tmt')
+											'StartDate'             => $data_sender['tmt'],
+											'audit_time'            => date('Y-m-d H:i:s'), 
+											'audit_user'            => $this->session->userdata('sesNip')
 										);
-						$flag = array
-								(
-									'id' => $get_masa_kerja_detail[0]->id
-								);
-						$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja,$flag);
+						$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja,array('id' => $get_masa_kerja_detail[0]->id));
 		
 						if (count($get_masa_kerja_pegawai) > 1) {
 							# code...
 							$data_masa_kerja_lama = array
 											(
-												'EndDate'    => date('Y-m-d',strtotime($this->input->post('tmt') . "-1 days"))
+												'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt'] . "-1 days")),
+												'audit_time'            => date('Y-m-d H:i:s'), 
+												'audit_user'            => $this->session->userdata('sesNip')
 											);
-							$flag_lama = array
-									(
-										'id' => $get_masa_kerja_pegawai[1]->id
-									);
-		
-							$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,$flag_lama);
+							$this->Allcrud->editData('mr_masa_kerja',$data_masa_kerja_lama,array('id' => $get_masa_kerja_pegawai[1]->id));
 						}
 					}
-				}				
+				}
+				
+				$get_masa_kerja_pegawai_akademik = $this->Mmaster->get_masa_kerja_id_pegawai_akademik($id_pegawai,'DESC');
+				if ($get_masa_kerja_pegawai_akademik == 0) {
+					# code...
+					$data_masa_kerja_akademik = array
+									(
+										'id_pegawai'            => $id_pegawai,
+										'StartDate'             => $data_sender['tmt_akademik'],
+										'EndDate'               => '9999-01-01',
+										'id_posisi'             => $data_sender['jabatan_akademik'],
+										'status_masa_kerja'     => 'A',
+										'audit_time'            => date('Y-m-d H:i:s'), 
+										'audit_user'            => $this->session->userdata('sesNip')
+									);
+					$this->Allcrud->addData('mr_masa_kerja_akademik',$data_masa_kerja_akademik);
+				}
+				else
+				{
+					$get_masa_kerja_detail_akademik = $this->Mmaster->get_masa_kerja_akademik($id_pegawai,$data_sender['jabatan_akademik']);
+		
+					if ($get_masa_kerja_detail_akademik == 0) {
+						# code...
+						$data_masa_kerja_lama_akademik = array
+										(
+											'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt_akademik'] . "-1 days")),
+											'audit_time'            => date('Y-m-d H:i:s'), 
+											'audit_user'            => $this->session->userdata('sesNip')
+										);
+						$this->Allcrud->editData('mr_masa_kerja_akademik',$data_masa_kerja_lama_akademik,array('id' => $get_masa_kerja_pegawai[0]->id));
+		
+						$data_masa_kerja_baru_akademik = array
+										(
+											'id_pegawai'            => $id_pegawai,
+											'StartDate'             => $data_sender['tmt_akademik'],
+											'EndDate'               => '9999-01-01',
+											'id_posisi'             => $data_sender['jabatan_akademik'],
+											'audit_time'            => date('Y-m-d H:i:s'), 
+											'audit_user'            => $this->session->userdata('sesNip')
+										);
+						$this->Allcrud->addData('mr_masa_kerja_akademik',$data_masa_kerja_baru_akademik);
+					}
+					else
+					{
+						$data_masa_kerja_akademik = array
+										(
+											'StartDate'             => $data_sender['tmt_akademik'],
+											'audit_time'            => date('Y-m-d H:i:s'), 
+											'audit_user'            => $this->session->userdata('sesNip')
+										);
+						$this->Allcrud->editData('mr_masa_kerja_akademik',$data_masa_kerja_akademik,array('id' => $get_masa_kerja_detail[0]->id));
+		
+						if (count($get_masa_kerja_pegawai_akademik) > 1) {
+							# code...
+							$data_masa_kerja_lama_akademik = array
+											(
+												'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt_akademik'] . "-1 days")),
+												'audit_time'            => date('Y-m-d H:i:s'), 
+												'audit_user'            => $this->session->userdata('sesNip')
+											);		
+							$this->Allcrud->editData('mr_masa_kerja_akademik',$data_masa_kerja_lama_akademik,array('id' => $get_masa_kerja_pegawai[1]->id));
+						}
+					}
+				}	
+				
+				$get_masa_kerja_pegawai_plt = $this->Mmaster->get_masa_kerja_id_pegawai_plt($id_pegawai,'DESC');
+				if ($get_masa_kerja_pegawai_akademik == 0) {
+					# code...
+					$data_masa_kerja_plt = array
+									(
+										'id_pegawai'            => $id_pegawai,
+										'StartDate'             => $data_sender['tmt_plt'],
+										'EndDate'               => '9999-01-01',
+										'id_posisi'             => $data_sender['jabatan_plt'],
+										'status_masa_kerja'     => 'A',
+										'audit_time'            => date('Y-m-d H:i:s'), 
+										'audit_user'            => $this->session->userdata('sesNip')
+									);
+					$this->Allcrud->addData('mr_masa_kerja_plt',$data_masa_kerja_plt);
+				}
+				else
+				{
+					$get_masa_kerja_detail_plt = $this->Mmaster->get_masa_kerja_plt($id_pegawai,$data_sender['jabatan_plt']);
+		
+					if ($get_masa_kerja_detail_plt == 0) {
+						# code...
+						$data_masa_kerja_lama_plt = array
+													(
+														'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt_plt'] . "-1 days")),
+														'audit_time'            => date('Y-m-d H:i:s'), 
+														'audit_user'            => $this->session->userdata('sesNip')
+													);
+						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_pegawai[0]->id));
+		
+						$data_masa_kerja_baru_plt = array
+													(
+														'id_pegawai'            => $id_pegawai,
+														'StartDate'             => $data_sender['tmt_plt'],
+														'EndDate'               => '9999-01-01',
+														'id_posisi'             => $data_sender['jabatan_plt'],
+														'audit_time'            => date('Y-m-d H:i:s'), 
+														'audit_user'            => $this->session->userdata('sesNip')
+													);
+						$this->Allcrud->addData('mr_masa_kerja_plt',$data_masa_kerja_baru_plt);
+					}
+					else
+					{
+						$data_masa_kerja_plt = array
+												(
+													'StartDate'             => $data_sender['tmt_plt'],
+													'audit_time'            => date('Y-m-d H:i:s'), 
+													'audit_user'            => $this->session->userdata('sesNip')
+												);
+						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_plt,array('id' => $get_masa_kerja_detail[0]->id));
+		
+						if (count($get_masa_kerja_pegawai_plt) > 1) {
+							# code...
+							$data_masa_kerja_lama_plt = array
+														(
+															'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt_plt'] . "-1 days")),
+															'audit_time'            => date('Y-m-d H:i:s'), 
+															'audit_user'            => $this->session->userdata('sesNip')
+														);		
+							$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_pegawai[1]->id));
+						}
+					}
+				}					
 			}
 			else {
 				# code...
@@ -370,62 +499,7 @@ class Data_pegawai extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		if($this->input->post('es4') != NULL || $this->input->post('nes4') != NULL){
-			if($this->input->post('es4') == NULL){
-				$flag = array(
-					'eselon4'    => $this->input->post('nes4'),
-					'kat_posisi' => 6
-				);
-			}else{
-				$flag = array(
-					'eselon4'    => $this->input->post('es4'),
-					'kat_posisi' => 6
-				);
-			}
-		}elseif($this->input->post('es3') != NULL || $this->input->post('nes3') != NULL){
-			if($this->input->post('es3') == NULL){
-				$flag = array(
-					'eselon3'    => $this->input->post('nes3'),
-					'eselon4'    => 0,
-					'kat_posisi' => 6
-				);
-			}else{
-				$flag = array(
-					'eselon3'    => $this->input->post('es3'),
-					'eselon4'    => 0,
-					'kat_posisi' => 6
-				);
-			}
-		}elseif($this->input->post('es2') != NULL || $this->input->post('nes2') != NULL){
-			if($this->input->post('es2') == NULL){
-				$flag = array(
-					'eselon2'    => $this->input->post('nes2'),
-					'eselon3'    => 0,
-					'kat_posisi' => 6
-				);
-			}else{
-				$flag = array(
-					'eselon2'    => $this->input->post('es2'),
-					'eselon3'    => 0,
-					'kat_posisi' => 6
-				);
-			}
-		}else{
-			if($this->input->post('es1') == NULL){
-				$flag = array(
-					'eselon1'    => $this->input->post('nes1'),
-					'eselon2'    => 0,
-					'kat_posisi' => 6
-				);
-			}else{
-				$flag = array(
-					'eselon1'    => $this->input->post('es1'),
-					'eselon2'    => 0,
-					'kat_posisi' => 6
-				);
-			}
-		}
-		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',$flag);
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('kat_posisi' =>6));
 		$this->load->view('master/pegawai/ajax_jabatan_struktur_akademik',$data);		
 	}
 

@@ -185,16 +185,16 @@ class Globalrules extends CI_Model
 			# code...
 			if ($id==NULL) {
 				# code...
-				$sql = "a.nip = '".$this->session->userdata('sesNip')."'";
+				$sql = "a.nip = '".$this->session->userdata('sesNip')."' AND a.status = 1";
 			}
 		}
 		elseif ($param == 'id') {
 			# code...
-			$sql = "a.id = '".$id."'";
+			$sql = "a.id = '".$id."' AND a.status = 1";
 		}
 		elseif ($param == 'nama_pegawai') {
 			# code...
-			$sql = "a.nama_pegawai = '".$id."'";
+			$sql = "a.nama_pegawai = '".$id."' AND a.status = 1";
 		}
 		elseif ($param == 'posisi') {
 			# code...
@@ -213,6 +213,8 @@ class Globalrules extends CI_Model
 						es2.nama_eselon2,
 						es3.nama_eselon3,
 						es4.nama_eselon4,
+						COALESCE(a.posisi_plt,0) as posisi_plt,
+						COALESCE(a.posisi_akademik,0) as posisi_akademik,						
 						COALESCE(a.photo,'-') as photo,
 						COALESCE(agm.nama_agama,'-') as nama_agama,
 						COALESCE(gol.ruang,'-') as nama_ruang,

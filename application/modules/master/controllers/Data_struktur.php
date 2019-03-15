@@ -269,4 +269,40 @@ class Data_struktur extends CI_Controller {
 		}
 		$this->load->view('master/struktur/eselon/atasan',$data);		
 	}
+
+	public function get_atasan_all()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$data_var    = "";
+		$data_sql    = "";
+		$data_sender = $this->input->post('data_sender');
+
+		$data_var = array(
+						'eselon4'    => $data_sender['es4'],
+						'eselon3'    => $data_sender['es3'],
+						'eselon2'    => $data_sender['es2'],
+						'eselon1'    => $data_sender['es1'],
+						'kat_posisi' => $data_sender['kat']
+					);
+		$data_sql = $this->Mmaster->cari_atasan_all($data_var);		
+
+		$data['list'] = $data_sql;
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->id,'posisi');				
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->nama_pegawai = $data_pegawai[0]->nama_pegawai;					
+				}
+				else
+				{
+					$data['list'][$i]->nama_pegawai = "-";					
+				}
+			}
+		}
+		$this->load->view('master/struktur/eselon/atasan',$data);		
+	}	
 }
