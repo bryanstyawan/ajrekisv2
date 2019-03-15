@@ -242,7 +242,7 @@
 
                                 if ($list[$i]->target_output != $list[$i]->edit_target_output) {
                                     # code...
-                                    $target_output = "<span class='data-before'>".$list[$i]->target_output."</span> <i class='fa fa-angle-double-right'></i> <span class='data-after'>".$list[$i]->edit_target_output_name."</span>";
+                                    $target_output = "<span class='data-before'>".$list[$i]->target_output_name."</span> <i class='fa fa-angle-double-right'></i> <span class='data-after'>".$list[$i]->edit_target_output_name."</span>";
                                 }
 
                                 if ($list[$i]->target_kualitasmutu != $list[$i]->edit_target_kualitasmutu) {
