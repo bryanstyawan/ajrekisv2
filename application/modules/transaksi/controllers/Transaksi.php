@@ -1518,7 +1518,7 @@ class Transaksi extends CI_Controller {
 		}
 	}
 
-	public function detail_transaksi_pegawai($id_pegawai)
+	public function detail_transaksi_pegawai($id_pegawai) 
 	{
 		// code...
 		$res_data               	  = 1;

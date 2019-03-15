@@ -1,4 +1,12 @@
 v4.0.0
+2019-03-15
+New:
+- Multi approve
+Improved:
+- Rombak Persetujuan skp
+Fixed:
+
+v4.0.0
 2019-03-14
 New:
 - Pencarian seluruh atasan berdasarkan eselon 1
