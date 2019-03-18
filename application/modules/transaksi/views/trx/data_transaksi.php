@@ -688,6 +688,9 @@ else {
                                                         </span>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <label class="pull-left"><b>*Pastikan Pengaturan Timezone dikomputer anda sudah benar.</b></label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1061,7 +1064,7 @@ else {
                                 Tahap Anda Periksa&nbsp;&nbsp;
                                 <sup>
                                     <span id="counter_atasan_proses_head" class="notif-count">
-                                        <span id="counter_atasan_proses"></span>
+                                        <span class="counter_atasan_notify" id="counter_atasan_proses"></span>
                                     </span>
                                 </sup>
                             </a>
@@ -1142,6 +1145,14 @@ else {
                         <div id="home_atasan" class="tab-pane fade in active" style="padding-top: 15px;">
                             <div class="col-lg-12">
                                 <h2>Tahap Anda Periksa</h2>
+                                <div class="col-md-3 pull-right">
+                                    <div class="checkbox pull-right">
+                                        <label>
+                                        <input type="checkbox" id="multi_approve" style="width: 19px;height: 21px;margin-top: 0px;margin-left: -25px;">
+                                        Multi Approve
+                                        </label>
+                                    </div>            
+                                </div>                                
                                 <table id="table_belum_diperiksa_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
                                         <tr>
@@ -1524,6 +1535,7 @@ else {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+ $("#multi_approve").prop('checked', true);
 function current_time() {
     // body...
     var d  = new Date(); // for now
@@ -1536,29 +1548,54 @@ function current_time() {
 }
 
 function approve(id) {
-    Lobibox.confirm({
-        title: "Konfirmasi",
-        msg: "Anda akan menyetujui pekerjaan ini ?",
-        callback: function ($this, type) {
-            if (type === 'yes'){
-                $.ajax({
-                    url :"<?php echo site_url()?>transaksi/approve/"+id,
-                    type:"post",
-                    beforeSend:function(){
-                        $("#loadprosess").modal('show');
-                    },
-					success:function(msg){
-						var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-					},
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-                })
+    var multi_approve = $("#multi_approve").is(":checked");    
+    if (multi_approve == false) 
+    {
+        Lobibox.confirm({
+            title: "Konfirmasi",
+            msg: "Anda akan menyetujui pekerjaan ini ?",
+            callback: function ($this, type) {
+                if (type === 'yes'){
+                    $.ajax({
+                        url :"<?php echo site_url()?>transaksi/approve/"+id,
+                        type:"post",
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
             }
-        }
-    })
+        })
+    }
+    else
+    {
+        $.ajax({
+            url :"<?php echo site_url()?>transaksi/approve/"+id,
+            type:"post",
+            beforeSend:function(){
+                $("#tr_belum_diperiksa_"+id).css({"background-color": "yellow"});                        
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj,'no-refresh');
+                $("#tr_belum_diperiksa_"+id).css({"background-color": "green","color": "#fff"});
+                // $(".skp_btn_"+id).css({"display": "none"});                                
+                $("#td_last_belum_diperiksa_ket_"+id).html('Sikerja telah disetujui');
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
+            }
+        })
+    }    
 }
 
 function revisi(id) {
@@ -1586,8 +1623,8 @@ function banding(id) {
 }
 
 function view_option(id,i) {
-    $('.teamwork').css({"backgroundColor": "", "color": "", "pointer-events" : ""});
-    $('#li_kandidat_'+i).css({"backgroundColor": "#00a65a", "color": "#000", "pointer-events" : ""});
+    // $('.teamwork').css({"backgroundColor": "", "color": "", "pointer-events" : ""});
+    // $('#li_kandidat_'+i).css({"backgroundColor": "#00a65a", "color": "#000", "pointer-events" : ""});
     oid_pegawai = id;
     $.ajax({
         url :"<?php echo site_url();?>transaksi/detail_transaksi_pegawai/"+oid_pegawai,
@@ -1600,7 +1637,7 @@ function view_option(id,i) {
                                 '<td colspan="5" class="text-center">Memuat Data</td>'
                             '</tr>';
             $('.table-view1 tbody').append(newrec);       
-            $('.notif-count').html('');     
+            // $('.notif-count').html('');     
             $('.counter_atasan_notify').html('');
         },
         success:function(msg){
@@ -1648,21 +1685,22 @@ function view_option(id,i) {
                         }
 
 
-                        row_data = "<tr>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
-                        "<td>"+kegiatan+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].realisasi_skp+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].target_skp+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].nama_pekerjaan+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_belum_diperiksa[i].target_output_name+"</td>"+
-                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
-                        "<td>"+
-                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
-                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
-                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-danger btn-xs' onclick='reject("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-close'></i>&nbsp;Tolak</a></div><br>"+
-                        "</td>"+
-                        "</tr>";
+                        row_data = "<tr id='tr_belum_diperiksa_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
+                                    "<td>"+kegiatan+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].realisasi_skp+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].target_skp+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].nama_pekerjaan+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_belum_diperiksa[i].target_output_name+"</td>"+
+                                    "<td></td>"+
+                                    // "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                                    "<td id='td_last_belum_diperiksa_ket_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
+                                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
+                                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
+                                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-danger btn-xs' onclick='reject("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-close'></i>&nbsp;Tolak</a></div><br>"+
+                                    "</td>"+
+                                    "</tr>";
                         $('#table_belum_diperiksa_atasan tbody').append(row_data);
                     }
                 }
@@ -1765,7 +1803,8 @@ function view_option(id,i) {
                         "<td>"+kegiatan+"</td>"+
                         "<td>"+obj.data.tr_tolak[i].nama_pekerjaan+"</td>"+
                         "<td>"+obj.data.tr_tolak[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_tolak[i].target_output_name+"</td>"+
-                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_disetujui[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                        // "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_tolak[i].tr_tolak+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                        "<td></td>"+
                         "<td>"+obj.data.tr_tolak[i].komentar_pemeriksa+"</td>"+
                         "<td>"+obj.data.tr_tolak[i].alasan_ditolak+"</td>"+                        
                         "</tr>";
@@ -1975,22 +2014,48 @@ function del(id) {
 
 function send_data_revisi(data_sender,param) {
     // body...
-    $.ajax({
-        url :"<?php echo site_url();?>transaksi/revisi/"+param,
-        type:"post",
-        data:{data_sender : data_sender},
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },					
-        success:function(msg){
-            var obj = jQuery.parseJSON (msg);
-            ajax_status(obj);
-        },
-        error:function(jqXHR,exception)
-        {
-            ajax_catch(jqXHR,exception);					
-        }
-    })
+    var multi_approve = $("#multi_approve").is(":checked");
+    if (multi_approve == false) {
+        $.ajax({
+            url :"<?php echo site_url();?>transaksi/revisi/"+param,
+            type:"post",
+            data:{data_sender : data_sender},
+            beforeSend:function(){
+                $("#loadprosess").modal('show');
+            },					
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj);
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
+            }
+        })        
+    }
+    else
+    {
+        $.ajax({
+            url :"<?php echo site_url();?>transaksi/revisi/"+param,
+            type:"post",
+            data:{data_sender : data_sender},
+            beforeSend:function(){
+                $("#revisi_data").modal('hide');                
+                $("#tr_belum_diperiksa_"+data_sender['id_pekerjaan']).css({"background-color": "yellow"});                        
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj,'no-refresh');
+                $("#tr_belum_diperiksa_"+data_sender['id_pekerjaan']).css({"background-color": "#FF9800","color": "#fff"});
+                // $(".skp_btn_"+id).css({"display": "none"});                                
+                $("#td_last_belum_diperiksa_ket_"+data_sender['id_pekerjaan']).html('Sikerja perlu revisi');
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
+            }
+        })
+    }    
 }
 
 function send_data_tambah_without_file(data_sender) {
@@ -2068,22 +2133,49 @@ function send_data_tambah(data_sender) {
 
 function send_data_tolak(data_sender,param) {
     // body...
-    $.ajax({
-        url :"<?php echo site_url();?>transaksi/tolak/"+param,
-        type:"post",
-        data:{data_sender : data_sender},
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
-        success:function(msg){
-            var obj = jQuery.parseJSON (msg);
-            ajax_status(obj);
-        },
-        error:function(jqXHR,exception)
-        {
-            ajax_catch(jqXHR,exception);					
-        }
-    })
+    var multi_approve = $("#multi_approve").is(":checked");    
+    if (multi_approve == false) 
+    {    
+        $.ajax({
+            url :"<?php echo site_url();?>transaksi/tolak/"+param,
+            type:"post",
+            data:{data_sender : data_sender},
+            beforeSend:function(){
+                $("#loadprosess").modal('show');
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj);
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
+            }
+        })        
+    }
+    else
+    {
+        $.ajax({
+            url :"<?php echo site_url();?>transaksi/tolak/"+param,
+            type:"post",
+            data:{data_sender : data_sender},
+            beforeSend:function(){
+                $("#tolak_data").modal('hide');                
+                $("#tr_belum_diperiksa_"+data_sender['id_pekerjaan']).css({"background-color": "yellow"});                        
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj,'no-refresh');
+                $("#tr_belum_diperiksa_"+data_sender['id_pekerjaan']).css({"background-color": "red","color": "#fff"});
+                // $(".skp_btn_"+id).css({"display": "none"});                                
+                $("#td_last_belum_diperiksa_ket_"+data_sender['id_pekerjaan']).html('Sikerja ditolak');
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
+            }
+        })
+    }
 }
 
 function reject_keberatan(id) {
@@ -2268,6 +2360,9 @@ $(document).ready(function()
         urtug              = $("#urtug").val();
         tgl_mulai          = change_format_date($("#tgl_mulai").val(),'yyyy-mm-dd');
         tgl_selesai        = change_format_date($("#tgl_selesai").val(),'yyyy-mm-dd');
+
+        tgl_mulai_raw      = $("#tgl_mulai").val();
+        tgl_selesai_raw    = $("#tgl_selesai").val();
 
         jam_mulai          = $("#jam_mulai").val();
         jam_selesai        = $("#jam_selesai").val();
