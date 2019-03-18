@@ -15,11 +15,12 @@
 }
 </style>
 
+
+<section id="approval_skp_member">
 <?php
 if ($member != 0) {
     # code...
 ?>
-
 <div class="col-md-3">
     <div class="box box-solid" id="isi_kontak" style="">
 
@@ -58,7 +59,8 @@ if ($member != 0) {
 </div>
 <?php
 }
-?> 
+?>
+</section> 
 
 
 <!-- DataTables -->
@@ -68,30 +70,23 @@ if ($member != 0) {
 <script type="text/javascript">
 function detail_skp(id) {
     // body...
-    $("#loadprosess").modal('show');                                                    
-    setTimeout(function(){
-        window.location.href = "<?php echo base_url().'skp/skp_member_detail/'?>"+id;
-    }, 1500);                               
-}
-
-$(document).ready(function()
-{
-    $(".table-view").DataTable({
-        "oLanguage": {
-            "sSearch": "Pencarian :",
-            "sSearchPlaceholder" : "Ketik untuk mencari",
-            "sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-            "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-            "sZeroRecords": "Data tidak ditemukan"  
+    $.ajax({
+        url :"<?php echo site_url()?>skp/get_target_skp_json/"+id,
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');            
+            $("#approval_skp_member").html("");
+        },			
+        success:function(msg){
+            $("#approval_skp_member").html(msg);
+            setTimeout(function(){
+                $("#loadprosess").modal('hide');
+            }, 500);
         },
-        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>" +           
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        "bSort": false,                        
-        "bAutoWidth": false
-        // "dom": '<"top"f>rt'
-        // "dom": '<"top"fl>rt<"bottom"ip><"clear">'            
-    });
-});
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
+        }
+    })
+}
 </script>

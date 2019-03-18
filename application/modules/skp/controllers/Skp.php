@@ -478,6 +478,49 @@ class Skp extends CI_Controller {
 		}
 	}	
 
+	public function get_target_skp_json($id)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
+		$id_posisi             = $infoPegawai[0]->posisi;		
+		$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
+		$data['id']            = $id;
+		$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
+		$data['member']   	 = $this->mskp->get_member($this->session->userdata('sesPosisi'));
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
+				$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
+				$urtug_belum_diperiksa = 0;
+				$urtug_pergantian      = 0;
+				if ($get_data) {
+					// code...
+					$urtug_belum_diperiksa = $get_data;
+				}
+				else {
+					// code...
+					$urtug_belum_diperiksa = 0;
+				}
+
+				if ($get_data_temp) {
+					// code...
+					$urtug_pergantian = $get_data_temp;
+				}
+				else {
+					// code...
+					$urtug_pergantian = 0;
+				}				
+
+				$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
+			}
+		}
+		$this->load->view('skp/approval/index',$data);
+	}
+
 	public function skp_member_detail($id)
 	{
 		# code...
