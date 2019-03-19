@@ -506,7 +506,7 @@ class Data_pegawai extends CI_Controller {
 	public function cari_jabatan_plt()
 	{
 		# code...
-		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('eselon1' =>$this->input->post('es1')));
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('kat_posisi' =>1));
 		$this->load->view('master/pegawai/ajax_jabatan_plt',$data);		
 	}
 
