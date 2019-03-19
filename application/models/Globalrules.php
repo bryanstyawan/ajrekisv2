@@ -883,31 +883,29 @@ class Globalrules extends CI_Model
 				$start_actual_time  = $tr_disetujui[$i]['tanggal_mulai'].' '.$tr_disetujui[$i]['jam_mulai'];
 				$end_actual_time    = $tr_disetujui[$i]['tanggal_selesai'].' '.$tr_disetujui[$i]['jam_selesai'];				
 				$diff               = strtotime($end_actual_time) - strtotime($start_actual_time);
-				$data_timeline['menit_efektif'] = $diff / 60;
-				$data_timeline['hari_efektif'] = round(($diff / 60)/1440);				 
+				$data_timeline[$i]['menit_efektif'] = $diff / 60;
+				$data_timeline[$i]['hari_efektif'] = round(($diff / 60)/1440);				 
+				$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];				
 				$hari_kerja         = $this->mtrx->get_hari_kerja();
 				if ($hari_kerja != 0)
 				{
-					$parameter_menit_hari = 1440 * $data_timeline['hari_efektif'];					
-					// if ($data_timeline['menit_efektif'] >= $parameter_menit_hari) {
-					// 	# code...
-					// 	$menit_efektif_sisa        		= "";
-					// 	$data_timeline_1['sisa_menit']   	= $data_timeline['menit_efektif'] - $parameter_menit_hari;
-					// 	$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_timeline_1['sisa_menit']['sisa_menit'];
-					// }					
-
-					// echo '<pre>';
-					// print_r($data_timeline);
-					// echo '</pre>';
-					
-					$menit_efektif_calc = ($data_timeline['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
+					if ($data_timeline1[$i]['menit_hari_efektif'] != 0) {
+						# code...
+						if ($data_timeline[$i]['menit_efektif'] >= $data_timeline1[$i]['menit_hari_efektif']) {
+							# code...
+							$menit_efektif_sisa        		= "";
+							$data_timeline_1['sisa_menit']   	= $data_timeline[$i]['menit_efektif'] - $data_timeline1[$i]['menit_hari_efektif'];
+							$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
+						}											
+					}					
+					$menit_efektif_calc = ($data_timeline[$i]['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
 				}
-				$data_timeline['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);																
+				$data_timeline[$i]['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);																
 
 				
-				if ($data_timeline['menit_efektif'] != $tr_disetujui[$i]['menit_efektif']) {
+				if ($data_timeline[$i]['menit_efektif'] != $tr_disetujui[$i]['menit_efektif']) {
 					# code...
-					$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline,array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
+					$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline[$i],array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
 				}
 			}
 		}
