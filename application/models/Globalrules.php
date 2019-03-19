@@ -889,15 +889,22 @@ class Globalrules extends CI_Model
 				if ($hari_kerja != 0)
 				{
 					$parameter_menit_hari = 1440 * $data_timeline['hari_efektif'];					
-					if ($data_timeline['menit_efektif'] >= $parameter_menit_hari) {
-						# code...
-						$menit_efektif_sisa        		= "";
-						$data_timeline_1['sisa_menit']   	= $data_timeline['menit_efektif'] - $parameter_menit_hari;
-						$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_timeline_1['sisa_menit']['sisa_menit'];
-					}					
+					// if ($data_timeline['menit_efektif'] >= $parameter_menit_hari) {
+					// 	# code...
+					// 	$menit_efektif_sisa        		= "";
+					// 	$data_timeline_1['sisa_menit']   	= $data_timeline['menit_efektif'] - $parameter_menit_hari;
+					// 	$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_timeline_1['sisa_menit']['sisa_menit'];
+					// }					
+
+					// echo '<pre>';
+					// print_r($data_timeline);
+					// echo '</pre>';
+					
 					$menit_efektif_calc = ($data_timeline['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
 				}
 				$data_timeline['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);																
+
+				
 				if ($data_timeline['menit_efektif'] != $tr_disetujui[$i]['menit_efektif']) {
 					# code...
 					$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline,array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
