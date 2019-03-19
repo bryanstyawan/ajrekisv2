@@ -262,7 +262,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_belum_diperiksa[$i]->kegiatan_skp;
+                                                    }                                                                                                                                                    
                                                 }                                  
                                     ?>
                                                 <tr>
@@ -353,7 +357,11 @@ else {
                                                     elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                         # code...
                                                         $kegiatan = $tr_revisi[$i]->kegiatan_skp_jfu;
-                                                    }                                                                                                
+                                                    }
+                                                    elseif ($infoPegawai[0]->kat_posisi == 6) {
+                                                        # code...
+                                                        $kegiatan = $tr_revisi[$i]->kegiatan_skp;
+                                                    }                                                                                                                                                    
                                                 }                                
                                     ?>
                                                 <tr>
@@ -2308,18 +2316,18 @@ $(document).ready(function()
         var n = str.indexOf("perjalanan dinas");
         var n1 = str.indexOf("Perjalanan Dinas");
 
-        // if (n > 0 || n1 > 0) {
-        //     // console.log("lock");
-        //     $(".timemasking").prop('disabled', true);
-        //     $(".timemasking").val('08:00:00');
-        //     $("#flag_urtug").val('perjalanan_dinas');
-        // }
-        // else {
-        //     // console.log("unlock");
-        //     $(".timemasking").prop('disabled', false);
-        //     $(".timemasking").val('');
-        //     $("#flag_urtug").val('-');
-        // }
+        if (n > 0 || n1 > 0) {
+            // console.log("lock");
+            $(".timemasking").prop('disabled', true);
+            $(".timemasking").val('08:00:00');
+            $("#flag_urtug").val('perjalanan_dinas');
+        }
+        else {
+            // console.log("unlock");
+            $(".timemasking").prop('disabled', false);
+            $(".timemasking").val('');
+            $("#flag_urtug").val('-');
+        }
 
         var id = $("#urtug").val();
         $.ajax({
