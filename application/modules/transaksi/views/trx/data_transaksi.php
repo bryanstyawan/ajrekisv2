@@ -95,10 +95,10 @@ else {
 
                 <div class="container col-lg-12" style="padding-top: 20px;">
                     <ul class="nav nav-tabs">
-                        <li class="active">
+                        <li id="tab_sikerja" class="active">
                             <a data-toggle="tab" href="#menu4"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;Tambah Data Kinerja</a>
                         </li>
-                        <li>
+                        <li id="tab_belum_diperiksa">
                             <a data-toggle="tab" href="#home">
                                 Tahap Belum diperiksa&nbsp;&nbsp;
                                 <sup>
@@ -2076,7 +2076,36 @@ function send_data_tambah_without_file(data_sender) {
         },					
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
-            ajax_status(obj);
+            ajax_status(obj,'no-refresh');
+            if (obj.status == 1)
+            {
+                $("#tab_sikerja").removeClass("active");
+                $("#menu4").removeClass("fade in active");                
+                $("#tab_belum_diperiksa").addClass("active");
+                $("#home").addClass("fade in active");    
+                $.ajax({
+                    url :"<?php echo site_url();?>transaksi/refresh_data/0/counter_proses",
+                    type:"post",
+                    beforeSend:function(){
+                        $(".form-control").val('');
+                        $("#hdn_param_out_skp").val('');
+                        $("#hdn_param_qty_skp").val('');
+                        $("#hdn_param_realisasi_qty_skp").val('');
+                        $("#param_qty_skp").html("Target Kuantitas SKP : ");
+                        $("#param_realisasi_qty_skp").html("Realisasi :  ");                        
+                        $("#loadprosess").modal('show');                        
+                        $("#table_belum_diperiksa tbody").html('');                        
+                    },
+                    success:function(msg){
+                        $("#table_belum_diperiksa tbody").html(msg);
+                        $("#loadprosess").modal('hide');                        
+                    },
+                    error:function(jqXHR,exception)
+                    {
+                        ajax_catch(jqXHR,exception);					
+                    }
+                })                                                                            
+            }            
         },
         error:function(jqXHR,exception)
         {
