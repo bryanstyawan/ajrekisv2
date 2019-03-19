@@ -1,4 +1,21 @@
 v4.0.0
+2019-03-18
+New:
+Improved:
+Fixed:
+- default perjalanan dinas
+- sync sikerja
+
+v4.0.0
+2019-03-18
+New:
+- multi approve sikerja
+Improved:
+Fixed:
+- Hapus default perjalanan dinas
+- sync sikerja
+
+v4.0.0
 2019-03-15
 New:
 - Multi approve

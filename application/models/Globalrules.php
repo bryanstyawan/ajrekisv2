@@ -869,6 +869,50 @@ class Globalrules extends CI_Model
 		return $store;
 	}	
 
+	public function sync_data_transaction($data_sender)
+	{
+		# code...
+		$tunjangan_session  = $this->session->userdata('tunjangan');		
+		$tr_disetujui = $this->Allcrud->getData('tr_capaian_pekerjaan',$data_sender)->result_array();
+		$data_timeline = array();
+		if ($tr_disetujui != array()) {
+			# code...
+			for ($i=0; $i < count($tr_disetujui); $i++) { 
+				# code...
+				$menit_efektif_calc = "";
+				$start_actual_time  = $tr_disetujui[$i]['tanggal_mulai'].' '.$tr_disetujui[$i]['jam_mulai'];
+				$end_actual_time    = $tr_disetujui[$i]['tanggal_selesai'].' '.$tr_disetujui[$i]['jam_selesai'];				
+				$diff               = strtotime($end_actual_time) - strtotime($start_actual_time);
+				$data_timeline['menit_efektif'] = $diff / 60;
+				$data_timeline['hari_efektif'] = round(($diff / 60)/1440);				 
+				$hari_kerja         = $this->mtrx->get_hari_kerja();
+				if ($hari_kerja != 0)
+				{
+					$parameter_menit_hari = 1440 * $data_timeline['hari_efektif'];					
+					// if ($data_timeline['menit_efektif'] >= $parameter_menit_hari) {
+					// 	# code...
+					// 	$menit_efektif_sisa        		= "";
+					// 	$data_timeline_1['sisa_menit']   	= $data_timeline['menit_efektif'] - $parameter_menit_hari;
+					// 	$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_timeline_1['sisa_menit']['sisa_menit'];
+					// }					
+
+					// echo '<pre>';
+					// print_r($data_timeline);
+					// echo '</pre>';
+					
+					$menit_efektif_calc = ($data_timeline['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
+				}
+				$data_timeline['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);																
+
+				
+				if ($data_timeline['menit_efektif'] != $tr_disetujui[$i]['menit_efektif']) {
+					# code...
+					$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline,array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
+				}
+			}
+		}
+	}
+
 /*
 write by Bryan Setyawan
 last edited : 21/11/2016
