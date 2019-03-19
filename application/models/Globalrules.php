@@ -888,11 +888,12 @@ class Globalrules extends CI_Model
 				$hari_kerja         = $this->mtrx->get_hari_kerja();
 				if ($hari_kerja != 0)
 				{
-					if ($data_sender['menit_efektif'] >= $parameter_menit_hari) {
+					$parameter_menit_hari = 1440 * $data_sender['hari_efektif'];					
+					if ($data_timeline['menit_efektif'] >= $parameter_menit_hari) {
 						# code...
 						$menit_efektif_sisa        		= "";
-						$data_sender['sisa_menit']   	= $data_sender['menit_efektif'] - $parameter_menit_hari;
-						$data_sender['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_sender['hari_efektif']) + $data_sender['sisa_menit'];
+						$data_timeline['sisa_menit']   	= $data_timeline['menit_efektif'] - $parameter_menit_hari;
+						$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_sender['sisa_menit'];
 					}					
 					$menit_efektif_calc = ($data_timeline['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
 				}
