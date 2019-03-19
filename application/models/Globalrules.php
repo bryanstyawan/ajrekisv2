@@ -893,7 +893,7 @@ class Globalrules extends CI_Model
 						# code...
 						$menit_efektif_sisa        		= "";
 						$data_timeline_1['sisa_menit']   	= $data_timeline['menit_efektif'] - $parameter_menit_hari;
-						$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_sender['sisa_menit'];
+						$data_timeline['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline['hari_efektif']) + $data_timeline_1['sisa_menit']['sisa_menit'];
 					}					
 					$menit_efektif_calc = ($data_timeline['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
 				}
