@@ -329,11 +329,11 @@
 
         $(document).ready(function()
         {
-            Lobibox.window({
-                title  : 'Pesan',
-                content: '<div class="row" style="margin: 1px;"><h2>Terima Kasih Telah Menggunakan SIKERJA 3.0</h2></div>'+
-                '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">Selamat Datang di era SIKERJA 4.0 (Terintegrasi SKP)</h3></div>'                
-            });
+            // Lobibox.window({
+            //     title  : 'Pesan',
+            //     content: '<div class="row" style="margin: 1px;"><h2>Terima Kasih Telah Menggunakan SIKERJA 3.0</h2></div>'+
+            //     '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">Selamat Datang di era SIKERJA 4.0 (Terintegrasi SKP)</h3></div>'                
+            // });
         });
         
     </script>

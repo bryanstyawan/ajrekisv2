@@ -1,10 +1,13 @@
 v4.0.0
 2019-03-18
 New:
+- Refresh data ajax sikerja
 Improved:
 Fixed:
 - default perjalanan dinas
 - sync sikerja
+- track data pegawai
+- nonaktif perhitungan awal
 
 v4.0.0
 2019-03-18

@@ -15,6 +15,16 @@ class Transaksi extends CI_Controller {
 		redirect('dashboard/home');
 	}
 
+	public function refresh_data($param=NULL,$flag=NULL)
+	{
+		# code...
+		$data['list']         = $this->mtrx->status_pekerjaan($param,$this->session->userdata('sesUser'));		
+		$data['hari_kerja']   = $this->mtrx->get_hari_kerja();
+		$data['infoPegawai']  = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');		
+		$data['id_html']      = $flag;
+		$this->load->view('transaksi/trx/refresh/index',$data);		
+	}
+
 	public function home()
 	{
 		$this->Globalrules->session_rule();
@@ -109,7 +119,7 @@ class Transaksi extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$res_data       = "";
 		$data_sender    = $this->input->post('data_sender');
-		$count_transact = $this->timeline_transact($data_sender);
+		// $count_transact = $this->timeline_transact($data_sender);
 		$data           = array
 						(
 							'id_pegawai'          => $this->session->userdata('sesUser'),
@@ -120,9 +130,9 @@ class Transaksi extends CI_Controller {
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
 							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							'menit_efektif'       => $count_transact['menit_efektif'],
-							'hari_efektif'        => $count_transact['hari_efektif'],
-							'tunjangan'           => $count_transact['tunjangan'],
+							// 'menit_efektif'       => $count_transact['menit_efektif'],
+							// 'hari_efektif'        => $count_transact['hari_efektif'],
+							// 'tunjangan'           => $count_transact['tunjangan'],
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
@@ -168,7 +178,7 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$data_sender    = $this->input->post('data_sender');
-		$count_transact = $this->timeline_transact($data_sender);
+		// $count_transact = $this->timeline_transact($data_sender);
 		$data           = array
 						(
 							'id_pegawai'          => $this->session->userdata('sesUser'),
@@ -179,9 +189,9 @@ class Transaksi extends CI_Controller {
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
 							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							'menit_efektif'       => $count_transact['menit_efektif'],
-							'hari_efektif'        => $count_transact['hari_efektif'],
-							'tunjangan'           => $count_transact['tunjangan'],
+							// 'menit_efektif'       => $count_transact['menit_efektif'],
+							// 'hari_efektif'        => $count_transact['hari_efektif'],
+							// 'tunjangan'           => $count_transact['tunjangan'],
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
@@ -891,7 +901,7 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$data_sender    = $this->input->post('data_sender');
-		$count_transact = $this->timeline_transact($data_sender);
+		// $count_transact = $this->timeline_transact($data_sender);
 		$data           = array
 						(
 							'id_pegawai'          => $this->session->userdata('sesUser'),
@@ -902,9 +912,9 @@ class Transaksi extends CI_Controller {
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
 							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							'menit_efektif'       => $count_transact['menit_efektif'],
-							'hari_efektif'        => $count_transact['hari_efektif'],
-							'tunjangan'           => $count_transact['tunjangan'],
+							// 'menit_efektif'       => $count_transact['menit_efektif'],
+							// 'hari_efektif'        => $count_transact['hari_efektif'],
+							// 'tunjangan'           => $count_transact['tunjangan'],
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
