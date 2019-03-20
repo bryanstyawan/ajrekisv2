@@ -666,7 +666,7 @@ else {
                                                     <label style="color: #000;font-weight: 400;font-size: 19px;">Kuantitas</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                                                        <input type="number" id="kuantitas" name="kuantitas" class="form-control">
+                                                        <input type="number" id="kuantitas" name="kuantitas" min="0" class="form-control">
                                                         <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span>
                                                     </div>
                                                     <div>
