@@ -2432,6 +2432,8 @@ $(document).ready(function()
                                 'flag_urtug'        : flag_urtug,
                                 'tgl_mulai'         : tgl_mulai,
                                 'tgl_selesai'       : tgl_selesai,
+                                'tgl_mulai_raw'     : tgl_mulai_raw,
+                                'tgl_selesai_raw'   : tgl_selesai_raw,
                                 'jam_mulai'         : jam_mulai,
                                 'jam_selesai'       : jam_selesai,
                                 'ket_pekerjaan'     : ket_pekerjaan,

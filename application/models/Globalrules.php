@@ -893,20 +893,40 @@ class Globalrules extends CI_Model
 						# code...
 						if ($data_timeline[$i]['menit_efektif'] >= $data_timeline1[$i]['menit_hari_efektif']) {
 							# code...
+							$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440) + 1;				 
+							$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];							
 							$menit_efektif_sisa        		= "";
-							$data_timeline_1['sisa_menit']   	= $data_timeline[$i]['menit_efektif'] - $data_timeline1[$i]['menit_hari_efektif'];
+							$data_timeline_1['sisa_menit']   	= ($data_timeline[$i]['menit_efektif'] + 1440) - $data_timeline1[$i]['menit_hari_efektif'];
 							$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
-						}											
-					}					
+						}
+					}
+					// else
+					// {
+					// 	if($data_timeline[$i]['menit_efektif'] > $hari_kerja[0]->jml_menit_perhari)
+					// 	{
+					// 		$menit_efektif_sisa        		= "";
+					// 		$data_timeline_1['sisa_menit']   	= $data_timeline[$i]['menit_efektif'] - $data_timeline1[$i]['menit_hari_efektif'];
+					// 		$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
+					// 	}
+					// }					
 					$menit_efektif_calc = ($data_timeline[$i]['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
 				}
 				$data_timeline[$i]['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);																
-
+			
 				
+				if ($this->session->userdata('kat_posisi') == 6) {
+					# code...
+					if ($tr_disetujui[$i]['nama_pekerjaan'] == 'Menyetujui pekerjaan') {
+						# code...
+						$this->Allcrud->delData('tr_capaian_pekerjaan',array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));						
+					}
+				}				
+
 				if ($data_timeline[$i]['menit_efektif'] != $tr_disetujui[$i]['menit_efektif']) {
 					# code...
 					$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline[$i],array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
 				}
+			
 			}
 		}
 	}

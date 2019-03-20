@@ -1,5 +1,14 @@
 v4.0.0
-2019-03-18
+2019-03-20
+New:
+Improved:
+- Penambahan +1 hari untuk multidays sikerja (sync sikerja)
+- Menghapus auto approve struktur akademik (sync sikerja)
+- Client hanya mengirim tanggal saja tanpa harus memproses menit efektif
+Fixed:
+
+v4.0.0
+2019-03-19
 New:
 - Refresh data ajax sikerja
 Improved:
