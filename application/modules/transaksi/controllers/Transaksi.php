@@ -831,8 +831,8 @@ class Transaksi extends CI_Controller {
 						(
 							'id_pegawai'          => $this->session->userdata('sesUser'),
 							'id_uraian_tugas'     => $data_sender['urtug'],
-							'tanggal_mulai'       => $data_sender['tgl_mulai'],
-							'tanggal_selesai'     => $data_sender['tgl_selesai'],
+							'tanggal_mulai'       => date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+							'tanggal_selesai'     => date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
 							'jam_mulai'           => $data_sender['jam_mulai'],
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
