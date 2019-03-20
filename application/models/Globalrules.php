@@ -895,7 +895,7 @@ class Globalrules extends CI_Model
 							# code...
 							$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440) + 1;				 
 							$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];							
-							$menit_efektif_sisa        		= "";
+							$menit_efektif_sisa        		= 0;
 							$data_timeline_1['sisa_menit']   	= ($data_timeline[$i]['menit_efektif'] + 1440) - $data_timeline1[$i]['menit_hari_efektif'];
 							$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
 						}
