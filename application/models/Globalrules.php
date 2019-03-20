@@ -879,7 +879,7 @@ class Globalrules extends CI_Model
 			# code...
 			for ($i=0; $i < count($tr_disetujui); $i++) { 
 				# code...
-				$menit_efektif_calc = "";
+				$menit_efektif_calc = 0;
 				$start_actual_time  = $tr_disetujui[$i]['tanggal_mulai'].' '.$tr_disetujui[$i]['jam_mulai'];
 				$end_actual_time    = $tr_disetujui[$i]['tanggal_selesai'].' '.$tr_disetujui[$i]['jam_selesai'];				
 				$diff               = strtotime($end_actual_time) - strtotime($start_actual_time);
