@@ -526,7 +526,7 @@ class Globalrules extends CI_Model
 				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->realisasi_waktu,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->aspek_biaya         = $this->aspek_biaya($data['list_skp'][$i]->target_biaya,$data['list_skp'][$i]->realisasi_biaya,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya);
-				$data['summary_skp']['nilai_capaian_skp']  = number_format($data['list_skp'][$i]->perhitungan['nilai_capaian_skp'],2);
+				$data['summary_skp']['nilai_capaian_skp']  = $data['list_skp'][$i]->perhitungan['nilai_capaian_skp'];
 				if($data['summary_skp']['nilai_capaian_skp'] != 0)
 				{
 					$data['summary_skp']['total_aspek']       += ($data['summary_skp']['nilai_capaian_skp']);
