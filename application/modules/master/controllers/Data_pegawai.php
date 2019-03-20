@@ -553,6 +553,11 @@ class Data_pegawai extends CI_Controller {
 			$kat_posisi = '';
 		}
 
+		$es2 = ($es2 == 0) ? '' : $es2 ;
+		$es3 = ($es3 == 0) ? '' : $es3 ;
+		$es4 = ($es4 == 0) ? '' : $es4 ;
+		
+
 		$data_sender = $this->input->post('data_sender');
 		$data_sender = array
 						(
@@ -562,7 +567,6 @@ class Data_pegawai extends CI_Controller {
 							'eselon4'    => $es4,
 							'kat_posisi' => $kat_posisi
 						);
-
 		$data_eselon_1 = $this->Allcrud->getData('mr_eselon1',array('id_es1'=>$es1))->result_array();
 		$data_eselon_2 = $this->Allcrud->getData('mr_eselon2',array('id_es2'=>$es2))->result_array();		
 		$data_eselon_3 = $this->Allcrud->getData('mr_eselon3',array('id_es3'=>$es3))->result_array();

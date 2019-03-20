@@ -769,6 +769,10 @@ function print_excel() {
 		kat_posisi = '-';
 	}
 
+	es2 = (es2 == '') ? 0 : es2 ;
+	es3 = (es3 == '') ? 0 : es3 ;
+	es4 = (es4 == '') ? 0 : es4 ;	
+
 	window.open('<?=base_url();?>master/data_pegawai/print_pegawai/'+kat_posisi+'/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");	
 	// window.location.href = "<?=base_url();?>master/data_pegawai/print_pegawai/"+kat_posisi+"/"+es1+"/"+es2+"/"+es3+"/"+es4";	
 
