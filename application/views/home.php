@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>        
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/NYEPIbaru.gif);background-size: 100% 100%;height: 555px;">
+            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/NYEPIbaru.gif);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/ada_apa_dengan_sikerja.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
@@ -329,11 +329,11 @@
 
         $(document).ready(function()
         {
-            Lobibox.window({
-                title  : 'Pesan',
-                content: '<div class="row" style="margin: 1px;"><h2>Terima Kasih Telah Menggunakan SIKERJA 3.0</h2></div>'+
-                '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">Selamat Datang di era SIKERJA 4.0 (Terintegrasi SKP)</h3></div>'                
-            });
+            // Lobibox.window({
+            //     title  : 'Pesan',
+            //     content: '<div class="row" style="margin: 1px;"><h2>Terima Kasih Telah Menggunakan SIKERJA 3.0</h2></div>'+
+            //     '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">Selamat Datang di era SIKERJA 4.0 (Terintegrasi SKP)</h3></div>'                
+            // });
         });
         
     </script>

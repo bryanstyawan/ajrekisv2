@@ -111,6 +111,7 @@ class Data_pegawai extends CI_Controller {
 					$data_store['status']     = 1;
 					$data_store['id_role']    = 2;
 					$data_store['user_input'] = date('y-m-d');
+					$data_store['audit_user'] = $this->session->userdata('sesNip');					
 					$id_pegawai  = $this->Allcrud->addData_with_return_id('mr_pegawai',$data_store);
 					if ($id_pegawai != 0)$res_data = 1;
 					$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil ditambah.');
@@ -118,6 +119,7 @@ class Data_pegawai extends CI_Controller {
 				elseif ($data_sender['crud'] == 'update') {
 					# code...
 					$data_store['user_update'] = date('y-m-d');
+					$data_store['audit_user'] = $this->session->userdata('sesNip');					
 					$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$data_sender['oid']));
 					$id_pegawai  = $data_sender['oid'];
 					$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil diubah.');
@@ -506,7 +508,7 @@ class Data_pegawai extends CI_Controller {
 	public function cari_jabatan_plt()
 	{
 		# code...
-		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('eselon1' =>$this->input->post('es1')));
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('kat_posisi' =>1));
 		$this->load->view('master/pegawai/ajax_jabatan_plt',$data);		
 	}
 

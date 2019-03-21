@@ -40,18 +40,38 @@
                                                             # code...
                                                             $x++;
 
-                                                            $kegiatan = "";
-                                                            if ($infoPegawai[0]->kat_posisi == 1) {
-                                                                # code...
-                                                                $kegiatan = $urtug[$i]->kegiatan_skp;
+                                                            $kegiatan_urtug = $urtug[$i]->kegiatan;                            
+                                                            if($infoPegawai[0]->kat_posisi == 1)
+                                                            {
+                                                                if ($urtug[$i]->id_skp_master != '') {
+                                                                    # code...
+                                                                    $kegiatan_urtug            = $urtug[$i]->kegiatan_skp;
+                                                                }
                                                             }
+                                                            elseif ($infoPegawai[0]->kat_posisi == 2) {
+                                                                # code...
+                                                                if ($urtug[$i]->id_skp_jft != '') {
+                                                                    # code...
+                                                                    $kegiatan_urtug            = $urtug[$i]->kegiatan_skp_jft;
+                                                                }                                
+                                                            }                            
                                                             elseif ($infoPegawai[0]->kat_posisi == 4) {
                                                                 # code...
-                                                                $kegiatan = $urtug[$i]->kegiatan_skp_jfu;
+                                                                if ($urtug[$i]->id_skp_jfu != 0) {
+                                                                    # code...
+                                                                    $kegiatan_urtug            = $urtug[$i]->kegiatan_skp_jfu;
+                                                                }                                
+                                                            }
+                                                            elseif($infoPegawai[0]->kat_posisi == 6)
+                                                            {
+                                                                if ($urtug[$i]->id_skp_master != '') {
+                                                                    # code...
+                                                                    $kegiatan_urtug            = $urtug[$i]->kegiatan_skp;
+                                                                }
                                                             }                                            
 
                                                 ?>
-                                                        <option value="<?php echo $urtug[$i]->skp_id;?>" <?php echo $urtug[$i]->skp_id==$pekerjaan[0]->id_uraian_tugas?"selected":""; ?>><?php echo $x.". ".$kegiatan;?></option>                                                    
+                                                        <option value="<?php echo $urtug[$i]->skp_id;?>" <?php echo $urtug[$i]->skp_id==$pekerjaan[0]->id_uraian_tugas?"selected":""; ?>><?php echo $x.". ".$kegiatan_urtug;?></option>                                                    
                                                 <?
                                                         }
                                                     }
@@ -210,6 +230,9 @@ $(document).ready(function()
         file_pendukung = $('#file_pendukung').prop('files')[0];
         oid            = $("#oid").val();
 
+        tgl_mulai_raw      = $("#tgl_mulai").val();
+        tgl_selesai_raw    = $("#tgl_selesai").val();        
+
         waktu_mulai        = tgl_mulai+" "+jam_mulai;
         waktu_selesai      = tgl_selesai+" "+jam_selesai;
 
@@ -237,6 +260,8 @@ $(document).ready(function()
                                 'tgl_selesai'  : tgl_selesai,
                                 'jam_mulai'    : jam_mulai,
                                 'jam_selesai'  : jam_selesai,
+                                'tgl_mulai_raw'     : tgl_mulai_raw,
+                                'tgl_selesai_raw'   : tgl_selesai_raw,                                
                                 'ket_pekerjaan': ket_pekerjaan,
                                 'kuantitas'    : kuantitas,
                                 'menit_efektif': menit_efektif,
