@@ -1,4 +1,12 @@
 v4.0.0
+2019-03-21
+New:
+- clockpicker
+- Validasi format 24 jam
+Improved:
+Fixed:
+
+v4.0.0
 2019-03-20
 New:
 Improved:

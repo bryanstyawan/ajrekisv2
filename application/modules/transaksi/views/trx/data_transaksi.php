@@ -632,7 +632,7 @@ else {
 
                                             <div class="form-group col-md-6">
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Jam Mulai</label>
-                                                <div class="input-group">
+                                                <div class="input-group clockpicker">
                                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                     <input type="text" id="jam_mulai" name="jam_mulai" class="form-control timemasking" data-inputmask="'mask': ['99:99']" data-mask>
                                                 </div>
@@ -640,7 +640,7 @@ else {
 
                                             <div class="form-group col-md-6">
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Jam Selesai</label>
-                                                <div class="input-group">
+                                                <div class="input-group clockpicker">
                                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                     <input type="text" id="jam_selesai" name="jam_selesai" class="form-control timemasking" data-inputmask="'mask': ['99:99']" data-mask>
                                                 </div>
@@ -1543,7 +1543,37 @@ else {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
- $("#multi_approve").prop('checked', true);
+time_flag = 0;
+$('#jam_mulai').on("change", function () {
+    var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+    if (!reg.test($('#jam_mulai').val())) {
+        alert("Mohon masukan format 24 jam");
+        time_flag = 0;
+        $('#jam_mulai').val('');
+        $('#jam_mulai').focus();
+    }
+    else
+    {
+        time_flag = 1;
+    }
+});
+
+$('#jam_selesai').on("change", function () {
+    var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+    if (!reg.test($('#jam_selesai').val())) {
+        alert("Mohon masukan format 24 jam");
+        time_flag = 0;
+        $('#jam_selesai').val('');
+        $('#jam_selesai').focus();
+    }
+    else
+    {
+        time_flag = 1;
+    }
+});
+
+
+$("#multi_approve").prop('checked', true);
 function current_time() {
     // body...
     var d  = new Date(); // for now
@@ -2451,6 +2481,7 @@ $(document).ready(function()
         }
         else if (tgl_mulai.length <= 0)
         {
+            time_flag = 0;            
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
             {
                 msg: "Tanggal mulai kosong, mohon lengkapi data tersebut"
@@ -2458,6 +2489,7 @@ $(document).ready(function()
         }
         else if (tgl_selesai.length <= 0 )
         {
+            time_flag = 0;            
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
             {
                 msg: "Tanggal selesai kosong, mohon lengkapi data tersebut"
@@ -2465,6 +2497,7 @@ $(document).ready(function()
         }
         else if (jam_mulai.length <= 0)
         {
+            time_flag = 0;            
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
             {
                 msg: "Jam mulai kosong, mohon lengkapi data tersebut"
@@ -2472,6 +2505,7 @@ $(document).ready(function()
         }
         else if (jam_selesai.length <= 0)
         {
+            time_flag = 0;            
             Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
             {
                 msg: "Jam selesai kosong, mohon lengkapi data tersebut"
@@ -2486,8 +2520,10 @@ $(document).ready(function()
         }
         else
         {
+            time_flag = 1;            
             if (tgl_mulai > tgl_server || tgl_selesai > tgl_server)
             {
+                time_flag = 0;                
                 Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
                 {
                     msg: "Tanggal tidak boleh melebihi Tanggal server."
@@ -2495,8 +2531,10 @@ $(document).ready(function()
             }
             else
             {
+                time_flag = 1;                
                 if (diff < 0)
                 {
+                    time_flag = 0;                    
                     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
                     {
                         msg: "Tanggal dan jam awal tidak boleh melebihi tanggal dan jam selesai."
@@ -2504,8 +2542,10 @@ $(document).ready(function()
                 }
                 else
                 {
+                    time_flag = 1;                    
                     if (end_actual_time > server_actual_time)
                     {
+                        time_flag = 0;                        
                         Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
                         {
                             msg: "Jam tidak boleh melebihi jam server."
@@ -2522,32 +2562,34 @@ $(document).ready(function()
                         }
                         else
                         {
+                            if (time_flag == 1) {
+                                if (kuantitas != 0) {
+                                    if (file_pendukung != undefined)
+                                    {
+                                        send_data_tambah(data_sender);
+                                    }
+                                    else
+                                    {
+                                        send_data_tambah_without_file(data_sender);                                    
+                                        // if (param_out_skp != 'Frekuensi')
+                                        // {
+                                        //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+                                        //     {
+                                        //         msg: "Wajib menyertakan file pendukung sebagai bukti realisasi"
+                                        //     });                                        
+                                        // }
+                                        // else {
+                                        //     send_data_tambah(data_sender);
+                                        // }                                    
+                                    }
+                                }
+                                else 
+                                {
+                                    send_data_tambah_without_file(data_sender);
+                                }                                
+                            }
                             // console.log('kuantitas : '+kuantitas);
-                            // console.log('file_pendukung : '+file_pendukung);
-                            if (kuantitas != 0) {
-                                if (file_pendukung != undefined)
-                                {
-                                    send_data_tambah(data_sender);
-                                }
-                                else
-                                {
-                                    send_data_tambah_without_file(data_sender);                                    
-                                    // if (param_out_skp != 'Frekuensi')
-                                    // {
-                                    //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-                                    //     {
-                                    //         msg: "Wajib menyertakan file pendukung sebagai bukti realisasi"
-                                    //     });                                        
-                                    // }
-                                    // else {
-                                    //     send_data_tambah(data_sender);
-                                    // }                                    
-                                }
-                            }
-                            else 
-                            {
-                                send_data_tambah_without_file(data_sender);
-                            }
+                            // console.log('file_pendukung : '+file_pendukung)
                         }
 
                     }
