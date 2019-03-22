@@ -39,6 +39,9 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/datatables/dataTables.bootstrap.css'; ?>");</style>
 <!-- Tour guide -->
 <style type="text/css">@import url("<?php echo base_url() . 'assets/bootstrap/css/bootstrap-tour.min.css'; ?>");</style>
+
+<style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.css'; ?>");</style>
+
 <!-- bootstrap wysihtml5 - text editor -->
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'; ?>");</style>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/loadme/style/loadme.css'; ?>");</style>
@@ -151,6 +154,12 @@ $(document).ready(function()
         todayHighlight: true,
         daysOfWeekHighlighted: "0,6"
     });
+
+    $('.clockpicker').clockpicker({
+        placement: 'top',
+        align: 'left',
+        donetext: 'Done'
+    });    
 
     $('.timerange-normal').datepicker({
         maxDate: new Date,
@@ -312,6 +321,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- DataTables -->
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
 <script type="text/javascript">
   /*********************************************************************************************/
 /* function = numberWithCommas(x)

@@ -1,4 +1,12 @@
 v4.0.0
+2019-03-21
+New:
+- clockpicker
+- Validasi format 24 jam
+Improved:
+Fixed:
+
+v4.0.0
 2019-03-20
 New:
 Improved:
@@ -8,6 +16,7 @@ Improved:
 - Client hanya mengirim tanggal saja tanpa harus memproses menit efektif (Edit)
 Fixed:
 - Uraian Tugas di sikerja tidak muncul
+- Filter data pegawai (BPSDM Riau)
 
 v4.0.0
 2019-03-19
