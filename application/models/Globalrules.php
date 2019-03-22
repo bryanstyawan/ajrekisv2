@@ -814,9 +814,32 @@ class Globalrules extends CI_Model
 		$i_am   = "";
 		if ($who_is != 0) {
 			# code...
-			if ($who_is[0]->es4 == 0)$i_am = "eselon 3";
-			if ($who_is[0]->es3 == 0)$i_am = "eselon 2";
-			if ($who_is[0]->es2 == 0)$i_am = "eselon 1";
+			if ($who_is[0]->kat_posisi == 1) {
+				# code...
+				if ($who_is[0]->es4 == 0)
+				{
+					$i_am = "eselon 3";
+				}
+
+				if ($who_is[0]->es3 == 0)
+				{
+					if ($who_is[0]->es4 == 0) {
+						# code...
+						$i_am = "eselon 2";
+					}					
+				}
+
+				if ($who_is[0]->es2 == 0)
+				{
+					if ($who_is[0]->es3 == 0) {
+						# code...
+						if ($who_is[0]->es4 == 0) {
+							# code...
+							$i_am = "eselon 1";								
+						}
+					}
+				}				
+			}
 		}
 
 		return $i_am;

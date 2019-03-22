@@ -145,12 +145,19 @@ class Transaksi extends CI_Controller {
 			# code...
 			$data_approve = array
 							(
-								'status_pekerjaan'     => '1',
 								'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
 								'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
 								'audit_update'         => date('Y-m-d H:i:s'),
 								'audit_user_update'    => $this->session->userdata('sesUser')
 							);
+			if ($this->session->userdata('kat_posisi') == 1) {
+				# code...
+				$data_approve['status_pekerjaan'] = 1;				
+			}
+			else
+			{
+				$data_approve['status_pekerjaan'] = 0;
+			}
 			$flag        = array('id_pekerjaan'=>$res_data_id);
 			$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
 		}
@@ -206,12 +213,19 @@ class Transaksi extends CI_Controller {
 			# code...
 			$data_approve = array
 							(
-								'status_pekerjaan' => '1',
 								'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
 								'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
 								'audit_update'         => date('Y-m-d H:i:s'),
 								'audit_user_update'    => $this->session->userdata('sesUser')
 							);
+			if ($this->session->userdata('kat_posisi') == 1) {
+				# code...
+				$data_approve['status_pekerjaan'] = 1;				
+			}
+			else
+			{
+				$data_approve['status_pekerjaan'] = 0;
+			}							
 			$flag        = array('id_pekerjaan'=>$id_pekerjaan);
 			$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
 		}
