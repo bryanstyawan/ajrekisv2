@@ -2,9 +2,11 @@ v4.0.0
 2019-03-22
 New:
 Improved:
+- filter akademik di pencarian di plt
 Fixed:
 - real tunjangan akademik
 - Core Rekap Kinerja (sync sikerja)
+- layout realisasi dan target di sikerja
 
 v4.0.0
 2019-03-21
