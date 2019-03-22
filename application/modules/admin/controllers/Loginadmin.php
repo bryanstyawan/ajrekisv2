@@ -32,7 +32,7 @@ class Loginadmin extends CI_Controller {
 			$tunjangan   = "";
 			$grade       = "";
 			$nama_posisi = "";
-	
+
 			if ($cekUser[0]->kat_posisi == 1) {
 				# code...
 				$tunjangan   = $cekUser[0]->tunjangan_raw;
@@ -50,6 +50,12 @@ class Loginadmin extends CI_Controller {
 				$tunjangan   = $cekUser[0]->tunjangan_jfu;
 				$grade       = $cekUser[0]->grade_jfu;
 				$nama_posisi = $cekUser[0]->nama_posisi_jfu;
+			}
+			elseif ($cekUser[0]->kat_posisi == 6) {
+				# code...
+				$tunjangan   = $cekUser[0]->tunjangan_raw;
+				$grade       = $cekUser[0]->grade_raw;
+				$nama_posisi = $cekUser[0]->nama_posisi_raw;
 			}
 
 			$data = array
