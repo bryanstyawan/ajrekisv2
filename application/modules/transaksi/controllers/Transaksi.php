@@ -352,7 +352,7 @@ class Transaksi extends CI_Controller {
 					if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
 
 					$id_pegawai = $get_data_transact[0]->id_pegawai;
-					$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),1);
+ 					$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 					if ($get_member != 0) {
 						# code...
 						$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
@@ -373,7 +373,7 @@ class Transaksi extends CI_Controller {
 				}
 				elseif ($who_is_approval == 'eselon 1') {
 					# code...
-					$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),1);
+					$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 					if ($get_member != 0) {
 						# code...
 						$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
