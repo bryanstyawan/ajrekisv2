@@ -667,9 +667,9 @@ else {
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                                         <input type="number" id="kuantitas" name="kuantitas" min="0" class="form-control">
-                                                        <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span>
                                                     </div>
                                                     <div>
+                                                        <span class="input-group-addon"><label id="param_qty_skp">Target Kuantitas SKP : </label></span> |                                                   
                                                         <span class="input-group-addon"><label id="param_realisasi_qty_skp">Realisasi : </label></span>
                                                     </div>
                                                 </div>
@@ -2375,18 +2375,18 @@ $(document).ready(function()
         var n = str.indexOf("perjalanan dinas");
         var n1 = str.indexOf("Perjalanan Dinas");
 
-        if (n > 0 || n1 > 0) {
-            // console.log("lock");
-            $(".timemasking").prop('disabled', true);
-            $(".timemasking").val('08:00:00');
-            $("#flag_urtug").val('perjalanan_dinas');
-        }
-        else {
-            // console.log("unlock");
-            $(".timemasking").prop('disabled', false);
-            $(".timemasking").val('');
-            $("#flag_urtug").val('-');
-        }
+        // if (n > 0 || n1 > 0) {
+        //     // console.log("lock");
+        //     $(".timemasking").prop('disabled', true);
+        //     $(".timemasking").val('08:00:00');
+        //     $("#flag_urtug").val('perjalanan_dinas');
+        // }
+        // else {
+        //     // console.log("unlock");
+        //     $(".timemasking").prop('disabled', false);
+        //     $(".timemasking").val('');
+        //     $("#flag_urtug").val('-');
+        // }
 
         var id = $("#urtug").val();
         $.ajax({
