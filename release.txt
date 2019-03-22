@@ -4,6 +4,7 @@ New:
 Improved:
 Fixed:
 - real tunjangan akademik
+- Core Rekap Kinerja (sync sikerja)
 
 v4.0.0
 2019-03-21
