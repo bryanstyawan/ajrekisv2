@@ -3,6 +3,7 @@ v4.0.0
 New:
 Improved:
 - Penambahan posisi di transaksi dan rekap kinerja
+- Koreksi tunjangan
 Fixed:
 - koreksi kinerja (untuk kondisi menit efektif lebih dari 5.5 atau 6.5 jam tapi dibawah 24 jam)
 
