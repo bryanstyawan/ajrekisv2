@@ -83,7 +83,7 @@ Last edit : 19/07/2016
 						Count(a.status_pekerjaan) AS count_status_pekerjaan,
 						SUM(a.tunjangan) AS tunjangan_kinerja,
 						((SUM(a.menit_efektif)/(b.jml_hari_aktif*b.jml_menit_perhari))*100) AS prosentase,
-						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,((CASE d.kat_posisi WHEN 1 THEN (e.tunjangan)WHEN 2 THEN (cls_jft.tunjangan)WHEN 4 THEN (cls_jfu.tunjangan)END) / 2),SUM(a.tunjangan)) AS real_tunjangan_kinerja,
+						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,((CASE d.kat_posisi WHEN 1 THEN (e.tunjangan) WHEN 2 THEN (cls_jft.tunjangan)WHEN 4 THEN (cls_jfu.tunjangan) WHEN 6 THEN (e.tunjangan)END) / 2),SUM(a.tunjangan)) AS real_tunjangan_kinerja,
 						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,100,((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100)) AS real_prosentase
 				FROM tr_capaian_pekerjaan a
 				LEFT JOIN mr_hari_aktif b ON b.bulan = MONTH(a.tanggal_mulai)

@@ -327,11 +327,7 @@ class Transaksi extends CI_Controller {
 								'nama_pekerjaan'       => 'Menyetujui pekerjaan',
 								'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
 								'hari_efektif'         => '0',
-								'status_pekerjaan'     => '1',
-								'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-								'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-								'audit_update'         => date('Y-m-d H:i:s'),
-								'audit_user_update'    => $this->session->userdata('sesUser')
+								'status_pekerjaan'     => '1'
 							);
 
 		/**************************************************/
@@ -352,13 +348,14 @@ class Transaksi extends CI_Controller {
 					if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
 
 					$id_pegawai = $get_data_transact[0]->id_pegawai;
-					$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),1);
+ 					$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 					if ($get_member != 0) {
 						# code...
 						$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
 						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
 						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 						$data['tunjangan']       = $get_value_approval['tunjangan'];
+						// print_r();die()
 						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
 						if ($who_is_super_approval == 'eselon 1')
 						{
@@ -373,7 +370,7 @@ class Transaksi extends CI_Controller {
 				}
 				elseif ($who_is_approval == 'eselon 1') {
 					# code...
-					$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),1);
+					$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 					if ($get_member != 0) {
 						# code...
 						$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
@@ -667,7 +664,7 @@ class Transaksi extends CI_Controller {
 
 		$hari_kerja         = $this->mtrx->get_hari_kerja();
 		$get_pegawai_id     = $this->mtrx->get_pegawai_id($id_posisi,'posisi');
-		$get_member         = $this->Globalrules->list_bawahan($id_posisi,1);
+		$get_member         = $this->Globalrules->list_bawahan($id_posisi);
 		$id_urtug           = "";
 		$menit_efektif_calc = "";
 
