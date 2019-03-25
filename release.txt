@@ -1,5 +1,5 @@
 v4.0.0
-2019-03-22
+2019-03-25
 New:
 Improved:
 - Penambahan posisi di transaksi dan rekap kinerja

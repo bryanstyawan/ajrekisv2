@@ -900,6 +900,32 @@ class Globalrules extends CI_Model
 			# code...
 			$id_posisi_jabatan        = $this->session->userdata('sesPosisi');
 			$tunjangan_session        = $this->session->userdata('tunjangan');				
+
+			if ($infoPegawai[0]->kat_posisi == 1) {
+				# code...
+				$tunjangan_session   = $infoPegawai[0]->tunjangan_raw;
+				$grade       = $infoPegawai[0]->grade_raw;
+				$nama_posisi = $infoPegawai[0]->nama_posisi_raw;
+			}
+			elseif ($infoPegawai[0]->kat_posisi == 2) {
+				# code...
+				$tunjangan_session   = $infoPegawai[0]->tunjangan_jft;
+				$grade       = $infoPegawai[0]->grade_jft;
+				$nama_posisi = $infoPegawai[0]->nama_posisi_jft;
+			}
+			elseif ($infoPegawai[0]->kat_posisi == 4) {
+				# code...
+				$tunjangan_session   = $infoPegawai[0]->tunjangan_jfu;
+				$grade       = $infoPegawai[0]->grade_jfu;
+				$nama_posisi = $infoPegawai[0]->nama_posisi_jfu;
+			}
+			elseif ($infoPegawai[0]->kat_posisi == 6) {
+				# code...
+				$tunjangan_session   = $infoPegawai[0]->tunjangan_raw;
+				$grade       = $infoPegawai[0]->grade_raw;
+				$nama_posisi = $infoPegawai[0]->nama_posisi_raw;
+			}
+
 			$tr_disetujui             = $this->Allcrud->getData('tr_capaian_pekerjaan',$data_sender)->result_array();
 			$data_timeline            = array();
 			$get_kinerja              = array();
