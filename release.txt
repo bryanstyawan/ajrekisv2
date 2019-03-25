@@ -8,6 +8,9 @@ Fixed:
 - Core Rekap Kinerja (sync sikerja)
 - layout realisasi dan target di sikerja
 - open member auto approve
+- penentu eselon 1 dan eselon 2
+- Kelas Posisi di struktur organisasi
+- Validasi auto approve
 
 v4.0.0
 2019-03-21

@@ -181,22 +181,24 @@ isset($class_posisi);
 						</div>
 					</div>
 
-					<label style="color: #000;font-weight: 400;font-size: 19px;">Kelas Jabatan</label>
-					<div class="form-group">
-						<div class="input-group">
-							<span class="input-group-addon"></span>
-							<select name="grade" id="grade" class="form-control">
-								<option value=0>Pilih Kelas Jabatan</option>
-								<?php
-									for ($i=0; $i < count($class_posisi) ; $i++) {
-										# code...
-								?>
-											<option value="<?=$class_posisi[$i]->posisi_class;?>"><?=$class_posisi[$i]->posisi_class;?></option>
-								<?php
-									}
-								?>
-							</select>
-						</div>
+					<div id="container_kelas_posisi">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Kelas Jabatan</label>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"></span>
+								<select name="grade" id="grade" class="form-control">
+									<option value=0>Pilih Kelas Jabatan</option>
+									<?php
+										for ($i=0; $i < count($class_posisi) ; $i++) {
+											# code...
+									?>
+												<option value="<?=$class_posisi[$i]->id;?>"><?=$class_posisi[$i]->posisi_class;?></option>
+									<?php
+										}
+									?>
+								</select>
+							</div>
+						</div>					
 					</div>				
 				</div>								
 			</div>
@@ -692,7 +694,15 @@ function view_form(id,arg) {
 				$("#id_jfu").val(response['id_jfu']);
 				$("#id_jft").val(response['id_jft']);								
 				$("#f_atasan").append('<option value="'+response['atasan']+'" selected>'+response['posisi_atasan']+'</option>');
-				$("#grade").append('<option value="'+response['id_posisi_class']+'" selected>'+response['id_posisi_class']+'</option>');
+
+				$("#grade").append('<option value="'+response['posisi_class']+'" selected>'+response['id_posisi_class']+'</option>');
+				if (response['kat_posisi'] == 1 || response['kat_posisi'] == 6) {
+					$("#container_kelas_posisi").css('display','');
+				}
+				else
+				{
+					$("#container_kelas_posisi").css('display','none');					
+				}
 				$("#jabatan").val(response['nama_posisi']);
 			}
 		);		
