@@ -961,13 +961,13 @@ class Globalrules extends CI_Model
 								$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
 							}
 						}
-						else
-						{
-							if($data_timeline[$i]['menit_efektif'] > $hari_kerja[0]->jml_menit_perhari)
-							{
-								$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']);
-							}
-						}			
+						// else
+						// {
+						// 	if($data_timeline[$i]['menit_efektif'] > $hari_kerja[0]->jml_menit_perhari)
+						// 	{
+						// 		$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']);
+						// 	}
+						// }			
 								
 						$menit_efektif_calc       		   = ($data_timeline[$i]['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
 						$prosentase_menit_efektif_summary += $menit_efektif_calc;
