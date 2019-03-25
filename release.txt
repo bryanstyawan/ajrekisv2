@@ -2,6 +2,14 @@ v4.0.0
 2019-03-22
 New:
 Improved:
+- Penambahan posisi di transaksi dan rekap kinerja
+Fixed:
+- koreksi kinerja (untuk kondisi menit efektif lebih dari 5.5 atau 6.5 jam tapi dibawah 24 jam)
+
+v4.0.0
+2019-03-22
+New:
+Improved:
 - filter akademik di pencarian di plt
 Fixed:
 - real tunjangan akademik
