@@ -10,6 +10,7 @@ class Laporan extends CI_Controller {
 	public function __construct () {
 		parent::__construct();
 		$this->load->model ('mlaporan', '', TRUE);
+		// $this->load->model ('Mmaster', '', TRUE);		
 		$this->load->model ('master/Mmaster', '', TRUE);
 		$this->load->library('excel');
 		$this->load->helper(array('url','form'));
@@ -241,20 +242,142 @@ class Laporan extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function filter_data_pegawai_rekap_kinerja()
+	public function sync_kinerja()
 	{
 		# code...
 		$data_sender = $this->input->post('data_sender');
 		$data_sender = array
 						(
-							'eselon1' => $data_sender['data_1'],
-							'eselon2' => $data_sender['data_2'],
-							'eselon3' => $data_sender['data_3'],
-							'eselon4' => $data_sender['data_4']
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'kat_posisi' => ''
 						);
 
-		$data = $this->get_data_summary($data_sender);
-		$this->load->view('laporan/kinerja/ajax_kinerja',$data);
+		$data['list'] = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
+																b.es3 ASC,
+																b.es4 ASC,
+																c.kat_posisi asc,
+																c.atasan ASC',$data_sender);		
+
+		if ($data['list'] != 0) {
+			# code...
+			$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$data['list'][$i]->id_pegawai,'tanggal_selesai LIKE'=>date('Y-m').'%'));							
+		}		
+	}
+
+	public function filter_kinerja()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$data_sender = array
+						(
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'kat_posisi' => ''
+						);
+
+		$data['list'] = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
+																b.es3 ASC,
+																b.es4 ASC,
+																c.kat_posisi asc,
+																c.atasan ASC',$data_sender);		
+
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
+				if ($get_data_struktur_organisasi != array()) {
+					# code...
+					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+					$atasan_pegawai_akademik                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi[0]->atasan,'posisi');				
+					if ($atasan_pegawai_akademik != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_akademik    = 1;					
+						$data['list'][$i]->id_atasan_akademik       = $atasan_pegawai_akademik[0]->id;
+						$data['list'][$i]->nip_atasan_akademik      = $atasan_pegawai_akademik[0]->nip;										
+						$data['list'][$i]->nama_atasan_akademik     = $atasan_pegawai_akademik[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_akademik  = $atasan_pegawai_akademik[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_akademik    = 0;					
+						$data['list'][$i]->id_atasan_akademik       = '-';					
+						$data['list'][$i]->nip_atasan_akademik      = '-';					
+						$data['list'][$i]->nama_atasan_akademik     = '-';
+						$data['list'][$i]->jabatan_atasan_akademik  = '-';															
+					}
+				}
+				else
+				{
+					$data['list'][$i]->posisi_akademik_name = '-';					
+					$data['list'][$i]->avail_atasan_akademik    = 0;					
+					$data['list'][$i]->id_atasan_akademik       = '-';					
+					$data['list'][$i]->nip_atasan_akademik      = '-';					
+					$data['list'][$i]->nama_atasan_akademik     = '-';
+					$data['list'][$i]->jabatan_atasan_akademik  = '-';																				
+				}			
+				
+				$get_data_struktur_organisasi1 = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_plt);				
+				if ($get_data_struktur_organisasi1 != array()) {
+					# code...
+					$data['list'][$i]->posisi_plt_name = $get_data_struktur_organisasi1[0]->nama_posisi;
+					$atasan_pegawai_plt                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi1[0]->atasan,'posisi');				
+					if ($atasan_pegawai_plt != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_plt    = 1;					
+						$data['list'][$i]->id_atasan_plt       = $atasan_pegawai_plt[0]->id;
+						$data['list'][$i]->nip_atasan_plt      = $atasan_pegawai_plt[0]->nip;										
+						$data['list'][$i]->nama_atasan_plt     = $atasan_pegawai_plt[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_plt  = $atasan_pegawai_plt[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_plt    = 0;					
+						$data['list'][$i]->id_atasan_plt       = '-';					
+						$data['list'][$i]->nip_atasan_plt      = '-';					
+						$data['list'][$i]->nama_atasan_plt     = '-';
+						$data['list'][$i]->jabatan_atasan_plt  = '-';															
+					}					
+				}
+				else
+				{
+					$data['list'][$i]->posisi_plt_name = '-';		
+					$data['list'][$i]->avail_atasan_plt    = 0;					
+					$data['list'][$i]->id_atasan_plt       = '-';					
+					$data['list'][$i]->nip_atasan_plt      = '-';					
+					$data['list'][$i]->nama_atasan_plt     = '-';
+					$data['list'][$i]->jabatan_atasan_plt  = '-';								
+				}							
+
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->avail_atasan    = 1;					
+					$data['list'][$i]->id_atasan       = $data_pegawai[0]->id;
+					$data['list'][$i]->nip_atasan      = $data_pegawai[0]->nip;										
+					$data['list'][$i]->nama_atasan     = $data_pegawai[0]->nama_pegawai;
+					$data['list'][$i]->jabatan_atasan  = $data_pegawai[0]->nama_jabatan;										
+				}
+				else
+				{
+					$data['list'][$i]->avail_atasan    = 0;					
+					$data['list'][$i]->id_atasan       = '-';					
+					$data['list'][$i]->nip_atasan      = '-';					
+					$data['list'][$i]->nama_atasan     = '-';
+					$data['list'][$i]->jabatan_atasan  = '-';															
+				}
+			}
+			// die();
+		}																
+		// echo "<pre>";
+		// print_r($data['list']);die();
+		// echo "</pre>";		
+		$this->load->view('laporan/kinerja/ajax_kinerja',$data);																		
 	}
 
 	public function filter_data_pegawai_rekap_kinerja_prod_disiplin()

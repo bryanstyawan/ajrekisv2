@@ -898,14 +898,14 @@ class Globalrules extends CI_Model
 		$infoPegawai           = $this->get_info_pegawai($data_sender['id_pegawai'],'id');
 		if ($infoPegawai != 0) {
 			# code...
-			$id_posisi_jabatan        = $this->session->userdata('sesPosisi');
-			$tunjangan_session        = $this->session->userdata('tunjangan');				
+			$id_posisi_jabatan        = $infoPegawai[0]->id_posisi;
+			$tunjangan_session        = 0;				
 
 			if ($infoPegawai[0]->kat_posisi == 1) {
 				# code...
 				$tunjangan_session   = $infoPegawai[0]->tunjangan_raw;
-				$grade       = $infoPegawai[0]->grade_raw;
-				$nama_posisi = $infoPegawai[0]->nama_posisi_raw;
+				$grade               = $infoPegawai[0]->grade_raw;
+				$nama_posisi         = $infoPegawai[0]->nama_posisi_raw;
 			}
 			elseif ($infoPegawai[0]->kat_posisi == 2) {
 				# code...
@@ -916,14 +916,14 @@ class Globalrules extends CI_Model
 			elseif ($infoPegawai[0]->kat_posisi == 4) {
 				# code...
 				$tunjangan_session   = $infoPegawai[0]->tunjangan_jfu;
-				$grade       = $infoPegawai[0]->grade_jfu;
-				$nama_posisi = $infoPegawai[0]->nama_posisi_jfu;
+				$grade               = $infoPegawai[0]->grade_jfu;
+				$nama_posisi         = $infoPegawai[0]->nama_posisi_jfu;
 			}
 			elseif ($infoPegawai[0]->kat_posisi == 6) {
 				# code...
 				$tunjangan_session   = $infoPegawai[0]->tunjangan_raw;
-				$grade       = $infoPegawai[0]->grade_raw;
-				$nama_posisi = $infoPegawai[0]->nama_posisi_raw;
+				$grade               = $infoPegawai[0]->grade_raw;
+				$nama_posisi         = $infoPegawai[0]->nama_posisi_raw;
 			}
 
 			$tr_disetujui             = $this->Allcrud->getData('tr_capaian_pekerjaan',$data_sender)->result_array();
@@ -956,9 +956,9 @@ class Globalrules extends CI_Model
 								# code...
 								$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440) + 1;				 
 								$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];							
-								$menit_efektif_sisa        		= 0;
-								$data_timeline_1['sisa_menit']   	= ($data_timeline[$i]['menit_efektif'] + 1440) - $data_timeline1[$i]['menit_hari_efektif'];
-								$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
+								$menit_efektif_sisa        				  = 0;
+								$data_timeline_1['sisa_menit']   		  = ($data_timeline[$i]['menit_efektif'] + 1440) - $data_timeline1[$i]['menit_hari_efektif'];
+								$data_timeline[$i]['menit_efektif']		  = ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
 							}
 						}
 						// else
@@ -993,7 +993,7 @@ class Globalrules extends CI_Model
 					$get_kinerja = array(
 											'menit_efektif'            => $menit_efektif_summary,
 											'tunjangan'                => $tunjangan_summary,
-											'real_tunjangan'           => $this->session->userdata('tunjangan')/2,										
+											'real_tunjangan'           => $tunjangan_session/2,										
 											'frekuensi_realisasi'      => $tr_realisasi_skp,
 											'prosentase_menit_efektif' => $prosentase_menit_efektif_summary*100
 										);
@@ -1005,11 +1005,16 @@ class Globalrules extends CI_Model
 					$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
 					$get_kinerja['bulan']                    = date('m');
 					$get_kinerja['tahun']                    = date('Y');
-					$get_kinerja['id_posisi']                    = $tr_disetujui[$i]['id_posisi'];								
+					$get_kinerja['id_posisi']                = $tr_disetujui[$i]['id_posisi'];								
 					if ($get_kinerja['prosentase_menit_efektif'] > 100) {
 						# code...
 						$get_kinerja['prosentase_menit_efektif'] = 100;				
+						$get_kinerja['real_tunjangan'] = $tunjangan_session/2;						
 					}						 
+					else
+					{
+						$get_kinerja['real_tunjangan'] = $tunjangan_summary;						
+					}
 
 					if($tr_disetujui[$i]['id_posisi'] != 0)
 					{
