@@ -1,51 +1,65 @@
-					<?php
-					if ($list) {
-						# code...
-						for ($i=0; $i < count($list); $i++) { 
-							# code...
-							$id                    = $list[$i]->id;
-							$prosentase            = $list[$i]->prosentase;
-							$menit_efektif         = $list[$i]->menit_efektif;
-							$menit_efektif_efektif = $list[$i]->menit_efektif_efektif;
-							$belum_diperiksa       = $list[$i]->belum_diperiksa;
-							$revisi                = $list[$i]->revisi;
-							$ditolak               = $list[$i]->ditolak;
-							$disetujui             = $list[$i]->disetujui;
-
-							if ($prosentase > 100) {
-								# code...
-								$prosentase = 100;
-							}
-
-							if ($list[$i]->tugas_belajar == 'Tugas Belajar') {
-								# code...
-								$belum_diperiksa = 0;
-								$revisi          = 0;
-								$ditolak         = 0;
-								$disetujui       = 0;
-								$menit_efektif   = 0;
-								$prosentase      = 0;								
-							}
-				?>
-						<tr>
-							<td><?=$i+1;?></td>						
-							<td><?=$list[$i]->nip;?></td>
-							<td><?=$list[$i]->nama_pegawai;?></td>
-<!-- 							<td><?=$list[$i]->nama_eselon1;?></td>					
-							<td><?=$list[$i]->nama_eselon2;?></td>					
-							<td><?=$list[$i]->nama_eselon3;?></td>					
-							<td><?=$list[$i]->nama_eselon4;?></td>					 -->
-							<td><?=$list[$i]->nama_posisi;?></td>					
-							<td><?=$list[$i]->nama_atasan;?></td>					
-							<td><?=$belum_diperiksa;?></td>					
-							<td><?=$revisi;?></td>					
-							<td><?=$ditolak;?></td>					
-							<td><?=$disetujui;?></td>					
-							<td><?=number_format($menit_efektif);?></td>
-							<td><?=number_format($prosentase);?> %</td>
-							<td><?=$list[$i]->tugas_belajar;?></td>
-						</tr>
-					<?php
-						}
-					}
-					?>
+<?php
+	for ($i=0; $i < count($list); $i++) {
+		# code...
+		// $id             = $list[$i]->id;
+		$data_link_a    = "";
+		$data_link_text = "";
+?>
+	<tr>
+		<td><?=$list[$i]->nip;?></td>								
+		<td><?=$list[$i]->nama_pegawai;?></td>
+		<td><?=$list[$i]->nama_posisi;?></td>
+		<td><?=$list[$i]->posisi_akademik_name;?></td>								
+		<td><?=$list[$i]->posisi_plt_name;?></td>
+		<td>
+			<?php
+				if ($list[$i]->avail_atasan == 1) {
+					# code...
+			?>
+					<b>[Definitif]</b> <?=$list[$i]->nama_atasan;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan;?></i>)
+			<?php
+				}
+				else
+				{
+					echo "<b>[Definitif]</b> N/A";
+				}
+			?>					
+			<hr>
+			<?php
+				if ($list[$i]->avail_atasan_akademik == 1) {
+					# code...
+			?>
+					<b>[Akademik]</b> <?=$list[$i]->nama_atasan_akademik;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_akademik;?></i>)
+			<?php
+				}
+				else
+				{
+					echo "<b>[Akademik]</b> N/A";
+				}
+			?>
+			<hr>
+			<?php
+				if ($list[$i]->avail_atasan_plt == 1) {
+					# code...
+			?>
+					<b>[PLT]</b> <?=$list[$i]->nama_atasan_plt;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_plt;?></i>)
+			<?php
+				}
+				else
+				{
+					echo "<b>[PLT]</b> N/A";
+				}
+			?>			
+		</td>		
+		<td></td>								
+		<td><?=$list[$i]->tr_revisi;?></td>
+		<td><?=$list[$i]->tr_tolak;?></td>
+		<td><?=$list[$i]->tr_approve;?></td>
+		<td><?=$list[$i]->menit_efektif;?></td>
+		<td><?=$list[$i]->prosentase_menit_efektif;?></td>
+	</tr>
+<?php
+	}
+?>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
