@@ -9,10 +9,10 @@
 
 						<?=$this->load->view('templates/filter/eselon',array('eselon1'=>$es1,'jenis_jabatan_stat'=>'off'));?>
 						<div class="row col-xs-12" style="margin-top:10px;">
-							<div class="box-title pull-left">
-								<button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-search"></i> Sync Transaksi</button>											
+							<div class="box-title pull-left">											
 							</div>																							
 							<div class="box-title pull-right">
+								<button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-refresh"></i> SYNC</button>							
 								<button class="btn btn-block btn-primary" id="btn_filter"><i class="fa fa-search"></i> FILTER DATA</button>											
 							</div>											
 						</div>						

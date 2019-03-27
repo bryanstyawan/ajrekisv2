@@ -255,15 +255,18 @@ class Laporan extends CI_Controller {
 							'kat_posisi' => ''
 						);
 
-		$data['list'] = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
-																b.es3 ASC,
-																b.es4 ASC,
-																c.kat_posisi asc,
-																c.atasan ASC',$data_sender);		
+		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
+																	a.es3 ASC,
+																	a.es4 ASC,
+																	b.kat_posisi asc,
+																	b.atasan ASC');		
+		// print_r(count($data['list']));die;
 
 		if ($data['list'] != 0) {
 			# code...
-			$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$data['list'][$i]->id_pegawai,'tanggal_selesai LIKE'=>date('Y-m').'%'));							
+			for ($i=0; $i < count($data['list']); $i++) { 
+				$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$data['list'][$i]->id_pegawai,'tanggal_mulai LIKE'=>date('Y-m').'%'));											
+			}
 		}		
 	}
 
