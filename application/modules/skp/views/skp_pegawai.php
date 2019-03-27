@@ -511,7 +511,7 @@
                                             <input type="hidden" id="before" name="before" class="form-control" >
                                             <input type="hidden" id="after" name="after" class="form-control" >
                                             <!-- <input type="hidden" style="font-size: 25px;" id="nkegiatan" name="nkegiatan" class="form-control" disabled="disabled"> -->
-                                            <textarea id="nkegiatan" name="nkegiatan" class="form-control"></textarea>
+                                            <textarea id="nkegiatan" name="nkegiatan" class="form-control" maxlength="1000"></textarea>
                                         </div>
                                     </div>
 

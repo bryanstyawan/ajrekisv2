@@ -1,19 +1,4 @@
-<style type="text/css">
-.modal{
-    /*display: block !important; */
-    /* I added this to see the modal, you don't need this */
-}
-
-/* Important part */
-.modal-dialog{
-    overflow-y: initial !important
-}
-.modal-body{
-    height: 250px;
-    overflow-y: auto;
-}
-</style>
-<div class="col-xs-12">
+<div class="col-xs-12" id="viewdata">
   	<div class="box">
         <div class="box-header">
 			<h3 class  ="box-title pull-right"><button class="btn btn-block btn-primary" id="addData"><i class="fa fa-plus-square"></i> Tambah Akademik</button></h3>
@@ -131,24 +116,65 @@
 </div>
 </div>
 
+<div class="col-lg-12" id="formdata" style="display:none;">
+	<div class="box">
+		<div class="box-header">
+			<h3 class="box-title" id="formdata-title"></h3>
+			<div class="box-tools pull-right"><button class="btn btn-block btn-danger" id="closeData"><i class="fa fa-close"></i></button></div>				
+		</div>
+		<div class="box-body">
+			<div class="row">
+				<input class="form-control" type="hidden" id="oid">
+				<input class="form-control" type="hidden" id="crud">					
+				<div class="col-md-6">
+					<div class="form-group">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Inisial</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-circle-o"></i></span>
+							<input type="text" id="inisial" name="inisial" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nama</label>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-circle-o"></i></span>
+							<input type="text" id="nama" name="nama" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- /.box-body -->
+		<div class="box-footer">
+			<a class="btn btn-success pull-right" id="btn-trigger-controll"><i class="fa fa-save"></i>&nbsp; Simpan</a>
+		</div>
+	</div><!-- /.box -->
+</div>
+
 <!-- DataTables -->
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
-
-    $('.timerange').datepicker({
-    	format: 'yyyy-mm-dd'
-    });
-
-	$("#addData").click(function(){
-		$("#newData").modal('show');
+    $("#addData").click(function()
+	{
+		$(".form-control").val('');
+		$("#formdata").css({"display": ""})
+		$("#viewdata").css({"display": "none"})
+		$("#formdata-title").html("Tambah Data");		
+		$("#crud").val('insert');
 	})
 
-	$("#btn_add_data").click(function(){
-		var inisial               = $("#data_inisial").val();
-		var nama               = $("#data_nama").val();
+	$("#closeData").click(function(){
+		$("#formdata").css({"display": "none"})
+		$("#viewdata").css({"display": ""})		
+	})	
 
+	$("#btn-trigger-controll").click(function(){
+		var oid          = $("#oid").val();
+		var crud         = $("#crud").val();
+		var inisial      = $("#inisial").val();
+		var nama         = $('#nama').val();
+		var data_sender  = "";
 		if (inisial.length <= 0)
 		{
 			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
@@ -165,116 +191,27 @@ $(document).ready(function(){
 		}
 		else
 		{
-            data_sender = {
-                                'kode'           : inisial,
-                                'nama_pendidikan': nama
-            }
+			data_sender = {
+				'oid'         : oid,
+				'crud'        : crud,
+				'inisial'     : inisial,
+				'nama' 		  : nama
+			}
+
 			$.ajax({
-				url :"<?php echo site_url()?>master/data_akademik/add_akademik",
-				type:"post",
-                data:{data_sender : data_sender},
+				url : "<?php echo site_url()?>master/data_akademik/store",
+				type: "post",
+				data: {data_sender:data_sender},
 				beforeSend:function(){
-					$("#newData").modal('hide');
 					$("#loadprosess").modal('show');
 				},
 				success:function(msg){
-                    var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
 				},
-				error:function(){
-					Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Penambahan data'
-					});
-				}
-			})
-		}
-
-
-	})
-
-	$("#btn_edit_data").click(function(){
-		var inisial = $("#ndata_inisial").val();
-		var nama    = $("#ndata_nama").val();
-		var oid     = $("#noid").val();
-
-        data_sender = {
-                            'kode'           : inisial,
-                            'nama_pendidikan': nama,
-                            'id_pendidikan'  : oid
-        }
-
-		if (inisial.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data inisial tidak boleh kosong"
-			});
-		}
-		else if (nama.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data nama tidak boleh kosong."
-			});
-		}
-		else
-		{
-			$.ajax({
-				url :"<?php echo site_url();?>master/data_akademik/peditAkademik",
-				type:"post",
-				data:{data_sender:data_sender},
-				beforeSend:function(){
-					$("#editData").modal('hide');
-					$("#loadprosess").modal('show');
-				},
-				success:function(msg){
-                    var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
-				},
-				error:function(){
-					Lobibox.notify('error', {
-						msg: 'Gagal Melakukan Perubahan data'
-					});
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
 				}
 			})
 		}
@@ -282,71 +219,111 @@ $(document).ready(function(){
 })
 
 function edit(id){
-	$("#loadprosess").modal('show');
-	$.getJSON('<?php echo site_url() ?>master/data_akademik/editAkademik/'+id,
-		function( response ) {
-            console.log(response[0].kode);
-			$("#editData").modal('show');
-			$("#ndata_inisial").val(response[0].kode);
-			$("#ndata_nama").val(response[0].nama_pendidikan);
-			$("#noid").val(response[0].id_pendidikan);
-			setTimeout(function(){
-				$("#loadprosess").modal('hide');
-			}, 1000);
+	// $("#loadprosess").modal('show');
+	// $.getJSON('<?php echo site_url() ?>master/data_akademik/editAkademik/'+id,
+	// 	function( response ) {
+    //         console.log(response[0].kode);
+	// 		$("#editData").modal('show');
+	// 		$("#ndata_inisial").val(response[0].kode);
+	// 		$("#ndata_nama").val(response[0].nama_pendidikan);
+	// 		$("#noid").val(response[0].id_pendidikan);
+	// 		setTimeout(function(){
+	// 			$("#loadprosess").modal('hide');
+	// 		}, 1000);
+	// 	}
+	// );
+	$.ajax({
+		url :"<?php echo site_url();?>master/data_akademik/get_data_akademik/"+id,
+		type:"post",
+		beforeSend:function(){
+			$("#loadprosess").modal('show');
+		},
+		success:function(msg){
+			var obj = jQuery.parseJSON (msg);
+			console.log();
+			$(".form-control-detail").val('');
+			$("#formdata").css({"display": ""})
+			$("#viewdata").css({"display": "none"})
+			$("#formdata > div > div > div.box-header > h3").html("Ubah Data");		
+			$("#crud").val('update');
+			$("#oid").val(obj.id_pendidikan);
+			$("#inisial").val(obj.kode);
+			$("#nama").val(obj.nama_pendidikan);
+			$("#loadprosess").modal('hide');				
+		},
+		error:function(jqXHR,exception)
+		{
+			ajax_catch(jqXHR,exception);					
 		}
-	);
+	})
 }
 
+//By Eric
+//Last Edited : 26-02-2019
 function del(id){
-    Lobibox.confirm({
-        title: "Konfirmasi",
-        msg: "Anda yakin akan menghapus data ini ?",
-        callback: function ($this, type) {
+    LobiboxBase = {
+        //DO NOT change this value. Lobibox depended on it
+        bodyClass       : 'lobibox-open',
+        //DO NOT change this object. Lobibox is depended on it
+        modalClasses : {
+            'error'     : 'lobibox-error',
+            'success'   : 'lobibox-success',
+            'info'      : 'lobibox-info',
+            'warning'   : 'lobibox-warning',
+            'confirm'   : 'lobibox-confirm',
+            'progress'  : 'lobibox-progress',
+            'prompt'    : 'lobibox-prompt',
+            'default'   : 'lobibox-default',
+            'window'    : 'lobibox-window'
+        },
+        buttons: {
+            ok: {
+                'class': 'lobibox-btn lobibox-btn-default',
+                text: 'OK',
+                closeOnClick: true
+            },
+            cancel: {
+                'class': 'lobibox-btn lobibox-btn-cancel',
+                text: 'Cancel',
+                closeOnClick: true
+            },
+            yes: {
+                'class': 'lobibox-btn lobibox-btn-yes',
+                text: 'Ya',
+                closeOnClick: true
+            },
+            no: {
+                'class': 'lobibox-btn lobibox-btn-no',
+                text: 'Tidak',
+                closeOnClick: true
+            }
+        }
+    }
+
+	Lobibox.confirm({
+		title: "Konfirmasi",
+		msg: "Anda yakin akan menghapus data ini ?",
+		callback: function ($this, type) {
 			if (type === 'yes'){
 				$.ajax({
-					url :"<?php echo site_url()?>master/data_akademik/del_akademik/"+id,
+					url : "<?php echo site_url()?>master/data_akademik/store/delete/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#loadprosess").modal('show');
 					},
-                    success:function(msg){
-                    var obj = jQuery.parseJSON (msg);
-                    if (obj.status == 1)
-                    {
-                        Lobibox.notify('success', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                            setTimeout(function(){
-                                location.reload();
-                            }, 1500);
-                        }, 5000);
-                    }
-                    else
-                    {
-                        Lobibox.notify('warning', {
-                            msg: obj.text
-                            });
-                        setTimeout(function(){
-                            $("#loadprosess").modal('hide');
-                        }, 5000);
-                    }
-				},
-					error:function(){
-					Lobibox.notify('error', {
-					msg: 'Gagal Melakukan Hapus data'
-					});
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
 					}
 				})
 			}
-	    }
+		}
     })
 }
-
-jQuery(function($) {
-    $('.auto').autoNumeric('init');
-});
 
 $(function () {
 	$("#example1").DataTable({
