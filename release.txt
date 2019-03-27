@@ -1,4 +1,23 @@
 v4.0.0
+2019-03-27
+New:
+- Filter Rekap Kinerja
+- Filter koreksi di rekap kinerja
+Improved:
+Fixed:
+- parameter posisi dan tunjangan di koreksi sikerja
+- Real Tunjangan di koreksi sikerja
+
+v4.0.0
+2019-03-25
+New:
+Improved:
+- Penambahan posisi di transaksi dan rekap kinerja
+- Koreksi tunjangan
+Fixed:
+- koreksi kinerja (untuk kondisi menit efektif lebih dari 5.5 atau 6.5 jam tapi dibawah 24 jam)
+
+v4.0.0
 2019-03-22
 New:
 Improved:

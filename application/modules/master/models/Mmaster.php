@@ -51,14 +51,16 @@ class Mmaster extends CI_Model {
 	}
 
 	//2019-02-14
-	public function data_pegawai($flag=NULL,$order_by=NULL)
+	public function data_pegawai($flag=NULL,$order_by=NULL,$filter=NULL)
 	{
 		# code...
+		$sql        = "";
 		$sql_1      = "";
 		$sql_2      = "";
 		$sql_3      = "";
 		$sql_4      = "";
 		$sql_5      = "";		
+		$join_1 	= "";	 
 		$select_opt = " a.local,
 						a.es1,
 						a.es2,
@@ -68,90 +70,139 @@ class Mmaster extends CI_Model {
 						b.id AS `id_posisi`,
 						b.kat_posisi,
 						c.posisi_class,";
-		if ($flag == 'default')
-		{
+
+		if ($flag != 'kinerja') {
 			# code...
-			$sql_1 = "AND a.es1 = '".$this->session->userdata('sesEs1')."'";
-			$sql_5 = "AND b.kat_posisi = 1";			
-		}
-		elseif ($flag == 'report') {
-			# code...
-			$sql_1 = "AND a.es1 = '".$this->session->userdata('sesEs1')."'";
-			$select_opt = "b.id AS `id_posisi`,";
+			if ($flag == 'default')
+			{
+				# code...
+				$sql_1 = "AND a.es1 = '".$this->session->userdata('sesEs1')."'";
+				$sql_5 = "AND b.kat_posisi = 1";			
+			}
+			else
+			{
+				if ($flag['eselon1'] == '') {
+					# code...
+					$sql_1 = "";
+				}
+				else $sql_1 = "AND a.es1 = '".$flag['eselon1']."'";
+	
+				if ($flag['eselon2'] == '') {
+					# code...
+					$sql_2 = "";
+				}
+				else $sql_2 = "AND a.es2 = '".$flag['eselon2']."'";
+	
+				if ($flag['eselon3'] == '') {
+					# code...
+					$sql_3 = "";
+				}
+				else $sql_3 = "AND a.es3 = '".$flag['eselon3']."'";
+	
+				if ($flag['eselon4'] == '') {
+					# code...
+					$sql_4 = "";
+				}
+				else $sql_4 = "AND a.es4 = '".$flag['eselon4']."'";
+	
+				if ($flag['kat_posisi'] == '') {
+					# code...
+					$sql_5 = "";
+				}
+				else $sql_5 = "AND b.kat_posisi = '".$flag['kat_posisi']."'";			
+			}			
+			$sql = "SELECT
+						a.id as id_pegawai,
+						a.nip,
+						a.nama_pegawai,
+						a.posisi_akademik,
+						a.posisi_plt,
+						a.photo AS photo,
+						a.status,
+						COALESCE(b.kat_posisi,'-') as kat_posisi,					
+						COALESCE(b.nama_posisi,'-') as nama_posisi, 
+						COALESCE(c.posisi_class,'-') as posisi_class_raw,
+						COALESCE(cls_jft.posisi_class,'-') as posisi_class_jft,
+						COALESCE(cls_jfu.posisi_class,'-') as posisi_class_jfu,															
+						COALESCE(es1.nama_eselon1,'-') as nama_eselon1,
+						COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
+						COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
+						COALESCE(es4.nama_eselon4,'-') as nama_eselon4,
+						".$select_opt."
+						b.atasan,
+						'2019-02-01' as tmt
+					FROM mr_pegawai a
+					LEFT JOIN mr_posisi b ON b.id = a.posisi
+					LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+					LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft = jft.id
+					LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id				
+					LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu = jfu.id
+					LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
+					LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+					LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
+					LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
+					LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4
+					WHERE a. STATUS = '1'
+					".$sql_1."
+					".$sql_2."
+					".$sql_3."
+					".$sql_4."
+					".$sql_5."				
+					ORDER BY ".$order_by."";
+			
+
 		}
 		else
 		{
-			if ($flag['eselon1'] == '') {
+			if ($filter['eselon1'] == '') {
 				# code...
 				$sql_1 = "";
 			}
-			else $sql_1 = "AND a.es1 = '".$flag['eselon1']."'";
+			else $sql_1 = "AND b.es1 = '".$filter['eselon1']."'";
 
-			if ($flag['eselon2'] == '') {
+			if ($filter['eselon2'] == '') {
 				# code...
 				$sql_2 = "";
 			}
-			else $sql_2 = "AND a.es2 = '".$flag['eselon2']."'";
+			else $sql_2 = "AND b.es2 = '".$filter['eselon2']."'";
 
-			if ($flag['eselon3'] == '') {
+			if ($filter['eselon3'] == '') {
 				# code...
 				$sql_3 = "";
 			}
-			else $sql_3 = "AND a.es3 = '".$flag['eselon3']."'";
+			else $sql_3 = "AND b.es3 = '".$filter['eselon3']."'";
 
-			if ($flag['eselon4'] == '') {
+			if ($filter['eselon4'] == '') {
 				# code...
 				$sql_4 = "";
 			}
-			else $sql_4 = "AND a.es4 = '".$flag['eselon4']."'";
+			else $sql_4 = "AND b.es4 = '".$filter['eselon4']."'";
 
-			if ($flag['kat_posisi'] == '') {
+			if ($filter['kat_posisi'] == '') {
 				# code...
 				$sql_5 = "";
 			}
-			else $sql_5 = "AND b.kat_posisi = '".$flag['kat_posisi']."'";			
-		}
+			else $sql_5 = "AND c.kat_posisi = '".$filter['kat_posisi']."'";
 
-		$sql = "SELECT
-					a.id as id_pegawai,
-					a.nip,
-					a.nama_pegawai,
-					a.posisi_akademik,
-					a.posisi_plt,
-					a.photo AS photo,
-					a.status,
-					COALESCE(b.kat_posisi,'-') as kat_posisi,					
-					COALESCE(b.nama_posisi,'-') as nama_posisi, 
-					COALESCE(c.posisi_class,'-') as posisi_class_raw,
-					COALESCE(cls_jft.posisi_class,'-') as posisi_class_jft,
-					COALESCE(cls_jfu.posisi_class,'-') as posisi_class_jfu,															
-					COALESCE(es1.nama_eselon1,'-') as nama_eselon1,
-					COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
-					COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
-					COALESCE(es4.nama_eselon4,'-') as nama_eselon4,
-					".$select_opt."
-					b.atasan,
-					'2019-02-01' as tmt
-				FROM mr_pegawai a
-				LEFT JOIN mr_posisi b ON b.id = a.posisi
-				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
-				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft = jft.id
-				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id				
-				LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu = jfu.id
-				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
-				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
-				LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
-				LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
-				LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4
-				WHERE a. STATUS = '1'
-				".$sql_1."
-				".$sql_2."
-				".$sql_3."
-				".$sql_4."
-				".$sql_5."				
-				ORDER BY ".$order_by."";
+			$sql = "select 	b.id as id_pegawai, b.posisi_akademik, b.posisi_plt, b.nip, b.nama_pegawai, c.nama_posisi, c.atasan, d.nama_eselon1, e.nama_eselon2, f.nama_eselon3, g.nama_eselon4,
+							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi
+					from (((((rpt_capaian_kinerja a
+					left join mr_pegawai b on a.id_pegawai=b.id)
+					left join mr_posisi c on b.posisi=c.id)
+					left join mr_eselon1 d on b.es1=d.id_es1)
+					left join mr_eselon2 e on b.es2=e.id_es2)
+					left join mr_eselon3 f on b.es3=f.id_es3)
+					left join mr_eselon4 g on b.es4=g.id_es4
+					where b.status=1
+					".$sql_1."
+					".$sql_2."
+					".$sql_3."
+					".$sql_4."
+					".$sql_5."									
+					ORDER BY ".$order_by."";
+		}
+		// print_r($sql);die();		
 		$query = $this->db->query($sql);
-		// print_r($sql);die();
 		if($query->num_rows() > 0)
 		{
 			return $query->result();

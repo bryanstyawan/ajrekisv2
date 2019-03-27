@@ -18,7 +18,11 @@ class Dashboard extends CI_Controller {
 		// print_r($this->session->userdata('sesPosisi'));die();
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
+<<<<<<< HEAD
 			$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'));
+=======
+			$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'));			
+>>>>>>> f1fcf736822361b76cf1ddd0421da98b07593822
 			$data['title']              = '';
 			$data['content']            = 'vdashboard';
 			$data['belum_diperiksa']    = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
