@@ -1,4 +1,15 @@
 v4.0.0
+2019-03-28
+New:
+- Rekap Kinerja (excel)
+Improved:
+- Koreksi sikerja akan bekerja jika prosentase dibawah 100%
+Fixed:
+- belum diperiksa (rekap kinerja)
+- Tombol Sync berubah jadi OLAH DATA TRANSAKSI SIKERJA
+- Kinerja Anggota (By Eric)
+
+v4.0.0
 2019-03-27
 New:
 - Filter Rekap Kinerja
@@ -241,6 +252,12 @@ Fixed:
 v4.0.0-Beta    
 2019-02-26
 New:
+Improved:
+- New CRUD dan View Kategori Posisi (By Eric)
+- New CRUD dan View Golongan (By Eric)
+- New CRUD dan View Akademik (By Eric)
+Fixed:
+- Controller Tugas Belajar & Tunjangan Profesi (By Eric)
 - Target skp yang belum dan sudah di set (report) di master pegawai
 - Rekap Pegawai (SKP) di Master Pegawai
 Improved:

@@ -185,7 +185,7 @@ class Mmaster extends CI_Model {
 			else $sql_5 = "AND c.kat_posisi = '".$filter['kat_posisi']."'";
 
 			$sql = "select 	b.id as id_pegawai, b.posisi_akademik, b.posisi_plt, b.nip, b.nama_pegawai, c.nama_posisi, c.atasan, d.nama_eselon1, e.nama_eselon2, f.nama_eselon3, g.nama_eselon4,
-							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi
+							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi, a.tr_belum_diperiksa
 					from (((((rpt_capaian_kinerja a
 					left join mr_pegawai b on a.id_pegawai=b.id)
 					left join mr_posisi c on b.posisi=c.id)
@@ -233,39 +233,36 @@ class Mmaster extends CI_Model {
 		}
 	}
 
+	public function list_kinerja_bawahan($posisi)
+	{
+		# code...
+		$sql        = "";
+		$curmonth 	= date('m');
+		$curyear	= date('Y');
 
+		$sql = "select 	b.id as id_pegawai, b.posisi_akademik, b.posisi_plt, b.nip, b.nama_pegawai, c.nama_posisi, c.atasan, d.nama_eselon1, e.nama_eselon2, f.nama_eselon3, g.nama_eselon4,
+							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi
+					from (((((rpt_capaian_kinerja a
+					left join mr_pegawai b on a.id_pegawai=b.id)
+					left join mr_posisi c on b.posisi=c.id)
+					left join mr_eselon1 d on b.es1=d.id_es1)
+					left join mr_eselon2 e on b.es2=e.id_es2)
+					left join mr_eselon3 f on b.es3=f.id_es3)
+					left join mr_eselon4 g on b.es4=g.id_es4
+					where b.status=1 and bulan=".$curmonth." and tahun=".$curyear."
+					and c.atasan = ".$posisi."";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
+		// print_r($sql);die();		
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
 	public function grade($id){
 		$this->db->where('kat_posisi',$id);
@@ -1211,4 +1208,6 @@ class Mmaster extends CI_Model {
 			return array();
 		}
 	}				
+
+
 }
