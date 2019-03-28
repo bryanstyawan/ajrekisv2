@@ -1,9 +1,12 @@
 v4.0.0
 2019-03-28
 New:
+- Rekap Kinerja (excel)
 Improved:
 - Koreksi sikerja akan bekerja jika prosentase dibawah 100%
 Fixed:
+- belum diperiksa (rekap kinerja)
+- Tombol Sync berubah jadi OLAH DATA TRANSAKSI SIKERJA
 
 v4.0.0
 2019-03-27
