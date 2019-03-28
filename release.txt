@@ -1,4 +1,11 @@
 v4.0.0
+2019-03-28
+New:
+- Kinerja Anggota (By Eric)
+Improved:
+Fixed:
+
+v4.0.0
 2019-03-27
 New:
 - Filter Rekap Kinerja

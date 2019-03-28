@@ -31,7 +31,7 @@
 					<table class="table table-bordered table-striped table-view">
 					<thead>
 						<tr>
-							<th>(ID) NIP</th>
+							<th>NIP</th>
 							<th>Nama Pegawai</th>	
 							<th>Jabatan (Kelas Jabatan)</th>													
 							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>							
