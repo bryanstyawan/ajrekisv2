@@ -270,6 +270,17 @@ class Laporan extends CI_Controller {
 		}		
 	}
 
+	public function kinerja_anggota()
+	{
+		# code...
+		$id = $this->session->userdata('sesPosisi');
+		$data['title']      = 'Rekapitulasi Data Kinerja Anggota';
+		$data['list'] = $this->Mmaster->list_kinerja_bawahan($id);
+		$data['content']    = 'laporan/kinerja/data_kinerja_anggota';
+		$this->load->view('templateAdmin',$data);
+		// print_r($data['list']);die();
+	}
+
 	public function filter_kinerja()
 	{
 		# code...

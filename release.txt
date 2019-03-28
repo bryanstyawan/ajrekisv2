@@ -7,6 +7,7 @@ Improved:
 Fixed:
 - belum diperiksa (rekap kinerja)
 - Tombol Sync berubah jadi OLAH DATA TRANSAKSI SIKERJA
+- Kinerja Anggota (By Eric)
 
 v4.0.0
 2019-03-27
