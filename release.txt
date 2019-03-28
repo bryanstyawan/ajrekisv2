@@ -1,4 +1,11 @@
 v4.0.0
+2019-03-28
+New:
+Improved:
+- Koreksi sikerja akan bekerja jika prosentase dibawah 100%
+Fixed:
+
+v4.0.0
 2019-03-27
 New:
 - Filter Rekap Kinerja

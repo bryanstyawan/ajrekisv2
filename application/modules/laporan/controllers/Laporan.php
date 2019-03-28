@@ -383,6 +383,148 @@ class Laporan extends CI_Controller {
 		$this->load->view('laporan/kinerja/ajax_kinerja',$data);																		
 	}
 
+	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL)
+	{
+		# code...
+		$es2 = ($es2 == 0) ? '' : $es2 ;
+		$es3 = ($es3 == 0) ? '' : $es3 ;
+		$es4 = ($es4 == 0) ? '' : $es4 ;
+		$data_sender = array
+						(
+							'eselon1'    => $es1,
+							'eselon2'    => $es2,
+							'eselon3'    => $es3,
+							'eselon4'    => $es4,
+							'kat_posisi' => ''
+						);		
+		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
+																		a.es3 ASC,
+																		a.es4 ASC,
+																		b.kat_posisi asc,
+																		b.atasan ASC');						
+
+																		$data['list'] = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
+																		b.es3 ASC,
+																		b.es4 ASC,
+																		c.kat_posisi asc,
+																		c.atasan ASC',$data_sender);		
+	
+		$this->excel->setActiveSheetIndex(0);
+		//name the worksheet
+
+		$this->excel->getActiveSheet(1)->getColumnDimension('a')->setWidth('5');
+		$this->excel->getActiveSheet(1)->getColumnDimension('b')->setWidth('22');
+		$this->excel->getActiveSheet(1)->getColumnDimension('c')->setWidth('44');
+		$this->excel->getActiveSheet(1)->getColumnDimension('d')->setWidth('35');
+		$this->excel->getActiveSheet(1)->getColumnDimension('e')->setWidth('35');
+		$this->excel->getActiveSheet(1)->getColumnDimension('f')->setWidth('35');
+		$this->excel->getActiveSheet(1)->getColumnDimension('g')->setWidth('35');
+		$this->excel->getActiveSheet(1)->getColumnDimension('h')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('i')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('j')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('k')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('l')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('m')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('n')->setWidth('15');														
+
+		$this->excel->getActiveSheet(1)->setTitle('Rekapitulasi Pegawai');
+		$this->excel->getActiveSheet(1)->getStyle('b7:h7')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$this->excel->getActiveSheet(1)->setCellValue('A1', 'No.');
+		$this->excel->getActiveSheet(1)->setCellValue('B1', 'NIP');		
+		$this->excel->getActiveSheet(1)->setCellValue('C1', 'Nama');		
+		$this->excel->getActiveSheet(1)->setCellValue('D1', 'Eselon I');
+		$this->excel->getActiveSheet(1)->setCellValue('E1', 'Eselon II');
+		$this->excel->getActiveSheet(1)->setCellValue('F1', 'Jabatan');
+		$this->excel->getActiveSheet(1)->setCellValue('G1', 'Atasan Langsung');		
+		$this->excel->getActiveSheet(1)->setCellValue('H1', 'Belum Diperiksa');
+		$this->excel->getActiveSheet(1)->setCellValue('I1', 'Revisi');	
+		$this->excel->getActiveSheet(1)->setCellValue('J1', 'Ditolak');			
+		$this->excel->getActiveSheet(1)->setCellValue('K1', 'Disetujui');
+		$this->excel->getActiveSheet(1)->setCellValue('L1', 'Menit Efektif');
+		$this->excel->getActiveSheet(1)->setCellValue('M1', 'Prosentase');
+		$this->excel->getActiveSheet(1)->setCellValue('N1', 'Keterangan');																		
+		if ($data['list'] != 0) {
+		    # code...
+		    $counter = "";
+		    for ($i=0; $i < count($data['list']); $i++) {
+				# code...
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->avail_atasan    = 1;					
+					$data['list'][$i]->id_atasan       = $data_pegawai[0]->id;
+					$data['list'][$i]->nip_atasan      = $data_pegawai[0]->nip;										
+					$data['list'][$i]->nama_atasan     = $data_pegawai[0]->nama_pegawai;
+					$data['list'][$i]->jabatan_atasan  = $data_pegawai[0]->nama_jabatan;										
+				}
+				else
+				{
+					$data['list'][$i]->avail_atasan    = 0;					
+					$data['list'][$i]->id_atasan       = '-';					
+					$data['list'][$i]->nip_atasan      = '-';					
+					$data['list'][$i]->nama_atasan     = '-';
+					$data['list'][$i]->jabatan_atasan  = '-';															
+				}				
+
+				$counter                = 2 + $i;
+				$set_status             = "";
+				$this->excel->getActiveSheet()->getStyle('a'.$counter.':n'.$counter)->getAlignment()->setWraptext(true);				
+				$this->excel->getActiveSheet(2)->setCellValue('a'.$counter, $i+1);
+				$this->excel->getActiveSheet(2)->setCellValue('b'.$counter, '`'.$data['list'][$i]->nip);
+				$this->excel->getActiveSheet(2)->setCellValue('c'.$counter, $data['list'][$i]->nama_pegawai);
+				$this->excel->getActiveSheet(2)->setCellValue('d'.$counter, $data['list'][$i]->nama_eselon1);
+				$this->excel->getActiveSheet(2)->setCellValue('e'.$counter, $data['list'][$i]->nama_eselon2);								
+				$this->excel->getActiveSheet(2)->setCellValue('f'.$counter, $data['list'][$i]->nama_posisi);
+				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->nama_atasan);
+				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->tr_belum_diperiksa);
+				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, $data['list'][$i]->tr_revisi);												
+				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $data['list'][$i]->tr_tolak);
+				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->tr_approve);
+				$this->excel->getActiveSheet(2)->setCellValue('l'.$counter, $data['list'][$i]->menit_efektif);
+				$this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $data['list'][$i]->prosentase_menit_efektif);
+				$this->excel->getActiveSheet(2)->setCellValue('n'.$counter, '');														
+		    }
+		}
+
+		ob_clean();
+
+		$filename='Rekapitulasi Pegawai - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
+		//header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+		exit();
+		redirect('master/data_pegawai/', false);		
+		// echo "<pre>";
+		// print_r($data['list']);die();		
+		// echo "</pre>";		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	public function filter_data_pegawai_rekap_kinerja_prod_disiplin()
 	{
 		# code...
@@ -398,7 +540,7 @@ class Laporan extends CI_Controller {
 		$data = $this->get_data_summary($data_sender);
 		$this->load->view('laporan/tunkir_produktivitas_disiplin/ajax_tunkir_produktivitas_disiplin',$data);
 	}
-
+	
 	public function get_data_summary($data_sender)
 	{
 		# code...
@@ -593,7 +735,66 @@ Last edit : 28/07/2016
 
 		echo json_encode($res);
 	}
-/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
 Create by : Bryan Setyawan Putra
 Last edit : 27/07/2016
 */

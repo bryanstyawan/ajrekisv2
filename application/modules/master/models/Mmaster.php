@@ -185,7 +185,7 @@ class Mmaster extends CI_Model {
 			else $sql_5 = "AND c.kat_posisi = '".$filter['kat_posisi']."'";
 
 			$sql = "select 	b.id as id_pegawai, b.posisi_akademik, b.posisi_plt, b.nip, b.nama_pegawai, c.nama_posisi, c.atasan, d.nama_eselon1, e.nama_eselon2, f.nama_eselon3, g.nama_eselon4,
-							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi
+							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi, a.tr_belum_diperiksa
 					from (((((rpt_capaian_kinerja a
 					left join mr_pegawai b on a.id_pegawai=b.id)
 					left join mr_posisi c on b.posisi=c.id)
