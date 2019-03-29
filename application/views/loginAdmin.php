@@ -441,7 +441,7 @@ input {
 						<div id="formFooter">
 							<a class="underlineHover" href="#" id="btn_forgot_password">Lupa Password?</a>
 							<hr>
-							<span style="color:#92badd;">V.2.0.0-Alpha</span>
+							<span style="color:#92badd;">V.4.0.0</span>
 						</div>
 					</div>
 				</div>

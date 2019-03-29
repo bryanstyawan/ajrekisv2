@@ -397,6 +397,7 @@ class Laporan extends CI_Controller {
 	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL)
 	{
 		# code...
+		$es1 = ($es1 == 0) ? '' : $es1 ;		
 		$es2 = ($es2 == 0) ? '' : $es2 ;
 		$es3 = ($es3 == 0) ? '' : $es3 ;
 		$es4 = ($es4 == 0) ? '' : $es4 ;

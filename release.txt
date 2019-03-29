@@ -1,6 +1,16 @@
 v4.0.0
 2019-03-28
 New:
+Improved:
+- auto approve berdasarkan jumlah seluruh Anggota, bukan berdasarkan anggota struktural
+- Rekap Kinerja dapat pull seluruh data 
+- Olah data transaksi sekarang hanya membaca flag yang telah dikoreksi, tidak lagi memeriksa seluruh data
+Fixed:
+- v2.0 menjadi v.4.0 di halaman login
+
+v4.0.0
+2019-03-28
+New:
 - Rekap Kinerja (excel)
 Improved:
 - Koreksi sikerja akan bekerja jika prosentase dibawah 100%
