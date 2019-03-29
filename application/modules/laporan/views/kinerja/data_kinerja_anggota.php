@@ -29,7 +29,7 @@
 							<td><?=$i+1;?></td>
 							<td><?=$list[$i]->nip;?></td>
 							<td><?=$list[$i]->nama_pegawai;?></td>
-							<td>0</td>
+							<td><?=$list[$i]->tr_belum_diperiksa;?></td>
 							<td><?=$list[$i]->tr_revisi;?></td>
 							<td><?=$list[$i]->tr_tolak;?></td>
 							<td><?=$list[$i]->tr_approve;?></td>
