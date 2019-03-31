@@ -197,9 +197,9 @@ class Transaksi extends CI_Controller {
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
 							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							// 'menit_efektif'       => $count_transact['menit_efektif'],
-							// 'hari_efektif'        => $count_transact['hari_efektif'],
-							// 'tunjangan'           => $count_transact['tunjangan'],
+							'menit_efektif'       => $count_transact['menit_efektif'],
+							'hari_efektif'        => $count_transact['hari_efektif'],
+							'tunjangan'           => $count_transact['tunjangan'],
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
