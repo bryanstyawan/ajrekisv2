@@ -1222,7 +1222,7 @@ class Globalrules extends CI_Model
 	// 	}
 	// }	
 
-	public function sync_data_transaction($data_sender)
+	public function sync_data_transaction($data_sender,$bulan,$tahun)
 	{
 		# code...
 		ini_set('max_execution_time', 2500);
@@ -1264,7 +1264,7 @@ class Globalrules extends CI_Model
 				if ($get_report_kinerja_all[0]['prosentase_menit_efektif'] < 100) {
 					# code...
 					$data_tr = $data_sender; 
-					$data_tr['flag_sync'] = NULL;																		
+					$data_tr['flag_sync'] = 0;																		
 					$tr_disetujui             = $this->Allcrud->getData('tr_capaian_pekerjaan',$data_tr)->result_array();
 					// echo "<pre>";
 					// print_r($data_tr);die();						
@@ -1296,8 +1296,8 @@ class Globalrules extends CI_Model
 							$diff                                     = strtotime($end_actual_time) - strtotime($start_actual_time);
 							$data_timeline[$i]['menit_efektif']       = $diff / 60;
 							$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440);				 
-							$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];				
-							$hari_kerja                               = $this->mtrx->get_hari_kerja();
+							$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];				 
+							$hari_kerja                               = $this->mtrx->get_hari_kerja($bulan,$tahun);
 							if ($hari_kerja != 0)
 							{												
 								if ($data_timeline1[$i]['menit_hari_efektif'] != 0) {
@@ -1331,16 +1331,17 @@ class Globalrules extends CI_Model
 						}					
 						$data_sender['flag_sync']                  = 1;
 						$flag_sync_1                               = $this->get_summary_sikerja($data_sender);								
-						if ($flag_sync_1 != array()) {
+						if ($flag_sync_1 != 0) {
 							# code...
 							for ($i=0; $i < count($flag_sync_1); $i++) { 
 								# code...
 								$get_kinerja['prosentase_menit_efektif']   = $flag_sync_1[$i]->prosentase;													
 
-								if ($get_kinerja['prosentase_menit_efektif'] > 100) {
+								if ($get_kinerja['prosentase_menit_efektif'] >= 100) {
 									# code...
 									$get_kinerja['prosentase_menit_efektif'] = 100;				
 									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
+									$get_kinerja['menit_efektif']            = 6600;									
 								}						 
 								else
 								{
@@ -1379,7 +1380,7 @@ class Globalrules extends CI_Model
 						$data_tr_1                                 = $data_sender;
 						$data_tr_1['flag_sync']                    = 1;
 						$flag_sync_1                               = $this->get_summary_sikerja($data_tr_1);
-						if ($flag_sync_1 != array()) {
+						if ($flag_sync_1 != 0) {
 							# code...
 							for ($i=0; $i < count($flag_sync_1); $i++) { 
 								# code...
@@ -1389,6 +1390,7 @@ class Globalrules extends CI_Model
 									# code...
 									$get_kinerja['prosentase_menit_efektif'] = 100;				
 									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
+									$get_kinerja['menit_efektif']            = 6600;									
 								}						 
 								else
 								{

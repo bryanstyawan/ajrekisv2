@@ -2,6 +2,15 @@ v4.0.0
 2019-03-28
 New:
 Improved:
+- Hari kerja (berdasarkan filter)
+Fixed:
+- penambahan Id posisi ketika input sikerja
+- Olah data sikerja
+
+v4.0.0
+2019-03-28
+New:
+Improved:
 - auto approve berdasarkan jumlah seluruh Anggota, bukan berdasarkan anggota struktural
 - Rekap Kinerja dapat pull seluruh data 
 - Olah data transaksi sekarang hanya membaca flag yang telah dikoreksi, tidak lagi memeriksa seluruh data

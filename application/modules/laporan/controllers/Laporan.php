@@ -265,7 +265,7 @@ class Laporan extends CI_Controller {
 		if ($data['list'] != 0) {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
-				$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$data['list'][$i]->id_pegawai,'tanggal_mulai LIKE'=>date('Y-m').'%'));											
+				$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));				
 			}
 		}		
 	}
