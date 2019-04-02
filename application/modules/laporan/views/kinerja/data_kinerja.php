@@ -9,10 +9,11 @@
 
 						<?=$this->load->view('templates/filter/eselon',array('eselon1'=>$es1,'jenis_jabatan_stat'=>'off'));?>
 						<div class="row col-xs-12" style="margin-top:10px;">
-							<div class="box-title pull-left">
-								<button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-search"></i> Sync Transaksi</button>											
+							<div class="box-title pull-left">	
+								<button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-refresh"></i> OLAH DATA TRANSAKSI SIKERJA</button>																	
 							</div>																							
-							<div class="box-title pull-right">
+							<div class="box-title pull-right">							
+								<button class="btn btn-block btn-success" id="btn_export_excel"><i class="fa fa-print"></i> Export Excel</button>							
 								<button class="btn btn-block btn-primary" id="btn_filter"><i class="fa fa-search"></i> FILTER DATA</button>											
 							</div>											
 						</div>						
@@ -89,6 +90,24 @@ $(document).ready(function(){
 			}
 		})		
 	})
+
+	$('#btn_export_excel').click(function() {
+		var es1        = $("#select_eselon_1").val();
+		var es2        = $("#select_eselon_2").val();	
+		var es3        = $("#select_eselon_3").val();
+		var es4        = $("#select_eselon_4").val();
+		var kat_posisi = $("#select_jenis_jabatan").val();
+		if (kat_posisi == '') {
+			kat_posisi = '-';
+		}
+
+		es2 = (es2 == '') ? 0 : es2 ;
+		es3 = (es3 == '') ? 0 : es3 ;
+		es4 = (es4 == '') ? 0 : es4 ;	
+
+		window.open('<?=base_url();?>laporan/export_kinerja_excel/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");			
+	})
+
 	$('#btn_filter').click(function() {
 		var select_eselon_1      = $("#select_eselon_1").val();
 		var select_eselon_2      = $("#select_eselon_2").val();

@@ -51,7 +51,7 @@
 				}
 			?>			
 		</td>		
-		<td></td>								
+		<td><?=$list[$i]->tr_belum_diperiksa;?></td>
 		<td><?=$list[$i]->tr_revisi;?></td>
 		<td><?=$list[$i]->tr_tolak;?></td>
 		<td><?=$list[$i]->tr_approve;?></td>
