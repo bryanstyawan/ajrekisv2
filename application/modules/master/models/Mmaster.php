@@ -59,7 +59,8 @@ class Mmaster extends CI_Model {
 		$sql_2      = "";
 		$sql_3      = "";
 		$sql_4      = "";
-		$sql_5      = "";		
+		$sql_5      = "";
+		$sql_6      = "";				
 		$join_1 	= "";	 
 		$select_opt = " a.local,
 						a.es1,
@@ -178,11 +179,17 @@ class Mmaster extends CI_Model {
 			}
 			else $sql_4 = "AND b.es4 = '".$filter['eselon4']."'";
 
-			if ($filter['kat_posisi'] == '') {
+			if ($filter['bulan'] == '') {
 				# code...
 				$sql_5 = "";
 			}
-			else $sql_5 = "AND c.kat_posisi = '".$filter['kat_posisi']."'";
+			else $sql_5 = "AND a.bulan = '".$filter['bulan']."'";
+
+			if ($filter['tahun'] == '') {
+				# code...
+				$sql_6 = "";
+			}
+			else $sql_6 = "AND a.tahun = '".$filter['tahun']."'";			
 
 			$sql = "select 	b.id as id_pegawai, b.posisi_akademik, b.posisi_plt, b.nip, b.nama_pegawai, c.nama_posisi, c.atasan, d.nama_eselon1, e.nama_eselon2, f.nama_eselon3, g.nama_eselon4,
 							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi, a.tr_belum_diperiksa
@@ -198,7 +205,8 @@ class Mmaster extends CI_Model {
 					".$sql_2."
 					".$sql_3."
 					".$sql_4."
-					".$sql_5."									
+					".$sql_5."
+					".$sql_6."														
 					ORDER BY ".$order_by."";
 		}
 		// print_r($sql);die();		

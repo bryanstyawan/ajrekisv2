@@ -1,5 +1,12 @@
 v4.0.0
-2019-03-28
+2019-04-05
+New:
+Improved:
+- Filter bulan dan tahun di rekap kinerja
+Fixed:
+
+v4.0.0
+2019-04-01
 New:
 Improved:
 - Hari kerja (berdasarkan filter)
