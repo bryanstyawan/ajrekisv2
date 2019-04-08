@@ -276,12 +276,27 @@ class Laporan extends CI_Controller {
 	public function kinerja_anggota()
 	{
 		# code...
-		$id = $this->session->userdata('sesPosisi');
 		$data['title']      = 'Rekapitulasi Data Kinerja Anggota';
-		$data['list'] = $this->Mmaster->list_kinerja_bawahan($id);
 		$data['content']    = 'laporan/kinerja/data_kinerja_anggota';
 		$this->load->view('templateAdmin',$data);
 		// print_r($data['list']);die();
+	}
+
+	Public function filter_kinerja_anggota()
+	{
+		$id = $this->session->userdata('sesPosisi');
+		$data_sender = $this->input->post('data_sender');	
+		$data_sender = array
+						(
+							'atasan'   => $id,
+							'bulan'    => $data_sender['data_5'],
+							'tahun'    => $data_sender['data_6']
+						);
+		$data['sender'] 	= $data_sender;
+		$data['list'] 		= $this->Mmaster->list_kinerja_bawahan($data_sender);
+		if ($data['list'] != 0) {
+			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);	
+		}
 	}
 
 	public function filter_kinerja()
@@ -395,7 +410,7 @@ class Laporan extends CI_Controller {
 		// echo "<pre>";
 		// print_r($data['list']);die();
 		// echo "</pre>";		
-		$this->load->view('laporan/kinerja/ajax_kinerja',$data);																		
+		$this->load->view('laporan/kinerja/ajax_kinerja',$data);
 	}
 
 	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL)
