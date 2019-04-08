@@ -438,7 +438,7 @@ class Laporan extends CI_Controller {
 		$this->excel->getActiveSheet(1)->getColumnDimension('m')->setWidth('15');		
 		$this->excel->getActiveSheet(1)->getColumnDimension('n')->setWidth('15');														
 
-		$this->excel->getActiveSheet(1)->setTitle('Rekapitulasi Pegawai');
+		$this->excel->getActiveSheet(1)->setTitle('Rekapitulasi Kinerja Pegawai');
 		$this->excel->getActiveSheet(1)->getStyle('b7:h7')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 		$this->excel->getActiveSheet(1)->setCellValue('A1', 'No.');
 		$this->excel->getActiveSheet(1)->setCellValue('B1', 'NIP');		
@@ -499,7 +499,7 @@ class Laporan extends CI_Controller {
 
 		ob_clean();
 
-		$filename='Rekapitulasi Pegawai - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
+		$filename='Rekapitulasi Kinerja Pegawai - '.date("d-m-Y").'.xlsx'; //save our workbook as this file name
 		//header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
@@ -582,7 +582,7 @@ class Laporan extends CI_Controller {
 				$data['list'][$i]->disetujui                = $data_transaksi[0]->count_status_pekerjaan;
 				$data['list'][$i]->ditolak                  = $data_tolak[0]->count_status_pekerjaan;
 				$data['list'][$i]->revisi                   = $data_revisi[0]->count_status_pekerjaan;
-				$data['list'][$i]->belum_diperiksa          = $data_transaksi[0]->count_status_pekerjaan;
+				$data['list'][$i]->belum_diperiksa          = $data_belum_diperiksa[0]->count_status_pekerjaan;
 				$data['list'][$i]->menit_efektif            = $data_transaksi[0]->menit_efektif;
 				$data['list'][$i]->menit_efektif_efektif    = $data_transaksi[0]->menit_efektif_sistem;
 				$data['list'][$i]->prosentase               = $data_transaksi[0]->prosentase;
