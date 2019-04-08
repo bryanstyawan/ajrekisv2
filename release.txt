@@ -1,4 +1,30 @@
 v4.0.0
+2019-04-05
+New:
+Improved:
+- Filter bulan dan tahun di rekap kinerja
+Fixed:
+
+v4.0.0
+2019-04-01
+New:
+Improved:
+- Hari kerja (berdasarkan filter)
+Fixed:
+- penambahan Id posisi ketika input sikerja
+- Olah data sikerja
+
+v4.0.0
+2019-03-28
+New:
+Improved:
+- auto approve berdasarkan jumlah seluruh Anggota, bukan berdasarkan anggota struktural
+- Rekap Kinerja dapat pull seluruh data 
+- Olah data transaksi sekarang hanya membaca flag yang telah dikoreksi, tidak lagi memeriksa seluruh data
+Fixed:
+- v2.0 menjadi v.4.0 di halaman login
+
+v4.0.0
 2019-03-28
 New:
 - Rekap Kinerja (excel)

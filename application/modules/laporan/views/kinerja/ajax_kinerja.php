@@ -57,6 +57,7 @@
 		<td><?=$list[$i]->tr_approve;?></td>
 		<td><?=$list[$i]->menit_efektif;?></td>
 		<td><?=$list[$i]->prosentase_menit_efektif;?></td>
+		<td><?=$this->Globalrules->set_bulan($sender['bulan']);?> <?=$sender['tahun'];?></td>		
 	</tr>
 <?php
 	}

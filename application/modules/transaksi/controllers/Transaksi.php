@@ -19,7 +19,7 @@ class Transaksi extends CI_Controller {
 	{
 		# code...
 		$data['list']         = $this->mtrx->status_pekerjaan($param,$this->session->userdata('sesUser'));		
-		$data['hari_kerja']   = $this->mtrx->get_hari_kerja();
+		$data['hari_kerja']   = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 		$data['infoPegawai']  = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');		
 		$data['id_html']      = $flag;
 		$this->load->view('transaksi/trx/refresh/index',$data);		
@@ -29,7 +29,7 @@ class Transaksi extends CI_Controller {
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_selesai LIKE'=>date('Y-m').'%'));		
+		$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
 		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));		
@@ -42,7 +42,7 @@ class Transaksi extends CI_Controller {
 		$data['tr_keberatan_ditolak'] = $this->mtrx->status_pekerjaan('5',$this->session->userdata('sesUser'));
 		$data['tr_banding']           = $this->mtrx->status_pekerjaan('6',$this->session->userdata('sesUser'));
 		$data['tr_banding_ditolak']   = $this->mtrx->status_pekerjaan('7',$this->session->userdata('sesUser'));
-		$data['hari_kerja']           = $this->mtrx->get_hari_kerja();
+		$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
 		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
 
@@ -120,10 +120,11 @@ class Transaksi extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$res_data       = "";
 		$data_sender    = $this->input->post('data_sender');
-		// $count_transact = $this->timeline_transact($data_sender);
+		$count_transact = $this->timeline_transact($data_sender);
 		$data           = array
 						(
 							'id_pegawai'          => $this->session->userdata('sesUser'),
+							'id_posisi'			  => $this->session->userdata('sesPosisi'),
 							'id_uraian_tugas'     => $data_sender['urtug'],
 							'tanggal_mulai'       => date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
 							'tanggal_selesai'     => date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
@@ -131,9 +132,9 @@ class Transaksi extends CI_Controller {
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
 							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							// 'menit_efektif'       => $count_transact['menit_efektif'],
-							// 'hari_efektif'        => $count_transact['hari_efektif'],
-							// 'tunjangan'           => $count_transact['tunjangan'],
+							'menit_efektif'       => $count_transact['menit_efektif'],
+							'hari_efektif'        => $count_transact['hari_efektif'],
+							'tunjangan'           => $count_transact['tunjangan'],
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
@@ -186,10 +187,11 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$data_sender    = $this->input->post('data_sender');
-		// $count_transact = $this->timeline_transact($data_sender);
+		$count_transact = $this->timeline_transact($data_sender);
 		$data           = array
 						(
 							'id_pegawai'          => $this->session->userdata('sesUser'),
+							'id_posisi'			  => $this->session->userdata('sesPosisi'),							
 							'id_uraian_tugas'     => $data_sender['urtug'],
 							'tanggal_mulai'       => date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
 							'tanggal_selesai'     => date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
@@ -197,9 +199,9 @@ class Transaksi extends CI_Controller {
 							'jam_selesai'         => $data_sender['jam_selesai'],
 							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
 							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							// 'menit_efektif'       => $count_transact['menit_efektif'],
-							// 'hari_efektif'        => $count_transact['hari_efektif'],
-							// 'tunjangan'           => $count_transact['tunjangan'],
+							'menit_efektif'       => $count_transact['menit_efektif'],
+							'hari_efektif'        => $count_transact['hari_efektif'],
+							'tunjangan'           => $count_transact['tunjangan'],
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
@@ -351,50 +353,50 @@ class Transaksi extends CI_Controller {
 		{
 			if ($who_is_emp == 'eselon 3' || $who_is_emp == 'eselon 2' || $who_is_emp == 'eselon 1') {
 				# code...
-				if ($who_is_approval == 'eselon 2')
-				{
-					# code...
-					$id_pegawai            = 0;
-					$get_pegawai           = $this->mtrx->get_pegawai_id($this->session->userdata('sesUser'),'default');
-					$atasan                = $get_pegawai[0]->atasan;
-					$who_is_super          = $this->mtrx->get_pegawai_id($atasan,'atasan');
-					$who_is_super_approval = "";
-					if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
-
-					$id_pegawai = $get_data_transact[0]->id_pegawai;
- 					$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-					if ($get_member != 0) {
-						# code...
-						$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
-						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-						$data['tunjangan']       = $get_value_approval['tunjangan'];
-						// print_r();die()
-						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-						if ($who_is_super_approval == 'eselon 1')
-						{
-							$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
-							$data['id_pegawai']      = $who_is_super[0]->id;
-							$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-							$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-							$data['tunjangan']       = $get_value_approval['tunjangan'];
-							$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-						}
-					}
-				}
-				elseif ($who_is_approval == 'eselon 1') {
-					# code...
-					$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-					if ($get_member != 0) {
-						# code...
-						$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
-						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-						$data['tunjangan']       = $get_value_approval['tunjangan'];
-						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-					}
-				}
+				//sebelumnya disini
 			}				
+			if ($who_is_approval == 'eselon 2')
+			{
+				# code...
+				$id_pegawai            = 0;
+				$get_pegawai           = $this->mtrx->get_pegawai_id($this->session->userdata('sesUser'),'default');
+				$atasan                = $get_pegawai[0]->atasan;
+				$who_is_super          = $this->mtrx->get_pegawai_id($atasan,'atasan');
+				$who_is_super_approval = "";
+				if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
+
+				$id_pegawai = $get_data_transact[0]->id_pegawai;
+				$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
+				if ($get_member != 0) {
+					# code...
+					$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
+					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
+					$data['tunjangan']       = $get_value_approval['tunjangan'];
+					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
+					if ($who_is_super_approval == 'eselon 1')
+					{
+						$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
+						$data['id_pegawai']      = $who_is_super[0]->id;
+						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
+						$data['tunjangan']       = $get_value_approval['tunjangan'];
+						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
+					}
+				}
+			}
+			elseif ($who_is_approval == 'eselon 1') {
+				# code...
+				$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
+				if ($get_member != 0) {
+					# code...
+					$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
+					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
+					$data['tunjangan']       = $get_value_approval['tunjangan'];
+					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
+				}
+			}			
 		}
 
 		$data_notify  = array
@@ -464,46 +466,47 @@ class Transaksi extends CI_Controller {
 			$posisi_plt            = $get_pegawai[0]->posisi_plt;			
 			if ($who_is_emp == 'eselon 3' || $who_is_emp == 'eselon 2' || $who_is_emp == 'eselon 1') {
 				# code...
-				if ($who_is_approval == 'eselon 2')
-				{
-					# code...
-					$id_pegawai            = 0;					
-					$who_is_super          = $this->mtrx->get_pegawai_plt_id($atasan,'atasan');
-					$who_is_super_approval = "";
-					if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
-					$id_pegawai = $get_data_transact[0]->id_pegawai;
-					$get_member = $this->Globalrules->list_bawahan($posisi_plt,1);
-					if ($get_member != 0) {
-						# code...
-						$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
-						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-						$data['tunjangan']       = $get_value_approval['tunjangan'];
-						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-						if ($who_is_super_approval == 'eselon 1')
-						{
-							$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
-							$data['id_pegawai']      = $who_is_super[0]->id;
-							$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-							$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-							$data['tunjangan']       = $get_value_approval['tunjangan'];
-							$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-						}
-					}
-				}
-				elseif ($who_is_approval == 'eselon 1') {
-					# code...
-					$get_member    = $this->Globalrules->list_bawahan($posisi_plt,1);
-					if ($get_member != 0) {
-						# code...
-						$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
-						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-						$data['tunjangan']       = $get_value_approval['tunjangan'];
-						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-					}
-				}
+				//sebelumnya disini
 			}				
+			if ($who_is_approval == 'eselon 2')
+			{
+				# code...
+				$id_pegawai            = 0;					
+				$who_is_super          = $this->mtrx->get_pegawai_plt_id($atasan,'atasan');
+				$who_is_super_approval = "";
+				if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
+				$id_pegawai = $get_data_transact[0]->id_pegawai;
+				$get_member = $this->Globalrules->list_bawahan($posisi_plt,1);
+				if ($get_member != 0) {
+					# code...
+					$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
+					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
+					$data['tunjangan']       = $get_value_approval['tunjangan'];
+					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
+					if ($who_is_super_approval == 'eselon 1')
+					{
+						$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
+						$data['id_pegawai']      = $who_is_super[0]->id;
+						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
+						$data['tunjangan']       = $get_value_approval['tunjangan'];
+						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
+					}
+				}
+			}
+			elseif ($who_is_approval == 'eselon 1') {
+				# code...
+				$get_member    = $this->Globalrules->list_bawahan($posisi_plt,1);
+				if ($get_member != 0) {
+					# code...
+					$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
+					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
+					$data['tunjangan']       = $get_value_approval['tunjangan'];
+					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
+				}
+			}			
 		}
 
 		$data_notify  = array
@@ -676,7 +679,7 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 
-		$hari_kerja         = $this->mtrx->get_hari_kerja();
+		$hari_kerja         = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 		$get_pegawai_id     = $this->mtrx->get_pegawai_id($id_posisi,'posisi');
 		$get_member         = $this->Globalrules->list_bawahan($id_posisi);
 		$id_urtug           = "";
@@ -806,7 +809,7 @@ class Transaksi extends CI_Controller {
 		$tunjangan_session  = $this->session->userdata('tunjangan');
 		$tunjangan          = "";
 		$menit_efektif_calc = "";
-		$hari_kerja         = $this->mtrx->get_hari_kerja();
+		$hari_kerja         = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 		if ($hari_kerja != 0)
 		{
 			# code...
@@ -1520,7 +1523,7 @@ class Transaksi extends CI_Controller {
 			{
 				$data['title']                = '[PLT]Persetujuan Sikerja Bawahan';
 				$data['content']              = 'transaksi/plt/index';				
-				$data['hari_kerja']           = $this->mtrx->get_hari_kerja();				
+				$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));				
 				$data['member'] = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);								
 				if ($data['member'] != 0) {
 					// code...
@@ -1573,7 +1576,7 @@ class Transaksi extends CI_Controller {
 			{
 				$data['title']                = '[Akademik] Persetujuan Sikerja Bawahan';
 				$data['content']              = 'transaksi/akademik/index';				
-				$data['hari_kerja']           = $this->mtrx->get_hari_kerja();				
+				$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));				
 				$data['member'] = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_akademik']);								
 				if ($data['member'] != 0) {
 					// code...

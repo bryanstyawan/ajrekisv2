@@ -397,11 +397,9 @@ class Mtrx extends CI_Model
 		}
 	}
 
-	public function get_hari_kerja()
+	public function get_hari_kerja($bulan=NULL,$tahun=NULL)
 	{
 		# code...
-		$bulan = date('m');
-		$tahun = date('Y');
 		$sql = "SELECT a.*
 				FROM mr_hari_aktif  a
 				WHERE a.bulan = '".$bulan."'
