@@ -1,5 +1,5 @@
 v4.0.0
-2019-04-05
+2019-04-08
 New:
 Improved:
 - Judul Rekap Kinerja Pegawai (By Eric)
@@ -7,6 +7,7 @@ Improved:
 Fixed:
 - Balon Notif di transaksi (baca tanggal mulai) (By Eric)
 - Kolom Transaksi Belum diperiksa di rekap kinerja (By Eric)
+- Olah data kinerja
 
 v4.0.0
 2019-04-05

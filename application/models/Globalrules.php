@@ -1484,7 +1484,7 @@ class Globalrules extends CI_Model
 										$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440) + 1;				 
 										$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];							
 										$menit_efektif_sisa        				  = 0;
-										$data_timeline_1['sisa_menit']   		  = ($data_timeline[$i]['menit_efektif'] + 1440) - $data_timeline1[$i]['menit_hari_efektif'];
+										$data_timeline_1['sisa_menit']   		  = ($data_timeline[$i]['menit_efektif']) - ($data_timeline1[$i]['menit_hari_efektif']);
 										$data_timeline[$i]['menit_efektif']		  = ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
 									}
 								}
@@ -1623,6 +1623,30 @@ class Globalrules extends CI_Model
 						}
 					}					
 				}
+			}
+			else
+			{
+				$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$id_posisi_jabatan,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
+				if ($get_report_kinerja == array()) {
+					# insert
+					$get_kinerja = array(
+											'menit_efektif'            => 0,
+											'tunjangan'                => 0,
+											'real_tunjangan'           => 0,										
+											'frekuensi_realisasi'      => 0,
+											'prosentase_menit_efektif' => 0
+										);
+					$get_kinerja['tr_approve']               = 0;
+					$get_kinerja['tr_tolak']                 = 0;
+					$get_kinerja['tr_revisi']                = 0;			
+					$get_kinerja['audit_user']               = 'system';
+					$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
+					$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
+					$get_kinerja['bulan']                    = date('m');
+					$get_kinerja['tahun']                    = date('Y');
+					$get_kinerja['id_posisi']                = $id_posisi_jabatan;
+					$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
+				}				
 			}
 		}
 	}
