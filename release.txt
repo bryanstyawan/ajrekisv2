@@ -2,6 +2,15 @@ v4.0.0
 2019-04-05
 New:
 Improved:
+- Judul Rekap Kinerja Pegawai
+Fixed:
+- Balon Notif di transaksi (baca tanggal mulai)
+- Kolom Transaksi Belum diperiksa di rekap kinerja
+
+v4.0.0
+2019-04-05
+New:
+Improved:
 - Filter bulan dan tahun di rekap kinerja
 Fixed:
 
