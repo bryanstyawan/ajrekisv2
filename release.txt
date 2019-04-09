@@ -2,6 +2,13 @@ v4.0.0
 2019-04-08
 New:
 Improved:
+Fixed:
+- Perbaikan auto approval, sebelumnya nilai auto approve terkena olah data sehingga data menjadi tidak akurat.
+
+v4.0.0
+2019-04-08
+New:
+Improved:
 - Judul Rekap Kinerja Pegawai (By Eric)
 - Filter bulan dan tahun di kinerja anggota (By Eric)
 Fixed:

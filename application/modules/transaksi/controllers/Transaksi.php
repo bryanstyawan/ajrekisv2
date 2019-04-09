@@ -343,7 +343,8 @@ class Transaksi extends CI_Controller {
 								'nama_pekerjaan'       => 'Menyetujui pekerjaan',
 								'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
 								'hari_efektif'         => '0',
-								'status_pekerjaan'     => '1'
+								'status_pekerjaan'     => '1',
+								'flag_sync'            => '1'
 							);
 
 		/**************************************************/
@@ -355,6 +356,7 @@ class Transaksi extends CI_Controller {
 				# code...
 				//sebelumnya disini
 			}				
+
 			if ($who_is_approval == 'eselon 2')
 			{
 				# code...
@@ -370,6 +372,7 @@ class Transaksi extends CI_Controller {
 				if ($get_member != 0) {
 					# code...
 					$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
+					$data['flag_sync']       = 1;
 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 					$data['tunjangan']       = $get_value_approval['tunjangan'];
@@ -377,6 +380,7 @@ class Transaksi extends CI_Controller {
 					if ($who_is_super_approval == 'eselon 1')
 					{
 						$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
+						$data['flag_sync']       = 1;						
 						$data['id_pegawai']      = $who_is_super[0]->id;
 						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
 						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
@@ -391,6 +395,7 @@ class Transaksi extends CI_Controller {
 				if ($get_member != 0) {
 					# code...
 					$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
+					$data['flag_sync']       = 1;					
 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 					$data['tunjangan']       = $get_value_approval['tunjangan'];
