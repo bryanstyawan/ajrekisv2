@@ -249,10 +249,10 @@ class Laporan extends CI_Controller {
 		$bulan       = '0'.$data_sender['data_5'];
 		if ($data_sender['data_5'] == 3) {
 			# code...
-			$bulan = '1';
+			$bulan = '01';
 		}
 		$tahun       = $data_sender['data_6'];
-		$data_date   = $tahun.'-0'.$bulan;		
+		$data_date   = $tahun.'-'.$bulan;		
 		$data_sender = array
 						(
 							'eselon1'    => $data_sender['data_1'],
@@ -273,6 +273,7 @@ class Laporan extends CI_Controller {
 			# code...
 			for ($i=0; $i < count($data['list']); $i++) { 
 				$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$data['list'][$i]->id_pegawai,'tanggal_mulai LIKE'=>$data_date.'%'),$bulan,$tahun);				
+				// $this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));				
 			}
 		}		
 	}
