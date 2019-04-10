@@ -25,208 +25,6 @@ class Laporan extends CI_Controller {
 		redirect('dashboard/home');
 	}
 
-	public function import_tunkir_produktivitas_disiplin()
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$data['title']                = 'Import Tunjangan Kinerja Aspek Produktivitas dan Aspek Disiplin';
-		$data['subtitle']             = '';
-		$data['bulan']				  = $this->Globalrules->data_bulan();
-		$data['content']              = 'laporan/import_tunkir_produktivitas_disiplin/import_tunkir_produktivitas_disiplin';
-		$this->load->view('templateAdmin',$data);
-	}
-
-	public function import_tunkir_produktivitas_disiplin_excel($bulan,$tahun)
-	{
-		# code...
-		$data_store = "";
-		if($_FILES['file']['error'] == 4)
-		{
-			return false;
-		}
-
-		$config['upload_path']        = './public/excel/';
-		$config['allowed_types']      = 'xls|xlsx';
-		$config['max_size']           = 20000;
-
-        $this->load->library('upload');
-        $this->upload->initialize($config);
-
-        if( $this->upload->do_upload('file') )
-        {
-			//load the excel library
-			$this->load->library('excel');
-
-			$dataImage     = $this->upload->data();
-
-			//read file from path
-			$objPHPExcel = PHPExcel_IOFactory::load($dataImage['full_path']);
-
-			//get only the Cell Collection
-			$cell_collection = $objPHPExcel->getActiveSheet()->getCellCollection();
-			//extract to a PHP readable array format
-			foreach ($cell_collection as $cell) {
-				$column     = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
-				$row        = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
-				$data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
-
-			    //header will/should be in row 1 only. of course this can be modified to suit your need.
-			    if ($row == 1) {
-			        $header[$row][$column] = $data_value;
-			    } else
-			    {
-			    	if ($row == 2) {
-			    		# code...
-			    	}
-			    	elseif ($row == 4) {
-			    		# code...
-				        $header[$row][$column] = $data_value;
-			    	}
-			    	else
-			    	{
-			        	$arr_data[$row][$column] = $data_value;
-			    	}
-			    }
-			}
-
-			//send the data in an array format
-			$data['values'] = $arr_data;
-
-			//clean data
-			$data_count = (6+count($data['values']));
-			for ($i=15; $i <= $data_count; $i++) {
-				# code...
-				if ($data['values'][$i]['A'] != 'Total') {
-					# code...
-					$data_store[$i-15]        = array
-										(
-											'nama'              => $data['values'][$i]['B'],
-											'nip'               => $data['values'][$i]['C'],
-											'npwp'              => $data['values'][$i]['D'],
-											'gol'               => $data['values'][$i]['E'],
-											'kelas_jabatan'     => $data['values'][$i]['F'],
-											'tunjangan_kinerja' => $data['values'][$i]['G'],
-											'tunjangan_plt_plh' => $data['values'][$i]['H'],
-											'total_pengurangan' => $data['values'][$i]['I'],
-											'total'             => $data['values'][$i]['J']
-									);
-				}
-			}
-
-
-			$es2 = $this->session->userdata('sesEs2');
-
-			for ($i=0; $i < count($data_store); $i++) {
-				# code...
-				$data_save        = array
-									(
-										'es2'				=> $es2,
-										'nama'              => $data_store[$i]['nama'],
-										'nip'               => $data_store[$i]['nip'],
-										'npwp'              => $data_store[$i]['npwp'],
-										'gol'               => $data_store[$i]['gol'],
-										'kelas_jabatan'     => $data_store[$i]['kelas_jabatan'],
-										'tunjangan_kinerja' => $data_store[$i]['tunjangan_kinerja'],
-										'tunjangan_plt_plh' => $data_store[$i]['tunjangan_plt_plh'],
-										'total_pengurangan' => $data_store[$i]['total_pengurangan'],
-										'total'             => $data_store[$i]['total'],
-										'bulan'				=> $bulan,
-										'tahun'				=> $tahun
-								);
-				$this->Allcrud->addData('tr_import_tunkir_produktivitas_disiplin_temp',$data_save);
-			}
-			$res = array
-						(
-							'status' => 1,
-							'text'   => 'Unggah data berhasil'
-						);
-			echo json_encode($res);
-			// $this->show_data_displin($es2,$bulan,$tahun);
-        }
-        else
-        {
-            echo $this->upload->display_errors();
-        }
-	}
-
-	public function show_data_displin($es2,$bulan,$tahun)
-	{
-		# code...
-		$res_data      = 1;
-		$data['list']  = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
-		$data['state'] = 'temp';
-		$this->load->view('laporan/import_tunkir_produktivitas_disiplin/getdat_temp',$data);
-	}
-
-	public function check_data_import_produktivitas_tunkir($es2,$bulan,$tahun)
-	{
-		# code...
-		$data['list'] = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
-	}
-
-	public function get_import_produktivitas_tunkir($es2,$bulan,$tahun)
-	{
-		# code...
-		$data_sender   = $this->input->post('data_sender');
-		$data['state'] = 'temp';
-		$data['list']  = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
-		$this->load->view('laporan/import_tunkir_produktivitas_disiplin/getdat_temp',$data);
-	}
-
-	public function save_import_produktivitas_tunkir($es2,$bulan,$tahun)
-	{
-		# code...
-		$res_data    = "";
-		$data_sender = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
-		// print_r($data_sender[0]->nama);die();
-		for ($i=0; $i < count($data_sender); $i++) {
-			# code...
-			if ($data_sender[$i]->verify_nip_nama != 'invalid') {
-				# code...
-				$data_save        = array
-									(
-										'es2'				=> $es2,
-										'nama'              => $data_sender[$i]->nama,
-										'nip'               => $data_sender[$i]->nip,
-										'npwp'              => $data_sender[$i]->npwp,
-										'gol'               => $data_sender[$i]->gol,
-										'kelas_jabatan'     => $data_sender[$i]->kelas_jabatan,
-										'tunjangan_kinerja' => $data_sender[$i]->tunjangan_kinerja,
-										'tunjangan_plt_plh' => $data_sender[$i]->tunjangan_plt_plh,
-										'total_pengurangan' => $data_sender[$i]->total_pengurangan,
-										'total'             => $data_sender[$i]->total,
-										'bulan'				=> $bulan,
-										'tahun'				=> $tahun
-								);
-				$this->Allcrud->addData('tr_import_tunkir_produktivitas_disiplin',$data_save);
-				$flag     = array('id' => $data_sender[$i]->id);
-				$res_data = $this->Allcrud->delData('tr_import_tunkir_produktivitas_disiplin_temp',$flag);
-			}
-			else
-			{
-				$flag     = array('id' => $data_sender[$i]->id);
-				$res_data = $this->Allcrud->delData('tr_import_tunkir_produktivitas_disiplin_temp',$flag);
-			}
-		}
-
-		$text_status = $this->Globalrules->check_status_res($res_data,'Data import telah disimpan.');
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
-	}
-
-	public function get_import_produktivitas_tunkir_real($es2,$bulan,$tahun)
-	{
-		# code...
-		$data['list']  = $this->mlaporan->import_real($es2,$bulan,$tahun);
-		$data['state'] = 'real';
-		$this->load->view('laporan/import_tunkir_produktivitas_disiplin/getdat_temp',$data);
-	}
-
 	public function rekap_kinerja()
 	{
 		$this->Globalrules->session_rule();
@@ -276,32 +74,6 @@ class Laporan extends CI_Controller {
 				// $this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));				
 			}
 		}		
-	}
-
-	public function kinerja_anggota()
-	{
-		# code...
-		$data['title']      = 'Rekapitulasi Data Kinerja Anggota';
-		$data['content']    = 'laporan/kinerja/data_kinerja_anggota';
-		$this->load->view('templateAdmin',$data);
-		// print_r($data['list']);die();
-	}
-
-	Public function filter_kinerja_anggota()
-	{
-		$id = $this->session->userdata('sesPosisi');
-		$data_sender = $this->input->post('data_sender');	
-		$data_sender = array
-						(
-							'atasan'   => $id,
-							'bulan'    => $data_sender['data_5'],
-							'tahun'    => $data_sender['data_6']
-						);
-		$data['sender'] 	= $data_sender;
-		$data['list'] 		= $this->Mmaster->list_kinerja_bawahan($data_sender);
-		if ($data['list'] != 0) {
-			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);	
-		}
 	}
 
 	public function filter_kinerja()
@@ -535,8 +307,54 @@ class Laporan extends CI_Controller {
 		// echo "<pre>";
 		// print_r($data['list']);die();		
 		// echo "</pre>";		
+	}	
+
+	/***************************** */
+
+	public function kinerja_anggota()
+	{
+		# code...
+		$data['title']      = 'Rekapitulasi Data Kinerja Anggota';
+		$data['content']    = 'laporan/kinerja/data_kinerja_anggota';
+		$this->load->view('templateAdmin',$data);
+		// print_r($data['list']);die();
 	}
 
+	Public function filter_kinerja_anggota()
+	{
+		$id = $this->session->userdata('sesPosisi');
+		$data_sender = $this->input->post('data_sender');	
+		$data_sender = array
+						(
+							'atasan'   => $id,
+							'bulan'    => $data_sender['data_5'],
+							'tahun'    => $data_sender['data_6']
+						);
+		$data['sender'] 	= $data_sender;
+		$data['list'] 		= $this->Mmaster->list_kinerja_bawahan($data_sender);
+		if ($data['list'] != 0) {
+			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);	
+		}
+	}
+
+	/***************************** */
+
+	public function rekap_tunkir_produktivitas_disiplin()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$data['title']      = 'Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin';
+		$data['content']    = 'laporan/tunkir_produktivitas_disiplin/data_tunkir';
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
+		$data['list']       =  '';
+		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
+		$data['es2']        = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
+		$data['role']       = $this->Allcrud->listData('user_role');
+		$this->load->view('templateAdmin',$data);
+	}
+	
+	/**************************** */
 
 
 
@@ -556,6 +374,228 @@ class Laporan extends CI_Controller {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public function import_tunkir_produktivitas_disiplin()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$data['title']                = 'Import Tunjangan Kinerja Aspek Produktivitas dan Aspek Disiplin';
+		$data['subtitle']             = '';
+		$data['bulan']				  = $this->Globalrules->data_bulan();
+		$data['content']              = 'laporan/import_tunkir_produktivitas_disiplin/import_tunkir_produktivitas_disiplin';
+		$this->load->view('templateAdmin',$data);
+	}
+
+	public function import_tunkir_produktivitas_disiplin_excel($bulan,$tahun)
+	{
+		# code...
+		$data_store = "";
+		if($_FILES['file']['error'] == 4)
+		{
+			return false;
+		}
+
+		$config['upload_path']        = './public/excel/';
+		$config['allowed_types']      = 'xls|xlsx';
+		$config['max_size']           = 20000;
+
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+
+        if( $this->upload->do_upload('file') )
+        {
+			//load the excel library
+			$this->load->library('excel');
+
+			$dataImage     = $this->upload->data();
+
+			//read file from path
+			$objPHPExcel = PHPExcel_IOFactory::load($dataImage['full_path']);
+
+			//get only the Cell Collection
+			$cell_collection = $objPHPExcel->getActiveSheet()->getCellCollection();
+			//extract to a PHP readable array format
+			foreach ($cell_collection as $cell) {
+				$column     = $objPHPExcel->getActiveSheet()->getCell($cell)->getColumn();
+				$row        = $objPHPExcel->getActiveSheet()->getCell($cell)->getRow();
+				$data_value = $objPHPExcel->getActiveSheet()->getCell($cell)->getValue();
+
+			    //header will/should be in row 1 only. of course this can be modified to suit your need.
+			    if ($row == 1) {
+			        $header[$row][$column] = $data_value;
+			    } else
+			    {
+			    	if ($row == 2) {
+			    		# code...
+			    	}
+			    	elseif ($row == 4) {
+			    		# code...
+				        $header[$row][$column] = $data_value;
+			    	}
+			    	else
+			    	{
+			        	$arr_data[$row][$column] = $data_value;
+			    	}
+			    }
+			}
+
+			//send the data in an array format
+			$data['values'] = $arr_data;
+
+			//clean data
+			$data_count = (6+count($data['values']));
+			for ($i=15; $i <= $data_count; $i++) {
+				# code...
+				if ($data['values'][$i]['A'] != 'Total') {
+					# code...
+					$data_store[$i-15]        = array
+										(
+											'nama'              => $data['values'][$i]['B'],
+											'nip'               => $data['values'][$i]['C'],
+											'npwp'              => $data['values'][$i]['D'],
+											'gol'               => $data['values'][$i]['E'],
+											'kelas_jabatan'     => $data['values'][$i]['F'],
+											'tunjangan_kinerja' => $data['values'][$i]['G'],
+											'tunjangan_plt_plh' => $data['values'][$i]['H'],
+											'total_pengurangan' => $data['values'][$i]['I'],
+											'total'             => $data['values'][$i]['J']
+									);
+				}
+			}
+
+
+			$es2 = $this->session->userdata('sesEs2');
+
+			for ($i=0; $i < count($data_store); $i++) {
+				# code...
+				$data_save        = array
+									(
+										'es2'				=> $es2,
+										'nama'              => $data_store[$i]['nama'],
+										'nip'               => $data_store[$i]['nip'],
+										'npwp'              => $data_store[$i]['npwp'],
+										'gol'               => $data_store[$i]['gol'],
+										'kelas_jabatan'     => $data_store[$i]['kelas_jabatan'],
+										'tunjangan_kinerja' => $data_store[$i]['tunjangan_kinerja'],
+										'tunjangan_plt_plh' => $data_store[$i]['tunjangan_plt_plh'],
+										'total_pengurangan' => $data_store[$i]['total_pengurangan'],
+										'total'             => $data_store[$i]['total'],
+										'bulan'				=> $bulan,
+										'tahun'				=> $tahun
+								);
+				$this->Allcrud->addData('tr_import_tunkir_produktivitas_disiplin_temp',$data_save);
+			}
+			$res = array
+						(
+							'status' => 1,
+							'text'   => 'Unggah data berhasil'
+						);
+			echo json_encode($res);
+			// $this->show_data_displin($es2,$bulan,$tahun);
+        }
+        else
+        {
+            echo $this->upload->display_errors();
+        }
+	}
+
+	public function show_data_displin($es2,$bulan,$tahun)
+	{
+		# code...
+		$res_data      = 1;
+		$data['list']  = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
+		$data['state'] = 'temp';
+		$this->load->view('laporan/import_tunkir_produktivitas_disiplin/getdat_temp',$data);
+	}
+
+	public function check_data_import_produktivitas_tunkir($es2,$bulan,$tahun)
+	{
+		# code...
+		$data['list'] = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
+	}
+
+	public function get_import_produktivitas_tunkir($es2,$bulan,$tahun)
+	{
+		# code...
+		$data_sender   = $this->input->post('data_sender');
+		$data['state'] = 'temp';
+		$data['list']  = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
+		$this->load->view('laporan/import_tunkir_produktivitas_disiplin/getdat_temp',$data);
+	}
+
+	public function save_import_produktivitas_tunkir($es2,$bulan,$tahun)
+	{
+		# code...
+		$res_data    = "";
+		$data_sender = $this->mlaporan->import_temporary($es2,$bulan,$tahun);
+		// print_r($data_sender[0]->nama);die();
+		for ($i=0; $i < count($data_sender); $i++) {
+			# code...
+			if ($data_sender[$i]->verify_nip_nama != 'invalid') {
+				# code...
+				$data_save        = array
+									(
+										'es2'				=> $es2,
+										'nama'              => $data_sender[$i]->nama,
+										'nip'               => $data_sender[$i]->nip,
+										'npwp'              => $data_sender[$i]->npwp,
+										'gol'               => $data_sender[$i]->gol,
+										'kelas_jabatan'     => $data_sender[$i]->kelas_jabatan,
+										'tunjangan_kinerja' => $data_sender[$i]->tunjangan_kinerja,
+										'tunjangan_plt_plh' => $data_sender[$i]->tunjangan_plt_plh,
+										'total_pengurangan' => $data_sender[$i]->total_pengurangan,
+										'total'             => $data_sender[$i]->total,
+										'bulan'				=> $bulan,
+										'tahun'				=> $tahun
+								);
+				$this->Allcrud->addData('tr_import_tunkir_produktivitas_disiplin',$data_save);
+				$flag     = array('id' => $data_sender[$i]->id);
+				$res_data = $this->Allcrud->delData('tr_import_tunkir_produktivitas_disiplin_temp',$flag);
+			}
+			else
+			{
+				$flag     = array('id' => $data_sender[$i]->id);
+				$res_data = $this->Allcrud->delData('tr_import_tunkir_produktivitas_disiplin_temp',$flag);
+			}
+		}
+
+		$text_status = $this->Globalrules->check_status_res($res_data,'Data import telah disimpan.');
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);
+	}
+
+	public function get_import_produktivitas_tunkir_real($es2,$bulan,$tahun)
+	{
+		# code...
+		$data['list']  = $this->mlaporan->import_real($es2,$bulan,$tahun);
+		$data['state'] = 'real';
+		$this->load->view('laporan/import_tunkir_produktivitas_disiplin/getdat_temp',$data);
+	}
 
 	public function filter_data_pegawai_rekap_kinerja_prod_disiplin()
 	{
@@ -636,21 +676,6 @@ class Laporan extends CI_Controller {
 		}
 
 		return $data;
-	}
-
-	public function rekap_tunkir_produktivitas_disiplin()
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$data['title']      = 'Rekapitulasi Tunjangan Kinerja Aspek Produktivitas & Aspek Disiplin';
-		$data['content']    = 'laporan/tunkir_produktivitas_disiplin/data_tunkir';
-		$data['bulan_list'] = $this->Globalrules->data_bulan();
-		$data['list']       =  '';
-		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
-		$data['es2']        = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
-		$data['role']       = $this->Allcrud->listData('user_role');
-		$this->load->view('templateAdmin',$data);
 	}
 
 /*

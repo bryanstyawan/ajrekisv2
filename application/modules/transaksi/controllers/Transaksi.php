@@ -459,6 +459,7 @@ class Transaksi extends CI_Controller {
 		$data              = array
 							(
 								'id_pegawai'           => $this->session->userdata('sesUser'),
+								'id_posisi'			  => $this->session->userdata('sesPosisi'),								
 								'tanggal_mulai'        => $get_data_transact[0]->tanggal_mulai,
 								'tanggal_selesai'      => $get_data_transact[0]->tanggal_selesai,
 								'jam_mulai'            => $get_data_transact[0]->jam_mulai,
