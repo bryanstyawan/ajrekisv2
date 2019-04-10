@@ -374,6 +374,10 @@ class Transaksi extends CI_Controller {
 					$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
 					$data['flag_sync']       = 1;
 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					if ($data['menit_efektif'] == 0) {
+						# code...
+						$data['menit_efektif'] = 1;
+					}
 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 					$data['tunjangan']       = $get_value_approval['tunjangan'];
 					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
@@ -383,6 +387,10 @@ class Transaksi extends CI_Controller {
 						$data['flag_sync']       = 1;						
 						$data['id_pegawai']      = $who_is_super[0]->id;
 						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+						if ($data['menit_efektif'] == 0) {
+							# code...
+							$data['menit_efektif'] = 1;
+						}						
 						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 						$data['tunjangan']       = $get_value_approval['tunjangan'];
 						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
@@ -397,6 +405,10 @@ class Transaksi extends CI_Controller {
 					$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
 					$data['flag_sync']       = 1;					
 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					if ($data['menit_efektif'] == 0) {
+						# code...
+						$data['menit_efektif'] = 1;
+					}											
 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 					$data['tunjangan']       = $get_value_approval['tunjangan'];
 					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
@@ -455,7 +467,6 @@ class Transaksi extends CI_Controller {
 								'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
 								'hari_efektif'         => '0',
 								'status_pekerjaan'     => '1',
-								'flag_sync'			   => '1',
 								'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
 								'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
 								'audit_update'         => date('Y-m-d H:i:s'),
@@ -487,6 +498,11 @@ class Transaksi extends CI_Controller {
 					# code...
 					$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					if ($data['menit_efektif'] == 0) {
+						# code...
+						$data['menit_efektif'] = 1;
+					}						
+					$data['flag_sync']       = 1;										
 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 					$data['tunjangan']       = $get_value_approval['tunjangan'];
 					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
@@ -495,6 +511,11 @@ class Transaksi extends CI_Controller {
 						$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
 						$data['id_pegawai']      = $who_is_super[0]->id;
 						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+						if ($data['menit_efektif'] == 0) {
+							# code...
+							$data['menit_efektif'] = 1;
+						}						
+						$data['flag_sync']       = 1;						
 						$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 						$data['tunjangan']       = $get_value_approval['tunjangan'];
 						$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
@@ -508,6 +529,11 @@ class Transaksi extends CI_Controller {
 					# code...
 					$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
+					if ($data['menit_efektif'] == 0) {
+						# code...
+						$data['menit_efektif'] = 1;
+					}						
+					$data['flag_sync']       = 1;	
 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
 					$data['tunjangan']       = $get_value_approval['tunjangan'];
 					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
