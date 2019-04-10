@@ -247,6 +247,10 @@ class Laporan extends CI_Controller {
 		# code...
 		$data_sender = $this->input->post('data_sender');
 		$bulan       = '0'.$data_sender['data_5'];
+		if ($data_sender['data_5'] == 3) {
+			# code...
+			$bulan = '01';
+		}
 		$tahun       = $data_sender['data_6'];
 		$data_date   = $tahun.'-'.$bulan;		
 		$data_sender = array
