@@ -167,20 +167,19 @@ $(document).ready(function(){
 	})
 
 	$('#btn_export_excel').click(function() {
-		var es1        = $("#select_eselon_1").val();
-		var es2        = $("#select_eselon_2").val();	
-		var es3        = $("#select_eselon_3").val();
-		var es4        = $("#select_eselon_4").val();
-		var kat_posisi = $("#select_jenis_jabatan").val();
-		if (kat_posisi == '') {
-			kat_posisi = '-';
-		}
+		var es1                  = $("#select_eselon_1").val();
+		var es2                  = $("#select_eselon_2").val();	
+		var es3                  = $("#select_eselon_3").val();
+		var es4                  = $("#select_eselon_4").val();
+		var select_bulan         = $("#select_bulan").val();
+		var select_tahun         = $("#select_tahun").val();				
+
 
 		es2 = (es2 == '') ? 0 : es2 ;
 		es3 = (es3 == '') ? 0 : es3 ;
 		es4 = (es4 == '') ? 0 : es4 ;	
 
-		window.open('<?=base_url();?>laporan/export_kinerja_excel/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");			
+		window.open('<?=base_url();?>laporan/export_kinerja_excel/'+es1+'/'+es2+'/'+es3+'/'+es4+'/'+select_bulan+'/'+select_tahun, "_blank");			
 	})
 
 	$('#btn_filter').click(function() {

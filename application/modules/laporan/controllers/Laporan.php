@@ -246,7 +246,7 @@ class Laporan extends CI_Controller {
 	{
 		# code...
 		$data_sender = $this->input->post('data_sender');
-		$bulan       = $data_sender['data_5'];
+		$bulan       = '0'.$data_sender['data_5'];
 		$tahun       = $data_sender['data_6'];
 		$data_date   = $tahun.'-'.$bulan;		
 		$data_sender = array
@@ -413,7 +413,7 @@ class Laporan extends CI_Controller {
 		$this->load->view('laporan/kinerja/ajax_kinerja',$data);
 	}
 
-	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL)
+	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL,$bulan=NULL,$tahun=NULL)
 	{
 		# code...
 		$es1 = ($es1 == 0) ? '' : $es1 ;		
@@ -426,19 +426,15 @@ class Laporan extends CI_Controller {
 							'eselon2'    => $es2,
 							'eselon3'    => $es3,
 							'eselon4'    => $es4,
-							'kat_posisi' => ''
+							'bulan' 	 => $bulan,
+							'tahun'		 => $tahun
 						);		
-		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
-																		a.es3 ASC,
-																		a.es4 ASC,
-																		b.kat_posisi asc,
-																		b.atasan ASC');						
-
-																		$data['list'] = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
-																		b.es3 ASC,
-																		b.es4 ASC,
-																		c.kat_posisi asc,
-																		c.atasan ASC',$data_sender);		
+		// die();
+		$data['list']   = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
+																b.es3 ASC,
+																b.es4 ASC,
+																c.kat_posisi asc,
+																c.atasan ASC',$data_sender);		
 	
 		$this->excel->setActiveSheetIndex(0);
 		//name the worksheet
@@ -457,23 +453,23 @@ class Laporan extends CI_Controller {
 		$this->excel->getActiveSheet(1)->getColumnDimension('l')->setWidth('15');		
 		$this->excel->getActiveSheet(1)->getColumnDimension('m')->setWidth('15');		
 		$this->excel->getActiveSheet(1)->getColumnDimension('n')->setWidth('15');														
-
-		$this->excel->getActiveSheet(1)->setTitle('Rekapitulasi Kinerja Pegawai');
+		$this->excel->getActiveSheet(1)->setTitle('Rekap Kinerja Pegawai '.$tahun.'-'.$bulan);
 		$this->excel->getActiveSheet(1)->getStyle('b7:h7')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-		$this->excel->getActiveSheet(1)->setCellValue('A1', 'No.');
-		$this->excel->getActiveSheet(1)->setCellValue('B1', 'NIP');		
-		$this->excel->getActiveSheet(1)->setCellValue('C1', 'Nama');		
-		$this->excel->getActiveSheet(1)->setCellValue('D1', 'Eselon I');
-		$this->excel->getActiveSheet(1)->setCellValue('E1', 'Eselon II');
-		$this->excel->getActiveSheet(1)->setCellValue('F1', 'Jabatan');
-		$this->excel->getActiveSheet(1)->setCellValue('G1', 'Atasan Langsung');		
-		$this->excel->getActiveSheet(1)->setCellValue('H1', 'Belum Diperiksa');
-		$this->excel->getActiveSheet(1)->setCellValue('I1', 'Revisi');	
-		$this->excel->getActiveSheet(1)->setCellValue('J1', 'Ditolak');			
-		$this->excel->getActiveSheet(1)->setCellValue('K1', 'Disetujui');
-		$this->excel->getActiveSheet(1)->setCellValue('L1', 'Menit Efektif');
-		$this->excel->getActiveSheet(1)->setCellValue('M1', 'Prosentase');
-		$this->excel->getActiveSheet(1)->setCellValue('N1', 'Keterangan');																		
+		$this->excel->getActiveSheet(1)->setCellValue('A1', 'Rekap Kinerja Pegawai '.$this->Globalrules->set_bulan($bulan).'-'.$tahun);
+		$this->excel->getActiveSheet(1)->setCellValue('A2', 'No.');
+		$this->excel->getActiveSheet(1)->setCellValue('B2', 'NIP');		
+		$this->excel->getActiveSheet(1)->setCellValue('C2', 'Nama');		
+		$this->excel->getActiveSheet(1)->setCellValue('D2', 'Eselon I');
+		$this->excel->getActiveSheet(1)->setCellValue('E2', 'Eselon II');
+		$this->excel->getActiveSheet(1)->setCellValue('F2', 'Jabatan');
+		$this->excel->getActiveSheet(1)->setCellValue('G2', 'Atasan Langsung');		
+		$this->excel->getActiveSheet(1)->setCellValue('H2', 'Belum Diperiksa');
+		$this->excel->getActiveSheet(1)->setCellValue('I2', 'Revisi');	
+		$this->excel->getActiveSheet(1)->setCellValue('J2', 'Ditolak');			
+		$this->excel->getActiveSheet(1)->setCellValue('K2', 'Disetujui');
+		$this->excel->getActiveSheet(1)->setCellValue('L2', 'Menit Efektif');
+		$this->excel->getActiveSheet(1)->setCellValue('M2', 'Prosentase');
+		$this->excel->getActiveSheet(1)->setCellValue('N2', 'Keterangan');																		
 		if ($data['list'] != 0) {
 		    # code...
 		    $counter = "";
@@ -497,7 +493,7 @@ class Laporan extends CI_Controller {
 					$data['list'][$i]->jabatan_atasan  = '-';															
 				}				
 
-				$counter                = 2 + $i;
+				$counter                = 3 + $i;
 				$set_status             = "";
 				$this->excel->getActiveSheet()->getStyle('a'.$counter.':n'.$counter)->getAlignment()->setWraptext(true);				
 				$this->excel->getActiveSheet(2)->setCellValue('a'.$counter, $i+1);

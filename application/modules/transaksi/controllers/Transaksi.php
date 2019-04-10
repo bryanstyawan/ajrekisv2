@@ -455,6 +455,7 @@ class Transaksi extends CI_Controller {
 								'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
 								'hari_efektif'         => '0',
 								'status_pekerjaan'     => '1',
+								'flag_sync'			   => '1',
 								'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
 								'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
 								'audit_update'         => date('Y-m-d H:i:s'),
@@ -859,6 +860,7 @@ class Transaksi extends CI_Controller {
 							// 'menit_efektif'       => $count_transact['menit_efektif'],
 							// 'hari_efektif'        => $count_transact['hari_efektif'],
 							// 'tunjangan'           => $count_transact['tunjangan'],
+							'flag_sync'			  => '0',
 							'status_pekerjaan'    => '0',
 							'audit_insert'        => date('Y-m-d H:i:s'),
 							'audit_user_insert'   => $this->session->userdata('sesUser')
