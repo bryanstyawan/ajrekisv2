@@ -336,6 +336,7 @@ class Transaksi extends CI_Controller {
 		$data              = array
 							(
 								'id_pegawai'           => $this->session->userdata('sesUser'),
+								'id_posisi'			   => $this->session->userdata('sesPosisi'),								
 								'tanggal_mulai'        => $get_data_transact[0]->tanggal_mulai,
 								'tanggal_selesai'      => $get_data_transact[0]->tanggal_selesai,
 								'jam_mulai'            => $get_data_transact[0]->jam_mulai,
@@ -343,8 +344,7 @@ class Transaksi extends CI_Controller {
 								'nama_pekerjaan'       => 'Menyetujui pekerjaan',
 								'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
 								'hari_efektif'         => '0',
-								'status_pekerjaan'     => '1',
-								'flag_sync'            => '1'
+								'status_pekerjaan'     => '1'
 							);
 
 		/**************************************************/
