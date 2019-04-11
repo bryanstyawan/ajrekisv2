@@ -3,6 +3,14 @@ v4.0.0
 New:
 Improved:
 Fixed:
+- Tanggal dan jam (awal - akhir ) yang sama
+- Olah data Kinerja (Status pekerjaan)
+
+v4.0.0
+2019-04-10
+New:
+Improved:
+Fixed:
 - Export Data kinerja
 - Olah data Kinerja
 

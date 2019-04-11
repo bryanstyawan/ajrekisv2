@@ -2562,31 +2562,41 @@ $(document).ready(function()
                         }
                         else
                         {
-                            if (time_flag == 1) {
-                                if (kuantitas != 0) {
-                                    if (file_pendukung != undefined)
+                            if (time_flag == 1) 
+                            {
+                                if (waktu_mulai ==  waktu_selesai) {
+                                    Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
                                     {
-                                        send_data_tambah(data_sender);
-                                    }
-                                    else
-                                    {
-                                        send_data_tambah_without_file(data_sender);                                    
-                                        // if (param_out_skp != 'Frekuensi')
-                                        // {
-                                        //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-                                        //     {
-                                        //         msg: "Wajib menyertakan file pendukung sebagai bukti realisasi"
-                                        //     });                                        
-                                        // }
-                                        // else {
-                                        //     send_data_tambah(data_sender);
-                                        // }                                    
-                                    }
-                                }
+                                        msg: "Tanggal dan jam awal tidak boleh sama dengan tanggal dan jam selesai."
+                                    });
+                                } 
                                 else 
                                 {
-                                    send_data_tambah_without_file(data_sender);
-                                }                                
+                                    if (kuantitas != 0) {
+                                        if (file_pendukung != undefined)
+                                        {
+                                            send_data_tambah(data_sender);
+                                        }
+                                        else
+                                        {
+                                            send_data_tambah_without_file(data_sender);                                    
+                                            // if (param_out_skp != 'Frekuensi')
+                                            // {
+                                            //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+                                            //     {
+                                            //         msg: "Wajib menyertakan file pendukung sebagai bukti realisasi"
+                                            //     });                                        
+                                            // }
+                                            // else {
+                                            //     send_data_tambah(data_sender);
+                                            // }                                    
+                                        }
+                                    }
+                                    else 
+                                    {
+                                        send_data_tambah_without_file(data_sender);
+                                    }                                                                    
+                                }
                             }
                             // console.log('kuantitas : '+kuantitas);
                             // console.log('file_pendukung : '+file_pendukung)
