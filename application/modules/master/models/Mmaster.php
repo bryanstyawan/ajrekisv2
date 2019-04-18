@@ -61,6 +61,7 @@ class Mmaster extends CI_Model {
 		$sql_4      = "";
 		$sql_5      = "";
 		$sql_6      = "";				
+		$sql_7      = "";		
 		$join_1 	= "";	 
 		$select_opt = " a.local,
 						a.es1,
@@ -189,7 +190,13 @@ class Mmaster extends CI_Model {
 				# code...
 				$sql_6 = "";
 			}
-			else $sql_6 = "AND a.tahun = '".$filter['tahun']."'";			
+			else $sql_6 = "AND a.tahun = '".$filter['tahun']."'";
+			
+			// if ($filter['id_pegawai'] == '') {
+			// 	# code...
+			// 	$sql_7 = "";
+			// }
+			// else $sql_7 = "AND b.id = '".$filter['id_pegawai']."'";			
 
 			$sql = "select 	b.id as id_pegawai, b.posisi_akademik, b.posisi_plt, b.nip, b.nama_pegawai, c.nama_posisi, c.atasan, d.nama_eselon1, e.nama_eselon2, f.nama_eselon3, g.nama_eselon4,
 							a.bulan, a.tahun, a.tr_approve, a.tr_tolak, a.tr_revisi, a.menit_efektif, a.prosentase_menit_efektif, a.real_tunjangan, a.frekuensi_realisasi, a.tr_belum_diperiksa

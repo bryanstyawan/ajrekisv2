@@ -508,7 +508,23 @@ class Data_pegawai extends CI_Controller {
 	public function cari_jabatan_plt()
 	{
 		# code...
-		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('kat_posisi' =>1,'kat_posisi' =>6));
+		$data['jabatan'] = $this->Allcrud->getData('mr_posisi',array('kat_posisi' =>1),NULL,array('kat_posisi' =>6));
+		// print_r($data['jabatan']->result_array()[0]['eselon1']);die();
+		// if ($data['jabatan']->result_array() != array()) {
+		// 	# code...
+		// 	for ($i=0; $i < count($data['jabatan']->result_array()); $i++) { 
+		// 		# code...
+		// 		$data['jabatan']->result_array()[$i]['nama_eselon1'] = array();				
+		// 		$es1 = $this->Allcrud->getData('mr_eselon1',array('id_es1' =>$data['jabatan']->result_array()[$i]['eselon1']));				
+		// 		// print_r($es1->result_array());
+		// 		if ($es1 != array()) {
+		// 			# code...
+		// 			// $data['jabatan']->result_array()[$i]['nama_eselon1'] = $es1->result_array()[0]['nama_eselon1'];	
+		// 		}
+		// 	}
+		// }
+		// die();
+		// print_r($data['jabatan']->result_array());die();
 		$this->load->view('master/pegawai/ajax_jabatan_plt',$data);		
 	}
 

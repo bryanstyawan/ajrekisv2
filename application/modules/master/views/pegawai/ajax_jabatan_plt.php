@@ -5,16 +5,31 @@
     <thead>
         <tr>
             <th>Nama Jabatan</th>
+            <th>Eselon I</th>
+            <th>Eselon II</th>
+            <th>Eselon III</th>
+            <th>Eselon IV</th>                                    
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-	<?php foreach($jabatan->result() as $row){?>
+    <?php 
+        foreach($jabatan->result() as $row)
+        {
+            $es1 = $this->Allcrud->getData('mr_eselon1',array('id_es1' =>$row->eselon1))->result_array();
+            $es2 = $this->Allcrud->getData('mr_eselon2',array('id_es2' =>$row->eselon2))->result_array();
+            $es3 = $this->Allcrud->getData('mr_eselon3',array('id_es3' =>$row->eselon3))->result_array();
+            $es4 = $this->Allcrud->getData('mr_eselon4',array('id_es4' =>$row->eselon4))->result_array();                                    
+    ?>
 		<tr>
-			<td><?php echo $row->nama_posisi;?></td>
+			<td><b><?php echo $row->nama_posisi;?></b></td>
+            <td><?=($es1 != array()) ? $es1[0]['nama_eselon1'] : '' ;?></td>
+            <td><?=($es2 != array()) ? $es2[0]['nama_eselon2'] : '' ;?></td>
+            <td><?=($es3 != array()) ? $es3[0]['nama_eselon3'] : '' ;?></td>
+            <td><?=($es4 != array()) ? $es4[0]['nama_eselon4'] : '' ;?></td>
 			<td>
 				<a class="btn btn-success" onclick="get_data('<?php echo $row->nama_posisi;?>',<?php echo $row->id;?>)"><i class="fa fa-check"></i> Pilih</a>			
-			</td>						
+			</td>		                                    				
 		</tr>
 	<?php }?>
     </tbody>

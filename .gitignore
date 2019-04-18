@@ -37,6 +37,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /.vscode
 /public
 /adminer
+/assets_home/video
 
 ## Other Files
 .ftpconfig

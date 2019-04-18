@@ -132,11 +132,48 @@
     <section id="about">
         <div class="container">
 
+            <div class="row">
+                <h2 class="column-title text-center">SUKSESKAN PEMILU SERENTAK 2019</h2>            
+                <div class="col-sm-3">
+                    
+                    <!-- 16:9 aspect ratio -->
+                    <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
+                        <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/FILLER_PERMILU_SERENTAK_2019_-_3_MENIT.mp4" type="video/mp4">
+                    </video>                    
+                </div>
+
+                <div class="col-sm-3">
+                    
+                    <!-- 16:9 aspect ratio -->
+                    <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
+                        <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/FILLER_PERMILU_SERENTAK_2019_-_60_DETIK.mp4" type="video/mp4">
+                    </video>
+                </div>
+
+                <div class="col-sm-3">
+                    
+                    <!-- 16:9 aspect ratio -->
+                    <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
+                        <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/KEMENDAGRI_30_PREVIEW_4_HD.mp4" type="video/mp4">
+                    </video>                    
+                </div>
+
+                <div class="col-sm-3">
+                    
+                    <!-- 16:9 aspect ratio -->
+                    <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
+                        <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/KEMENDAGRI_60_PREVIEW_6_PUSPEN-1.mp4" type="video/mp4">
+                    </video>                    
+                </div>                                                                
+            </div>
+            <br>                    
+
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">Tentang Sikerja</h2>
                 <p class="text-center wow fadeInDown">Aplikasi berbasis web milik kementerian dalam negeri yang digunakan untuk melakukan penilaian dan pengukuran kinerja PNS berdasarkan instrumen analisis jabatan dan analisis beban kerja dan menjadi dasar perhitungan produktifitas kerja dalam pemberian tunjangan kinerja.</p>
             </div>
 
+            <br>
             <div class="row">
                 <div class="col-sm-6 wow fadeInLeft">
                     <h3 class="column-title">Video Intro</h3>

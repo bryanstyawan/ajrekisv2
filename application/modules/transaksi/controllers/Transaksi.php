@@ -386,6 +386,7 @@ class Transaksi extends CI_Controller {
 						$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
 						$data['flag_sync']       = 1;						
 						$data['id_pegawai']      = $who_is_super[0]->id;
+						$data['id_posisi']       = $who_is_super[0]->id_posisi;						
 						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
 						if ($data['menit_efektif'] == 0) {
 							# code...
@@ -511,6 +512,7 @@ class Transaksi extends CI_Controller {
 					{
 						$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
 						$data['id_pegawai']      = $who_is_super[0]->id;
+						$data['id_posisi']       = $who_is_super[0]->id_posisi;						
 						$data['menit_efektif']   = $get_value_approval['menit_efektif'];
 						if ($data['menit_efektif'] == 0) {
 							# code...
