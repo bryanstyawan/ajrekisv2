@@ -1,5 +1,22 @@
 v4.0.0
-2019-04-10
+2019-04-22
+New:
+Improved:
+- Notification
+Fixed:
+
+v4.0.0
+2019-04-18
+New:
+- Get data OR
+- Rekap Tunjangan Kinerja
+Improved:
+Fixed:
+- Filter PLT
+- Komponen di filter PLT
+
+v4.0.0
+2019-04-11
 New:
 Improved:
 Fixed:

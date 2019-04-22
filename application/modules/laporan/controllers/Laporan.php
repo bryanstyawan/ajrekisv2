@@ -190,6 +190,77 @@ class Laporan extends CI_Controller {
 		$this->load->view('laporan/kinerja/ajax_kinerja',$data);
 	}
 
+	public function filter_tunkir()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$data_sender = array
+						(
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'bulan'      => $data_sender['data_5'],
+							'tahun'		 => $data_sender['data_6']
+						);
+		$data['sender'] = $data_sender;
+		$data['list']   = $this->Mmaster->data_pegawai('kinerja','b.es2 ASC,
+																b.es3 ASC,
+																b.es4 ASC,
+																c.kat_posisi asc,
+																c.atasan ASC',$data_sender);		
+
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+
+			}
+			// die();
+		}																
+		// echo "<pre>";
+		// print_r($data['list']);die();
+		// echo "</pre>";		
+
+		// if ($data['list'] != 0) {
+		// 	# code...
+		// 	for ($i=0; $i < count($data['list']); $i++) { 
+		// 		# code...
+		// 		if ($data['list']->kat_posisi == 1) {
+		// 			# code...
+		// 			$data['list']->tunjangan   = $data['list']->tunjangan_raw;
+		// 			$data['list']->grade       = $data['list']->grade_raw;
+		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_raw;
+		// 		}
+		// 		elseif ($data['list']->kat_posisi == 2) {
+		// 			# code...
+		// 			$data['list']->tunjangan   = $data['list']->tunjangan_jft;
+		// 			$data['list']->grade       = $data['list']->grade_jft;
+		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_jft;
+		// 		}
+		// 		elseif ($data['list']->kat_posisi == 4) {
+		// 			# code...
+		// 			$data['list']->tunjangan   = $data['list']->tunjangan_jfu;
+		// 			$data['list']->grade       = $data['list']->grade_jfu;
+		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_jfu;
+		// 		}
+		// 		elseif ($data['list']->kat_posisi == 6) {
+		// 			# code...
+		// 			$data['list']->tunjangan   = $data['list']->tunjangan_raw;
+		// 			$data['list']->grade       = $data['list']->grade_raw;
+		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_raw;
+		// 		}
+		// 	}
+		// 	// die();
+		// }																
+		// echo "<pre>";
+		// print_r($data['list']);die();
+		// echo "</pre>";		
+		$this->load->view('laporan/tunjangan/ajax_tunkir',$data);
+	}
+
+	
+
 	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL,$bulan=NULL,$tahun=NULL)
 	{
 		# code...

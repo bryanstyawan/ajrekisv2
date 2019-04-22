@@ -2,13 +2,15 @@
 
 	function menu_header()
 	{
-		$CI            = & get_instance();
-		$id            = $CI->session->userdata('sesUser');
-		$role          = $CI->session->userdata('sesRole');
-		$posisi        = $CI->session->userdata('sesIdPos');
-		$id_posisi     = $CI->session->userdata('sesPosisi');
-		$id_kat_posisi = $CI->session->userdata('kat_posisi');
-		$infoPegawai   = $CI->Globalrules->get_info_pegawai();
+		$CI              = & get_instance();
+		$id              = $CI->session->userdata('sesUser');
+		$role            = $CI->session->userdata('sesRole');
+		$posisi          = $CI->session->userdata('sesIdPos');
+		$id_posisi       = $CI->session->userdata('sesPosisi');
+		$id_kat_posisi   = $CI->session->userdata('kat_posisi');
+		$infoPegawai     = $CI->Globalrules->get_info_pegawai();
+		$posisi_plt      = $infoPegawai[0]->posisi_plt; 
+		$posisi_akademik = $infoPegawai[0]->posisi_akademik; 		
 		$query_atasan_bawahan = 0;
 		$get_bawahan = $CI->db->query("SELECT a.*
 											FROM mr_pegawai a
@@ -41,16 +43,16 @@
 										$query_atasan_bawahan
 										ORDER BY prioritas asc"
 									);
-		$notify       = $CI->db->query("SELECT a.*,
-												COALESCE(sender.photo,'-') as photo_sender
-										FROM log_notifikasi a
-										LEFT JOIN mr_pegawai sender
-										ON sender.id = a.sender										
-										WHERE a.receiver    = '".$id."'
-										AND   a.status_read = 0
-										ORDER BY a.id DESC"
-									);
-		$count_notify = count($notify->result());
+		// $notify       = $CI->db->query("SELECT a.*,
+		// 										COALESCE(sender.photo,'-') as photo_sender
+		// 								FROM log_notifikasi a
+		// 								LEFT JOIN mr_pegawai sender
+		// 								ON sender.id = a.sender										
+		// 								WHERE a.receiver    = '".$id."'
+		// 								AND   a.status_read = 0
+		// 								ORDER BY a.id DESC"
+		// 							);
+		// $count_notify = count($notify->result());
 		$CI->load->view('templates/header/head');
 		$CI->load->view('templates/header/navigation');							
 		if ($id_posisi != 0) {
@@ -98,9 +100,70 @@
 				
 				if ($x != 0) {
 					# code...
-					$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik));
+					if ($row->url_pages == 'transaksi/home') {
+						# code...
+						$sql_trx       = $CI->db->query("SELECT b.nama_pegawai ,a.*
+														FROM tr_capaian_pekerjaan a
+														LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+														JOIN mr_posisi c ON b.posisi = c.id
+														WHERE c.atasan = '".$id_posisi."' 
+														AND b.status = 1 
+														AND a.status_pekerjaan = 0
+														AND MONTH(a.tanggal_mulai) = '".date('m')."'
+														ORDER BY b.nama_pegawai asc"
+													);
+						$counter_trx = count($sql_trx->result_array());
+						$counter_atasan = $counter_trx; 
+						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>$counter_atasan));							
+					}
+					elseif ($row->uri == 'plt') {
+						# code...
+						$sql_trx       = $CI->db->query("SELECT b.nama_pegawai ,a.*
+														FROM tr_capaian_pekerjaan a
+														LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+														JOIN mr_posisi c ON b.posisi = c.id
+														WHERE c.atasan = '".$posisi_plt."' 
+														AND b.status = 1 
+														AND a.status_pekerjaan = 0
+														AND MONTH(a.tanggal_mulai) = '".date('m')."'
+														ORDER BY b.nama_pegawai asc"
+													);
+						$counter_trx = count($sql_trx->result_array());
+						$counter_atasan = $counter_trx; 
+						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>$counter_atasan));													
+					}
+					elseif ($row->uri == 'akademik') {
+						# code...
+						$sql_trx       = $CI->db->query("SELECT b.nama_pegawai ,a.*
+														FROM tr_capaian_pekerjaan a
+														LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+														JOIN mr_posisi c ON b.posisi = c.id
+														WHERE c.atasan = '".$posisi_akademik."' 
+														AND b.status = 1 
+														AND a.status_pekerjaan = 0
+														AND MONTH(a.tanggal_mulai) = '".date('m')."'
+														ORDER BY b.nama_pegawai asc"
+													);
+						// print_r("SELECT b.nama_pegawai ,a.*
+						// FROM tr_capaian_pekerjaan a
+						// LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+						// JOIN mr_posisi c ON b.posisi = c.id
+						// WHERE c.atasan = '".$posisi_akademik."' 
+						// AND b.status = 1 
+						// AND a.status_pekerjaan = 0
+						// AND MONTH(a.tanggal_mulai) = '".date('m')."'
+						// ORDER BY b.nama_pegawai asc");die();
+						$counter_trx = count($sql_trx->result_array());
+						$counter_atasan = $counter_trx; 
+						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>$counter_atasan));													
+					}					
+					else
+					{
+						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>0));
+					}					
+
 					$anak = $CI->db->query(" SELECT config_menu.*,
-													config_menu_akses.id_akses
+														config_menu_akses.id_akses
 											FROM config_menu
 											INNER JOIN config_menu_akses
 											ON config_menu.id_menu=config_menu_akses.id_menu
@@ -152,7 +215,14 @@
 	
 					if ($x != 0) {
 						# code...
-						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik));
+						if ($row->url_pages == 'transaksi/home') {
+							# code...
+							$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>10));							
+						}
+						else
+						{
+							$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>0));
+						}
 						$anak = $CI->db->query(" SELECT config_menu.*,
 														config_menu_akses.id_akses
 												FROM config_menu
@@ -196,7 +266,7 @@
 		if ($id_posisi != 0) {
 			# code...
 			$CI->load->view('templates/header/message');
-			$CI->load->view('templates/header/notification',array('counter'=>$count_notify,'notify_result'=>$notify->result()));																		
+			// $CI->load->view('templates/header/notification',array('counter'=>$count_notify,'notify_result'=>$notify->result()));																		
 		}	
 		$CI->load->view('templates/header/user',array('infoPegawai'=>$infoPegawai));		
 		$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));		

@@ -29,7 +29,6 @@ class Transaksi extends CI_Controller {
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
 		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));		
@@ -352,11 +351,6 @@ class Transaksi extends CI_Controller {
 		/**************************************************/
 		if ($get_data_transact != 0)
 		{
-			if ($who_is_emp == 'eselon 3' || $who_is_emp == 'eselon 2' || $who_is_emp == 'eselon 1') {
-				# code...
-				//sebelumnya disini
-			}				
-
 			if ($who_is_approval == 'eselon 2')
 			{
 				# code...

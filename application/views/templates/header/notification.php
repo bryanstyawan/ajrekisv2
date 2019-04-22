@@ -15,23 +15,23 @@
             foreach($notify_result as $row_notify)
             {
                 $photo_sender = "";
-                if ($row_notify->photo_sender == '-') {
-                    # code...
-                    $photo_sender = '<img class="icn_user" src="'.base_url().'assets/images/businessman1.jpg">';
-                }
-                else
-                {
-                    $photo_sender = '<img class="icn_user" src="'.base_url() . 'public/images/pegawai/'.$row_notify->photo_sender.'">';                    
-                }
+                // if ($row_notify->photo_sender == '-') {
+                //     # code...
+                //     $photo_sender = '<img class="icn_user" src="'.base_url().'assets/images/businessman1.jpg">';
+                // }
+                // else
+                // {
+                //     $photo_sender = '<img class="icn_user" src="'.base_url() . 'public/images/pegawai/'.$row_notify->photo_sender.'">';                    
+                // }
 
                 if ($row_notify->status_log == 'notify') {
                     # code...
 ?>
                     <li class="noti-text">
                         <a href="<?php echo site_url();?>/Admin/redirect_notifikasi/<?php echo $row_notify->id?>">
-                            <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
-                                <?php echo $photo_sender;?>
-                            </div>
+                            <!-- <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
+                                <?php //echo $photo_sender;?>
+                            </div> -->
                             <?php echo $row_notify->remarks;?>
                             <div class="col-lg-9 pull-right">
                                 <label class="pull-right"><?php echo $row_notify->audit_time;?></label>
@@ -46,9 +46,9 @@
 ?>
                     <li class="noti-text">
                         <a href="<?php echo site_url().'/'.$row_notify->url;?>">
-                            <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
-                                <?php echo $photo_sender;?>
-                            </div>
+                            <!-- <div class="col-lg-3" style="padding-left: 0px;padding-right: 0px;">
+                                <?php //echo $photo_sender;?>
+                            </div> -->
                             <?php echo $row_notify->remarks;?>
                             <div class="col-lg-9 pull-right">
                                 <label class="pull-right">[Approval] <?php echo $row_notify->audit_time;?></label>
