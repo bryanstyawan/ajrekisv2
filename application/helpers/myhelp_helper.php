@@ -100,6 +100,9 @@
 				
 				if ($x != 0) {
 					# code...
+					$counter_trx_home     = "";
+					$counter_trx_plt      = "";					
+					$counter_trx_akademik = "";					
 					if ($row->url_pages == 'transaksi/home') {
 						# code...
 						$sql_trx       = $CI->db->query("SELECT b.nama_pegawai ,a.*
@@ -112,8 +115,8 @@
 														AND MONTH(a.tanggal_mulai) = '".date('m')."'
 														ORDER BY b.nama_pegawai asc"
 													);
-						$counter_trx = count($sql_trx->result_array());
-						$counter_atasan = $counter_trx; 
+						$counter_trx_home = count($sql_trx->result_array());
+						$counter_atasan = $counter_trx_home; 
 						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>$counter_atasan));							
 					}
 					elseif ($row->uri == 'plt') {
@@ -128,8 +131,8 @@
 														AND MONTH(a.tanggal_mulai) = '".date('m')."'
 														ORDER BY b.nama_pegawai asc"
 													);
-						$counter_trx = count($sql_trx->result_array());
-						$counter_atasan = $counter_trx; 
+						$counter_trx_plt = count($sql_trx->result_array());
+						$counter_atasan = $counter_trx_plt; 
 						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>$counter_atasan));													
 					}
 					elseif ($row->uri == 'akademik') {
@@ -144,17 +147,8 @@
 														AND MONTH(a.tanggal_mulai) = '".date('m')."'
 														ORDER BY b.nama_pegawai asc"
 													);
-						// print_r("SELECT b.nama_pegawai ,a.*
-						// FROM tr_capaian_pekerjaan a
-						// LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
-						// JOIN mr_posisi c ON b.posisi = c.id
-						// WHERE c.atasan = '".$posisi_akademik."' 
-						// AND b.status = 1 
-						// AND a.status_pekerjaan = 0
-						// AND MONTH(a.tanggal_mulai) = '".date('m')."'
-						// ORDER BY b.nama_pegawai asc");die();
-						$counter_trx = count($sql_trx->result_array());
-						$counter_atasan = $counter_trx; 
+						$counter_trx_akademik = count($sql_trx->result_array());
+						$counter_atasan = $counter_trx_akademik; 
 						$CI->load->view('templates/header/parent',array('icon'=>$row->icon,'name'=>$row->nama_menu,'controll'=>$controll_plt_akademik,'counter'=>$counter_atasan));													
 					}					
 					else
@@ -176,14 +170,50 @@
 					foreach($anak->result() as $baris)
 					{
 						$change_name = $baris->nama_menu;						
-						if (count($anak->result()) > 7) {
-							# code...
-							$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6'));
+						if ($baris->url_pages == 'transaksi/home') {
+							# code...							
+							if (count($anak->result()) > 7) {
+								# code...
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6','counter_child'=>$counter_trx_home));
+							}
+							else
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10','counter_child'=>$counter_trx_home));
+							}													
 						}
+						elseif ($baris->url_pages == 'transaksi/plt') {
+							# code...
+							if (count($anak->result()) > 7) {
+								# code...
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6','counter_child'=>$counter_trx_plt));
+							}
+							else
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10','counter_child'=>$counter_trx_plt));
+							}																	
+						}
+						elseif ($baris->url_pages == 'transaksi/akademik') {
+							# code...
+							if (count($anak->result()) > 7) {
+								# code...
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6','counter_child'=>$counter_trx_akademik));
+							}
+							else
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10','counter_child'=>$counter_trx_akademik));
+							}																	
+						}	
 						else
 						{
-							$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));
-						}						
+							if (count($anak->result()) > 7) {
+								# code...
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-6','counter_child'=>0));
+							}
+							else
+							{
+								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10','counter_child'=>0));
+							}						
+						}
 					}
 					$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));
 					$CI->load->view('templates/header/close_tag',array('tag'=>'li'));																									
@@ -244,7 +274,7 @@
 							else
 							{
 								$CI->load->view('templates/header/child',array('icon'=>$row->icon,'name'=>$change_name,'url_pages'=>$baris->url_pages,'layout'=>'col-lg-10'));
-							}						
+							}
 						}
 						$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));
 						$CI->load->view('templates/header/close_tag',array('tag'=>'li'));																									

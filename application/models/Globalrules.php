@@ -1036,7 +1036,8 @@ class Globalrules extends CI_Model
 								$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;								
 								$prosentase_menit_efektif_summary += $menit_efektif_calc;
 							}															
-							
+
+							$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;							
 							$data_timeline[$i]['flag_sync'] = 1;
 							$data_timeline[$i]['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);					
 							$data_timeline[$i]['id_posisi'] = $id_posisi_jabatan;
@@ -1047,10 +1048,9 @@ class Globalrules extends CI_Model
 						if ($flag_sync_1 != 0) {
 							# code...
 							for ($i=0; $i < count($flag_sync_1); $i++) { 
-								# code...
-								$get_kinerja['prosentase_menit_efektif']   = $flag_sync_1[$i]->prosentase;													
-
-								if ($get_kinerja['prosentase_menit_efektif'] >= 100) {
+								# code...												
+								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
+								if ($get_kinerja['menit_efektif'] > 6600) {
 									# code...
 									$get_kinerja['prosentase_menit_efektif'] = 100;				
 									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
@@ -1058,9 +1058,10 @@ class Globalrules extends CI_Model
 								}						 
 								else
 								{
+									$get_kinerja['prosentase_menit_efektif'] = ($get_kinerja['menit_efektif']/6600)*100;									
 									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
 								}						
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
+
 								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
 								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				
 								$get_kinerja['tr_approve']               = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
@@ -1211,6 +1212,7 @@ class Globalrules extends CI_Model
 								$prosentase_menit_efektif_summary += $menit_efektif_calc;
 							}															
 							
+							$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;							
 							$data_timeline[$i]['flag_sync'] = 1;
 							$data_timeline[$i]['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);					
 							$data_timeline[$i]['id_posisi'] = $id_posisi_jabatan;
@@ -1222,9 +1224,8 @@ class Globalrules extends CI_Model
 							# code...
 							for ($i=0; $i < count($flag_sync_1); $i++) { 
 								# code...
-								$get_kinerja['prosentase_menit_efektif']   = $flag_sync_1[$i]->prosentase;													
-
-								if ($get_kinerja['prosentase_menit_efektif'] >= 100) {
+								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
+								if ($get_kinerja['menit_efektif'] > 6600) {
 									# code...
 									$get_kinerja['prosentase_menit_efektif'] = 100;				
 									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
@@ -1232,9 +1233,9 @@ class Globalrules extends CI_Model
 								}						 
 								else
 								{
+									$get_kinerja['prosentase_menit_efektif'] = ($get_kinerja['menit_efektif']/6600)*100;									
 									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
 								}						
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
 								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
 								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				
 								$get_kinerja['tr_approve']               = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
@@ -1271,9 +1272,8 @@ class Globalrules extends CI_Model
 							# code...
 							for ($i=0; $i < count($flag_sync_1); $i++) { 
 								# code...
-								$get_kinerja['prosentase_menit_efektif']   = $flag_sync_1[$i]->prosentase;													
-
-								if ($get_kinerja['prosentase_menit_efektif'] > 100) {
+								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
+								if ($get_kinerja['menit_efektif'] > 6600) {
 									# code...
 									$get_kinerja['prosentase_menit_efektif'] = 100;				
 									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
@@ -1281,8 +1281,9 @@ class Globalrules extends CI_Model
 								}						 
 								else
 								{
+									$get_kinerja['prosentase_menit_efektif'] = ($get_kinerja['menit_efektif']/6600)*100;									
 									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
-								}						
+								}		
 								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
 								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
 								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				

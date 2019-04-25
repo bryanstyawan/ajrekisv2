@@ -1,4 +1,11 @@
 v4.0.0
+2019-04-24
+New:
+Improved:
+Fixed:
+- Decimal olah data (prosentase)
+
+v4.0.0
 2019-04-22
 New:
 Improved:
