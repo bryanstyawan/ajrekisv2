@@ -663,8 +663,8 @@ function banding(id) {
 }
 
 function view_option(id,i) {
-    $('.teamwork').css({"backgroundColor": "", "color": "", "pointer-events" : ""});
-    $('#li_kandidat_'+i).css({"backgroundColor": "#00a65a", "color": "#000", "pointer-events" : ""});
+    // $('.teamwork').css({"backgroundColor": "", "color": "", "pointer-events" : ""});
+    // $('#li_kandidat_'+i).css({"backgroundColor": "#00a65a", "color": "#000", "pointer-events" : ""});
     oid_pegawai = id;
     $.ajax({
         url :"<?php echo site_url();?>transaksi/detail_transaksi_pegawai/"+oid_pegawai,
@@ -677,7 +677,7 @@ function view_option(id,i) {
                                 '<td colspan="5" class="text-center">Memuat Data</td>'
                             '</tr>';
             $('.table-view1 tbody').append(newrec);       
-            $('.notif-count').html('');     
+            // $('.notif-count').html('');     
             $('.counter_atasan_notify').html('');
         },
         success:function(msg){

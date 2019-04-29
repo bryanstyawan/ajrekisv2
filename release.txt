@@ -1,4 +1,13 @@
 v4.0.0
+2019-04-29
+New:
+- SP Insert Transaksi (By Eric)
+Improved:
+Fixed:
+- Decimal di Kinerja Anggota (By Eric)
+- Balon Notifikasi di Transaksi PLT (By Eric)
+
+v4.0.0
 2019-04-24
 New:
 Improved:

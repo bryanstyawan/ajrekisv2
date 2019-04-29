@@ -22,7 +22,8 @@
 				}
 				else
 				{
-					echo round(($list[$i]->menit_efektif/6600)*100,2);
+					// echo round(($list[$i]->menit_efektif/6600)*100,2);
+					echo number_format((float)(($list[$i]->menit_efektif/6600)*100),2,'.','');
 				}
 			?>
 		</td>	
