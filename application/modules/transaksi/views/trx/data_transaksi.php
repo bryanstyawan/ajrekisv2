@@ -203,6 +203,7 @@ else {
                                         if ($tr_belum_diperiksa != 0)
                                         {
                                             # code...
+                                            // print_r($infoPegawai);
                                             $active_keberatan = "";
                                             $active_banding = "";
                                             if ($hari_kerja != 0) {
@@ -283,7 +284,7 @@ else {
                                                         if ($tr_belum_diperiksa[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_belum_diperiksa[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_belum_diperiksa[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -376,7 +377,7 @@ else {
                                                         if ($tr_revisi[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_revisi[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_revisi[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -456,7 +457,7 @@ else {
                                                         if ($tr_disetujui[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_disetujui[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_disetujui[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -531,7 +532,7 @@ else {
                                                         if ($tr_tolak[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_tolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_tolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -767,7 +768,7 @@ else {
                                                         if ($tr_keberatan[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_keberatan[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_keberatan[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -841,7 +842,7 @@ else {
                                                         if ($tr_keberatan_ditolak[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_keberatan_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_keberatan_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -917,7 +918,7 @@ else {
                                                         if ($tr_banding[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_banding[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_banding[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -990,7 +991,7 @@ else {
                                                         if ($tr_banding_ditolak[$i]->file_pendukung != '') {
                                                             # code...
                                                     ?>
-                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$tr_banding_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
+                                                        <a class="btn btn-success btn-xs" href="<?php echo base_url() . 'public/file_pendukung/'.$infoPegawai[0]->nip.'/'.$tr_banding_ditolak[$i]->file_pendukung; ?>"><i class="fa fa-download"></i>&nbsp;Unduh</a>
                                                     <?php
                                                         }
                                                     ?>
@@ -2164,32 +2165,27 @@ function send_data_tambah(data_sender) {
         },
         success: function(msg1){
             var obj1 = jQuery.parseJSON (msg1);
-            console.log(msg1);
-            if (obj1.status == 1)
+            console.log(obj1.status);
+            if(obj1.status == 1)
             {
-                $.ajax({
-                    url :"<?php echo site_url();?>transaksi/add_pekerjaan/"+obj1.id,
-                    type:"post",
-                    data:{data_sender : data_sender},
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-                    },
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-                })
+                data_sender['file_pendukung'] = obj1.filename;
+                console.log(data_sender);
+                send_data_tambah_without_file(data_sender);
             }
-            else
-            {
-                Lobibox.notify('warning', {
-                    msg: obj1.text
-                    });
-                setTimeout(function(){
-                    $("#loadprosess").modal('hide');
-                }, 5000);
-            }
+            // console.log(data_sender);            
+            // if (obj1.status == 1)
+            // {
+            //     send_data_tambah_without_file(data_sender);
+            // }
+            // else
+            // {
+            //     Lobibox.notify('warning', {
+            //         msg: obj1.text
+            //         });
+            //     setTimeout(function(){
+            //         $("#loadprosess").modal('hide');
+            //     }, 5000);
+            // }
         },
         error:function(jqXHR,exception)
         {
@@ -2437,7 +2433,8 @@ $(document).ready(function()
         ket_pekerjaan      = $("#ket_pekerjaan").val();
         kuantitas          = $("#kuantitas").val();
         file_pendukung     = $('#file_pendukung').prop('files')[0];
-
+        // file_pendukung     = $('#file_pendukung')[0].files[0];
+        
         waktu_mulai        = tgl_mulai+" "+jam_mulai;
         waktu_selesai      = tgl_selesai+" "+jam_selesai;
 
@@ -2445,10 +2442,10 @@ $(document).ready(function()
         end_actual_time    = new Date(waktu_selesai);
         server_actual_time = new Date();
         diff               = end_actual_time - start_actual_time;
-        diff_date          = (new Date(tgl_selesai)) - (new Date(tgl_mulai));
+        // diff_date          = (new Date(tgl_selesai)) - (new Date(tgl_mulai));
 
-        hari_efektif       = ((diff_date/1000) / 86400);
-        menit_efektif      = diff / 60000;
+        // hari_efektif       = ((diff_date/1000) / 86400);
+        // menit_efektif      = diff / 60000;
 
         flag_param_out_skp = '';
         param_out_skp      = $("#hdn_param_out_skp").val();
@@ -2457,19 +2454,30 @@ $(document).ready(function()
         total_qty          = +realisasi_qty + +kuantitas;
         target_qty         = $("#hdn_param_qty_skp").val();
 
+        if (kuantitas == 0)
+        {
+            kuantitas = 0;
+        }
+
+        // if (file_pendukung == undefined)
+        // {
+        //     file_pendukung = null;
+        // }
+        
         var data_sender = {
                                 'urtug'             : urtug,
                                 'flag_urtug'        : flag_urtug,
-                                'tgl_mulai'         : tgl_mulai,
-                                'tgl_selesai'       : tgl_selesai,
+                                // 'tgl_mulai'         : tgl_mulai,
+                                // 'tgl_selesai'       : tgl_selesai,
                                 'tgl_mulai_raw'     : tgl_mulai_raw,
                                 'tgl_selesai_raw'   : tgl_selesai_raw,
                                 'jam_mulai'         : jam_mulai,
                                 'jam_selesai'       : jam_selesai,
                                 'ket_pekerjaan'     : ket_pekerjaan,
                                 'kuantitas'         : kuantitas,
-                                'menit_efektif'     : menit_efektif,
-                                'hari_efektif'      : hari_efektif
+                                // 'file_pendukung'    : file_pendukung
+                                // 'menit_efektif'     : menit_efektif,
+                                // 'hari_efektif'      : hari_efektif
                             };
 
         if (urtug.length <= 0)
@@ -2579,6 +2587,7 @@ $(document).ready(function()
                                         }
                                         else
                                         {
+                                            data_sender['file_pendukung'] = null;
                                             send_data_tambah_without_file(data_sender);                                    
                                             // if (param_out_skp != 'Frekuensi')
                                             // {
@@ -2594,6 +2603,7 @@ $(document).ready(function()
                                     }
                                     else 
                                     {
+                                        data_sender['file_pendukung'] = null;
                                         send_data_tambah_without_file(data_sender);
                                     }                                                                    
                                 }
