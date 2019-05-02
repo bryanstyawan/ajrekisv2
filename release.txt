@@ -1,4 +1,12 @@
 v4.0.0
+2019-05-02
+New:
+- SP Insert Transaksi Definitif (By Eric)
+- SP Approve Transaksi Definitif (By Eric)
+Improved:
+Fixed:
+
+v4.0.0
 2019-04-29
 New:
 - SP Insert Transaksi (By Eric)
