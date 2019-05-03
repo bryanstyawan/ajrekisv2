@@ -359,6 +359,9 @@ class Transaksi extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$id_atasan 	 = $this->session->userdata('sesUser');
 		$res_data    = $this->Allcrud->approve_transaksi($id,$id_atasan);
+		if ($res_data > 0) {
+			$res_data = 1;
+		}
 		$text_status = "Data pekerjaan telah disetujui";
 	// 	/**************************************************/
 	// 	/*siapkan data untuk auto approve*/

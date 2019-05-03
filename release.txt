@@ -1,4 +1,11 @@
 v4.0.0
+2019-05-03
+New:
+Improved:
+Fixed:
+- Pesan Setelah approve transaksi (By Eric)
+
+v4.0.0
 2019-05-02
 New:
 - SP Insert Transaksi Definitif (By Eric)
