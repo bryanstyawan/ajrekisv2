@@ -202,7 +202,14 @@ $(document).click(function(e) {
         <header class="main-header" style="position:fixed;width:100%;">
             <?php menu_header();?>
         </header>
-
+        <aside class="main-sidebar hidden-md hidden-lg hidden-sm" style="padding-top: 0px;">
+            <section class="sidebar " style="height: auto;">
+                <ul class="nav sidebar-menu">
+                <li class="header"></li>
+                    <?php menuSamping(); ?>
+                </ul>
+            </section>
+        </aside>
 
         <div class="content-wrapper">
            <section class="content-header">

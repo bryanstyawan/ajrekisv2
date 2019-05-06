@@ -343,6 +343,15 @@ class Laporan extends CI_Controller {
 
 				$counter                = 3 + $i;
 				$set_status             = "";
+				$prosentase_menit_kerja = '';
+				if ((($data['list'][$i]->menit_efektif/6600)*100) > 100) {
+					# code...
+					$prosentase_menit_kerja = 100;
+				}
+				else
+				{
+					$prosentase_menit_kerja = round(($data['list'][$i]->menit_efektif/6600)*100,2);
+				}
 				$this->excel->getActiveSheet()->getStyle('a'.$counter.':n'.$counter)->getAlignment()->setWraptext(true);				
 				$this->excel->getActiveSheet(2)->setCellValue('a'.$counter, $i+1);
 				$this->excel->getActiveSheet(2)->setCellValue('b'.$counter, '`'.$data['list'][$i]->nip);
@@ -356,7 +365,7 @@ class Laporan extends CI_Controller {
 				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $data['list'][$i]->tr_tolak);
 				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->tr_approve);
 				$this->excel->getActiveSheet(2)->setCellValue('l'.$counter, $data['list'][$i]->menit_efektif);
-				$this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $data['list'][$i]->prosentase_menit_efektif);
+				$this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $prosentase_menit_kerja);
 				$this->excel->getActiveSheet(2)->setCellValue('n'.$counter, '');														
 		    }
 		}

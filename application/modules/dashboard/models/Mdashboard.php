@@ -8,6 +8,45 @@ class Mdashboard extends CI_Model
 	
 	}
 
+	public function check_data_menit_efektif_rpt()
+	{
+		# code...
+		$bulan = date('m');
+		$tahun = date('Y'); 
+		$sql = "SELECT
+					a.id_pegawai,
+					a.bulan,
+					a.tahun,
+					a.tr_approve,
+					a.menit_efektif,
+					b.jml_menit AS tr_Menit_efektif
+				FROM
+					rpt_capaian_kinerja a
+				LEFT JOIN (
+					SELECT
+						id_pegawai,
+						SUM(`menit_efektif`) jml_menit
+					FROM
+						`tr_capaian_pekerjaan`
+					WHERE
+						MONTH (`tanggal_mulai`) = 4
+					AND `status_pekerjaan` = 1
+					GROUP BY
+						`id_pegawai`
+				) b ON b.id_pegawai = a.id_pegawai
+				WHERE a.bulan = 4
+				AND a.menit_efektif <> b.jml_menit";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}								
+	}	
+
 	public function get_data_menit_efektif($param)
 	{
 		# code...
