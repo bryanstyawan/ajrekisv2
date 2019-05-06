@@ -408,6 +408,34 @@ class Laporan extends CI_Controller {
 		}
 	}
 
+	public function kinerja_anggota_plt()
+	{
+		# code...
+		$data['title']      = 'Rekapitulasi Data Kinerja Anggota PLT';
+		$data['content']    = 'laporan/kinerja/data_kinerja_anggota_plt';
+		$this->load->view('templateAdmin',$data);
+		// print_r($data['list']);die();
+	}
+
+	Public function filter_kinerja_anggota_plt()
+	{
+		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		// $id = $this->session->userdata('sesPosisi');\
+		$id = $get_data_pegawai[0]['posisi_plt'];
+		$data_sender = $this->input->post('data_sender');	
+		$data_sender = array
+						(
+							'atasan'   => $id,
+							'bulan'    => $data_sender['data_5'],
+							'tahun'    => $data_sender['data_6']
+						);
+		$data['sender'] 	= $data_sender;
+		$data['list'] 		= $this->Mmaster->list_kinerja_bawahan($data_sender);
+		if ($data['list'] != 0) {
+			$this->load->view('laporan/kinerja/ajax_kinerja_anggota_plt',$data);	
+		}
+	}
+
 	/***************************** */
 
 	public function rekap_tunkir_produktivitas_disiplin()
