@@ -68,7 +68,37 @@ class Dashboard extends CI_Controller {
 		else
 		{
 			$data['title']              = '';
-			$data['content']            = 'vdashboard_empty';			
+			$data['content']            = 'vdashboard_empty';	
+			// $check_data = $this->mdashboard->check_data_menit_efektif_rpt();		
+			// if ($check_data != 0) {
+			// 	# code...
+			// 	for ($i=0; $i < count($check_data); $i++) { 
+			// 		# code...
+			// 		$data_approve = array
+			// 						(
+			// 							'menit_efektif' => $check_data[$i]->tr_Menit_efektif
+			// 						);
+			// 		$flag        = array(
+			// 								'id_pegawai' => $check_data[$i]->id_pegawai,
+			// 								'bulan' => $check_data[$i]->bulan,
+			// 								'tahun' => $check_data[$i]->tahun
+			// 							);
+			// 		$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$data_approve,$flag);					
+			// 		if ($res_data == 1) {
+			// 			# code...
+			// 			echo $i." Success </br>";
+			// 		}
+			// 		else
+			// 		{
+			// 			echo $i." fail </br>";						
+			// 		}
+			// 	}				
+			// }
+			// echo "<pre>";
+			// // print_r(count($check_data));die();
+			// print_r($check_data[0]);die();			
+			// echo "</pre>";
+
 		}		
 
 		$this->load->view('templateAdmin',$data);

@@ -1,4 +1,12 @@
 v4.0.0
+2019-05-06
+New:
+Improved:
+Fixed:
+- Penyesuaian layout mobile - Login
+- Penyesuaian layout mobile - Sidebar
+
+v4.0.0
 2019-05-03
 New:
 Improved:
