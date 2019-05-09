@@ -14,7 +14,8 @@
 		<td><?=$list[$i]->tr_tolak;?></td>
 		<td><?=$list[$i]->tr_approve;?></td>
 		<td><?=$list[$i]->menit_efektif;?></td>
-		<td>
+		<td><?=$list[$i]->prosentase_menit_efektif;?></td>
+		<!-- <td>
 			<?php
 				if ((($list[$i]->menit_efektif/6600)*100) > 100) {
 					# code...
@@ -26,7 +27,7 @@
 					echo number_format((float)(($list[$i]->menit_efektif/6600)*100),2,'.','');
 				}
 			?>
-		</td>	
+		</td>	 -->
 	</tr>
 <?php
 	}

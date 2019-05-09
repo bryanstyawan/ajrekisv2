@@ -66,7 +66,7 @@
 							<th>NIP</th>
 							<th>Nama Pegawai</th>
 							<th>Nama Posisi</th>	
-							<th>Belum Dperiksa</th>							
+							<th>Belum Diperiksa</th>							
 							<th>Revisi</th>
 							<th>Ditolak</th>
 							<th>Disetujui</th>

@@ -1,4 +1,12 @@
 v4.0.0
+2019-05-09
+New:
+Improved:
+Fixed:
+- Dataset Kinerja Anggota (By Eric)
+- Dataset Kinerja Anggota PLT (By Eric)
+
+v4.0.0
 2019-05-06
 New:
 Improved:
