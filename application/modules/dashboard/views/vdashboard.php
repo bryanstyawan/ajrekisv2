@@ -85,7 +85,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_realisasi_menit_efektif',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
-        'value_php' => number_format($data_transaksi[0]->menit_efektif),
+        'value_php' => number_format($data_transaksi_rpt[0]->menit_efektif),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
         'html'      => ''));                
     $this->load->view('dashboard_component/common_component',array(
@@ -93,7 +93,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
-        'value_php' => number_format($data_transaksi[0]->real_tunjangan_kinerja),
+        'value_php' => number_format($data_transaksi_rpt[0]->real_tunjangan),
         'title'     => 'TUNJANGAN',
         'html'      => ''));
         $this->load->view('dashboard_component/common_component',array(
@@ -105,7 +105,7 @@ if ($this->session->userdata('sesPosisi') != 0)
             'title'     => 'FINGERPRINT',
             'html'      => ''));        
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-12 col-xs-8',
+        'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'%'),
@@ -224,7 +224,7 @@ else {
                     height:200,
                     max:100,
                 });
-        $('#gaugeContainer').jqxGauge('value', <?php echo $data_transaksi[0]->real_prosentase;?>);
+        $('#gaugeContainer').jqxGauge('value', <?php echo $data_transaksi_rpt[0]->prosentase_menit_efektif;?>);
 
         $("#btn-detail").click(function()
         {

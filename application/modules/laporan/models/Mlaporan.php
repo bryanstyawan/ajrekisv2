@@ -65,6 +65,93 @@ Last edit : 19/07/2016
 		}
 	}
 
+	public function get_transact_rpt($id_pegawai,$status,$bulan,$tahun)
+	{
+		$sql = "SELECT
+							b.id AS id_pegawai,
+							c.id as id_posisi,
+							b.posisi_akademik,
+							b.posisi_plt,
+							b.nip,
+							b.nama_pegawai,
+							c.nama_posisi,
+							c.atasan,
+							d.nama_eselon1,
+							e.nama_eselon2,
+							f.nama_eselon3,
+							g.nama_eselon4,
+							a.bulan,
+							a.tahun,
+							a.tr_approve,
+							a.tr_tolak,
+							a.tr_revisi,
+							a.menit_efektif,
+							a.prosentase_menit_efektif,
+							a.real_tunjangan,
+							a.frekuensi_realisasi,
+							a.tr_belum_diperiksa,
+							c.kat_posisi,
+						-- 	IF(c.kat_posisi = 1,h.posisi_class,NULL) as class_posisi_struktural_definif,
+						-- 	IF(c.kat_posisi = 2,l.posisi_class,NULL) as class_posisi_jft_definif,
+						-- 	IF(c.kat_posisi = 4,j.posisi_class,NULL) as class_posisi_jfu_definif,
+						-- 	IF(c.kat_posisi = 6,h.posisi_class,NULL) as class_posisi_struktur_akademik_definif,
+							CASE
+									WHEN c.kat_posisi = 1 THEN h.posisi_class
+									WHEN c.kat_posisi = 2 THEN l.posisi_class
+									WHEN c.kat_posisi = 4 THEN j.posisi_class
+									WHEN c.kat_posisi = 6 THEN h.posisi_class
+							END as class_posisi_definitif,
+							CASE
+									WHEN c.kat_posisi = 1 THEN h.tunjangan
+									WHEN c.kat_posisi = 2 THEN l.tunjangan
+									WHEN c.kat_posisi = 4 THEN j.tunjangan
+									WHEN c.kat_posisi = 6 THEN h.tunjangan
+							END as tunjangan_definitif
+						FROM
+							(
+								(
+									(
+										(
+											(
+												rpt_capaian_kinerja a
+												LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+											)
+											LEFT JOIN mr_posisi c ON a.id_posisi = c.id
+										)
+										LEFT JOIN mr_eselon1 d ON b.es1 = d.id_es1
+									)
+									LEFT JOIN mr_eselon2 e ON b.es2 = e.id_es2
+								)
+								LEFT JOIN mr_eselon3 f ON b.es3 = f.id_es3
+							)
+						LEFT JOIN mr_eselon4 g ON b.es4 = g.id_es4
+						LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
+						LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
+						LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+						LEFT JOIN mr_jabatan_fungsional_umum k ON c.id_jft = k.id
+						LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+							WHERE
+							b. STATUS = 1
+						AND a.bulan = ".$bulan." 
+						AND a.tahun = ".$tahun."
+						AND a.id_pegawai = ".$id_pegawai."
+						ORDER BY
+							b.es2 ASC,
+							b.es3 ASC,
+							b.es4 ASC,
+							c.kat_posisi ASC,
+							c.atasan ASC";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 	public function get_transact($id_pegawai,$status,$bulan,$tahun)
 	{
 		$sql = "SELECT a.id_pegawai,

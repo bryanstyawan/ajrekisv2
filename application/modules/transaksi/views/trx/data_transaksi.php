@@ -29,7 +29,7 @@ else {
 }
 
 ?>
-    <input type="hidden" id="trigger_msg" value="<?=$trigger_msg_hari_aktif;?>">
+    <input type="hidden" id="trigger_msg" value="<?php echo $trigger_msg_hari_aktif;?>">
     <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 
     <?php
@@ -61,16 +61,16 @@ else {
                                 $flag_struktural = 'background:#dddfff;';
                             }
                     ?>
-                            <li style="cursor: pointer;<?=$flag_struktural;?>" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>','<?=$i;?>')">
+                            <li style="cursor: pointer;<?php echo $flag_struktural;?>" class="teamwork" id="li_kandidat_<?php echo $i;?>" onclick="view_option('<?php echo $member[$i]->id;?>','<?php echo $i;?>')">
                                 <a class="contact-name">
-                                    <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
-                                    <sup style="<?=$flag_counter;?>">
+                                    <i class="fa fa-circle-o text-red contact-name-list"></i><?php echo $member[$i]->nama_pegawai;?>
+                                    <sup style="<?php echo $flag_counter;?>">
                                         <span class="notif-count pull-right">
-                                            <span><?=$member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;?></span>
+                                            <span><?php echo $member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;?></span>
                                         </span>
                                     </sup>
                                 </a>
-                                <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$member[$i]->nama_pegawai;?>"></input>
+                                <input type="hidden" id="hdn_pegawai_<?php echo $i;?>" name="list_kandidat" value="<?php echo $member[$i]->nama_pegawai;?>"></input>
                             </li>
                         <?php
                         }
@@ -84,7 +84,7 @@ else {
     ?>
 
 <section id="view_main">
-    <div class="<?=$trigger_cs_layout_transaksi;?>">
+    <div class="<?php echo $trigger_cs_layout_transaksi;?>">
         <div class="box">
             <div class="box-header">
                 <div class ="box-tools">
@@ -182,7 +182,7 @@ else {
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade" style="padding-top: 15px;">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Belum diperiksa</h2>
                                 <table id="table_belum_diperiksa" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -271,13 +271,13 @@ else {
                                                 }                                  
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_belum_diperiksa[$i]->tanggal_selesai;?>&nbsp;<?=$tr_belum_diperiksa[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_belum_diperiksa[$i]->realisasi_skp;?></td>
-                                                    <td><?=$tr_belum_diperiksa[$i]->target_skp;?></td>
-                                                    <td><?=$tr_belum_diperiksa[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_belum_diperiksa[$i]->frekuensi_realisasi.' '.$tr_belum_diperiksa[$i]->target_output_name;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_belum_diperiksa[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_belum_diperiksa[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->realisasi_skp;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->target_skp;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->frekuensi_realisasi.' '.$tr_belum_diperiksa[$i]->target_output_name;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -294,7 +294,7 @@ else {
                                                             if ($active_keberatan == 'show_keberatan') {
                                                                 # code...
                                                         ?>
-                                                            <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>&nbsp;&nbsp;
+                                                            <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?php echo $tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>&nbsp;&nbsp;
                                                         <?php
                                                             }
                                                         ?>
@@ -302,12 +302,12 @@ else {
                                                             if ($active_banding == 'show_banding') {
                                                                 # code...
                                                         ?>
-                                                            <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="banding('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>&nbsp;&nbsp;
+                                                            <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="banding('<?php echo $tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>&nbsp;&nbsp;
                                                         <?php
                                                             }
                                                         ?>
                                                         <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_belum_diperiksa[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp;
-                                                        <button class="btn btn-danger btn-xs" onclick="del('<?=$tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
+                                                        <button class="btn btn-danger btn-xs" onclick="del('<?php echo $tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
                                                     </td>
                                                 </tr>
                                     <?php
@@ -319,7 +319,7 @@ else {
                             </div>
                         </div>
                         <div id="menu1" class="tab-pane fade" style="padding-top: 15px;">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Revisi</h2>
                                 <table id="table_revisi" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -366,11 +366,11 @@ else {
                                                 }                                
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_revisi[$i]->tanggal_mulai;?>&nbsp;<?=$tr_revisi[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_revisi[$i]->tanggal_selesai;?>&nbsp;<?=$tr_revisi[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_revisi[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_revisi[$i]->frekuensi_realisasi.' '.$tr_revisi[$i]->target_output_name;?></td>
+                                                    <td><?php echo $tr_revisi[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_revisi[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_revisi[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_revisi[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_revisi[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_revisi[$i]->frekuensi_realisasi.' '.$tr_revisi[$i]->target_output_name;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -382,10 +382,10 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_revisi[$i]->komentar_pemeriksa;?></td>
+                                                    <td><?php echo $tr_revisi[$i]->komentar_pemeriksa;?></td>
                                                     <td>
                                                         <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_revisi[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Revisi</button>');?>
-                                                        <button class="btn btn-danger btn-xs" onclick="del('<?=$tr_revisi[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
+                                                        <button class="btn btn-danger btn-xs" onclick="del('<?php echo $tr_revisi[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
                                                     </td>
                                                 </tr>
                                     <?php
@@ -397,7 +397,7 @@ else {
                             </div>
                         </div>
                         <div id="menu2" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Disetujui</h2>
                                 <table id="table_disetujui" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -445,12 +445,12 @@ else {
                                                 }
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_disetujui[$i]->tanggal_mulai;?>&nbsp;<?=$tr_disetujui[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_disetujui[$i]->tanggal_selesai;?>&nbsp;<?=$tr_disetujui[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_disetujui[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_disetujui[$i]->frekuensi_realisasi.' '.$tr_disetujui[$i]->target_output_name;?></td>
-                                                    <td><?=$tr_disetujui[$i]->target_skp;?></td>
+                                                    <td><?php echo $tr_disetujui[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_disetujui[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_disetujui[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_disetujui[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_disetujui[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_disetujui[$i]->frekuensi_realisasi.' '.$tr_disetujui[$i]->target_output_name;?></td>
+                                                    <td><?php echo $tr_disetujui[$i]->target_skp;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -462,8 +462,8 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_disetujui[$i]->menit_efektif;?></td>
-                                                    <!-- <td>Rp. <?=number_format($tr_disetujui[$i]->tunjangan);?></td> -->
+                                                    <td><?php echo $tr_disetujui[$i]->menit_efektif;?></td>
+                                                    <!-- <td>Rp. <?php echo number_format($tr_disetujui[$i]->tunjangan);?></td> -->
                                                 </tr>
                                     <?php
                                             }
@@ -474,7 +474,7 @@ else {
                             </div>
                         </div>
                         <div id="menu3" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Ditolak</h2>
                                 <table id="table_ditolak" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -521,11 +521,11 @@ else {
                                                 }                                                               
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_tolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_tolak[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_tolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_tolak[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_tolak[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_tolak[$i]->frekuensi_realisasi.' '.$tr_tolak[$i]->target_output_name;?></td>
+                                                    <td><?php echo $tr_tolak[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_tolak[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_tolak[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_tolak[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_tolak[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_tolak[$i]->frekuensi_realisasi.' '.$tr_tolak[$i]->target_output_name;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -537,9 +537,9 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_tolak[$i]->alasan_ditolak;?></td>
+                                                    <td><?php echo $tr_tolak[$i]->alasan_ditolak;?></td>
                                                     <td>
-                                                        <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?=$tr_tolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>
+                                                        <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?php echo $tr_tolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>
                                                     </td>
                                                 </tr>
                                     <?php
@@ -552,7 +552,7 @@ else {
                         </div>
 
                         <div id="menu4" class="tab-pane fade in active">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2 class="text-center" style="background-color: #FF0000;color: #fff;">EQUAL WORK DESERVES EQUAL PAY</h2>
 
                                 <div class="box-header with-border">
@@ -693,7 +693,7 @@ else {
                                                 <div class="row">
                                                     <div class="col-md-6 pull-right">
                                                         <span class="input-group-btn">
-                                                            <a class="btn btn-app pull-right" id="btn_save" <?=$trigger_disable_hari_aktif;?> style="<?=$trigger_css_hari_aktif;?>"><i class="fa fa-save"></i> Simpan</a>
+                                                            <a class="btn btn-app pull-right" id="btn_save" <?php echo $trigger_disable_hari_aktif;?> style="<?php echo $trigger_css_hari_aktif;?>"><i class="fa fa-save"></i> Simpan</a>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -710,7 +710,7 @@ else {
                         </div>
 
                         <div id="menu5" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Keberatan</h2>
                                 <table id="table_ditolak" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -756,12 +756,12 @@ else {
                                                 }                                                                   
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_keberatan[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_keberatan[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_keberatan[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_keberatan[$i]->frekuensi_realisasi.' '.$tr_keberatan[$i]->target_output_name;?></td>                                                    
-                                                    <!-- <td><?=$tr_keberatan[$i]->output_pekerjaan;?></td> -->
+                                                    <td><?php echo $tr_keberatan[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_keberatan[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_keberatan[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_keberatan[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_keberatan[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_keberatan[$i]->frekuensi_realisasi.' '.$tr_keberatan[$i]->target_output_name;?></td>                                                    
+                                                    <!-- <td><?php echo $tr_keberatan[$i]->output_pekerjaan;?></td> -->
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -773,7 +773,7 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_keberatan[$i]->komentar_keberatan;?></td>
+                                                    <td><?php echo $tr_keberatan[$i]->komentar_keberatan;?></td>
                                                 </tr>
                                     <?php
                                             }
@@ -784,7 +784,7 @@ else {
                             </div>
                         </div>
                         <div id="menu6" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Keberatan Ditolak</h2>
                                 <table id="table_ditolak" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -831,11 +831,11 @@ else {
                                                 }                                                                              
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_keberatan_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_keberatan_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_keberatan_ditolak[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_keberatan_ditolak[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_keberatan_ditolak[$i]->frekuensi_realisasi.' '.$tr_keberatan_ditolak[$i]->target_output_name;?></td>
+                                                    <td><?php echo $tr_keberatan_ditolak[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_keberatan_ditolak[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_keberatan_ditolak[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_keberatan_ditolak[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_keberatan_ditolak[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_keberatan_ditolak[$i]->frekuensi_realisasi.' '.$tr_keberatan_ditolak[$i]->target_output_name;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -847,9 +847,9 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_keberatan_ditolak[$i]->alasan_ditolak;?></td>
+                                                    <td><?php echo $tr_keberatan_ditolak[$i]->alasan_ditolak;?></td>
                                                     <td>
-                                                        <button class="btn btn-xs" onclick="banding('<?=$tr_keberatan_ditolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>
+                                                        <button class="btn btn-xs" onclick="banding('<?php echo $tr_keberatan_ditolak[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Banding</button>
                                                     </td>
                                                 </tr>
                                     <?php
@@ -861,7 +861,7 @@ else {
                             </div>
                         </div>
                         <div id="menu7" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Banding</h2>
                                 <table id="table_ditolak" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -907,11 +907,11 @@ else {
                                                 }        
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_banding[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_banding[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_banding[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_banding[$i]->frekuensi_realisasi.' '.$tr_banding[$i]->target_output_name;?></td>
+                                                    <td><?php echo $tr_banding[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_banding[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_banding[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_banding[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_banding[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_banding[$i]->frekuensi_realisasi.' '.$tr_banding[$i]->target_output_name;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -923,7 +923,7 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_banding[$i]->komentar_banding;?></td>
+                                                    <td><?php echo $tr_banding[$i]->komentar_banding;?></td>
                                                 </tr>
                                     <?php
                                             }
@@ -934,7 +934,7 @@ else {
                             </div>
                         </div>
                         <div id="menu8" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Banding Ditolak</h2>
                                 <table id="table_ditolak" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -980,11 +980,11 @@ else {
                                                 }                                                
                                     ?>
                                                 <tr>
-                                                    <td><?=$tr_banding_ditolak[$i]->tanggal_mulai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_mulai;?></td>
-                                                    <td><?=$tr_banding_ditolak[$i]->tanggal_selesai;?>&nbsp;<?=$tr_banding_ditolak[$i]->jam_selesai;?></td>
-                                                    <td><?=$kegiatan;?></td>
-                                                    <td><?=$tr_banding_ditolak[$i]->nama_pekerjaan;?></td>
-                                                    <td><?=$tr_banding_ditolak[$i]->output_pekerjaan;?></td>
+                                                    <td><?php echo $tr_banding_ditolak[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_banding_ditolak[$i]->jam_mulai;?></td>
+                                                    <td><?php echo $tr_banding_ditolak[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_banding_ditolak[$i]->jam_selesai;?></td>
+                                                    <td><?php echo $kegiatan;?></td>
+                                                    <td><?php echo $tr_banding_ditolak[$i]->nama_pekerjaan;?></td>
+                                                    <td><?php echo $tr_banding_ditolak[$i]->output_pekerjaan;?></td>
                                                     <td>
                                                     <?php
                                                         $link = "";
@@ -996,7 +996,7 @@ else {
                                                         }
                                                     ?>
                                                     </td>
-                                                    <td><?=$tr_banding_ditolak[$i]->komentar_tolak_banding;?></td>
+                                                    <td><?php echo $tr_banding_ditolak[$i]->komentar_tolak_banding;?></td>
                                                 </tr>
                                     <?php
                                             }

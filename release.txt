@@ -1,4 +1,13 @@
 v4.0.0
+2019-05-10
+New:
+Improved:
+- Nilai di dashboard mengikuti nilai di rpt
+- penyederhaaan speedometer
+Fixed:
+- Penyesuaian layout mobile - Transaksi
+
+v4.0.0
 2019-05-06
 New:
 Improved:
