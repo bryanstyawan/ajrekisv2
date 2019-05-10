@@ -46,6 +46,22 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     }
     $nama_agama    = $infoPegawai[0]->nama_agama;
 }
+
+$prosentase_menit_efektif_rpt = 0;
+if ($data_transaksi_rpt != 0) {
+    # code...
+    $prosentase_menit_efektif_rpt = $data_transaksi_rpt[0]->prosentase_menit_efektif;
+}                
+$menit_efektif_rpt = 0;
+if ($data_transaksi_rpt != 0) {
+    # code...
+    $menit_efektif_rpt = $data_transaksi_rpt[0]->menit_efektif;
+}
+$real_tunjangan_rpt = 0;
+if ($data_transaksi_rpt != 0) {
+    # code...
+    $real_tunjangan_rpt = $data_transaksi_rpt[0]->real_tunjangan;
+}
 ?>
 
 <?php
@@ -85,25 +101,25 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_realisasi_menit_efektif',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
-        'value_php' => number_format($data_transaksi_rpt[0]->menit_efektif),
+        'value_php' => number_format($menit_efektif_rpt),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
-        'html'      => ''));                
+        'html'      => ''));                        
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
-        'value_php' => number_format($data_transaksi_rpt[0]->real_tunjangan),
+        'value_php' => number_format($real_tunjangan_rpt),
         'title'     => 'TUNJANGAN',
         'html'      => ''));
-        $this->load->view('dashboard_component/common_component',array(
-            'class'     => 'col-lg-3 col-xs-8',
-            'id'        => '',
-            'color_box' => 'background-color: #d2d6de !important;',
-            'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
-            'value_php' => 0,
-            'title'     => 'FINGERPRINT',
-            'html'      => ''));        
+    $this->load->view('dashboard_component/common_component',array(
+        'class'     => 'col-lg-3 col-xs-8',
+        'id'        => '',
+        'color_box' => 'background-color: #d2d6de !important;',
+        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
+        'value_php' => 0,
+        'title'     => 'FINGERPRINT',
+        'html'      => ''));        
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
@@ -224,7 +240,7 @@ else {
                     height:200,
                     max:100,
                 });
-        $('#gaugeContainer').jqxGauge('value', <?php echo $data_transaksi_rpt[0]->prosentase_menit_efektif;?>);
+        $('#gaugeContainer').jqxGauge('value', <?php echo $prosentase_menit_efektif_rpt;?>);
 
         $("#btn-detail").click(function()
         {

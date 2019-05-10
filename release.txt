@@ -6,6 +6,7 @@ Improved:
 - penyederhaaan speedometer
 Fixed:
 - Penyesuaian layout mobile - Transaksi
+- Validasi rpt di dashboard
 
 2019-05-09
 New:
