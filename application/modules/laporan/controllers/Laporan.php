@@ -411,9 +411,87 @@ class Laporan extends CI_Controller {
 							'tahun'    => $data_sender['data_6']
 						);
 		$data['sender'] 	= $data_sender;
-		$data['list'] 		= $this->Mmaster->list_kinerja_bawahan($data_sender);
-		if ($data['list'] != 0) {
+		$data['list'] 		= $this->Mmaster->list_bawahan($data_sender);
+		if ($data['list'] != 0) 
+		{
+			for ($i=0; $i < count($data['list']); $i++)
+			{
+				
+				$data_rekap = $this->Mmaster->list_kinerja($data['list'][$i]->id,$data_sender);
+				// print_r($data_rekap);die();
+				if ($data_rekap != 0) {
+					# code..
+					$data['list'][$i]->tr_belum_diperiksa   		= $data_rekap[0]->tr_belum_diperiksa;
+					$data['list'][$i]->tr_revisi       				= $data_rekap[0]->tr_revisi;
+					$data['list'][$i]->tr_tolak     				= $data_rekap[0]->tr_tolak;
+					$data['list'][$i]->tr_approve    	    		= $data_rekap[0]->tr_approve;
+					$data['list'][$i]->menit_efektif  				= $data_rekap[0]->menit_efektif;
+					$data['list'][$i]->prosentase_menit_efektif  	= $data_rekap[0]->prosentase_menit_efektif;
+				}
+				else
+				{
+					$data['list'][$i]->tr_belum_diperiksa   		= 0;
+					$data['list'][$i]->tr_revisi       				= 0;
+					$data['list'][$i]->tr_tolak     				= 0;
+					$data['list'][$i]->tr_approve    	    		= 0;
+					$data['list'][$i]->menit_efektif  				= 0;
+					$data['list'][$i]->prosentase_menit_efektif  	= 0;
+				}
+			}
 			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);	
+		}
+	}
+
+	public function kinerja_anggota_plt()
+	{
+		# code...
+		$data['title']      = 'Rekapitulasi Data Kinerja Anggota PLT';
+		$data['content']    = 'laporan/kinerja/data_kinerja_anggota_plt';
+		$this->load->view('templateAdmin',$data);
+		// print_r($data['list']);die();
+	}
+
+	Public function filter_kinerja_anggota_plt()
+	{
+		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		// $id = $this->session->userdata('sesPosisi');\
+		$id = $get_data_pegawai[0]['posisi_plt'];
+		$data_sender = $this->input->post('data_sender');	
+		$data_sender = array
+						(
+							'atasan'   => $id,
+							'bulan'    => $data_sender['data_5'],
+							'tahun'    => $data_sender['data_6']
+						);
+		$data['sender'] 	= $data_sender;
+		$data['list'] 		= $this->Mmaster->list_bawahan($data_sender);
+		if ($data['list'] != 0) 
+		{
+			for ($i=0; $i < count($data['list']); $i++)
+			{
+				
+				$data_rekap = $this->Mmaster->list_kinerja($data['list'][$i]->id,$data_sender);
+				// print_r($data_rekap);die();
+				if ($data_rekap != 0) {
+					# code..
+					$data['list'][$i]->tr_belum_diperiksa   		= $data_rekap[0]->tr_belum_diperiksa;
+					$data['list'][$i]->tr_revisi       				= $data_rekap[0]->tr_revisi;
+					$data['list'][$i]->tr_tolak     				= $data_rekap[0]->tr_tolak;
+					$data['list'][$i]->tr_approve    	    		= $data_rekap[0]->tr_approve;
+					$data['list'][$i]->menit_efektif  				= $data_rekap[0]->menit_efektif;
+					$data['list'][$i]->prosentase_menit_efektif  	= $data_rekap[0]->prosentase_menit_efektif;
+				}
+				else
+				{
+					$data['list'][$i]->tr_belum_diperiksa   		= 0;
+					$data['list'][$i]->tr_revisi       				= 0;
+					$data['list'][$i]->tr_tolak     				= 0;
+					$data['list'][$i]->tr_approve    	    		= 0;
+					$data['list'][$i]->menit_efektif  				= 0;
+					$data['list'][$i]->prosentase_menit_efektif  	= 0;
+				}
+			}
+			$this->load->view('laporan/kinerja/ajax_kinerja_anggota_plt',$data);
 		}
 	}
 

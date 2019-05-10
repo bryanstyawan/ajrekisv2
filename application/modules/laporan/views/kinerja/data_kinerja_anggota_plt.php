@@ -104,7 +104,7 @@ $(document).ready(function(){
 		else
 		{
 			$.ajax({
-				url :"<?php echo site_url()?>laporan/filter_kinerja_anggota",
+				url :"<?php echo site_url()?>laporan/filter_kinerja_anggota_plt",
 				type:"post",
 				data: { data_sender : data_link},
 				beforeSend:function(){
