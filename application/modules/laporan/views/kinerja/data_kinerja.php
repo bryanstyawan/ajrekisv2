@@ -72,7 +72,7 @@
 						</div>
 						<div class="row col-xs-12" style="margin-top:10px;">
 							<div class="box-title pull-left">	
-								<button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-refresh"></i> OLAH DATA TRANSAKSI SIKERJA</button>																	
+								<!-- <button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-refresh"></i> OLAH DATA TRANSAKSI SIKERJA</button>																	 -->
 							</div>																							
 							<div class="box-title pull-right">							
 								<button class="btn btn-block btn-success" id="btn_export_excel"><i class="fa fa-print"></i> Export Excel</button>							
