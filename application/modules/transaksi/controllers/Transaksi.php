@@ -385,7 +385,7 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$id_atasan 	 = $this->session->userdata('sesUser');
-		$res_data    = $this->Allcrud->approve_transaksi($id,$id_atasan);
+		$res_data    = $this->Allcrud->approve_transaksi_plt($id,$id_atasan);
 		if ($res_data > 0) {
 			$res_data = 1;
 		}
