@@ -13,6 +13,12 @@ New:
 Improved:
 Fixed:
 
+2019-05-13
+New:
+- SP Approval SIKERJA PLT (By Eric)
+Improved:
+Fixed:
+
 v4.0.0
 2019-05-10
 New:
@@ -23,6 +29,7 @@ Fixed:
 - Penyesuaian layout mobile - Transaksi
 - Validasi rpt di dashboard
 
+v4.0.0
 2019-05-09
 New:
 Improved:
