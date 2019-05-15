@@ -59,7 +59,11 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
                             (
                                 'tunjangan'              => $transact[0]->real_tunjangan,
                                 'menit_kerja'            => $transact[0]->menit_efektif,
-                                'persentase_menit_kerja' => $transact[0]->prosentase_menit_efektif
+                                'persentase_menit_kerja' => $transact[0]->prosentase_menit_efektif,
+                                'tr_belum_diperiksa'     => $transact[0]->tr_belum_diperiksa,
+                                'tr_disetujui'           => $transact[0]->tr_approve,
+                                'tr_ditolak'             => $transact[0]->tr_tolak,
+                                'tr_revisi'              => $transact[0]->tr_revisi
                             );
 
                 $data = array

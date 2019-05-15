@@ -1,4 +1,19 @@
 v4.0.0
+2019-05-15
+New:
+Improved:
+Fixed:
+- API Kinerja (Status pekerjaan)
+- Data pegawai (masa kerja)
+
+v4.0.0
+2019-05-14
+New:
+- API Kinerja
+Improved:
+Fixed:
+
+v4.0.0
 2019-05-10
 New:
 Improved:

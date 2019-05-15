@@ -236,7 +236,7 @@ class Data_pegawai extends CI_Controller {
 											'audit_time'            => date('Y-m-d H:i:s'), 
 											'audit_user'            => $this->session->userdata('sesNip')
 										);
-						$this->Allcrud->editData('mr_masa_kerja_akademik',$data_masa_kerja_akademik,array('id' => $get_masa_kerja_detail[0]->id));
+						$this->Allcrud->editData('mr_masa_kerja_akademik',$data_masa_kerja_akademik,array('id' => $get_masa_kerja_detail_akademik[0]->id));
 		
 						if (count($get_masa_kerja_pegawai_akademik) > 1) {
 							# code...
@@ -278,7 +278,7 @@ class Data_pegawai extends CI_Controller {
 														'audit_time'            => date('Y-m-d H:i:s'), 
 														'audit_user'            => $this->session->userdata('sesNip')
 													);
-						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_pegawai[0]->id));
+						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_detail_plt[0]->id));
 		
 						$data_masa_kerja_baru_plt = array
 													(
@@ -299,7 +299,7 @@ class Data_pegawai extends CI_Controller {
 													'audit_time'            => date('Y-m-d H:i:s'), 
 													'audit_user'            => $this->session->userdata('sesNip')
 												);
-						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_plt,array('id' => $get_masa_kerja_detail[0]->id));
+						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_plt,array('id' => $get_masa_kerja_detail_plt[0]->id));
 		
 						if (count($get_masa_kerja_pegawai_plt) > 1) {
 							# code...
@@ -309,7 +309,7 @@ class Data_pegawai extends CI_Controller {
 															'audit_time'            => date('Y-m-d H:i:s'), 
 															'audit_user'            => $this->session->userdata('sesNip')
 														);		
-							$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_pegawai[1]->id));
+							$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_detail_plt[1]->id));
 						}
 					}
 				}					
