@@ -219,64 +219,64 @@ class Transaksi extends CI_Controller {
 	// 	echo json_encode($res);
 	// }
 
-	public function add_pekerjaan($id_pekerjaan)
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$data_sender    = $this->input->post('data_sender');
-		$count_transact = $this->timeline_transact($data_sender);
-		$data           = array
-						(
-							'id_pegawai'          => $this->session->userdata('sesUser'),
-							'id_posisi'			  => $this->session->userdata('sesPosisi'),							
-							'id_uraian_tugas'     => $data_sender['urtug'],
-							'tanggal_mulai'       => date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
-							'tanggal_selesai'     => date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
-							'jam_mulai'           => $data_sender['jam_mulai'],
-							'jam_selesai'         => $data_sender['jam_selesai'],
-							'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
-							'frekuensi_realisasi' => $data_sender['kuantitas'],
-							'menit_efektif'       => $count_transact['menit_efektif'],
-							'hari_efektif'        => $count_transact['hari_efektif'],
-							'tunjangan'           => $count_transact['tunjangan'],
-							'status_pekerjaan'    => '0',
-							'audit_insert'        => date('Y-m-d H:i:s'),
-							'audit_user_insert'   => $this->session->userdata('sesUser')
-						);
+	// public function add_pekerjaan($id_pekerjaan)
+	// {
+	// 	# code...
+	// 	$this->Globalrules->session_rule();
+	// 	$data_sender    = $this->input->post('data_sender');
+	// 	$count_transact = $this->timeline_transact($data_sender);
+	// 	$data           = array
+	// 					(
+	// 						'id_pegawai'          => $this->session->userdata('sesUser'),
+	// 						'id_posisi'			  => $this->session->userdata('sesPosisi'),							
+	// 						'id_uraian_tugas'     => $data_sender['urtug'],
+	// 						'tanggal_mulai'       => date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+	// 						'tanggal_selesai'     => date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+	// 						'jam_mulai'           => $data_sender['jam_mulai'],
+	// 						'jam_selesai'         => $data_sender['jam_selesai'],
+	// 						'nama_pekerjaan'      => $data_sender['ket_pekerjaan'],
+	// 						'frekuensi_realisasi' => $data_sender['kuantitas'],
+	// 						'menit_efektif'       => $count_transact['menit_efektif'],
+	// 						'hari_efektif'        => $count_transact['hari_efektif'],
+	// 						'tunjangan'           => $count_transact['tunjangan'],
+	// 						'status_pekerjaan'    => '0',
+	// 						'audit_insert'        => date('Y-m-d H:i:s'),
+	// 						'audit_user_insert'   => $this->session->userdata('sesUser')
+	// 					);
 
-		$flag                   = array('id_pekerjaan'=>$id_pekerjaan);
-		$res_data               = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
+	// 	$flag                   = array('id_pekerjaan'=>$id_pekerjaan);
+	// 	$res_data               = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 
-		$who_is_approval        = $this->Globalrules->who_is($this->session->userdata('sesUser'));
-		if ($who_is_approval == 'eselon 1') {
-			# code...
-			$data_approve = array
-							(
-								'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-								'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-								'audit_update'         => date('Y-m-d H:i:s'),
-								'audit_user_update'    => $this->session->userdata('sesUser')
-							);
-			if ($this->session->userdata('kat_posisi') == 1) {
-				# code...
-				$data_approve['status_pekerjaan'] = 1;				
-			}
-			else
-			{
-				$data_approve['status_pekerjaan'] = 0;
-			}							
-			$flag        = array('id_pekerjaan'=>$id_pekerjaan);
-			$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
-		}
+	// 	$who_is_approval        = $this->Globalrules->who_is($this->session->userdata('sesUser'));
+	// 	if ($who_is_approval == 'eselon 1') {
+	// 		# code...
+	// 		$data_approve = array
+	// 						(
+	// 							'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
+	// 							'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
+	// 							'audit_update'         => date('Y-m-d H:i:s'),
+	// 							'audit_user_update'    => $this->session->userdata('sesUser')
+	// 						);
+	// 		if ($this->session->userdata('kat_posisi') == 1) {
+	// 			# code...
+	// 			$data_approve['status_pekerjaan'] = 1;				
+	// 		}
+	// 		else
+	// 		{
+	// 			$data_approve['status_pekerjaan'] = 0;
+	// 		}							
+	// 		$flag        = array('id_pekerjaan'=>$id_pekerjaan);
+	// 		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
+	// 	}
 
-		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
-	}
+	// 	$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');
+	// 	$res = array
+	// 				(
+	// 					'status' => $res_data,
+	// 					'text'   => $text_status
+	// 				);
+	// 	echo json_encode($res);
+	// }
 
 	public function upload_file_pendukung($param=NULL,$id=NULL)
 	{
@@ -386,6 +386,33 @@ class Transaksi extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$id_atasan 	 = $this->session->userdata('sesUser');
 		$res_data    = $this->Allcrud->approve_transaksi_plt($id,$id_atasan);
+		if ($res_data > 0) {
+			$res_data = 1;
+		}
+		$text_status = "Data pekerjaan telah disetujui";
+		$data_notify  = array
+						(
+							'id_table'   => $id,
+							'table_name' => 'tr_capaian_pekerjaan'
+						);
+		$this->Globalrules->push_notifikasi($data_notify,'read_data');
+
+		$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
+		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);
+	}
+
+	public function approve_akademik($id)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$id_atasan 	 = $this->session->userdata('sesUser');
+		$res_data    = $this->Allcrud->approve_transaksi_akdm($id,$id_atasan);
 		if ($res_data > 0) {
 			$res_data = 1;
 		}
@@ -659,38 +686,38 @@ class Transaksi extends CI_Controller {
 
 	// }	
 
-	public function approve_akademik($id)
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$data_approve = array
-						(
-							'status_pekerjaan'     => '1',
-							'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-							'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-							'audit_update'         => date('Y-m-d H:i:s'),
-							'audit_user_update'    => $this->session->userdata('sesUser')
-						);
-		$flag        = array('id_pekerjaan'=>$id);
-		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
-		$text_status = "Data pekerjaan telah disetujui";
-		$data_notify  = array
-						(
-							'id_table'   => $id,
-							'table_name' => 'tr_capaian_pekerjaan'
-						);
-		$this->Globalrules->push_notifikasi($data_notify,'read_data');
+	// public function approve_akademik($id)
+	// {
+	// 	# code...
+	// 	$this->Globalrules->session_rule();
+	// 	$data_approve = array
+	// 					(
+	// 						'status_pekerjaan'     => '1',
+	// 						'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
+	// 						'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
+	// 						'audit_update'         => date('Y-m-d H:i:s'),
+	// 						'audit_user_update'    => $this->session->userdata('sesUser')
+	// 					);
+	// 	$flag        = array('id_pekerjaan'=>$id);
+	// 	$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
+	// 	$text_status = "Data pekerjaan telah disetujui";
+	// 	$data_notify  = array
+	// 					(
+	// 						'id_table'   => $id,
+	// 						'table_name' => 'tr_capaian_pekerjaan'
+	// 					);
+	// 	$this->Globalrules->push_notifikasi($data_notify,'read_data');
 
-		$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
-		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
+	// 	$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
+	// 	$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
+	// 	$res = array
+	// 				(
+	// 					'status' => $res_data,
+	// 					'text'   => $text_status
+	// 				);
+	// 	echo json_encode($res);
 
-	}		
+	// }		
 
 	public function approve_all()
 	{
