@@ -29,7 +29,8 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         $this->methods['users_get']['limit'] = 500; // 500 requests per hour per user/key
         $this->methods['users_post']['limit'] = 100; // 100 requests per hour per user/key
         $this->methods['users_delete']['limit'] = 50; // 50 requests per hour per user/key
-		$this->load->model ('m_api', '', TRUE);        
+        $this->load->model('m_api', '', TRUE);      
+        $this->load->database();          
     }
 
     public function summary_post()
@@ -39,33 +40,32 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         $year  = $this->input->post('tahun');                
         $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
         $bulan = htmlspecialchars($month, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
-        $year  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
+        $tahun  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
         $users = $this->m_api->get_pegawai($nip);
         if ($users != 0)
         {
-            $transact = $this->m_api->get_transact($nip,1,date('m'),date('Y'));            
+            $transact = $this->m_api->get_transact($nip,1,$bulan,$tahun);            
 
             $res_pegawai = array
             (
                 'nip'                    => $users[0]->nip,
                 'nama'                   => $users[0]->nama_pegawai,
             );
-
+            
             if ($transact != 0) {
                 # code...
 
                 $res_data_tr = array
                             (
-                                'tanggal'                => $transact[0]->tanggal_mulai,
-                                'tunjangan'              => $transact[0]->real_tunjangan_kinerja,
+                                'tunjangan'              => $transact[0]->real_tunjangan,
                                 'menit_kerja'            => $transact[0]->menit_efektif,
-                                'persentase_menit_kerja' => round($transact[0]->real_prosentase)
+                                'persentase_menit_kerja' => $transact[0]->prosentase_menit_efektif
                             );
 
                 $data = array
                         (
-                            'res_pegawai' => $res_pegawai,
-                            'res_data'    => $res_data_tr 
+                            'res_pegawai'   => $res_pegawai,
+                            'res_transaksi' => $res_data_tr 
                         );
 
                 $res_data = array(

@@ -6,12 +6,12 @@ class M_api extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function get_pegawai($nip=NULL)
+	public function get_pegawai($nip)
 	{
 		# code...
 		$sql = "SELECT a.*
-				FROM mr_pegawai a
-				WHERE a.nip = '".$nip."'";
+						FROM mr_pegawai a
+						WHERE a.nip = '".$nip."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -30,59 +30,72 @@ class M_api extends CI_Model {
 			# code...
 			$nip = "0";
 		}
-		$sql = "SELECT a.id_pegawai,
-						a.tanggal_mulai,
-						c.nama_pegawai,
-						c.nip,
+		$sql = "SELECT
+					b.id AS id_pegawai,
+					c.id as id_posisi,
+					b.posisi_akademik,
+					b.posisi_plt,
+					b.nip,
+					b.nama_pegawai,
+					c.nama_posisi,
+					c.atasan,
+					d.nama_eselon1,
+					e.nama_eselon2,
+					f.nama_eselon3,
+					g.nama_eselon4,
+					a.bulan,
+					a.tahun,
+					a.tr_approve,
+					a.tr_tolak,
+					a.tr_revisi,
+					a.menit_efektif,
+					a.prosentase_menit_efektif,
+					a.real_tunjangan,
+					a.frekuensi_realisasi,
+					a.tr_belum_diperiksa,
+					c.kat_posisi,
+				-- 	IF(c.kat_posisi = 1,h.posisi_class,NULL) as class_posisi_struktural_definif,
+				-- 	IF(c.kat_posisi = 2,l.posisi_class,NULL) as class_posisi_jft_definif,
+				-- 	IF(c.kat_posisi = 4,j.posisi_class,NULL) as class_posisi_jfu_definif,
+				-- 	IF(c.kat_posisi = 6,h.posisi_class,NULL) as class_posisi_struktur_akademik_definif,
+					CASE
+							WHEN c.kat_posisi = 1 THEN h.posisi_class
+							WHEN c.kat_posisi = 2 THEN l.posisi_class
+							WHEN c.kat_posisi = 4 THEN j.posisi_class
+							WHEN c.kat_posisi = 6 THEN h.posisi_class
+					END as class_posisi_definitif,
+					CASE
+							WHEN c.kat_posisi = 1 THEN h.tunjangan
+							WHEN c.kat_posisi = 2 THEN l.tunjangan
+							WHEN c.kat_posisi = 4 THEN j.tunjangan
+							WHEN c.kat_posisi = 6 THEN h.tunjangan
+					END as tunjangan_definitif
+				FROM
+					(
 						(
-							CASE d.kat_posisi
-								WHEN 1 THEN (e.tunjangan/2)
-								WHEN 2 THEN (cls_jft.tunjangan/2)
-								WHEN 4 THEN (cls_jfu.tunjangan/2)
-							END								
-						) as tunjangan_kinerja_sistem,
---						(e.tunjangan/2) AS tunjangan_kinerja_sistem,
-						a.status_pekerjaan,
-						MONTH(a.tanggal_mulai) AS `month`,
-						(b.jml_hari_aktif*b.jml_menit_perhari) AS menit_efektif_sistem,
-						SUM(a.menit_efektif) AS menit_efektif,
-						Count(a.status_pekerjaan) AS count_status_pekerjaan,
-						SUM(a.tunjangan) AS tunjangan_kinerja,
-						((SUM(a.menit_efektif)/(b.jml_hari_aktif*b.jml_menit_perhari))*100) AS prosentase,
-						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,((CASE d.kat_posisi WHEN 1 THEN (e.tunjangan)WHEN 2 THEN (cls_jft.tunjangan)WHEN 4 THEN (cls_jfu.tunjangan)END) / 2),SUM(a.tunjangan)) AS real_tunjangan_kinerja,
-						IF(((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100) > 100,100,((SUM(a.menit_efektif) / (b.jml_hari_aktif * b.jml_menit_perhari)) * 100)) AS real_prosentase,
-							COALESCE((
-									SELECT IF(COALESCE(aa.keterangan,'-')='-','-','Tugas Belajar')
-									FROM mr_tugas_belajar aa
-									WHERE aa.id_pegawai = a.id_pegawai
-									AND (a.tanggal_mulai BETWEEN aa.tgl_mulai AND aa.tgl_selesai)
-							 ),'-') AS tugas_belajar,
-							COALESCE((
-									SELECT bb.tunjangan
-									FROM mr_tunjangan_profesi bb
-									WHERE bb.id_pegawai = a.id_pegawai
-									AND bb.tgl_selesai LIKE '%9999-01-01%'
-							 ),'0') AS tunjangan_profesi,
-							COALESCE((
-									SELECT cc.total/2
-									FROM tr_import_tunkir_produktivitas_disiplin cc
-									WHERE cc.nip = c.nip
-									AND cc.bulan = ".$bulan."
-							 ),'0') AS tunjangan_disiplin
-				FROM tr_capaian_pekerjaan a
-				LEFT JOIN mr_hari_aktif b ON b.bulan = MONTH(a.tanggal_mulai)
-				LEFT JOIN mr_pegawai c ON a.id_pegawai = c.id
-				LEFT JOIN mr_posisi d ON c.posisi = d.id
-				LEFT JOIN mr_posisi_class e ON e.id = d.posisi_class
-				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON d.id_jft  = jft.id
-				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
-				LEFT JOIN mr_jabatan_fungsional_umum jfu ON d.id_jfu      = jfu.id
-				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
-				WHERE a.status_pekerjaan = ".$status."
-				AND MONTH(a.tanggal_mulai) = ".$bulan."
-				AND YEAR(a.tanggal_mulai) = ".$tahun."
-				AND c.nip = ".$nip."
-                AND b.tahun = '".$tahun."'";
+							(
+								(
+									(
+										rpt_capaian_kinerja a
+										LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+									)
+									LEFT JOIN mr_posisi c ON a.id_posisi = c.id
+								)
+								LEFT JOIN mr_eselon1 d ON b.es1 = d.id_es1
+							)
+							LEFT JOIN mr_eselon2 e ON b.es2 = e.id_es2
+						)
+						LEFT JOIN mr_eselon3 f ON b.es3 = f.id_es3
+					)
+				LEFT JOIN mr_eselon4 g ON b.es4 = g.id_es4
+				LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
+				LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
+				LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+				LEFT JOIN mr_jabatan_fungsional_umum k ON c.id_jft = k.id
+				LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+				WHERE a.bulan = '".$bulan."' 
+				AND a.tahun = '".$tahun."'
+				AND b.nip = '".$nip."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

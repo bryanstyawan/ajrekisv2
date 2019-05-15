@@ -1,4 +1,5 @@
 v4.0.0
+<<<<<<< HEAD
 2019-05-13
 New:
 - SP Approval SIKERJA PLT (By Eric)
@@ -6,6 +7,17 @@ Improved:
 Fixed:
 
 v4.0.0
+=======
+2019-05-10
+New:
+Improved:
+- Nilai di dashboard mengikuti nilai di rpt
+- penyederhaaan speedometer
+Fixed:
+- Penyesuaian layout mobile - Transaksi
+- Validasi rpt di dashboard
+
+>>>>>>> eba9dc10031b94d3d4bb2b5aeaef7a94393b148d
 2019-05-09
 New:
 Improved:
