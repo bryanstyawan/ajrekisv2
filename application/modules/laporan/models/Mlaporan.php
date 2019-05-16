@@ -114,7 +114,7 @@ Last edit : 19/07/2016
 										(
 											(
 												rpt_capaian_kinerja a
-												LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+												LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id and a.id_posisi = b.posisi
 											)
 											LEFT JOIN mr_posisi c ON a.id_posisi = c.id
 										)
