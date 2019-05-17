@@ -417,9 +417,10 @@ class Laporan extends CI_Controller {
 			for ($i=0; $i < count($data['list']); $i++)
 			{
 				
-				$data_rekap = $this->Mmaster->list_kinerja($data['list'][$i]->id,$data_sender);
+				$data_rekap = $this->Mmaster->list_kinerja($data['list'][$i]->id,$data['list'][$i]->posisi,$data_sender);
 				// print_r($data_rekap);die();
-				if ($data_rekap != 0) {
+				if ($data_rekap != 0) 
+				{
 					# code..
 					$data['list'][$i]->tr_belum_diperiksa   		= $data_rekap[0]->tr_belum_diperiksa;
 					$data['list'][$i]->tr_revisi       				= $data_rekap[0]->tr_revisi;
@@ -470,9 +471,10 @@ class Laporan extends CI_Controller {
 			for ($i=0; $i < count($data['list']); $i++)
 			{
 				
-				$data_rekap = $this->Mmaster->list_kinerja($data['list'][$i]->id,$data_sender);
+				$data_rekap = $this->Mmaster->list_kinerja($data['list'][$i]->id,$data['list'][$i]->posisi,$data_sender);
 				// print_r($data_rekap);die();
-				if ($data_rekap != 0) {
+				if ($data_rekap != 0) 
+				{
 					# code..
 					$data['list'][$i]->tr_belum_diperiksa   		= $data_rekap[0]->tr_belum_diperiksa;
 					$data['list'][$i]->tr_revisi       				= $data_rekap[0]->tr_revisi;
