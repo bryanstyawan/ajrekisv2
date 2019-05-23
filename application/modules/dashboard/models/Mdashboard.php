@@ -109,4 +109,31 @@ class Mdashboard extends CI_Model
 			return 0;
 		}								
 	}	
+
+	public function get_data_dashboard()
+	{
+	 	# code...
+	 	$bulan = date('m');
+	 	$tahun = date('Y'); 
+	 	#JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
+	 	$sql = "SELECT ROUND(SUM(`menit_efektif`)/6000 * 100,2) as prosentase_menit_efektif,
+	 				   SUM(`menit_efektif`) as menit_efektif,
+	 				   SUM(`tunjangan`) as tunjangankinerja
+	 			FROM tr_capaian_pekerjaan a
+	 			JOIN mr_pegawai c ON a.id_pegawai = c.id
+	 			WHERE a.tanggal_mulai LIKE '%".date('Y-m')."%'
+	 			AND a.tanggal_selesai LIKE '%".date('Y-m')."%'
+	 			AND a.id_pegawai = '".$this->session->userdata('sesUser')."'
+	 			AND a.status_pekerjaan = '1'";
+	 	
+	 	$query = $this->db->query($sql);
+	 	if($query->num_rows() > 0)
+	 	{
+	 		return $query->result();
+	 	}
+	 	else
+	 	{
+	 		return 0;
+	 	}								
+	}	
 }

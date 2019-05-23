@@ -33,6 +33,7 @@ class Dashboard extends CI_Controller {
 			$data['history_golongan']   = $this->mdashboard->get_history_golongan();
 			$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 			$data['data_transaksi_rpt'] = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
+			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard();
 			$data['data_api']			= '';
 			// $data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));			
 			// print_r($data['data_transaksi_rpt']);die();

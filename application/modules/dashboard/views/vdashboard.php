@@ -51,16 +51,30 @@ $prosentase_menit_efektif_rpt = 0;
 if ($data_transaksi_rpt != 0) {
     # code...
     $prosentase_menit_efektif_rpt = $data_transaksi_rpt[0]->prosentase_menit_efektif;
-}                
-$menit_efektif_rpt = 0;
-if ($data_transaksi_rpt != 0) {
-    # code...
-    $menit_efektif_rpt = $data_transaksi_rpt[0]->menit_efektif;
+
 }
-$real_tunjangan_rpt = 0;
-if ($data_transaksi_rpt != 0) {
+// $menit_efektif_rpt = 0;
+// if ($data_transaksi_rpt != 0) {
+//     # code...
+//     $menit_efektif_rpt = $data_transaksi_rpt[0]->menit_efektif;
+// }
+
+$menit_efektif_rpt = 0;
+if ($menit_efektif_dashboard != 0) {
     # code...
-    $real_tunjangan_rpt = $data_transaksi_rpt[0]->real_tunjangan;
+    $menit_efektif_rpt = $menit_efektif_dashboard[0]->menit_efektif;
+}
+
+// $real_tunjangan_rpt = 0;
+// if ($data_transaksi_rpt != 0) {
+//     # code...
+//     $real_tunjangan_rpt = $data_transaksi_rpt[0]->real_tunjangan;
+// }
+
+$real_tunjangan_rpt = 0;
+if ($menit_efektif_dashboard != 0) {
+    # code...
+    $real_tunjangan_rpt =  $menit_efektif_dashboard[0]->tunjangankinerja;
 }
 ?>
 
@@ -220,8 +234,8 @@ else {
     $(document).ready(function()
     {
     
-        // var res_api = '<?=$data_api;?>';
-        // console.log(res_api);
+        var res_api = '<?=$data_api;?>';
+        console.log(res_api);
         // Lobibox.window({
         //     title  : 'Informasi',
         //     content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+            

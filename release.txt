@@ -7,7 +7,8 @@ Improved:
 Fixed:
 - Responsive Transaksi Sikerja bawahan
 - Slider Waisak & kebangkitan nasional
-
+- Modifikasi persentase menit efektif (rifki)
+- realisasi menit efektif dan tunjangan (rifki)
 
 v4.0.0
 2019-05-15
