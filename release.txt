@@ -9,6 +9,7 @@ Fixed:
 - Slider Waisak & kebangkitan nasional
 - Modifikasi persentase menit efektif (rifki)
 - realisasi menit efektif dan tunjangan (rifki)
+- Perbaikan fungsi get_data_dashboard (Rifki)
 
 v4.0.0
 2019-05-15

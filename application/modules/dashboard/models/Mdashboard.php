@@ -116,11 +116,21 @@ class Mdashboard extends CI_Model
 	 	$bulan = date('m');
 	 	$tahun = date('Y'); 
 	 	#JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
-	 	$sql = "SELECT ROUND(SUM(`menit_efektif`)/6000 * 100,2) as prosentase_menit_efektif,
-	 				   SUM(`menit_efektif`) as menit_efektif,
-	 				   SUM(`tunjangan`) as tunjangankinerja
-	 			FROM tr_capaian_pekerjaan a
-	 			JOIN mr_pegawai c ON a.id_pegawai = c.id
+	 	$sql = "SELECT  CASE WHEN SUM(menit_efektif)>=6000 THEN 100
+					ELSE
+						ROUND(SUM(`menit_efektif`)/6000 * 100,2) 
+					END AS prosentase_menit_efektif,
+					SUM(`menit_efektif`) AS menit_efektif,
+					CASE WHEN SUM(menit_efektif)>=6000 THEN cls.tunjangan * 0.5
+					ELSE
+						ROUND(SUM(`menit_efektif`)/6000 * cls.tunjangan * 0.5,0)
+					END AS tunjangankinerja,
+					cls.posisi_class,
+					cls.tunjangan
+				FROM tr_capaian_pekerjaan a
+				JOIN mr_pegawai c ON a.id_pegawai = c.id
+				JOIN mr_posisi pos ON pos.id = c.posisi
+				JOIN `mr_posisi_class` cls ON cls.id=pos.posisi_class
 	 			WHERE a.tanggal_mulai LIKE '%".date('Y-m')."%'
 	 			AND a.tanggal_selesai LIKE '%".date('Y-m')."%'
 	 			AND a.id_pegawai = '".$this->session->userdata('sesUser')."'
