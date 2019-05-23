@@ -12,6 +12,13 @@ Fixed:
 v4.0.0
 2019-05-15
 New:
+Improved:
+Fixed:
+- Persentase di Excel Rekap Kinerja Pegawai (By Eric)
+
+v4.0.0
+2019-05-15
+New:
 - SP Approval SIKERJA Akademik (By Eric)
 Improved:
 Fixed:

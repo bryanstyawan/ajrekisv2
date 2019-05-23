@@ -365,7 +365,7 @@ class Laporan extends CI_Controller {
 				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $data['list'][$i]->tr_tolak);
 				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->tr_approve);
 				$this->excel->getActiveSheet(2)->setCellValue('l'.$counter, $data['list'][$i]->menit_efektif);
-				$this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $prosentase_menit_kerja);
+				$this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $data['list'][$i]->prosentase_menit_efektif);
 				$this->excel->getActiveSheet(2)->setCellValue('n'.$counter, '');														
 		    }
 		}
@@ -515,45 +515,6 @@ class Laporan extends CI_Controller {
 	}
 	
 	/**************************** */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public function import_tunkir_produktivitas_disiplin()
 	{
