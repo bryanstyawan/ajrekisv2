@@ -187,11 +187,14 @@ else {
                                 <table id="table_belum_diperiksa" class="table table-bordered table-striped table-view">
                                     <thead>
                                         <tr>
+                                            <th>Aktivitas</th>
                                             <th>Tanggal, Jam Mulai</th>
                                             <th>Tanggal, Jam Selesai</th>
                                             <th>Uraian Tugas</th>
+                                            <!--                                             
                                             <th>Realisasi Target SKP</th>
                                             <th>Target SKP</th>
+                                             -->
                                             <th>Keterangan Pekerjaan</th>
                                             <th>Output Kuantitas</th>
                                             <th>File Pendukung</th>
@@ -271,11 +274,25 @@ else {
                                                 }                                  
                                     ?>
                                                 <tr>
+                                                    <td>
+                                                        <?php
+                                                            if ($tr_belum_diperiksa[$i]->lasttime == 0) {
+                                                                # code...
+                                                                echo 'Hari ini.';
+                                                            }
+                                                            else
+                                                            {
+                                                                echo $tr_belum_diperiksa[$i]->lasttime.' Hari Yang Lalu';
+                                                            }
+                                                        ?> 
+                                                    </td>                                                
                                                     <td><?php echo $tr_belum_diperiksa[$i]->tanggal_mulai;?>&nbsp;<?php echo $tr_belum_diperiksa[$i]->jam_mulai;?></td>
                                                     <td><?php echo $tr_belum_diperiksa[$i]->tanggal_selesai;?>&nbsp;<?php echo $tr_belum_diperiksa[$i]->jam_selesai;?></td>
                                                     <td><?php echo $kegiatan;?></td>
+                                                    <!-- 
                                                     <td><?php echo $tr_belum_diperiksa[$i]->realisasi_skp;?></td>
-                                                    <td><?php echo $tr_belum_diperiksa[$i]->target_skp;?></td>
+                                                    <td><?php echo $tr_belum_diperiksa[$i]->target_skp;?></td> 
+                                                    -->
                                                     <td><?php echo $tr_belum_diperiksa[$i]->nama_pekerjaan;?></td>
                                                     <td><?php echo $tr_belum_diperiksa[$i]->frekuensi_realisasi.' '.$tr_belum_diperiksa[$i]->target_output_name;?></td>
                                                     <td>
@@ -306,7 +323,7 @@ else {
                                                         <?php
                                                             }
                                                         ?>
-                                                        <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_belum_diperiksa[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp;
+                                                        <!-- <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_belum_diperiksa[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp; -->
                                                         <button class="btn btn-danger btn-xs" onclick="del('<?php echo $tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
                                                     </td>
                                                 </tr>
@@ -384,7 +401,7 @@ else {
                                                     </td>
                                                     <td><?php echo $tr_revisi[$i]->komentar_pemeriksa;?></td>
                                                     <td>
-                                                        <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_revisi[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Revisi</button>');?>
+                                                        <!-- <?php echo anchor('transaksi/ubah_pekerjaan/'.$tr_revisi[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Revisi</button>');?> -->
                                                         <button class="btn btn-danger btn-xs" onclick="del('<?php echo $tr_revisi[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
                                                     </td>
                                                 </tr>
@@ -1152,7 +1169,7 @@ else {
 
                     <div class="tab-content">
                         <div id="home_atasan" class="tab-pane fade in active" style="padding-top: 15px;">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Anda Periksa</h2>
                                 <div class="col-md-3 pull-right">
                                     <div class="checkbox pull-right">
@@ -1165,6 +1182,7 @@ else {
                                 <table id="table_belum_diperiksa_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
                                         <tr>
+                                            <th>Aktivitas</th>
                                             <th>Tanggal, Jam Mulai</th>
                                             <th>Tanggal, Jam Selesai</th>
                                             <th>Uraian Tugas</th>
@@ -1183,7 +1201,7 @@ else {
                         </div>
 
                         <div id="menu1_atasan" class="tab-pane fade" style="padding-top: 15px;">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Revisi</h2>
                                 <table id="table_revisi_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
@@ -1204,11 +1222,12 @@ else {
                         </div>
 
                         <div id="menu2_atasan" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Anda Setuju</h2>
                                 <table id="table_disetujui_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
                                         <tr>
+                                            <!-- <th>Aktivitas</th> -->
                                             <th>Tanggal, Jam Mulai</th>
                                             <th>Tanggal, Jam Selesai</th>
                                             <th>Uraian Tugas</th>
@@ -1227,7 +1246,7 @@ else {
                         </div>
 
                         <div id="menu3_atasan" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Anda Tolak</h2>
                                 <table id="table_ditolak_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
@@ -1248,7 +1267,7 @@ else {
                         </div>
 
                         <div id="menu5_atasan" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Keberatan</h2>
                                 <table id="table_keberatan_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
@@ -1271,7 +1290,7 @@ else {
                         </div>
 
                         <div id="menu6_atasan" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Keberatan Anda Tolak</h2>
                                 <table id="table_keberatan_ditolak_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
@@ -1294,7 +1313,7 @@ else {
                         </div>
 
                         <div id="menu7_atasan" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Banding</h2>
                                 <table id="table_banding_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
@@ -1318,7 +1337,7 @@ else {
 
 
                         <div id="menu8_atasan" class="tab-pane fade">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Banding Ditolak</h2>
                                 <table id="table_banding_ditolak_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
@@ -1723,8 +1742,18 @@ function view_option(id,i) {
                             }
                         }
 
+                        param_history_time = '';
+                        if (obj.data.tr_belum_diperiksa[i].lasttime == 0) {
+                            param_history_time = 'Hari ini.'
+                        }
+                        else
+                        {
+                            param_history_time = obj.data.tr_belum_diperiksa[i].lasttime+' Hari Yang Lalu';
+                        }                        
+
 
                         row_data = "<tr id='tr_belum_diperiksa_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
+                                    "<td>"+param_history_time+"</td>"+
                                     "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
                                     "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
                                     "<td>"+kegiatan+"</td>"+
@@ -1800,7 +1829,17 @@ function view_option(id,i) {
                                 kegiatan = obj.data.tr_disetujui[i].kegiatan_skp_jfu;
                             }
                         }
+
+                        // param_history_time = '';
+                        // if (obj.data.tr_disetujui[i].lasttime == 0) {
+                        //     param_history_time = 'Hari ini.'
+                        // }
+                        // else
+                        // {
+                        //     param_history_time = obj.data.tr_disetujui[i].lasttime+' Hari Yang Lalu';
+                        // }
                         row_data = "<tr>"+
+                        // "<td>"+param_history_time+"</td>"+                        
                         "<td>"+obj.data.tr_disetujui[i].tanggal_mulai+"&nbsp;"+obj.data.tr_disetujui[i].jam_mulai+"</td>"+
                         "<td>"+obj.data.tr_disetujui[i].tanggal_selesai+"&nbsp;"+obj.data.tr_disetujui[i].jam_selesai+"</td>"+
                         "<td>"+kegiatan+"</td>"+
@@ -2136,7 +2175,7 @@ function send_data_tambah_without_file(data_sender) {
                         ajax_catch(jqXHR,exception);					
                     }
                 })                                                                            
-            }            
+            } 
         },
         error:function(jqXHR,exception)
         {
@@ -2169,23 +2208,8 @@ function send_data_tambah(data_sender) {
             if(obj1.status == 1)
             {
                 data_sender['file_pendukung'] = obj1.filename;
-                console.log(data_sender);
                 send_data_tambah_without_file(data_sender);
             }
-            // console.log(data_sender);            
-            // if (obj1.status == 1)
-            // {
-            //     send_data_tambah_without_file(data_sender);
-            // }
-            // else
-            // {
-            //     Lobibox.notify('warning', {
-            //         msg: obj1.text
-            //         });
-            //     setTimeout(function(){
-            //         $("#loadprosess").modal('hide');
-            //     }, 5000);
-            // }
         },
         error:function(jqXHR,exception)
         {

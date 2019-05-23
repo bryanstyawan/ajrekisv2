@@ -177,7 +177,8 @@ class Mtrx extends CI_Model
 							AND aa.id_uraian_tugas = a.id_uraian_tugas
 							AND aa.status_pekerjaan = '1'
 						),0) as `realisasi_skp`,
-						b.target_qty as `target_skp`
+						b.target_qty as `target_skp`,
+						DATEDIFF(CONCAT(CURDATE(),' ',CURTIME()), CONCAT(a.tanggal_selesai,' ',a.jam_selesai)) as lasttime
 				FROM tr_capaian_pekerjaan a
 				JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
 				LEFT OUTER JOIN mr_skp_satuan c ON b.target_output = c.id
@@ -187,7 +188,8 @@ class Mtrx extends CI_Model
 				WHERE a.tanggal_mulai LIKE '%".date('Y-m')."%'
 				AND a.tanggal_selesai LIKE '%".date('Y-m')."%'
 				AND a.status_pekerjaan = '".$status."'
-				AND a.id_pegawai = '".$id_pegawai."'";
+				AND a.id_pegawai = '".$id_pegawai."'
+				ORDER BY a.tanggal_selesai DESC, a.jam_selesai DESC";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -522,5 +524,27 @@ class Mtrx extends CI_Model
 		{
 			return 0;
 		}
+	}
+
+	public function verify_datetime_pekerjaan($id_pegawai,$id_posisi)
+	{
+		# code...
+		$date_string = date('Y').'-'.date('m');
+		$sql = "SELECT a.*
+				FROM tr_capaian_pekerjaan a
+				WHERE a.id_pegawai = '".$id_pegawai."'
+				AND a.id_posisi = '".$id_posisi."'
+				AND a.tanggal_mulai like '%".$date_string."%'
+				ORDER BY a.tanggal_selesai DESC, a.jam_selesai DESC
+				LIMIT 1";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}		
 	}
 }

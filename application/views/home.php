@@ -81,6 +81,32 @@
 
     <section id="main-slider">
         <div class="owl-carousel">
+
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/kebangkitannasional2.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/waisak_1.gif);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+
+
             <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/bedug.gif);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">

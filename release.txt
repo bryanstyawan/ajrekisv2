@@ -1,4 +1,15 @@
 v4.0.0
+2019-05-23
+New:
+- CURL
+Improved:
+- Sortir waktu berdasarkan tanggal dan jam selesai
+Fixed:
+- Responsive Transaksi Sikerja bawahan
+- Slider Waisak & kebangkitan nasional
+
+
+v4.0.0
 2019-05-15
 New:
 - SP Approval SIKERJA Akademik (By Eric)

@@ -219,6 +219,9 @@ else {
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
+    
+        // var res_api = '<?=$data_api;?>';
+        // console.log(res_api);
         // Lobibox.window({
         //     title  : 'Informasi',
         //     content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+            
