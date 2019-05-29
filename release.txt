@@ -1,4 +1,13 @@
 v4.0.0
+2019-05-28
+New:
+Improved:
+Fixed:
+- Menghapus revisi di transaksi sikerja
+- Perbaikan Persentase menit efektif yang tidak tampil
+- Parameter menit efektif
+
+v4.0.0
 2019-05-23
 New:
 - CURL

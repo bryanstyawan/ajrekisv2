@@ -110,20 +110,20 @@ class Mdashboard extends CI_Model
 		}								
 	}	
 
-	public function get_data_dashboard()
+	public function get_data_dashboard($set_menit_efektif=NULL)
 	{
 	 	# code...
 	 	$bulan = date('m');
 	 	$tahun = date('Y'); 
 	 	#JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
-	 	$sql = "SELECT  CASE WHEN SUM(menit_efektif)>=6000 THEN 100
+	 	$sql = "SELECT  CASE WHEN SUM(menit_efektif)>=".$set_menit_efektif." THEN 100
 					ELSE
-						ROUND(SUM(`menit_efektif`)/6000 * 100,2) 
+						ROUND(SUM(`menit_efektif`)/".$set_menit_efektif." * 100,2) 
 					END AS prosentase_menit_efektif,
 					SUM(`menit_efektif`) AS menit_efektif,
-					CASE WHEN SUM(menit_efektif)>=6000 THEN cls.tunjangan * 0.5
+					CASE WHEN SUM(menit_efektif)>=".$set_menit_efektif." THEN cls.tunjangan * 0.5
 					ELSE
-						ROUND(SUM(`menit_efektif`)/6000 * cls.tunjangan * 0.5,0)
+						ROUND(SUM(`menit_efektif`)/".$set_menit_efektif." * cls.tunjangan * 0.5,0)
 					END AS tunjangankinerja,
 					cls.posisi_class,
 					cls.tunjangan

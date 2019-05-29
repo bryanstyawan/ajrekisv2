@@ -108,7 +108,7 @@ else {
                                 </sup>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a data-toggle="tab" href="#menu1">
                                 Tahap Revisi
                                 <sup>
@@ -117,7 +117,7 @@ else {
                                     </span>
                                 </sup>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a data-toggle="tab" href="#menu2">
                                 Tahap Disetujui
@@ -335,8 +335,9 @@ else {
                                 </table>
                             </div>
                         </div>
+                        
                         <div id="menu1" class="tab-pane fade" style="padding-top: 15px;">
-                            <div class="table-responsive">
+                                <div class="table-responsive">
                                 <h2>Tahap Revisi</h2>
                                 <table id="table_revisi" class="table table-bordered table-striped table-view">
                                     <thead>
@@ -413,6 +414,8 @@ else {
                                 </table>
                             </div>
                         </div>
+                                        
+
                         <div id="menu2" class="tab-pane fade">
                             <div class="table-responsive">
                                 <h2>Tahap Disetujui</h2>
@@ -1087,7 +1090,7 @@ else {
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a data-toggle="tab" href="#home_atasan">
-                                Tahap Anda Periksa&nbsp;&nbsp;
+                                Periksa&nbsp;&nbsp;
                                 <sup>
                                     <span id="counter_atasan_proses_head" class="notif-count">
                                         <span class="counter_atasan_notify" id="counter_atasan_proses"></span>
@@ -1095,6 +1098,7 @@ else {
                                 </sup>
                             </a>
                         </li>
+                        <!-- 
                         <li>
                             <a data-toggle="tab" href="#menu1_atasan">
                                 Tahap Revisi
@@ -1104,10 +1108,11 @@ else {
                                     </span>
                                 </sup>
                             </a>
-                        </li>
+                        </li> 
+                        -->
                         <li>
                             <a data-toggle="tab" href="#menu2_atasan">
-                                Tahap Anda Setujui
+                                Setujui
                                 <sup>
                                     <span id="counter_atasan_disetujui_head" class="notif-count-transparent">
                                         <span class="counter_atasan_notify" id="counter_atasan_disetujui"></span>
@@ -1117,7 +1122,7 @@ else {
                         </li>
                         <li>
                             <a data-toggle="tab" href="#menu3_atasan">
-                                Tahap Anda Tolak
+                                Tolak
                                 <sup>
                                     <span id="counter_atasan_tolak_head" class="notif-count-transparent">
                                         <span class="counter_atasan_notify" id="counter_atasan_tolak"></span>
@@ -1127,7 +1132,7 @@ else {
                         </li>
                         <li>
                             <a data-toggle="tab" href="#menu5_atasan">
-                                Tahap Keberatan
+                                Keberatan
                                 <sup>
                                     <span id="counter_atasan_keberatan_head" class="notif-count">
                                         <span class="counter_atasan_notify" id="counter_atasan_keberatan"></span>
@@ -1137,7 +1142,7 @@ else {
                         </li>
                         <li>
                             <a data-toggle="tab" href="#menu6_atasan">
-                                Tahap Keberatan Anda Tolak
+                                Keberatan Ditolak
                                 <sup>
                                     <span id="counter_atasan_keberatan_ditolak_head" class="notif-count-transparent">
                                         <span class="counter_atasan_notify" id="counter_atasan_keberatan_ditolak"></span>
@@ -1147,7 +1152,7 @@ else {
                         </li>
                         <li>
                             <a data-toggle="tab" href="#menu7_atasan">
-                                Tahap Banding
+                                Banding
                                 <sup>
                                     <span id="counter_atasan_banding_head" class="notif-count-transparent">
                                         <span class="counter_atasan_notify" id="counter_atasan_banding"></span>
@@ -1157,7 +1162,7 @@ else {
                         </li>
                         <li>
                             <a data-toggle="tab" href="#menu8_atasan">
-                                Tahap Banding Ditolak
+                                Banding Ditolak
                                 <sup>
                                     <span id="counter_atasan_banding_ditolak_head" class="notif-count-transparent">
                                         <span class="counter_atasan_notify" id="counter_atasan_banding_ditolak"></span>
@@ -1765,7 +1770,7 @@ function view_option(id,i) {
                                     // "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
                                     "<td id='td_last_belum_diperiksa_ket_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
                                         "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
-                                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
+                                        // "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
                                         "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-danger btn-xs' onclick='reject("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-close'></i>&nbsp;Tolak</a></div><br>"+
                                     "</td>"+
                                     "</tr>";
