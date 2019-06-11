@@ -133,7 +133,7 @@ $(document).ready(function(){
 		es3 = (es3 == '') ? 0 : es3 ;
 		es4 = (es4 == '') ? 0 : es4 ;	
 
-		window.open('<?=base_url();?>laporan/export_kinerja_excel/'+es1+'/'+es2+'/'+es3+'/'+es4+'/'+select_bulan+'/'+select_tahun, "_blank");			
+		window.open('<?=base_url();?>laporan/export_tunjangan_excel/'+es1+'/'+es2+'/'+es3+'/'+es4+'/'+select_bulan+'/'+select_tahun, "_blank");			
 	})
 
 	$('#btn_filter').click(function() {

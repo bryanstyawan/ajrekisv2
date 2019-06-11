@@ -2558,16 +2558,17 @@ $(document).ready(function()
         else
         {
             time_flag = 1;
-            console.log(start_actual_time.getFullYear());
-            if (start_actual_time.getFullYear() != server_actual_time.getFullYear() || end_actual_time.getFullYear() != server_actual_time.getFullYear())
-            {
-                time_flag = 0;                
-                Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-                {
-                    msg: "Tahun harus sesuai dengan tahun berjalan."
-                });
-            }
-            else if (tgl_mulai > tgl_server || tgl_selesai > tgl_server)
+            // console.log(start_actual_time.getFullYear());
+            // if (start_actual_time.getFullYear() != server_actual_time.getFullYear() || end_actual_time.getFullYear() != server_actual_time.getFullYear())
+            // {
+            //     time_flag = 0;                
+            //     Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            //     {
+            //         msg: "Tahun harus sesuai dengan tahun berjalan."
+            //     });
+            // }
+            // else 
+            if (tgl_mulai > tgl_server || tgl_selesai > tgl_server)
             {
                 time_flag = 0;                
                 Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"

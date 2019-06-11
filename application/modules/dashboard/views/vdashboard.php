@@ -96,8 +96,9 @@ if ($this->session->userdata('sesPosisi') != 0)
         'nama_pegawai' => $nama_pegawai,
         'nama_jabatan' => $nama_jabatan));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
-    $this->load->view('dashboard_component/member_component');                            
-    $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
+    $this->load->view('dashboard_component/potongan_component');
+    $this->load->view('dashboard_component/member_component');                                
+    // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>
     </div>
         

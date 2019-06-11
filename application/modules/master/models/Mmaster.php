@@ -252,7 +252,7 @@ class Mmaster extends CI_Model {
 					LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
 					LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
 					LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
-					LEFT JOIN mr_jabatan_fungsional_umum k ON c.id_jft = k.id
+					LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
 					LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id					
 					where b.status=1
 					".$sql_1."
@@ -307,7 +307,7 @@ class Mmaster extends CI_Model {
 		}
 		else $sql_7 = "AND b.atasan = '".$filter['atasan']."'";
 
-		$sql = "select a.id, a.nip, a.nama_pegawai, a.posisi, b.nama_posisi
+		$sql = "select a.id, a.nip, a.nama_pegawai, b.nama_posisi
 				from mr_pegawai a
 				left join mr_posisi b on a.posisi=b.id
 				where a.status=1
@@ -325,7 +325,7 @@ class Mmaster extends CI_Model {
 		}
 	}
 
-	public function list_kinerja($id=NULL, $posisi=NULL, $filter=NULL)
+	public function list_kinerja($id=NULL, $filter=NULL)
 	{
 		# code...
 		$sql        = "";
@@ -346,7 +346,7 @@ class Mmaster extends CI_Model {
 
 		$sql = "select 	*
 					from rpt_capaian_kinerja 
-					where id_pegawai='".$id."' and id_posisi='".$posisi."'
+					where id_pegawai='".$id."' and 
 					".$sql_5."
 					".$sql_6."";
 

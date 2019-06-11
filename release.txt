@@ -1,4 +1,14 @@
 v4.0.0
+2019-06-11
+New:
+- Validasi pekerjaan tidak boleh sama dalam 1 waktu
+Improved:
+- Export tunjangan
+Fixed:
+- nonaktif Validasi js "Tahun harus sesuai dengan tahun berjalan" 
+- Perbaikan grade kelas jft & jfu
+
+v4.0.0
 2019-05-28
 New:
 Improved:
