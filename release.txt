@@ -7,6 +7,8 @@ Improved:
 Fixed:
 - nonaktif Validasi js "Tahun harus sesuai dengan tahun berjalan" 
 - Perbaikan grade kelas jft & jfu
+Canceled:
+- Penilaian SKP Bulanan versi minimal
 
 v4.0.0
 2019-05-28
