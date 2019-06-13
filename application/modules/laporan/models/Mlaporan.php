@@ -128,7 +128,7 @@ Last edit : 19/07/2016
 						LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
 						LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
 						LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
-						LEFT JOIN mr_jabatan_fungsional_umum k ON c.id_jft = k.id
+						LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
 						LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
 							WHERE
 							b. STATUS = 1
