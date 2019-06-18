@@ -124,48 +124,6 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
-	$('#btn_sync').click(function() {
-		var select_eselon_1      = $("#select_eselon_1").val();
-		var select_eselon_2      = $("#select_eselon_2").val();
-		var select_eselon_3      = $("#select_eselon_3").val();
-		var select_eselon_4      = $("#select_eselon_4").val();
-		var select_bulan         = $("#select_bulan").val();
-		var select_tahun         = $("#select_tahun").val();		
-		var data_link = {
-						'data_1': select_eselon_1,
-						'data_2': select_eselon_2,
-						'data_3': select_eselon_3,
-						'data_4': select_eselon_4,
-						'data_5': select_bulan,
-						'data_6': select_tahun
-		}
-		if (select_bulan.length <= 0 || select_tahun.length <= 0) {
-			Lobibox.notify('warning', {
-				title: 'Perhatian',
-				msg: 'Proses dihentikan, mohon pilih bulan dan tahun'
-			});                        			
-		}
-		else
-		{
-
-			$.ajax({
-				url :"<?php echo site_url()?>laporan/sync_kinerja",
-				type:"post",
-				data: { data_sender : data_link},
-				beforeSend:function(){
-					$("#loadprosess").modal('show');
-				},			
-				success:function(msg){
-					$("#loadprosess").modal('hide');
-				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			})	
-		}	
-	})
-
 	$('#btn_export_excel').click(function() {
 		var es1                  = $("#select_eselon_1").val();
 		var es2                  = $("#select_eselon_2").val();	

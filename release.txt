@@ -1,4 +1,13 @@
 v4.0.0
+2019-06-18
+New:
+Improved:
+- Filter Export tunjangan
+Fixed:
+- Hapus Syncronisasi (JS)
+Canceled:
+
+v4.0.0
 2019-06-11
 New:
 - Validasi pekerjaan tidak boleh sama dalam 1 waktu
