@@ -4,6 +4,16 @@
 ?>
 <!-- <div class="col-md-5" style="height:445px;max-height: 550px;margin-bottom:25px;"> -->
     <!-- LINE CHART -->
+    <!-- <a href="#" id="main_mailbox" class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Penilaian SKP Bulanan</span>
+                <span class="info-box-number">90</span>
+            </div>
+        </div>
+    </a> -->
 <div class="col-md-5">    
     <div class="box box-info" style="height: 100%;">
         <div class="box-header with-border">

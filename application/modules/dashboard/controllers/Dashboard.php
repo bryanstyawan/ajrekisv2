@@ -65,25 +65,8 @@ class Dashboard extends CI_Controller {
 			$data['history_golongan']   = $this->mdashboard->get_history_golongan();
 			$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 			$data['data_transaksi_rpt'] = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
-			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard();
+			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(6000);
 			$data['data_api']			= '';
-			// $data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));			
-			// print_r($data['data_transaksi_rpt']);die();
-			// if ($data['data_transaksi']) {
-			// 	# code...
-			// 	$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
-			// 	if ($get_data != array()) {
-			// 		# code...
-			// 		$data['data_transaksi'][0]->persentase_potongan    = $get_data[0]['persentase'];
-			// 			  $real_tunjangan_kinerja                      = $data['data_transaksi'][0]->real_tunjangan_kinerja - ($data['data_transaksi'][0]->real_tunjangan_kinerja*($data['data_transaksi'][0]->persentase_potongan/100));
-			// 		$data['data_transaksi'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;
-			// 	}
-			// 	else
-			// 	{
-	
-			// 	}
-			// }
-	
 			$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
 			if ($data['member'] != 0) {
@@ -101,6 +84,36 @@ class Dashboard extends CI_Controller {
 					}
 				}
 			}					
+
+			// $data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));			
+			if ($data['data_transaksi_rpt']) {
+				# code...
+				$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
+				if ($get_data != array()) {
+					# code...
+					$data['data_transaksi_rpt'][0]->persentase_potongan    = $get_data[0]['persentase'];
+					// $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja - ($data['data_transaksi_rpt'][0]->real_tunjangan_kinerja*($data['data_transaksi_rpt'][0]->persentase_potongan/100));
+					// $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;
+					if ($get_data[0]['persentase'] == 0) {
+						# code...
+						$data['data_transaksi_rpt'][0]->status_potongan = 0;
+					}
+					else
+					{
+						$data['data_transaksi_rpt'][0]->status_potongan = 1;						
+					}
+				}
+				else
+				{
+					$data['data_transaksi_rpt'][0]->status_potongan        = 2;	
+					$data['data_transaksi_rpt'][0]->persentase_potongan    = 5;	
+					// $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja;									
+					// // $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja - ($data['data_transaksi_rpt'][0]->real_tunjangan_kinerja*($data['data_transaksi_rpt'][0]->persentase_potongan/100));
+					// $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;					
+				}
+			}		
+			
+			// print_r($data['data_transaksi_rpt']);die();
 		}
 		else
 		{
@@ -257,6 +270,25 @@ class Dashboard extends CI_Controller {
 		$data['oid']   = $oid;
 		$this->load->view('dashboard/datatable_modal',$data);		
 	}
+
+	public function get_datamodal_fingerprint($oid)
+	{
+		# code...
+		$data['list']  = $this->mtrx->status_pekerjaan($oid,$this->session->userdata('sesUser'));
+		$data['title'] = '';
+		$data['oid']   = $oid;
+		$this->load->view('dashboard/datatable_modal_finger',$data);		
+	}
+
+	public function get_datamodal_tunjangan($oid)
+	{
+		# code...
+		$data['list']  = $this->mtrx->status_pekerjaan($oid,$this->session->userdata('sesUser'));
+		$data['title'] = '';
+		$data['oid']   = $oid;
+		$this->load->view('dashboard/datatable_modal_tunjangan',$data);		
+	}
+
 
 	public function post_penilaian_skp_bulan($arg,$oid)
 	{

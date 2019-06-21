@@ -1,4 +1,34 @@
 v4.0.0
+2019-06-18
+New:
+Improved:
+- Filter Export tunjangan
+Fixed:
+- Hapus Syncronisasi (JS)
+Canceled:
+
+v4.0.0
+2019-06-11
+New:
+- Validasi pekerjaan tidak boleh sama dalam 1 waktu
+Improved:
+- Export tunjangan
+Fixed:
+- nonaktif Validasi js "Tahun harus sesuai dengan tahun berjalan" 
+- Perbaikan grade kelas jft & jfu
+Canceled:
+- Penilaian SKP Bulanan versi minimal
+
+v4.0.0
+2019-05-28
+New:
+Improved:
+Fixed:
+- Menghapus revisi di transaksi sikerja
+- Perbaikan Persentase menit efektif yang tidak tampil
+- Parameter menit efektif
+
+v4.0.0
 2019-05-23
 New:
 - CURL
