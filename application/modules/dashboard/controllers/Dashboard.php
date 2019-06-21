@@ -267,6 +267,25 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard/datatable_modal',$data);		
 	}
 
+	public function get_datamodal_fingerprint($oid)
+	{
+		# code...
+		$data['list']  = $this->mtrx->status_pekerjaan($oid,$this->session->userdata('sesUser'));
+		$data['title'] = '';
+		$data['oid']   = $oid;
+		$this->load->view('dashboard/datatable_modal_finger',$data);		
+	}
+
+	public function get_datamodal_tunjangan($oid)
+	{
+		# code...
+		$data['list']  = $this->mtrx->status_pekerjaan($oid,$this->session->userdata('sesUser'));
+		$data['title'] = '';
+		$data['oid']   = $oid;
+		$this->load->view('dashboard/datatable_modal_tunjangan',$data);		
+	}
+
+
 	public function post_penilaian_skp_bulan($arg,$oid)
 	{
 		# code...
