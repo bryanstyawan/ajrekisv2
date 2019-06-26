@@ -106,7 +106,7 @@
                     <?php
                         }
                     ?>
-                    <?php echo anchor('transaksi/ubah_pekerjaan/'.$list[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp;
+                    <!-- <?php echo anchor('transaksi/ubah_pekerjaan/'.$list[$i]->id_pekerjaan,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>&nbsp;Ubah</button>');?>&nbsp;&nbsp; -->
                     <button class="btn btn-danger btn-xs" onclick="del('<?=$list[$i]->id_pekerjaan;?>')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
                 </td>
             </tr>
