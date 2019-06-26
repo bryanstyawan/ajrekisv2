@@ -1,4 +1,12 @@
 v4.0.0
+2019-06-26
+New:
+Improved:
+Fixed:
+- Layout fingerprint
+Canceled:
+
+v4.0.0
 2019-06-18
 New:
 Improved:

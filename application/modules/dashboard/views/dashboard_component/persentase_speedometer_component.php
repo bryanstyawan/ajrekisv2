@@ -5,8 +5,12 @@ if ($menit_efektif_dashboard != 0) {
     // $prosentase = $data_transaksi_rpt[0]->prosentase_menit_efektif;
     $prosentase = $menit_efektif_dashboard[0]->prosentase_menit_efektif;    
 }
+else
+{
+    $prosentase = 0;   
+}
 ?>
-<div class="col-md-3 text-center">
+<div class="col-md-3 text-center main-dashboard">
         <div class="col-md-12 col-sm-6 tour-step tour7 centering">
             <div class="panel panel-kemendagri" id="persen" style="cursor:pointer;border-color: #00a7d0;height:415px;">
                 <div class="panel-body" style="padding:0px;">
