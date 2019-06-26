@@ -4,6 +4,8 @@ New:
 Improved:
 Fixed:
 - Layout fingerprint
+- timeout api
+- Persentase dashboard
 Canceled:
 
 v4.0.0

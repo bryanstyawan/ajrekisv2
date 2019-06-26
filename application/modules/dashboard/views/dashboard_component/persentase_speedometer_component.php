@@ -1,9 +1,9 @@
 <?php
 $prosentase = 0;
-if ($menit_efektif_dashboard != 0) {
+if ($data_transaksi_rpt != 0) {
     # code...
-    // $prosentase = $data_transaksi_rpt[0]->prosentase_menit_efektif;
-    $prosentase = $menit_efektif_dashboard[0]->prosentase_menit_efektif;    
+    $prosentase = $data_transaksi_rpt[0]->prosentase_menit_efektif;
+    // $prosentase = $menit_efektif_dashboard[0]->prosentase_menit_efektif;    
 }
 else
 {
