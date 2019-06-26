@@ -5,6 +5,7 @@ Improved:
 Fixed:
 - timeout api
 - Persentase dashboard
+- Hapus Ubah transaksi (Refresh)
 Canceled:
 
 v4.0.0
