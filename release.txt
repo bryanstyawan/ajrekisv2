@@ -2,11 +2,13 @@ v4.0.0
 2019-06-26
 New:
 Improved:
+- Hide Grafik kinerja anggota
 Fixed:
 - Layout fingerprint
 - timeout api
 - Persentase dashboard
 - Hapus Ubah transaksi (Refresh)
+- Kinerja Anggota
 Canceled:
 
 v4.0.0

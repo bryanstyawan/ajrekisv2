@@ -439,7 +439,7 @@ class Laporan extends CI_Controller {
 					$data['list'][$i]->prosentase_menit_efektif  	= 0;
 				}
 			}
-			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);	
+			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);			
 		}
 	}
 
