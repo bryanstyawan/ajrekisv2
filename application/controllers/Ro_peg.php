@@ -21,7 +21,7 @@ curl_setopt_array($curl, array(
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 30,
+  CURLOPT_TIMEOUT => 360,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_POSTFIELDS => "token=80f0d4e2dcda977afbfbed11de34b6b4&nip=$nip&month=$month&year=$year",
