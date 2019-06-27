@@ -1,4 +1,13 @@
 v4.0.0
+2019-06-27
+New:
+- 
+Improved:
+- Penambahan Kolom posisi pada rekap tungkir
+Fixed:
+- 
+
+v4.0.0
 2019-06-11
 New:
 - Validasi pekerjaan tidak boleh sama dalam 1 waktu
