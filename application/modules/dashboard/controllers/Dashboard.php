@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller {
 	{
 		error_reporting(E_ALL ^ E_WARNING);
 		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
+		//$this->Globalrules->notif_message();
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
 			$data['title']                   = '';
@@ -198,7 +198,7 @@ class Dashboard extends CI_Controller {
 	{
 		# code...
 		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
+		//$this->Globalrules->notif_message();
 		$data['title']   = 'Lihat Semua Pemberitahuan';
 		$data['list']    = $this->Allcrud->getData('log_notifikasi',array('receiver'=>$this->session->userdata('sesUser')));
 		$data['content'] = 'dashboard/notification/view_all';

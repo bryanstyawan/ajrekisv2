@@ -108,7 +108,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #00a7d0;','value'=>''),
-        'value_php' => $belum_diperiksa,
+        'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa) ,
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
@@ -336,7 +336,7 @@ else {
             })                                  
         })
 
-         $("#btn_fingerprint").click(function() 
+        $("#btn_fingerprint").click(function() 
         {
             $.ajax({
                 url :"<?php echo site_url()?>dashboard/get_datamodal_fingerprint/1",
@@ -797,7 +797,7 @@ else {
                     var total_tunjangan_="";
 
                     //for(i in object)
-                   // console.log('lengthnya adalah ' + object.results.data.length);
+                    // console.log('lengthnya adalah ' + object.results.data.length);
 
                     for(j=0;j < object.results.data.length;j++) 
                     {
@@ -808,8 +808,12 @@ else {
                     //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
                     total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
                     document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
-                  //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
-                }
+                    //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
+                },
+                error:function(jqXHR,exception)
+                {
+                    document.getElementById("total_tunjangan_").innerHTML = 'N/A';
+                }                
  
             });
         }
