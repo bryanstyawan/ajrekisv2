@@ -569,7 +569,7 @@ else {
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
 
-                    console.table(obj.data.skp.list_skp);
+                    // console.table(obj.data.skp.list_skp);
 
                     MONTHS = [];
                     VALUES = [];
@@ -731,12 +731,55 @@ else {
 
     }   
 
-    function formatRupiah(num) {
-    var p = num.toFixed(2).split(".");
+    function formatRupiah(num) 
+    {
+        var p = num.toFixed(2).split(".");
         return "" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
             return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
         }, "");
     }
+
+    function approve_good_kinerja(arg,oid) 
+    {
+        if (oid == 0) {
+            var oid = $("#member_section_oid").val();            
+        }
+        
+        tagline = '';
+        if (arg == 'yes') {
+            tagline = 'berkinerja baik dan mencapai skp bulan ini.';
+        }
+        else
+        {
+            tagline = 'berkinerja kurang baik dan belum mencapai skp bulan ini.'
+        }
+
+        tagline = "Apakah benar bahwa pegawai ini "+tagline;
+
+        Lobibox.confirm({
+            title: "Konfirmasi",
+            msg  : tagline,
+            callback: function ($this, type) {
+                if (type === 'yes'){
+                    $.ajax({
+                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid,
+                        type:"post",
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
+            }
+        })    
+    }    
 
     $(document).ready(function(){
         get_api_fingerprint();         

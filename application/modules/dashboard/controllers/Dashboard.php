@@ -17,7 +17,6 @@ class Dashboard extends CI_Controller {
 		$this->Globalrules->notif_message();
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
-			// $this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));
 			$data['title']              = '';
 			$data['content']            = 'vdashboard';
 
@@ -41,14 +40,16 @@ class Dashboard extends CI_Controller {
 				// code...
 				for ($i=0; $i < count($data['member']); $i++) {
 					// code...
-					$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')))->num_rows();
-					if ($get_data) {
+					$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')));
+					if ($get_data->result_array() != array()) {
 						// code...
-						$data['member'][$i]->counter_belum_diperiksa = $get_data;
+						$data['member'][$i]->counter_belum_diperiksa = $get_data->num_rows();
+						$data['member'][$i]->persentase              = $get_data->result_array();
 					}
 					else {
 						// code...
 						$data['member'][$i]->counter_belum_diperiksa = 0;
+						$data['member'][$i]->persentase              = array();						
 					}
 				}
 			}					
@@ -68,7 +69,7 @@ class Dashboard extends CI_Controller {
 					}
 					else
 					{
-						$data['data_transaksi_rpt'][0]->status_potongan = 1;						
+						$data['data_transaksi_rpt'][0]->status_potongan = 1;						 
 					}
 				}
 				else
@@ -79,72 +80,13 @@ class Dashboard extends CI_Controller {
 					// // $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja - ($data['data_transaksi_rpt'][0]->real_tunjangan_kinerja*($data['data_transaksi_rpt'][0]->persentase_potongan/100));
 					// $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;					
 				}
-			}		
-			
+			}					
 			// print_r($data['data_transaksi_rpt']);die();
 		}
 		else
 		{
-			$res_api = "";
-
-			// $curl = curl_init();
-			// $data_send = "nip=".$this->session->userdata('sesNip')."&bulan=".date('m')."&tahun=".date('Y')."";
-			// curl_setopt_array($curl, array(
-			//   CURLOPT_URL => "localhost/sikerja/kinerja/index.php/api/kinerja/summary/",
-			//   CURLOPT_RETURNTRANSFER => true,
-			//   CURLOPT_CUSTOMREQUEST => "POST",
-			//   CURLOPT_POSTFIELDS => $data_send,
-			//   CURLOPT_HTTPHEADER => array(
-			//     "API-AUTH-KEY: f99aecef3d12e02dcbb6260bbdd35189c89e6e73",
-			//     "content-type: application/x-www-form-urlencoded",
-			//   )
-			// ));
-			// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);		
-	
-			// $response = curl_exec($curl);
-			// $err = curl_error($curl);
-			// curl_close($curl);
-			// if ($err) 
-			// {
-			//   echo "cURL Error #:" . $err;
-			// } 
-			// else
-			// {
-			// 	$res_api = $response;
-			// } 
-
 			$data['title']              = '';
 			$data['content']            = 'vdashboard_empty';	
-			// $check_data = $this->mdashboard->check_data_menit_efektif_rpt();		
-			// if ($check_data != 0) {
-			// 	# code...
-			// 	for ($i=0; $i < count($check_data); $i++) { 
-			// 		# code...
-			// 		$data_approve = array
-			// 						(
-			// 							'menit_efektif' => $check_data[$i]->tr_Menit_efektif
-			// 						);
-			// 		$flag        = array(
-			// 								'id_pegawai' => $check_data[$i]->id_pegawai,
-			// 								'bulan' => $check_data[$i]->bulan,
-			// 								'tahun' => $check_data[$i]->tahun
-			// 							);
-			// 		$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$data_approve,$flag);					
-			// 		if ($res_data == 1) {
-			// 			# code...
-			// 			echo $i." Success </br>";
-			// 		}
-			// 		else
-			// 		{
-			// 			echo $i." fail </br>";						
-			// 		}
-			// 	}				
-			// }
-			// echo "<pre>";
-			// // print_r(count($check_data));die();
-			// print_r($check_data[0]);die();			
-			// echo "</pre>";
-
 		}		
 
 		$this->load->view('templateAdmin',$data);

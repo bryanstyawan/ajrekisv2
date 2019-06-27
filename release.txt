@@ -2,15 +2,18 @@ v4.0.0
 2019-06-27
 New:
 Improved:
+- Penilaian SKP Bulanan Bawahan
 Fixed:
 Canceled:
 - Menu sidebar (tampilan mobile)
+- Olah Data transaksi (sync)
+- Layout lama penilaian SKP bulanan (pilih member)
+
 
 v4.0.0
 2019-06-26
 New:
 Improved:
-- Hide Grafik kinerja anggota
 Fixed:
 - Layout fingerprint
 - timeout api
@@ -18,6 +21,7 @@ Fixed:
 - Hapus Ubah transaksi (Refresh)
 - Kinerja Anggota
 Canceled:
+- Hide Grafik kinerja anggota
 
 v4.0.0
 2019-06-18
