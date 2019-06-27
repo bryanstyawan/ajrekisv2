@@ -17,25 +17,24 @@ class Dashboard extends CI_Controller {
 		$this->Globalrules->notif_message();
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
-			$data['title']              = '';
-			$data['content']            = 'vdashboard';
+			$data['title']                   = '';
+			$data['content']                 = 'vdashboard';
 
-			$data['belum_diperiksa']    = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
-			$data['disetujui']          = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
-			$data['tolak']              = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
-			$data['revisi']             = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
+			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);
+			$data['disetujui']               = $this->stat_pekerjaan(1);
+			$data['tolak']                   = $this->stat_pekerjaan(2);
+			$data['revisi']                  = $this->stat_pekerjaan(3);
 
-			$data['agama']              = $this->Allcrud->listData('mr_agama')->result_array();
-			$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
-			$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
-			$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
-			$data['history_golongan']   = $this->mdashboard->get_history_golongan();
-			$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
-			$data['data_transaksi_rpt'] = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
+			$data['agama']                   = $this->Allcrud->listData('mr_agama')->result_array();
+			$data['golongan']                = $this->Allcrud->listData('mr_golongan')->result_array();
+			$data['infoPegawai']             = $this->Globalrules->get_info_pegawai();
+			$data['info_kompetensi']         = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
+			$data['history_golongan']        = $this->mdashboard->get_history_golongan();
+			$data['skp']                     = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+			$data['data_transaksi_rpt']      = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
 			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(6000);
-			$data['data_api']			= '';
-			$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
-			$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
+			$data['menit_efektif_year']      = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
+			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
 			if ($data['member'] != 0) {
 				// code...
 				for ($i=0; $i < count($data['member']); $i++) {
@@ -90,6 +89,12 @@ class Dashboard extends CI_Controller {
 		}		
 
 		$this->load->view('templateAdmin',$data);
+	}
+
+	public function stat_pekerjaan($arg)
+	{
+		# code...
+		$this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>$arg,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();		
 	}
 
 	public function delete_common_notify($param=NULL)

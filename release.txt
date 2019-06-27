@@ -1,6 +1,7 @@
 v4.0.0
 2019-06-27
 New:
+- Fungsi stat pekerjaan
 Improved:
 - Penilaian SKP Bulanan Bawahan
 Fixed:
@@ -8,7 +9,7 @@ Canceled:
 - Menu sidebar (tampilan mobile)
 - Olah Data transaksi (sync)
 - Layout lama penilaian SKP bulanan (pilih member)
-
+- Tarik data api sikerja
 
 v4.0.0
 2019-06-26
