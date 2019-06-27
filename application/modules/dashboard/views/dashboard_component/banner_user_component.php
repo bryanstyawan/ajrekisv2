@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-4 main-dashboard">
     <div class="box box-widget widget-user">
         <div class="widget-user-header bg-aqua-active" style="height: 90%;max-height: 160px;">
             <h3 class="widget-user-username text-center" style="margin-bottom:10px;"><?php echo $nama_pegawai;?></h3>

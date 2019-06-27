@@ -140,10 +140,10 @@ class Mmaster extends CI_Model {
 					LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id				
 					LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu = jfu.id
 					LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
-					LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
-					LEFT JOIN mr_eselon2 es2 on es2.id_es2 = a.es2
-					LEFT JOIN mr_eselon3 es3 on es3.id_es3 = a.es3
-					LEFT JOIN mr_eselon4 es4 on es4.id_es4 = a.es4
+					LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = b.eselon1
+					LEFT JOIN mr_eselon2 es2 on es2.id_es2 = b.eselon2
+					LEFT JOIN mr_eselon3 es3 on es3.id_es3 = b.eselon3
+					LEFT JOIN mr_eselon4 es4 on es4.id_es4 = b.eselon4
 					WHERE a. STATUS = '1'
 					".$sql_1."
 					".$sql_2."
@@ -156,35 +156,63 @@ class Mmaster extends CI_Model {
 		}
 		else
 		{
+			$sql_es1 = "";
+			$sql_es1a = "";			
 			if ($filter['eselon1'] == '') {
 				# code...
-				$sql_1 = "";
+				$sql_es1 = "";
+				$sql_es1a = "";				
 			}
-			else $sql_1 = "AND b.es1 = '".$filter['eselon1']."'";
+			else{
+				$sql_es1  = "AND b.eselon1 = '".$filter['eselon1']."'";
+				$sql_es1a = "AND c.eselon1 = '".$filter['eselon1']."'";				
+			}
 
+			$sql_es2 = "";
+			$sql_es2a = "";
 			if ($filter['eselon2'] == '') {
 				# code...
-				$sql_2 = "";
+				$sql_es2  = "";
+				$sql_es2a = "";				
 			}
-			else $sql_2 = "AND b.es2 = '".$filter['eselon2']."'";
+			else 
+			{
+				$sql_es2  = "AND b.eselon2 = '".$filter['eselon2']."'";
+				$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";				
+			}
 
+			$sql_es3 = "";
+			$sql_es3a = "";
 			if ($filter['eselon3'] == '') {
 				# code...
-				$sql_3 = "";
+				$sql_es3  = "";
+				$sql_es3a = "";				
 			}
-			else $sql_3 = "AND b.es3 = '".$filter['eselon3']."'";
+			else 
+			{
+				$sql_es3  = "AND b.eselon3 = '".$filter['eselon3']."'";
+				$sql_es3a = "AND c.eselon3 = '".$filter['eselon3']."'";				
+			}
 
+			$sql_es4 = "";
+			$sql_es4a = "";
 			if ($filter['eselon4'] == '') {
 				# code...
-				$sql_4 = "";
+				$sql_es4  = "";
+				$sql_es4a = "";				
 			}
-			else $sql_4 = "AND b.es4 = '".$filter['eselon4']."'";
+			else 
+			{
+				$sql_es4 = "AND b.eselon4 = '".$filter['eselon4']."'";
+				$sql_es4a = "AND c.eselon4 = '".$filter['eselon4']."'";				
+			}
 
-			if ($filter['bulan'] == '') {
-				# code...
-				$sql_5 = "";
-			}
-			else $sql_5 = "AND a.bulan = '".$filter['bulan']."'";
+
+			// if ($filter['bulan'] == '') {
+			// 	# code...
+			// 	$sql_5 = "";
+			// }
+			// else $sql_5 = "AND a.bulan = '".$filter['bulan']."'";
 
 			if ($filter['tahun'] == '') {
 				# code...
@@ -198,75 +226,137 @@ class Mmaster extends CI_Model {
 			// }
 			// else $sql_7 = "AND b.id = '".$filter['id_pegawai']."'";			
 
-			$sql = "select 	b.id as id_pegawai, 
-							b.posisi_akademik, 
-							b.posisi_plt, 
-							b.nip, 
-							b.nama_pegawai, 
-							c.nama_posisi, 
-							c.atasan, 
-							d.nama_eselon1, 
-							e.nama_eselon2, 
-							f.nama_eselon3, 
-							g.nama_eselon4,
-							a.bulan, 
-							a.tahun, 
-							a.tr_approve, 
-							a.tr_tolak, 
-							a.tr_revisi, 
-							a.menit_efektif, 
-							a.prosentase_menit_efektif, 
-							a.real_tunjangan, 
-							a.frekuensi_realisasi, 
-							a.tr_belum_diperiksa,
-							c.kat_posisi,
-							CASE
-									WHEN c.kat_posisi = 1 THEN h.posisi_class
-									WHEN c.kat_posisi = 2 THEN l.posisi_class
-									WHEN c.kat_posisi = 4 THEN j.posisi_class
-									WHEN c.kat_posisi = 6 THEN h.posisi_class
-							END as class_posisi_definitif,
-							CASE
-								WHEN c.kat_posisi = 1 THEN h.tunjangan
-								WHEN c.kat_posisi = 2 THEN l.tunjangan
-								WHEN c.kat_posisi = 4 THEN j.tunjangan
-								WHEN c.kat_posisi = 6 THEN h.tunjangan
-							END as tunjangan_definitif					
-					from (
-							(
-								(
-									(
-										(
-											rpt_capaian_kinerja a 
-											left join mr_pegawai b on a.id_pegawai=b.id
-										)
-										left join mr_posisi c on a.id_posisi=c.id
-									)
-									left join mr_eselon1 d on b.es1=d.id_es1
-								)
-								left join mr_eselon2 e on b.es2=e.id_es2
-							)
-							left join mr_eselon3 f on b.es3=f.id_es3
-						)
-					left join mr_eselon4 g on b.es4=g.id_es4
-					LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
-					LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
-					LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
-					LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
-					LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id					
-					where b.status=1
-					".$sql_1."
-					".$sql_2."
-					".$sql_3."
-					".$sql_4."
-					".$sql_5."
-					".$sql_6."														
-					ORDER BY ".$order_by."";
+			$sql = "SELECT    
+			a.id_pegawai,
+			b.eselon1,
+			b.eselon2,
+			b.eselon3,
+			b.eselon4,
+			IFNULL(c.posisi_akademik,0) as posisi_akademik, 
+			IFNULL(c.posisi_plt,0) as posisi_plt, 
+			c.nip,
+			c.`nama_pegawai`,
+			b.`nama_posisi`,
+			b.atasan as atasan,
+			d.nama_eselon1,
+			e.nama_eselon2,
+			f.nama_eselon3,
+			g.nama_eselon4,
+			bulan,
+			tahun,
+			tr_approve,
+			tr_tolak,
+			tr_revisi,
+			menit_efektif,
+			prosentase_menit_efektif,
+			real_tunjangan,
+			tr_belum_diperiksa,
+			b.kat_posisi,
+			CASE
+					WHEN b.kat_posisi = 1 THEN h.posisi_class
+					WHEN b.kat_posisi = 2 THEN l.posisi_class
+					WHEN b.kat_posisi = 4 THEN j.posisi_class
+					WHEN b.kat_posisi = 6 THEN h.posisi_class
+			END as class_posisi_definitif,
+			CASE
+				WHEN b.kat_posisi = 1 THEN h.tunjangan
+				WHEN b.kat_posisi = 2 THEN l.tunjangan
+				WHEN b.kat_posisi = 4 THEN j.tunjangan
+				WHEN b.kat_posisi = 6 THEN h.tunjangan
+			END as tunjangan_definitif
+		FROM `rpt_capaian_kinerja` a
+		LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
+		LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
+		LEFT JOIN mr_eselon1 d on b.eselon1 = d.id_es1
+		LEFT JOIN mr_eselon2 e on b.eselon2 = e.id_es2
+		LEFT JOIN mr_eselon3 f on b.eselon3 = f.id_es3
+		LEFT JOIN mr_eselon4 g on b.eselon4 = g.id_es4
+		LEFT JOIN mr_posisi_class h ON b.posisi_class = h.id
+		LEFT JOIN mr_jabatan_fungsional_umum i ON b.id_jfu = i.id
+		LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+		LEFT JOIN mr_jabatan_fungsional_tertentu k ON b.id_jft = k.id
+		LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+		WHERE c.id_role <> 7
+		AND c.id_role <> 6
+		AND a.`id_pegawai` IS NOT NULL		
+		AND a.bulan = ".$filter['bulan']."
+		AND a.tahun = ".$filter['tahun']."		
+		".$sql_es1."
+		".$sql_es2."
+		".$sql_es3."
+		".$sql_es4."
+		UNION
+			SELECT
+				a.id,
+				c.eselon1,
+				c.eselon2,
+				c.eselon3,
+				c.eselon4,
+				IFNULL(a.posisi_akademik,0) as posisi_akademik, 
+				IFNULL(a.posisi_plt,0) as posisi_plt, 
+				a.nip,	
+				a.nama_pegawai,
+				c.`nama_posisi`,
+				c.atasan as atasan,
+				d.nama_eselon1,
+				e.nama_eselon2,
+				f.nama_eselon3,
+				g.nama_eselon4,
+				IFNULL(bulan, 0),
+				IFNULL(tahun, 0),
+				IFNULL(tr_approve, 0),
+				IFNULL(tr_tolak, 0),
+				IFNULL(tr_revisi,0),
+				IFNULL(menit_efektif,0),
+				IFNULL(prosentase_menit_efektif,0),
+				IFNULL(real_tunjangan,0),
+				IFNULL(tr_belum_diperiksa,0),
+				c.kat_posisi,
+				CASE
+						WHEN c.kat_posisi = 1 THEN h.posisi_class
+						WHEN c.kat_posisi = 2 THEN l.posisi_class
+						WHEN c.kat_posisi = 4 THEN j.posisi_class
+						WHEN c.kat_posisi = 6 THEN h.posisi_class
+				END as class_posisi_definitif,
+				CASE
+					WHEN c.kat_posisi = 1 THEN h.tunjangan
+					WHEN c.kat_posisi = 2 THEN l.tunjangan
+					WHEN c.kat_posisi = 4 THEN j.tunjangan
+					WHEN c.kat_posisi = 6 THEN h.tunjangan
+				END as tunjangan_definitif
+			FROM mr_pegawai a
+			LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
+			AND b.bulan = ".$filter['bulan']."
+			AND b.tahun = ".$filter['tahun']."
+			LEFT JOIN mr_posisi c ON c.id = a.posisi
+			LEFT JOIN mr_eselon1 d on c.eselon1 = d.id_es1
+			LEFT JOIN mr_eselon2 e on c.eselon2 = e.id_es2
+			LEFT JOIN mr_eselon3 f on c.eselon3 = f.id_es3
+			LEFT JOIN mr_eselon4 g on c.eselon4 = g.id_es4
+			LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
+			LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
+			LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+			LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
+			LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+			WHERE a.STATUS = 1
+			AND a.id_role <> 7
+			AND a.id_role <> 6
+			".$sql_es1a."
+			".$sql_es2a."
+			".$sql_es3a."
+			".$sql_es4a."
+			AND a.`id` NOT IN (
+				SELECT IFNULL(id_pegawai, 0)
+				FROM `rpt_capaian_kinerja`
+				WHERE bulan = ".$filter['bulan']."
+				AND tahun = ".$filter['tahun']."
+			)
+			ORDER BY eselon2 ASC, eselon3 ASC, eselon4 ASC, kat_posisi ASC, atasan ASC";
 		}
 		// print_r($sql);die();		
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
-		{
+		 {
 			return $query->result();
 		}
 		else
@@ -307,7 +397,7 @@ class Mmaster extends CI_Model {
 		}
 		else $sql_7 = "AND b.atasan = '".$filter['atasan']."'";
 
-		$sql = "select a.id, a.nip, a.nama_pegawai, b.nama_posisi
+		$sql = "select a.id, a.nip, a.nama_pegawai, b.nama_posisi, a.posisi, b.nama_posisi
 				from mr_pegawai a
 				left join mr_posisi b on a.posisi=b.id
 				where a.status=1
@@ -325,7 +415,7 @@ class Mmaster extends CI_Model {
 		}
 	}
 
-	public function list_kinerja($id=NULL, $filter=NULL)
+	public function list_kinerja($id=NULL, $posisi=NULL, $filter=NULL)
 	{
 		# code...
 		$sql        = "";
@@ -346,7 +436,7 @@ class Mmaster extends CI_Model {
 
 		$sql = "select 	*
 					from rpt_capaian_kinerja 
-					where id_pegawai='".$id."' and 
+					where id_pegawai='".$id."' and id_posisi='".$posisi."'
 					".$sql_5."
 					".$sql_6."";
 

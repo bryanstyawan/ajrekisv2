@@ -363,6 +363,7 @@ class Mskp extends CI_Model
 				LEFT OUTER JOIN mr_skp_satuan d ON a.target_output = d.id
 				WHERE a.tahun = '".date('Y')."'
 				AND a.id_pegawai = '".$this->session->userdata('sesUser')."'
+				AND a.id_posisi = '".$this->session->userdata('sesPosisi')."'				
 				AND a.status <> '99'
 				AND a.status = '1'
 				GROUP BY a.id_pegawai";

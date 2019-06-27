@@ -76,6 +76,7 @@ if ($menit_efektif_dashboard != 0) {
     # code...
     $real_tunjangan_rpt =  $menit_efektif_dashboard[0]->tunjangankinerja;
 }
+$fingerprint = "";
 ?>
 
 <?php
@@ -88,7 +89,6 @@ if ($this->session->userdata('sesPosisi') != 0)
 {
     # code...
 ?>
-
 <div class="col-md-12 tour-step tour1" id="main-dashboard">
     <div class="row">
     <?php
@@ -118,23 +118,23 @@ if ($this->session->userdata('sesPosisi') != 0)
         'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
         'value_php' => number_format($menit_efektif_rpt),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
-        'html'      => ''));                        
+        'html'      => ''));                
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
-        'id'        => '',
+        'id'        => 'btn_tunjangan',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
         'value_php' => number_format($real_tunjangan_rpt),
         'title'     => 'TUNJANGAN',
         'html'      => ''));
-    $this->load->view('dashboard_component/common_component',array(
+    $this->load->view('dashboard_component/common_finger',array(
         'class'     => 'col-lg-3 col-xs-8',
-        'id'        => '',
+        'id'        => 'btn_fingerprint',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
-        'value_php' => 0,
-        'title'     => 'FINGERPRINT',
-        'html'      => ''));        
+        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
+        'value_php' => $fingerprint,
+        'title'     => 'FINGERPRINT', 
+        'html'      => "<label id='total_tunjangan_' />"));       
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
@@ -169,6 +169,16 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
     'id'           => 'modal-transaksi-realisasi',
     'header'       => 'Realisasi Menit Kerja Efektif',
     'id_datatable' => 'get-datatable1'));
+
+$this->load->view('dashboard_component/common_modal_datatable_component',array(
+    'id'           => 'modal-transaksi-tunjangan',
+    'header'       => 'TUNJANGAN',
+    'id_datatable' => 'get-datatable2'));
+
+$this->load->view('dashboard_component/common_modal_datatable_component',array(
+    'id'           => 'modal-transaksi-fingerprint',
+    'header'       => 'FINGERPRINT',
+    'id_datatable' => 'get-datatable3'));
 ?>
 
 <?php
@@ -305,6 +315,49 @@ else {
 					ajax_catch(jqXHR,exception);					
 				}                
             })		            				
+        })
+
+
+         $("#btn_tunjangan").click(function() 
+        {
+            $.ajax({
+                url :"<?php echo site_url()?>dashboard/get_datamodal_tunjangan/1",
+                type:"post",
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                    $('.table-view').dataTable().remove();                    
+                },
+                success:function(msg){
+                    $("#get-datatable2").html(msg);                 
+                    $("#modal-transaksi-tunjangan").modal('show');
+                    $("#loadprosess").modal('hide');                            
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);                    
+                }                
+            })                                  
+        })
+
+         $("#btn_fingerprint").click(function() 
+        {
+            $.ajax({
+                url :"<?php echo site_url()?>dashboard/get_datamodal_fingerprint/1",
+                type:"post",
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                    $('.table-view').dataTable().remove();                    
+                },
+                success:function(msg){
+                    $("#get-datatable3").html(msg);                 
+                    $("#modal-transaksi-fingerprint").modal('show');
+                    $("#loadprosess").modal('hide');                            
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);                    
+                }                
+            })                                  
         })
 
         $("#btn-save-profile").click(function()
@@ -676,5 +729,50 @@ else {
             })
         }
 
-    }    
+    }   
+
+    function formatRupiah(num) {
+    var p = num.toFixed(2).split(".");
+        return "" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+            return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
+        }, "");
+    }
+
+    $(document).ready(function(){
+        get_api_fingerprint();         
+        $('#mydata').dataTable();
+
+        function get_api_fingerprint(){
+            $.ajax({
+                type  : 'ajax',
+                url   : '<?php echo base_url()?>ro_peg/index',
+                async : false,
+                dataType : 'json',
+                success : function(object){
+                    var html = '';
+                    var i = "";
+                    var j = "";
+                    var k = "";
+                    var sum_jumlah = 0;
+                    var total_tunjangan_="";
+
+                    //for(i in object)
+                   // console.log('lengthnya adalah ' + object.results.data.length);
+
+                    for(j=0;j < object.results.data.length;j++) 
+                    {
+                        k = object.results.data[j].jumlah;
+                        sum_jumlah = sum_jumlah + k;
+                    }
+
+                    //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
+                    total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
+                    document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
+                  //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
+                }
+ 
+            });
+        }
+ 
+    }); 
 </script>

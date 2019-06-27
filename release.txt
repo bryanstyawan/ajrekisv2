@@ -6,6 +6,26 @@ Improved:
 - Penambahan Kolom posisi pada rekap tungkir
 Fixed:
 - 
+2019-06-26
+New:
+Improved:
+- Hide Grafik kinerja anggota
+Fixed:
+- Layout fingerprint
+- timeout api
+- Persentase dashboard
+- Hapus Ubah transaksi (Refresh)
+- Kinerja Anggota
+Canceled:
+
+v4.0.0
+2019-06-18
+New:
+Improved:
+- Filter Export tunjangan
+Fixed:
+- Hapus Syncronisasi (JS)
+Canceled:
 
 v4.0.0
 2019-06-11
