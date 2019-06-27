@@ -206,7 +206,9 @@ $(document).click(function(e) {
             <section class="sidebar " style="height: auto;">
                 <ul class="nav sidebar-menu">
                 <li class="header"></li>
-                    <?php menuSamping(); ?>
+                    <?php 
+                        // menuSamping(); 
+                    ?>
                 </ul>
             </section>
         </aside>

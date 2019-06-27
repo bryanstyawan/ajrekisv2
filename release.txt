@@ -1,4 +1,12 @@
 v4.0.0
+2019-06-27
+New:
+Improved:
+Fixed:
+Canceled:
+- Menu sidebar (tampilan mobile)
+
+v4.0.0
 2019-06-26
 New:
 Improved:
