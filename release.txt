@@ -24,9 +24,11 @@ v4.0.0
 New:
 Improved:
 - Filter Export tunjangan
+- Penambahan Kolom posisi pada rekap tungkir
 Fixed:
 - Hapus Syncronisasi (JS)
 Canceled:
+
 
 v4.0.0
 2019-06-11
