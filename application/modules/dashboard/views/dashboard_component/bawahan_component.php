@@ -76,10 +76,10 @@
                     <h4 class="text-center">Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?</h4>                
                 </div>
                 <div class="box-footer">
-                    <a class="btn btn-info pull-right" onclick="approve_good_kinerja('yes')">
+                    <a class="btn btn-info pull-right" onclick="approve_good_kinerja('yes',0)">
                         <i class="fa fa-check"></i> Ya
                     </a>                                        
-                    <a class="btn btn-danger pull-left" onclick="approve_good_kinerja('no')">
+                    <a class="btn btn-danger pull-left" onclick="approve_good_kinerja('no',0)">
                         <i class="fa fa-close"></i> Tidak
                     </a>                                                            
                 </div>                
@@ -129,43 +129,5 @@
 </div>
 
 <script>
-$("#profile-dashboard").hide();  
-function approve_good_kinerja(arg) {
-    var oid = $("#member_section_oid").val();
-    
-    tagline = '';
-    if (arg == 'yes') {
-        tagline = 'berkinerja baik dan mencapai skp bulan ini.';
-    }
-    else
-    {
-        tagline = 'berkinerja kurang baik dan belum mencapai skp bulan ini.'
-    }
-
-    tagline = "Apakah benar bahwa pegawai ini "+tagline;
-
-    Lobibox.confirm({
-        title: "Konfirmasi",
-        msg  : tagline,
-        callback: function ($this, type) {
-            if (type === 'yes'){
-                $.ajax({
-                    url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid,
-                    type:"post",
-                    beforeSend:function(){
-                        $("#loadprosess").modal('show');
-                    },
-                    success:function(msg){
-                        var obj = jQuery.parseJSON (msg);
-                        ajax_status(obj);
-                    },
-                    error:function(jqXHR,exception)
-                    {
-                        ajax_catch(jqXHR,exception);					
-                    }
-                })
-            }
-        }
-    })    
-}
+$("#profile-dashboard").hide();
 </script>

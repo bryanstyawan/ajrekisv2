@@ -6,11 +6,7 @@
                                                                     padding-right: 5px;
                                                                     padding-left: 5px;">
     <?php
-        if($infoPegawai != '')
-        {
-    ?>
-    <?php
-            if ($infoPegawai[0]->photo == '-') {
+            if ($photo == '-') {
                 # code...
     ?>
                 <img class="icn_user" src="http://mandarinpalace.fi/wp-content/uploads/2015/11/businessman.jpg">
@@ -18,17 +14,10 @@
             }
             else
             {
-?>
-                <img class="icn_user" src="<?php echo base_url() . 'public/images/pegawai/'.$infoPegawai[0]->photo;?>">
-<?php
-            }
-        }
-        else
-        {
     ?>
-                <img class="icn_user" src="http://mandarinpalace.fi/wp-content/uploads/2015/11/businessman.jpg">
+                <img class="icn_user" src="<?php echo base_url() . 'public/images/pegawai/'.$photo;?>">
     <?php
-        }
+            }
     ?>
     </a>
     <ul class="dropdown-menu" style="left: auto;">

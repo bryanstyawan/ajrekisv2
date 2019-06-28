@@ -92,8 +92,7 @@ class Mdashboard extends CI_Model
 	public function get_history_golongan()
 	{
 		# code...
-		$sql = "SELECT a.*,
-						b.nama_pangkat
+		$sql = "SELECT b.nama_pangkat, a.tmt
 				FROM mr_history_golongan a
 				JOIN mr_golongan b
 				ON a.id_golongan = b.id

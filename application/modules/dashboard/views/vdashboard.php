@@ -108,7 +108,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #00a7d0;','value'=>''),
-        'value_php' => $belum_diperiksa,
+        'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa) ,
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
@@ -244,9 +244,6 @@ else {
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
-    
-        var res_api = '<?=$data_api;?>';
-        console.log(res_api);
         // Lobibox.window({
         //     title  : 'Informasi',
         //     content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+            
@@ -339,7 +336,7 @@ else {
             })                                  
         })
 
-         $("#btn_fingerprint").click(function() 
+        $("#btn_fingerprint").click(function() 
         {
             $.ajax({
                 url :"<?php echo site_url()?>dashboard/get_datamodal_fingerprint/1",
@@ -569,7 +566,7 @@ else {
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
 
-                    console.table(obj.data.skp.list_skp);
+                    // console.table(obj.data.skp.list_skp);
 
                     MONTHS = [];
                     VALUES = [];
@@ -731,12 +728,55 @@ else {
 
     }   
 
-    function formatRupiah(num) {
-    var p = num.toFixed(2).split(".");
+    function formatRupiah(num) 
+    {
+        var p = num.toFixed(2).split(".");
         return "" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
             return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
         }, "");
     }
+
+    function approve_good_kinerja(arg,oid) 
+    {
+        if (oid == 0) {
+            var oid = $("#member_section_oid").val();            
+        }
+        
+        tagline = '';
+        if (arg == 'yes') {
+            tagline = 'berkinerja baik dan mencapai skp bulan ini.';
+        }
+        else
+        {
+            tagline = 'berkinerja kurang baik dan belum mencapai skp bulan ini.'
+        }
+
+        tagline = "Apakah benar bahwa pegawai ini "+tagline;
+
+        Lobibox.confirm({
+            title: "Konfirmasi",
+            msg  : tagline,
+            callback: function ($this, type) {
+                if (type === 'yes'){
+                    $.ajax({
+                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid,
+                        type:"post",
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
+            }
+        })    
+    }    
 
     $(document).ready(function(){
         get_api_fingerprint();         
@@ -757,7 +797,7 @@ else {
                     var total_tunjangan_="";
 
                     //for(i in object)
-                   // console.log('lengthnya adalah ' + object.results.data.length);
+                    // console.log('lengthnya adalah ' + object.results.data.length);
 
                     for(j=0;j < object.results.data.length;j++) 
                     {
@@ -768,8 +808,12 @@ else {
                     //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
                     total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
                     document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
-                  //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
-                }
+                    //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
+                },
+                error:function(jqXHR,exception)
+                {
+                    document.getElementById("total_tunjangan_").innerHTML = 'N/A';
+                }                
  
             });
         }
