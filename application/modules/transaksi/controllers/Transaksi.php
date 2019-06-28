@@ -119,83 +119,213 @@ class Transaksi extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$res_data        = "";
 		$data_sender     = $this->input->post('data_sender');
-		$verify_datetime = $this->mtrx->verify_datetime_pekerjaan($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
-		if ($verify_datetime != 0) {
+		$res_data_id     = $this->Allcrud->insert_transaksi
+						(
+							$this->session->userdata('sesUser'),
+							$this->session->userdata('sesPosisi'),
+							$data_sender['urtug'],
+							date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+							date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+							$data_sender['jam_mulai'],
+							$data_sender['jam_selesai'],
+							$data_sender['ket_pekerjaan'],
+							$data_sender['kuantitas'],
+							$data_sender['file_pendukung']
+						);
+
+		if ($res_data_id != 0) {
 			# code...
-			$date_server     = $verify_datetime[0]->tanggal_selesai;
-			$time_server     = $verify_datetime[0]->jam_selesai;
-			$datetime_server = $date_server.' '.$time_server;
-			$datetime_trx    = date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])).' '.$data_sender['jam_mulai'];
-			if (strtotime($datetime_server) > strtotime($datetime_trx)) {
-				# code...
-				$text_status = "Transaksi tidak diizinkan, anda telah melakukan transaksi pada rentang waktu ini sebelumnya.";
-				$res_data = 0;
-			}
-			else
-			{
-				$res_data_id     = $this->Allcrud->insert_transaksi
-								(
-									$this->session->userdata('sesUser'),
-									$this->session->userdata('sesPosisi'),
-									$data_sender['urtug'],
-									date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
-									date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
-									$data_sender['jam_mulai'],
-									$data_sender['jam_selesai'],
-									$data_sender['ket_pekerjaan'],
-									$data_sender['kuantitas'],
-									$data_sender['file_pendukung']
-								);
-
-				if ($res_data_id != 0) {
-					# code...
-					$res_data = 1;
-				}
-				else {
-					# code...
-					$res_data = 0;
-				}
-
-				$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
-				$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
-			}
+			$res_data = 1;
 		}
-		else
-		{
-			// lanjutkan transaksi
-			$res_data_id     = $this->Allcrud->insert_transaksi
-							(
-								$this->session->userdata('sesUser'),
-								$this->session->userdata('sesPosisi'),
-								$data_sender['urtug'],
-								date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
-								date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
-								$data_sender['jam_mulai'],
-								$data_sender['jam_selesai'],
-								$data_sender['ket_pekerjaan'],
-								$data_sender['kuantitas'],
-								$data_sender['file_pendukung']
-							);
-
-			if ($res_data_id != 0) {
-				# code...
-				$res_data = 1;
-			}
-			else {
-				# code...
-				$res_data = 0;
-			}
-
-			$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
-			$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
+		else {
+			# code...
+			$res_data = 0;
 		}
+
+		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');		
 
 		$res = array
 					(
 						'status' => $res_data,
 						'text'   => $text_status
 					);
-		echo json_encode($res);
+		echo json_encode($res);		
+		// if (($data_sender['tgl_mulai_raw'] == $data_sender['tgl_selesai_raw'])) 
+		// {
+		// 	# code...
+		// 	$res_data_id     = $this->Allcrud->insert_transaksi
+		// 					(
+		// 						$this->session->userdata('sesUser'),
+		// 						$this->session->userdata('sesPosisi'),
+		// 						$data_sender['urtug'],
+		// 						date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+		// 						date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+		// 						$data_sender['jam_mulai'],
+		// 						$data_sender['jam_selesai'],
+		// 						$data_sender['ket_pekerjaan'],
+		// 						$data_sender['kuantitas'],
+		// 						$data_sender['file_pendukung']
+		// 					);
+
+		// 	if ($res_data_id != 0) {
+		// 		# code...
+		// 		$res_data = 1;
+		// 	}
+		// 	else {
+		// 		# code...
+		// 		$res_data = 0;
+		// 	}
+	
+		// 	// 		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		// 	// 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
+		// 	/////////////////////////////////////////////////////////////////
+		// 	//Menyusul, menunggu diskusi selanjutnya
+		// 	////////////////////////////////////////////////////////////////
+		// 	// $verify_datetime = $this->mtrx->verify_datetime_pekerjaan($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$data_sender['tgl_mulai_raw']);										
+		// 	// if ($verify_datetime != 0) {
+		// 	// 	# code...
+		// 	// 	$date_server     = $verify_datetime[0]->tanggal_selesai;
+		// 	// 	$time_server     = $verify_datetime[0]->jam_selesai;
+		// 	// 	$datetime_server = $date_server.' '.$time_server;
+		// 	// 	$datetime_trx    = date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])).' '.$data_sender['jam_mulai'];
+		// 	// 	if (strtotime($datetime_server) > strtotime($datetime_trx)) {
+		// 	// 		# code...
+		// 	// 		$text_status = "Transaksi tidak diizinkan, anda telah melakukan transaksi pada rentang waktu ini sebelumnya.";
+		// 	// 		$res_data = 0;
+		// 	// 	}
+		// 	// 	else
+		// 	// 	{
+		// 	// 		$res_data_id     = $this->Allcrud->insert_transaksi
+		// 	// 						(
+		// 	// 							$this->session->userdata('sesUser'),
+		// 	// 							$this->session->userdata('sesPosisi'),
+		// 	// 							$data_sender['urtug'],
+		// 	// 							date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+		// 	// 							date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+		// 	// 							$data_sender['jam_mulai'],
+		// 	// 							$data_sender['jam_selesai'],
+		// 	// 							$data_sender['ket_pekerjaan'],
+		// 	// 							$data_sender['kuantitas'],
+		// 	// 							$data_sender['file_pendukung']
+		// 	// 						);
+	
+		// 	// 		if ($res_data_id != 0) {
+		// 	// 			# code...
+		// 	// 			$res_data = 1;
+		// 	// 		}
+		// 	// 		else {
+		// 	// 			# code...
+		// 	// 			$res_data = 0;
+		// 	// 		}
+	
+		// 	// 		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		// 	// 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
+		// 	// 	}
+		// 	// }
+		// 	// else
+		// 	// {
+		// 	// 	// lanjutkan transaksi
+		// 	// 	$res_data_id     = $this->Allcrud->insert_transaksi
+		// 	// 					(
+		// 	// 						$this->session->userdata('sesUser'),
+		// 	// 						$this->session->userdata('sesPosisi'),
+		// 	// 						$data_sender['urtug'],
+		// 	// 						date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+		// 	// 						date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+		// 	// 						$data_sender['jam_mulai'],
+		// 	// 						$data_sender['jam_selesai'],
+		// 	// 						$data_sender['ket_pekerjaan'],
+		// 	// 						$data_sender['kuantitas'],
+		// 	// 						$data_sender['file_pendukung']
+		// 	// 					);
+	
+		// 	// 	if ($res_data_id != 0) {
+		// 	// 		# code...
+		// 	// 		$res_data = 1;
+		// 	// 	}
+		// 	// 	else {
+		// 	// 		# code...
+		// 	// 		$res_data = 0;
+		// 	// 	}
+	
+		// 	// 	$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		// 	// 	$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
+		// 	// }			
+		// }
+		// else
+		// {
+		// 	$verify_datetime = $this->mtrx->verify_datetime_pekerjaan($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),'multi');			
+		// 	if ($verify_datetime != 0) {
+		// 		# code...				
+		// 		$date_server     = $verify_datetime[0]->tanggal_selesai;
+		// 		$time_server     = $verify_datetime[0]->jam_selesai;
+		// 		$datetime_server = $date_server.' '.$time_server;
+		// 		$datetime_trx    = date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])).' '.$data_sender['jam_mulai'];
+		// 		if (strtotime($datetime_server) > strtotime($datetime_trx)) {
+		// 			# code...
+		// 			$text_status = "Transaksi tidak diizinkan, anda telah melakukan transaksi pada rentang waktu ini sebelumnya.";
+		// 			$res_data = 0;
+		// 		}
+		// 		else
+		// 		{
+		// 			$res_data_id     = $this->Allcrud->insert_transaksi
+		// 							(
+		// 								$this->session->userdata('sesUser'),
+		// 								$this->session->userdata('sesPosisi'),
+		// 								$data_sender['urtug'],
+		// 								date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+		// 								date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+		// 								$data_sender['jam_mulai'],
+		// 								$data_sender['jam_selesai'],
+		// 								$data_sender['ket_pekerjaan'],
+		// 								$data_sender['kuantitas'],
+		// 								$data_sender['file_pendukung']
+		// 							);
+	
+		// 			if ($res_data_id != 0) {
+		// 				# code...
+		// 				$res_data = 1;
+		// 			}
+		// 			else {
+		// 				# code...
+		// 				$res_data = 0;
+		// 			}
+	
+		// 			$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		// 			$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
+		// 		}
+		// 	}
+		// 	else
+		// 	{
+		// 		// lanjutkan transaksi
+		// 		$res_data_id     = $this->Allcrud->insert_transaksi
+		// 						(
+		// 							$this->session->userdata('sesUser'),
+		// 							$this->session->userdata('sesPosisi'),
+		// 							$data_sender['urtug'],
+		// 							date('Y-m-d', strtotime($data_sender['tgl_mulai_raw'])),
+		// 							date('Y-m-d', strtotime($data_sender['tgl_selesai_raw'])),
+		// 							$data_sender['jam_mulai'],
+		// 							$data_sender['jam_selesai'],
+		// 							$data_sender['ket_pekerjaan'],
+		// 							$data_sender['kuantitas'],
+		// 							$data_sender['file_pendukung']
+		// 						);
+	
+		// 		if ($res_data_id != 0) {
+		// 			# code...
+		// 			$res_data = 1;
+		// 		}
+		// 		else {
+		// 			# code...
+		// 			$res_data = 0;
+		// 		}
+	
+		// 		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		// 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');			
+		// 	}
+		// }
 	}
 
 	public function upload_file_pendukung($param=NULL,$id=NULL)

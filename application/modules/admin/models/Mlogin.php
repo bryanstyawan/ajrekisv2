@@ -47,7 +47,8 @@ class Mlogin extends CI_Model {
 		}				
 		if ($flag_universal == 1) {
 			# code...
-			$sql = "SELECT a.*, 
+			$sql = "SELECT a.*,
+						COALESCE(a.photo,'-') as photo,			 
 						c.nama_role, 
 						es1.nama_eselon1, 
 						es2.nama_eselon2, 

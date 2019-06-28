@@ -1,4 +1,15 @@
 v4.1.0
+2019-06-28
+New:
+- v.4.1.0
+Improved:
+- menampilkan photo tidak lagi dari ambil dari query
+- Layout lama penilaian SKP bulanan [pilih member], data yang ditampilkan menjadi 4 data perhalaman
+Fixed:
+Canceled:
+- Validasi pekerjaan tidak boleh sama dalam 1 waktu
+
+v4.1.0
 2019-06-27
 New:
 - Fungsi stat pekerjaan
