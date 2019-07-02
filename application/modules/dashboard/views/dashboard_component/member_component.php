@@ -9,7 +9,7 @@
         </div>
         <div class="box-body">
             <?php
-                if ($this->session->userdata('sesPosisi') == 0) {
+                if ($id_posisi == 0) {
                     # code...
                 }
                 else {
@@ -79,16 +79,16 @@
     $(document).ready(function(){             
         $("#table-member-component").DataTable({
             "oLanguage": {
-                "sSearch": "Pencarian :",
+                "sSearch": "<span><i class='fa fa-search'></i></span>",
                 "sSearchPlaceholder" : "Ketik untuk mencari",
                 "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
                 "sZeroRecords": "Data tidak ditemukan"
             },
-            "dom": "<'row'<'col-sm-6'f>>" +
+            "dom": "<'row'<'col-sm-6 pull-right'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-7'p>>",
-            "bSort": false
-
+            "bSort": false,
+            "pageLength": 4   
             // "dom": '<"top"f>rt'
             // "dom": '<"top"fl>rt<"bottom"ip><"clear">'
         });

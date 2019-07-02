@@ -25,6 +25,7 @@ class Dashboard extends CI_Controller {
 			$data['tolak']                   = $this->stat_pekerjaan(2);
 			$data['revisi']                  = $this->stat_pekerjaan(3);
 
+			$data['id_posisi']               = $this->session->userdata('sesPosisi');			
 			$data['agama']                   = $this->Allcrud->listData('mr_agama')->result_array();
 			$data['golongan']                = $this->Allcrud->listData('mr_golongan')->result_array();
 			$data['infoPegawai']             = $this->Globalrules->get_info_pegawai();
@@ -32,8 +33,8 @@ class Dashboard extends CI_Controller {
 			$data['history_golongan']        = $this->mdashboard->get_history_golongan();
 			$data['skp']                     = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 			$data['data_transaksi_rpt']      = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
-			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(6000);
-			$data['menit_efektif_year']      = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
+			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(6600);
+			// $data['menit_efektif_year']      = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
 			if ($data['member'] != 0) {
 				// code...
@@ -287,3 +288,39 @@ class Dashboard extends CI_Controller {
 		$this->load->view('templateAdmin',$data);		
 	}	
 }
+
+
+
+			// $res_api = "";
+
+			// $curl = curl_init();
+			// $data_send = "nip=".$this->session->userdata('sesNip')."&bulan=".date('m')."&tahun=".date('Y')."";
+			// curl_setopt_array($curl, array(
+			//   CURLOPT_URL => "https://sikerja.kemendagri.go.id/kinerja/index.php/api/kinerja/summary/",
+			//   CURLOPT_RETURNTRANSFER => true,
+			//   CURLOPT_CUSTOMREQUEST => "POST",
+			//   CURLOPT_POSTFIELDS => $data_send,
+			//   CURLOPT_HTTPHEADER => array(
+			//     "API-AUTH-KEY: f99aecef3d12e02dcbb6260bbdd35189c89e6e73",
+			//     "content-type: application/x-www-form-urlencoded",
+			//   )
+			// ));
+			// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);		
+	
+			
+
+			// $response = curl_exec($curl);
+			// $err = curl_error($curl);
+			// curl_close($curl);
+			// if ($err) 
+			// {
+			//   echo "cURL Error #:" . $err;
+			// } 
+			// else
+			// {
+			// 	$res_api = $response;
+			// } 
+
+			// echo $response;
+			// die();							
+			// $this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));
