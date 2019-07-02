@@ -1,6 +1,14 @@
 v4.1.0
 2019-06-28
 New:
+- Data History
+Improved:
+Fixed:
+Canceled:
+
+v4.1.0
+2019-06-28
+New:
 - v.4.1.0
 Improved:
 - menampilkan photo tidak lagi dari ambil dari query

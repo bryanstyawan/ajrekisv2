@@ -1043,7 +1043,64 @@ class Transaksi extends CI_Controller {
 		// echo "</pre>";
 		return $_res_data;
 	}
-
+	
+	Public function filter_kinerja_sendiri()
+	{
+		//print_r("tes");
+		$id = $this->session->userdata('sesUser');
+		$data_sender = $this->input->post('data_sender');	
+		$data_sender = array
+		(
+			'bulan'    => $data_sender['data_5'],
+			'tahun'    => $data_sender['data_6']
+		);
+		$data['sender'] 	= $data_sender;
+		$data['list'] 		= $this->Mmaster->list_kinerja_sendiri($id,$data_sender);
+		//print_r($data['list']);die();
+		if ($data['list'] != 0) 
+		
+		{
+			for ($i=0; $i < count($data['list']); $i++)
+			{
+				
+				$data_rekap = $this->Mmaster->list_kinerja_sendiri($id,$data_sender);
+				// print_r($data_rekap);die();
+				if ($data_rekap != 0) 
+				{
+					# code..
+					$data['list'][$i]->nomor   						= $i+1;
+					$data['list'][$i]->tanggal_mulai       			= $data_rekap[$i]->tanggal_mulai;
+					$data['list'][$i]->jam_mulai     				= $data_rekap[$i]->jam_mulai;
+					$data['list'][$i]->tanggal_selesai    	    	= $data_rekap[$i]->tanggal_selesai;
+					$data['list'][$i]->jam_selesai  				= $data_rekap[$i]->jam_selesai;
+					$data['list'][$i]->nama_pekerjaan  				= $data_rekap[$i]->nama_pekerjaan;
+					$data['list'][$i]->status_pekerjaan  			= $data_rekap[$i]->status_pekerjaan;
+					$data['list'][$i]->menit_efektif  				= $data_rekap[$i]->menit_efektif;
+				}
+				else
+				{
+					$data['list'][$i]->tr_belum_diperiksa   		= 0;
+					$data['list'][$i]->tr_revisi       				= 0;
+					$data['list'][$i]->tr_tolak     				= 0;
+					$data['list'][$i]->tr_approve    	    		= 0;
+					$data['list'][$i]->menit_efektif  				= 0;
+					$data['list'][$i]->prosentase_menit_efektif  	= 0;
+				}
+			}
+			$this->load->view('transaksi/history/ajax_kinerja_anggota',$data);
+		}
+		
+	}
+	
+	public function history()
+	{
+		# code...
+		$data['title']      = 'History Transaksi';
+		$data['content']    = 'transaksi/history/data_history';
+		$this->load->view('templateAdmin',$data);
+		// print_r($data['list']);die();
+	}
+	
 	public function edit_pekerjaan()
 	{
 		# code...

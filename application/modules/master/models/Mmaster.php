@@ -452,6 +452,50 @@ class Mmaster extends CI_Model {
 		}
 	}
 
+	public function list_kinerja_sendiri($id=NULL,  $filter=NULL)
+	{
+		# code...
+		$sql        = "";
+		$sql_5      = "";
+		$sql_6      = "";
+		
+		if ($filter['bulan'] == '') {
+			# code...
+			$sql_5 = "";
+		}
+		else $sql_5 = "AND MONTH(tanggal_mulai) = '".$filter['bulan']."'";
+
+		if ($filter['tahun'] == '') {
+			# code...
+			$sql_6 = "";
+		}
+		else $sql_6 = "AND YEAR(tanggal_mulai) = '".$filter['tahun']."'";
+		
+		//$sql_7 = "SET @no=0;";
+		$sql=  "SELECT tanggal_mulai, jam_mulai, tanggal_selesai, jam_selesai, nama_pekerjaan,  
+				CASE WHEN `status_pekerjaan`=0 THEN 'Belum Diperiksa'
+				WHEN `status_pekerjaan`=1 THEN	'Disetujui'
+				WHEN `status_pekerjaan`=2 THEN 'Direvisi'
+				WHEN `status_pekerjaan`=3 THEN 'Ditolak'
+				END AS status_pekerjaan,
+				menit_efektif, tunjangan, `frekuensi_realisasi` 
+				FROM `tr_capaian_pekerjaan` WHERE id_pegawai='".$id."' 
+					".$sql_5."
+					".$sql_6."
+				ORDER BY tanggal_mulai";
+
+		//print_r($sql);die();		
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
 	public function grade($id){
 		$this->db->where('kat_posisi',$id);
 		$this->db->select(" a.posisi_class, a.tunjangan, b.* ");
