@@ -2,17 +2,17 @@
 $data_bulan[] = "";
 $data_value[] = "";
 $data_menit = "";
-if ($menit_efektif_year != 0) {
-    // code...
-    for ($i=0; $i < count($menit_efektif_year); $i++) {
-        // code...
-        $data_bulan[$i] = $menit_efektif_year[$i]->nama_bulan;
-        $data_value[$i] = $menit_efektif_year[$i]->menit_efektif;
-    }
+// if ($menit_efektif_year != 0) {
+//     // code...
+//     for ($i=0; $i < count($menit_efektif_year); $i++) {
+//         // code...
+//         $data_bulan[$i] = $menit_efektif_year[$i]->nama_bulan;
+//         $data_value[$i] = $menit_efektif_year[$i]->menit_efektif;
+//     }
 
-    $data_bulan = json_encode($data_bulan);
-    $data_value = json_encode($data_value);
-}
+//     $data_bulan = json_encode($data_bulan);
+//     $data_value = json_encode($data_value);
+// }
 
 $nama_pegawai  = "";
 $nama_jabatan  = "";
@@ -570,11 +570,11 @@ else {
 
                     MONTHS = [];
                     VALUES = [];
-                    for(i=0;i<obj.data.menit_efektif_year.length;i++)
-                    {
-                        VALUES[i] = obj.data.menit_efektif_year[i].menit_efektif;
-                        MONTHS[i] = obj.data.menit_efektif_year[i].nama_bulan;                        
-                    }
+                    // for(i=0;i<obj.data.menit_efektif_year.length;i++)
+                    // {
+                    //     VALUES[i] = obj.data.menit_efektif_year[i].menit_efektif;
+                    //     MONTHS[i] = obj.data.menit_efektif_year[i].nama_bulan;                        
+                    // }
 
                     if (obj.status == 1)
                     {

@@ -9,7 +9,7 @@
         </div>
         <div class="box-body">
             <?php
-                if ($this->session->userdata('sesPosisi') == 0) {
+                if ($id_posisi == 0) {
                     # code...
                 }
                 else {

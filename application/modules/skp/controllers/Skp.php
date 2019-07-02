@@ -2255,4 +2255,47 @@ class Skp extends CI_Controller {
 		exit();
 		redirect('master_skp_posisi/'.$id, false);
 	}
+
+	public function penilaian_skp_bulanan_plt()
+	{
+		# code...
+		$posisi = $this->session->userdata('posisi_plt');
+		$this->form_penilaian_skp($posisi);
+	}
+
+	public function penilaian_skp_bulanan_akademik()
+	{
+		# code...
+		$posisi = $this->session->userdata('posisi_akademik');
+		$this->form_penilaian_skp($posisi);		
+	}	
+
+	public function form_penilaian_skp($posisi)
+	{
+		$data['title']     = '';				
+		$data['content'] = 'skp/penilaian_skp_plt_akademik/index';
+		$data['id_posisi'] = $posisi;								
+		$data['member']  = $this->Globalrules->list_bawahan($posisi);		
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')));
+				if ($get_data->result_array() != array()) {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = $get_data->num_rows();
+					$data['member'][$i]->persentase              = $get_data->result_array();
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = 0;
+					$data['member'][$i]->persentase              = array();						
+				}
+			}
+		}		
+
+		$this->load->view('templateAdmin',$data);		
+	}
+
+
 }
