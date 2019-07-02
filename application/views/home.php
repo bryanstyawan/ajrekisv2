@@ -158,11 +158,10 @@
     <section id="about">
         <div class="container">
 
-            <div class="row">
+            <!-- <div class="row">
                 <h2 class="column-title text-center">SUKSESKAN PEMILU SERENTAK 2019</h2>            
                 <div class="col-sm-3">
                     
-                    <!-- 16:9 aspect ratio -->
                     <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
                         <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/FILLER_PERMILU_SERENTAK_2019_-_3_MENIT.mp4" type="video/mp4">
                     </video>                    
@@ -170,7 +169,6 @@
 
                 <div class="col-sm-3">
                     
-                    <!-- 16:9 aspect ratio -->
                     <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
                         <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/FILLER_PERMILU_SERENTAK_2019_-_60_DETIK.mp4" type="video/mp4">
                     </video>
@@ -178,7 +176,6 @@
 
                 <div class="col-sm-3">
                     
-                    <!-- 16:9 aspect ratio -->
                     <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
                         <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/KEMENDAGRI_30_PREVIEW_4_HD.mp4" type="video/mp4">
                     </video>                    
@@ -186,13 +183,12 @@
 
                 <div class="col-sm-3">
                     
-                    <!-- 16:9 aspect ratio -->
                     <video id="f_video" class="col-lg-12" style="height: 255px;" height="315" controls controlsList="nodownload">
                         <source id="f_source" src="<?php echo base_url();?>assets_home/video/pemilu/KEMENDAGRI_60_PREVIEW_6_PUSPEN-1.mp4" type="video/mp4">
                     </video>                    
                 </div>                                                                
             </div>
-            <br>                    
+            <br>                     -->
 
             <div class="section-header">
                 <h2 class="section-title text-center wow fadeInDown">Tentang Sikerja</h2>
@@ -203,7 +199,6 @@
             <div class="row">
                 <div class="col-sm-6 wow fadeInLeft">
                     <h3 class="column-title">Video Intro</h3>
-                    <!-- 16:9 aspect ratio -->
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe width="420" height="315" src="https://www.youtube.com/embed/mef2bK7uYs0" frameborder="0" allowfullscreen></iframe>
                     </div>

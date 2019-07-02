@@ -82,7 +82,6 @@ class Loginadmin extends CI_Controller {
 							'kat_posisi'      => $cekUser[0]->kat_posisi,
 							'posisi_plt'      => $cekUser[0]->posisi_plt,
 							'posisi_akademik' => $cekUser[0]->posisi_akademik,
-							'posisi_akademik' => $cekUser[0]->posisi_akademik,
 							'photo'           => $cekUser[0]->photo,							
 							'login'           => TRUE
 						);
