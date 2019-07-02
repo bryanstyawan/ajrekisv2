@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-4 main-dashboard">
     <div class="box box-widget widget-user">
         <div class="widget-user-header bg-aqua-active" style="height: 90%;max-height: 160px;">
             <h3 class="widget-user-username text-center" style="margin-bottom:10px;"><?php echo $nama_pegawai;?></h3>
@@ -6,39 +6,28 @@
         </div>
         <div class="widget-user-image text-center" style="left:43%!important;padding-top:10px;">
             <?php
-                if($infoPegawai != '')
-                {
-            ?>
-            <?php
-                    if ($infoPegawai[0]->photo == '-') {
-                        # code...
-            ?>
-                        <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
-                            <img style="width: 160px;height: 160px;border-radius:50%;" src="<?php echo base_url() . 'assets/images/businessman1.jpg';?>">
-                            <div class="dz-message" style="margin: 2em 0;">
-                                <span> Klik atau Drop File Foto disini</span>
-                            </div>
+                $photo = $this->session->userdata('photo');
+                if ($photo == '-') {
+                    # code...
+        ?>
+                    <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
+                        <img style="width: 160px;height: 160px;border-radius:50%;" src="<?php echo base_url() . 'assets/images/businessman1.jpg';?>">
+                        <div class="dz-message" style="margin: 2em 0;">
+                            <span> Klik atau Drop File Foto disini</span>
                         </div>
-            <?php
-                    }
-                    else
-                    {
-            ?>
-                        <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
-                            <img style="width: 160px;height: 160px;border-radius:50%;" src="<?php echo base_url() . 'public/images/pegawai/'.$infoPegawai[0]->photo;?>">
-                            <div class="dz-message" style="margin: 2em 0;">
-                                <span> Klik atau Drop File Foto disini</span>
-                            </div>
-                        </div>
-            <?php                        
-
-                    }
+                    </div>
+        <?php
                 }
                 else
                 {
-            ?>
-                        <img style="width: 160px;height: 160px;border-radius:50%;" src="http://mandarinpalace.fi/wp-content/uploads/2015/11/businessman.jpg">
-            <?php
+        ?>
+                    <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
+                        <img style="width: 160px;height: 160px;border-radius:50%;" src="<?php echo base_url() . 'public/images/pegawai/'.$photo;?>">
+                        <div class="dz-message" style="margin: 2em 0;">
+                            <span> Klik atau Drop File Foto disini</span>
+                        </div>
+                    </div>
+        <?php                        
                 }
             ?>
         </div>

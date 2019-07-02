@@ -1,11 +1,62 @@
+v4.1.0
+2019-06-28
+New:
+- Data History
+Improved:
+Fixed:
+Canceled:
+
+v4.1.0
+2019-06-28
+New:
+- v.4.1.0
+Improved:
+- menampilkan photo tidak lagi dari ambil dari query
+- Layout lama penilaian SKP bulanan [pilih member], data yang ditampilkan menjadi 4 data perhalaman
+Fixed:
+Canceled:
+- Validasi pekerjaan tidak boleh sama dalam 1 waktu
+
+v4.1.0
+2019-06-27
+New:
+- Fungsi stat pekerjaan
+Improved:
+- Penilaian SKP Bulanan Bawahan
+- Penyesuaian Login [eselon berdasarkan posisi]
+Fixed:
+- Validasi status belum_diperiksa jika data tidak ada
+Canceled:
+- Menu sidebar [tampilan mobile]
+- Olah Data transaksi [syn]
+- Layout lama penilaian SKP bulanan [pilih member]
+- data api sikerja
+- Infopegawai [query] di pengaturan menu [myhelp_helper]
+- Pesan
+
+v4.0.0
+2019-06-26
+New:
+Improved:
+Fixed:
+- Layout fingerprint
+- timeout api
+- Persentase dashboard
+- Hapus Ubah transaksi [Refresh]
+- Kinerja Anggota
+Canceled:
+- Hide Grafik kinerja anggota
+
 v4.0.0
 2019-06-18
 New:
 Improved:
 - Filter Export tunjangan
+- Penambahan Kolom posisi pada rekap tungkir
 Fixed:
-- Hapus Syncronisasi (JS)
+- Hapus Syncronisasi [JS]
 Canceled:
+
 
 v4.0.0
 2019-06-11
@@ -151,8 +202,8 @@ v4.0.0
 New:
 Improved:
 Fixed:
-- Tanggal dan jam (awal - akhir ) yang sama
-- Olah data Kinerja (Status pekerjaan)
+- Tanggal dan jam [awal - akhir] yang sama
+- Olah data Kinerja [Status pekerjaan]
 
 v4.0.0
 2019-04-10
@@ -191,7 +242,7 @@ v4.0.0
 2019-04-01
 New:
 Improved:
-- Hari kerja (berdasarkan filter)
+- Hari kerja [berdasarkan filter]
 Fixed:
 - penambahan Id posisi ketika input sikerja
 - Olah data sikerja
@@ -209,11 +260,11 @@ Fixed:
 v4.0.0
 2019-03-28
 New:
-- Rekap Kinerja (excel)
+- Rekap Kinerja [excel]
 Improved:
 - Koreksi sikerja akan bekerja jika prosentase dibawah 100%
 Fixed:
-- belum diperiksa (rekap kinerja)
+- belum diperiksa [rekap kinerja]
 - Tombol Sync berubah jadi OLAH DATA TRANSAKSI SIKERJA
 - Kinerja Anggota (By Eric)
 
@@ -234,7 +285,7 @@ Improved:
 - Penambahan posisi di transaksi dan rekap kinerja
 - Koreksi tunjangan
 Fixed:
-- koreksi kinerja (untuk kondisi menit efektif lebih dari 5.5 atau 6.5 jam tapi dibawah 24 jam)
+- koreksi kinerja [untuk kondisi menit efektif lebih dari 5.5 atau 6.5 jam tapi dibawah 24 jam]
 
 v4.0.0
 2019-03-22
@@ -243,7 +294,7 @@ Improved:
 - filter akademik di pencarian di plt
 Fixed:
 - real tunjangan akademik
-- Core Rekap Kinerja (sync sikerja)
+- Core Rekap Kinerja [sync sikerja]
 - layout realisasi dan target di sikerja
 - open member auto approve
 - penentu eselon 1 dan eselon 2
@@ -262,13 +313,13 @@ v4.0.0
 2019-03-20
 New:
 Improved:
-- Penambahan +1 hari untuk multidays sikerja (sync sikerja)
-- Menghapus auto approve struktur akademik (sync sikerja)
+- Penambahan +1 hari untuk multidays sikerja [sync sikerja]
+- Menghapus auto approve struktur akademik [sync sikerja]
 - Client hanya mengirim tanggal saja tanpa harus memproses menit efektif
-- Client hanya mengirim tanggal saja tanpa harus memproses menit efektif (Edit)
+- Client hanya mengirim tanggal saja tanpa harus memproses menit efektif [Edit]
 Fixed:
 - Uraian Tugas di sikerja tidak muncul
-- Filter data pegawai (BPSDM Riau)
+- Filter data pegawai [BPSDM Riau]
 
 v4.0.0
 2019-03-19
@@ -314,19 +365,19 @@ Fixed:
 v4.0.0
 2019-03-13
 New:
-- PLT & Struktur Akademik (Target skp, Transaksi sikerja) 
+- PLT & Struktur Akademik [Target skp, Transaksi sikerja] 
 Improved:
 Fixed:
 - res config
-- fix PLT & akademik (yang belum ada akses)
+- fix PLT & akademik [yang belum ada akses]
 
 v4.0.0
 2019-03-12
 New:
 - TMT Jabatan PLT dan Jabatan Akademik
-- Nonaktif pegawai (pegawai)
+- Nonaktif pegawai [pegawai]
 - Atasan plt dan atasan akademik
-- Penambahan Role user (Fullstack Developer)
+- Penambahan Role user [Fullstack Developer]
 - Pembatasan Login Akses
 Improved:
 Fixed:
@@ -342,8 +393,8 @@ New:
 - read access
 - Transaksi PLT
 Improved:
-- Menu (atasan - Bawahan)
-- Setting Menu (atasan - Bawahan)
+- Menu [atasan - Bawahan]
+- Setting Menu [atasan - Bawahan]
 - Data history eselon1, eselon2, eselon3, eselon4, Pegawai, Struktur Organisasi 
 Fixed:
 - Auto Approve skp
@@ -356,15 +407,15 @@ New:
 - Struktur Akademik di target skp
 Improved:
 Fixed:
-- Counter approval (Ubah (sebelumnya sudah diapprove) + pengajuan target skp baru)
-- Penyesuaian target skp ketika ada aktivasi dari master skp (struktural)
-- Permasalahan aktivasi ketika tambah skp baru (struktural)
+- Counter approval [Ubah (sebelumnya sudah diapprove) + pengajuan target skp baru]
+- Penyesuaian target skp ketika ada aktivasi dari master skp [struktural]
+- Permasalahan aktivasi ketika tambah skp baru [struktural]
 - Footer
 
 v4.0.0
 2019-03-06
 New:
-- Hapus target skp yang bersumber dari penambahan skp pribadi (Yang sudah diapprove tidak bisa dihapus)
+- Hapus target skp yang bersumber dari penambahan skp pribadi [Yang sudah diapprove tidak bisa dihapus]
 - Aktivasi skp struktural
 Improved:
 - Penambahan jumlah target yang sudah diapprove di laporan skp pegawai

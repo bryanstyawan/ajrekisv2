@@ -31,6 +31,15 @@ if ($data_transaksi_rpt != 0) {
 <?php
     }
 }
+else
+{
+?>
+    <div class="callout callout-warning">
+        <h4>Kinerja (skp) anda bulan ini belum dinilai dan Kinerja (skp) anda bulan ini belum tercapai (Pengurangann 5%)</h4>
+        <p>Silahkan menghubungi atasan untuk dilakukan penilaian.</p>
+    </div>
+<?php    
+}
 
 ?>
 

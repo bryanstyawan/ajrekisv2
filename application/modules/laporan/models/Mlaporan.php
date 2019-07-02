@@ -91,10 +91,6 @@ Last edit : 19/07/2016
 							a.frekuensi_realisasi,
 							a.tr_belum_diperiksa,
 							c.kat_posisi,
-						-- 	IF(c.kat_posisi = 1,h.posisi_class,NULL) as class_posisi_struktural_definif,
-						-- 	IF(c.kat_posisi = 2,l.posisi_class,NULL) as class_posisi_jft_definif,
-						-- 	IF(c.kat_posisi = 4,j.posisi_class,NULL) as class_posisi_jfu_definif,
-						-- 	IF(c.kat_posisi = 6,h.posisi_class,NULL) as class_posisi_struktur_akademik_definif,
 							CASE
 									WHEN c.kat_posisi = 1 THEN h.posisi_class
 									WHEN c.kat_posisi = 2 THEN l.posisi_class

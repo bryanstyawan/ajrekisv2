@@ -76,13 +76,7 @@ if ($menit_efektif_dashboard != 0) {
     # code...
     $real_tunjangan_rpt =  $menit_efektif_dashboard[0]->tunjangankinerja;
 }
-
-$fingerprint = 0;
-if ($menit_efektif_dashboard != 0) {
-    # code...
-    $menit_efektif_rpt = $menit_efektif_dashboard[0]->menit_efektif;
-}
-
+$fingerprint = "";
 ?>
 
 <?php
@@ -95,7 +89,6 @@ if ($this->session->userdata('sesPosisi') != 0)
 {
     # code...
 ?>
-
 <div class="col-md-12 tour-step tour1" id="main-dashboard">
     <div class="row">
     <?php
@@ -115,7 +108,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #00a7d0;','value'=>''),
-        'value_php' => $belum_diperiksa,
+        'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa) ,
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
@@ -125,7 +118,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
         'value_php' => number_format($menit_efektif_rpt),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
-        'html'      => '')); 
+        'html'      => ''));                
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_tunjangan',
@@ -134,14 +127,14 @@ if ($this->session->userdata('sesPosisi') != 0)
         'value_php' => number_format($real_tunjangan_rpt),
         'title'     => 'TUNJANGAN',
         'html'      => ''));
-    $this->load->view('dashboard_component/common_component',array(
+    $this->load->view('dashboard_component/common_finger',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_fingerprint',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
-        'value_php' => "",
-        'title'     => "<label id='total_tunjangan_' />", 
-        'html'      => "FINGERPRINT"));       
+        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
+        'value_php' => $fingerprint,
+        'title'     => 'FINGERPRINT', 
+        'html'      => "<label id='total_tunjangan_' />"));       
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
@@ -176,6 +169,7 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
     'id'           => 'modal-transaksi-realisasi',
     'header'       => 'Realisasi Menit Kerja Efektif',
     'id_datatable' => 'get-datatable1'));
+
 $this->load->view('dashboard_component/common_modal_datatable_component',array(
     'id'           => 'modal-transaksi-tunjangan',
     'header'       => 'TUNJANGAN',
@@ -250,9 +244,6 @@ else {
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
-    
-        var res_api = '<?=$data_api;?>';
-        console.log(res_api);
         // Lobibox.window({
         //     title  : 'Informasi',
         //     content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+            
@@ -324,7 +315,7 @@ else {
         })
 
 
-        $("#btn_tunjangan").click(function() 
+         $("#btn_tunjangan").click(function() 
         {
             $.ajax({
                 url :"<?php echo site_url()?>dashboard/get_datamodal_tunjangan/1",
@@ -575,7 +566,7 @@ else {
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
 
-                    console.table(obj.data.skp.list_skp);
+                    // console.table(obj.data.skp.list_skp);
 
                     MONTHS = [];
                     VALUES = [];
@@ -737,21 +728,61 @@ else {
 
     }   
 
-
-    function formatRupiah(num) {
+    function formatRupiah(num) 
+    {
         var p = num.toFixed(2).split(".");
-        return "Rp." + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+        return "" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
             return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
-        }, "") + "." + p[1];
+        }, "");
     }
 
+    function approve_good_kinerja(arg,oid) 
+    {
+        if (oid == 0) {
+            var oid = $("#member_section_oid").val();            
+        }
+        
+        tagline = '';
+        if (arg == 'yes') {
+            tagline = 'berkinerja baik dan mencapai skp bulan ini.';
+        }
+        else
+        {
+            tagline = 'berkinerja kurang baik dan belum mencapai skp bulan ini.'
+        }
+
+        tagline = "Apakah benar bahwa pegawai ini "+tagline;
+
+        Lobibox.confirm({
+            title: "Konfirmasi",
+            msg  : tagline,
+            callback: function ($this, type) {
+                if (type === 'yes'){
+                    $.ajax({
+                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid,
+                        type:"post",
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
+            }
+        })    
+    }    
+
     $(document).ready(function(){
-        tampil_data_barang();   //pemanggilan fungsi tampil barang.
-         
+        get_api_fingerprint();         
         $('#mydata').dataTable();
-          
-        //fungsi tampil barang
-        function tampil_data_barang(){
+
+        function get_api_fingerprint(){
             $.ajax({
                 type  : 'ajax',
                 url   : '<?php echo base_url()?>ro_peg/index',
@@ -766,9 +797,10 @@ else {
                     var total_tunjangan_="";
 
                     //for(i in object)
-                   // console.log('lengthnya adalah ' + object.results.data.length);
-                    for(j=0;j < object.results.data.length;j++) {
+                    // console.log('lengthnya adalah ' + object.results.data.length);
 
+                    for(j=0;j < object.results.data.length;j++) 
+                    {
                         k = object.results.data[j].jumlah;
                         sum_jumlah = sum_jumlah + k;
                     }
@@ -776,9 +808,15 @@ else {
                     //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
                     total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
                     document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
-                  //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
-                }
+                    //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
+                },
+                error:function(jqXHR,exception)
+                {
+                    document.getElementById("total_tunjangan_").innerHTML = 'N/A';
+                }                
+ 
             });
         }
+ 
     }); 
 </script>

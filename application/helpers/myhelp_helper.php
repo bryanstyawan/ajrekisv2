@@ -8,9 +8,9 @@
 		$posisi          = $CI->session->userdata('sesIdPos');
 		$id_posisi       = $CI->session->userdata('sesPosisi');
 		$id_kat_posisi   = $CI->session->userdata('kat_posisi');
-		$infoPegawai     = $CI->Globalrules->get_info_pegawai();
-		$posisi_plt      = $infoPegawai[0]->posisi_plt; 
-		$posisi_akademik = $infoPegawai[0]->posisi_akademik; 		
+		$posisi_plt      = $CI->session->userdata('posisi_plt'); 
+		$posisi_akademik = $CI->session->userdata('posisi_akademik'); 		
+		$photo           = $CI->session->userdata('photo');
 		$query_atasan_bawahan = 0;
 		$get_bawahan = $CI->db->query("SELECT a.*
 											FROM mr_pegawai a
@@ -73,7 +73,7 @@
 				$controll_plt_akademik = array('type' => 'all', 'status' => 0);
 				if ($row->uri == 'plt') {
 					# code...
-					if ($infoPegawai[0]->posisi_plt != 0) {
+					if ($posisi_plt != 0) {
 						# code...
 						$controll_plt_akademik = array('type' => 'plt', 'status' => 1);					
 					}
@@ -84,7 +84,7 @@
 				}
 				elseif ($row->uri == 'akademik') {
 					# code...
-					if ($infoPegawai[0]->posisi_akademik != 0) {
+					if ($posisi_akademik != 0) {
 						# code...
 						$controll_plt_akademik = array('type' => 'akademik', 'status' => 1);					
 					}					
@@ -105,7 +105,7 @@
 					$counter_trx_akademik = "";					
 					if ($row->url_pages == 'transaksi/home') {
 						# code...
-						$sql_trx       = $CI->db->query("SELECT b.nama_pegawai ,a.*
+						$sql_trx       = $CI->db->query("SELECT b.nama_pegawai
 														FROM tr_capaian_pekerjaan a
 														LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
 														JOIN mr_posisi c ON b.posisi = c.id
@@ -295,10 +295,10 @@
 		$CI->load->view('templates/header/open_tag',array('tag'=>'ul','class'=>'nav navbar-nav pull-right'));
 		if ($id_posisi != 0) {
 			# code...
-			$CI->load->view('templates/header/message');
+			// $CI->load->view('templates/header/message');
 			// $CI->load->view('templates/header/notification',array('counter'=>$count_notify,'notify_result'=>$notify->result()));																		
 		}	
-		$CI->load->view('templates/header/user',array('infoPegawai'=>$infoPegawai));		
+		$CI->load->view('templates/header/user',array('photo'=>$photo));		
 		$CI->load->view('templates/header/close_tag',array('tag'=>'ul'));		
 		$CI->load->view('templates/header/close_tag',array('tag'=>'div'));				
 		$CI->load->view('templates/header/close_tag',array('tag'=>'nav'));				

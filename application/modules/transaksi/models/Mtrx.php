@@ -526,10 +526,15 @@ class Mtrx extends CI_Model
 		}
 	}
 
-	public function verify_datetime_pekerjaan($id_pegawai,$id_posisi)
+	public function verify_datetime_pekerjaan($id_pegawai,$id_posisi,$arg=NULL)
 	{
 		# code...
-		$date_string = date('Y').'-'.date('m');
+		$date_string = date('Y-m-d', strtotime($arg));		
+		if ($arg == 'multi') {
+			# code...
+			$date_string = date('Y').'-'.date('m');						
+		}
+
 		$sql = "SELECT a.*
 				FROM tr_capaian_pekerjaan a
 				WHERE a.id_pegawai = '".$id_pegawai."'

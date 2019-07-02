@@ -47,7 +47,8 @@ class Mlogin extends CI_Model {
 		}				
 		if ($flag_universal == 1) {
 			# code...
-			$sql = "SELECT a.*, 
+			$sql = "SELECT a.*,
+						COALESCE(a.photo,'-') as photo,			 
 						c.nama_role, 
 						es1.nama_eselon1, 
 						es2.nama_eselon2, 
@@ -78,10 +79,10 @@ class Mlogin extends CI_Model {
 					LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu      = jfu.id
 					LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id
 					LEFT JOIN user_role c ON a.id_role                        = c.id_role
-					LEFT JOIN mr_eselon4 es4 ON es4.id_es4                    = a.es4
-					LEFT JOIN mr_eselon3 es3 ON es3.id_es3                    = es4.id_es3
-					LEFT JOIN mr_eselon2 es2 ON es2.id_es2                    = es3.id_es2
-					LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = es2.id_es1
+					LEFT JOIN mr_eselon4 es4 ON es4.id_es4                    = b.eselon4
+					LEFT JOIN mr_eselon3 es3 ON es3.id_es3                    = b.eselon3
+					LEFT JOIN mr_eselon2 es2 ON es2.id_es2                    = b.eselon2
+					LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = b.eselon1
 					WHERE a.nip = '$nip' 
 					AND a.status='1' 
 					ORDER BY a.id ASC
@@ -111,8 +112,8 @@ class Mlogin extends CI_Model {
 						COALESCE(jfu.nama_jabatan,'-') as nama_posisi_jfu,										
 						COALESCE(cls_jfu.posisi_class,'-') as grade_jfu,
 						COALESCE(cls_jfu.tunjangan,'-') as tunjangan_jfu										
-	--					d.tunjangan,
-	--					d.posisi_class as `grade`
+			--					d.tunjangan,
+			--					d.posisi_class as `grade`
 					FROM mr_pegawai a 
 					LEFT JOIN mr_posisi b ON b.id                             = a.posisi
 					LEFT JOIN mr_posisi_class d ON b.posisi_class             = d.id
@@ -121,10 +122,10 @@ class Mlogin extends CI_Model {
 					LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu      = jfu.id
 					LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id
 					LEFT JOIN user_role c ON a.id_role                        = c.id_role
-					LEFT JOIN mr_eselon4 es4 ON es4.id_es4                    = a.es4
-					LEFT JOIN mr_eselon3 es3 ON es3.id_es3                    = es4.id_es3
-					LEFT JOIN mr_eselon2 es2 ON es2.id_es2                    = es3.id_es2
-					LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = es2.id_es1
+					LEFT JOIN mr_eselon4 es4 ON es4.id_es4                    = b.eselon4
+					LEFT JOIN mr_eselon3 es3 ON es3.id_es3                    = b.eselon3
+					LEFT JOIN mr_eselon2 es2 ON es2.id_es2                    = b.eselon2
+					LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = b.eselon1
 					WHERE a.nip = '$nip' 
 					AND a.password = '$secured_pass'
 					AND a.status='1' 

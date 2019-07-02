@@ -201,9 +201,14 @@ class Globalrules extends CI_Model
 			$sql = "b.id = '".$id."' AND a.status = 1";
 		}		
 
-		$sql = "SELECT  a.*,
-						COALESCE(a.tmt_golongan,'-') as tmt_golongan,
+		$sql = "SELECT  COALESCE(a.tmt_golongan,'-') as tmt_golongan,
 						a.nama_pegawai,
+						a.posisi,
+						a.nip,
+						a.email,
+						a.no_hp,
+						a.alamat,
+						a.golongan,						
 						b.nama_posisi as `nama_jabatan`,
 						b.atasan,
 						b.id as `id_posisi`,
@@ -237,14 +242,13 @@ class Globalrules extends CI_Model
 				LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu      = jfu.id
 				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
 				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
-				LEFT OUTER JOIN mr_eselon2 es2 ON es2.id_es2 = a.es2
-				LEFT OUTER JOIN mr_eselon3 es3 ON es3.id_es3 = a.es3
-				LEFT OUTER JOIN mr_eselon4 es4 ON es4.id_es4 = a.es4
+				LEFT OUTER JOIN mr_eselon2 es2 ON es2.id_es2 = b.eselon2
+				LEFT OUTER JOIN mr_eselon3 es3 ON es3.id_es3 = b.eselon3
+				LEFT OUTER JOIN mr_eselon4 es4 ON es4.id_es4 = b.eselon4
 				LEFT OUTER JOIN mr_agama agm on agm.id_agama = a.id_agama				
 				LEFT OUTER JOIN mr_golongan gol ON gol.id = a.golongan				
 				WHERE ".$sql."";
 				// NOTE ==> Kolom Posisi_class pada mr_posisi dan ID pada mr_POSISI_CLASS
-				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

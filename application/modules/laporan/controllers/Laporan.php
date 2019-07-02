@@ -439,7 +439,7 @@ class Laporan extends CI_Controller {
 					$data['list'][$i]->prosentase_menit_efektif  	= 0;
 				}
 			}
-			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);	
+			$this->load->view('laporan/kinerja/ajax_kinerja_anggota',$data);			
 		}
 	}
 
@@ -950,15 +950,16 @@ Last edit : 31/05/2019
 		$this->excel->getActiveSheet(1)->getColumnDimension('c')->setWidth('44');
 		$this->excel->getActiveSheet(1)->getColumnDimension('d')->setWidth('35');
 		$this->excel->getActiveSheet(1)->getColumnDimension('e')->setWidth('35');
-		$this->excel->getActiveSheet(1)->getColumnDimension('f')->setWidth('12');
-		$this->excel->getActiveSheet(1)->getColumnDimension('g')->setWidth('19');
-		$this->excel->getActiveSheet(1)->getColumnDimension('h')->setWidth('15');		
-		$this->excel->getActiveSheet(1)->getColumnDimension('i')->setWidth('23');		
-		$this->excel->getActiveSheet(1)->getColumnDimension('j')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('f')->setWidth('35');
+		$this->excel->getActiveSheet(1)->getColumnDimension('g')->setWidth('12');
+		$this->excel->getActiveSheet(1)->getColumnDimension('h')->setWidth('19');
+		$this->excel->getActiveSheet(1)->getColumnDimension('i')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('j')->setWidth('23');		
 		$this->excel->getActiveSheet(1)->getColumnDimension('k')->setWidth('15');		
 		$this->excel->getActiveSheet(1)->getColumnDimension('l')->setWidth('15');		
 		$this->excel->getActiveSheet(1)->getColumnDimension('m')->setWidth('15');		
-		$this->excel->getActiveSheet(1)->getColumnDimension('n')->setWidth('15');														
+		$this->excel->getActiveSheet(1)->getColumnDimension('n')->setWidth('15');		
+		$this->excel->getActiveSheet(1)->getColumnDimension('o')->setWidth('15');														
 		$this->excel->getActiveSheet(1)->setTitle('Rekap Tunjangan Pegawai '.$tahun.'-'.$bulan);
 		$this->excel->getActiveSheet(1)->getStyle('b7:h7')->getBorders()->getallborders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 		$this->excel->getActiveSheet(1)->setCellValue('A1', 'Rekap Tunjangan Pegawai '.$this->Globalrules->set_bulan($bulan).'-'.$tahun);
@@ -967,12 +968,13 @@ Last edit : 31/05/2019
 		$this->excel->getActiveSheet(1)->setCellValue('C2', 'Nama');		
 		$this->excel->getActiveSheet(1)->setCellValue('D2', 'Eselon I');
 		$this->excel->getActiveSheet(1)->setCellValue('E2', 'Eselon II');
-		$this->excel->getActiveSheet(1)->setCellValue('F2', 'Menit Efektif');
-		$this->excel->getActiveSheet(1)->setCellValue('G2', 'Tunjangan');		
-		$this->excel->getActiveSheet(1)->setCellValue('H2', 'Posisi Kelas');
-		$this->excel->getActiveSheet(1)->setCellValue('I2', 'Tunjangan Yang Diberikan');	
-		$this->excel->getActiveSheet(1)->setCellValue('J2', 'Prosentase');			
-		$this->excel->getActiveSheet(1)->setCellValue('K2', 'Periode');																		
+		$this->excel->getActiveSheet(1)->setCellValue('F2', 'Posisi');
+		$this->excel->getActiveSheet(1)->setCellValue('G2', 'Menit Efektif');
+		$this->excel->getActiveSheet(1)->setCellValue('H2', 'Tunjangan');		
+		$this->excel->getActiveSheet(1)->setCellValue('I2', 'Posisi Kelas');
+		$this->excel->getActiveSheet(1)->setCellValue('J2', 'Tunjangan Yang Diberikan');	
+		$this->excel->getActiveSheet(1)->setCellValue('K2', 'Prosentase');			
+		$this->excel->getActiveSheet(1)->setCellValue('L2', 'Periode');																		
 		if ($data['list'] != 0) {
 			# code...
 			$counter = "";
@@ -1013,15 +1015,16 @@ Last edit : 31/05/2019
 				$this->excel->getActiveSheet(2)->setCellValue('c'.$counter, $data['list'][$i]->nama_pegawai);
 				$this->excel->getActiveSheet(2)->setCellValue('d'.$counter, $data['list'][$i]->nama_eselon1);
 				$this->excel->getActiveSheet(2)->setCellValue('e'.$counter, $data['list'][$i]->nama_eselon2);								
-				$this->excel->getActiveSheet(2)->setCellValue('f'.$counter, $data['list'][$i]->menit_efektif);
-				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, number_format($data['list'][$i]->tunjangan_definitif,0));
-				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, $data['list'][$i]->class_posisi_definitif);
-				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, number_format($data['list'][$i]->real_tunjangan,0));												
-				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $data['list'][$i]->prosentase_menit_efektif);
+				$this->excel->getActiveSheet(2)->setCellValue('f'.$counter, $data['list'][$i]->nama_posisi);								
+				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->menit_efektif);
+				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, number_format($data['list'][$i]->tunjangan_definitif,0));
+				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, $data['list'][$i]->class_posisi_definitif);
+				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, number_format($data['list'][$i]->real_tunjangan,0));												
+				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->prosentase_menit_efektif);
 				// $this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->tr_approve);
 				// $this->excel->getActiveSheet(2)->setCellValue('l'.$counter, $data['list'][$i]->menit_efektif);
 				// $this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $data['list'][$i]->prosentase_menit_efektif);
-				$this->excel->getActiveSheet(2)->setCellValue('n'.$counter, '');														
+				$this->excel->getActiveSheet(2)->setCellValue('o'.$counter, '');														
 			}
 		}
 
@@ -1043,66 +1046,6 @@ Last edit : 31/05/2019
 		// print_r($data['list']);die();		
 		// echo "</pre>";		
 	}	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 Create by : Bryan Setyawan Putra
