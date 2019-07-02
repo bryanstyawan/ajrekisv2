@@ -9,6 +9,7 @@ Improved:
 Fixed:
 Canceled:
 - Grafik kinerja anggota
+- Layout video (Sukseskan pemilu serentak)
 
 v4.1.0
 2019-06-28
