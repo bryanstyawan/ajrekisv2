@@ -1,3 +1,17 @@
+v4.1.2
+2019-07-08
+New:
+Improved:
+- prioritas penilaian skp bulanan berdasarkan yang telah dinilai
+- Hari kerja di dashboard [reporting]
+- Penilaian SKP Bulanan [PLT]
+- Penilaian SKP Bulanan [Akademik]
+- Code Review
+Fixed:
+Canceled:
+- Hapus Syncronisasi transaksi [PHP - laporan]
+- Approval Transaksi [non-prosedural]
+
 v4.1.1
 2019-06-29
 New:

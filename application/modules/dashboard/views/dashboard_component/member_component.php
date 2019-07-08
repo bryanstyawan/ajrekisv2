@@ -30,7 +30,7 @@
                         $flag_counter = "text-yellow";
                         $flag_display = "display:none;";
                         $flag_icon    = 'fa-circle-o text-yellow';
-                        if ($member[$i]->counter_belum_diperiksa != 0) {
+                        if ($member[$i]->flag_belum_diperiksa != 0) {
                             // code...
                             if ($member[$i]->persentase != array()) {
                                 # code...
@@ -55,9 +55,9 @@
                                 <?=$member[$i]->nama_pegawai;?>
                             </td>
                             <td>
-                                <a class="btn btn-primary btn-md" onclick="view_option('<?=$member[$i]->id;?>')">Detail</a>
-                                <a class="btn btn-success" onclick="approve_good_kinerja('yes','<?=$member[$i]->id;?>')">Ya</a>
-                                <a class="btn btn-danger" onclick="approve_good_kinerja('no','<?=$member[$i]->id;?>')">Tidak</a>                                
+                                <a class="btn btn-primary btn-md" onclick="view_option('<?=$member[$i]->id_pegawai;?>')">Detail</a>
+                                <a class="btn btn-success" onclick="approve_good_kinerja('yes','<?=$member[$i]->id_pegawai;?>')">Ya</a>
+                                <a class="btn btn-danger" onclick="approve_good_kinerja('no','<?=$member[$i]->id_pegawai;?>')">Tidak</a>                                
                             </td>
                         </tr>
             <?php
