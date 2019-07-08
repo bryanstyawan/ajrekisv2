@@ -48,28 +48,12 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
 }
 
 $prosentase_menit_efektif_rpt = 0;
-if ($data_transaksi_rpt != 0) {
-    # code...
-    $prosentase_menit_efektif_rpt = $menit_efektif_dashboard[0]->prosentase_menit_efektif;
-
-}
-// $menit_efektif_rpt = 0;
-// if ($data_transaksi_rpt != 0) {
-//     # code...
-//     $menit_efektif_rpt = $data_transaksi_rpt[0]->menit_efektif;
-// }
-
-$menit_efektif_rpt = 0;
+$menit_efektif_rpt            = 0;
 if ($menit_efektif_dashboard != 0) {
     # code...
-    $menit_efektif_rpt = $menit_efektif_dashboard[0]->menit_efektif;
+    $menit_efektif_rpt            = $menit_efektif_dashboard[0]->menit_efektif;
+    $prosentase_menit_efektif_rpt = $menit_efektif_dashboard[0]->prosentase_menit_efektif;    
 }
-
-// $real_tunjangan_rpt = 0;
-// if ($data_transaksi_rpt != 0) {
-//     # code...
-//     $real_tunjangan_rpt = $data_transaksi_rpt[0]->real_tunjangan;
-// }
 
 $real_tunjangan_rpt = 0;
 if ($menit_efektif_dashboard != 0) {

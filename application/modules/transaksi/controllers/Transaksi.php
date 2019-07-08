@@ -484,291 +484,6 @@ class Transaksi extends CI_Controller {
 		echo json_encode($res);
 	}
 
-	// Approve Non Stored Procedure
-	// public function approve($id)
-	// {
-	// 	# code...
-	// 	$this->Globalrules->session_rule();
-	// 	$data_approve = array
-	// 					(
-	// 						'status_pekerjaan'     => '1',
-	// 						'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-	// 						'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-	// 						'audit_update'         => date('Y-m-d H:i:s'),
-	// 						'audit_user_update'    => $this->session->userdata('sesUser')
-	// 					);
-	// 	$flag        = array('id_pekerjaan'=>$id);
-	// 	$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
-	// 	$text_status = "Data pekerjaan telah disetujui";
-	// 	/**************************************************/
-	// 	/*siapkan data untuk auto approve*/
-	// 	/**************************************************/
-	// 	$who_is_approval   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
-	// 	$get_data_transact = $this->mtrx->get_transaksi_id($id);
-	// 	$who_is_emp        = $this->Globalrules->who_is($get_data_transact[0]->id_pegawai);		
-	// 	$menit_efektif     = $get_data_transact[0]->menit_efektif;
-	// 	$data              = array
-	// 						(
-	// 							'id_pegawai'           => $this->session->userdata('sesUser'),
-	// 							'id_posisi'			   => $this->session->userdata('sesPosisi'),								
-	// 							'tanggal_mulai'        => $get_data_transact[0]->tanggal_mulai,
-	// 							'tanggal_selesai'      => $get_data_transact[0]->tanggal_selesai,
-	// 							'jam_mulai'            => $get_data_transact[0]->jam_mulai,
-	// 							'jam_selesai'          => $get_data_transact[0]->jam_selesai,
-	// 							'nama_pekerjaan'       => 'Menyetujui pekerjaan',
-	// 							'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
-	// 							'hari_efektif'         => '0',
-	// 							'status_pekerjaan'     => '1'
-	// 						);
-
-	// 	/**************************************************/
-	// 	/*auto approve*/
-	// 	/**************************************************/
-	// 	if ($get_data_transact != 0)
-	// 	{
-	// 		if ($who_is_emp == 'eselon 3' || $who_is_emp == 'eselon 2' || $who_is_emp == 'eselon 1') {
-	// 			# code...
-	// 			//sebelumnya disini
-	// 		}				
-
-	// 		if ($who_is_approval == 'eselon 2')
-	// 		{
-	// 			# code...
-	// 			$id_pegawai            = 0;
-	// 			$get_pegawai           = $this->mtrx->get_pegawai_id($this->session->userdata('sesUser'),'default');
-	// 			$atasan                = $get_pegawai[0]->atasan;
-	// 			$who_is_super          = $this->mtrx->get_pegawai_id($atasan,'atasan');
-	// 			$who_is_super_approval = "";
-	// 			if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
-
-	// 			$id_pegawai = $get_data_transact[0]->id_pegawai;
-	// 			$get_member = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-	// 			if ($get_member != 0) {
-	// 				# code...
-	// 				$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
-	// 				$data['flag_sync']       = 1;
-	// 				$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-	// 				if ($data['menit_efektif'] == 0) {
-	// 					# code...
-	// 					$data['menit_efektif'] = 1;
-	// 				}
-	// 				$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-	// 				$data['tunjangan']       = $get_value_approval['tunjangan'];
-	// 				$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-	// 				if ($who_is_super_approval == 'eselon 1')
-	// 				{
-	// 					$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
-	// 					$data['flag_sync']       = 1;						
-	// 					$data['id_pegawai']      = $who_is_super[0]->id;
-	// 					$data['id_posisi']       = $who_is_super[0]->id_posisi;						
-	// 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-	// 					if ($data['menit_efektif'] == 0) {
-	// 						# code...
-	// 						$data['menit_efektif'] = 1;
-	// 					}						
-	// 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-	// 					$data['tunjangan']       = $get_value_approval['tunjangan'];
-	// 					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-	// 				}
-	// 			}
-	// 		}
-	// 		elseif ($who_is_approval == 'eselon 1') {
-	// 			# code...
-	// 			$get_member    = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-	// 			if ($get_member != 0) {
-	// 				# code...
-	// 				$get_value_approval      = $this->get_value_approval($this->session->userdata('sesPosisi'),$menit_efektif);
-	// 				$data['flag_sync']       = 1;					
-	// 				$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-	// 				if ($data['menit_efektif'] == 0) {
-	// 					# code...
-	// 					$data['menit_efektif'] = 1;
-	// 				}											
-	// 				$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-	// 				$data['tunjangan']       = $get_value_approval['tunjangan'];
-	// 				$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-	// 			}
-	// 		}			
-	// 	}
-
-	// 	$data_notify  = array
-	// 					(
-	// 						'id_table'   => $id,
-	// 						'table_name' => 'tr_capaian_pekerjaan'
-	// 					);
-	// 	$this->Globalrules->push_notifikasi($data_notify,'read_data');
-
-	// 	$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
-	// 	$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
-	// 	$res = array
-	// 				(
-	// 					'status' => $res_data,
-	// 					'text'   => $text_status
-	// 				);
-	// 	echo json_encode($res);
-
-	// }
-
-	// public function approve_plt($id)
-	// {
-	// 	# code...
-	// 	$this->Globalrules->session_rule();
-	// 	$data_approve = array
-	// 					(
-	// 						'status_pekerjaan'     => '1',
-	// 						'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-	// 						'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-	// 						'audit_update'         => date('Y-m-d H:i:s'),
-	// 						'audit_user_update'    => $this->session->userdata('sesUser')
-	// 					);
-	// 	$flag        = array('id_pekerjaan'=>$id);
-	// 	$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
-	// 	$text_status = "Data pekerjaan telah disetujui";
-	// 	/**************************************************/
-	// 	/*siapkan data untuk auto approve*/
-	// 	/**************************************************/
-	// 	$who_is_approval   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
-	// 	$get_data_transact = $this->mtrx->get_transaksi_id($id);
-	// 	$who_is_emp        = $this->Globalrules->who_is($get_data_transact[0]->id_pegawai);		
-	// 	$menit_efektif     = $get_data_transact[0]->menit_efektif;
-	// 	$data              = array
-	// 						(
-	// 							'id_pegawai'           => $this->session->userdata('sesUser'),
-	// 							'id_posisi'			  => $this->session->userdata('sesPosisi'),								
-	// 							'tanggal_mulai'        => $get_data_transact[0]->tanggal_mulai,
-	// 							'tanggal_selesai'      => $get_data_transact[0]->tanggal_selesai,
-	// 							'jam_mulai'            => $get_data_transact[0]->jam_mulai,
-	// 							'jam_selesai'          => $get_data_transact[0]->jam_selesai,
-	// 							'nama_pekerjaan'       => 'Menyetujui pekerjaan',
-	// 							'output_pekerjaan'     => $get_data_transact[0]->output_pekerjaan,
-	// 							'hari_efektif'         => '0',
-	// 							'status_pekerjaan'     => '1',
-	// 							'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-	// 							'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-	// 							'audit_update'         => date('Y-m-d H:i:s'),
-	// 							'audit_user_update'    => $this->session->userdata('sesUser')
-	// 						);
-
-	// 	/**************************************************/
-	// 	/*auto approve*/
-	// 	/**************************************************/
-	// 	if ($get_data_transact != 0)
-	// 	{
-	// 		$get_pegawai           = $this->mtrx->get_pegawai_plt_id($this->session->userdata('sesUser'),'default');
-	// 		$atasan                = $get_pegawai[0]->atasan;
-	// 		$posisi_plt            = $get_pegawai[0]->posisi_plt;			
-	// 		if ($who_is_emp == 'eselon 3' || $who_is_emp == 'eselon 2' || $who_is_emp == 'eselon 1') {
-	// 			# code...
-	// 			//sebelumnya disini
-	// 		}				
-	// 		if ($who_is_approval == 'eselon 2')
-	// 		{
-	// 			# code...
-	// 			$id_pegawai            = 0;					
-	// 			$who_is_super          = $this->mtrx->get_pegawai_plt_id($atasan,'atasan');
-	// 			$who_is_super_approval = "";
-	// 			if ($who_is_super != 0)$who_is_super_approval = $this->Globalrules->who_is($who_is_super[0]->id);
-	// 			$id_pegawai = $get_data_transact[0]->id_pegawai;
-	// 			$get_member = $this->Globalrules->list_bawahan($posisi_plt,1);
-	// 			if ($get_member != 0) {
-	// 				# code...
-	// 				$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
-	// 				$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-	// 				if ($data['menit_efektif'] == 0) {
-	// 					# code...
-	// 					$data['menit_efektif'] = 1;
-	// 				}						
-	// 				$data['flag_sync']       = 1;										
-	// 				$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-	// 				$data['tunjangan']       = $get_value_approval['tunjangan'];
-	// 				$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-	// 				if ($who_is_super_approval == 'eselon 1')
-	// 				{
-	// 					$get_value_approval      = $this->get_value_approval($who_is_super[0]->id_posisi,$menit_efektif);
-	// 					$data['id_pegawai']      = $who_is_super[0]->id;
-	// 					$data['id_posisi']       = $who_is_super[0]->id_posisi;						
-	// 					$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-	// 					if ($data['menit_efektif'] == 0) {
-	// 						# code...
-	// 						$data['menit_efektif'] = 1;
-	// 					}						
-	// 					$data['flag_sync']       = 1;						
-	// 					$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-	// 					$data['tunjangan']       = $get_value_approval['tunjangan'];
-	// 					$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-	// 				}
-	// 			}
-	// 		}
-	// 		elseif ($who_is_approval == 'eselon 1') {
-	// 			# code...
-	// 			$get_member    = $this->Globalrules->list_bawahan($posisi_plt,1);
-	// 			if ($get_member != 0) {
-	// 				# code...
-	// 				$get_value_approval      = $this->get_value_approval($posisi_plt,$menit_efektif);
-	// 				$data['menit_efektif']   = $get_value_approval['menit_efektif'];
-	// 				if ($data['menit_efektif'] == 0) {
-	// 					# code...
-	// 					$data['menit_efektif'] = 1;
-	// 				}						
-	// 				$data['flag_sync']       = 1;	
-	// 				$data['id_uraian_tugas'] = $get_value_approval['id_urtug'];
-	// 				$data['tunjangan']       = $get_value_approval['tunjangan'];
-	// 				$res_data                = $this->Allcrud->addData('tr_capaian_pekerjaan',$data);
-	// 			}
-	// 		}			
-	// 	}
-
-	// 	$data_notify  = array
-	// 					(
-	// 						'id_table'   => $id,
-	// 						'table_name' => 'tr_capaian_pekerjaan'
-	// 					);
-	// 	$this->Globalrules->push_notifikasi($data_notify,'read_data');
-
-	// 	$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
-	// 	$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
-	// 	$res = array
-	// 				(
-	// 					'status' => $res_data,
-	// 					'text'   => $text_status
-	// 				);
-	// 	echo json_encode($res);
-
-	// }	
-
-	// public function approve_akademik($id)
-	// {
-	// 	# code...
-	// 	$this->Globalrules->session_rule();
-	// 	$data_approve = array
-	// 					(
-	// 						'status_pekerjaan'     => '1',
-	// 						'tanggal_pemeriksa'    => date('Y-m-d H:i:s'),
-	// 						'id_pegawai_pemeriksa' => $this->session->userdata('sesUser'),
-	// 						'audit_update'         => date('Y-m-d H:i:s'),
-	// 						'audit_user_update'    => $this->session->userdata('sesUser')
-	// 					);
-	// 	$flag        = array('id_pekerjaan'=>$id);
-	// 	$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data_approve,$flag);
-	// 	$text_status = "Data pekerjaan telah disetujui";
-	// 	$data_notify  = array
-	// 					(
-	// 						'id_table'   => $id,
-	// 						'table_name' => 'tr_capaian_pekerjaan'
-	// 					);
-	// 	$this->Globalrules->push_notifikasi($data_notify,'read_data');
-
-	// 	$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
-	// 	$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
-	// 	$res = array
-	// 				(
-	// 					'status' => $res_data,
-	// 					'text'   => $text_status
-	// 				);
-	// 	echo json_encode($res);
-
-	// }		
-
 	public function approve_all()
 	{
 		# code...
@@ -1457,7 +1172,6 @@ class Transaksi extends CI_Controller {
 			# code...
 			$atasan = $atasan[0]->id;
 		}
-
 		$check_tugas_tambahan = $this->mtrx->check_tugas_tambahan($this->session->userdata('sesPosisi'),date('Y'));
 
 		if ($check_tugas_tambahan == 0) {
@@ -1763,7 +1477,7 @@ class Transaksi extends CI_Controller {
 		echo json_encode($res);
 	}
 
-	public function plt()
+	public function form_persetujuan_sikerja_plt_akademik($arg)
 	{
 		# code...
 		$this->Globalrules->session_rule();
@@ -1772,16 +1486,32 @@ class Transaksi extends CI_Controller {
 		if ($get_data_pegawai != array()) 
 		{
 			# code...
-			if ($get_data_pegawai[0]['posisi_plt'] == 0) {
+			$id_posisi    = 0;
+			$text_title   = '';
+			$text_content = '';
+			if ($arg == 'akademik') {
+				# code...
+				$text_title   = '[Akademik]';
+				$text_content = 'akademik';
+				$id_posisi    = $get_data_pegawai[0]['posisi_akademik'];
+			} elseif($arg == 'plt') {
+				# code...
+				$text_title   = '[PLT]';				
+				$text_content = 'plt';
+				$id_posisi    = $get_data_pegawai[0]['posisi_plt'];				
+			}
+			
+
+			if ($id_posisi == 0) {
 				# code...
 				redirect('dashboard/home');
 			}
 			else
 			{
-				$data['title']                = '[PLT]Persetujuan Sikerja Bawahan';
-				$data['content']              = 'transaksi/plt/index';				
+				$data['title']                = $text_title.' Persetujuan Sikerja Bawahan';
+				$data['content']              = 'transaksi/'.$text_content.'/index';				
 				$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));				
-				$data['member'] = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);								
+				$data['member'] = $this->Globalrules->list_bawahan($id_posisi);								
 				if ($data['member'] != 0) {
 					// code...
 					for ($i=0; $i < count($data['member']); $i++) {
@@ -1809,7 +1539,15 @@ class Transaksi extends CI_Controller {
 				}		
 				$this->load->view('templateAdmin',$data);				
 			}
-		}		
+		}			
+	}
+
+	public function plt()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();		
+		$this->form_persetujuan_sikerja_plt_akademik('plt');
 	}
 
 	public function akademik()
@@ -1817,47 +1555,6 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();		
-		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
-		if ($get_data_pegawai != array()) 
-		{
-			# code...
-			if ($get_data_pegawai[0]['posisi_akademik'] == 0) {
-				# code...
-				redirect('dashboard/home');
-			}
-			else
-			{
-				$data['title']                = '[Akademik] Persetujuan Sikerja Bawahan';
-				$data['content']              = 'transaksi/akademik/index';				
-				$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));				
-				$data['member'] = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_akademik']);								
-				if ($data['member'] != 0) {
-					// code...
-					for ($i=0; $i < count($data['member']); $i++) {
-						// code...
-						$get_data           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-						$get_data_keberatan = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-						if ($get_data) {
-							// code...
-							$data['member'][$i]->counter_belum_diperiksa = $get_data;
-						}
-						else {
-							// code...
-							$data['member'][$i]->counter_belum_diperiksa = 0;
-						}
-		
-						if ($get_data_keberatan) {
-							// code...
-							$data['member'][$i]->counter_keberatan = $get_data_keberatan;
-						}
-						else {
-							// code...
-							$data['member'][$i]->counter_keberatan = 0;
-						}				
-					}
-				}		
-				$this->load->view('templateAdmin',$data);				
-			}
-		}		
+		$this->form_persetujuan_sikerja_plt_akademik('akademik');		
 	}	
 }
