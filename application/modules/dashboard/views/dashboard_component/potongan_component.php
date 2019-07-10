@@ -7,7 +7,7 @@
             # code...
 ?>
             <div class="callout callout-warning">
-                <h4>Kinerja (skp) anda bulan ini belum dinilai (Pengurangann 5%)</h4>
+                <h4>Kinerja (skp) anda bulan ini belum dinilai (Pengurangan 5%)</h4>
                 <p>Silahkan menghubungi atasan untuk dilakukan penilaian.</p>
             </div>
 <?php            

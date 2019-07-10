@@ -76,11 +76,15 @@ if ($this->session->userdata('sesPosisi') != 0)
 <div class="col-md-12 tour-step tour1" id="main-dashboard">
     <div class="row">
     <?php
+    $who_is   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
     $this->load->view('dashboard_component/banner_user_component',array(
         'nama_pegawai' => $nama_pegawai,
         'nama_jabatan' => $nama_jabatan));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
-    $this->load->view('dashboard_component/potongan_component');
+    if ($who_is != 'eselon 1') {
+        # code...
+        $this->load->view('dashboard_component/potongan_component');        
+    }
     $this->load->view('dashboard_component/member_component');                                
     // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>

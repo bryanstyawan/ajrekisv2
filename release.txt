@@ -1,3 +1,14 @@
+v4.1.2.1
+2019-07-10
+New:
+- Eselon 1 tidak ada penilaian skp bulanan sehingga eselon 1 hanya menilai kinerja bulanan anggota saja.
+Improved:
+- Release v4.1.2.1
+Fixed:
+- penulisan Pengurangann menjadi Pengurangan di pemberitahuan Pengurangan skp 
+- Pengaturan hari kerja di dashboard
+Canceled:
+
 v4.1.2
 2019-07-08
 New:

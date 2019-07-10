@@ -262,7 +262,7 @@ $(document).click(function(e) {
                     <div class="text-center" style="color:#fff;">
                         <span>Copyright@2018 Biro Kepegawaian</span><span>Right Reserved</span>
                         <br>
-                        <span>V.4.1.1</span>
+                        <span>v4.1.2.1</span>
                     </div>
                 </div>
             </div>
