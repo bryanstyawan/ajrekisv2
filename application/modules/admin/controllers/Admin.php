@@ -24,7 +24,7 @@ class Admin extends CI_Controller
 		$this->Globalrules->notif_message();		
 		$data['title']      		= 'Ubah Password';		
 		$data['subtitle']   		= '';
-		$data['content']    		= 'admin/user/change_password';
+		$data['content']    		= 'admin/profile/data_profile';
 		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
 		$data['agama']              = $this->Allcrud->listData('mr_agama')->result_array();
 		$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
@@ -36,7 +36,8 @@ class Admin extends CI_Controller
 		$data['diklat_fungsional'] 	= $this->Globalrules->get_history_diklat('2');
 		$data['diklat_teknis'] 		= $this->Globalrules->get_history_diklat('3');
 		$data['pendidikan'] 		= $this->Allcrud->listData('mr_pendidikan');
-		$data['diklat'] 			= $this->Allcrud->listData('mr_diklat');		$this->load->view('templateAdmin',$data);		
+		$data['diklat'] 			= $this->Allcrud->listData('mr_diklat');		
+		$this->load->view('templateAdmin',$data);		
 	}
 
 	public function do_change_password()
