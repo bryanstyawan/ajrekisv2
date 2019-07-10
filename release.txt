@@ -24,7 +24,6 @@ Canceled:
 - Hapus Syncronisasi transaksi [PHP - laporan]
 - Approval Transaksi [non-prosedural]
 
->>>>>>> d92b1f1c17a6bbd77bfa1848cbe54fc080ebdcd4
 v4.1.1
 2019-06-29
 New:
