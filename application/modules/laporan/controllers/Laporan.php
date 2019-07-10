@@ -40,42 +40,6 @@ class Laporan extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function sync_kinerja()
-	{
-		# code...
-		$data_sender = $this->input->post('data_sender');
-		$bulan       = '0'.$data_sender['data_5'];
-		if ($data_sender['data_5'] == 3) {
-			# code...
-			$bulan = '01';
-		}
-		$tahun       = $data_sender['data_6'];
-		$data_date   = $tahun.'-'.$bulan;		
-		$data_sender = array
-						(
-							'eselon1'    => $data_sender['data_1'],
-							'eselon2'    => $data_sender['data_2'],
-							'eselon3'    => $data_sender['data_3'],
-							'eselon4'    => $data_sender['data_4'],
-							'kat_posisi' => ''
-						);
-
-		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
-																	a.es3 ASC,
-																	a.es4 ASC,
-																	b.kat_posisi asc,
-																	b.atasan ASC');		
-		// print_r(count($data['list']));die;
-
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) { 
-				// $this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$data['list'][$i]->id_pegawai,'tanggal_mulai LIKE'=>$data_date.'%'),4,2019);				
-				// $this->Globalrules->sync_data_transaction(array('status_pekerjaan'=>1,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'),date('m'),date('Y'));				
-			}
-		}		
-	}
-
 	public function filter_kinerja()
 	{
 		# code...

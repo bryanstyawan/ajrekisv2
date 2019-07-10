@@ -48,28 +48,12 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
 }
 
 $prosentase_menit_efektif_rpt = 0;
-if ($data_transaksi_rpt != 0) {
-    # code...
-    $prosentase_menit_efektif_rpt = $menit_efektif_dashboard[0]->prosentase_menit_efektif;
-
-}
-// $menit_efektif_rpt = 0;
-// if ($data_transaksi_rpt != 0) {
-//     # code...
-//     $menit_efektif_rpt = $data_transaksi_rpt[0]->menit_efektif;
-// }
-
-$menit_efektif_rpt = 0;
+$menit_efektif_rpt            = 0;
 if ($menit_efektif_dashboard != 0) {
     # code...
-    $menit_efektif_rpt = $menit_efektif_dashboard[0]->menit_efektif;
+    $menit_efektif_rpt            = $menit_efektif_dashboard[0]->menit_efektif;
+    $prosentase_menit_efektif_rpt = $menit_efektif_dashboard[0]->prosentase_menit_efektif;    
 }
-
-// $real_tunjangan_rpt = 0;
-// if ($data_transaksi_rpt != 0) {
-//     # code...
-//     $real_tunjangan_rpt = $data_transaksi_rpt[0]->real_tunjangan;
-// }
 
 $real_tunjangan_rpt = 0;
 if ($menit_efektif_dashboard != 0) {
@@ -92,11 +76,15 @@ if ($this->session->userdata('sesPosisi') != 0)
 <div class="col-md-12 tour-step tour1" id="main-dashboard">
     <div class="row">
     <?php
+    $who_is   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
     $this->load->view('dashboard_component/banner_user_component',array(
         'nama_pegawai' => $nama_pegawai,
         'nama_jabatan' => $nama_jabatan));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
-    $this->load->view('dashboard_component/potongan_component');
+    if ($who_is != 'eselon 1') {
+        # code...
+        $this->load->view('dashboard_component/potongan_component');        
+    }
     $this->load->view('dashboard_component/member_component');                                
     // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>

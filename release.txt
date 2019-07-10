@@ -2,10 +2,29 @@ v4.1.2.2
 2019-07-10
 New:
 - Menu Profile
+- Eselon 1 tidak ada penilaian skp bulanan sehingga eselon 1 hanya menilai kinerja bulanan anggota saja.
 Improved:
+- Release v4.1.2.1
 Fixed:
+- penulisan Pengurangann menjadi Pengurangan di pemberitahuan Pengurangan skp 
+- Pengaturan hari kerja di dashboard
 Canceled:
 
+v4.1.2
+2019-07-08
+New:
+Improved:
+- prioritas penilaian skp bulanan berdasarkan yang telah dinilai
+- Hari kerja di dashboard [reporting]
+- Penilaian SKP Bulanan [PLT]
+- Penilaian SKP Bulanan [Akademik]
+- Code Review
+Fixed:
+Canceled:
+- Hapus Syncronisasi transaksi [PHP - laporan]
+- Approval Transaksi [non-prosedural]
+
+>>>>>>> d92b1f1c17a6bbd77bfa1848cbe54fc080ebdcd4
 v4.1.1
 2019-06-29
 New:

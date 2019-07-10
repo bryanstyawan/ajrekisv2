@@ -19,13 +19,14 @@ class Dashboard extends CI_Controller {
 			# code...
 			$data['title']                   = '';
 			$data['content']                 = 'vdashboard';
+			$data['id_posisi']               = $this->session->userdata('sesPosisi');
 
 			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);
 			$data['disetujui']               = $this->stat_pekerjaan(1);
 			$data['tolak']                   = $this->stat_pekerjaan(2);
 			$data['revisi']                  = $this->stat_pekerjaan(3);
 
-			$data['id_posisi']               = $this->session->userdata('sesPosisi');			
+			$data['hari_kerja']              = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 			$data['agama']                   = $this->Allcrud->listData('mr_agama')->result_array();
 			$data['golongan']                = $this->Allcrud->listData('mr_golongan')->result_array();
 			$data['infoPegawai']             = $this->Globalrules->get_info_pegawai();
@@ -33,55 +34,9 @@ class Dashboard extends CI_Controller {
 			$data['history_golongan']        = $this->mdashboard->get_history_golongan();
 			$data['skp']                     = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 			$data['data_transaksi_rpt']      = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
-			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(6600);
-			// $data['menit_efektif_year']      = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
-			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));		
-			if ($data['member'] != 0) {
-				// code...
-				for ($i=0; $i < count($data['member']); $i++) {
-					// code...
-					$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$data['member'][$i]->id,'tahun'=> date('Y'),'bulan'=>date('m')));
-					if ($get_data->result_array() != array()) {
-						// code...
-						$data['member'][$i]->counter_belum_diperiksa = $get_data->num_rows();
-						$data['member'][$i]->persentase              = $get_data->result_array();
-					}
-					else {
-						// code...
-						$data['member'][$i]->counter_belum_diperiksa = 0;
-						$data['member'][$i]->persentase              = array();						
-					}
-				}
-			}					
-
-			// $data['data_transaksi']     = $this->mlaporan->get_transact($this->session->userdata('sesUser'),1,date('m'),date('Y'));			
-			if ($data['data_transaksi_rpt']) {
-				# code...
-				$get_data = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=> date('Y'),'bulan'=>date('m')))->result_array();			
-				if ($get_data != array()) {
-					# code...
-					$data['data_transaksi_rpt'][0]->persentase_potongan    = $get_data[0]['persentase'];
-					// $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja - ($data['data_transaksi_rpt'][0]->real_tunjangan_kinerja*($data['data_transaksi_rpt'][0]->persentase_potongan/100));
-					// $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;
-					if ($get_data[0]['persentase'] == 0) {
-						# code...
-						$data['data_transaksi_rpt'][0]->status_potongan = 0;
-					}
-					else
-					{
-						$data['data_transaksi_rpt'][0]->status_potongan = 1;						 
-					}
-				}
-				else
-				{
-					$data['data_transaksi_rpt'][0]->status_potongan        = 2;	
-					$data['data_transaksi_rpt'][0]->persentase_potongan    = 5;	
-					// $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja;									
-					// // $real_tunjangan_kinerja                                = $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja - ($data['data_transaksi_rpt'][0]->real_tunjangan_kinerja*($data['data_transaksi_rpt'][0]->persentase_potongan/100));
-					// $data['data_transaksi_rpt'][0]->real_tunjangan_kinerja = $real_tunjangan_kinerja;					
-				}
-			}					
-			// print_r($data['data_transaksi_rpt']);die();
+			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(($data['hari_kerja'] != 0) ? ($data['hari_kerja'][0]->jml_hari_aktif*$data['hari_kerja'][0]->jml_menit_perhari) : 0);
+			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
+			$data['notify_penilaian_skp']	 = $this->Globalrules->list_bawahan($this->session->userdata('sesUser'),'id_pegawai','penilaian_skp');											
 		}
 		else
 		{

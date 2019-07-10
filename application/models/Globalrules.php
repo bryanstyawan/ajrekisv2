@@ -582,7 +582,7 @@ class Globalrules extends CI_Model
 		}
 	}
 
-	public function list_bawahan($posisi,$parameter=NULL)
+	public function list_bawahan($posisi,$parameter=NULL,$arg=NULL)
 	{
 		# code...
 		$sql_where = '';
@@ -594,18 +594,76 @@ class Globalrules extends CI_Model
 			# code...
 			$sql_where = "AND b.kat_posisi = '".$parameter."'";
 		}
-		$sql = "SELECT DISTINCT a.*,
-								a.id as `id_pegawai`,
-								b.nama_posisi,
-								b.kat_posisi as b_kat_posisi
-			    FROM mr_pegawai a
-			    JOIN mr_posisi b
-			    ON a.posisi = b.id
-			    WHERE b.atasan = '$posisi'
-			    AND a.status = 1
-				".$sql_where."
-				ORDER BY a.nama_pegawai asc";
+
+		$sql = "";
+		if($arg == 'penilaian_skp')
+		{
+			$sql_where_1 = "";
+			if ($parameter == 'id_pegawai') {
+				# code...
+				$sql_where     = "a.id_pegawai = '".$posisi."'";
+				$sql_where_1   = "a.id = '".$posisi."'";
+			}
+			else
+			{
+				$sql_where     = "c.atasan = '".$posisi."'";
+				$sql_where_1   = "c.atasan = '".$posisi."'";
+			} 
+
+			$sql = "SELECT 	a.id_pegawai,
+							b.nip,
+							b.nama_pegawai,
+							a.bulan,
+							a.tahun,
+							a.persentase,
+							IF(a.id <> 0,1,0) as flag_belum_diperiksa
+					FROM tr_pengurangan_tunjangan a
+					LEFT JOIN mr_pegawai b ON b.id = a.id_pegawai
+					LEFT JOIN mr_posisi c ON b.posisi = c.id
+					WHERE ".$sql_where."
+					AND b.status = 1
+					AND a.tahun = '".date('Y')."'
+					AND a.bulan = '".date('m')."'
+					UNION 
+						SELECT 	a.id,
+										a.nip,
+										a.nama_pegawai,
+										IFNULL(bulan,".date('m')."),
+										IFNULL(tahun,".date('Y')."),
+										IFNULL(persentase, 5),
+										IF(b.id <> 0,1,0) as flag_belum_diperiksa
+						FROM mr_pegawai a
+						LEFT JOIN tr_pengurangan_tunjangan b ON b.id_pegawai = a.`id`
+						AND b.tahun = '".date('Y')."'
+						AND b.bulan = '".date('m')."'
+						LEFT JOIN mr_posisi c ON a.posisi = c.id
+						WHERE ".$sql_where_1."
+						AND a.status = 1
+						AND a.`id` NOT IN (
+									SELECT IFNULL(id_pegawai, 0)
+									FROM `tr_pengurangan_tunjangan`
+									WHERE bulan = '".date('m')."'
+									AND tahun = '".date('Y')."'
+								)
+					ORDER BY flag_belum_diperiksa ASC, nama_pegawai ASC";
+		}
+		else
+		{
+			$sql = "SELECT DISTINCT a.*,
+									a.id as `id_pegawai`,
+									b.nama_posisi,
+									b.kat_posisi as b_kat_posisi
+					FROM mr_pegawai a
+					JOIN mr_posisi b
+					ON a.posisi = b.id
+					WHERE b.atasan = '$posisi'
+					AND a.status = 1
+					".$sql_where."
+					ORDER BY a.nama_pegawai asc";
+		}
+
 		$query = $this->db->query($sql);
+		// print_r($sql);die()	;
 		if($query->num_rows() > 0)
 		{
 			return $query->result();
