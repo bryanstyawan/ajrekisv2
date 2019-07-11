@@ -419,6 +419,11 @@ class Data_pegawai extends CI_Controller {
         if($this->upload->do_upload('userfile')){
 			$image        = $this->upload->data('file_name');			
 			$this->Allcrud->editData('mr_pegawai',array('photo'=>$image),array('id'=>$token));
+			$data_session = array
+						(
+							'photo'           => $image
+						);
+			$this->session->set_userdata($data_session);			
         }
 		echo $this->upload->display_errors();
 	}

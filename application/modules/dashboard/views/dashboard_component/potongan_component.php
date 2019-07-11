@@ -1,9 +1,9 @@
-<div class="col-md-5">
+<div class="col-md-12" style="padding: 0px;">
 
 <?php
     if ($notify_penilaian_skp != 0) {
         # code...
-        if ($notify_penilaian_skp[0]->flag_belum_diperiksa == 0) {
+        if ($notify_penilaian_skp[0]->flag_sudah_diperiksa == 0) {
             # code...
 ?>
             <div class="callout callout-warning">

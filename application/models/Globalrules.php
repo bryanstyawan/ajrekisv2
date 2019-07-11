@@ -616,7 +616,7 @@ class Globalrules extends CI_Model
 							a.bulan,
 							a.tahun,
 							a.persentase,
-							IF(a.id <> 0,1,0) as flag_belum_diperiksa
+							IF(a.id <> 0,1,0) as flag_sudah_diperiksa
 					FROM tr_pengurangan_tunjangan a
 					LEFT JOIN mr_pegawai b ON b.id = a.id_pegawai
 					LEFT JOIN mr_posisi c ON b.posisi = c.id
@@ -631,7 +631,7 @@ class Globalrules extends CI_Model
 										IFNULL(bulan,".date('m')."),
 										IFNULL(tahun,".date('Y')."),
 										IFNULL(persentase, 5),
-										IF(b.id <> 0,1,0) as flag_belum_diperiksa
+										IF(b.id <> 0,1,0) as flag_sudah_diperiksa
 						FROM mr_pegawai a
 						LEFT JOIN tr_pengurangan_tunjangan b ON b.id_pegawai = a.`id`
 						AND b.tahun = '".date('Y')."'
@@ -645,7 +645,7 @@ class Globalrules extends CI_Model
 									WHERE bulan = '".date('m')."'
 									AND tahun = '".date('Y')."'
 								)
-					ORDER BY flag_belum_diperiksa ASC, nama_pegawai ASC";
+					ORDER BY flag_sudah_diperiksa ASC, nama_pegawai ASC";
 		}
 		else
 		{

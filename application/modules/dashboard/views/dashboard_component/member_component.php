@@ -30,7 +30,7 @@
                         $flag_counter = "text-yellow";
                         $flag_display = "display:none;";
                         $flag_icon    = 'fa-circle-o text-yellow';
-                        if ($member[$i]->flag_belum_diperiksa != 0) {
+                        if ($member[$i]->flag_sudah_diperiksa != 0) {
                             // code...
                             if ($member[$i]->persentase != array()) {
                                 # code...

@@ -1,3 +1,21 @@
+v4.1.2.3
+2019-07-11
+New:
+- ubah session photo ketika user menganti photo
+- Upload foto pegawai [info pegawai]
+Improved:
+- Pemindahan ubah password
+- Pemindahan Info pegawai
+- Perubahan Layout banner user [dashboard]
+- Pemindahan notifikasi penilaian skp bulanan dibawah Layout banner user [dashboard]
+- layout pekerjaan belum diperiksa, realisasi menit efektif, capaian skp, tunjangan, fingerprint di dashboard [dashboard]
+Fixed:
+Canceled:
+- Ubah data diri [dashboard]
+- Upload foto pegawai [dashboard]
+- statistik kinerja
+- Icon dihilangkan [pekerjaan belum diperiksa, realisasi menit efektif, capaian skp, tunjangan, fingerprint di dashboard]
+
 v4.1.2.2
 2019-07-10
 New:

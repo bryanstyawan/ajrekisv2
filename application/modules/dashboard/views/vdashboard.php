@@ -2,17 +2,6 @@
 $data_bulan[] = "";
 $data_value[] = "";
 $data_menit = "";
-// if ($menit_efektif_year != 0) {
-//     // code...
-//     for ($i=0; $i < count($menit_efektif_year); $i++) {
-//         // code...
-//         $data_bulan[$i] = $menit_efektif_year[$i]->nama_bulan;
-//         $data_value[$i] = $menit_efektif_year[$i]->menit_efektif;
-//     }
-
-//     $data_bulan = json_encode($data_bulan);
-//     $data_value = json_encode($data_value);
-// }
 
 $nama_pegawai  = "";
 $nama_jabatan  = "";
@@ -79,12 +68,9 @@ if ($this->session->userdata('sesPosisi') != 0)
     $who_is   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
     $this->load->view('dashboard_component/banner_user_component',array(
         'nama_pegawai' => $nama_pegawai,
-        'nama_jabatan' => $nama_jabatan));
+        'nama_jabatan' => $nama_jabatan,
+        'who_is'       => $who_is));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
-    if ($who_is != 'eselon 1') {
-        # code...
-        $this->load->view('dashboard_component/potongan_component');        
-    }
     $this->load->view('dashboard_component/member_component');                                
     // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>
@@ -92,50 +78,50 @@ if ($this->session->userdata('sesPosisi') != 0)
         
     <?php
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-3 col-xs-8',
+        'class'     => 'col-lg-2 col-xs-8',
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #00a7d0;','value'=>''),
+        'icon'      => '',
         'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa) ,
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-3 col-xs-8',
+        'class'     => 'col-lg-2 col-xs-8',
         'id'        => 'btn_realisasi_menit_efektif',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
+        'icon'      => '',
         'value_php' => number_format($menit_efektif_rpt),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
-        'html'      => ''));                
+        'html'      => ''));                       
+    $this->load->view('dashboard_component/common_component',array(
+        'class'     => 'col-lg-2 col-xs-8',
+        'id'        => '',
+        'color_box' => 'background-color: #d2d6de !important;',
+        'icon'      => '',
+        'value_php' => $skp['persentase_target_realisasi']->persentase,
+        'title'     => 'CAPAIAN SKP',
+        'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_tunjangan',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
-        'value_php' => number_format($real_tunjangan_rpt),
+        'icon'      => '',
+        'value_php' => 'Rp. '.number_format($real_tunjangan_rpt),
         'title'     => 'TUNJANGAN',
-        'html'      => ''));
+        'html'      => ''));    
     $this->load->view('dashboard_component/common_finger',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_fingerprint',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
+        'icon'      => '',
         'value_php' => $fingerprint,
         'title'     => 'FINGERPRINT', 
-        'html'      => "<label id='total_tunjangan_' />"));       
-    $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-3 col-xs-8',
-        'id'        => '',
-        'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'%'),
-        'value_php' => $skp['persentase_target_realisasi']->persentase,
-        'title'     => 'CAPAIAN SKP',
-        'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
+        'html'      => "<label id='total_tunjangan_' />"));
 ?>
 </div>
 <?php
 $this->load->view('dashboard_component/bawahan_component');
-$this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
+// $this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
 $this->load->view('dashboard_component/information_emp_component',array(
     'nama_eselon1'  => $nama_eselon1,
     'nama_eselon2'  => $nama_eselon2,
@@ -186,49 +172,6 @@ else {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxgauge.js"></script>
 <script>
     $("#profile-dashboard").hide();
-    /** ----------------------------------------------------------------------- */    
-    if (document.getElementById('dropzone_image')) {
-        // other code here
-        Dropzone.autoDiscover = false;
-        var foto_upload= new Dropzone("div#dropzone_image",{
-            url: "<?php echo site_url();?>/master/data_pegawai/unggah_foto_pegawai_self",
-            maxFilesize: 2,
-            method:"post",
-            acceptedFiles:"image/*",
-            paramName:"userfile",
-            dictInvalidFileType:"Type file ini tidak dizinkan",
-            addRemoveLinks:true,
-            thumbnailWidth: null,
-            thumbnailHeight: null,
-            init: function() {
-                this.on("thumbnail", function(file, dataUrl) {
-                    $('.dz-image').last().find('img').attr({width: '100%', height: '100%'});
-                }),
-                this.on("success", function(file) {
-                    $('.dz-image').css({"width":"100%", "height":"auto"});
-                })
-            }
-        });
-
-        foto_upload.on("processing",function(a){
-            $("#loadprosess").modal('show');
-        });
-
-        foto_upload.on("sending",function(a,b,c){
-            a.token =$('#oidPegawai').val();
-            c.append("token_foto",a.token); //Menmpersiapkan token untuk masing masing foto
-        });
-
-        foto_upload.on("success",function(a){
-            setTimeout(function(){
-                $("#loadprosess").modal('hide');
-                setTimeout(function(){
-                    location.reload();
-                }, 1500);
-            }, 5000);
-        });
-    }
-
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
@@ -553,17 +496,6 @@ else {
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
-
-                    // console.table(obj.data.skp.list_skp);
-
-                    MONTHS = [];
-                    VALUES = [];
-                    // for(i=0;i<obj.data.menit_efektif_year.length;i++)
-                    // {
-                    //     VALUES[i] = obj.data.menit_efektif_year[i].menit_efektif;
-                    //     MONTHS[i] = obj.data.menit_efektif_year[i].nama_bulan;                        
-                    // }
-
                     if (obj.status == 1)
                     {
                         $("#main-dashboard").hide();
@@ -572,9 +504,6 @@ else {
                         $("#member_section_oid").val(arg);
                         $("#f_name").val(obj.data.infoPegawai[0].nama_pegawai);
                         $("#f_name_es1").val(obj.data.infoPegawai[0].nama_jabatan);
-                        // $("#f_name_es2").val(obj.data.infoPegawai[0].nama_eselon2);
-                        // $("#f_name_es3").val(obj.data.infoPegawai[0].nama_eselon3);
-                        // $("#f_name_es4").val(obj.data.infoPegawai[0].nama_eselon4);
                         $("#f_nip").val(obj.data.infoPegawai[0].nip);                                                                                                    
 
                         if(obj.data.skp.list_skp.length == 0)
@@ -719,7 +648,7 @@ else {
     function formatRupiah(num) 
     {
         var p = num.toFixed(2).split(".");
-        return "" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+        return "Rp. " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
             return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
         }, "");
     }
