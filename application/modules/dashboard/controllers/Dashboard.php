@@ -34,6 +34,7 @@ class Dashboard extends CI_Controller {
 			$data['history_golongan']        = $this->mdashboard->get_history_golongan();
 			$data['skp']                     = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 			$data['data_transaksi_rpt']      = $this->mlaporan->get_transact_rpt($this->session->userdata('sesUser'),1,date('m'),date('Y'));
+			$data['menit_efektif_year']      = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['menit_efektif_dashboard'] = $this->mdashboard->get_data_dashboard(($data['hari_kerja'] != 0) ? ($data['hari_kerja'][0]->jml_hari_aktif*$data['hari_kerja'][0]->jml_menit_perhari) : 0);
 			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
 			$data['notify_penilaian_skp']	 = $this->Globalrules->list_bawahan($this->session->userdata('sesUser'),'id_pegawai','penilaian_skp');											

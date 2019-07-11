@@ -1,6 +1,19 @@
 <?php
 $data_bulan[] = "";
 $data_value[] = "";
+
+if ($menit_efektif_year != 0) {
+    // code...
+    for ($i=0; $i < count($menit_efektif_year); $i++) {
+        // code...
+        $data_bulan[$i] = $menit_efektif_year[$i]->nama_bulan;
+        $data_value[$i] = $menit_efektif_year[$i]->menit_efektif;
+    }
+
+    $data_bulan = json_encode($data_bulan);
+    $data_value = json_encode($data_value);
+}
+
 $data_menit = "";
 
 $nama_pegawai  = "";
@@ -72,7 +85,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'who_is'       => $who_is));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
     $this->load->view('dashboard_component/member_component');                                
-    // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
+    $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>
     </div>
         

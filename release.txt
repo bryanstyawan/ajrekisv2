@@ -4,6 +4,7 @@ New:
 - ubah session photo ketika user menganti photo
 - Upload foto pegawai [info pegawai]
 Improved:
+- statistik kinerja dengan mode bar
 - Pemindahan ubah password
 - Pemindahan Info pegawai
 - Perubahan Layout banner user [dashboard]
@@ -13,7 +14,6 @@ Fixed:
 Canceled:
 - Ubah data diri [dashboard]
 - Upload foto pegawai [dashboard]
-- statistik kinerja
 - Icon dihilangkan [pekerjaan belum diperiksa, realisasi menit efektif, capaian skp, tunjangan, fingerprint di dashboard]
 
 v4.1.2.2

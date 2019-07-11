@@ -23,7 +23,7 @@
     var VALUES = '<?=$data_value;?>';
     var MONTHS = '<?=$data_bulan;?>';
     var config = {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: jQuery.parseJSON (MONTHS),
             datasets: [{
