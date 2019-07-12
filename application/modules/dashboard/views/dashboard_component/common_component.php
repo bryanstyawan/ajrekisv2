@@ -10,12 +10,12 @@
         <?php                
             }
         ?>
-        <div class="inner">
-            <?=$html;?>            
-        </div>
         <div class="inner col-lg-12">
             <p><?=$title;?></p>
             <h3><?=$value_php;?></h3>            
         </div>
+        <div class="inner">
+            <?=$html;?>            
+        </div>        
     </div>
 </div>    

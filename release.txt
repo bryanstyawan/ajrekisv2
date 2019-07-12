@@ -1,4 +1,13 @@
 v4.1.2.3
+2019-07-12
+New:
+Improved:
+Fixed:
+- id pegawai yang hilang di master pegawai
+- Layout capaian skp [dashboard]
+Canceled:
+
+v4.1.2.3
 2019-07-11
 New:
 - ubah session photo ketika user menganti photo

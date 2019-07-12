@@ -201,7 +201,8 @@ class Globalrules extends CI_Model
 			$sql = "b.id = '".$id."' AND a.status = 1";
 		}		
 
-		$sql = "SELECT  COALESCE(a.tmt_golongan,'-') as tmt_golongan,
+		$sql = "SELECT  a.id,
+						COALESCE(a.tmt_golongan,'-') as tmt_golongan,
 						a.nama_pegawai,
 						a.posisi,
 						a.nip,
