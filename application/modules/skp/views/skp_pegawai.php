@@ -157,28 +157,28 @@
                             $kegiatan            = $list[$i]->kegiatan;                            
                             if($info_posisi[0]['kat_posisi'] == 1)
                             {
-                                if ($list[$i]->id_skp_master != '') {
+                                if ($list[$i]->id_skp_master != 0) {
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp;
                                 }
                             }
                             elseif ($info_posisi[0]['kat_posisi'] == 2) {
                                 # code...
-                                if ($list[$i]->id_skp_jft != '') {
+                                if ($list[$i]->id_skp_jft != 0) {
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp_jft;
                                 }                                
                             }                            
                             elseif ($info_posisi[0]['kat_posisi'] == 4) {
                                 # code...
-                                if ($list[$i]->id_skp_jfu != '') {
+                                if ($list[$i]->id_skp_jfu != 0) {
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp_jfu;
                                 }                                
                             }
                             elseif($info_posisi[0]['kat_posisi'] == 6)
                             {
-                                if ($list[$i]->id_skp_master != '') {
+                                if ($list[$i]->id_skp_master != 0) {
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp;
                                 }
@@ -315,7 +315,7 @@
                             {
                                 if ($list[$i]->kegiatan_skp_status != 1) {
                                     # code...
-                                    if ($list[$i]->id_skp_master == '') {
+                                    if ($list[$i]->id_skp_master == 0) {
                                         # code...
                                         $flag_show = 1;                                        
                                     }                                 

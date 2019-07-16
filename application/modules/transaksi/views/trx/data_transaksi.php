@@ -598,14 +598,14 @@ else {
                                                                     $kegiatan_urtug = $urtug[$i]->kegiatan;                            
                                                                     if($infoPegawai[0]->kat_posisi == 1)
                                                                     {
-                                                                        if ($urtug[$i]->id_skp_master != '') {
+                                                                        if ($urtug[$i]->id_skp_master != 0) {
                                                                             # code...
                                                                             $kegiatan_urtug            = $urtug[$i]->kegiatan_skp;
                                                                         }
                                                                     }
                                                                     elseif ($infoPegawai[0]->kat_posisi == 2) {
                                                                         # code...
-                                                                        if ($urtug[$i]->id_skp_jft != '') {
+                                                                        if ($urtug[$i]->id_skp_jft != 0) {
                                                                             # code...
                                                                             $kegiatan_urtug            = $urtug[$i]->kegiatan_skp_jft;
                                                                         }                                
@@ -619,7 +619,7 @@ else {
                                                                     }
                                                                     elseif($infoPegawai[0]->kat_posisi == 6)
                                                                     {
-                                                                        if ($urtug[$i]->id_skp_master != '') {
+                                                                        if ($urtug[$i]->id_skp_master != 0) {
                                                                             # code...
                                                                             $kegiatan_urtug            = $urtug[$i]->kegiatan_skp;
                                                                         }
