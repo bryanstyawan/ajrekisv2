@@ -87,6 +87,26 @@
                                     Diklat Teknis&nbsp;&nbsp;
                                 </a>
                             </li>
+                            <li>
+                                <a data-toggle="tab" href="#Konferensi">
+                                    Konferensi&nbsp;&nbsp;
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#KaryaTulis">
+                                    Karya Tulis&nbsp;&nbsp;
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#Organisasi">
+                                    Organisasi&nbsp;&nbsp;
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#Penghargaan">
+                                    Penghargaan&nbsp;&nbsp;
+                                </a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -289,7 +309,8 @@
                                                             <th>Jenis Diklat</th>
                                                             <th>Tempat</th>
                                                             <th>Panitia</th>
-                                                            <th>Tanggal</th>
+                                                            <th>Tanggal Mulai</th>
+                                                            <th>Tanggal Selesai</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -303,7 +324,8 @@
                                                                         <td><?=$diklat_struktural[$i]->nama_diklat;?></td>
                                                                         <td><?=$diklat_struktural[$i]->tempat;?></td>
                                                                         <td><?=$diklat_struktural[$i]->panitia;?></td>
-                                                                        <td><?=$diklat_struktural[$i]->tgl_mulai;?>-<?=$diklat_struktural[$i]->tgl_selesai;?></td>
+                                                                        <td><?=$diklat_struktural[$i]->tgl_mulai;?></td>
+                                                                        <td><?=$diklat_struktural[$i]->tgl_selesai;?></td>
                                                                         <td><button class="btn btn-warning btn-xs" onclick="main_form('STRUKTURAL','update','<?php echo $diklat_struktural[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
                                                                         <td><button class="btn btn-danger btn-xs" onclick="main_form('STRUKTURAL','delete','<?php echo $diklat_struktural[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
                                                                     </tr>
@@ -343,7 +365,8 @@
                                                             <th>Jenis Diklat</th>
                                                             <th>Tempat</th>
                                                             <th>Panitia</th>
-                                                            <th>Tanggal</th>
+                                                            <th>Tanggal Mulai</th>
+                                                            <th>Tanggal Selesai</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -357,7 +380,8 @@
                                                                         <td><?=$diklat_fungsional[$i]->nama_diklat;?></td>
                                                                         <td><?=$diklat_fungsional[$i]->tempat;?></td>
                                                                         <td><?=$diklat_fungsional[$i]->panitia;?></td>
-                                                                        <td><?=$diklat_fungsional[$i]->tgl_mulai;?>-<?=$diklat_fungsional[$i]->tgl_selesai;?></td>
+                                                                        <td><?=$diklat_fungsional[$i]->tgl_mulai;?></td>
+                                                                        <td><?=$diklat_fungsional[$i]->tgl_selesai;?></td>
                                                                         <td><button class="btn btn-warning btn-xs" onclick="main_form('FUNGSIONAL','update','<?php echo $diklat_fungsional[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
                                                                         <td><button class="btn btn-danger btn-xs" onclick="main_form('FUNGSIONAL','delete','<?php echo $diklat_fungsional[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
                                                                     </tr>
@@ -397,7 +421,8 @@
                                                             <th>Jenis Diklat</th>
                                                             <th>Tempat</th>
                                                             <th>Panitia</th>
-                                                            <th>Tanggal</th>
+                                                            <th>Tanggal Mulai</th>
+                                                            <th>Tanggal Selesai</th>
                                                             <th>Aksi</th>
                                                         </tr>
                                                     </thead>
@@ -411,7 +436,8 @@
                                                                         <td><?=$diklat_teknis[$i]->nama_diklat;?></td>
                                                                         <td><?=$diklat_teknis[$i]->tempat;?></td>
                                                                         <td><?=$diklat_teknis[$i]->panitia;?></td>
-                                                                        <td><?=$diklat_teknis[$i]->tgl_mulai;?>-<?=$diklat_teknis[$i]->tgl_selesai;?></td>
+                                                                        <td><?=$diklat_teknis[$i]->tgl_mulai;?></td>
+                                                                        <td><?=$diklat_teknis[$i]->tgl_selesai;?></td>
                                                                         <td><button class="btn btn-warning btn-xs" onclick="main_form('TEKNIS','update','<?php echo $diklat_teknis[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
                                                                         <td><button class="btn btn-danger btn-xs" onclick="main_form('TEKNIS','delete','<?php echo $diklat_teknis[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
                                                                     </tr>
