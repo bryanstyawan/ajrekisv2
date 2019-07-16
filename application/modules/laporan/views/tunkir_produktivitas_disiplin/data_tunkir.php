@@ -95,12 +95,13 @@
 							<th>Nama Pegawai</th>	
 							<th>Eselon I</th>													
 							<th>Eselon II</th>							
+							<th>Posisi Kelas</th>																																			
 							<th>Menit Efektif</th>
-							<th>Tunjangan</th>							
-							<th>Posisi Kelas</th>																												
+							<th>Prosentase</th>							
+							<th>Tunjangan</th>
+							<th>Potongan SKP Bulanan</th>							
 							<!-- <th>Tunjangan Profesi</th>							 -->
 							<th>Tunjangan Yang dibayarkan</th>
-							<th>Prosentase</th>
 							<th>Periode</th>				
 							<th>Keterangan</th>																															
 						</tr>

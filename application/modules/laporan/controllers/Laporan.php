@@ -174,18 +174,6 @@ class Laporan extends CI_Controller {
 																c.kat_posisi asc,
 																c.atasan ASC',$data_sender);		
 
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) { 
-				# code...
-
-			}
-			// die();
-		}																
-		// echo "<pre>";
-		// print_r($data['list']);die();
-		// echo "</pre>";		
-
 		// if ($data['list'] != 0) {
 		// 	# code...
 		// 	for ($i=0; $i < count($data['list']); $i++) { 
@@ -217,9 +205,6 @@ class Laporan extends CI_Controller {
 		// 	}
 		// 	// die();
 		// }																
-		// echo "<pre>";
-		// print_r($data['list']);die();
-		// echo "</pre>";		
 		$this->load->view('laporan/tunjangan/ajax_tunkir',$data);
 	}
 

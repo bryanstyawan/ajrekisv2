@@ -227,131 +227,160 @@ class Mmaster extends CI_Model {
 			// else $sql_7 = "AND b.id = '".$filter['id_pegawai']."'";			
 
 			$sql = "SELECT    
-			a.id_pegawai,
-			b.eselon1,
-			b.eselon2,
-			b.eselon3,
-			b.eselon4,
-			IFNULL(c.posisi_akademik,0) as posisi_akademik, 
-			IFNULL(c.posisi_plt,0) as posisi_plt, 
-			c.nip,
-			c.`nama_pegawai`,
-			b.`nama_posisi`,
-			b.atasan as atasan,
-			d.nama_eselon1,
-			e.nama_eselon2,
-			f.nama_eselon3,
-			g.nama_eselon4,
-			bulan,
-			tahun,
-			tr_approve,
-			tr_tolak,
-			tr_revisi,
-			menit_efektif,
-			prosentase_menit_efektif,
-			real_tunjangan,
-			tr_belum_diperiksa,
-			b.kat_posisi,
-			CASE
-					WHEN b.kat_posisi = 1 THEN h.posisi_class
-					WHEN b.kat_posisi = 2 THEN l.posisi_class
-					WHEN b.kat_posisi = 4 THEN j.posisi_class
-					WHEN b.kat_posisi = 6 THEN h.posisi_class
-			END as class_posisi_definitif,
-			CASE
-				WHEN b.kat_posisi = 1 THEN h.tunjangan
-				WHEN b.kat_posisi = 2 THEN l.tunjangan
-				WHEN b.kat_posisi = 4 THEN j.tunjangan
-				WHEN b.kat_posisi = 6 THEN h.tunjangan
-			END as tunjangan_definitif
-		FROM `rpt_capaian_kinerja` a
-		LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
-		LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
-		LEFT JOIN mr_eselon1 d on b.eselon1 = d.id_es1
-		LEFT JOIN mr_eselon2 e on b.eselon2 = e.id_es2
-		LEFT JOIN mr_eselon3 f on b.eselon3 = f.id_es3
-		LEFT JOIN mr_eselon4 g on b.eselon4 = g.id_es4
-		LEFT JOIN mr_posisi_class h ON b.posisi_class = h.id
-		LEFT JOIN mr_jabatan_fungsional_umum i ON b.id_jfu = i.id
-		LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
-		LEFT JOIN mr_jabatan_fungsional_tertentu k ON b.id_jft = k.id
-		LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
-		WHERE c.id_role <> 7
-		AND c.id_role <> 6
-		AND a.`id_pegawai` IS NOT NULL		
-		AND a.bulan = ".$filter['bulan']."
-		AND a.tahun = ".$filter['tahun']."		
-		".$sql_es1."
-		".$sql_es2."
-		".$sql_es3."
-		".$sql_es4."
-		UNION
-			SELECT
-				a.id,
-				c.eselon1,
-				c.eselon2,
-				c.eselon3,
-				c.eselon4,
-				IFNULL(a.posisi_akademik,0) as posisi_akademik, 
-				IFNULL(a.posisi_plt,0) as posisi_plt, 
-				a.nip,	
-				a.nama_pegawai,
-				c.`nama_posisi`,
-				c.atasan as atasan,
-				d.nama_eselon1,
-				e.nama_eselon2,
-				f.nama_eselon3,
-				g.nama_eselon4,
-				IFNULL(bulan, 0),
-				IFNULL(tahun, 0),
-				IFNULL(tr_approve, 0),
-				IFNULL(tr_tolak, 0),
-				IFNULL(tr_revisi,0),
-				IFNULL(menit_efektif,0),
-				IFNULL(prosentase_menit_efektif,0),
-				IFNULL(real_tunjangan,0),
-				IFNULL(tr_belum_diperiksa,0),
-				c.kat_posisi,
-				CASE
-						WHEN c.kat_posisi = 1 THEN h.posisi_class
-						WHEN c.kat_posisi = 2 THEN l.posisi_class
-						WHEN c.kat_posisi = 4 THEN j.posisi_class
-						WHEN c.kat_posisi = 6 THEN h.posisi_class
-				END as class_posisi_definitif,
-				CASE
-					WHEN c.kat_posisi = 1 THEN h.tunjangan
-					WHEN c.kat_posisi = 2 THEN l.tunjangan
-					WHEN c.kat_posisi = 4 THEN j.tunjangan
-					WHEN c.kat_posisi = 6 THEN h.tunjangan
-				END as tunjangan_definitif
-			FROM mr_pegawai a
-			LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
-			AND b.bulan = ".$filter['bulan']."
-			AND b.tahun = ".$filter['tahun']."
-			LEFT JOIN mr_posisi c ON c.id = a.posisi
-			LEFT JOIN mr_eselon1 d on c.eselon1 = d.id_es1
-			LEFT JOIN mr_eselon2 e on c.eselon2 = e.id_es2
-			LEFT JOIN mr_eselon3 f on c.eselon3 = f.id_es3
-			LEFT JOIN mr_eselon4 g on c.eselon4 = g.id_es4
-			LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
-			LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
-			LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
-			LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
-			LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
-			WHERE a.STATUS = 1
-			AND a.id_role <> 7
-			AND a.id_role <> 6
-			".$sql_es1a."
-			".$sql_es2a."
-			".$sql_es3a."
-			".$sql_es4a."
-			AND a.`id` NOT IN (
-				SELECT IFNULL(id_pegawai, 0)
-				FROM `rpt_capaian_kinerja`
-				WHERE bulan = ".$filter['bulan']."
-				AND tahun = ".$filter['tahun']."
-			)
-			ORDER BY eselon2 ASC, eselon3 ASC, eselon4 ASC, kat_posisi ASC, atasan ASC";
+					a.id_pegawai,
+					b.eselon1,
+					b.eselon2,
+					b.eselon3,
+					b.eselon4,
+					IFNULL(c.posisi_akademik,0) as posisi_akademik, 
+					IFNULL(c.posisi_plt,0) as posisi_plt, 
+					c.nip,
+					c.`nama_pegawai`,
+					b.`nama_posisi`,
+					b.atasan as atasan,
+					d.nama_eselon1,
+					e.nama_eselon2,
+					f.nama_eselon3,
+					g.nama_eselon4,
+					a.bulan,
+					a.tahun,
+					a.tr_approve,
+					a.tr_tolak,
+					a.tr_revisi,
+					a.menit_efektif,
+					a.prosentase_menit_efektif,
+					a.tr_belum_diperiksa,
+					b.kat_posisi,
+					CASE
+							WHEN b.kat_posisi = 1 THEN h.posisi_class
+							WHEN b.kat_posisi = 2 THEN l.posisi_class
+							WHEN b.kat_posisi = 4 THEN j.posisi_class
+							WHEN b.kat_posisi = 6 THEN h.posisi_class
+					END as class_posisi_definitif,
+					CASE
+						WHEN b.kat_posisi = 1 THEN h.tunjangan
+						WHEN b.kat_posisi = 2 THEN l.tunjangan
+						WHEN b.kat_posisi = 4 THEN j.tunjangan
+						WHEN b.kat_posisi = 6 THEN h.tunjangan
+					END as tunjangan_definitif,
+					IFNULL(CASE
+						WHEN pt.persentase = 0 THEN pt.persentase
+						WHEN pt.persentase = 5 THEN pt.persentase
+						WHEN pt.persentase = NULL THEN 5
+					END,5) AS persentase_potongan_skp_bulanan,
+					( 
+						IFNULL(
+								CASE
+									WHEN pt.persentase = 0 THEN pt.persentase
+									WHEN pt.persentase = 5 THEN pt.persentase
+									WHEN pt.persentase = NULL THEN 5
+								END,5
+							)*a.real_tunjangan
+					)/100 as nilai_potongan_skp_bulanan,					
+					a.real_tunjangan - 					( 
+						IFNULL(
+								CASE
+									WHEN pt.persentase = 0 THEN pt.persentase
+									WHEN pt.persentase = 5 THEN pt.persentase
+									WHEN pt.persentase = NULL THEN 5
+								END,5
+							)*a.real_tunjangan
+					)/100 as real_tunjangan,
+					a.real_tunjangan as real_tunjangan_sb_potongan  			
+				FROM `rpt_capaian_kinerja` a
+				LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
+				LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
+				LEFT JOIN mr_eselon1 d on b.eselon1 = d.id_es1
+				LEFT JOIN mr_eselon2 e on b.eselon2 = e.id_es2
+				LEFT JOIN mr_eselon3 f on b.eselon3 = f.id_es3
+				LEFT JOIN mr_eselon4 g on b.eselon4 = g.id_es4
+				LEFT JOIN mr_posisi_class h ON b.posisi_class = h.id
+				LEFT JOIN mr_jabatan_fungsional_umum i ON b.id_jfu = i.id
+				LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu k ON b.id_jft = k.id
+				LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+				LEFT JOIN tr_pengurangan_tunjangan pt ON pt.id_pegawai = c.id
+				AND pt.bulan = ".$filter['bulan']."
+				AND pt.tahun = ".$filter['tahun']."										
+				WHERE c.id_role <> 7
+				AND c.id_role <> 6
+				AND a.`id_pegawai` IS NOT NULL		
+				AND a.bulan = ".$filter['bulan']."
+				AND a.tahun = ".$filter['tahun']."		
+				".$sql_es1."
+				".$sql_es2."
+				".$sql_es3."
+				".$sql_es4."
+				UNION
+					SELECT
+						a.id,
+						c.eselon1,
+						c.eselon2,
+						c.eselon3,
+						c.eselon4,
+						IFNULL(a.posisi_akademik,0) as posisi_akademik, 
+						IFNULL(a.posisi_plt,0) as posisi_plt, 
+						a.nip,	
+						a.nama_pegawai,
+						c.`nama_posisi`,
+						c.atasan as atasan,
+						d.nama_eselon1,
+						e.nama_eselon2,
+						f.nama_eselon3,
+						g.nama_eselon4,
+						IFNULL(b.bulan, 0),
+						IFNULL(b.tahun, 0),
+						IFNULL(b.tr_approve, 0),
+						IFNULL(b.tr_tolak, 0),
+						IFNULL(b.tr_revisi,0),
+						IFNULL(b.menit_efektif,0),
+						IFNULL(b.prosentase_menit_efektif,0),
+						IFNULL(b.tr_belum_diperiksa,0),
+						c.kat_posisi,
+						CASE
+								WHEN c.kat_posisi = 1 THEN h.posisi_class
+								WHEN c.kat_posisi = 2 THEN l.posisi_class
+								WHEN c.kat_posisi = 4 THEN j.posisi_class
+								WHEN c.kat_posisi = 6 THEN h.posisi_class
+						END as class_posisi_definitif,
+						CASE
+							WHEN c.kat_posisi = 1 THEN h.tunjangan
+							WHEN c.kat_posisi = 2 THEN l.tunjangan
+							WHEN c.kat_posisi = 4 THEN j.tunjangan
+							WHEN c.kat_posisi = 6 THEN h.tunjangan
+						END as tunjangan_definitif,
+						IFNULL(b.prosentase_menit_efektif, 0) as persentase_potongan_skp_bulanan,
+						IFNULL(b.real_tunjangan, 0) as nilai_potongan_skp_bulanan,						
+						IFNULL(b.real_tunjangan,0),
+						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan						
+					FROM mr_pegawai a
+					LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
+					AND b.bulan = ".$filter['bulan']."
+					AND b.tahun = ".$filter['tahun']."
+					LEFT JOIN mr_posisi c ON c.id = a.posisi
+					LEFT JOIN mr_eselon1 d on c.eselon1 = d.id_es1
+					LEFT JOIN mr_eselon2 e on c.eselon2 = e.id_es2
+					LEFT JOIN mr_eselon3 f on c.eselon3 = f.id_es3
+					LEFT JOIN mr_eselon4 g on c.eselon4 = g.id_es4
+					LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
+					LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
+					LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+					LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
+					LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+					WHERE a.STATUS = 1
+					AND a.id_role <> 7
+					AND a.id_role <> 6
+					".$sql_es1a."
+					".$sql_es2a."
+					".$sql_es3a."
+					".$sql_es4a."
+					AND a.`id` NOT IN (
+						SELECT IFNULL(id_pegawai, 0)
+						FROM `rpt_capaian_kinerja`
+						WHERE bulan = ".$filter['bulan']."
+						AND tahun = ".$filter['tahun']."
+					)
+					ORDER BY eselon2 ASC, eselon3 ASC, eselon4 ASC, kat_posisi ASC, atasan ASC";
 		}
 		// print_r($sql);die();		
 		$query = $this->db->query($sql);

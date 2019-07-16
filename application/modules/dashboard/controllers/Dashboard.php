@@ -51,7 +51,7 @@ class Dashboard extends CI_Controller {
 	public function stat_pekerjaan($arg)
 	{
 		# code...
-		$this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>$arg,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();		
+		return $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>$arg,'id_pegawai'=>$this->session->userdata('sesUser'),'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();		
 	}
 
 	public function delete_common_notify($param=NULL)

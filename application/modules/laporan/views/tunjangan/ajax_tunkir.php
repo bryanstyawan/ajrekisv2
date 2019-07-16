@@ -10,12 +10,12 @@
 		<td><?=$list[$i]->nama_pegawai;?></td>
 		<td><?=$list[$i]->nama_eselon1;?></td>
 		<td><?=$list[$i]->nama_eselon2;?></td>
+		<td><?=$list[$i]->class_posisi_definitif;?></td>		
 		<td><?=number_format($list[$i]->menit_efektif,0);?></td>
+		<td><?=$list[$i]->prosentase_menit_efektif;?>%</td>		
 		<td>Rp. <?=number_format($list[$i]->tunjangan_definitif,0);?></td>
-		<td><?=$list[$i]->class_posisi_definitif;?></td>
-        <!-- <td></td>                                 -->
+		<td>Rp. <?=number_format($list[$i]->nilai_potongan_skp_bulanan,0);?></td>
 		<td><?=number_format($list[$i]->real_tunjangan,0);?></td>        
-		<td><?=$list[$i]->prosentase_menit_efektif;?>%</td>
 		<td><?=$this->Globalrules->set_bulan($sender['bulan']);?> <?=$sender['tahun'];?></td>
         <td></td>        
 	</tr>
