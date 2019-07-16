@@ -188,13 +188,14 @@ else {
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
-        // Lobibox.window({
-        //     title  : 'Informasi',
-        //     content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+            
-        //               '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">1. Tentukan TARGET SKP (Masuk ke Menu SKP -> Target SKP -> Ubah Target ).</h3></div>'+
-        //               '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">2. Meminta persetujuan atasan (Approval Target SKP).</h3></div>'+
-        //               '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">3. Setelah target SKP disetujui, pegawai baru dapat mengisi sikerja (klik data transaksi/tambah data sikerja) dengan uraian tugas sesuai jabatan.</h3></div>'                                              
-        // });        
+        Lobibox.window({
+            title  : 'Informasi',
+            content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+            
+                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Berdasarkan Pasal 24 ayat (1) Permendagri 132 tahun 2018 tentang Tunjangan Kinerja Pegawai di Kementerian Dalam Negeri, "Pegawai mendapat pengurangan Tunjangan Kinerja sebesar 5% (lima persen) dari aspek Produktivitas Kerja apabila pegawai tidak mencapai sasaran target yang ditentukan."</h4></div>'+
+                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
+                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
+        });        
+
         $('#gaugeContainer').jqxGauge({
                     ranges: [{ startValue: 0, endValue: 25, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
                             { startValue: 25, endValue: 50, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
