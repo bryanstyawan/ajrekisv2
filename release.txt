@@ -1,4 +1,22 @@
 v4.1.2.3
+2019-07-18
+New:
+Improved:
+Fixed:
+- form penilaian skp [plt&akademik]
+Canceled:
+
+v4.1.2.3
+2019-07-16
+New:
+Improved:
+- report pemotongan skp bulanan
+Fixed:
+- counter pekerjaan belum diperiksa [dashboard]
+- Code Review [laporan]
+Canceled:
+
+v4.1.2.3
 2019-07-16
 New:
 Improved:
