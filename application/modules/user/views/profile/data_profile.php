@@ -57,7 +57,7 @@
                                     Biodata
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a data-toggle="tab" href="#Pangkat">
                                     Pangkat&nbsp;&nbsp;
                                 </a>
@@ -106,7 +106,7 @@
                                 <a data-toggle="tab" href="#Penghargaan">
                                     Penghargaan&nbsp;&nbsp;
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
 
                         <div class="tab-content">
@@ -114,11 +114,9 @@
                             <!-- Tab Biodata -->
                             <div id="Biodata" class="tab-pane fade in active">
                                 <div class="col-lg-12">
-
                                     <div class="box box-default">
                                         <div class="box-body">
                                             <div class="row">
-
                                                 <div class="form-group col-md-12">
                                                     <label class="widget-user-desc" style="margin-top:5px;">NIP</label>
                                                         <span style="margin-left:121px;">: <?php echo $infoPegawai[0]->nip;?></span><br>
@@ -132,22 +130,25 @@
                                                         <span style="margin-left:101px;">: <?php echo $infoPegawai[0]->nama_agama;?></span><br>
                                                     <label class="widget-user-desc" style="margin-top:5px;">No HP</label>
                                                         <span style="margin-left:106px;">: <?php echo $infoPegawai[0]->no_hp;?></span><br>
-                                                    <label class="widget-user-desc" style="margin-top:5px;">E-mail</label>
+                                                    <label class="widget-user-desc" style="margin-top:5px;">E-Mail</label>
                                                         <span style="margin-left:104px;">: <?php echo $infoPegawai[0]->email;?></span><br>
-                                                    <label class="widget-user-desc" style="margin-top:5px;">Jabatan</label>
+                                                    <!-- <label class="widget-user-desc" style="margin-top:5px;">Jabatan</label>
                                                         <span style="margin-left:93px;">: <?php echo $infoPegawai[0]->nama_jabatan;?></span><br>
                                                     <label class="widget-user-desc" style="margin-left:153px;">TMT Jabatan</label>
                                                         <span>: <?php echo date('d F Y', strtotime($infoPegawai[0]->tmt_jabatan));?></span><br>
                                                     <label class="widget-user-desc" style="margin-top:5px;">Pangkat</label>
                                                         <span style="margin-left:93px;">: <?php echo $infoPegawai[0]->nama_pangkat.'('.$infoPegawai[0]->nama_golongan.'/'.$infoPegawai[0]->nama_ruang.')';?></span><br>
                                                     <label class="widget-user-desc" style="margin-left:153px;">TMT Pangkat</label>
-                                                        <span>: <?php echo date('d F Y', strtotime($infoPegawai[0]->tmt_golongan));?></span><br>
+                                                        <span>: <?php echo date('d F Y', strtotime($infoPegawai[0]->tmt_golongan));?></span><br> -->
                                                     <label class="widget-user-desc" style="margin-top:5px;">Alamat</label>
                                                         <span style="margin-left:100px;">: <?php echo $infoPegawai[0]->alamat;?></span><br>
                                                 </div>
                                             </div>    
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <button class="btn btn-block btn-primary" id="btn_edit" onclick="main_form('BIODATA','update','<?php echo $infoPegawai[0]->id;?>')"> Edit Data</button>
                                 </div>
                             </div>
 
@@ -470,6 +471,97 @@
         </div>
     </section>
 
+    <section id="form_section_biodata" style="display:none;">
+        <input class="form-control-detail" type="hidden" name="crud_biodata" id="crud_biodata">
+        <input class="form-control-detail" type="hidden" name="oid_biodata" id="oid_biodata">
+        <div class='col-md-10'>
+            <div class="form-horizontal">
+                <div id="form_pegawai" name="form_pegawai">
+                    <div class="col-md-12">
+                        <div class="box box-primary" style="padding:10px;">
+                            <div class="box-header">
+                                <h3 class="box-title"></h3>
+                                <div class="box-tools pull-right"><a id="closeDataBiodata" class="btn btn-block btn-danger"><i class="fa fa-close"></i></a></div>
+                            </div>
+                            <div class="form-group">
+                                <br><br>
+                                <label class="col-md-2 control-label">NIP</label>
+                                <div class="col-md-8">
+                                    <input class="form-control form-control-detail" id="f_nip" type="text" max="30" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Nama</label>
+                                <div class="col-md-8">
+                                    <input class="form-control form-control-detail" id="f_nama" type="text" max="100" disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Tempat Lahir</label>
+                                <div class="col-md-3">
+                                    <input class="form-control form-control-detail" id="f_tempat_lahir" type="text" max="50">
+                                </div>
+                                <label class="col-md-2 control-label">Tanggal Lahir</label>
+                                <div class="col-md-3">
+                                    <input type="text" id="f_tgl_lahir" class="form-control form-control-detail timerange-normal" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask> 
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Jenis Kelamin</label>
+                                <div class="col-md-8">
+                                    <select id="f_jenis_kelamin" class="form-control form-control-detail">
+                                        <option value="L">Laki-Laki</option>
+                                        <option value="P">Perempuan</option>
+                                    </select>                        
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Agama</label>
+                                <div class="col-md-8">
+                                    <select id="f_agama" class="form-control form-control-detail">
+                                        <?php foreach($agama->result() as $row){?>
+                                            <option value="<?php echo $row->id_agama;?>"><?php echo $row->nama_agama;?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">No HP</label>
+                                <div class="col-md-8">
+                                    <input class="form-control form-control-detail" id="f_no_hp" type="text" max="12">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">E-Mail</label>
+                                <div class="col-md-8">
+                                    <input class="form-control form-control-detail" id="f_email" type="text" max="100">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Alamat</label>
+                                <div class="col-md-8">
+                                    <textarea class="form-control form-control-detail" id="f_alamat"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="box-tools pull-right"><button class="btn btn-block btn-primary" id="btn_simpan" onclick="simpan('BIODATA')"> Simpan</button></div>
+                            </div>
+
+					    </div>
+				    </div>
+			    </div>
+            </div>
+	    </div>
+    </section>
+
     <section id="form_section_pendidikan" style="display:none;">
         <input class="form-control-detail" type="hidden" name="crud" id="crud">
         <input class="form-control-detail" type="hidden" name="oid" id="oid">
@@ -604,40 +696,7 @@
 	    </div>
     </section>
 </div>
-<!-- <div class="form-horizontal">
-	<form id="form_password" name="form_password">
-		<div class="col-md-12">
-	      	<div class="box box-primary" style="padding:10px;">
-				<div class="form-group">
-					<label for="gender" class="col-md-2 control-label"></label>
-					<div class="col-md-9">
-						<div class="row">
-						<a class="btn btn-app pull-right" id="btn_save"><i class="fa fa-save"></i> Simpan</a>
-					</div>
-				</div>
 
-				<div class="form-group">
-					<label for="es1" class="col-md-2 control-label">Password Lama</label>
-					<div class="col-md-9">
-						<input type="password" class="form-control" id="pass_lama" name="pass_lama">					
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="es2" class="col-md-2 control-label">Password Baru</label>
-					<div class="col-md-9">
-						<input type="password" class="form-control" id="pass_baru" name="pass_baru">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="es2" class="col-md-2 control-label">Ulangi Password Baru</label>
-					<div class="col-md-9">
-						<input type="password" class="form-control" id="re_pass_baru" name="re_pass_baru">
-					</div>
-				</div>				
-			</div>
-		</div>
-	</form>
-</div> -->
 <script type="text/javascript">
     if (document.getElementById('dropzone_image')) {
         // other code here
@@ -682,7 +741,12 @@
     }
 $(document).ready(function()
 {
-	$("#closeDataPendidikan").click(function(){
+	$("#closeDataBiodata").click(function(){
+		$("#form_section_biodata").css({"display": "none"})
+        $("#view_section").css({"display": ""})		
+	});
+    
+    $("#closeDataPendidikan").click(function(){
 		$("#form_section_pendidikan").css({"display": "none"})
         $("#view_section").css({"display": ""})		
 	});
@@ -695,7 +759,45 @@ $(document).ready(function()
 
 function main_form(modul,params,id) {
     // console.log(id);
-	if (modul == 'UMUM') {
+	if (modul == 'BIODATA') {
+        $.ajax({
+            url :"<?php echo site_url()?>user/get_data_pegawai/"+id,		
+            type:"post",
+            beforeSend:function(){
+                $("#loadprosess").modal('show');
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                console.log();
+                $(".form-control-detail").val('');
+                $("#form_section_biodata").css({"display": ""})
+                $("#view_section").css({"display": "none"})
+                $("#form_section_biodata > div > div > form > div > div > div.box-header > h3").html("Ubah Data");
+                $("#crud_biodata").val('update');
+                $("#oid_biodata").val(obj.biodata[0].id);
+                
+                if (obj.biodata != 0) {
+                    if (obj.list_agama.length != 0) 
+                    {
+                        $('#f_nip').val(obj.biodata[0].nip);
+                        $("#f_nama").val(obj.biodata[0].nama_pegawai);
+                        $("#f_tempat_lahir").val(obj.biodata[0].TempatLahir);
+                        $("#f_tgl_lahir").val(obj.biodata[0].BirthDate);
+                        $("#f_jenis_kelamin").val(obj.biodata[0].Gender);
+                        $("#f_agama").val(obj.biodata[0].id_agama);
+                        $("#f_no_hp").val(obj.biodata[0].no_hp);
+                        $("#f_email").val(obj.biodata[0].email);
+                        $("#f_alamat").val(obj.biodata[0].alamat);
+                    }
+                }
+                $("#loadprosess").modal('hide');
+            },
+            error:function(jqXHR,exception) {
+                ajax_catch(jqXHR,exception);					
+            }
+        })
+    }    
+    else if (modul == 'UMUM') {
         if (params == 'insert') {
             $(".form-control-detail").val('');
             $("#form_section_pendidikan").css({"display": ""})
@@ -926,7 +1028,119 @@ function main_form(modul,params,id) {
 }
 
 function simpan(modul) {
-    if (modul == 'PENDIDIKAN') {
+    if (modul == 'BIODATA') {
+        var f_nip               = $("#f_nip").val();
+        var f_nama              = $("#f_nama").val();
+        var f_tempat_lahir      = $("#f_tempat_lahir").val();
+        var f_tgl_lahir         = $("#f_tgl_lahir").val();
+        var f_jenis_kelamin     = $("#f_jenis_kelamin").val();
+        var f_agama             = $("#f_agama").val();
+        var f_no_hp             = $("#f_no_hp").val();
+        var f_email             = $("#f_email").val();
+        var f_alamat            = $("#f_alamat").val();
+        var oid                 = $("#oid_biodata").val();
+        var crud                = $("#crud_biodata").val();
+        var data_sender         = "";
+
+        if (f_nip <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data NIP tidak boleh kosong."
+            });
+        }
+        else if(f_nama.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data Nama Pegawai tidak boleh kosong."
+            });
+        }
+        else if(f_tempat_lahir.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data Tempat Lahir tidak boleh kosong."
+            });
+        }
+        else if(f_tgl_lahir.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data Tanggal Lahir tidak boleh kosong."
+            });
+        }
+        else if(f_jenis_kelamin.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data Jenis Kelamin tidak boleh kosong."
+            });
+        }
+        else if(f_agama.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data Agama tidak boleh kosong."
+            });
+        }
+        else if(f_no_hp.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data No HP tidak boleh kosong."
+            });
+        }
+        else if(f_email.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data E-Mail tidak boleh kosong."
+            });
+        }
+        else if(f_alamat.length <= 0)
+        {
+            Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
+            {
+                msg: "Data Alamat tidak boleh kosong."
+            });
+        }
+        else
+        {
+            data_sender = {
+                    'crud'   		: crud,
+                    'oid'    		: oid,
+                    'nip'    	    : f_nip,
+                    'nama_pegawai'  : f_nama,
+                    'TempatLahir'   : f_tempat_lahir,
+                    'BirthDate'     : f_tgl_lahir,
+                    'Gender'   	    : f_jenis_kelamin,
+                    'id_agama'   	: f_agama,
+                    'no_hp'   	    : f_no_hp,
+                    'email'   	    : f_email,
+                    'alamat'   	    : f_alamat
+                }				
+            
+            $.ajax({
+                url :"<?php echo site_url()?>user/store_profile",
+                type:"post",
+                data: { data_sender : data_sender},
+                beforeSend:function(){
+                    $("#loadprosess").modal('show');
+                },
+                success:function(msg){
+                    var obj = jQuery.parseJSON (msg);
+                    // console.log(obj);
+                    ajax_status(obj);
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
+                }
+            })				
+        }
+    }
+    else if (modul == 'PENDIDIKAN') {
         var f_pendidikan          = $("#f_pendidikan").val();
         var f_jurusan             = $("#f_jurusan").val();
         var f_nama_sekolah        = $("#f_nama_sekolah").val();
