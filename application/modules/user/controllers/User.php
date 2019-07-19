@@ -25,7 +25,7 @@ class User extends CI_Controller
 		$data['content']    		= 'user/profile/data_profile';
 		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
 		// print_r($data['infoPegawai']);die();
-		$data['agama']              = $this->Allcrud->listData('mr_agama')->result_array();
+		$data['agama']              = $this->Allcrud->listData('mr_agama');
 		$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
 		// $data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
 		$data['history_golongan']   = $this->Globalrules->get_history_golongan();
@@ -37,6 +37,15 @@ class User extends CI_Controller
 		$data['pendidikan'] 		= $this->Allcrud->listData('mr_pendidikan');
 		$data['diklat'] 			= $this->Allcrud->listData('mr_diklat');		
 		$this->load->view('templateAdmin',$data);		
+	}
+
+	public function get_data_pegawai($id_pegawai){
+		$this->Globalrules->session_rule();
+		$data['biodata'] = $this->Allcrud->getData('mr_pegawai',array('id'=>$id_pegawai))->result_array();
+		if ($data['biodata'] != array()) {
+			$data['list_agama']      = $this->Allcrud->getData('mr_agama',array('id_agama'=>$data['biodata'][0]['id_agama']))->result_array();
+		}
+		echo json_encode($data);
 	}
 
 	public function get_data_pendidikan($id_pegawai){
@@ -55,6 +64,58 @@ class User extends CI_Controller
 			$data['list_diklat']      = $this->Allcrud->getData('mr_diklat',array('id_diklat'=>$data['diklat'][0]['id_diklat']))->result_array();
 		}
 		echo json_encode($data);
+	}
+
+	public function store_profile($arg=NULL,$oid=NULL)
+	{
+		$res_data    = 0;
+		$text_status = "";
+		$data_sender = array();
+		if ($arg == NULL) {
+			$data_sender = $this->input->post('data_sender');
+		}
+		else {
+			$data_sender['crud'] = $arg;
+			$data_sender['oid']  = $oid;
+		}
+		
+		// print_r($data_sender);die();
+		if ($data_sender['crud'] != 'delete') {
+			// $data_store['id'] 		= $this->session->userdata('sesUser');
+			$data_store['nama_pegawai'] 	= $data_sender['nama_pegawai'];
+			$data_store['TempatLahir'] 		= $data_sender['TempatLahir'];
+			$data_store['BirthDate'] 		= $data_sender['BirthDate'];
+			$data_store['Gender'] 			= $data_sender['Gender'];
+			$data_store['id_agama'] 		= $data_sender['id_agama'];
+			$data_store['no_hp'] 			= $data_sender['no_hp'];
+			$data_store['email'] 			= $data_sender['email'];
+			$data_store['alamat'] 			= $data_sender['alamat'];
+			$data_store['audit_time'] 		= date('Y-m-d H:i:s');
+			$data_store['audit_user'] 		= $this->session->userdata('sesUser');
+
+			if ($data_sender['crud'] == 'insert') {
+				$res_data       = $this->Allcrud->addData('mr_pegawai',$data_store);
+				$text_status 	= $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil ditambah.');
+			}
+			elseif ($data_sender['crud'] == 'update') {
+				$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$data_sender['oid']));
+				$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil diubah.');
+			}								
+		}
+		else {
+			if ($data_sender['crud'] == 'delete') {
+				
+				$res_data    = $this->Allcrud->delData('mr_pegawai',array('id' => $data_sender['oid']));				
+				$text_status = $this->Globalrules->check_status_res($res_data,'Data Pegawai telah berhasil dihapus.');											
+			}				
+		}
+		$res = array
+				(
+					'status' => $res_data,
+					'text'   => $text_status
+				);
+		// print_r($res);die();
+		echo json_encode($res);											
 	}
 	
 	public function store_pendidikan($arg=NULL,$oid=NULL)
