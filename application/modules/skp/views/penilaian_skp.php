@@ -27,18 +27,18 @@ $kat_posisi    = "";
 // echo "<pre>";
 // print_r($infoPegawai);die();				
 // echo"</pre>";
-if ($infoPegawai != 0 || $infoPegawai != '') {
-    # code...
-    $nama_pegawai  = $infoPegawai1[0]->nama_pegawai;
-    $nama_jabatan  = $infoPegawai1[0]->nama_jabatan;
-    $nama_eselon1  = $infoPegawai1[0]->nama_eselon1;
-    $nama_eselon2  = $infoPegawai1[0]->nama_eselon2;
-    $nama_eselon3  = $infoPegawai1[0]->nama_eselon3;
-    $nama_eselon4  = $infoPegawai1[0]->nama_eselon4;
-    $nip           = $infoPegawai1[0]->nip;
-    $kelas_jabatan = $infoPegawai1[0]->kelas_jabatan;
-    $kat_posisi    = $infoPegawai1[0]->kat_posisi;
-}
+// if ($infoPegawai != 0 || $infoPegawai != '') {
+//     # code...
+//     $nama_pegawai  = $infoPegawai1[0]->nama_pegawai;
+//     $nama_jabatan  = $infoPegawai1[0]->nama_jabatan;
+//     $nama_eselon1  = $infoPegawai1[0]->nama_eselon1;
+//     $nama_eselon2  = $infoPegawai1[0]->nama_eselon2;
+//     $nama_eselon3  = $infoPegawai1[0]->nama_eselon3;
+//     $nama_eselon4  = $infoPegawai1[0]->nama_eselon4;
+//     $nip           = $infoPegawai1[0]->nip;
+//     $kelas_jabatan = $infoPegawai1[0]->kelas_jabatan;
+//     $kat_posisi    = $infoPegawai1[0]->kat_posisi;
+// }
 ?>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <style type="text/css">
@@ -138,12 +138,12 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                             <div class="col-sm-6">
                                 <label>
                                     Pimpinan Tinggi Madya (Eselon I) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon1"><?php echo $nama_eselon1;?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon1"><?php echo $this->session->userdata('nama_es1');?></span>
                             </div>
                             <div class="col-sm-6">
                                 <label>
                                     Pimpinan Tinggi Pratama (Eselon II) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon2"><?php echo $nama_eselon2;?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon2"><?php echo $this->session->userdata('nama_es2');?></span>
                             </div>
                         </div>
                     </div>
@@ -152,12 +152,12 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                             <div class="col-sm-6">
                                 <label>
                                     Administrator (Eselon III) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon3"><?php echo $nama_eselon3;?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon3"><?php echo $this->session->userdata('nama_es3');?></span>
                             </div>
                             <div class="col-sm-6">
                                 <label>
                                     Pengawas (Eselon IV) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon4"><?php echo $nama_eselon4;?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon4"><?php echo $this->session->userdata('nama_es4');?></span>
                             </div>
                         </div>
                     </div>
@@ -166,24 +166,24 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                             <div class="col-sm-6">
                                 <label>
                                     NIP:</label>
-                                <span id="ContentPlaceHolder1_lbl_nip"><?php echo $nip;?></span>
+                                <span id="ContentPlaceHolder1_lbl_nip"><?php echo $this->session->userdata('sesNip');?></span>
                             </div>
                             <div class="col-sm-6">
                                 <label>
                                     Nama Pegawai:</label>
-                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $nama_pegawai;?></span>
+                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $this->session->userdata('sesNama');?></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>
                                     Kelas Jabatan:</label>
-                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $kelas_jabatan;?></span>
+                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $this->session->userdata('sesNama');?></span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

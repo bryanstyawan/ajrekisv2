@@ -1,4 +1,13 @@
 v4.1.2.4
+2019-07-23
+New:
+Improved:
+Fixed:
+- Merubah pengambilan data info pegawai dari database ke session di penilaian skp
+Canceled:
+- Infopegawai database
+
+v4.1.2.4
 2019-07-19
 New:
 - Edit Biodata di menu profile
