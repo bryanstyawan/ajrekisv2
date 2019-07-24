@@ -24,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-            <?php
+            <?php       
                     for ($i=0; $i < count($member); $i++) { 
                         # code...
                         $flag_counter = "text-yellow";
@@ -34,7 +34,7 @@
                             // code...
                             if ($member[$i]->persentase != array()) {
                                 # code...
-                                if ($member[$i]->persentase[0]['persentase'] == 5) {
+                                if ($member[$i]->persentase == 5) {
                                     # code...
                                     $flag_counter = "text-red";
                                     $flag_display = "display:'';";

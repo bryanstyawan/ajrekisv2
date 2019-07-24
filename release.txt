@@ -1,4 +1,12 @@
 v4.1.2.4
+2019-07-24
+New:
+Improved:
+Fixed:
+- form penilaian skp [plt&akademik]
+Canceled:
+
+v4.1.2.4
 2019-07-23
 New:
 Improved:
