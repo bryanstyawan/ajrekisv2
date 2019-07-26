@@ -142,7 +142,7 @@ class Transaksi extends CI_Controller {
 			$res_data = 0;
 		}
 
-		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
+		// $this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$res_data_id,'approval');
 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan Telah ditambah');		
 
 		$res = array
@@ -420,7 +420,7 @@ class Transaksi extends CI_Controller {
 						);
 		$this->Globalrules->push_notifikasi($data_notify,'read_data');
 
-		$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
+		// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
 					(
@@ -447,7 +447,7 @@ class Transaksi extends CI_Controller {
 						);
 		$this->Globalrules->push_notifikasi($data_notify,'read_data');
 
-		$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
+		// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
 					(
@@ -474,7 +474,7 @@ class Transaksi extends CI_Controller {
 						);
 		$this->Globalrules->push_notifikasi($data_notify,'read_data');
 
-		$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
+		// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
 					(
