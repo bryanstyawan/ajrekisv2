@@ -413,14 +413,6 @@ class Transaksi extends CI_Controller {
 			$res_data = 1;
 		}
 		$text_status = "Data pekerjaan telah disetujui";
-		$data_notify  = array
-						(
-							'id_table'   => $id,
-							'table_name' => 'tr_capaian_pekerjaan'
-						);
-		// $this->Globalrules->push_notifikasi($data_notify,'read_data');
-
-		// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
 					(
@@ -584,8 +576,8 @@ class Transaksi extends CI_Controller {
 								'id_table'   => $data_sender[$i]['id'],
 								'table_name' => 'tr_capaian_pekerjaan'
 							);
-			$this->Globalrules->push_notifikasi($data_notify,'read_data');
-			$this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$data_sender[$i]['id'].'/',$data_sender[$i]['id'],'notify');
+			// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+			// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$data_sender[$i]['id'].'/',$data_sender[$i]['id'],'notify');
 		}
 
 
@@ -656,8 +648,8 @@ class Transaksi extends CI_Controller {
 								'id_table'   => $data_sender['id_pekerjaan'],
 								'table_name' => 'tr_capaian_pekerjaan'
 							);
-			$this->Globalrules->push_notifikasi($data_notify,'read_data');
-			$this->notify_capaian_kerja('Pekerjaan anda perlu revisi dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
+			// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+			// $this->notify_capaian_kerja('Pekerjaan anda perlu revisi dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
 		}
 		elseif ($param == 'all-aout') {
 			# code...
@@ -680,8 +672,8 @@ class Transaksi extends CI_Controller {
 									'id_table'   => $data_sender[$i]['id_pekerjaan'],
 									'table_name' => 'tr_capaian_pekerjaan'
 								);
-				$this->Globalrules->push_notifikasi($data_notify,'read_data');
-				$this->notify_capaian_kerja('Pekerjaan anda perlu revisi dan atasan anda mengatakan "'.$data_sender[$i]['komentar'].'"','transaksi/home/'.$data_sender[$i]['id_pekerjaan'].'/',$data_sender[$i]['id_pekerjaan'],'notify');
+				// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+				// $this->notify_capaian_kerja('Pekerjaan anda perlu revisi dan atasan anda mengatakan "'.$data_sender[$i]['komentar'].'"','transaksi/home/'.$data_sender[$i]['id_pekerjaan'].'/',$data_sender[$i]['id_pekerjaan'],'notify');
 			}
 		}
 
@@ -843,8 +835,8 @@ class Transaksi extends CI_Controller {
 		$flag        = array('id_pekerjaan'=>$data_sender['oid']);
 		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 
-		$this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$data_sender['oid'],'approval');
-		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan telah diubah');
+		// $this->notify_capaian_kerja(' telah mengajukan laporan pekerjaan','transaksi/home/',$data_sender['oid'],'approval');
+		// $text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan telah diubah');
 		$res         = array
 					(
 						'status' => $res_data,
@@ -879,8 +871,8 @@ class Transaksi extends CI_Controller {
 								'id_table'   => $data_sender['id_pekerjaan'],
 								'table_name' => 'tr_capaian_pekerjaan'
 							);
-			$this->Globalrules->push_notifikasi($data_notify,'read_data');
-			$this->notify_capaian_kerja('Pekerjaan anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
+			// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+			// $this->notify_capaian_kerja('Pekerjaan anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
 		}
 		elseif ($param == 'all-aout') {
 			# code...
@@ -903,8 +895,8 @@ class Transaksi extends CI_Controller {
 									'id_table'   => $data_sender[$i]['id_pekerjaan'],
 									'table_name' => 'tr_capaian_pekerjaan'
 								);
-				$this->Globalrules->push_notifikasi($data_notify,'read_data');
-				$this->notify_capaian_kerja('Pekerjaan anda telah ditolak dan atasan anda mengatakan "'.$data_sender[$i]['komentar'].'"','transaksi/home/'.$data_sender[$i]['id_pekerjaan'].'/',$data_sender[$i]['id_pekerjaan'],'notify');
+				// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+				// $this->notify_capaian_kerja('Pekerjaan anda telah ditolak dan atasan anda mengatakan "'.$data_sender[$i]['komentar'].'"','transaksi/home/'.$data_sender[$i]['id_pekerjaan'].'/',$data_sender[$i]['id_pekerjaan'],'notify');
 			}
 		}
 
@@ -933,8 +925,8 @@ class Transaksi extends CI_Controller {
 		$flag        = array('id_pekerjaan'=>$data_sender['id_pekerjaan']);
 		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 
-		$this->notify_capaian_kerja(' telah mengajukan keberatan','transaksi/home/',$data_sender['id_pekerjaan'],'approval');
-		$text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
+		// $this->notify_capaian_kerja(' telah mengajukan keberatan','transaksi/home/',$data_sender['id_pekerjaan'],'approval');
+		// $text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
 		$res = array
 					(
 						'status' => $res_data,
@@ -966,8 +958,8 @@ class Transaksi extends CI_Controller {
 							'table_name' => 'tr_capaian_pekerjaan'
 						);
 		$this->Globalrules->push_notifikasi($data_notify,'read_data');
-		$this->notify_capaian_kerja('Pengajuan keberatan anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
-		$text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
+		// $this->notify_capaian_kerja('Pengajuan keberatan anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
+		// $text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
 		$res = array
 					(
 						'status' => $res_data,
@@ -1003,7 +995,7 @@ class Transaksi extends CI_Controller {
 				$flag        = array('id_pekerjaan'=>$data_sender['id_pekerjaan']);
 				$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 				$text_status = "Status pekerjaan telah diubah";
-				$this->notify_capaian_kerja(' telah mengajukan banding','transaksi/home/',$data_sender['id_pekerjaan'],'approval-es2');
+				// $this->notify_capaian_kerja(' telah mengajukan banding','transaksi/home/',$data_sender['id_pekerjaan'],'approval-es2');
 			}
 			else
 			{
@@ -1043,8 +1035,8 @@ class Transaksi extends CI_Controller {
 							'id_table'   => $data_sender['id_pekerjaan'],
 							'table_name' => 'tr_capaian_pekerjaan'
 						);
-		$this->Globalrules->push_notifikasi($data_notify,'read_data');
-		$this->notify_capaian_kerja('Pengajuan banding anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
+		// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+		// $this->notify_capaian_kerja('Pengajuan banding anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
 		$res = array
 					(
