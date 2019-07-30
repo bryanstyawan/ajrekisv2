@@ -1,4 +1,12 @@
 v4.1.2.4
+2019-07-30
+New:
+Improved:
+Fixed:
+- Query Dashboard, tunjangan diambil dari posisi terakhir
+Canceled:
+
+v4.1.2.4
 2019-07-26
 New:
 Improved:

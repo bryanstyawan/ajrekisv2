@@ -115,26 +115,13 @@ class Mdashboard extends CI_Model
 	 	$bulan = date('m');
 	 	$tahun = date('Y'); 
 	 	#JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
-	 	$sql = "SELECT  CASE WHEN SUM(menit_efektif)>=".$set_menit_efektif." THEN 100
-					ELSE
-						ROUND(SUM(`menit_efektif`)/".$set_menit_efektif." * 100,2) 
-					END AS prosentase_menit_efektif,
-					SUM(`menit_efektif`) AS menit_efektif,
-					CASE WHEN SUM(menit_efektif)>=".$set_menit_efektif." THEN cls.tunjangan * 0.5
-					ELSE
-						ROUND(SUM(`menit_efektif`)/".$set_menit_efektif." * cls.tunjangan * 0.5,0)
-					END AS tunjangankinerja,
-					cls.posisi_class,
-					cls.tunjangan
-				FROM tr_capaian_pekerjaan a
-				JOIN mr_pegawai c ON a.id_pegawai = c.id
-				JOIN mr_posisi pos ON pos.id = c.posisi
-				JOIN `mr_posisi_class` cls ON cls.id=pos.posisi_class
-	 			WHERE a.tanggal_mulai LIKE '%".date('Y-m')."%'
-	 			AND a.tanggal_selesai LIKE '%".date('Y-m')."%'
-	 			AND a.id_pegawai = '".$this->session->userdata('sesUser')."'
-	 			AND a.status_pekerjaan = '1'";
-	 	
+	 	$sql = "SELECT a.*,
+						a.real_tunjangan as tunjangankinerja
+				FROM rpt_capaian_kinerja a
+				WHERE a.tahun = '".$tahun."'
+				AND a.bulan = '".$bulan."'
+				AND a.id_pegawai = '".$this->session->userdata('sesUser')."'
+				AND a.id_posisi = '".$this->session->userdata('sesPosisi')."'";
 	 	$query = $this->db->query($sql);
 	 	if($query->num_rows() > 0)
 	 	{
