@@ -263,29 +263,37 @@ class Mmaster extends CI_Model {
 						WHEN b.kat_posisi = 4 THEN j.tunjangan
 						WHEN b.kat_posisi = 6 THEN h.tunjangan
 					END as tunjangan_definitif,
-					IFNULL(CASE
-						WHEN pt.persentase = 0 THEN pt.persentase
-						WHEN pt.persentase = 5 THEN pt.persentase
-						WHEN pt.persentase = NULL THEN 5
-					END,5) AS persentase_potongan_skp_bulanan,
-					( 
+					IF(a.bulan = 7 && a.tahun = 2019,0,
 						IFNULL(
-								CASE
-									WHEN pt.persentase = 0 THEN pt.persentase
-									WHEN pt.persentase = 5 THEN pt.persentase
-									WHEN pt.persentase = NULL THEN 5
-								END,5
-							)*a.real_tunjangan
-					)/100 as nilai_potongan_skp_bulanan,					
-					a.real_tunjangan - 					( 
-						IFNULL(
-								CASE
-									WHEN pt.persentase = 0 THEN pt.persentase
-									WHEN pt.persentase = 5 THEN pt.persentase
-									WHEN pt.persentase = NULL THEN 5
-								END,5
-							)*a.real_tunjangan
-					)/100 as real_tunjangan,
+										CASE
+											WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+											WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+											WHEN a.persentase_pemotongan = NULL THEN 5
+										END,5
+									)
+					) AS persentase_pemotongan_potongan_skp_bulanan,
+					IF(a.bulan = 7 && a.tahun = 2019,0,
+							(
+								IFNULL(
+											CASE
+												WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = NULL THEN 5
+											END,5
+										)*a.real_tunjangan
+							)/100
+					)as nilai_potongan_skp_bulanan,					
+					a.real_tunjangan - IF(a.bulan = 7 && a.tahun = 2019,0,
+							(
+								IFNULL(
+											CASE
+												WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = NULL THEN 5
+											END,5
+										)*a.real_tunjangan
+							)/100
+					) as real_tunjangan,
 					a.real_tunjangan as real_tunjangan_sb_potongan  			
 				FROM `rpt_capaian_kinerja` a
 				LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
@@ -299,9 +307,6 @@ class Mmaster extends CI_Model {
 				LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
 				LEFT JOIN mr_jabatan_fungsional_tertentu k ON b.id_jft = k.id
 				LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
-				LEFT JOIN tr_pengurangan_tunjangan pt ON pt.id_pegawai = c.id
-				AND pt.bulan = ".$filter['bulan']."
-				AND pt.tahun = ".$filter['tahun']."										
 				WHERE c.id_role <> 7
 				AND c.id_role <> 6
 				AND a.`id_pegawai` IS NOT NULL		
@@ -349,8 +354,8 @@ class Mmaster extends CI_Model {
 							WHEN c.kat_posisi = 4 THEN j.tunjangan
 							WHEN c.kat_posisi = 6 THEN h.tunjangan
 						END as tunjangan_definitif,
-						IFNULL(b.prosentase_menit_efektif, 0) as persentase_potongan_skp_bulanan,
-						IFNULL(b.real_tunjangan, 0) as nilai_potongan_skp_bulanan,						
+						IFNULL(b.persentase_pemotongan, 0) as persentase_potongan_skp_bulanan,
+						IFNULL(b.persentase_pemotongan, 0) as nilai_potongan_skp_bulanan,						
 						IFNULL(b.real_tunjangan,0),
 						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan						
 					FROM mr_pegawai a

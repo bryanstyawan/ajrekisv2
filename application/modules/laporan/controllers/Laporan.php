@@ -173,38 +173,6 @@ class Laporan extends CI_Controller {
 																b.es4 ASC,
 																c.kat_posisi asc,
 																c.atasan ASC',$data_sender);		
-
-		// if ($data['list'] != 0) {
-		// 	# code...
-		// 	for ($i=0; $i < count($data['list']); $i++) { 
-		// 		# code...
-		// 		if ($data['list']->kat_posisi == 1) {
-		// 			# code...
-		// 			$data['list']->tunjangan   = $data['list']->tunjangan_raw;
-		// 			$data['list']->grade       = $data['list']->grade_raw;
-		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_raw;
-		// 		}
-		// 		elseif ($data['list']->kat_posisi == 2) {
-		// 			# code...
-		// 			$data['list']->tunjangan   = $data['list']->tunjangan_jft;
-		// 			$data['list']->grade       = $data['list']->grade_jft;
-		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_jft;
-		// 		}
-		// 		elseif ($data['list']->kat_posisi == 4) {
-		// 			# code...
-		// 			$data['list']->tunjangan   = $data['list']->tunjangan_jfu;
-		// 			$data['list']->grade       = $data['list']->grade_jfu;
-		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_jfu;
-		// 		}
-		// 		elseif ($data['list']->kat_posisi == 6) {
-		// 			# code...
-		// 			$data['list']->tunjangan   = $data['list']->tunjangan_raw;
-		// 			$data['list']->grade       = $data['list']->grade_raw;
-		// 			$data['list']->nama_posisi = $data['list']->nama_posisi_raw;
-		// 		}
-		// 	}
-		// 	// die();
-		// }																
 		$this->load->view('laporan/tunjangan/ajax_tunkir',$data);
 	}
 
