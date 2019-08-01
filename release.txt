@@ -3,6 +3,8 @@ v4.1.2.4.1
 New:
 Improved:
 - Rekap tunjangan dengan aturan bulan juli 2019 tidak ada pemotongan
+- Pemindahan penyimpanan penilaian skp bulanan dari tr_pemotongan ke rpt_capaian_kerja
+- penambahan flag periksa skp bulanan
 Fixed:
 Canceled:
 

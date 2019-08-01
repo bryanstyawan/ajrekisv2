@@ -32,9 +32,9 @@
                         $flag_icon    = 'fa-circle-o text-yellow';
                         if ($member[$i]->flag_sudah_diperiksa != 0) {
                             // code...
-                            if ($member[$i]->persentase != array()) {
+                            if ($member[$i]->persentase_pemotongan != array()) {
                                 # code...
-                                if ($member[$i]->persentase == 5) {
+                                if ($member[$i]->persentase_pemotongan == 5) {
                                     # code...
                                     $flag_counter = "text-red";
                                     $flag_display = "display:'';";
@@ -56,8 +56,8 @@
                             </td>
                             <td>
                                 <a class="btn btn-primary btn-md" onclick="view_option('<?=$member[$i]->id_pegawai;?>')">Detail</a>
-                                <a class="btn btn-success" onclick="approve_good_kinerja('yes','<?=$member[$i]->id_pegawai;?>')">Ya</a>
-                                <a class="btn btn-danger" onclick="approve_good_kinerja('no','<?=$member[$i]->id_pegawai;?>')">Tidak</a>                                
+                                <a class="btn btn-success" onclick="approve_good_kinerja('yes','<?=$member[$i]->id_pegawai;?>','<?=$member[$i]->id_posisi;?>')">Ya</a>
+                                <a class="btn btn-danger" onclick="approve_good_kinerja('no','<?=$member[$i]->id_pegawai;?>','<?=$member[$i]->id_posisi;?>')">Tidak</a>                                
                             </td>
                         </tr>
             <?php

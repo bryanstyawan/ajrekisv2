@@ -612,13 +612,14 @@ class Globalrules extends CI_Model
 			} 
 
 			$sql = "SELECT 	a.id_pegawai,
+							c.id as id_posisi,
 							b.nip,
 							b.nama_pegawai,
 							a.bulan,
 							a.tahun,
-							a.persentase,
-							IF(a.id <> 0,1,0) as flag_sudah_diperiksa
-					FROM tr_pengurangan_tunjangan a
+							a.persentase_pemotongan,
+							IF(a.audit_check_skp = 1,1,0) as flag_sudah_diperiksa
+					FROM rpt_capaian_kinerja a
 					LEFT JOIN mr_pegawai b ON b.id = a.id_pegawai
 					LEFT JOIN mr_posisi c ON b.posisi = c.id
 					WHERE ".$sql_where."
@@ -627,14 +628,15 @@ class Globalrules extends CI_Model
 					AND a.bulan = '".date('m')."'
 					UNION 
 						SELECT 	a.id,
-										a.nip,
-										a.nama_pegawai,
-										IFNULL(bulan,".date('m')."),
-										IFNULL(tahun,".date('Y')."),
-										IFNULL(persentase, 5),
-										IF(b.id <> 0,1,0) as flag_sudah_diperiksa
+								c.id as id_posisi,						
+								a.nip,
+								a.nama_pegawai,
+								IFNULL(bulan,".date('m')."),
+								IFNULL(tahun,".date('Y')."),
+								IFNULL(persentase_pemotongan, 5),
+								IF(b.audit_check_skp = 1,1,0) as flag_sudah_diperiksa
 						FROM mr_pegawai a
-						LEFT JOIN tr_pengurangan_tunjangan b ON b.id_pegawai = a.`id`
+						LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
 						AND b.tahun = '".date('Y')."'
 						AND b.bulan = '".date('m')."'
 						LEFT JOIN mr_posisi c ON a.posisi = c.id
@@ -642,7 +644,7 @@ class Globalrules extends CI_Model
 						AND a.status = 1
 						AND a.`id` NOT IN (
 									SELECT IFNULL(id_pegawai, 0)
-									FROM `tr_pengurangan_tunjangan`
+									FROM `rpt_capaian_kinerja`
 									WHERE bulan = '".date('m')."'
 									AND tahun = '".date('Y')."'
 								)

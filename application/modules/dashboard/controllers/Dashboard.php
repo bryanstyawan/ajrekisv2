@@ -190,11 +190,11 @@ class Dashboard extends CI_Controller {
 	}
 
 
-	public function post_penilaian_skp_bulan($arg,$oid)
+	public function post_penilaian_skp_bulan($arg,$oid,$oid_posisi)
 	{
 		# code...
 		$res_data = 0;
-		$getdata  = $this->Allcrud->getData('tr_pengurangan_tunjangan',array('id_pegawai'=>$oid,'tahun'=>date('Y'),'bulan'=>date('m')))->result_array();
+		$getdata  = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai'=>$oid,'id_posisi'=>$oid_posisi,'tahun'=>date('Y'),'bulan'=>date('m')))->result_array();
 		$persentase = '0';
 		if ($arg == 'no') {
 			# code...
@@ -206,24 +206,27 @@ class Dashboard extends CI_Controller {
 		}
 		$data = array
 					(
-						'id_pegawai' => $oid,
-						'tahun'      => date('Y'),
-						'bulan'      => date('m'),
-						'persentase' => $persentase
+						'id_pegawai'            => $oid,
+						'id_posisi'             => $oid_posisi,
+						'tahun'                 => date('Y'),
+						'bulan'                 => date('m'),
+						'audit_check_skp'       => 1,
+						'persentase_pemotongan' => $persentase
 					);
 		if ($getdata == array()) {
 			# code...
-			$res_data = $this->Allcrud->addData('tr_pengurangan_tunjangan',$data);
+			$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$data);
 		}							
 		else {
 			# code...
 			$flag = array
 			(
 				'id_pegawai' => $oid,
+				'id_posisi'  => $oid_posisi,
 				'tahun'      => date('Y'),
 				'bulan'      => date('m')
 			);
-			$res_data    = $this->Allcrud->editData('tr_pengurangan_tunjangan',$data,$flag);			
+			$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$data,$flag);			
 		}
 
 		$text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');
