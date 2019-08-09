@@ -741,6 +741,9 @@
     }
 $(document).ready(function()
 {
+    profile();    
+    riwayat_pendidikan();    
+    riwayat_pangkat();    
 	$("#closeDataBiodata").click(function(){
 		$("#form_section_biodata").css({"display": "none"})
         $("#view_section").css({"display": ""})		
@@ -756,6 +759,67 @@ $(document).ready(function()
         $("#view_section").css({"display": ""})		
 	});
 })
+
+function profile() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_profile/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            console.log(obj.results);
+            console.log(obj.results.nama);                        
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_pendidikan() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pedidikan/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            console.log(obj.results);
+            console.log(obj.results[0]);
+            console.log(obj.results[0].nsek);                        
+            // console.log(obj.results.nama);                        
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_pangkat() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pangkat/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            console.log(obj.results);
+            console.log(obj.results[0]);
+            console.log(obj.results[0].pangkat);                        
+            // console.log(obj.results.nama);                        
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
 
 function main_form(modul,params,id) {
     // console.log(id);
