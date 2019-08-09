@@ -4,7 +4,7 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/dropzone-work/dropzone.min.js"></script>
 <div class="col-md-12" id="profile-dashboard">
 
-    <!-- Profile Picture -->
+    <!-- Profile Picture
     <div class="col-md-2">
         <div class="box box-widget widget-user" style="height:230px;width:205px;padding-left:8px;padding-top:7px;">
             <?php
@@ -44,10 +44,10 @@
                 }
             ?>
         </div>
-    </div>
+    </div> -->
 
     <section id="view_section">
-        <div class="col-md-10" id="view_section">
+        <div class="col-md-12" id="view_section">
             <!-- <div class="container"> -->
                 <div class="box">
                     <div class="box-body">
@@ -117,7 +117,7 @@
                                     <div class="box box-default">
                                         <div class="box-body">
                                             <div class="row">
-                                                <div class="form-group col-md-12">
+                                                <div class="form-group col-md-10">
                                                     <label class="widget-user-desc" style="margin-top:5px;">NIP</label>
                                                         <span style="margin-left:121px;">: <?php echo $infoPegawai[0]->nip;?></span><br>
                                                     <label class="widget-user-desc" style="margin-top:5px;">Nama</label>
@@ -143,6 +143,48 @@
                                                     <label class="widget-user-desc" style="margin-top:5px;">Alamat</label>
                                                         <span style="margin-left:100px;">: <?php echo $infoPegawai[0]->alamat;?></span><br>
                                                 </div>
+                                                <!-- Profile Picture -->
+                                                <div class="col-md-2">
+                                                    <!-- <div class="box box-widget widget-user" style="height:230px;width:205px;padding-left:8px;padding-top:7px;"> -->
+                                                    <div class="box box-widget widget-user">
+                                                        <?php
+                                                            if($infoPegawai != '')
+                                                            {
+                                                        ?>
+                                                        <?php
+                                                                if ($infoPegawai[0]->photo == '-') {
+                                                                    # code...
+                                                        ?>
+                                                                <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
+                                                                    <img style="width: 190px; height: 190px;" src="<?php echo base_url() . 'assets/images/businessman1.jpg';?>">
+                                                                    <div class="dz-message" style="margin: 2em 0;">
+                                                                        <span> Klik atau Drop File Foto disini</span>
+                                                                    </div>
+                                                                </div>
+                                                        <?php
+                                                                }
+                                                                else
+                                                                {
+                                                        ?>
+                                                                <div class="dropzone" id="dropzone_image" style="padding: 0px!important;border:none;background: transparent;">
+                                                                    <img style="width: 190px; height: 190px;" src="<?php echo base_url() . 'public/images/pegawai/'.$infoPegawai[0]->photo;?>">
+                                                                    <div class="dz-message" style="margin: 2em 0;">
+                                                                        <span> Klik atau Drop File Foto disini</span>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                        <?php
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                        ?>
+                                                                <img style="width: 190px; height: 190px;" src="http://mandarinpalace.fi/wp-content/uploads/2015/11/businessman.jpg">
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                </div>   
                                             </div>    
                                         </div>
                                     </div>
@@ -471,10 +513,11 @@
         </div>
     </section>
 
+    <!-- Section Input Biodata -->
     <section id="form_section_biodata" style="display:none;">
         <input class="form-control-detail" type="hidden" name="crud_biodata" id="crud_biodata">
         <input class="form-control-detail" type="hidden" name="oid_biodata" id="oid_biodata">
-        <div class='col-md-10'>
+        <div class='col-md-12'>
             <div class="form-horizontal">
                 <div id="form_pegawai" name="form_pegawai">
                     <div class="col-md-12">
@@ -562,10 +605,11 @@
 	    </div>
     </section>
 
+    <!-- Section Input Pendidikan -->
     <section id="form_section_pendidikan" style="display:none;">
         <input class="form-control-detail" type="hidden" name="crud" id="crud">
         <input class="form-control-detail" type="hidden" name="oid" id="oid">
-        <div class='col-md-10'>
+        <div class='col-md-12'>
             <div class="form-horizontal">
                 <div id="form_pegawai" name="form_pegawai">
                     <div class="col-md-12">
@@ -627,10 +671,11 @@
 	    </div>
     </section>
 
+    <!-- Section Input Diklat -->
     <section id="form_section_diklat" style="display:none;">
         <input class="form-control-detail" type="hidden" name="crud_diklat" id="crud_diklat">
         <input class="form-control-detail" type="hidden" name="oid_diklat" id="oid_diklat">
-        <div class='col-md-10'>
+        <div class='col-md-12'>
             <div class="form-horizontal">
                 <div id="form_pegawai" name="form_pegawai">
                     <div class="col-md-12">
