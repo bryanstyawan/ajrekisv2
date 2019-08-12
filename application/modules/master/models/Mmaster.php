@@ -282,18 +282,47 @@ class Mmaster extends CI_Model {
 											END,5
 										)*a.real_tunjangan
 							)/100
-					)as nilai_potongan_skp_bulanan,					
-					a.real_tunjangan - IF(a.bulan = 7 && a.tahun = 2019,0,
-							(
-								IFNULL(
-											CASE
-												WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
-												WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
-												WHEN a.persentase_pemotongan = NULL THEN 5
-											END,5
-										)*a.real_tunjangan
-							)/100
-					) as real_tunjangan,
+					)as nilai_potongan_skp_bulanan,
+					IFNULL(tp.tunjangan,0) as tunjangan_profesi,
+					IF(IFNULL(tp.tunjangan,0) = 0, 
+						(a.real_tunjangan - IF(a.bulan = 7 && a.tahun = 2019,0,
+								(
+									IFNULL(
+												CASE
+													WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+													WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+													WHEN a.persentase_pemotongan = NULL THEN 5
+												END,5
+											)*a.real_tunjangan
+								)/100
+						))
+						,
+						(
+							IF(a.menit_efektif < (ha.jml_hari_aktif * ha.jml_menit_perhari),
+								(
+									(
+										CASE
+											WHEN b.kat_posisi = 1 THEN h.tunjangan
+											WHEN b.kat_posisi = 2 THEN l.tunjangan
+											WHEN b.kat_posisi = 4 THEN j.tunjangan
+											WHEN b.kat_posisi = 6 THEN h.tunjangan
+										END							
+									) - IFNULL(tp.tunjangan,0)
+								) * 0.5 * (a.menit_efektif/(ha.jml_hari_aktif * ha.jml_menit_perhari))
+								,
+								(
+									(
+										CASE
+											WHEN b.kat_posisi = 1 THEN h.tunjangan
+											WHEN b.kat_posisi = 2 THEN l.tunjangan
+											WHEN b.kat_posisi = 4 THEN j.tunjangan
+											WHEN b.kat_posisi = 6 THEN h.tunjangan
+										END							
+									) - IFNULL(tp.tunjangan,0)
+								) * 0.5															
+							)
+						)						
+						)  as real_tunjangan,
 					a.real_tunjangan as real_tunjangan_sb_potongan  			
 				FROM `rpt_capaian_kinerja` a
 				LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
@@ -307,6 +336,10 @@ class Mmaster extends CI_Model {
 				LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
 				LEFT JOIN mr_jabatan_fungsional_tertentu k ON b.id_jft = k.id
 				LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+				LEFT JOIN mr_tunjangan_profesi tp ON tp.id_pegawai = a.id_pegawai				
+				AND tp.tgl_selesai = '9999-01-01'				
+				LEFT JOIN mr_hari_aktif ha ON ha.bulan = a.bulan
+				AND ha.tahun = ".$filter['tahun']." 				
 				WHERE c.id_role <> 7
 				AND c.id_role <> 6
 				AND a.`id_pegawai` IS NOT NULL		
@@ -356,6 +389,7 @@ class Mmaster extends CI_Model {
 						END as tunjangan_definitif,
 						IFNULL(b.persentase_pemotongan, 0) as persentase_potongan_skp_bulanan,
 						IFNULL(b.persentase_pemotongan, 0) as nilai_potongan_skp_bulanan,						
+						IFNULL(tp.tunjangan, 0) as tunjangan_profesi,						
 						IFNULL(b.real_tunjangan,0),
 						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan						
 					FROM mr_pegawai a
@@ -372,9 +406,11 @@ class Mmaster extends CI_Model {
 					LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
 					LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
 					LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+					LEFT JOIN mr_tunjangan_profesi tp ON tp.id_pegawai = a.id					
+					AND tp.tgl_selesai = '9999-01-01'					
 					WHERE a.STATUS = 1
 					AND a.id_role <> 7
-					AND a.id_role <> 6
+					AND a.id_role <> 6					
 					".$sql_es1a."
 					".$sql_es2a."
 					".$sql_es3a."

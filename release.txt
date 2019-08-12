@@ -1,3 +1,21 @@
+v4.1.2.5
+2019-08-09
+New:
+- API Profile
+- API riwayat Pendidikan
+- API riwayat pangkat
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.5
+2019-08-01
+New:
+- Tunjangan Profesi
+Improved:
+Fixed:
+Canceled:
+
 v4.1.2.4.1
 2019-08-01
 New:

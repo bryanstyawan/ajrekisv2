@@ -15,6 +15,7 @@
 		<td><?=$list[$i]->prosentase_menit_efektif;?>%</td>		
 		<td>Rp. <?=number_format($list[$i]->tunjangan_definitif,0);?></td>
 		<td>Rp. <?=number_format($list[$i]->nilai_potongan_skp_bulanan,0);?></td>
+		<td><?=number_format($list[$i]->tunjangan_profesi,0);?></td>
 		<td><?=number_format($list[$i]->real_tunjangan,0);?></td>        
 		<td><?=$this->Globalrules->set_bulan($sender['bulan']);?> <?=$sender['tahun'];?></td>
         <td></td>        

@@ -100,7 +100,7 @@
 							<th>Prosentase</th>							
 							<th>Tunjangan</th>
 							<th>Potongan SKP Bulanan</th>							
-							<!-- <th>Tunjangan Profesi</th>							 -->
+							<th>Tunjangan Profesi</th>							
 							<th>Tunjangan Yang dibayarkan</th>
 							<th>Periode</th>				
 							<th>Keterangan</th>																															

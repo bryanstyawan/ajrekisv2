@@ -887,11 +887,12 @@ Last edit : 31/05/2019
 		$this->excel->getActiveSheet(1)->setCellValue('E2', 'Eselon II');
 		$this->excel->getActiveSheet(1)->setCellValue('F2', 'Posisi');
 		$this->excel->getActiveSheet(1)->setCellValue('G2', 'Menit Efektif');
-		$this->excel->getActiveSheet(1)->setCellValue('H2', 'Tunjangan');		
-		$this->excel->getActiveSheet(1)->setCellValue('I2', 'Posisi Kelas');
-		$this->excel->getActiveSheet(1)->setCellValue('J2', 'Tunjangan Yang Diberikan');	
-		$this->excel->getActiveSheet(1)->setCellValue('K2', 'Prosentase');			
-		$this->excel->getActiveSheet(1)->setCellValue('L2', 'Periode');																		
+		$this->excel->getActiveSheet(1)->setCellValue('H2', 'Tunjangan Profesi');		
+		$this->excel->getActiveSheet(1)->setCellValue('I2', 'Tunjangan');		
+		$this->excel->getActiveSheet(1)->setCellValue('J2', 'Posisi Kelas');
+		$this->excel->getActiveSheet(1)->setCellValue('K2', 'Tunjangan Yang Diberikan');	
+		$this->excel->getActiveSheet(1)->setCellValue('L2', 'Prosentase');			
+		$this->excel->getActiveSheet(1)->setCellValue('M2', 'Periode');																		
 		if ($data['list'] != 0) {
 			# code...
 			$counter = "";
@@ -934,10 +935,11 @@ Last edit : 31/05/2019
 				$this->excel->getActiveSheet(2)->setCellValue('e'.$counter, $data['list'][$i]->nama_eselon2);								
 				$this->excel->getActiveSheet(2)->setCellValue('f'.$counter, $data['list'][$i]->nama_posisi);								
 				$this->excel->getActiveSheet(2)->setCellValue('g'.$counter, $data['list'][$i]->menit_efektif);
-				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, number_format($data['list'][$i]->tunjangan_definitif,0));
-				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, $data['list'][$i]->class_posisi_definitif);
-				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, number_format($data['list'][$i]->real_tunjangan,0));												
-				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->prosentase_menit_efektif);
+				$this->excel->getActiveSheet(2)->setCellValue('h'.$counter, number_format($data['list'][$i]->tunjangan_profesi,0));				
+				$this->excel->getActiveSheet(2)->setCellValue('i'.$counter, number_format($data['list'][$i]->tunjangan_definitif,0));
+				$this->excel->getActiveSheet(2)->setCellValue('j'.$counter, $data['list'][$i]->class_posisi_definitif);
+				$this->excel->getActiveSheet(2)->setCellValue('k'.$counter, number_format($data['list'][$i]->real_tunjangan,0));												
+				$this->excel->getActiveSheet(2)->setCellValue('l'.$counter, $data['list'][$i]->prosentase_menit_efektif);
 				// $this->excel->getActiveSheet(2)->setCellValue('k'.$counter, $data['list'][$i]->tr_approve);
 				// $this->excel->getActiveSheet(2)->setCellValue('l'.$counter, $data['list'][$i]->menit_efektif);
 				// $this->excel->getActiveSheet(2)->setCellValue('m'.$counter, $data['list'][$i]->prosentase_menit_efektif);
