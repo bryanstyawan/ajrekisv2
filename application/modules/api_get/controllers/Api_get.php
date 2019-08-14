@@ -43,7 +43,7 @@ class Api_get extends CI_Controller
 		}		
 	}
 
-	public function simpeg_riwayat_pedidikan($nip)
+	public function simpeg_riwayat_pendidikan($nip)
 	{
 		# code...
 		$curl = curl_init();
@@ -76,7 +76,7 @@ class Api_get extends CI_Controller
 				for ($i=0; $i < count($data_decode); $i++) { 
 					# code...
 					$data_store_detail = array(
-						'njur'       => $data_decode[0]->njur,						
+						'njur'       => $data_decode[$i]->njur,						
 						'nsek'       => $data_decode[$i]->nsek,
 						'ntpu'       => $data_decode[$i]->ntpu,
 						'tempat'	 => $data_decode[$i]->tempat,
@@ -123,7 +123,7 @@ class Api_get extends CI_Controller
 				for ($i=0; $i < count($data_decode); $i++) { 
 					# code...
 					$data_store_detail = array(
-						'jenis_naik_pangkat'       => $data_decode[0]->jenis_naik_pangkat,						
+						'jenis_naik_pangkat'       => $data_decode[$i]->jenis_naik_pangkat,						
 						'nama_gol'                 => $data_decode[$i]->nama_gol,
 						'nomor_sk'                 => $data_decode[$i]->nomor_sk,
 						'pangkat'	               => $data_decode[$i]->pangkat,
@@ -132,8 +132,361 @@ class Api_get extends CI_Controller
 					); 
 				}				
 			}			
-		  echo $response;
+		  	echo $response;
 		}		
 	}
+
+	public function simpeg_riwayat_jabatan($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/jabatan/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'jabatan'     => $data_decode[$i]->jataban,						
+						'neselon'     => $data_decode[$i]->neselon,
+						'jenisjab'    => $data_decode[$i]->jenisjab,
+						'tmt_jabatan' => $data_decode[$i]->tmt_jabatan
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}
+
+	public function simpeg_riwayat_diklat_struktural($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/dstruktural/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'tempat'      => $data_decode[$i]->tempat,						
+						'panitia'     => $data_decode[$i]->panitia,
+						'ndik'        => $data_decode[$i]->ndik,
+						'angkatan'    => $data_decode[$i]->angkatan,
+						'thndiklat'   => $data_decode[$i]->thndiklat,
+						'blndiklat'   => $data_decode[$i]->blndiklat,
+						'tgl_mulai'   => $data_decode[$i]->tgl_mulai																		
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}
+	
+	public function simpeg_riwayat_diklat_fungsional($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/dfungsional/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'tempat'      => $data_decode[$i]->tempat,						
+						'panitia'     => $data_decode[$i]->panitia,
+						'ndik'        => $data_decode[$i]->ndik,
+						'angkatan'    => $data_decode[$i]->angkatan,
+						'thndiklat'   => $data_decode[$i]->thndiklat,
+						'blndiklat'   => $data_decode[$i]->blndiklat,
+						'tgl_mulai'   => $data_decode[$i]->tgl_mulai																		
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}
+	
+	public function simpeg_riwayat_diklat_teknis($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/dteknis/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'ndiktek'        => $data_decode[$i]->ndiktek,						
+						'tempat'         => $data_decode[$i]->tempat,
+						'panitia'        => $data_decode[$i]->panitia,
+						'tgl_mulai'      => $data_decode[$i]->tgl_mulai,
+						'tgl_akhir'      => $data_decode[$i]->tgl_akhir																		
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}
+	
+	public function simpeg_riwayat_konferensi($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/seminar/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'nseminar'        => $data_decode[$i]->nseminar,
+						'peran'           => $data_decode[$i]->peran,												
+						'tempat'          => $data_decode[$i]->tempat,
+						'panitia'         => $data_decode[$i]->panitia,
+						'tgl_mulai'       => $data_decode[$i]->tgl_mulai,
+						'tgl_akhir'       => $data_decode[$i]->tgl_akhir																		
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}	
+
+	public function simpeg_karya_tulis($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/karyatulis/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'judul_buku' => $data_decode[$i]->judul_buku,
+						'tahun'      => $data_decode[$i]->tahun
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}
+	
+	public function simpeg_organisasi($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/organisasi/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'jorg' 			 => $data_decode[$i]->jorg,
+						'norg'           => $data_decode[$i]->norg,
+						'jborg'          => $data_decode[$i]->jborg,
+						'tempat'         => $data_decode[$i]->tempat,
+						'tgl_mulai'      => $data_decode[$i]->tgl_mulai,
+						'tgl_akhir'      => $data_decode[$i]->tgl_akhir																			
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}
+	
+	public function simpeg_penghargaan($nip)
+	{
+		# code...
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+		  CURLOPT_URL => "https://ropeg.setjen.kemendagri.go.id/restsimpeg/api/penghargaan/af9ec164748d7690c4f58021b6907d8d/".$nip,
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} 
+		else 
+		{
+			$data_decode     = json_decode($response)->results;			
+			if (count($data_decode) != 0) {
+				# code...
+				for ($i=0; $i < count($data_decode); $i++) { 
+					# code...
+					$data_store_detail = array(
+						'nbintang' => $data_decode[$i]->nbintang,
+						'aoleh'    => $data_decode[$i]->aoleh,
+						'nsk'      => $data_decode[$i]->nsk,
+						'tholeh'   => $data_decode[$i]->tholeh																			
+					); 
+				}				
+			}			
+		 	echo $response;
+		}		
+	}	
 
 }

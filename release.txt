@@ -1,6 +1,31 @@
 v4.1.2.5
 2019-08-09
 New:
+- API Jabatan
+- API Diklat Struktural
+- API Diklat Fungsional
+- API Diklat Teknis
+- API Diklat Konferensi
+- API Diklat Karya tulis
+- API Organisasi
+- API Penghargaan
+- Layout Pendidikan
+- Layout Pengkat
+- Layout Jabatan
+- Layout Struktural
+- Layout Fungsional
+- Layout Teknis
+- Layout Konferensi
+- Layout Karya tulis
+- Layout Organisasi
+- Layout Penghargaan
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.5
+2019-08-09
+New:
 - API Profile
 - API riwayat Pendidikan
 - API riwayat pangkat
