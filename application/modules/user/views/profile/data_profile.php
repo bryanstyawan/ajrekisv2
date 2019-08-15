@@ -57,56 +57,56 @@
                                     Biodata
                                 </a>
                             </li>
-                            <!-- <li>
-                                <a data-toggle="tab" href="#Pangkat">
+                            <li>
+                                <a data-toggle="tab" href="#li_pangkat">
                                     Pangkat&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#Jabatan">
+                                <a data-toggle="tab" href="#li_pendidikan_umum">
+                                    Pendidikan Umum&nbsp;&nbsp;
+                                </a>
+                            </li>   
+                            <li>
+                                <a data-toggle="tab" href="#li_jabatan">
                                     Jabatan&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#Umum">
-                                    Pendidikan Umum&nbsp;&nbsp;
-                                </a>
-                            </li>
-                            <li>
-                                <a data-toggle="tab" href="#Struktural">
+                                <a data-toggle="tab" href="#li_diklat_struktural">
                                     Diklat Struktural&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#Fungsional">
+                                <a data-toggle="tab" href="#li_diklat_fungsional">
                                     Diklat Fungsional&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#Teknis">
+                                <a data-toggle="tab" href="#li_teknis">
                                     Diklat Teknis&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#Konferensi">
+                                <a data-toggle="tab" href="#li_konferensi">
                                     Konferensi&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#KaryaTulis">
+                                <a data-toggle="tab" href="#li_KaryaTulis">
                                     Karya Tulis&nbsp;&nbsp;
                                 </a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#Organisasi">
+                                <a data-toggle="tab" href="#li_organisasi">
                                     Organisasi&nbsp;&nbsp;
                                 </a>
-                            </li>
+                            </li>                                                                                                                                                                        
                             <li>
-                                <a data-toggle="tab" href="#Penghargaan">
+                                <a data-toggle="tab" href="#li_penghargaan">
                                     Penghargaan&nbsp;&nbsp;
                                 </a>
-                            </li> -->
+                            </li>                            
                         </ul>
 
                         <div class="tab-content">
@@ -195,7 +195,7 @@
                             </div>
 
                             <!-- Tab Pangkat -->
-                            <div id="Pangkat" class="tab-pane fade">
+                            <div id="li_pangkat" class="tab-pane fade">
                                 <div class="col-lg-12">
                                     <div class="box box-default">
                                         <div class="box-body">
@@ -209,26 +209,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
-                                                        <?php
-                                                            if ($history_golongan != 0) {
-                                                                for ($i=0; $i < count($history_golongan); $i++) { 
-                                                        ?>
-                                                                    <tr>
-                                                                        <td><?=$i+1;?></td>
-                                                                        <td><?=$history_golongan[$i]->nama_pangkat;?></td>
-                                                                        <td><?=$history_golongan[$i]->tmt;?></td>
-                                                                    </tr>
-                                                        <?php
-                                                                }
-                                                            } 
-                                                            else {
-                                                        ?>   
-                                                                <tr>
-                                                                    <td colspan="6" align="center">Data Masih Kosong</td>
-                                                                </tr>
-                                                        <?php
-                                                            }
-                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>                                        
@@ -238,7 +218,7 @@
                             </div>
 
                             <!-- Tab Jabatan -->
-                            <div id="Jabatan" class="tab-pane fade">
+                            <div id="li_jabatan" class="tab-pane fade">
                                 <div class="col-lg-12">
                                     <div class="box box-default">
                                         <div class="box-body">
@@ -247,33 +227,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No.</th>
-                                                            <th>Nama Jabatan</th>
+                                                            <th class="col-lg-6">Nama Jabatan</th>
                                                             <th>Jenis</th>
                                                             <th>TMT Jabatan</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
-                                                        <?php
-                                                            if ($history_golongan != 0) {
-                                                                for ($i=0; $i < count($history_jabatan); $i++) { 
-                                                        ?>
-                                                                    <tr>
-                                                                        <td><?=$i+1;?></td>
-                                                                        <td><?=$history_jabatan[$i]->nama_posisi;?></td>
-                                                                        <td><?=$history_jabatan[$i]->nama_kat_posisi;?></td>
-                                                                        <td><?=$history_jabatan[$i]->StartDate;?></td>
-                                                                    </tr>
-                                                        <?php
-                                                                }
-                                                            }
-                                                            else {
-                                                        ?>   
-                                                                <tr>
-                                                                    <td colspan="6" align="center">Data Masih Kosong</td>
-                                                                </tr>
-                                                        <?php
-                                                            }
-                                                        ?>
+                                                        
                                                     </tbody>
                                                 </table>
                                             </div>                                        
@@ -283,7 +243,7 @@
                             </div>
 
                             <!-- Tab Pendidikan Umum -->
-                            <div id="Umum" class="tab-pane fade">
+                            <div id="li_pendidikan_umum" class="tab-pane fade">
                                 <div class="col-lg-12">
                                     <div class="box box-default">
                                         <div class="box-body">
@@ -301,32 +261,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
-                                                        <?php
-                                                            if ($history_pendidikan != 0) {
-                                                                for ($i=0; $i < count($history_pendidikan); $i++) { 
-                                                        ?>
-                                                                    <tr>
-                                                                        <td><?=$i+1;?></td>
-                                                                        <td><?=$history_pendidikan[$i]->nama_pendidikan;?> (<?=$history_pendidikan[$i]->kode;?>)</td>
-                                                                        <td><?=$history_pendidikan[$i]->jurusan;?></td>
-                                                                        <td><?=$history_pendidikan[$i]->nama_sekolah;?></td>
-                                                                        <td><?=$history_pendidikan[$i]->lokasi_sekolah;?></td>
-                                                                        <td><?=$history_pendidikan[$i]->tahun_lulus;?></td>
-                                                                        <!-- <td><?php echo anchor('master/editPegawai/'.$history_pendidikan[$i]->id,'<button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button>');?></td> -->
-                                                                        <td><button class="btn btn-warning btn-xs" onclick="main_form('UMUM','update','<?php echo $history_pendidikan[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
-                                                                        <td><button class="btn btn-danger btn-xs" onclick="main_form('UMUM','delete','<?php echo $history_pendidikan[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
-                                                                    </tr>
-                                                        <?php
-                                                                }
-                                                            }
-                                                            else {
-                                                        ?>   
-                                                                <tr>
-                                                                    <td colspan="6" align="center">Data Masih Kosong</td>
-                                                                </tr>
-                                                        <?php
-                                                            }
-                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>                                        
@@ -334,13 +268,13 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2 pull-right">
-                                    <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('UMUM','insert','NULL')"> Tambah Data</button>
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('UMUM','insert','NULL')"> Tambah Data</button> -->
                                     <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
                                 </div>	
                             </div>
 
                             <!-- Tab Diklat Struktural -->
-                            <div id="Struktural" class="tab-pane fade">
+                            <div id="li_diklat_struktural" class="tab-pane fade">
                                 <div class="col-lg-12">
                                     <div class="box box-default">
                                         <div class="box-body">
@@ -358,31 +292,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
-                                                        <?php
-                                                            if ($diklat_struktural != 0) {
-                                                                for ($i=0; $i < count($diklat_struktural); $i++) { 
-                                                        ?>
-                                                                    <tr>
-                                                                        <td><?=$i+1;?></td>
-                                                                        <td><?=$diklat_struktural[$i]->nama_diklat;?></td>
-                                                                        <td><?=$diklat_struktural[$i]->tempat;?></td>
-                                                                        <td><?=$diklat_struktural[$i]->panitia;?></td>
-                                                                        <td><?=$diklat_struktural[$i]->tgl_mulai;?></td>
-                                                                        <td><?=$diklat_struktural[$i]->tgl_selesai;?></td>
-                                                                        <td><button class="btn btn-warning btn-xs" onclick="main_form('STRUKTURAL','update','<?php echo $diklat_struktural[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
-                                                                        <td><button class="btn btn-danger btn-xs" onclick="main_form('STRUKTURAL','delete','<?php echo $diklat_struktural[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
-                                                                    </tr>
-                                                        <?php
-                                                                }
-                                                            }
-                                                            else {
-                                                        ?>   
-                                                                <tr>
-                                                                    <td colspan="6" align="center">Data Masih Kosong</td>
-                                                                </tr>
-                                                        <?php
-                                                            }
-                                                        ?>
+
                                                     </tbody>
                                                 </table>
                                             </div>                                        
@@ -390,13 +300,13 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2 pull-right">
-                                    <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('STRUKTURAL','insert','NULL')"> Tambah Data</button>
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('STRUKTURAL','insert','NULL')"> Tambah Data</button> -->
                                     <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
                                 </div>	
                             </div>
 
                             <!-- Tab Diklat Fungsional -->
-                            <div id="Fungsional" class="tab-pane fade">
+                            <div id="li_diklat_fungsional" class="tab-pane fade">
                                 <div class="col-lg-12">
                                     <div class="box box-default">
                                         <div class="box-body">
@@ -414,31 +324,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
-                                                        <?php
-                                                            if ($diklat_fungsional != 0) {
-                                                                for ($i=0; $i < count($diklat_fungsional); $i++) { 
-                                                        ?>
-                                                                    <tr>
-                                                                        <td><?=$i+1;?></td>
-                                                                        <td><?=$diklat_fungsional[$i]->nama_diklat;?></td>
-                                                                        <td><?=$diklat_fungsional[$i]->tempat;?></td>
-                                                                        <td><?=$diklat_fungsional[$i]->panitia;?></td>
-                                                                        <td><?=$diklat_fungsional[$i]->tgl_mulai;?></td>
-                                                                        <td><?=$diklat_fungsional[$i]->tgl_selesai;?></td>
-                                                                        <td><button class="btn btn-warning btn-xs" onclick="main_form('FUNGSIONAL','update','<?php echo $diklat_fungsional[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
-                                                                        <td><button class="btn btn-danger btn-xs" onclick="main_form('FUNGSIONAL','delete','<?php echo $diklat_fungsional[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
-                                                                    </tr>
-                                                        <?php
-                                                                }
-                                                            }
-                                                            else {
-                                                        ?>   
-                                                                <tr>
-                                                                    <td colspan="6" align="center">Data Masih Kosong</td>
-                                                                </tr>
-                                                        <?php
-                                                            }
-                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>                                        
@@ -446,13 +331,13 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2 pull-right">
-                                    <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('FUNGSIONAL','insert','NULL')"> Tambah Data</button>
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('FUNGSIONAL','insert','NULL')"> Tambah Data</button> -->
                                     <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
                                 </div>	
                             </div>
 
                             <!-- Tab Diklat Teknis -->
-                            <div id="Teknis" class="tab-pane fade">
+                            <div id="li_teknis" class="tab-pane fade">
                                 <div class="col-lg-12">
                                     <div class="box box-default">
                                         <div class="box-body">
@@ -470,31 +355,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
-                                                        <?php
-                                                            if ($diklat_teknis != 0) {
-                                                                for ($i=0; $i < count($diklat_teknis); $i++) { 
-                                                        ?>
-                                                                    <tr>
-                                                                        <td><?=$i+1;?></td>
-                                                                        <td><?=$diklat_teknis[$i]->nama_diklat;?></td>
-                                                                        <td><?=$diklat_teknis[$i]->tempat;?></td>
-                                                                        <td><?=$diklat_teknis[$i]->panitia;?></td>
-                                                                        <td><?=$diklat_teknis[$i]->tgl_mulai;?></td>
-                                                                        <td><?=$diklat_teknis[$i]->tgl_selesai;?></td>
-                                                                        <td><button class="btn btn-warning btn-xs" onclick="main_form('TEKNIS','update','<?php echo $diklat_teknis[$i]->id;?>')"><i class="fa fa-edit"></i> Ubah</button></td>
-                                                                        <td><button class="btn btn-danger btn-xs" onclick="main_form('TEKNIS','delete','<?php echo $diklat_teknis[$i]->id;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
-                                                                    </tr>
-                                                        <?php
-                                                                }
-                                                            }
-                                                            else {
-                                                        ?>   
-                                                                <tr>
-                                                                    <td colspan="6" align="center">Data Masih Kosong</td>
-                                                                </tr>
-                                                        <?php
-                                                            }
-                                                        ?>
+
                                                     </tbody>
                                                 </table>
                                             </div>                                        
@@ -502,10 +363,133 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2 pull-right">
-                                    <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('TEKNIS','insert','NULL')"> Tambah Data</button>
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('TEKNIS','insert','NULL')"> Tambah Data</button> -->
                                     <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
                                 </div>	
                             </div>
+
+                            <!-- Tab konferensi -->
+                            <div id="li_konferensi" class="tab-pane fade">
+                                <div class="col-lg-12">
+                                    <div class="box box-default">
+                                        <div class="box-body">
+                                            <div class="col-lg-12">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Jenis Konferensi/Seminar</th>
+                                                            <th>Peran</th>                                                            
+                                                            <th>Tempat</th>
+                                                            <th>Panitia</th>
+                                                            <th>Tanggal Mulai</th>
+                                                            <th>Tanggal Selesai</th>
+                                                            <th>Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_content">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('TEKNIS','insert','NULL')"> Tambah Data</button> -->
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
+                                </div>	
+                            </div>
+                            
+                            <!-- Tab karyatulis -->
+                            <div id="li_KaryaTulis" class="tab-pane fade">
+                                <div class="col-lg-12">
+                                    <div class="box box-default">
+                                        <div class="box-body">
+                                            <div class="col-lg-12">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Judul Buku</th>
+                                                            <th>Tahun</th>                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_content">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('TEKNIS','insert','NULL')"> Tambah Data</button> -->
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
+                                </div>	
+                            </div>
+
+                            <!-- Tab karyatulis -->
+                            <div id="li_organisasi" class="tab-pane fade">
+                                <div class="col-lg-12">
+                                    <div class="box box-default">
+                                        <div class="box-body">
+                                            <div class="col-lg-12">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Nama</th>
+                                                            <th>Jenis</th>
+                                                            <th>Jabatan</th>
+                                                            <th>Tempat</th>
+                                                            <th>Tanggal Mulai</th>                                                            
+                                                            <th>Tanggal Selesai</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_content">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('TEKNIS','insert','NULL')"> Tambah Data</button> -->
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
+                                </div>	
+                            </div>                            
+                            
+                            <!-- Tab Diklat Teknis -->
+                            <div id="li_penghargaan" class="tab-pane fade">
+                                <div class="col-lg-12">
+                                    <div class="box box-default">
+                                        <div class="box-body">
+                                            <div class="col-lg-12">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th>Nama</th>                                                             
+                                                            <th>Dari</th>
+                                                            <th>SK</th>
+                                                            <th>Tahun</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table_content">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 pull-right">
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah" onclick="main_form('TEKNIS','insert','NULL')"> Tambah Data</button> -->
+                                    <!-- <button class="btn btn-block btn-primary" id="btn_tambah"> Tambah Data</button>	 -->
+                                </div>	
+                            </div>                            
                         </div>                    
                     </div>
                 </div>
@@ -789,7 +773,15 @@ $(document).ready(function()
     profile();    
     riwayat_pendidikan();    
     riwayat_pangkat();    
-	$("#closeDataBiodata").click(function(){
+    riwayat_jabatan();
+    riwayat_diklat_struktural();       
+    riwayat_diklat_fungsional();
+	riwayat_diklat_teknis();
+    riwayat_konferensi();
+    karya_tulis();
+    organisasi();
+    penghargaan();
+    $("#closeDataBiodata").click(function(){
 		$("#form_section_biodata").css({"display": "none"})
         $("#view_section").css({"display": ""})		
 	});
@@ -826,7 +818,7 @@ function profile() {
 
 function riwayat_pendidikan() {
     $.ajax({
-        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pedidikan/<?=$this->session->userdata('sesNip');?>",		
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pendidikan/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
         beforeSend:function(){
             $("#loadprosess").modal('show');
@@ -834,10 +826,19 @@ function riwayat_pendidikan() {
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
-            console.log(obj.results);
-            console.log(obj.results[0]);
-            console.log(obj.results[0].nsek);                        
-            // console.log(obj.results.nama);                        
+            tr_insert = "";
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                            '<td>'+(i +1)+'</td>'+
+                            '<td>'+obj.results[i].ntpu+'</td>'+
+                            '<td>'+obj.results[i].njur+'</td>'+
+                            '<td>'+obj.results[i].nsek+'</td>'+
+                            '<td>'+obj.results[i].tempat+'</td>'+
+                            '<td>'+obj.results[i].thnlulus+'</td>'+
+                            '<td></td>'+                                                                                                                
+                        '</tr>';                                          
+            }  
+            $("#li_pendidikan_umum > div > div > div > div > table > tbody").html(tr_insert);                        
         },
         error:function(jqXHR,exception) {
             ajax_catch(jqXHR,exception);					
@@ -855,10 +856,255 @@ function riwayat_pangkat() {
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                            '<td>'+(i +1)+'</td>'+
+                            '<td>'+obj.results[i].pangkat+'</td>'+
+                            '<td>'+obj.results[i].tmt_pangkat+'</td>'+
+                        '</tr>';                                          
+            }  
+            $("#li_pangkat > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_jabatan() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_jabatan/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
             console.log(obj.results);
-            console.log(obj.results[0]);
-            console.log(obj.results[0].pangkat);                        
-            // console.log(obj.results.nama);                        
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                            '<td>'+(i +1)+'</td>'+
+                            '<td>'+obj.results[i].jataban+'</td>'+
+                            '<td>'+obj.results[i].jenisjab+'</td>'+
+                            '<td>'+obj.results[i].tmt_jabatan+'</td>'+                            
+                        '</tr>';                                          
+            }  
+            $("#li_jabatan > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_diklat_struktural() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_struktural/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                            '<td>'+(i +1)+'</td>'+
+                            '<td>'+obj.results[i].ndik+'</td>'+
+                            '<td>'+obj.results[i].tempat+'</td>'+
+                            '<td>'+obj.results[i].panitia+'</td>'+
+                            '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                            '<td></td>'+
+                            '<td></td>'+
+                        '</tr>';                                          
+            }  
+            $("#li_diklat_struktural > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_diklat_fungsional() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_fungsional/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+(i +1)+'</td>'+                                                                                                                            
+                        '</tr>';                                          
+            }  
+            $("#li_diklat_fungsional > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_diklat_teknis() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_teknis/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                            '<td>'+(i +1)+'</td>'+
+                            '<td>'+obj.results[i].ndiktek+'</td>'+
+                            '<td>'+obj.results[i].tempat+'</td>'+
+                            '<td>'+obj.results[i].panitia+'</td>'+
+                            '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                            '<td>'+obj.results[i].tgl_akhir+'</td>'+
+                            '<td></td>'+                                                                                                                
+                        '</tr>';                                          
+            }  
+            $("#li_teknis > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_konferensi() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_konferensi/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].nseminar+'</td>'+
+                                '<td>'+obj.results[i].peran+'</td>'+
+                                '<td>'+obj.results[i].tempat+'</td>'+
+                                '<td>'+obj.results[i].panitia+'</td>'+
+                                '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                                '<td>'+obj.results[i].tgl_akhir+'</td>'+                                                                                                                            
+                                '<td></td>'+
+                        '</tr>';                                          
+            }  
+            $("#li_konferensi > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function karya_tulis() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_karya_tulis/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].judul_buku+'</td>'+
+                                '<td>'+obj.results[i].tahun+'</td>'+                                                                                                                            
+                        '</tr>';                                          
+            }  
+            $("#li_KaryaTulis > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function penghargaan() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_penghargaan/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].nbintang+'</td>'+
+                                '<td>'+obj.results[i].aoleh+'</td>'+
+                                '<td>'+obj.results[i].nsk+'</td>'+
+                                '<td>'+obj.results[i].tholeh+'</td>'+
+                        '</tr>';                                          
+            }  
+            $("#li_penghargaan > div > div > div > div > table > tbody").html(tr_insert);            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function organisasi() {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_organisasi/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+            tr_insert = "";
+            console.log(obj.results);
+            for (i=0 ;i<obj.results.length;i++) {
+                tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].norg+'</td>'+                                
+                                '<td>'+obj.results[i].jorg+'</td>'+                                                                                                                            
+                                '<td>'+obj.results[i].jborg+'</td>'+
+                                '<td>'+obj.results[i].tempat+'</td>'+
+                                '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                                '<td>'+obj.results[i].tgl_akhir+'</td>'+                                
+                        '</tr>';                                          
+            }  
+            $("#li_organisasi > div > div > div > div > table > tbody").html(tr_insert);            
         },
         error:function(jqXHR,exception) {
             ajax_catch(jqXHR,exception);					
