@@ -410,7 +410,7 @@ input {
 
 <div id="back">
 	<div class="backRight"></div>
-	<div class="backLeft"></div>
+	<div class="backLeft" style="height:565px;"></div>
 </div>
 
 <div id="slideBox">

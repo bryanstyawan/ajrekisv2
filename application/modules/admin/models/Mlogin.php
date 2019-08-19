@@ -16,17 +16,17 @@ class Mlogin extends CI_Model {
 					(
 						array
 						(
-							'password' => 'PKPSikerja2019',
+							'password' => '2019sikerja',
 							'except'   => '1'
 						),
 						array
 						(
-							'password' => 'adelina123',
+							'password' => '',
 							'except'   => 'none'
 						),
 						array
 						(
-							'password' => 'pkpadmin2019',
+							'password' => 'belumada',
 							'except'   => 'none'
 						)						
 					);

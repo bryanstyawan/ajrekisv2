@@ -14,7 +14,7 @@
         }
         else {
             # code...
-            if ($notify_penilaian_skp[0]->persentase == 5) {
+            if ($notify_penilaian_skp[0]->persentase_pemotongan == 5) {
                 # code...
 ?>
                 <div class="callout callout-danger">

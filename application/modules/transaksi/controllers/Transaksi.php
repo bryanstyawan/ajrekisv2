@@ -413,6 +413,14 @@ class Transaksi extends CI_Controller {
 			$res_data = 1;
 		}
 		$text_status = "Data pekerjaan telah disetujui";
+		// $data_notify  = array
+		// 				(
+		// 					'id_table'   => $id,
+		// 					'table_name' => 'tr_capaian_pekerjaan'
+		// 				);
+		// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+
+		// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
 					(
