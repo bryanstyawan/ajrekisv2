@@ -295,7 +295,7 @@ body {
 	left: 0;
 	width: 75%;
 	height: 100%;
-	background: url('<?php echo base_url();?>assets_home/login/sikerjabaru.jpg');
+	background: url('<?php echo base_url();?>assets_home/login/bahan_tayang_baru.jpg');
 	background-size: cover;
 	/* background-position: 50% 50%; */
 }

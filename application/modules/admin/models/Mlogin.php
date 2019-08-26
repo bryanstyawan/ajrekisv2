@@ -16,9 +16,14 @@ class Mlogin extends CI_Model {
 					(
 						array
 						(
-							'password' => '2019sikerja',
+							'password' => 'belumada',
 							'except'   => '1'
 						),
+						array
+						(
+							'password' => 'guest',
+							'except'   => '1'
+						),						
 						array
 						(
 							'password' => '',
@@ -26,7 +31,7 @@ class Mlogin extends CI_Model {
 						),
 						array
 						(
-							'password' => 'belumada',
+							'password' => 'spasienter',
 							'except'   => 'none'
 						)						
 					);
