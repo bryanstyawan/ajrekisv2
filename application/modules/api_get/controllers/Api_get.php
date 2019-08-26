@@ -21,7 +21,7 @@ class Api_get extends CI_Controller
 		  CURLOPT_RETURNTRANSFER => true,
 		  CURLOPT_ENCODING => "",
 		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_TIMEOUT => 360,
 		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		  CURLOPT_CUSTOMREQUEST => "GET",
 		  CURLOPT_POSTFIELDS => "",
@@ -70,23 +70,34 @@ class Api_get extends CI_Controller
 		} 
 		else 
 		{
-			$data_decode     = json_decode($response)->results;			
+			$data_store_detail = array();
+			$data_decode       = json_decode($response)->results;			
 			if (count($data_decode) != 0) {
 				# code...
 				for ($i=0; $i < count($data_decode); $i++) { 
 					# code...
-					$data_store_detail = array(
-						'njur'       => $data_decode[$i]->njur,						
-						'nsek'       => $data_decode[$i]->nsek,
-						'ntpu'       => $data_decode[$i]->ntpu,
-						'tempat'	 => $data_decode[$i]->tempat,
-						'thnlulus'   => $data_decode[$i]->thnlulus,
-						'tsttb2'     => $data_decode[$i]->tsttb2
+					$get_scoring = $this->Allcrud->getData('mr_pendidikan',array('id_pendidikan'=>$data_decode[$i]->ktp))->result_array();
+					$scoring = ($get_scoring != array()) ? $get_scoring[0]['skor'] : 0 ;
+
+					$data_store_detail[$i] = array(
+						'njur'         => $data_decode[$i]->njur,						
+						'nsek'         => $data_decode[$i]->nsek,
+						'ntpu'         => $data_decode[$i]->ntpu,
+						'tempat'       => $data_decode[$i]->tempat,
+						'thnlulus'     => $data_decode[$i]->thnlulus,
+						'tsttb2'       => $data_decode[$i]->tsttb2,
+						'sources'      => 'simpeg',
+						'scoring'      => $scoring
 					); 
 				}				
 			}			
-			// print_r($data_decode);die();
-		  	echo $response;
+
+			$data_res = array(
+				'message' => json_decode($response)->message,
+				'results' => $data_store_detail,
+				'status' => json_decode($response)->status
+			);
+		  	echo json_encode($data_res);
 		}
 	}
 

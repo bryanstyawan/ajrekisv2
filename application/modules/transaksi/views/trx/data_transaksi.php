@@ -585,7 +585,7 @@ else {
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Uraian Tugas</label>
-                                                <select class="form-control tour-step step1" name="urtug" id="urtug">
+                                                <select class="form-control js-example-basic-single tour-step step1" name="urtug" id="urtug">
                                                         <option value="">Pilih Uraian Tugas</option>
 
                                                         <?php
