@@ -157,6 +157,8 @@ v4.1.2.3
 2019-07-12
 New:
 Improved:
+- Eselon 1 tidak ada pemotongan tunjangan dari penilaian skp bulanan
+- Setup gitignore [node_module]
 Fixed:
 - id pegawai yang hilang di master pegawai
 - Layout capaian skp [dashboard]
