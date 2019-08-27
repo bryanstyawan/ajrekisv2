@@ -1,3 +1,13 @@
+v4.1.2.5.1
+2019-08-27
+New:
+Improved:
+- Ubah Data Pribadi menjadi Data Pribadi
+Fixed:
+- Penilaian SKP Bulanan di PLT
+Canceled:
+- Tombol Edit di data profile
+
 v4.1.2.5
 2019-08-26
 New:

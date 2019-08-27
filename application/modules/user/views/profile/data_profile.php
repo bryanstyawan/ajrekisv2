@@ -189,9 +189,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 pull-right">
-                                    <button class="btn btn-block btn-primary" id="btn_edit" onclick="main_form('BIODATA','update','<?php echo $infoPegawai[0]->id;?>')"> Edit Data</button>
-                                </div>
                             </div>
 
                             <!-- Tab Pangkat -->
