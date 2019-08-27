@@ -3,6 +3,7 @@ v4.1.2.5.1
 New:
 Improved:
 - Ubah Data Pribadi menjadi Data Pribadi
+- Report Tunjangan Kinerja [Tunjangan profesi, pemotongan skp bulanan]
 Fixed:
 - Penilaian SKP Bulanan di PLT
 Canceled:
