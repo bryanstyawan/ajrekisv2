@@ -56,3 +56,4 @@ application/config/database.php
 /kinerja/application/config/database.php
 .htaccess
 /assets_home/x_css
+/node_modules/
