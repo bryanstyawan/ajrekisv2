@@ -6,6 +6,7 @@ Improved:
 - Report Tunjangan Kinerja [Tunjangan profesi, pemotongan skp bulanan]
 Fixed:
 - Penilaian SKP Bulanan di PLT
+- Upload tugas tambabahan dan kreativitas
 Canceled:
 - Tombol Edit di data profile
 

@@ -68,7 +68,7 @@
                                             <tr>
                                                 <td><?=$i+1;?></td>
                                                 <td><?=$tr_tugas_tambahan[$i]->no_surat_keterangan;?></td>
-                                                <td><a href="<?php echo site_url()?>public/file_tugas_tambahan/<?=$tr_tugas_tambahan[$i]->file_surat_keterangan;?>" class="btn btn-block btn-primary">Unduh</a></td>
+                                                <td><a target="_blank" href="<?php echo site_url()?>public/file_tugas_tambahan/<?=$this->session->userdata('sesNip');?>/<?=$tr_tugas_tambahan[$i]->file_surat_keterangan;?>" class="btn btn-block btn-primary">Unduh</a></td>
                                                 <td><?=$tr_tugas_tambahan[$i]->keterangan;?></td>
                                                 <td><?=$tr_tugas_tambahan[$i]->tahun;?></td>
                                                 <td>
@@ -154,7 +154,7 @@
                                                 <td><?=$i+1;?></td>
                                                 <td><?=$tr_kreativitas[$i]->no_surat_keterangan;?></td>
                                                 <td><?=$tr_kreativitas[$i]->pejabat_penanda_tangan;?></td>
-                                                <td><a href="<?php echo site_url()?>public/file_tugas_tambahan/<?=$tr_kreativitas[$i]->file_surat_keterangan;?>" class="btn btn-block btn-primary" target="_blank">Unduh</a></td>
+                                                <td><a target="_blank" href="<?php echo site_url()?>public/file_tugas_tambahan/<?=$this->session->userdata('sesNip');?>/<?=$tr_kreativitas[$i]->file_surat_keterangan;?>" class="btn btn-block btn-primary">Unduh</a></td>
                                                 <td><?=$tr_kreativitas[$i]->keterangan;?></td>
                                                 <td><?=$tr_kreativitas[$i]->tahun;?></td>
                                                 <td>

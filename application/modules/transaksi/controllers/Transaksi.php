@@ -1222,11 +1222,17 @@ class Transaksi extends CI_Controller {
 		$res_data_id			 = "";
 		$text_status             = "";
 		$data_sender             = $this->input->post('data_sender');
-		$config['upload_path']   = FCPATH.'/public/file_tugas_tambahan/';
+        $nip                     = $this->session->userdata('sesNip');
+        $config['upload_path']   = FCPATH."/public/file_tugas_tambahan/".$nip."/";		
 		$config['allowed_types'] = 'pdf|csv|zip|docx|doc|xlsx|xl|xls|jpg|jpeg';
 		$config['max_size']      = '3000';
 
 		$this->load->library('upload', $config);
+
+		if(!is_dir("public/file_pendukung/".$nip."/"))
+		{
+			mkdir("public/file_pendukung/".$nip."/", 0755);
+		}        
 
 		if ( ! $this->upload->do_upload('file')){
 			$res_data       = 0;
