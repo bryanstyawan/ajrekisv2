@@ -1,0 +1,165 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tran`(IN `id_pgw` DOUBLE,
+	IN `pos_id` DOUBLE,
+	IN `urtug` DOUBLE,
+	IN `tgl_mulai` DATE,
+	IN `tgl_selesai` DATE,
+	IN `jm_mulai` TIME,
+	IN `jm_selesai` TIME,
+	IN `ket` VARCHAR(1000),
+	IN `qty` INT,
+	IN `file_pen` VARCHAR(200))
+BEGIN
+
+DECLARE id_rpt double;
+DECLARE es1, es2, es3, es4, kat_posisi, cls int;
+DECLARE id_jft, id_jfu int;
+DECLARE tnj double;
+
+DECLARE start_tran varchar(50);
+DECLARE end_tran varchar(50);
+
+DECLARE diff, diff_day int;
+DECLARE menit, hari int;
+DECLARE tot_menit int;
+DECLARE ht_tnj double;
+DECLARE stat int;
+
+DECLARE avail int;
+DECLARE approve, periksa int;
+
+DECLARE freq, mnt int;
+DECLARE prsn float;
+DECLARE tun double;
+DECLARE rl_tnj double;
+
+DECLARE bln, thn int;
+DECLARE datenow datetime;
+
+SET datenow = CURRENT_TIMESTAMP();
+SET bln = MONTH(tgl_mulai);
+SET thn = YEAR(tgl_mulai);
+SET stat = 0;
+
+SET start_tran = CONCAT(tgl_mulai,' ',jm_mulai);
+SET end_tran 	= CONCAT(tgl_selesai,' ',jm_selesai);
+	
+SELECT TIMESTAMPDIFF(MINUTE, start_tran, end_tran) 
+	into diff;
+
+SELECT TIMESTAMPDIFF(DAY, start_tran, end_tran) 
+	into diff_day;
+	
+IF diff_day > 0 THEN
+	SET hari = diff_day + 1;
+	SET menit = (hari * 330) + (diff - (diff_day*1440));
+ELSE
+	SET hari = 1;
+	SET menit = diff;
+END IF;
+
+SELECT a.eselon1, a.eselon2, a.eselon3, a.eselon4, a.id_jft, a.id_jfu, a.kat_posisi, a.posisi_class
+	INTO es1, es2, es3, es4, id_jft, id_jfu, kat_posisi, cls
+	FROM mr_posisi a
+	WHERE a.id=pos_id;
+	
+IF kat_posisi = 1 OR kat_posisi = 6 THEN
+	SELECT a.tunjangan
+		INTO tnj
+		FROM mr_posisi_class a
+		WHERE a.id=cls;
+ELSEIF kat_posisi = 2 THEN
+	SELECT b.tunjangan
+		INTO tnj
+		FROM mr_jabatan_fungsional_tertentu a
+		LEFT JOIN mr_posisi_class b ON a.id_kelas_jabatan=b.id
+		WHERE a.id=id_jft;
+ELSEIF kat_posisi = 4 THEN
+	SELECT b.tunjangan
+		INTO tnj
+		FROM mr_jabatan_fungsional_umum a
+		LEFT JOIN mr_posisi_class b ON a.id_kelas_jabatan=b.id
+		WHERE a.id=id_jfu;
+END IF;
+	
+SELECT jml_hari_aktif*jml_menit_perhari
+	INTO tot_menit
+	FROM mr_hari_aktif
+	WHERE bulan=bln AND tahun=thn;
+	
+SET ht_tnj = (menit/tot_menit)*tnj/2;
+	
+IF es1 > 0 and es2 = 0 and es3 = 0  and es4 = 0 THEN
+	SET stat = 1;
+	INSERT INTO tr_capaian_pekerjaan (
+		id_pegawai, id_posisi, id_uraian_tugas, tanggal_mulai, tanggal_selesai, jam_mulai, jam_selesai, nama_pekerjaan, frekuensi_realisasi, 
+		menit_efektif,	hari_efektif, tunjangan, status_pekerjaan, file_pendukung, tanggal_pemeriksa, id_pegawai_pemeriksa, audit_insert, audit_user_insert, flag_sync)
+	VALUES (
+		id_pgw, pos_id, urtug, tgl_mulai, tgl_selesai, jm_mulai, jm_selesai, ket, qty, 
+		menit, hari, ht_tnj, stat, file_pen, datenow, id_pgw, datenow, id_pgw, 0);
+ELSE
+	INSERT INTO tr_capaian_pekerjaan (
+		id_pegawai, id_posisi, id_uraian_tugas, tanggal_mulai, tanggal_selesai, jam_mulai, jam_selesai, nama_pekerjaan, frekuensi_realisasi, 
+		menit_efektif,	hari_efektif, tunjangan, status_pekerjaan, file_pendukung, audit_insert, audit_user_insert, flag_sync)
+	VALUES (
+		id_pgw, pos_id, urtug, tgl_mulai, tgl_selesai, jm_mulai, jm_selesai, ket, qty, 
+		menit, hari, ht_tnj, stat, file_pen, datenow, id_pgw, 0);
+END IF;
+
+IF ROW_COUNT() > 0 THEN
+
+	SELECT id, COUNT(*)
+		INTO id_rpt, avail
+		FROM rpt_capaian_kinerja
+		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+		AND bulan = bln AND tahun = thn;
+		
+-- 	SELECT COUNT(*), SUM(frekuensi_realisasi), sum(menit_efektif)
+-- 		INTO approve, freq, mnt
+-- 		FROM tr_capaian_pekerjaan
+-- 		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+-- 		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=1;
+		
+-- 	IF approve = 0 THEN
+-- 		SET freq = 0;
+-- 		SET mnt = 0;
+-- 		SET tun = 0;
+-- 		SET prsn = 0;
+-- 		SET rl_tnj = 0;
+-- 	ELSE
+-- 		IF mnt >= tot_menit THEN
+-- 			SET prsn = 100;
+-- 			SET rl_tnj = tnj/2;
+-- 		ELSE
+-- 			SET prsn = (mnt/tot_menit)*100;
+-- 			SET rl_tnj = (((mnt/tot_menit)*tnj)/2);
+-- 		END IF;
+-- 		SET tun = (((mnt/tot_menit)*tnj)/2);
+-- 	END IF;
+		
+-- 	SELECT COUNT(*)
+-- 		INTO periksa
+-- 		FROM tr_capaian_pekerjaan
+-- 		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+-- 		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=0;
+	
+	IF avail > 0 THEN
+		UPDATE rpt_capaian_kinerja SET
+-- 			tr_approve = approve,
+			tr_belum_diperiksa = tr_belum_diperiksa+1,
+-- 			menit_efektif = mnt,
+-- 			prosentase_menit_efektif = prsn,
+-- 			tunjangan = tun,
+-- 			real_tunjangan = rl_tnj,
+-- 			frekuensi_realisasi = freq,
+			audit_time = datenow
+		WHERE id = id_rpt;
+	ELSE
+		INSERT INTO rpt_capaian_kinerja(
+			id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi,
+			menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time)
+		VALUES (
+-- 			id_pgw, pos_id, bln, thn, approve, periksa, 0, 0, mnt, prsn, tun, rl_tnj, freq, 'system', datenow);
+			id_pgw, pos_id, bln, thn, 0, 1, 0, 0, 0, 0, 0, 0, 0, 'system', datenow);
+	END IF;
+END IF;
+END
