@@ -219,6 +219,12 @@ class Dashboard extends CI_Controller {
 		}							
 		else {
 			# code...
+			$data = array
+			(
+				'audit_check_skp'       => 1,
+				'persentase_pemotongan' => $persentase
+			);
+
 			$flag = array
 			(
 				'id_pegawai' => $oid,
