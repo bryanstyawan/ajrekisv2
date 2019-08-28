@@ -364,7 +364,7 @@ if ($member != 0) {
                         <td><?=$target_kualitasmutu;?></td>
                         <td><?=$target_waktu_bln;?></td>
                         <td>bln</td>
-                        <td><?=number_format($target_biaya);?></td>
+                        <td><?=number_format((float)($target_biaya),2, ",", ".");?></td>
                         <!-- <td><?=$status;?></td> -->
                         <td><?=$keterangan;?></td>
                         <td>
