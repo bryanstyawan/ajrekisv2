@@ -54,27 +54,15 @@ class Mmaster extends CI_Model {
 	public function data_pegawai($flag=NULL,$order_by=NULL,$filter=NULL)
 	{
 		# code...
-		$sql        = "";
-		$sql_1      = "";
-		$sql_2      = "";
-		$sql_3      = "";
-		$sql_4      = "";
-		$sql_5      = "";
-		$sql_6      = "";				
-		$sql_7      = "";		
-		$join_1 	= "";	 
-		$select_opt = " a.local,
-						a.es1,
-						a.es2,
-						a.es3,
-						a.es4,
-						a.id,
-						b.id AS `id_posisi`,
-						b.kat_posisi,
-						c.posisi_class,";
-
 		if ($flag != 'kinerja') {
 			# code...
+			$sql        = "";
+			$sql_1      = "";
+			$sql_2      = "";
+			$sql_3      = "";
+			$sql_4      = "";
+			$sql_5      = "";
+
 			if ($flag == 'default')
 			{
 				# code...
@@ -130,7 +118,15 @@ class Mmaster extends CI_Model {
 						COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
 						COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
 						COALESCE(es4.nama_eselon4,'-') as nama_eselon4,
-						".$select_opt."
+						a.local,
+						a.es1,
+						a.es2,
+						a.es3,
+						a.es4,
+						a.id,
+						b.id AS `id_posisi`,
+						b.kat_posisi,
+						c.posisi_class,
 						b.atasan,
 						'2019-02-01' as tmt
 					FROM mr_pegawai a
@@ -151,80 +147,48 @@ class Mmaster extends CI_Model {
 					".$sql_4."
 					".$sql_5."				
 					ORDER BY ".$order_by."";
-			
-
 		}
 		else
 		{
 			$sql_es1 = "";
 			$sql_es1a = "";			
-			if ($filter['eselon1'] == '') {
+			if ($filter['eselon1'] != '') {
 				# code...
-				$sql_es1 = "";
-				$sql_es1a = "";				
-			}
-			else{
 				$sql_es1  = "AND b.eselon1 = '".$filter['eselon1']."'";
 				$sql_es1a = "AND c.eselon1 = '".$filter['eselon1']."'";				
 			}
 
 			$sql_es2 = "";
 			$sql_es2a = "";
-			if ($filter['eselon2'] == '') {
+			if ($filter['eselon2'] != '') {
 				# code...
-				$sql_es2  = "";
-				$sql_es2a = "";				
-			}
-			else 
-			{
 				$sql_es2  = "AND b.eselon2 = '".$filter['eselon2']."'";
-				$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";				
+				$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";
 			}
 
 			$sql_es3 = "";
 			$sql_es3a = "";
-			if ($filter['eselon3'] == '') {
+			if ($filter['eselon3'] != '') {
 				# code...
-				$sql_es3  = "";
-				$sql_es3a = "";				
-			}
-			else 
-			{
 				$sql_es3  = "AND b.eselon3 = '".$filter['eselon3']."'";
 				$sql_es3a = "AND c.eselon3 = '".$filter['eselon3']."'";				
 			}
 
 			$sql_es4 = "";
 			$sql_es4a = "";
-			if ($filter['eselon4'] == '') {
+			if ($filter['eselon4'] != '') {
 				# code...
-				$sql_es4  = "";
-				$sql_es4a = "";				
-			}
-			else 
-			{
 				$sql_es4 = "AND b.eselon4 = '".$filter['eselon4']."'";
 				$sql_es4a = "AND c.eselon4 = '".$filter['eselon4']."'";				
 			}
-
-
-			// if ($filter['bulan'] == '') {
-			// 	# code...
-			// 	$sql_5 = "";
-			// }
-			// else $sql_5 = "AND a.bulan = '".$filter['bulan']."'";
-
-			if ($filter['tahun'] == '') {
-				# code...
-				$sql_6 = "";
-			}
-			else $sql_6 = "AND a.tahun = '".$filter['tahun']."'";
 			
-			// if ($filter['id_pegawai'] == '') {
-			// 	# code...
-			// 	$sql_7 = "";
-			// }
-			// else $sql_7 = "AND b.id = '".$filter['id_pegawai']."'";			
+			$sql_pegawai   = "";
+			$sql_pegawaia  = "";			
+			if ($filter['pegawai'] != '') {
+				# code...
+				$sql_pegawai  = "AND c.id = '".$filter['pegawai']."'";
+				$sql_pegawaia  = "AND a.id = '".$filter['pegawai']."'";
+			}
 
 			$sql = "SELECT    
 					a.id_pegawai,
@@ -357,6 +321,7 @@ class Mmaster extends CI_Model {
 				".$sql_es2."
 				".$sql_es3."
 				".$sql_es4."
+				".$sql_pegawai."
 				UNION
 					SELECT
 						a.id,
@@ -423,13 +388,14 @@ class Mmaster extends CI_Model {
 					".$sql_es2a."
 					".$sql_es3a."
 					".$sql_es4a."
+					".$sql_pegawaia."					
 					AND a.`id` NOT IN (
 						SELECT IFNULL(id_pegawai, 0)
 						FROM `rpt_capaian_kinerja`
 						WHERE bulan = ".$filter['bulan']."
 						AND tahun = ".$filter['tahun']."
 					)
-					ORDER BY eselon2 ASC, eselon3 ASC, eselon4 ASC, kat_posisi ASC, atasan ASC";
+					ORDER BY ".$order_by."";
 		}
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

@@ -503,9 +503,7 @@ class Globalrules extends CI_Model
 		{
 			$data['atasan_penilai'] = 0;			
 		}
-		// echo "<pre>";
-		// print_r($data['atasan_penilai']);die();
-		// echo "</pre>";
+
 		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
 /**********************************************************************************************************/
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
@@ -521,10 +519,6 @@ class Globalrules extends CI_Model
 /**********************************************************************************************************/
 		$data['summary_skp']['nilai_capaian_skp'] = "";
 		$data['summary_skp']['total_aspek']       = 0;
-		// echo "<pre>";
-		// print_r($data['list_skp']);
-		// echo "</pre>";
-		// die();		
 		if ($data['list_skp'] != 0) {
 				# code...
 			$total = "";
