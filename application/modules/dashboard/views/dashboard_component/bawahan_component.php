@@ -36,7 +36,7 @@
             </div>
         </div>    
         
-        <div class="col-lg-4">
+        <!-- <div class="col-lg-4">
             <div class="box">
                 <div class="box-body">
                     <h4 class="text-center">Apakah pegawai ini telah memenuhi capaian target SKP bulan ini ?</h4>                
@@ -50,7 +50,7 @@
                     </a>                                                            
                 </div>                
             </div>
-        </div>     
+        </div>      -->
         
         <div class="col-lg-12">
             <div class="container-fluid">
