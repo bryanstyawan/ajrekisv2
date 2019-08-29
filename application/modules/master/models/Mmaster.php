@@ -315,6 +315,7 @@ class Mmaster extends CI_Model {
 				WHERE c.id_role <> 7
 				AND c.id_role <> 6
 				AND a.`id_pegawai` IS NOT NULL		
+				AND a.menit_efektif <> 0				
 				AND a.bulan = ".$filter['bulan']."
 				AND a.tahun = ".$filter['tahun']."		
 				".$sql_es1."
