@@ -14,8 +14,6 @@ if ($menit_efektif_year != 0) {
     $data_value = json_encode($data_value);
 }
 
-$data_menit = "";
-
 $nama_pegawai  = "";
 $nama_jabatan  = "";
 $nama_eselon1  = "";
@@ -49,19 +47,6 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $nama_agama    = $infoPegawai[0]->nama_agama;
 }
 
-$prosentase_menit_efektif_rpt = 0;
-$menit_efektif_rpt            = 0;
-if ($menit_efektif_dashboard != 0) {
-    # code...
-    $menit_efektif_rpt            = $menit_efektif_dashboard[0]->menit_efektif;
-    $prosentase_menit_efektif_rpt = $menit_efektif_dashboard[0]->prosentase_menit_efektif;    
-}
-
-$real_tunjangan_rpt = 0;
-if ($menit_efektif_dashboard != 0) {
-    # code...
-    $real_tunjangan_rpt =  $menit_efektif_dashboard[0]->tunjangankinerja;
-}
 $fingerprint = "";
 ?>
 
@@ -95,7 +80,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
-        'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa) ,
+        'value_php' => (($summary_tr == '') ? 0 : $summary_tr[0]->tr_belum_diperiksa),
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
@@ -103,7 +88,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_realisasi_menit_efektif',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
-        'value_php' => number_format($menit_efektif_rpt),
+        'value_php' => (($summary_tr == '') ? 0 : $summary_tr[0]->menit_efektif),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
         'html'      => ''));                       
     $this->load->view('dashboard_component/common_component',array(
@@ -119,7 +104,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_tunjangan',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
-        'value_php' => 'Rp. '.number_format($real_tunjangan_rpt),
+        'value_php' => (($summary_tr == '') ? 0 : 'Rp.'.number_format($summary_tr[0]->real_tunjangan,0)),
         'title'     => 'TUNJANGAN',
         'html'      => ''));    
     $this->load->view('dashboard_component/common_finger',array(
@@ -210,7 +195,7 @@ else {
                     height:200,
                     max:100,
                 });
-        $('#gaugeContainer').jqxGauge('value', <?php echo $prosentase_menit_efektif_rpt;?>);
+        $('#gaugeContainer').jqxGauge('value', <?=(($summary_tr == '') ? 0 : $summary_tr[0]->prosentase_menit_efektif);?>);
 
         $("#btn-detail").click(function()
         {
