@@ -20,6 +20,7 @@ class Dashboard extends CI_Controller {
 			$data['title']                   = '';
 			$data['content']                 = 'vdashboard';
 			$data['id_posisi']               = $this->session->userdata('sesPosisi');
+			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
 
 			$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();
 			$data['skp']                      = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
@@ -217,7 +218,7 @@ class Dashboard extends CI_Controller {
 					);
 		if ($getdata == array()) {
 			# code...
-			$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$data);
+			// $res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$data);
 		}							
 		else {
 			# code...

@@ -80,7 +80,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
-        'value_php' => (($summary_tr == '') ? 0 : $summary_tr[0]->tr_belum_diperiksa),
+        'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa),
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
