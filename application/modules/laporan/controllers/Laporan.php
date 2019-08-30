@@ -45,7 +45,8 @@ class Laporan extends CI_Controller {
 							'eselon4'    => $data_sender['data_4'],
 							'bulan'      => $data_sender['data_5'],
 							'tahun'		 => $data_sender['data_6'],
-							'pegawai'	 => ''
+							'pegawai'	 => '',
+							'posisi'	 => ''
 						);
 		$data['sender'] = $data_sender;
 		$data['list']   = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,
@@ -163,7 +164,8 @@ class Laporan extends CI_Controller {
 							'eselon4'    => $es4,
 							'bulan' 	 => $bulan,
 							'tahun'		 => $tahun,
-							'pegawai'	 => ''							
+							'pegawai'	 => '',
+							'posisi'	 => ''							
 						);		
 		// die();
 		$data['list']   = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,
@@ -304,7 +306,8 @@ class Laporan extends CI_Controller {
 							'eselon4'    => $data_sender['data_4'],
 							'bulan'      => $data_sender['data_5'],
 							'tahun'		 => $data_sender['data_6'],
-							'pegawai'	 => ''
+							'pegawai'	 => '',
+							'posisi'	 => ''
 						);
 		$data['sender'] = $data_sender;
 		$data['list']   = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,
@@ -330,7 +333,8 @@ class Laporan extends CI_Controller {
 							'eselon4'    => $es4,
 							'bulan' 	 => $bulan,
 							'tahun'		 => $tahun,
-							'pegawai'	 => ''							
+							'pegawai'	 => '',
+							'posisi'	 => ''							
 						);		
 		// die();
 		$data['list']   = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,

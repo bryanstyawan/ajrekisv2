@@ -190,6 +190,14 @@ class Mmaster extends CI_Model {
 				$sql_pegawaia  = "AND a.id = '".$filter['pegawai']."'";
 			}
 
+			$sql_posisi   = "";
+			$sql_posisia   = "";			
+			if ($filter['posisi'] != '') {
+				# code...
+				$sql_posisi  = "AND b.id = '".$filter['posisi']."'";
+				$sql_posisia  = "AND c.id = '".$filter['posisi']."'";
+			}			
+
 			$sql = "SELECT    
 					a.id_pegawai,
 					b.eselon1,
@@ -297,7 +305,7 @@ class Mmaster extends CI_Model {
 					)  as real_tunjangan,
 					a.real_tunjangan as real_tunjangan_sb_potongan  			
 				FROM `rpt_capaian_kinerja` a
-				LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
+				LEFT JOIN mr_posisi b ON b.id = a.id_posisi
 				LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
 				LEFT JOIN mr_eselon1 d on b.eselon1 = d.id_es1
 				LEFT JOIN mr_eselon2 e on b.eselon2 = e.id_es2
@@ -315,7 +323,7 @@ class Mmaster extends CI_Model {
 				WHERE c.id_role <> 7
 				AND c.id_role <> 6
 				AND a.`id_pegawai` IS NOT NULL		
-				AND a.menit_efektif <> 0				
+				AND a.id_posisi <> 0				
 				AND a.bulan = ".$filter['bulan']."
 				AND a.tahun = ".$filter['tahun']."		
 				".$sql_es1."
@@ -323,6 +331,7 @@ class Mmaster extends CI_Model {
 				".$sql_es3."
 				".$sql_es4."
 				".$sql_pegawai."
+				".$sql_posisi."				
 				UNION
 					SELECT
 						a.id,
@@ -389,7 +398,8 @@ class Mmaster extends CI_Model {
 					".$sql_es2a."
 					".$sql_es3a."
 					".$sql_es4a."
-					".$sql_pegawaia."					
+					".$sql_pegawaia."
+					".$sql_posisi."										
 					AND a.`id` NOT IN (
 						SELECT IFNULL(id_pegawai, 0)
 						FROM `rpt_capaian_kinerja`

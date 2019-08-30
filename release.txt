@@ -4,6 +4,7 @@ New:
 Improved:
 Fixed:
 - API SSL certificate problem
+- Integrasi data report dengan dashboard berdasarkan pegawai dan posisi
 Canceled:
 
 v4.1.2.5.2

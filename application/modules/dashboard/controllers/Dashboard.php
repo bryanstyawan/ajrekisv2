@@ -39,7 +39,8 @@ class Dashboard extends CI_Controller {
 																		'eselon4'    => '',
 																		'bulan'      => date('m'),
 																		'tahun'		 => date('Y'),
-																		'pegawai'	 => $this->session->userdata('sesUser')
+																		'pegawai'	 => $this->session->userdata('sesUser'),
+																		'posisi'	 => $this->session->userdata('sesPosisi')																		
 																	));					
 		}
 		else
