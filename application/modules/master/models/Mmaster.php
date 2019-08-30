@@ -304,7 +304,8 @@ class Mmaster extends CI_Model {
 						)						
 					)  as real_tunjangan,
 					a.real_tunjangan as real_tunjangan_sb_potongan,
-					a.persentase_pemotongan  			
+					a.persentase_pemotongan,
+					a.audit_check_skp		
 				FROM `rpt_capaian_kinerja` a
 				LEFT JOIN mr_posisi b ON b.id = a.id_posisi
 				LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
@@ -376,7 +377,8 @@ class Mmaster extends CI_Model {
 						IFNULL(tp.tunjangan, 0) as tunjangan_profesi,						
 						IFNULL(b.real_tunjangan,0),
 						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan,
-						IFNULL(b.persentase_pemotongan,5) as persentase_pemotongan 						
+						IFNULL(b.persentase_pemotongan,5) as persentase_pemotongan,
+						IFNULL(b.audit_check_skp,0) as audit_check_skp   						
 					FROM mr_pegawai a
 					LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
 					AND b.bulan = ".$filter['bulan']."
