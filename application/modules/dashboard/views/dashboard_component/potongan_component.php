@@ -1,9 +1,9 @@
 <div class="col-md-12" style="padding: 0px;">
 
 <?php
-    if ($notify_penilaian_skp != 0) {
+    if ($summary_tr != 0) {
         # code...
-        if ($notify_penilaian_skp[0]->flag_sudah_diperiksa == 0) {
+        if ($summary_tr[0]->audit_check_skp == 0) {
             # code...
 ?>
             <div class="callout callout-warning">
@@ -14,7 +14,7 @@
         }
         else {
             # code...
-            if ($notify_penilaian_skp[0]->persentase_pemotongan == 5) {
+            if ($summary_tr[0]->persentase_pemotongan == 5) {
                 # code...
 ?>
                 <div class="callout callout-danger">
