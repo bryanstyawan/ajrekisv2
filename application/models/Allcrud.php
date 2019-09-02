@@ -51,8 +51,8 @@ class Allcrud extends CI_Model {
 		return $this->db->update($table,$data);
 	}
 
-	public function approve_transaksi($id_tran,$id_atasan){
-		$SQL = "call approve_tran($id_tran,$id_atasan)";
+	public function approve_transaksi($kode, $id_tran,$id_atasan){
+		$SQL = "call approve_tran($kode, $id_tran,$id_atasan)";
 		$query = $this->db->query($SQL);
 		// print_r($query);die();
         return $this->db->affected_rows();
