@@ -1,3 +1,67 @@
+v4.1.2.5.2
+2019-08-30
+New:
+Improved:
+Fixed:
+- API SSL certificate problem
+- Integrasi data report dengan dashboard berdasarkan pegawai dan posisi
+- pemberitahuan Integrasi data report dengan dashboard
+Canceled:
+- notify_penilaian_skp
+
+v4.1.2.5.2
+2019-08-29
+New:
+Improved:
+- Code Review Globalrules
+- Code Review Dashboard
+- Code Review laporan
+- Integrasi data report dengan dashboard
+Fixed:
+Canceled:
+- hari_kerja [dashboard]
+- agama [dashboard]
+- golongan [dashboard]
+- history_golongan [dashboard]
+- data_transaksi_rpt [dashboard]
+- API Kinerja [dashboard]
+- import tunkir produktivitas disiplin
+- Rekap Banding
+- Rekap Tunjangan
+- Rekap keberatan
+
+v4.1.2.5.1
+2019-08-27
+New:
+Improved:
+- Ubah Data Pribadi menjadi Data Pribadi
+- Report Tunjangan Kinerja [Tunjangan profesi, pemotongan skp bulanan]
+Fixed:
+- Penilaian SKP Bulanan di PLT
+- Upload tugas tambabahan dan kreativitas
+Canceled:
+- Tombol Edit di data profile
+
+v4.1.2.5
+2019-08-26
+New:
+- Autocomplete data transaksi
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.5
+2019-08-19
+New:
+Improved:
+- Code Review
+- Auth
+- Store api Pendidikan
+Fixed:
+Canceled:
+- Notification
+- Madmin
+
 v4.1.2.5
 2019-09-02
 New:
@@ -144,6 +208,8 @@ v4.1.2.3
 2019-07-12
 New:
 Improved:
+- Eselon 1 tidak ada pemotongan tunjangan dari penilaian skp bulanan
+- Setup gitignore [node_module]
 Fixed:
 - id pegawai yang hilang di master pegawai
 - Layout capaian skp [dashboard]

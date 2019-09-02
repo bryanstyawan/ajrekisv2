@@ -47,3 +47,13 @@ findit
 finditxx
 /dashboard
 /analisa_query
+/advanced/*
+/okstore/*
+/assets_home/slider/*
+/assets_home/login/*
+application/config/config.php
+application/config/database.php
+/kinerja/application/config/database.php
+.htaccess
+/assets_home/x_css
+/node_modules/

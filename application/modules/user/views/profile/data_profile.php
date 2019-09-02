@@ -189,9 +189,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 pull-right">
-                                    <button class="btn btn-block btn-primary" id="btn_edit" onclick="main_form('BIODATA','update','<?php echo $infoPegawai[0]->id;?>')"> Edit Data</button>
-                                </div>
                             </div>
 
                             <!-- Tab Pangkat -->
@@ -257,7 +254,8 @@
                                                             <th>Nama Sekolah</th>
                                                             <th>Lokasi Sekolah</th>
                                                             <th>Tahun Lulus</th>
-                                                            <th>Aksi</th>
+                                                            <!-- <th>Skoring</th> -->
+                                                            <!-- <th>Aksi</th> -->
                                                         </tr>
                                                     </thead>
                                                     <tbody id="table_content">
@@ -807,8 +805,8 @@ function profile() {
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
-            console.log(obj.results);
-            console.log(obj.results.nama);                        
+            // console.log(obj.results);
+            // console.log(obj.results.nama);                        
         },
         error:function(jqXHR,exception) {
             ajax_catch(jqXHR,exception);					
@@ -835,7 +833,7 @@ function riwayat_pendidikan() {
                             '<td>'+obj.results[i].nsek+'</td>'+
                             '<td>'+obj.results[i].tempat+'</td>'+
                             '<td>'+obj.results[i].thnlulus+'</td>'+
-                            '<td></td>'+                                                                                                                
+                            // '<td>'+obj.results[i].scoring+'</td>'+
                         '</tr>';                                          
             }  
             $("#li_pendidikan_umum > div > div > div > div > table > tbody").html(tr_insert);                        
@@ -883,7 +881,7 @@ function riwayat_jabatan() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                             '<td>'+(i +1)+'</td>'+
@@ -911,7 +909,7 @@ function riwayat_diklat_struktural() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                             '<td>'+(i +1)+'</td>'+
@@ -942,7 +940,7 @@ function riwayat_diklat_fungsional() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                                 '<td>'+(i +1)+'</td>'+
@@ -973,7 +971,7 @@ function riwayat_diklat_teknis() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                             '<td>'+(i +1)+'</td>'+
@@ -1004,7 +1002,7 @@ function riwayat_konferensi() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                                 '<td>'+(i +1)+'</td>'+
@@ -1036,7 +1034,7 @@ function karya_tulis() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                                 '<td>'+(i +1)+'</td>'+
@@ -1063,7 +1061,7 @@ function penghargaan() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                                 '<td>'+(i +1)+'</td>'+
@@ -1092,7 +1090,7 @@ function organisasi() {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             tr_insert = "";
-            console.log(obj.results);
+            // console.log(obj.results);
             for (i=0 ;i<obj.results.length;i++) {
                 tr_insert += '<tr>'+
                                 '<td>'+(i +1)+'</td>'+
@@ -1123,7 +1121,6 @@ function main_form(modul,params,id) {
             },
             success:function(msg){
                 var obj = jQuery.parseJSON (msg);
-                console.log();
                 $(".form-control-detail").val('');
                 $("#form_section_biodata").css({"display": ""})
                 $("#view_section").css({"display": "none"})

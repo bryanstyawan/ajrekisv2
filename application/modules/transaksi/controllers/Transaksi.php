@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Transaksi extends CI_Controller {
 
 	public function __construct () {
@@ -413,6 +412,14 @@ class Transaksi extends CI_Controller {
 			$res_data = 1;
 		}
 		$text_status = "Data pekerjaan telah disetujui";
+		// $data_notify  = array
+		// 				(
+		// 					'id_table'   => $id,
+		// 					'table_name' => 'tr_capaian_pekerjaan'
+		// 				);
+		// $this->Globalrules->push_notifikasi($data_notify,'read_data');
+
+		// $this->notify_capaian_kerja('Pekerjaan anda telah disetujui','transaksi/home/'.$id.'/',$id,'notify');
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
 					(
@@ -1198,11 +1205,17 @@ class Transaksi extends CI_Controller {
 		$res_data_id			 = "";
 		$text_status             = "";
 		$data_sender             = $this->input->post('data_sender');
-		$config['upload_path']   = FCPATH.'/public/file_tugas_tambahan/';
+        $nip                     = $this->session->userdata('sesNip');
+        $config['upload_path']   = FCPATH."/public/file_tugas_tambahan/".$nip."/";		
 		$config['allowed_types'] = 'pdf|csv|zip|docx|doc|xlsx|xl|xls|jpg|jpeg';
 		$config['max_size']      = '3000';
 
 		$this->load->library('upload', $config);
+
+		if(!is_dir("public/file_pendukung/".$nip."/"))
+		{
+			mkdir("public/file_pendukung/".$nip."/", 0755);
+		}        
 
 		if ( ! $this->upload->do_upload('file')){
 			$res_data       = 0;

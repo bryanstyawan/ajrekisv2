@@ -54,27 +54,15 @@ class Mmaster extends CI_Model {
 	public function data_pegawai($flag=NULL,$order_by=NULL,$filter=NULL)
 	{
 		# code...
-		$sql        = "";
-		$sql_1      = "";
-		$sql_2      = "";
-		$sql_3      = "";
-		$sql_4      = "";
-		$sql_5      = "";
-		$sql_6      = "";				
-		$sql_7      = "";		
-		$join_1 	= "";	 
-		$select_opt = " a.local,
-						a.es1,
-						a.es2,
-						a.es3,
-						a.es4,
-						a.id,
-						b.id AS `id_posisi`,
-						b.kat_posisi,
-						c.posisi_class,";
-
 		if ($flag != 'kinerja') {
 			# code...
+			$sql        = "";
+			$sql_1      = "";
+			$sql_2      = "";
+			$sql_3      = "";
+			$sql_4      = "";
+			$sql_5      = "";
+
 			if ($flag == 'default')
 			{
 				# code...
@@ -130,7 +118,15 @@ class Mmaster extends CI_Model {
 						COALESCE(es2.nama_eselon2,'-') as nama_eselon2,
 						COALESCE(es3.nama_eselon3,'-') as nama_eselon3,
 						COALESCE(es4.nama_eselon4,'-') as nama_eselon4,
-						".$select_opt."
+						a.local,
+						a.es1,
+						a.es2,
+						a.es3,
+						a.es4,
+						a.id,
+						b.id AS `id_posisi`,
+						b.kat_posisi,
+						c.posisi_class,
 						b.atasan,
 						'2019-02-01' as tmt
 					FROM mr_pegawai a
@@ -151,80 +147,56 @@ class Mmaster extends CI_Model {
 					".$sql_4."
 					".$sql_5."				
 					ORDER BY ".$order_by."";
-			
-
 		}
 		else
 		{
 			$sql_es1 = "";
 			$sql_es1a = "";			
-			if ($filter['eselon1'] == '') {
+			if ($filter['eselon1'] != '') {
 				# code...
-				$sql_es1 = "";
-				$sql_es1a = "";				
-			}
-			else{
 				$sql_es1  = "AND b.eselon1 = '".$filter['eselon1']."'";
 				$sql_es1a = "AND c.eselon1 = '".$filter['eselon1']."'";				
 			}
 
 			$sql_es2 = "";
 			$sql_es2a = "";
-			if ($filter['eselon2'] == '') {
+			if ($filter['eselon2'] != '') {
 				# code...
-				$sql_es2  = "";
-				$sql_es2a = "";				
-			}
-			else 
-			{
 				$sql_es2  = "AND b.eselon2 = '".$filter['eselon2']."'";
-				$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";				
+				$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";
 			}
 
 			$sql_es3 = "";
 			$sql_es3a = "";
-			if ($filter['eselon3'] == '') {
+			if ($filter['eselon3'] != '') {
 				# code...
-				$sql_es3  = "";
-				$sql_es3a = "";				
-			}
-			else 
-			{
 				$sql_es3  = "AND b.eselon3 = '".$filter['eselon3']."'";
 				$sql_es3a = "AND c.eselon3 = '".$filter['eselon3']."'";				
 			}
 
 			$sql_es4 = "";
 			$sql_es4a = "";
-			if ($filter['eselon4'] == '') {
+			if ($filter['eselon4'] != '') {
 				# code...
-				$sql_es4  = "";
-				$sql_es4a = "";				
-			}
-			else 
-			{
 				$sql_es4 = "AND b.eselon4 = '".$filter['eselon4']."'";
 				$sql_es4a = "AND c.eselon4 = '".$filter['eselon4']."'";				
 			}
-
-
-			// if ($filter['bulan'] == '') {
-			// 	# code...
-			// 	$sql_5 = "";
-			// }
-			// else $sql_5 = "AND a.bulan = '".$filter['bulan']."'";
-
-			if ($filter['tahun'] == '') {
-				# code...
-				$sql_6 = "";
-			}
-			else $sql_6 = "AND a.tahun = '".$filter['tahun']."'";
 			
-			// if ($filter['id_pegawai'] == '') {
-			// 	# code...
-			// 	$sql_7 = "";
-			// }
-			// else $sql_7 = "AND b.id = '".$filter['id_pegawai']."'";			
+			$sql_pegawai   = "";
+			$sql_pegawaia  = "";			
+			if ($filter['pegawai'] != '') {
+				# code...
+				$sql_pegawai  = "AND c.id = '".$filter['pegawai']."'";
+				$sql_pegawaia  = "AND a.id = '".$filter['pegawai']."'";
+			}
+
+			$sql_posisi   = "";
+			$sql_posisia   = "";			
+			if ($filter['posisi'] != '') {
+				# code...
+				$sql_posisi  = "AND b.id = '".$filter['posisi']."'";
+				$sql_posisia  = "AND c.id = '".$filter['posisi']."'";
+			}			
 
 			$sql = "SELECT    
 					a.id_pegawai,
@@ -263,38 +235,46 @@ class Mmaster extends CI_Model {
 						WHEN b.kat_posisi = 4 THEN j.tunjangan
 						WHEN b.kat_posisi = 6 THEN h.tunjangan
 					END as tunjangan_definitif,
-					IF(a.bulan = 7 && a.tahun = 2019,0,
-						IFNULL(
-										CASE
-											WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
-											WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
-											WHEN a.persentase_pemotongan = NULL THEN 5
-										END,5
-									)
-					) AS persentase_pemotongan_potongan_skp_bulanan,
-					IF(a.bulan = 7 && a.tahun = 2019,0,
-							(
+					IF(b.atasan = 0 && b.kat_posisi = 1,0,
+						(
+							IF(a.bulan = 7 && a.tahun = 2019,0,
 								IFNULL(
-											CASE
-												WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
-												WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
-												WHEN a.persentase_pemotongan = NULL THEN 5
-											END,5
-										)*a.real_tunjangan
-							)/100
-					)as nilai_potongan_skp_bulanan,
-					IFNULL(tp.tunjangan,0) as tunjangan_profesi,
-					IF(IFNULL(tp.tunjangan,0) = 0, 
-						(a.real_tunjangan - IF(a.bulan = 7 && a.tahun = 2019,0,
-								(
-									IFNULL(
+												CASE
+													WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+													WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+													WHEN a.persentase_pemotongan = NULL THEN 5
+												END,5
+											)
+							)
+						)
+					) AS persentase_pemotongan_potongan_skp_bulanan,
+					IF(b.atasan = 0 && b.kat_posisi = 1,0,
+						(
+							IF(a.bulan = 7 && a.tahun = 2019,0,
+								IFNULL(
 												CASE
 													WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
 													WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
 													WHEN a.persentase_pemotongan = NULL THEN 5
 												END,5
 											)*a.real_tunjangan
+							)/100
+						)
+					) as nilai_potongan_skp_bulanan,
+					IFNULL(tp.tunjangan,0) as tunjangan_profesi,
+					IF(IFNULL(tp.tunjangan,0) = 0, 
+						(a.real_tunjangan -  IF(b.atasan = 0 && b.kat_posisi = 1,0,
+							(
+								IF(a.bulan = 7 && a.tahun = 2019,0,
+									IFNULL(
+										CASE
+											WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+											WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+											WHEN a.persentase_pemotongan = NULL THEN 5
+										END,5
+									)*a.real_tunjangan
 								)/100
+							)
 						))
 						,
 						(
@@ -322,10 +302,12 @@ class Mmaster extends CI_Model {
 								) * 0.5															
 							)
 						)						
-						)  as real_tunjangan,
-					a.real_tunjangan as real_tunjangan_sb_potongan  			
+					)  as real_tunjangan,
+					a.real_tunjangan as real_tunjangan_sb_potongan,
+					a.persentase_pemotongan,
+					a.audit_check_skp		
 				FROM `rpt_capaian_kinerja` a
-				LEFT JOIN mr_posisi b ON b.id = a.`id_posisi`
+				LEFT JOIN mr_posisi b ON b.id = a.id_posisi
 				LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
 				LEFT JOIN mr_eselon1 d on b.eselon1 = d.id_es1
 				LEFT JOIN mr_eselon2 e on b.eselon2 = e.id_es2
@@ -343,12 +325,15 @@ class Mmaster extends CI_Model {
 				WHERE c.id_role <> 7
 				AND c.id_role <> 6
 				AND a.`id_pegawai` IS NOT NULL		
+				AND a.id_posisi <> 0				
 				AND a.bulan = ".$filter['bulan']."
 				AND a.tahun = ".$filter['tahun']."		
 				".$sql_es1."
 				".$sql_es2."
 				".$sql_es3."
 				".$sql_es4."
+				".$sql_pegawai."
+				".$sql_posisi."				
 				UNION
 					SELECT
 						a.id,
@@ -391,7 +376,9 @@ class Mmaster extends CI_Model {
 						IFNULL(b.persentase_pemotongan, 0) as nilai_potongan_skp_bulanan,						
 						IFNULL(tp.tunjangan, 0) as tunjangan_profesi,						
 						IFNULL(b.real_tunjangan,0),
-						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan						
+						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan,
+						IFNULL(b.persentase_pemotongan,5) as persentase_pemotongan,
+						IFNULL(b.audit_check_skp,0) as audit_check_skp   						
 					FROM mr_pegawai a
 					LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
 					AND b.bulan = ".$filter['bulan']."
@@ -415,15 +402,16 @@ class Mmaster extends CI_Model {
 					".$sql_es2a."
 					".$sql_es3a."
 					".$sql_es4a."
+					".$sql_pegawaia."
+					".$sql_posisi."										
 					AND a.`id` NOT IN (
 						SELECT IFNULL(id_pegawai, 0)
 						FROM `rpt_capaian_kinerja`
 						WHERE bulan = ".$filter['bulan']."
 						AND tahun = ".$filter['tahun']."
 					)
-					ORDER BY eselon2 ASC, eselon3 ASC, eselon4 ASC, kat_posisi ASC, atasan ASC";
+					ORDER BY ".$order_by."";
 		}
-		// print_r($sql);die();		
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		 {

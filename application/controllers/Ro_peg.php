@@ -1,85 +1,60 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Ro_peg extends CI_Controller {
-	public function __construct() {
-		parent::__construct();
-	}
+  public function __construct() {
+  parent::__construct();
+}
+public function index(){
+            	
+          
 
-	public function index(){
-		$curl = curl_init();
+$curl = curl_init();
 
-		$this->Globalrules->session_rule();	
-		$nip = $this->session->userdata('sesNip');
-		$hari = date('Y-m-d');
+$this->Globalrules->session_rule();	
+$nip = $this->session->userdata('sesNip');
+$hari = date('Y-m-d');
 
-		$month = substr($hari,6,1);
-		$year = substr($hari,0,4);
-		curl_setopt_array($curl, array(
-										CURLOPT_PORT => "8090",
-										CURLOPT_URL => "http://192.168.193.172:8090/esidik/api/presensi/getpotongan",
-										CURLOPT_RETURNTRANSFER => true,
-										CURLOPT_ENCODING => "",
-										CURLOPT_MAXREDIRS => 10,
-										CURLOPT_TIMEOUT => 360,
-										CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-										CURLOPT_CUSTOMREQUEST => "POST",
-										CURLOPT_POSTFIELDS => "token=80f0d4e2dcda977afbfbed11de34b6b4&nip=$nip&month=$month&year=$year",
-										CURLOPT_HTTPHEADER => array(
-																		"Accept: */*",
-																		"Cache-Control: no-cache",
-																		"Connection: keep-alive",
-																		"Content-Type: application/x-www-form-urlencoded",
-																		"Host: 192.168.193.172:8090",
-																		"Postman-Token: 56e5503f-b702-4aa2-8456-328c677911ed,79ca6720-2e5a-4e1d-80e7-7d9156717897",
-																		"User-Agent: PostmanRuntime/7.13.0",
-																		"accept-encoding: gzip, deflate",
-																		"cache-control: no-cache",
-																		"content-length: 79",
-																		"cookie: abs3nDagr1=1u4nv51j49i0r3a8dp8a8vldvmq5iknp"
-																	),
-										));
-		$response = curl_exec($curl);
-		$err = curl_error($curl);
-		curl_close($curl);
+$month = substr($hari,6,1);
+$year = substr($hari,0,4);
+curl_setopt_array($curl, array(
+  CURLOPT_PORT => "8090",
+  CURLOPT_URL => "http://192.168.193.172:8090/esidik/api/presensi/getpotongan",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 360,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS => "token=80f0d4e2dcda977afbfbed11de34b6b4&nip=$nip&month=$month&year=$year",
+  CURLOPT_HTTPHEADER => array(
+    "Accept: */*",
+    "Cache-Control: no-cache",
+    "Connection: keep-alive",
+    "Content-Type: application/x-www-form-urlencoded",
+    "Host: 192.168.193.172:8090",
+    "Postman-Token: 56e5503f-b702-4aa2-8456-328c677911ed,79ca6720-2e5a-4e1d-80e7-7d9156717897",
+    "User-Agent: PostmanRuntime/7.13.0",
+    "accept-encoding: gzip, deflate",
+    "cache-control: no-cache",
+    "content-length: 79",
+    "cookie: abs3nDagr1=1u4nv51j49i0r3a8dp8a8vldvmq5iknp"
+  ),
+));
 
-		if ($err) 
-		{
-			echo "cURL Error #:" . $err;
-		} 
-		else 
-		{
-			$data_decode     = json_decode($response)->results;
-			$data_header     = $data_decode->info_pegawai;
-			$data_detail     = $data_decode->data;
-			$jumlah_potongan = 0;
-			if (count($data_detail) != 0) {
-				# code...
-				for ($i=0; $i < count($data_detail); $i++) { 
-					# code...
-					$data_store_detail = array(
-						'id_pegawai' => $this->session->userdata('sesUser'),						
-						'tanggal'    => $data_detail[$i]->tgl,
-						'status'     => $data_detail[$i]->status,
-						'nilai'		 => $data_detail[$i]->nilai,
-						'persentase' => $data_detail[$i]->persentase,
-						'jumlah'     => $data_detail[$i]->jumlah
-					); 
-					$jumlah_potongan += $data_detail[$i]->jumlah;
-	
-				}				
-			}
+$response = curl_exec($curl);
+$err = curl_error($curl);
 
-			// $data_header[0]
-			$tunjangan = $data_header[0]->tunjangan - $jumlah_potongan; 
-			$data_store = array(
-				'tunjangan'  => $tunjangan,
-				'id_pegawai' => $this->session->userdata('sesUser'),
-				'tahun'      => date('Y'),
-				'bulan'      => date('m')
-			);
-			// print_r($data_store);die();   
-			echo $response;
-		}
-	}
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+
+}
+
+
+
 }
 
 

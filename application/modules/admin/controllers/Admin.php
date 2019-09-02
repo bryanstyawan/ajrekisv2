@@ -6,7 +6,7 @@ class Admin extends CI_Controller
 	public function __construct () 
 	{
 		parent::__construct();
-		$this->load->model ('Madmin', '', TRUE);
+		// $this->load->model ('Madmin', '', TRUE);
 		$this->load->model ('mlogin', '', TRUE);		
 		date_default_timezone_set('Asia/Jakarta');				
 	}
@@ -59,17 +59,17 @@ class Admin extends CI_Controller
 		}
 	}
 
-	public function user()
-	{
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();	
+	// public function user()
+	// {
+	// 	$this->Globalrules->session_rule();
+	// 	$this->Globalrules->notif_message();	
 
-		$data['title']   = 'Administrator';
-		$data['content'] = 'admin/user/data_user';
-		$data['role']    = $this->Allcrud->listData('user_role');
-		$data['user']    = $this->madmin->datauser();
-		$this->load->view('templateAdmin',$data);
-	}
+	// 	$data['title']   = 'Administrator';
+	// 	$data['content'] = 'admin/user/data_user';
+	// 	$data['role']    = $this->Allcrud->listData('user_role');
+	// 	$data['user']    = $this->madmin->datauser();
+	// 	$this->load->view('templateAdmin',$data);
+	// }
 
 	public function adduser()
 	{
@@ -87,11 +87,11 @@ class Admin extends CI_Controller
 		$this->Allcrud->addData('user',$add);
 	}
 
-	public function ajaxuser(){
-		$this->Globalrules->notif_message();		
-		$data['user'] = $this->madmin->datauser();
-		$this->load->view('admin/user/ajaxuser',$data);
-	}
+	// public function ajaxuser(){
+	// 	$this->Globalrules->notif_message();		
+	// 	$data['user'] = $this->madmin->datauser();
+	// 	$this->load->view('admin/user/ajaxuser',$data);
+	// }
 
 	public function edituser($id){
 		$this->Globalrules->notif_message();		

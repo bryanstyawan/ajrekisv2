@@ -16,17 +16,22 @@ class Mlogin extends CI_Model {
 					(
 						array
 						(
-							'password' => 'PKPSikerja2019',
+							'password' => 'belumada',
 							'except'   => '1'
 						),
 						array
 						(
-							'password' => 'adelina123',
+							'password' => 'guest',
+							'except'   => '1'
+						),						
+						array
+						(
+							'password' => '',
 							'except'   => 'none'
 						),
 						array
 						(
-							'password' => 'pkpadmin2019',
+							'password' => 'spasienter',
 							'except'   => 'none'
 						)						
 					);
@@ -195,5 +200,88 @@ class Mlogin extends CI_Model {
 		$this->db->limit(1);
 		return $this->db->get('captcha');
 	}
+
+	// public function get_history_golongan()
+	// {
+	// 	# code...
+	// 	$sql = "SELECT a.*,
+	// 					b.nama_pangkat
+	// 			FROM mr_history_golongan a
+	// 			JOIN mr_golongan b
+	// 			ON a.id_golongan = b.id
+	// 			WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+	// 			ORDER BY a.tmt DESC";
+	// 	$query = $this->db->query($sql);
+	// 	if($query->num_rows() > 0)
+	// 	{
+	// 		return $query->result();
+	// 	}
+	// 	else
+	// 	{
+	// 		return 0;
+	// 	}								
+	// }
+
+	// public function get_history_jabatan()
+	// {
+	// 	# code...
+	// 	$sql = "SELECT a.*,
+	// 					b.nama_posisi,
+	// 					c.nama_kat_posisi
+	// 			FROM (mr_masa_kerja a
+	// 			JOIN mr_posisi b ON a.id_posisi = b.id)
+	// 			JOIN mr_kat_posisi c ON b.kat_posisi = c.id
+	// 			WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+	// 			ORDER BY a.StartDate DESC";
+	// 	$query = $this->db->query($sql);
+	// 	if($query->num_rows() > 0)
+	// 	{
+	// 		return $query->result();
+	// 	}
+	// 	else
+	// 	{
+	// 		return 0;
+	// 	}								
+	// }	
+
+	// public function get_history_pendidikan()
+	// {
+	// 	# code...
+	// 	$sql = "SELECT a.*,
+	// 					b.kode,
+	// 					b.nama_pendidikan
+	// 			FROM mr_history_pendidikan a
+	// 			JOIN mr_pendidikan b ON a.id_pendidikan = b.id_pendidikan
+	// 			WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+	// 			ORDER BY a.tahun_lulus DESC";
+	// 	$query = $this->db->query($sql);
+	// 	if($query->num_rows() > 0)
+	// 	{
+	// 		return $query->result();
+	// 	}
+	// 	else
+	// 	{
+	// 		return 0;
+	// 	}								
+	// }
+	
+	// public function get_history_diklat($id_diklat)
+	// {
+	// 	# code...
+	// 	$sql = "SELECT a.*
+	// 			FROM mr_history_diklat a
+	// 			WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+	// 			AND a.id_diklat = '".$id_diklat."'
+	// 			ORDER BY a.tgl_mulai DESC";
+	// 	$query = $this->db->query($sql);
+	// 	if($query->num_rows() > 0)
+	// 	{
+	// 		return $query->result();
+	// 	}
+	// 	else
+	// 	{
+	// 		return 0;
+	// 	}								
+	// }	
 	
 }

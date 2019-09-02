@@ -43,16 +43,6 @@
 										$query_atasan_bawahan
 										ORDER BY prioritas asc"
 									);
-		// $notify       = $CI->db->query("SELECT a.*,
-		// 										COALESCE(sender.photo,'-') as photo_sender
-		// 								FROM log_notifikasi a
-		// 								LEFT JOIN mr_pegawai sender
-		// 								ON sender.id = a.sender										
-		// 								WHERE a.receiver    = '".$id."'
-		// 								AND   a.status_read = 0
-		// 								ORDER BY a.id DESC"
-		// 							);
-		// $count_notify = count($notify->result());
 		$CI->load->view('templates/header/head');
 		$CI->load->view('templates/header/navigation');							
 		if ($id_posisi != 0) {
