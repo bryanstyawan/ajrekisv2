@@ -63,6 +63,14 @@ Canceled:
 - Madmin
 
 v4.1.2.5
+2019-09-02
+New:
+Improved:
+- Upgrade SP Tambah dan Approve Transaksi
+Fixed:
+Canceled:
+
+v4.1.2.5
 2019-08-27
 New:
 - Kinerja Anggota Struktur Akademik
