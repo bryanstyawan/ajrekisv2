@@ -2286,7 +2286,7 @@ class Skp extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 		$data['penilai']  = '';
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> History SKP';
+		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
 		$data['content']  = 'skp/skp_history_skp';
 		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
 		$this->load->view('templateAdmin',$data);
