@@ -1,4 +1,13 @@
 v4.1.2.5.2
+2019-09-02
+New:
+Improved:
+- Upgrade SP Tambah dan Approve Transaksi
+- Hapus Transaksi Belum Diperiksa
+Fixed:
+Canceled:
+
+v4.1.2.5.2
 2019-08-30
 New:
 Improved:
@@ -33,12 +42,14 @@ Canceled:
 v4.1.2.5.1
 2019-08-27
 New:
+- Kinerja Anggota Struktur Akademik
 Improved:
 - Ubah Data Pribadi menjadi Data Pribadi
 - Report Tunjangan Kinerja [Tunjangan profesi, pemotongan skp bulanan]
 Fixed:
 - Penilaian SKP Bulanan di PLT
 - Upload tugas tambabahan dan kreativitas
+- Number Format di Approval SKP
 Canceled:
 - Tombol Edit di data profile
 
@@ -61,23 +72,6 @@ Fixed:
 Canceled:
 - Notification
 - Madmin
-
-v4.1.2.5
-2019-09-02
-New:
-Improved:
-- Upgrade SP Tambah dan Approve Transaksi
-Fixed:
-Canceled:
-
-v4.1.2.5
-2019-08-27
-New:
-- Kinerja Anggota Struktur Akademik
-Improved:
-Fixed:
-- Number Format di Approval SKP
-Canceled:
 
 v4.1.2.5
 2019-08-09
