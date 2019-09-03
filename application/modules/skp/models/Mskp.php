@@ -908,5 +908,33 @@ class Mskp extends CI_Model
 			return array();
 		}
 	}	
+
+    public function get_request_history($id,$tahun)
+	{
+		# code...
+		
+		$sql = "SELECT a.id_pegawai as pegawai,
+				a.id_posisi as posisi,
+				b.nama_pegawai as nama_pegawai,
+				c.nama_posisi as nama_posisi,
+				a.audit_time as tanggal_laku
+				from mr_masa_kerja a,
+				mr_pegawai b, mr_posisi c WHERE
+				a.id_pegawai = '".$id."' AND
+				a.id_pegawai = b.id AND
+				a.id_posisi = c.id AND
+				substring(a.audit_time,1,4) = '".$tahun."' 
+				
+				";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
 	
 }
