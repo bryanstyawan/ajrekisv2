@@ -1,3 +1,258 @@
+v4.1.2.5.2
+2019-09-02
+New:
+Improved:
+- Upgrade SP Tambah dan Approve Transaksi
+- Hapus Transaksi Belum Diperiksa
+Fixed:
+Canceled:
+
+v4.1.2.5.2
+2019-08-30
+New:
+Improved:
+Fixed:
+- API SSL certificate problem
+- Integrasi data report dengan dashboard berdasarkan pegawai dan posisi
+- pemberitahuan Integrasi data report dengan dashboard
+Canceled:
+- notify_penilaian_skp
+
+v4.1.2.5.2
+2019-08-29
+New:
+Improved:
+- Code Review Globalrules
+- Code Review Dashboard
+- Code Review laporan
+- Integrasi data report dengan dashboard
+Fixed:
+Canceled:
+- hari_kerja [dashboard]
+- agama [dashboard]
+- golongan [dashboard]
+- history_golongan [dashboard]
+- data_transaksi_rpt [dashboard]
+- API Kinerja [dashboard]
+- import tunkir produktivitas disiplin
+- Rekap Banding
+- Rekap Tunjangan
+- Rekap keberatan
+
+v4.1.2.5.1
+2019-08-27
+New:
+- Kinerja Anggota Struktur Akademik
+Improved:
+- Ubah Data Pribadi menjadi Data Pribadi
+- Report Tunjangan Kinerja [Tunjangan profesi, pemotongan skp bulanan]
+Fixed:
+- Penilaian SKP Bulanan di PLT
+- Upload tugas tambabahan dan kreativitas
+- Number Format di Approval SKP
+Canceled:
+- Tombol Edit di data profile
+
+v4.1.2.5
+2019-08-26
+New:
+- Autocomplete data transaksi
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.5
+2019-08-19
+New:
+Improved:
+- Code Review
+- Auth
+- Store api Pendidikan
+Fixed:
+Canceled:
+- Notification
+- Madmin
+
+v4.1.2.5
+2019-08-09
+New:
+- API Jabatan
+- API Diklat Struktural
+- API Diklat Fungsional
+- API Diklat Teknis
+- API Diklat Konferensi
+- API Diklat Karya tulis
+- API Organisasi
+- API Penghargaan
+- Layout Pendidikan
+- Layout Pengkat
+- Layout Jabatan
+- Layout Struktural
+- Layout Fungsional
+- Layout Teknis
+- Layout Konferensi
+- Layout Karya tulis
+- Layout Organisasi
+- Layout Penghargaan
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.5
+2019-08-09
+New:
+- API Profile
+- API riwayat Pendidikan
+- API riwayat pangkat
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.5
+2019-08-01
+New:
+- Tunjangan Profesi
+Improved:
+Fixed:
+Canceled:
+
+v4.1.2.4.1
+2019-08-01
+New:
+Improved:
+- Rekap tunjangan dengan aturan bulan juli 2019 tidak ada pemotongan
+- Pemindahan penyimpanan penilaian skp bulanan dari tr_pemotongan ke rpt_capaian_kerja
+- penambahan flag periksa skp bulanan
+Fixed:
+Canceled:
+
+v4.1.2.4
+2019-07-30
+New:
+Improved:
+Fixed:
+- Query Dashboard, tunjangan diambil dari posisi terakhir
+Canceled:
+
+v4.1.2.4
+2019-07-26
+New:
+Improved:
+Fixed:
+- SP Approval Transaksi SiKerja
+Canceled:
+- notify transaksi
+
+v4.1.2.4
+2019-07-24
+New:
+Improved:
+Fixed:
+- form penilaian skp [plt&akademik]
+Canceled:
+
+v4.1.2.4
+2019-07-23
+New:
+Improved:
+Fixed:
+- Merubah pengambilan data info pegawai dari database ke session di penilaian skp
+- Ubah password
+Canceled:
+- Infopegawai database
+
+v4.1.2.4
+2019-07-19
+New:
+- Edit Biodata di menu profile
+Improved:
+Fixed:
+Canceled:
+- Tab Pangkat, Jabatan, Pendidikan, Diklat
+
+v4.1.2.3
+2019-07-18
+New:
+Improved:
+Fixed:
+- form penilaian skp [plt&akademik]
+Canceled:
+
+v4.1.2.3
+2019-07-16
+New:
+Improved:
+- report pemotongan skp bulanan
+Fixed:
+- counter pekerjaan belum diperiksa [dashboard]
+- Code Review [laporan]
+Canceled:
+
+v4.1.2.3
+2019-07-16
+New:
+Improved:
+- report pemotongan skp bulanan
+Fixed:
+- counter pekerjaan belum diperiksa [dashboard]
+- Code Review [laporan]
+Canceled:
+
+v4.1.2.3
+2019-07-12
+New:
+Improved:
+- Eselon 1 tidak ada pemotongan tunjangan dari penilaian skp bulanan
+- Setup gitignore [node_module]
+Fixed:
+- id pegawai yang hilang di master pegawai
+- Layout capaian skp [dashboard]
+Canceled:
+
+v4.1.2.3
+2019-07-11
+New:
+- ubah session photo ketika user menganti photo
+- Upload foto pegawai [info pegawai]
+Improved:
+- statistik kinerja dengan mode bar
+- Pemindahan ubah password
+- Pemindahan Info pegawai
+- Perubahan Layout banner user [dashboard]
+- Pemindahan notifikasi penilaian skp bulanan dibawah Layout banner user [dashboard]
+- layout pekerjaan belum diperiksa, realisasi menit efektif, capaian skp, tunjangan, fingerprint di dashboard [dashboard]
+Fixed:
+Canceled:
+- Ubah data diri [dashboard]
+- Upload foto pegawai [dashboard]
+- Icon dihilangkan [pekerjaan belum diperiksa, realisasi menit efektif, capaian skp, tunjangan, fingerprint di dashboard]
+
+v4.1.2.2
+2019-07-10
+New:
+- Menu Profile
+- Eselon 1 tidak ada penilaian skp bulanan sehingga eselon 1 hanya menilai kinerja bulanan anggota saja.
+Improved:
+- Release v4.1.2.1
+Fixed:
+- penulisan Pengurangann menjadi Pengurangan di pemberitahuan Pengurangan skp 
+- Pengaturan hari kerja di dashboard
+Canceled:
+
+v4.1.2
+2019-07-08
+New:
+Improved:
+- prioritas penilaian skp bulanan berdasarkan yang telah dinilai
+- Hari kerja di dashboard [reporting]
+- Penilaian SKP Bulanan [PLT]
+- Penilaian SKP Bulanan [Akademik]
+- Code Review
+Fixed:
+Canceled:
+- Hapus Syncronisasi transaksi [PHP - laporan]
+- Approval Transaksi [non-prosedural]
+
 v4.1.1
 2019-06-29
 New:

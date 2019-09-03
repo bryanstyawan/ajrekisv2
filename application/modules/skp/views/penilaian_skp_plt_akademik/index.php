@@ -194,7 +194,7 @@
 
     }      
     
-    function approve_good_kinerja(arg,oid) 
+    function approve_good_kinerja(arg,oid,oid_posisi) 
     {
         if (oid == 0) {
             var oid = $("#member_section_oid").val();            
@@ -217,7 +217,7 @@
             callback: function ($this, type) {
                 if (type === 'yes'){
                     $.ajax({
-                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid,
+                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid+'/'+oid_posisi,
                         type:"post",
                         beforeSend:function(){
                             $("#loadprosess").modal('show');

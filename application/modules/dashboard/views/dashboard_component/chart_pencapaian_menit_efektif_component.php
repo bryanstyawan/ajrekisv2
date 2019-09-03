@@ -6,7 +6,7 @@
     <!-- LINE CHART -->
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">Pencapaian Menit Efektif <?=date('Y');?></h3>
+            <h2 class="box-title">Pencapaian Menit Efektif <?=date('Y');?></h3>
         </div>
         <div class="box-body chart-responsive" style="height: 371px;">
             <canvas id="canvas"></canvas>
@@ -23,17 +23,33 @@
     var VALUES = '<?=$data_value;?>';
     var MONTHS = '<?=$data_bulan;?>';
     var config = {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: jQuery.parseJSON (MONTHS),
             datasets: [{
                 label: 'Menit Efektif',
                 data: jQuery.parseJSON (VALUES),
-                fill: false,
+                fill: true,
+                backgroundColor: [
+                                    "#000080", 
+                                    "#800080", 
+                                    "#008000", 
+                                    "#808000", 
+                                    "#008080", 
+                                    "#800000",
+                                    "#FF00FF",
+                                    "#556B2F",
+                                    "#2F4F4F",
+                                    "#FF00FF",
+                                    "#D2691E",
+                                    "#DC143C"], 
             }]
         },
         options: {
             responsive: true,
+            legend: {
+                display: false
+            },            
             tooltips: {
                 mode: 'index',
                 intersect: false,
@@ -44,18 +60,18 @@
             },
             scales: {
                 xAxes: [{
-                display: true,
-                scaleLabel: {
                     display: true,
-                    labelString: 'Bulan'
-                }
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Bulan'
+                    }
                 }],
                 yAxes: [{
-                display: true,
-                scaleLabel: {
                     display: true,
-                    labelString: 'Menit Efektif'
-                }
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Menit Efektif'
+                    }
                 }]
             }
         }

@@ -45,6 +45,7 @@
 <!-- bootstrap wysihtml5 - text editor -->
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'; ?>");</style>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/loadme/style/loadme.css'; ?>");</style>
+<style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/fullcalendar/fullcalendar.min.css'; ?>");</style>
 <!-- Jquery -->
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <style>
@@ -170,6 +171,8 @@ $(document).ready(function()
 
     $(".timerange").inputmask("dd-mm-yyyy", {"placeholder": "dd-mm-yyyy"});
 
+    $('.js-example-basic-single').select2();                 
+
     $("#noti-tab").click(function(){
         // body...
         show_time = $(".noti-container").css('display');
@@ -262,7 +265,7 @@ $(document).click(function(e) {
                     <div class="text-center" style="color:#fff;">
                         <span>Copyright@2018 Biro Kepegawaian</span><span>Right Reserved</span>
                         <br>
-                        <span>V.4.1.1</span>
+                        <span>v4.1.2.2</span>
                     </div>
                 </div>
             </div>
@@ -331,6 +334,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script type="text/javascript">
   /*********************************************************************************************/
 /* function = numberWithCommas(x)

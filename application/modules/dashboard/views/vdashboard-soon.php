@@ -1,7 +1,7 @@
 <?php
 $data_bulan[] = "";
 $data_value[] = "";
-
+$data_menit = "";
 if ($menit_efektif_year != 0) {
     // code...
     for ($i=0; $i < count($menit_efektif_year); $i++) {
@@ -47,7 +47,42 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $nama_agama    = $infoPegawai[0]->nama_agama;
 }
 
-$fingerprint = "";
+$prosentase_menit_efektif_rpt = 0;
+if ($data_transaksi_rpt != 0) {
+    # code...
+    $prosentase_menit_efektif_rpt = $data_transaksi_rpt[0]->prosentase_menit_efektif;
+
+}
+// $menit_efektif_rpt = 0;
+// if ($data_transaksi_rpt != 0) {
+//     # code...
+//     $menit_efektif_rpt = $data_transaksi_rpt[0]->menit_efektif;
+// }
+
+$menit_efektif_rpt = 0;
+if ($menit_efektif_dashboard != 0) {
+    # code...
+    $menit_efektif_rpt = $menit_efektif_dashboard[0]->menit_efektif;
+}
+
+// $real_tunjangan_rpt = 0;
+// if ($data_transaksi_rpt != 0) {
+//     # code...
+//     $real_tunjangan_rpt = $data_transaksi_rpt[0]->real_tunjangan;
+// }
+
+$real_tunjangan_rpt = 0;
+if ($menit_efektif_dashboard != 0) {
+    # code...
+    $real_tunjangan_rpt =  $menit_efektif_dashboard[0]->tunjangankinerja;
+}
+
+$fingerprint = 0;
+if ($menit_efektif_dashboard != 0) {
+    # code...
+    $menit_efektif_rpt = $menit_efektif_dashboard[0]->menit_efektif;
+}
+
 ?>
 
 <?php
@@ -60,66 +95,66 @@ if ($this->session->userdata('sesPosisi') != 0)
 {
     # code...
 ?>
+
 <div class="col-md-12 tour-step tour1" id="main-dashboard">
     <div class="row">
     <?php
-    $who_is   = $this->Globalrules->who_is($this->session->userdata('sesUser'));
     $this->load->view('dashboard_component/banner_user_component',array(
         'nama_pegawai' => $nama_pegawai,
-        'nama_jabatan' => $nama_jabatan,
-        'who_is'       => $who_is));
+        'nama_jabatan' => $nama_jabatan));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
+    $this->load->view('dashboard_component/potongan_component');
     $this->load->view('dashboard_component/member_component');                                
-    $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
+    // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>
     </div>
         
     <?php
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
+        'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => '',
-        'value_php' => (($belum_diperiksa == '') ? 0 : $belum_diperiksa),
+        'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #00a7d0;','value'=>''),
+        'value_php' => $belum_diperiksa,
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
+        'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_realisasi_menit_efektif',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => '',
-        'value_php' => (($summary_tr == '') ? 0 : $summary_tr[0]->menit_efektif),
+        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
+        'value_php' => number_format($menit_efektif_rpt),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
-        'html'      => ''));                       
-    $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
-        'id'        => '',
-        'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => '',
-        'value_php' => $skp['persentase_target_realisasi']->persentase,
-        'title'     => 'CAPAIAN SKP',
-        'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
+        'html'      => '')); 
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_tunjangan',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => '',
-        'value_php' => (($summary_tr == '') ? 0 : 'Rp.'.number_format($summary_tr[0]->real_tunjangan,0)),
+        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
+        'value_php' => number_format($real_tunjangan_rpt),
         'title'     => 'TUNJANGAN',
-        'html'      => ''));    
-    $this->load->view('dashboard_component/common_finger',array(
+        'html'      => ''));
+    $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_fingerprint',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => '',
-        'value_php' => $fingerprint,
-        'title'     => 'FINGERPRINT', 
-        'html'      => "<label id='total_tunjangan_' />"));
+        'icon'      => array('name'=>'fa fa-clock-o','style'=>'background-color: #673AB7;','value'=>''),
+        'value_php' => "",
+        'title'     => "<label id='total_tunjangan_' />", 
+        'html'      => "FINGERPRINT"));       
+    $this->load->view('dashboard_component/common_component',array(
+        'class'     => 'col-lg-3 col-xs-8',
+        'id'        => '',
+        'color_box' => 'background-color: #d2d6de !important;',
+        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'%'),
+        'value_php' => $skp['persentase_target_realisasi']->persentase,
+        'title'     => 'CAPAIAN SKP',
+        'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
 ?>
 </div>
 <?php
 $this->load->view('dashboard_component/bawahan_component');
-// $this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
+$this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
 $this->load->view('dashboard_component/information_emp_component',array(
     'nama_eselon1'  => $nama_eselon1,
     'nama_eselon2'  => $nama_eselon2,
@@ -141,7 +176,6 @@ $this->load->view('dashboard_component/common_modal_datatable_component',array(
     'id'           => 'modal-transaksi-realisasi',
     'header'       => 'Realisasi Menit Kerja Efektif',
     'id_datatable' => 'get-datatable1'));
-
 $this->load->view('dashboard_component/common_modal_datatable_component',array(
     'id'           => 'modal-transaksi-tunjangan',
     'header'       => 'TUNJANGAN',
@@ -171,16 +205,61 @@ else {
 <script>
     $("#profile-dashboard").hide();
     /** ----------------------------------------------------------------------- */    
+    if (document.getElementById('dropzone_image')) {
+        // other code here
+        Dropzone.autoDiscover = false;
+        var foto_upload= new Dropzone("div#dropzone_image",{
+            url: "<?php echo site_url();?>/master/data_pegawai/unggah_foto_pegawai_self",
+            maxFilesize: 2,
+            method:"post",
+            acceptedFiles:"image/*",
+            paramName:"userfile",
+            dictInvalidFileType:"Type file ini tidak dizinkan",
+            addRemoveLinks:true,
+            thumbnailWidth: null,
+            thumbnailHeight: null,
+            init: function() {
+                this.on("thumbnail", function(file, dataUrl) {
+                    $('.dz-image').last().find('img').attr({width: '100%', height: '100%'});
+                }),
+                this.on("success", function(file) {
+                    $('.dz-image').css({"width":"100%", "height":"auto"});
+                })
+            }
+        });
+
+        foto_upload.on("processing",function(a){
+            $("#loadprosess").modal('show');
+        });
+
+        foto_upload.on("sending",function(a,b,c){
+            a.token =$('#oidPegawai').val();
+            c.append("token_foto",a.token); //Menmpersiapkan token untuk masing masing foto
+        });
+
+        foto_upload.on("success",function(a){
+            setTimeout(function(){
+                $("#loadprosess").modal('hide');
+                setTimeout(function(){
+                    location.reload();
+                }, 1500);
+            }, 5000);
+        });
+    }
+
+    /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
-        Lobibox.window({
-            title  : 'Informasi',
-            content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+            
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Berdasarkan Pasal 24 ayat (1) Permendagri 132 tahun 2018 tentang Tunjangan Kinerja Pegawai di Kementerian Dalam Negeri, "Pegawai mendapat pengurangan Tunjangan Kinerja sebesar 5% (lima persen) dari aspek Produktivitas Kerja apabila pegawai tidak mencapai sasaran target yang ditentukan."</h4></div>'+
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
-        });        
-
+    
+        var res_api = '<?=$data_api;?>';
+        console.log(res_api);
+        // Lobibox.window({
+        //     title  : 'Informasi',
+        //     content: '<div class="row" style="margin: 1px;"><h2>Petunjuk Penggunaan</h2></div>'+            
+        //               '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">1. Tentukan TARGET SKP (Masuk ke Menu SKP -> Target SKP -> Ubah Target ).</h3></div>'+
+        //               '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">2. Meminta persetujuan atasan (Approval Target SKP).</h3></div>'+
+        //               '<div class="row" style="margin: 1px;"><h3 style="text-align: JUSTIFY;">3. Setelah target SKP disetujui, pegawai baru dapat mengisi sikerja (klik data transaksi/tambah data sikerja) dengan uraian tugas sesuai jabatan.</h3></div>'                                              
+        // });        
         $('#gaugeContainer').jqxGauge({
                     ranges: [{ startValue: 0, endValue: 25, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
                             { startValue: 25, endValue: 50, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
@@ -195,7 +274,7 @@ else {
                     height:200,
                     max:100,
                 });
-        $('#gaugeContainer').jqxGauge('value', <?=(($summary_tr == '') ? 0 : $summary_tr[0]->prosentase_menit_efektif);?>);
+        $('#gaugeContainer').jqxGauge('value', <?php echo $prosentase_menit_efektif_rpt;?>);
 
         $("#btn-detail").click(function()
         {
@@ -245,7 +324,7 @@ else {
         })
 
 
-         $("#btn_tunjangan").click(function() 
+        $("#btn_tunjangan").click(function() 
         {
             $.ajax({
                 url :"<?php echo site_url()?>dashboard/get_datamodal_tunjangan/1",
@@ -495,6 +574,17 @@ else {
                 },
                 success:function(msg){
                     var obj = jQuery.parseJSON (msg);
+
+                    console.table(obj.data.skp.list_skp);
+
+                    MONTHS = [];
+                    VALUES = [];
+                    for(i=0;i<obj.data.menit_efektif_year.length;i++)
+                    {
+                        VALUES[i] = obj.data.menit_efektif_year[i].menit_efektif;
+                        MONTHS[i] = obj.data.menit_efektif_year[i].nama_bulan;                        
+                    }
+
                     if (obj.status == 1)
                     {
                         $("#main-dashboard").hide();
@@ -503,6 +593,9 @@ else {
                         $("#member_section_oid").val(arg);
                         $("#f_name").val(obj.data.infoPegawai[0].nama_pegawai);
                         $("#f_name_es1").val(obj.data.infoPegawai[0].nama_jabatan);
+                        // $("#f_name_es2").val(obj.data.infoPegawai[0].nama_eselon2);
+                        // $("#f_name_es3").val(obj.data.infoPegawai[0].nama_eselon3);
+                        // $("#f_name_es4").val(obj.data.infoPegawai[0].nama_eselon4);
                         $("#f_nip").val(obj.data.infoPegawai[0].nip);                                                                                                    
 
                         if(obj.data.skp.list_skp.length == 0)
@@ -644,61 +737,21 @@ else {
 
     }   
 
-    function formatRupiah(num) 
-    {
+
+    function formatRupiah(num) {
         var p = num.toFixed(2).split(".");
-        return "Rp. " + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+        return "Rp." + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
             return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
-        }, "");
+        }, "") + "." + p[1];
     }
 
-    function approve_good_kinerja(arg,oid,oid_posisi) 
-    {
-        if (oid == 0) {
-            var oid = $("#member_section_oid").val();            
-        }
-        
-        tagline = '';
-        if (arg == 'yes') {
-            tagline = 'berkinerja baik dan mencapai skp bulan ini.';
-        }
-        else
-        {
-            tagline = 'berkinerja kurang baik dan belum mencapai skp bulan ini.'
-        }
-
-        tagline = "Apakah benar bahwa pegawai ini "+tagline;
-
-        Lobibox.confirm({
-            title: "Konfirmasi",
-            msg  : tagline,
-            callback: function ($this, type) {
-                if (type === 'yes'){
-                    $.ajax({
-                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid+'/'+oid_posisi,
-                        type:"post",
-                        beforeSend:function(){
-                            $("#loadprosess").modal('show');
-                        },
-                        success:function(msg){
-                            var obj = jQuery.parseJSON (msg);
-                            ajax_status(obj);
-                        },
-                        error:function(jqXHR,exception)
-                        {
-                            ajax_catch(jqXHR,exception);					
-                        }
-                    })
-                }
-            }
-        })    
-    }    
-
     $(document).ready(function(){
-        get_api_fingerprint();         
+        tampil_data_barang();   //pemanggilan fungsi tampil barang.
+         
         $('#mydata').dataTable();
-
-        function get_api_fingerprint(){
+          
+        //fungsi tampil barang
+        function tampil_data_barang(){
             $.ajax({
                 type  : 'ajax',
                 url   : '<?php echo base_url()?>ro_peg/index',
@@ -713,10 +766,9 @@ else {
                     var total_tunjangan_="";
 
                     //for(i in object)
-                    // console.log('lengthnya adalah ' + object.results.data.length);
+                   // console.log('lengthnya adalah ' + object.results.data.length);
+                    for(j=0;j < object.results.data.length;j++) {
 
-                    for(j=0;j < object.results.data.length;j++) 
-                    {
                         k = object.results.data[j].jumlah;
                         sum_jumlah = sum_jumlah + k;
                     }
@@ -724,15 +776,9 @@ else {
                     //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
                     total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
                     document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
-                    //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
-                },
-                error:function(jqXHR,exception)
-                {
-                    document.getElementById("total_tunjangan_").innerHTML = 'N/A';
-                }                
- 
+                  //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
+                }
             });
         }
- 
     }); 
 </script>

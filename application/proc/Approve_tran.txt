@@ -1,0 +1,445 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `approve_tran`(
+	IN `kode` INT,
+	IN `id_tran` DOUBLE,
+	IN `id_atasan` DOUBLE
+)
+BEGIN
+DECLARE id_rpt, id_rpt_ats, id_rpt_spr double;
+DECLARE id_pgw double;
+DECLARE id_spr, pos_id_spr int;
+DECLARE id_auto_ats, id_auto_spr double;
+
+DECLARE eselon1, eselon2, eselon3, eselon4, pos_id int;
+DECLARE eselon1_ats, eselon2_ats, eselon3_ats, eselon4_ats, pos_id_ats, plt_id_ats int;
+
+DECLARE bln, thn int;
+
+DECLARE kat_id, cls_id int;
+DECLARE jft_id, jfu_id int;
+
+DECLARE kat_id_ats, cls_id_ats int;
+DECLARE jft_id_ats, jfu_id_ats int;
+
+DECLARE kat_id_spr, cls_id_spr int;
+DECLARE jft_id_spr, jfu_id_spr int;
+
+DECLARE tnj double;
+DECLARE tnj_ats double;
+DECLARE tnj_spr double;
+
+DECLARE start_date date;
+DECLARE end_date date;
+DECLARE start_time time;
+DECLARE end_time time;
+
+DECLARE avail int;
+DECLARE approve, periksa, tolak, revisi int;
+DECLARE approve_ats, periksa_ats, tolak_ats, revisi_ats int;
+DECLARE approve_spr, periksa_spr, tolak_spr, revisi_spr int;
+
+DECLARE freq, mnt int;
+DECLARE freq_ats, mnt_ats int;
+DECLARE freq_spr, mnt_spr int;
+
+DECLARE prsn, prsn_ats, prsn_spr float;
+DECLARE rl_tnj, rl_tnj_ats, rl_tnj_spr double;
+
+DECLARE mnt_auto_ats, mnt_auto_spr int;
+DECLARE tnj_auto_ats, tnj_auto_spr double;
+
+DECLARE hari int;
+DECLARE diff int;
+DECLARE diff_ats int;
+DECLARE diff_spr int;
+
+DECLARE count_ats int;
+DECLARE count_spr int;
+
+DECLARE tot_menit int;
+
+DECLARE ht_tnj double;
+DECLARE ht_tnj_ats double;
+DECLARE ht_tnj_spr double;
+
+DECLARE datenow datetime;
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+END;
+	
+DECLARE EXIT HANDLER FOR SQLWARNING
+BEGIN
+	ROLLBACK;
+END;
+	
+START TRANSACTION;
+
+SET datenow = CURRENT_TIMESTAMP();
+
+SELECT id_pegawai, id_posisi, tanggal_mulai, tanggal_selesai, jam_mulai, jam_selesai, menit_efektif, hari_efektif
+	into id_pgw, pos_id, start_date, end_date, start_time, end_time, diff, hari
+	FROM tr_capaian_pekerjaan 
+	WHERE id_pekerjaan = id_tran;
+
+SET bln = MONTH(start_date);
+SET thn = YEAR(start_date);
+	
+SELECT a.id_jft, a.id_jfu, a.kat_posisi, a.posisi_class
+	INTO jft_id, jfu_id, kat_id, cls_id
+	FROM mr_posisi a
+	WHERE a.id=pos_id;
+	
+IF kat_id = 1 OR kat_id = 6 THEN
+	SELECT a.tunjangan
+		INTO tnj
+		FROM mr_posisi_class a
+		WHERE a.id=cls_id;
+ELSEIF kat_id = 2 THEN
+	SELECT b.tunjangan
+		INTO tnj
+		FROM mr_jabatan_fungsional_tertentu a
+		LEFT JOIN mr_posisi_class b ON a.id_kelas_jabatan=b.id
+		WHERE a.id=jft_id;
+ELSEIF kat_id = 4 THEN
+	SELECT b.tunjangan
+		INTO tnj
+		FROM mr_jabatan_fungsional_umum a
+		LEFT JOIN mr_posisi_class b ON a.id_kelas_jabatan=b.id
+		WHERE a.id=jfu_id;
+END IF;
+	
+SELECT jml_hari_aktif*jml_menit_perhari
+	INTO tot_menit
+	FROM mr_hari_aktif
+	WHERE bulan=bln AND tahun=thn;
+
+UPDATE tr_capaian_pekerjaan SET 
+	status_pekerjaan=1, 
+	tanggal_pemeriksa = datenow,
+	id_pegawai_pemeriksa = id_atasan,
+	audit_update = datenow,
+	audit_user_update = id_atasan
+WHERE id_pekerjaan = id_tran;
+
+IF ROW_COUNT() > 0 THEN
+
+	SELECT id, COUNT(*)
+		INTO id_rpt, avail
+		FROM rpt_capaian_kinerja
+		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+		AND bulan = bln AND tahun = thn;
+		
+-- 	SELECT COUNT(*), SUM(frekuensi_realisasi), sum(menit_efektif)
+	SELECT SUM(frekuensi_realisasi), sum(menit_efektif)
+		INTO freq, mnt
+		FROM tr_capaian_pekerjaan
+		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=1;
+		
+-- 	SELECT COUNT(*)
+-- 		INTO periksa
+-- 		FROM tr_capaian_pekerjaan
+-- 		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+-- 		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=0;
+		
+	-- SELECT COUNT(*)
+		-- INTO tolak
+		-- FROM tr_capaian_pekerjaan
+		-- WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+		-- AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=2;
+		
+	-- SELECT COUNT(*)
+		-- INTO revisi
+		-- FROM tr_capaian_pekerjaan
+		-- WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+		-- AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=3;
+		
+	IF mnt >= tot_menit THEN
+		SET prsn = 100;
+		SET rl_tnj = tnj/2;
+	ELSE
+		SET prsn = (mnt/tot_menit)*100;
+		SET rl_tnj = (((mnt/tot_menit)*tnj)/2);
+	END IF;
+		
+	IF avail > 0 THEN
+		UPDATE rpt_capaian_kinerja SET
+			tr_approve = tr_approve+1,
+			tr_belum_diperiksa = tr_belum_diperiksa-1,
+			-- tr_tolak = tolak,
+			-- tr_revisi = revisi,
+			menit_efektif = mnt,
+			prosentase_menit_efektif = prsn,
+			tunjangan = (((mnt/tot_menit)*tnj)/2),
+			real_tunjangan = rl_tnj,
+			frekuensi_realisasi = freq,
+			audit_time = datenow
+		WHERE id = id_rpt;
+	ELSE
+		INSERT INTO rpt_capaian_kinerja(
+			id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi,
+			menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time)
+		VALUES (
+-- 			id_pgw, pos_id, bln, thn, approve, periksa, 0, 0, mnt, prsn, (((mnt/tot_menit)*tnj)/2), rl_tnj, freq, 'system', datenow);
+			id_pgw, pos_id, bln, thn, 1, 0, 0, 0, mnt, prsn, (((mnt/tot_menit)*tnj)/2), rl_tnj, freq, 'system', datenow);
+	END IF;
+	
+	IF ROW_COUNT() > 0 THEN
+		IF kode < 3 THEN -- Jika Bukan Approval Akademik
+			IF kode = 1 THEN -- Jika Appoval Definitif
+				SELECT b.eselon1, b.eselon2, b.eselon3, b.eselon4, a.posisi, b.id_jft, b.id_jfu, b.kat_posisi, b.posisi_class, b.atasan 
+					INTO eselon1_ats, eselon2_ats, eselon3_ats, eselon4_ats, pos_id_ats, jft_id_ats, jfu_id_ats, kat_id_ats, cls_id_ats, pos_id_spr
+					FROM mr_pegawai a
+					LEFT JOIN mr_posisi b on a.posisi=b.id
+					WHERE a.id=id_atasan;
+			ELSEIF kode = 2 THEN -- Jika Approval PLT
+				SELECT b.eselon1, b.eselon2, b.eselon3, b.eselon4, a.posisi, b.id_jft, b.id_jfu, b.kat_posisi, b.posisi_class, b.atasan 
+					INTO eselon1_ats, eselon2_ats, eselon3_ats, eselon4_ats, pos_id_ats, jft_id_ats, jfu_id_ats, kat_id_ats, cls_id_ats, pos_id_spr
+					FROM mr_pegawai a
+					LEFT JOIN mr_posisi b on a.posisi_plt=b.id
+					WHERE a.id=id_atasan;
+			END IF;
+			
+			IF kat_id_ats = 1 OR kat_id_ats = 6 THEN -- Jika Jabatan Struktural dan Akademik
+				SELECT a.tunjangan
+					INTO tnj_ats
+					FROM mr_posisi_class a
+					WHERE a.id=cls_id_ats;
+			ELSEIF kat_id_ats = 2 THEN -- Jika Jabatan Fungsioanal Tertentu
+				SELECT b.tunjangan
+					INTO tnj_ats
+					FROM mr_jabatan_fungsional_tertentu a
+					LEFT JOIN mr_posisi_class b ON a.id_kelas_jabatan=b.id
+					WHERE a.id=jft_id_ats;
+			ELSEIF kat_id_ats = 4 THEN -- Jika Jabatan Fungsional Umum
+				SELECT b.tunjangan
+					INTO tnj_ats
+					FROM mr_jabatan_fungsional_umum a
+					LEFT JOIN mr_posisi_class b ON a.id_kelas_jabatan=b.id
+					WHERE a.id=jfu_id_ats;
+			END IF;
+					
+			SELECT COUNT(*) -- Hitung Jumlah Bawahan
+				INTO count_ats
+				FROM mr_pegawai a
+				LEFT JOIN mr_posisi b on a.posisi=b.id
+				WHERE a.status=1 and b.atasan=pos_id_ats;
+	
+			SET diff_ats = diff/count_ats;
+		
+			IF diff_ats < 1 THEN
+				SET diff_ats = 1;
+			END IF;
+		
+			SET ht_tnj_ats = (diff_ats/tot_menit)*tnj_ats*0.5;
+			
+			IF kat_id_ats = 1 THEN
+				IF eselon3_ats = 0 and eselon4_ats = 0 THEN
+					IF eselon2_ats != 0 THEN
+	
+						SELECT a.id, b.id_jft, b.id_jfu, b.kat_posisi, b.posisi_class, c.tunjangan
+							INTO id_spr, jft_id_spr, jfu_id_spr, kat_id_spr, cls_id_spr, tnj_spr
+							FROM mr_pegawai a
+							LEFT JOIN mr_posisi b on a.posisi=b.id
+							LEFT JOIN mr_posisi_class c ON b.posisi_class=c.id
+							WHERE a.status=1 AND (a.posisi=pos_id_spr OR a.posisi_plt=pos_id_spr);
+	
+						SELECT COUNT(*)
+							INTO count_spr
+							FROM mr_pegawai a
+							LEFT JOIN mr_posisi b on a.posisi=b.id
+							WHERE a.status=1 and b.atasan=pos_id_spr;
+				
+						SET diff_spr = diff_ats/count_spr;
+				
+						IF diff_spr < 1 THEN
+							SET diff_spr = 1;
+						END IF;
+		
+						SET ht_tnj_spr = (diff_spr/tot_menit)*tnj_spr*0.5;
+					
+						IF ROW_COUNT() > 0 OR kat_id_spr = 1 THEN
+						
+							SELECT id_pekerjaan, COUNT(*)
+								INTO id_auto_spr, avail
+								FROM tr_capaian_pekerjaan
+								WHERE id_pegawai = id_spr AND id_posisi = pos_id_spr
+								AND MONTH(tanggal_mulai) = bln AND YEAR(tanggal_mulai) = thn 
+								AND id_uraian_tugas=0 AND nama_pekerjaan='Menyetujui Pekerjaan';
+								
+							IF avail > 0 THEN
+								UPDATE tr_capaian_pekerjaan SET
+									menit_efektif = menit_efektif + diff_spr,
+									tunjangan = tunjangan + ht_tnj_spr,
+									audit_update = datenow,
+									audit_user_update = datenow,
+									audit_time = datenow
+								WHERE id_pekerjaan = id_auto_spr;
+							ELSE	
+								INSERT INTO tr_capaian_pekerjaan (
+									id_pegawai, id_posisi, id_uraian_tugas, tanggal_mulai, tanggal_selesai, jam_mulai, jam_selesai, nama_pekerjaan, status_pekerjaan, 
+									menit_efektif, hari_efektif, tunjangan, id_pegawai_pemeriksa, tanggal_pemeriksa, audit_insert, audit_user_insert, audit_update, audit_user_update, audit_time, flag_sync)
+								VALUES (
+									id_spr, pos_id_spr, 0, start_date, end_date, start_time, end_time, 'Menyetujui Pekerjaan', 1, 
+									diff_spr, hari, ht_tnj_spr, id_spr, datenow, datenow, id_spr, datenow, id_spr, datenow, 1);
+							END IF;
+						END IF;
+					
+						IF ROW_COUNT() > 0 THEN
+							SELECT id, COUNT(*)
+								INTO id_rpt_spr, avail
+								FROM rpt_capaian_kinerja
+								WHERE id_pegawai = id_spr AND id_posisi = pos_id_spr
+								AND bulan = bln AND tahun = thn;
+		
+							-- SELECT COUNT(*), SUM(frekuensi_realisasi), sum(menit_efektif)
+							SELECT SUM(frekuensi_realisasi), sum(menit_efektif)
+								INTO freq_spr, mnt_spr
+								FROM tr_capaian_pekerjaan
+								WHERE id_pegawai = id_spr AND id_posisi = pos_id_spr
+								AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=1;
+		
+-- 							SELECT COUNT(*)
+-- 								INTO periksa_spr
+-- 								FROM tr_capaian_pekerjaan
+-- 								WHERE id_pegawai = id_spr AND id_posisi = pos_id_spr
+-- 								AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=0;
+		
+							-- SELECT COUNT(*)
+								-- INTO tolak_spr
+								-- FROM tr_capaian_pekerjaan
+								-- WHERE id_pegawai = id_spr AND id_posisi = pos_id_spr
+								-- AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=2;
+		
+							-- SELECT COUNT(*)
+								-- INTO revisi_spr
+								-- FROM tr_capaian_pekerjaan
+								-- WHERE id_pegawai = id_spr AND id_posisi = pos_id_spr
+								-- AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=3;
+		
+							IF mnt_spr >= tot_menit THEN
+								SET prsn_spr = 100;
+								SET rl_tnj_spr = tnj_spr/2;
+							ELSE
+								SET prsn_spr = (mnt_spr/tot_menit)*100;
+								SET rl_tnj_spr = (((mnt_spr/tot_menit)*tnj_spr)/2);
+							END IF;
+		
+							IF avail > 0 THEN
+								UPDATE rpt_capaian_kinerja SET
+									tr_approve = tr_approve + 1,
+									-- tr_belum_diperiksa = tr_belum_diperiksa - 1 ,
+									-- tr_tolak = tolak_spr,
+									-- tr_revisi = revisi_spr,
+									menit_efektif = mnt_spr,
+									prosentase_menit_efektif = prsn_spr,
+									tunjangan = (((mnt_spr/tot_menit)*tnj_spr)/2),
+									real_tunjangan = rl_tnj_spr,
+									frekuensi_realisasi = freq_spr,
+									audit_time = datenow
+								WHERE id = id_rpt_spr;
+							ELSE
+								INSERT INTO rpt_capaian_kinerja(
+									id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi, 
+									menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time)
+								VALUES (
+									id_spr, pos_id_spr, bln, thn, 1, 0, 0, 0, 
+									mnt_spr, prsn_spr, (((mnt_spr/tot_menit)*tnj_spr)/2), rl_tnj_spr, freq_spr, 'system', datenow);
+							END IF;
+						END IF;
+					END IF;
+					
+					SELECT id_pekerjaan, COUNT(*)
+						INTO id_auto_ats, avail
+						FROM tr_capaian_pekerjaan
+						WHERE id_pegawai = id_atasan AND id_posisi = pos_id_ats
+						AND MONTH(tanggal_mulai) = bln AND YEAR(tanggal_mulai) = thn 
+						AND id_uraian_tugas=0 AND nama_pekerjaan='Menyetujui Pekerjaan';
+				
+					IF avail > 0 THEN
+						UPDATE tr_capaian_pekerjaan SET
+							menit_efektif = menit_efektif + diff_ats,
+							tunjangan = tunjangan + ht_tnj_ats,
+							audit_update = datenow,
+							audit_user_update = datenow,
+							audit_time = datenow
+						WHERE id_pekerjaan = id_auto_ats;
+					ELSE
+						INSERT INTO tr_capaian_pekerjaan (
+							id_pegawai, id_posisi, id_uraian_tugas, tanggal_mulai, tanggal_selesai, jam_mulai, jam_selesai, nama_pekerjaan, status_pekerjaan, 
+							menit_efektif,	hari_efektif, tunjangan, id_pegawai_pemeriksa, tanggal_pemeriksa, audit_insert, audit_user_insert, audit_update, audit_user_update, audit_time, flag_sync)
+						VALUES (
+							id_atasan, pos_id_ats, 0, start_date, end_date, start_time, end_time, 'Menyetujui Pekerjaan', 1, 
+							diff_ats, hari, ht_tnj_ats, id_atasan, datenow, datenow, id_atasan, datenow, id_spr, datenow, 1);
+					END IF;
+				
+					IF ROW_COUNT() > 0 THEN
+						SELECT id, COUNT(*)
+							INTO id_rpt_ats, avail
+							FROM rpt_capaian_kinerja
+							WHERE id_pegawai = id_atasan AND id_posisi = pos_id_ats
+							AND bulan = bln AND tahun = thn;
+	
+						-- SELECT COUNT(*), SUM(frekuensi_realisasi), sum(menit_efektif)
+						SELECT SUM(frekuensi_realisasi), sum(menit_efektif)
+							INTO freq_ats, mnt_ats
+							FROM tr_capaian_pekerjaan
+							WHERE id_pegawai = id_atasan AND id_posisi = pos_id_ats
+							AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=1;
+	
+-- 						SELECT COUNT(*)
+-- 							INTO periksa_ats
+-- 							FROM tr_capaian_pekerjaan
+-- 							WHERE id_pegawai = id_atasan AND id_posisi = pos_id_ats
+-- 							AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=0;
+
+						-- SELECT COUNT(*)
+							-- INTO tolak_ats
+							-- FROM tr_capaian_pekerjaan
+							-- WHERE id_pegawai = id_atasan AND id_posisi = pos_id_ats
+							-- AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=2;
+
+						-- SELECT COUNT(*)
+							-- INTO revisi_ats
+							-- FROM tr_capaian_pekerjaan
+							-- WHERE id_pegawai = id_atasan AND id_posisi = pos_id_ats
+							-- AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=3;
+	
+						IF mnt_ats >= tot_menit THEN
+							SET prsn_ats = 100;
+							SET rl_tnj_ats = tnj_ats/2;
+						ELSE
+							SET prsn_ats = (mnt_ats/tot_menit)*100;
+							SET rl_tnj_ats = (((mnt_ats/tot_menit)*tnj_ats)/2);
+						END IF;
+	
+						IF avail > 0 THEN
+							UPDATE rpt_capaian_kinerja SET
+								tr_approve = tr_approve+1,
+								-- tr_belum_diperiksa = tr_belum_diperiksa-1,
+								-- tr_tolak = tolak_ats,
+								-- tr_revisi = revisi_ats,
+								menit_efektif = mnt_ats,
+								prosentase_menit_efektif = prsn_ats,
+								tunjangan = (((mnt_ats/tot_menit)*tnj_ats)/2),
+								real_tunjangan = rl_tnj_ats,
+								frekuensi_realisasi = freq_ats,
+								audit_time = datenow
+							WHERE id = id_rpt_ats;
+						ELSE
+							INSERT INTO rpt_capaian_kinerja(
+								id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi,
+								menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time)
+							VALUES (
+								id_atasan, pos_id_ats, bln, thn, 1, 0, 0, 0,
+								mnt_ats, prsn_ats, (((mnt_ats/tot_menit)*tnj_ats)/2), rl_tnj_ats, freq_ats, 'system', datenow);
+						END IF;
+					END IF;	
+				END IF;
+			END IF;
+		END IF;
+	END IF;
+END IF;
+COMMIT;
+END

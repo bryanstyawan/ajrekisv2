@@ -585,7 +585,7 @@ else {
                                         <div class="row">
                                             <div class="form-group col-md-12">
                                                 <label style="color: #000;font-weight: 400;font-size: 19px;">Uraian Tugas</label>
-                                                <select class="form-control tour-step step1" name="urtug" id="urtug">
+                                                <select class="form-control js-example-basic-single tour-step step1" name="urtug" id="urtug">
                                                         <option value="">Pilih Uraian Tugas</option>
 
                                                         <?php
@@ -598,14 +598,14 @@ else {
                                                                     $kegiatan_urtug = $urtug[$i]->kegiatan;                            
                                                                     if($infoPegawai[0]->kat_posisi == 1)
                                                                     {
-                                                                        if ($urtug[$i]->id_skp_master != '') {
+                                                                        if ($urtug[$i]->id_skp_master != 0) {
                                                                             # code...
                                                                             $kegiatan_urtug            = $urtug[$i]->kegiatan_skp;
                                                                         }
                                                                     }
                                                                     elseif ($infoPegawai[0]->kat_posisi == 2) {
                                                                         # code...
-                                                                        if ($urtug[$i]->id_skp_jft != '') {
+                                                                        if ($urtug[$i]->id_skp_jft != 0) {
                                                                             # code...
                                                                             $kegiatan_urtug            = $urtug[$i]->kegiatan_skp_jft;
                                                                         }                                
@@ -619,7 +619,7 @@ else {
                                                                     }
                                                                     elseif($infoPegawai[0]->kat_posisi == 6)
                                                                     {
-                                                                        if ($urtug[$i]->id_skp_master != '') {
+                                                                        if ($urtug[$i]->id_skp_master != 0) {
                                                                             # code...
                                                                             $kegiatan_urtug            = $urtug[$i]->kegiatan_skp;
                                                                         }

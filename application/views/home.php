@@ -82,7 +82,19 @@
     <section id="main-slider">
         <div class="owl-carousel">
 
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/kebangkitannasional2.jpg);background-size: 100% 100%;height: 555px;">
+            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/bahan_paparan_terbaru.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/kememerdekaan2019.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -93,42 +105,7 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/waisak_1.gif);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>            
 
-
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/bedug.gif);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/pak_aji_fix.jpg);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>         -->
             <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/equal.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
@@ -139,8 +116,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
+            </div>        
+            
+            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/Rb2.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -151,6 +129,28 @@
                     </div>
                 </div>
             </div>
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/Rb3.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/Rb4.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
 
         </div><!--/.owl-carousel-->
     </section><!--/#main-slider-->

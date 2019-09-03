@@ -201,15 +201,20 @@ class Globalrules extends CI_Model
 			$sql = "b.id = '".$id."' AND a.status = 1";
 		}		
 
-		$sql = "SELECT  COALESCE(a.tmt_golongan,'-') as tmt_golongan,
+		$sql = "SELECT  a.id,
+						COALESCE(a.tmt_golongan,'-') as tmt_golongan,
 						a.nama_pegawai,
 						a.posisi,
 						a.nip,
+						a.TempatLahir,
+						a.BirthDate,
+						a.Gender,
 						a.email,
 						a.no_hp,
 						a.alamat,
 						a.golongan,						
 						b.nama_posisi as `nama_jabatan`,
+						a.tmt_jabatan,
 						b.atasan,
 						b.id as `id_posisi`,
 						b.kat_posisi,
@@ -498,9 +503,7 @@ class Globalrules extends CI_Model
 		{
 			$data['atasan_penilai'] = 0;			
 		}
-		// echo "<pre>";
-		// print_r($data['atasan_penilai']);die();
-		// echo "</pre>";
+
 		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
 /**********************************************************************************************************/
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
@@ -516,10 +519,6 @@ class Globalrules extends CI_Model
 /**********************************************************************************************************/
 		$data['summary_skp']['nilai_capaian_skp'] = "";
 		$data['summary_skp']['total_aspek']       = 0;
-		// echo "<pre>";
-		// print_r($data['list_skp']);
-		// echo "</pre>";
-		// die();		
 		if ($data['list_skp'] != 0) {
 				# code...
 			$total = "";
@@ -578,7 +577,7 @@ class Globalrules extends CI_Model
 		}
 	}
 
-	public function list_bawahan($posisi,$parameter=NULL)
+	public function list_bawahan($posisi,$parameter=NULL,$arg=NULL)
 	{
 		# code...
 		$sql_where = '';
@@ -590,18 +589,78 @@ class Globalrules extends CI_Model
 			# code...
 			$sql_where = "AND b.kat_posisi = '".$parameter."'";
 		}
-		$sql = "SELECT DISTINCT a.*,
-								a.id as `id_pegawai`,
-								b.nama_posisi,
-								b.kat_posisi as b_kat_posisi
-			    FROM mr_pegawai a
-			    JOIN mr_posisi b
-			    ON a.posisi = b.id
-			    WHERE b.atasan = '$posisi'
-			    AND a.status = 1
-				".$sql_where."
-				ORDER BY a.nama_pegawai asc";
+
+		$sql = "";
+		if($arg == 'penilaian_skp')
+		{
+			$sql_where_1 = "";
+			if ($parameter == 'id_pegawai') {
+				# code...
+				$sql_where     = "a.id_pegawai = '".$posisi."'";
+				$sql_where_1   = "a.id = '".$posisi."'";
+			}
+			else
+			{
+				$sql_where     = "c.atasan = '".$posisi."'";
+				$sql_where_1   = "c.atasan = '".$posisi."'";
+			} 
+
+			$sql = "SELECT 	a.id_pegawai,
+							c.id as id_posisi,
+							b.nip,
+							b.nama_pegawai,
+							a.bulan,
+							a.tahun,
+							a.persentase_pemotongan,
+							IF(a.audit_check_skp = 1,1,0) as flag_sudah_diperiksa
+					FROM rpt_capaian_kinerja a
+					LEFT JOIN mr_pegawai b ON b.id = a.id_pegawai
+					LEFT JOIN mr_posisi c ON b.posisi = c.id
+					WHERE ".$sql_where."
+					AND b.status = 1
+					AND a.tahun = '".date('Y')."'
+					AND a.bulan = '".date('m')."'
+					UNION 
+						SELECT 	a.id,
+								c.id as id_posisi,						
+								a.nip,
+								a.nama_pegawai,
+								IFNULL(bulan,".date('m')."),
+								IFNULL(tahun,".date('Y')."),
+								IFNULL(persentase_pemotongan, 5),
+								IF(b.audit_check_skp = 1,1,0) as flag_sudah_diperiksa
+						FROM mr_pegawai a
+						LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
+						AND b.tahun = '".date('Y')."'
+						AND b.bulan = '".date('m')."'
+						LEFT JOIN mr_posisi c ON a.posisi = c.id
+						WHERE ".$sql_where_1."
+						AND a.status = 1
+						AND a.`id` NOT IN (
+									SELECT IFNULL(id_pegawai, 0)
+									FROM `rpt_capaian_kinerja`
+									WHERE bulan = '".date('m')."'
+									AND tahun = '".date('Y')."'
+								)
+					ORDER BY flag_sudah_diperiksa ASC, nama_pegawai ASC";
+		}
+		else
+		{
+			$sql = "SELECT DISTINCT a.*,
+									a.id as `id_pegawai`,
+									b.nama_posisi,
+									b.kat_posisi as b_kat_posisi
+					FROM mr_pegawai a
+					JOIN mr_posisi b
+					ON a.posisi = b.id
+					WHERE b.atasan = '$posisi'
+					AND a.status = 1
+					".$sql_where."
+					ORDER BY a.nama_pegawai asc";
+		}
+
 		$query = $this->db->query($sql);
+		// print_r($sql);die()	;
 		if($query->num_rows() > 0)
 		{
 			return $query->result();
@@ -1365,4 +1424,87 @@ class Globalrules extends CI_Model
 			}
 		}
 	}
+
+	public function get_history_golongan()
+	{
+		# code...
+		$sql = "SELECT a.*,
+						b.nama_pangkat
+				FROM mr_history_golongan a
+				JOIN mr_golongan b
+				ON a.id_golongan = b.id
+				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+				ORDER BY a.tmt DESC";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}								
+	}
+
+	public function get_history_jabatan()
+	{
+		# code...
+		$sql = "SELECT a.*,
+						b.nama_posisi,
+						c.nama_kat_posisi
+				FROM (mr_masa_kerja a
+				JOIN mr_posisi b ON a.id_posisi = b.id)
+				JOIN mr_kat_posisi c ON b.kat_posisi = c.id
+				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+				ORDER BY a.StartDate DESC";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}								
+	}	
+
+	public function get_history_pendidikan()
+	{
+		# code...
+		$sql = "SELECT a.*,
+						b.kode,
+						b.nama_pendidikan
+				FROM mr_history_pendidikan a
+				JOIN mr_pendidikan b ON a.id_pendidikan = b.id_pendidikan
+				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+				ORDER BY a.tahun_lulus DESC";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}								
+	}
+	
+	public function get_history_diklat($id_diklat)
+	{
+		# code...
+		$sql = "SELECT a.*
+				FROM mr_history_diklat a
+				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
+				AND a.id_diklat = '".$id_diklat."'
+				ORDER BY a.tgl_mulai DESC";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}								
+	}	
 }
