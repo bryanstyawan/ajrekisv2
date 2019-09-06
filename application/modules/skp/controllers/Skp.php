@@ -2278,4 +2278,29 @@ class Skp extends CI_Controller {
 		$data['member']  = $this->Globalrules->list_bawahan($posisi,NULL,'penilaian_skp');		
 		$this->load->view('templateAdmin',$data);		
 	}
+
+    public function history_skp($param=NULL)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+		$data['penilai']  = '';
+		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
+		$data['content']  = 'skp/skp_history_skp';
+		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
+		$this->load->view('templateAdmin',$data);
+	}
+
+	public function cetak_history_skp($id,$posisi,$nama_posisi)
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
+		$data['penilai']  = '';
+		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
+		$data['content']  = 'skp/cetak_history_skp';
+		$this->load->view('templateAdmin',$data);
+	}	
 }
