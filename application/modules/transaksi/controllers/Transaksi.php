@@ -1087,7 +1087,20 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$flag     = array('id_pekerjaan' => $id);
-		$res_data = $this->Allcrud->delData('tr_capaian_pekerjaan',$flag);
+		$res_data 	 	= $this->Allcrud->delData('tr_capaian_pekerjaan',$flag);
+
+		$data_rpt	    = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai'=>$this->session->userdata('sesUser'),'id_posisi'=>$this->session->userdata('sesPosisi'),'bulan'=>date('m'),'tahun'=>date('Y')))->result_array();
+		$id				= array
+						(
+							'id' => $data_rpt[0]['id']
+						);
+		$data           = array
+						(
+							'tr_belum_diperiksa'    => $data_rpt[0]['tr_belum_diperiksa']-1,
+							'audit_time'	     	=> date('Y-m-d H:i:s')
+						);
+		// print_r($id);die();
+		$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$data,$id);
 		$text_status = $this->Globalrules->check_status_res($res_data,'Pekerjaan telah dihapus');
 		$res = array
 					(
