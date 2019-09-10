@@ -1,3 +1,16 @@
+v4.1.2.5.3
+2019-09-10
+New:
+- Layout dinilai, penilai, atasan penilai dengan menggunakan accordion [history skp] 
+Improved:
+- Pewarnaan di prilaku kerja [history skp]
+Fixed:
+- Check jabatan di history skp [history skp]
+- Css history skp [history skp]
+Canceled:
+- Css history skp [history skp]
+- datatable [history skp]
+
 v4.1.2.5.2
 2019-08-30
 New:

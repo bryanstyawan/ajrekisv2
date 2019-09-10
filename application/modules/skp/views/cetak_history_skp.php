@@ -86,7 +86,6 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     if($atasan_penilai[0]->tmt_golongan != '-')$tmt_golongan_atasan_penilai = ', '.date("d-m-Y",strtotime($atasan_penilai[0]->tmt_golongan));else $tmt_golongan_atasan_penilai        = '';
 }
 ?>
-<style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <style type="text/css">
 
 #table_skp
@@ -99,69 +98,33 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     vertical-align: middle;
     text-align: center;
     border: 1px solid rgba(158, 158, 158, 0.2);
-    padding-left: 25px;
 }
 
-#table_skp > thead > tr:nth-child(1) > th:nth-child(1)
-{
-    max-width: 0px;
-    padding-left: 15px;
-    padding-right: 20px;
-}
-
-#table_skp > thead > tr:nth-child(1) > th:nth-child(2)
-{
-    padding-left: 12px;
-    padding-right: 9px;
-}
-
-#table_skp > thead > tr:nth-child(1) > th:nth-child(3),
-#table_skp > thead > tr:nth-child(1) > th:nth-child(4),
-#table_skp > thead > tr:nth-child(1) > th:nth-child(5)
-{
-    word-wrap: break-word;
-    padding-left: 5px;
-    padding-right: 5px;
-    max-width: 22px!important;
-    width: 22px!important;
-}
-
-#table_skp > thead > tr:nth-child(1) > th:nth-child(6)
-{
-
-}
-
-#table_skp > thead > tr:nth-child(1) > th:nth-child(7)
-{
-
-}
-
-#table_skp > thead > tr:nth-child(1) > th:nth-child(8),
-#table_skp > thead > tr:nth-child(1) > th:nth-child(9)
-{
-    padding-left: 9px;
-    padding-right: 9px;
-    max-width: 46px;
-    word-wrap: break-word;
-}
-
+/* #table_skp > thead > tr:nth-child(1) > th:nth-child(4),
 #table_skp > thead > tr:nth-child(2) > th:nth-child(1),
 #table_skp > thead > tr:nth-child(2) > th:nth-child(2),
 #table_skp > thead > tr:nth-child(2) > th:nth-child(3),
-#table_skp > thead > tr:nth-child(2) > th:nth-child(4),
-#table_skp > thead > tr:nth-child(2) > th:nth-child(5),
-#table_skp > thead > tr:nth-child(2) > th:nth-child(6),
-#table_skp > thead > tr:nth-child(2) > th:nth-child(7),
-#table_skp > thead > tr:nth-child(2) > th:nth-child(8)
+#table_skp > thead > tr:nth-child(2) > th:nth-child(4), */
+#table_skp > tbody > tr > td:nth-child(4),
+#table_skp > tbody > tr > td:nth-child(5),
+#table_skp > tbody > tr > td:nth-child(6),
+#table_skp > tbody > tr > td:nth-child(7)
 {
-    max-width: 22px!important;
-    width: 22px!important;
+    background: #9E9E9E;
+    border: 1px solid #009688;    
 }
 
 #table_skp>tbody>tr>td
 {
     text-align: ;
     border: 1px solid rgba(158, 158, 158, 0.2);
+}
+
+#table_skp > thead > tr:nth-child(1) > th:nth-child(1),
+#table_skp > tbody > tr > td:nth-child(1)
+{
+    width: 0px;
+    padding-left: 10px
 }
 
 #table_skp > tbody > tr > td:nth-child(2)
@@ -182,15 +145,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     text-align: ;
     border: 1px solid rgba(158, 158, 158, 0.2);
 }
-
-#data1 > thead > tr:nth-child(1) > th:nth-child(1)
-{
-    max-width: 0px;
-    padding-left: 15px;
-    padding-bottom: 198px;
-}
 </style>
-
 <!-- <div class="col-lg-6">
     <label style="color: #000;font-weight: 400;font-size: 19px;">Tahun</label>
     <div class="form-group">
@@ -219,91 +174,132 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
             </div>
         </div>
         <div class="box-body">
-            <table id="data1" class="table table-bordered table-striped">
+            <div class="col-md-12">
+                <div class="box box-solid">
+                    <div class="box-group" id="accordion">
+                        <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                        <div class="panel box box-primary">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                    YANG DINILAI
+                                </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="box-body">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>a. Nama</td>
+                                                <td colspan="4"><?php echo $nama_pegawai;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>b. NIP</td>
+                                                <td colspan="4"><?php echo $nip;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>c. Pangkat, Golongan Ruang, TMT</td>
+                                                <td colspan="4"><?=$pangkat;?> <?=$ruang;?> <?=$tmt_golongan;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>d. Jabatan/Pekerjaan</td>
+                                                <td colspan="4"><?php 
+                                                $nama_posisi = $this->uri->segment(5);
+                                                //echo $nama_posisi; 
+                                                echo str_replace('%20',' ', $nama_posisi); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>e. Unit Organisasi</td>
+                                                <td colspan="4"><?=$nama_eselon2." ".$nama_eselon1;?></td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel box box-danger">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
+                                    PEJABAT PENILAI
+                                </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="box-body">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>a. Nama</td>
+                                                <td colspan="4"><?php echo $nama_pegawai_atasan;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>b. NIP</td>
+                                                <td colspan="4"><?php echo $nip_atasan;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>c. Pangkat, Golongan Ruang, TMT</td>
+                                                <td colspan="4"><?=$pangkat_atasan;?> <?=$ruang_atasan;?> <?=$tmt_golongan_atasan;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>d. Jabatan/Pekerjaan</td>
+                                                <td colspan="4"><?=$nama_jabatan_atasan;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>e. Unit Organisasi</td>
+                                                <td colspan="4"><?=$nama_eselon2_atasan." ".$nama_eselon1_atasan;?></td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel box box-success">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
+                                    ATASAN PEJABAT PENILAI
+                                </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false">
+                                <div class="box-body">
+                                    <table id="data1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>a. Nama</td>
+                                                <td colspan="4"><?php echo $nama_pegawai_atasan_penilai;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>b. NIP</td>
+                                                <td colspan="4"><?php echo $nip_atasan_penilai;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>c. Pangkat, Golongan Ruang, TMT</td>
+                                                <td colspan="4"><?=$pangkat_atasan_penilai;?> <?=$ruang_atasan_penilai;?> <?=$tmt_golongan_atasan_penilai;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>d. Jabatan/Pekerjaan</td>
+                                                <td colspan="4"><?=$nama_jabatan_atasan_penilai;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>e. Unit Organisasi</td>
+                                                <td colspan="4"><?=$nama_eselon2_atasan_penilai." ".$nama_eselon1_atasan_penilai;?></td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            <!-- /.box -->
+            </div>            
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th rowspan="6">1. </th>
-                        <th colspan="5">YANG DINILAI</th>
-                    </tr>
-                    <tr>
-                        <td>a. Nama</td>
-                        <td colspan="4"><?php echo $nama_pegawai;?></td>
-                    </tr>
-                    <tr>
-                        <td>b. NIP</td>
-                        <td colspan="4"><?php echo $nip;?></td>
-                    </tr>
-                    <tr>
-                        <td>c. Pangkat, Golongan Ruang, TMT</td>
-                        <td colspan="4"><?=$pangkat;?> <?=$ruang;?> <?=$tmt_golongan;?></td>
-                    </tr>
-                    <tr>
-                        <td>d. Jabatan/Pekerjaan</td>
-                        <td colspan="4"><?php 
-                        $nama_posisi = $this->uri->segment(5);
-                        //echo $nama_posisi; 
-                        echo str_replace('%20',' ', $nama_posisi); ?></td>
-                    </tr>
-                    <tr>
-                        <td>e. Unit Organisasi</td>
-                        <td colspan="4"><?=$nama_eselon2." ".$nama_eselon1;?></td>
-                    </tr>
-                </thead>
-                <thead>
-                    <tr>
-                        <th rowspan="6">2. </th>
-                        <th colspan="5">PEJABAT PENILAI</th>
-                    </tr>
-                    <tr>
-                        <td>a. Nama</td>
-                        <td colspan="4"><?php echo $nama_pegawai_atasan;?></td>
-                    </tr>
-                    <tr>
-                        <td>b. NIP</td>
-                        <td colspan="4"><?php echo $nip_atasan;?></td>
-                    </tr>
-                    <tr>
-                        <td>c. Pangkat, Golongan Ruang, TMT</td>
-                        <td colspan="4"><?=$pangkat_atasan;?> <?=$ruang_atasan;?> <?=$tmt_golongan_atasan;?></td>
-                    </tr>
-                    <tr>
-                        <td>d. Jabatan/Pekerjaan</td>
-                        <td colspan="4"><?=$nama_jabatan_atasan;?></td>
-                    </tr>
-                    <tr>
-                        <td>e. Unit Organisasi</td>
-                        <td colspan="4"><?=$nama_eselon2." ".$nama_eselon1;?></td>
-                    </tr>
-                </thead>
-                <thead>
-                    <tr>
-                        <th rowspan="6">3. </th>
-                        <th colspan="5">ATASAN PEJABAT PENILAI</th>
-                    </tr>
-                    <tr>
-                        <td>a. Nama</td>
-                        <td colspan="4"><?php echo $nama_pegawai_atasan_penilai;?></td>
-                    </tr>
-                    <tr>
-                        <td>b. NIP</td>
-                        <td colspan="4"><?php echo $nip_atasan_penilai;?></td>
-                    </tr>
-                    <tr>
-                        <td>c. Pangkat, Golongan Ruang, TMT</td>
-                        <td colspan="4"><?=$pangkat_atasan_penilai;?> <?=$ruang_atasan_penilai;?> <?=$tmt_golongan_atasan_penilai;?></td>
-                    </tr>
-                    <tr>
-                        <td>d. Jabatan/Pekerjaan</td>
-                        <td colspan="4"><?=$nama_jabatan_atasan_penilai;?></td>
-                    </tr>
-                    <tr>
-                        <td>e. Unit Organisasi</td>
-                        <td colspan="4"><?=$nama_eselon2." ".$nama_eselon1;?></td>
-                    </tr>
-                </thead>
-                <thead>
-                    <tr>
-                        <th rowspan="11">4. </th>
                         <th colspan="4">UNSUR YANG DINILAI</th>
                         <th>Jumlah</th>
                     </tr>
@@ -316,33 +312,33 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                         <td rowspan="9">b. Perilaku Kerja</td>
                         <td>1. Orientasi Pelayanan</td>
                         <td><?=number_format($summary_prilaku_skp['orientasi_pelayanan'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['orientasi_pelayanan']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['orientasi_pelayanan'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['orientasi_pelayanan'])['value'];?></td>
                         <td rowspan="8"></td>
                     </tr>
                     <tr>
                         <td>2. Integritas</td>
                         <td><?=number_format($summary_prilaku_skp['integritas'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['integritas']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['integritas'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['integritas'])['value'];?></td>
                     </tr>
                     <tr>
                         <td>3. Komitmen</td>
                         <td><?=number_format($summary_prilaku_skp['komitmen'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['komitmen']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['komitmen'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['komitmen'])['value'];?></td>
                     </tr>
                     <tr>
                         <td>4. Disiplin</td>
                         <td><?=number_format($summary_prilaku_skp['disiplin'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['disiplin']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['disiplin'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['disiplin'])['value'];?></td>
                     </tr>
                     <tr>
                         <td>5. Kerjasama</td>
                         <td><?=number_format($summary_prilaku_skp['kerjasama'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kerjasama']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kerjasama'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kerjasama'])['value'];?></td>
                     </tr>
                     <tr>
                         <td>6. Kepemimpinan</td>
                         <td><?=number_format($summary_prilaku_skp['kepemimpinan'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan'])['value'];?></td>
                     </tr>
                     <tr>
                         <td>7. Jumlah</td>
@@ -351,7 +347,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                     <tr>
                         <td>8. Nilai Rata - Rata</td>
                         <td><?=number_format($summary_prilaku_skp['rata_rata'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['rata_rata']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['rata_rata'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['rata_rata'])['value'];?></td>
                     </tr>
                     <tr>
                         <td colspan="3">
@@ -359,11 +355,11 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                         <td><?=number_format($summary_prilaku_skp['nilai_prilaku_kerja'],2);?></$td>
                     </tr>
                     <tr>
-                        <th rowspan="2" colspan="5" class="text-center">NILAI PRESTASI KERJA</th>
+                        <th rowspan="2" colspan="4" class="text-center">NILAI PRESTASI KERJA</th>
                         <td><?=number_format($summary_prilaku_skp['nilai_prilaku_kerja']+$summary_skp['nilai_sasaran_kinerja_pegawai'],2);?></td>
                     </tr>
                     <tr>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['nilai_prilaku_kerja']+$summary_skp['nilai_sasaran_kinerja_pegawai']);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['nilai_prilaku_kerja']+$summary_skp['nilai_sasaran_kinerja_pegawai'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['nilai_prilaku_kerja']+$summary_skp['nilai_sasaran_kinerja_pegawai'])['value'];?></td>
                     </tr>
                 </thead>
             </table>
@@ -379,7 +375,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
             </div>
         </div>
         <div class="box-body">
-            <table id="table_skp" class="table table-bordered table-striped table-view">
+            <table id="table_skp" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th rowspan="2">No</th>
@@ -393,8 +389,8 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                         <th rowspan="2">Aspek Kualitas</th>
                         <th rowspan="2">Aspek Waktu</th> -->
                         <th rowspan="2">Penghitungan</th>
-                        <th rowspan="2">Penghitungan</th>
-                        <th rowspan="2" colspan="2">Nilai Capaian SKP</th>
+                        <th rowspan="2">Nilai Capaian SKP</th>
+                        <th rowspan="2" colspan="2">Predikat</th>                        
                     </tr>
                     <tr>
                         <th>Kuan - Output</th>
@@ -455,11 +451,8 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 
                     ?>
                     <tr>
-                        <td><span class="col-md-12 text-center"><?=$i+1;?></span></td>
+                        <td><?=$i+1;?></td>
                         <td style="text-align: -webkit-left;"><?=$kegiatan;?></td>
-                        <!-- <td><?=$pk_status;?></td>
-                        <td><?=$list_skp[$i]->nama_jenis_skp;?></td> -->
-                        <!-- <td><?=$list_skp[$i]->AK_target;?></td> -->
                         <td></td>
                         <td><?=$list_skp[$i]->target_qty." ".$list_skp[$i]->target_output_name;?></td>
                         <td><?=$list_skp[$i]->target_kualitasmutu;?></td>
@@ -481,15 +474,14 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                 }
                             ?>
                         </td>
-                        <td><?=$list_skp[$i]->realisasi_waktu." bln";?></td>
-                        <!-- <td><?="2 bln";?></td>                         -->
+                        <td><?=$list_skp[$i]->target_waktu_bln." bln";?></td>
                         <td><?=number_format($list_skp[$i]->realisasi_biaya);?></td>
                         <!-- <td><?=$list_skp[$i]->aspek_kuantitas;?></td>
                         <td><?=$list_skp[$i]->aspek_kualitas;?></td>
                         <td><?=$list_skp[$i]->aspek_waktu['aspek_waktu'];?></td> -->
                         <td><?=number_format($list_skp[$i]->perhitungan['aspek'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($list_skp[$i]->perhitungan['nilai_capaian_skp']);?></td>
                         <td><?=number_format($list_skp[$i]->perhitungan['nilai_capaian_skp'],2);?></td>
+                        <td style="<?=$this->Globalrules->nilai_capaian_skp($list_skp[$i]->perhitungan['nilai_capaian_skp'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($list_skp[$i]->perhitungan['nilai_capaian_skp'])['value'];?></td>                        
                     </tr>
                     <?php
                         }
@@ -610,20 +602,20 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 <script type="text/javascript">
 $(document).ready(function()
 {
-    $("#data1").DataTable({
-        "oLanguage": {
-            "sSearch": "Pencarian :",
-            "sSearchPlaceholder" : "Ketik untuk mencari",
-            "sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
-            "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-            "sZeroRecords": "Data tidak ditemukan"
-        },
-        "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        "bSort": false,
-        "bAutoWidth": false
-    });
+    // $("#data1").DataTable({
+    //     "oLanguage": {
+    //         "sSearch": "Pencarian :",
+    //         "sSearchPlaceholder" : "Ketik untuk mencari",
+    //         "sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+    //         "sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+    //         "sZeroRecords": "Data tidak ditemukan"
+    //     },
+    //     "dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+    //             "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+    //             "<'row'<'col-sm-12'tr>>" +
+    //             "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+    //     "bSort": false,
+    //     "bAutoWidth": false
+    // });
 });
 </script>

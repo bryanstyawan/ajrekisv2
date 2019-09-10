@@ -413,28 +413,37 @@ class Globalrules extends CI_Model
 	{
 		# code...
 		$nilai_skp = "";
+		$style     = "";
 		if ($parameter >= 91) {
 			# code...
 			$nilai_skp = "Sangat Baik";
+			$style     = "background:#00BCD4;";
 		}
 		elseif ($parameter >= 76) {
 			# code...
 			$nilai_skp = "Baik";
+			$style     = "background:#8BC34A;";
 		}
 		elseif ($parameter >= 61) {
 			# code...
 			$nilai_skp = "Cukup";
+			$style     = "background:#FFEB3B;";
 		}
 		elseif ($parameter >= 51) {
 			# code...
 			$nilai_skp = "Kurang";
+			$style     = "background:#F44336;";
 		}
 		elseif ($parameter <= 50) {
 			# code...
 			$nilai_skp = "Buruk";
+			$style     = "background:#F44336;";
 		}
 
-		return $nilai_skp;
+		return array(
+			'value' => $nilai_skp,
+			'css'   => $style
+		);
 	}
 
 	public function data_summary_skp_pegawai($id,$_id_posisi)
@@ -485,6 +494,8 @@ class Globalrules extends CI_Model
 						}
 						else
 						{
+							$_atasan_id = $this->list_atasan($data['atasan'][0]->posisi);
+							$_atasan_id = ($_atasan_id == 0) ? 0 : $_atasan_id[0]->id;							
 							$data['atasan_penilai'] = $this->get_info_pegawai($_atasan_id,'id');							
 						}
 					}
