@@ -583,7 +583,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                     ?>
                     <tr class="even">
                         <td colspan="12" class="text-center">NILAI CAPAIAN SKP</td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp($total);?></td>
+                         <td><?=$this->Globalrules->nilai_capaian_skp($total)['value'];?></td>
                         <td><?=number_format($total,2);?></td>
                     </tr>
                 </tfoot>
