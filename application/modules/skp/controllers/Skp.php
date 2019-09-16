@@ -2282,6 +2282,20 @@ class Skp extends CI_Controller {
     public function history_skp($param=NULL)
 	{
 		# code...
+		$getMasaKerja = $this->Allcrud->getData('mr_masa_kerja', array('id_pegawai' => $this->session->userdata('sesUser'),'id_posisi' => $this->session->userdata('sesPosisi')))->result_array();		
+		if($getMasaKerja == array())
+		{
+			$data        = array
+						(
+							'id_pegawai' => $this->session->userdata('sesUser'),
+							'id_posisi'  => $this->session->userdata('sesPosisi'),
+							'StartDate'  => date('Y-m-d H:i:s'),
+							'EndDate'    => '9999-01-01',
+							'audit_user' => $this->session->userdata('sesNip'),
+							'audit_time' => date('Y-m-d H:i:s')
+						);		
+			$res_data    = $this->Allcrud->addData('mr_masa_kerja',$data);			
+		}
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));

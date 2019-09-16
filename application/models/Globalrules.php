@@ -301,14 +301,26 @@ class Globalrules extends CI_Model
 		return $text_status;
 	}
 
-	public function aspek_kuantitas($realisasi_kuantitas,$target_qty)
+	public function aspek_kuantitas($realisasi_kuantitas,$target_qty,$realisasi_kualitasmutu)
 	{
 		# code...
-		$aspek_kuantitas = "";
-	    if ($realisasi_kuantitas != 0 && $target_qty != 0) {
-	        # code...
-	        $aspek_kuantitas = ($realisasi_kuantitas/$target_qty)*100;
-	    }
+		// print_r($realisasi_kualitasmutu);die();
+		$aspek_kuantitas = 0;
+		if ($realisasi_kualitasmutu == 0) {
+			# code...
+			$aspek_kuantitas = 0;
+		}
+		else
+		{
+			if ($realisasi_kuantitas != 0 && $target_qty != 0) {
+				# code...
+				if ($realisasi_kualitasmutu == 0) {
+					# code...
+					$realisasi_kuantitas = 0;
+				}
+				$aspek_kuantitas = ($realisasi_kuantitas/$target_qty)*100;
+			}
+		}		
 
 	    return $aspek_kuantitas;
 	}
@@ -328,9 +340,10 @@ class Globalrules extends CI_Model
 	public function aspek_waktu($realisasi_waktu,$target_waktu_bln,$kegiatan)
 	{
 		# code...
-		$aspek_waktu       = "";
-		$tingkat_efisiensi = "";
+		$aspek_waktu       = 0;
+		$tingkat_efisiensi = 0;
 
+		// $aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
 		if ($kegiatan == 0) {
 			// # code...
 			$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*0*100;
@@ -341,7 +354,7 @@ class Globalrules extends CI_Model
 			if ($tingkat_efisiensi <= 24) {
 				# code...
 				//nilai baik
-			$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
+				$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
 			}
 			elseif ($tingkat_efisiensi > 24) {
 					# code...
@@ -535,9 +548,9 @@ class Globalrules extends CI_Model
 			$total = "";
 			for ($i=0; $i < count($data['list_skp']); $i++) {
 				# code...
-				$data['list_skp'][$i]->aspek_kuantitas     = $this->aspek_kuantitas($data['list_skp'][$i]->realisasi_kuantitas,$data['list_skp'][$i]->target_qty);
 				$data['list_skp'][$i]->aspek_kualitas      = $this->aspek_kualitas($data['list_skp'][$i]->realisasi_kualitasmutu,$data['list_skp'][$i]->target_kualitasmutu);
-				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->realisasi_waktu,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
+				$data['list_skp'][$i]->aspek_kuantitas     = $this->aspek_kuantitas($data['list_skp'][$i]->realisasi_kuantitas,$data['list_skp'][$i]->target_qty,$data['list_skp'][$i]->realisasi_kualitasmutu);				
+				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->aspek_biaya         = $this->aspek_biaya($data['list_skp'][$i]->target_biaya,$data['list_skp'][$i]->realisasi_biaya,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya);
 				$data['summary_skp']['nilai_capaian_skp']  = $data['list_skp'][$i]->perhitungan['nilai_capaian_skp'];
