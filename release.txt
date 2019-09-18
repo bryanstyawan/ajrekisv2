@@ -1,4 +1,13 @@
 v4.1.2.5.3
+2019-09-18
+New:
+Improved:
+Fixed:
+- Cetak SKP
+- nama posisi di link [history skp]
+Canceled:
+
+v4.1.2.5.3
 2019-09-16
 New:
 Improved:

@@ -99,7 +99,7 @@ img {
 						</div>
 					</div>
 					<div class="back face">
-						<a href="<?php echo site_url()?>skp/cetak_history_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>/<?php echo $request_history[$i]->nama_posisi?>">
+						<a href="<?php echo site_url()?>skp/cetak_history_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>">
 							<h1><?php echo $request_history[$i]->nama_posisi ?></h1>
 						</a>        
 						<p class="artist"><?php echo $request_history[$i]->tanggal_laku?></p>
