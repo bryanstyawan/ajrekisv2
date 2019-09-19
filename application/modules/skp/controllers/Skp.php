@@ -1601,28 +1601,83 @@ class Skp extends CI_Controller {
 		$evaluator                   = $data['evaluator'];
 		$total_realisasi_skp         = "";
 		$nilai_capaian_skp           = "";
-		$pangkat                     = '';
-		$pangkat_atasan              = '';
-		$pangkat_atasan_penilai      = '';
-		$ruang                       = '';
-		$ruang_atasan                = '';
-		$ruang_atasan_penilai        = '';
-		$tmt_golongan                = '';
-		$tmt_golongan_atasan         = '';
-		$tmt_golongan_atasan_penilai = '';
+		
+		$nama_pegawai  = "";
+		$nama_jabatan  = "";
+		$nama_eselon1  = "";
+		$nama_eselon2  = "";
+		$nama_eselon3  = "";
+		$nama_eselon4  = "";
+		$nip           = "";
+		$kelas_jabatan = "";
+		$pangkat       = "";
+		$ruang         = "";
+		$tmt_golongan  = "";
+		$kat_posisi    = "";
+		$nama_posisi_cetak  = "";
+		
+		$nama_pegawai_atasan  = "";
+		$nama_jabatan_atasan  = "";
+		$nama_eselon1_atasan  = "";
+		$nama_eselon2_atasan  = "";
+		$nama_eselon3_atasan  = "";
+		$nama_eselon4_atasan  = "";
+		$nip_atasan           = "";
+		$kelas_jabatan_atasan = "";
+		$pangkat_atasan       = "";
+		$ruang_atasan         = "";
+		$tmt_golongan_atasan  = "";
+		
+		$nama_pegawai_atasan_penilai  = "";
+		$nama_jabatan_atasan_penilai  = "";
+		$nama_eselon1_atasan_penilai  = "";
+		$nama_eselon2_atasan_penilai  = "";
+		$nama_eselon3_atasan_penilai  = "";
+		$nama_eselon4_atasan_penilai  = "";
+		$nip_atasan_penilai           = "";
+		$kelas_jabatan_atasan_penilai = "";
+		$pangkat_atasan_penilai       = "";
+		$ruang_atasan_penilai         = "";
+		$tmt_golongan_atasan_penilai  = "";
 
+		if ($data['infoPegawai'] != 0 || $data['infoPegawai'] != '') {
+			if($data['infoPegawai'][0]->nama_pangkat != '-')$pangkat      = $data['infoPegawai'][0]->nama_pangkat;else $pangkat                                        = '-';
+			if($data['infoPegawai'][0]->nama_golongan != '-')$ruang       = '('.$data['infoPegawai'][0]->nama_golongan.'/'.$data['infoPegawai'][0]->nama_ruang.')';else $ruang = '';
+			if($data['infoPegawai'][0]->tmt_golongan != '-')$tmt_golongan = ', '.date("d-m-Y",strtotime($data['infoPegawai'][0]->tmt_golongan));else $tmt_golongan = '';		
+		}
 
-		if($data['infoPegawai'][0]->nama_pangkat != '-')$pangkat      = $data['infoPegawai'][0]->nama_pangkat;else $pangkat                                        = '-';
-		if($data['infoPegawai'][0]->nama_golongan != '-')$ruang       = '('.$data['infoPegawai'][0]->nama_golongan.'/'.$data['infoPegawai'][0]->nama_ruang.')';else $ruang = '';
-		if($data['infoPegawai'][0]->tmt_golongan != '-')$tmt_golongan = ', '.date("d-m-Y",strtotime($data['infoPegawai'][0]->tmt_golongan));else $tmt_golongan = '';		
+		if ($data['atasan'] != 0 || $data['atasan'] != '') {
+			$nama_pegawai_atasan  = $data['atasan'][0]->nama_pegawai;
+			$nama_jabatan_atasan  = $data['atasan'][0]->nama_jabatan;
+			$nama_eselon1_atasan  = $data['atasan'][0]->nama_eselon1;
+			$nama_eselon2_atasan  = $data['atasan'][0]->nama_eselon2;
+			$nama_eselon3_atasan  = $data['atasan'][0]->nama_eselon3;
+			$nama_eselon4_atasan  = $data['atasan'][0]->nama_eselon4;
+			$nip_atasan           = $data['atasan'][0]->nip;
+			$kelas_jabatan_atasan = $data['atasan'][0]->kelas_jabatan;			
+			if($data['atasan'][0]->nama_pangkat != '-')$pangkat_atasan      = $data['atasan'][0]->nama_pangkat;else $pangkat_atasan                                        = '-';
+			if($data['atasan'][0]->nama_golongan != '-')$ruang_atasan       = '('.$data['atasan'][0]->nama_golongan.'/'.$data['atasan'][0]->nama_ruang.')';else $ruang_atasan      = '';
+			if($data['atasan'][0]->tmt_golongan != '-')$tmt_golongan_atasan = ', '.date("d-m-Y",strtotime($data['atasan'][0]->tmt_golongan));else $tmt_golongan_atasan = '';
+		}
 
-		if($data['atasan'][0]->nama_pangkat != '-')$pangkat_atasan      = $data['atasan'][0]->nama_pangkat;else $pangkat_atasan                                        = '-';
-		if($data['atasan'][0]->nama_golongan != '-')$ruang_atasan       = '('.$data['atasan'][0]->nama_golongan.'/'.$data['atasan'][0]->nama_ruang.')';else $ruang_atasan      = '';
-		if($data['atasan'][0]->tmt_golongan != '-')$tmt_golongan_atasan = ', '.date("d-m-Y",strtotime($data['atasan'][0]->tmt_golongan));else $tmt_golongan_atasan = '';
+		if ($data['atasan_penilai'] != 0 || $data['atasan_penilai'] != '') {		
+			$nama_pegawai_atasan_penilai  = $data['atasan_penilai'][0]->nama_pegawai;
+			$nama_jabatan_atasan_penilai  = $data['atasan_penilai'][0]->nama_jabatan;
+			$nama_eselon1_atasan_penilai  = $data['atasan_penilai'][0]->nama_eselon1;
+			$nama_eselon2_atasan_penilai  = $data['atasan_penilai'][0]->nama_eselon2;
+			$nama_eselon3_atasan_penilai  = $data['atasan_penilai'][0]->nama_eselon3;
+			$nama_eselon4_atasan_penilai  = $data['atasan_penilai'][0]->nama_eselon4;
+			$nip_atasan_penilai           = $data['atasan_penilai'][0]->nip;
+			$kelas_jabatan_atasan_penilai = $data['atasan_penilai'][0]->kelas_jabatan;			
+			if($data['atasan_penilai'][0]->nama_pangkat != '-')$pangkat_atasan_penilai      = $data['atasan_penilai'][0]->nama_pangkat;else $pangkat_atasan_penilai                                           = '-';
+			if($data['atasan_penilai'][0]->nama_golongan != '-')$ruang_atasan_penilai       = '('.$data['atasan_penilai'][0]->nama_golongan.'/'.$data['atasan_penilai'][0]->nama_ruang.')';else $ruang_atasan_penilai = '';
+			if($data['atasan_penilai'][0]->tmt_golongan != '-')$tmt_golongan_atasan_penilai = ', '.date("d-m-Y",strtotime($data['atasan_penilai'][0]->tmt_golongan));else $tmt_golongan_atasan_penilai        = '';
+		}
+		
+		// echo "<pre>"; 
+		// print_r($data);die();
+		// echo "</pre>";
 
-		if($data['atasan_penilai'][0]->nama_pangkat != '-')$pangkat_atasan_penilai      = $data['atasan_penilai'][0]->nama_pangkat;else $pangkat_atasan_penilai                                           = '-';
-		if($data['atasan_penilai'][0]->nama_golongan != '-')$ruang_atasan_penilai       = '('.$data['atasan_penilai'][0]->nama_golongan.'/'.$data['atasan_penilai'][0]->nama_ruang.')';else $ruang_atasan_penilai = '';
-		if($data['atasan_penilai'][0]->tmt_golongan != '-')$tmt_golongan_atasan_penilai = ', '.date("d-m-Y",strtotime($data['atasan_penilai'][0]->tmt_golongan));else $tmt_golongan_atasan_penilai        = '';
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 300);
 		$this->excel->setActiveSheetIndex(0);
@@ -1693,11 +1748,11 @@ class Skp extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('c22', 'c. Pangkat, Golongan ruang, TMT');
 		$this->excel->getActiveSheet()->setCellValue('c23', 'd. Jabatan/Pekerjaan');
 		$this->excel->getActiveSheet()->setCellValue('c24', 'e. Unit Organisasi');
-		$this->excel->getActiveSheet()->setCellValue('d20', $data['atasan'][0]->nama_pegawai);
-		$this->excel->getActiveSheet()->setCellValue('d21', "'".$data['atasan'][0]->nip);
+		$this->excel->getActiveSheet()->setCellValue('d20', $nama_pegawai_atasan);
+		$this->excel->getActiveSheet()->setCellValue('d21', "'".$nip_atasan);
 		$this->excel->getActiveSheet()->setCellValue('d22', $pangkat_atasan.$ruang_atasan.$tmt_golongan_atasan);
-		$this->excel->getActiveSheet()->setCellValue('d23', $data['atasan'][0]->nama_jabatan);
-		$this->excel->getActiveSheet()->setCellValue('d24', $data['atasan'][0]->nama_eselon2." ".$data['atasan'][0]->nama_eselon1);
+		$this->excel->getActiveSheet()->setCellValue('d23', $nama_jabatan_atasan);
+		$this->excel->getActiveSheet()->setCellValue('d24', $nama_eselon2_atasan." ".$nama_eselon1_atasan);
 		$this->excel->getActiveSheet()->mergeCells('b19:b24');
 		$this->excel->getActiveSheet()->mergeCells('c19:h19');
 		$this->excel->getActiveSheet()->mergeCells('d20:h20');
@@ -1719,11 +1774,11 @@ class Skp extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('c28', 'c. Pangkat, Golongan ruang, TMT');
 		$this->excel->getActiveSheet()->setCellValue('c29', 'd. Jabatan/Pekerjaan');
 		$this->excel->getActiveSheet()->setCellValue('c30', 'e. Unit Organisasi');
-		$this->excel->getActiveSheet()->setCellValue('d26', $data['atasan_penilai'][0]->nama_pegawai);
-		$this->excel->getActiveSheet()->setCellValue('d27', "'".$data['atasan_penilai'][0]->nip);
+		$this->excel->getActiveSheet()->setCellValue('d26', $nama_pegawai_atasan_penilai);
+		$this->excel->getActiveSheet()->setCellValue('d27', "'".$nip_atasan_penilai);
 		$this->excel->getActiveSheet()->setCellValue('d28', $pangkat_atasan_penilai.$ruang_atasan_penilai.$tmt_golongan_atasan_penilai);
-		$this->excel->getActiveSheet()->setCellValue('d29', $data['atasan_penilai'][0]->nama_jabatan);
-		$this->excel->getActiveSheet()->setCellValue('d30', $data['atasan_penilai'][0]->nama_eselon2." ".$data['atasan_penilai'][0]->nama_eselon1);
+		$this->excel->getActiveSheet()->setCellValue('d29', $nama_jabatan_atasan_penilai);
+		$this->excel->getActiveSheet()->setCellValue('d30', $nama_eselon2_atasan_penilai." ".$nama_eselon1_atasan_penilai);
 		$this->excel->getActiveSheet()->mergeCells('b25:b30');
 		$this->excel->getActiveSheet()->mergeCells('c25:h25');
 		$this->excel->getActiveSheet()->mergeCells('d26:h26');
@@ -1764,16 +1819,16 @@ class Skp extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('f39', number_format($data['summary_prilaku_skp']['jumlah'],2));
 		$this->excel->getActiveSheet()->setCellValue('f40', number_format($data['summary_prilaku_skp']['rata_rata'],2));
 		$this->excel->getActiveSheet()->setCellValue('h41', number_format($data['summary_prilaku_skp']['nilai_prilaku_kerja'],2));
-		$this->excel->getActiveSheet()->setCellValue('g33', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['orientasi_pelayanan']));
-		$this->excel->getActiveSheet()->setCellValue('g34', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['integritas']));
-		$this->excel->getActiveSheet()->setCellValue('g35', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['komitmen']));
-		$this->excel->getActiveSheet()->setCellValue('g36', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['disiplin']));
-		$this->excel->getActiveSheet()->setCellValue('g37', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kerjasama']));
-		$this->excel->getActiveSheet()->setCellValue('g38', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kepemimpinan']));
-		$this->excel->getActiveSheet()->setCellValue('g40', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['rata_rata']));
+		$this->excel->getActiveSheet()->setCellValue('g33', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['orientasi_pelayanan'])['value']);
+		$this->excel->getActiveSheet()->setCellValue('g34', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['integritas'])['value']);
+		$this->excel->getActiveSheet()->setCellValue('g35', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['komitmen'])['value']);
+		$this->excel->getActiveSheet()->setCellValue('g36', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['disiplin'])['value']);
+		$this->excel->getActiveSheet()->setCellValue('g37', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kerjasama'])['value']);
+		$this->excel->getActiveSheet()->setCellValue('g38', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kepemimpinan'])['value']);
+		$this->excel->getActiveSheet()->setCellValue('g40', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['rata_rata'])['value']);
 		$this->excel->getActiveSheet()->setCellValue('e41', number_format($data['summary_prilaku_skp']['rata_rata'],2)." x 40%");
 		$this->excel->getActiveSheet()->setCellValue('h42', number_format($data['summary_skp']['nilai_sasaran_kinerja_pegawai']+$data['summary_prilaku_skp']['nilai_prilaku_kerja'],2));
-		$this->excel->getActiveSheet()->setCellValue('h43', $this->Globalrules->nilai_capaian_skp($data['summary_skp']['nilai_sasaran_kinerja_pegawai']+$data['summary_prilaku_skp']['nilai_prilaku_kerja']));
+		$this->excel->getActiveSheet()->setCellValue('h43', $this->Globalrules->nilai_capaian_skp($data['summary_skp']['nilai_sasaran_kinerja_pegawai']+$data['summary_prilaku_skp']['nilai_prilaku_kerja'])['value']);
 		$this->excel->getActiveSheet()->mergeCells('b31:b41');
 		$this->excel->getActiveSheet()->mergeCells('c31:g31');
 		$this->excel->getActiveSheet()->mergeCells('d32:g32');
@@ -1877,8 +1932,8 @@ class Skp extends CI_Controller {
 
 		$this->excel->getActiveSheet()->setCellValue('e92', '9. DIBUAT TANGGAL, ......................');
 		$this->excel->getActiveSheet()->setCellValue('f93', 'PEJABAT PENILAI');
-		$this->excel->getActiveSheet()->setCellValue('e99', strtoupper($data['atasan'][0]->nama_pegawai));
-		$this->excel->getActiveSheet()->setCellValue('e100', "'".$data['atasan'][0]->nip);
+		$this->excel->getActiveSheet()->setCellValue('e99', strtoupper($nama_pegawai_atasan));
+		$this->excel->getActiveSheet()->setCellValue('e100', "'".$nip_atasan);
 		$this->excel->getActiveSheet()->mergeCells('e92:h92');
 		$this->excel->getActiveSheet()->mergeCells('f93:h93');
 		$this->excel->getActiveSheet()->mergeCells('e99:h99');
@@ -1892,8 +1947,8 @@ class Skp extends CI_Controller {
 
 		$this->excel->getActiveSheet()->setCellValue('e113', '11. DITERIMA TANGGAL, ......................');
 		$this->excel->getActiveSheet()->setCellValue('f114', 'ATASAN PEJABAT PENILAI');
-		$this->excel->getActiveSheet()->setCellValue('e120', strtoupper($data['atasan_penilai'][0]->nama_pegawai));
-		$this->excel->getActiveSheet()->setCellValue('e121', "'".$data['atasan_penilai'][0]->nip);
+		$this->excel->getActiveSheet()->setCellValue('e120', strtoupper($nama_pegawai_atasan_penilai));
+		$this->excel->getActiveSheet()->setCellValue('e121', "'".$nip_atasan_penilai);
 		$this->excel->getActiveSheet()->mergeCells('e113:h113');
 		$this->excel->getActiveSheet()->mergeCells('f114:h114');
 		$this->excel->getActiveSheet()->mergeCells('e120:h120');
@@ -2127,7 +2182,7 @@ class Skp extends CI_Controller {
 			$this->excel->getActiveSheet()->mergeCells('b'.$counter.':'.'n'.$counter_1);
 			$this->excel->getActiveSheet(1)->setCellValue('b'.$counter, 'NILAI CAPAIAN SKP');
 			$this->excel->getActiveSheet(1)->setCellValue('o'.$counter, number_format($data['summary_skp_dan_prilaku'],2));
-			$this->excel->getActiveSheet(1)->setCellValue('o'.$counter_1, $this->Globalrules->nilai_capaian_skp($total_realisasi_skp));
+			$this->excel->getActiveSheet(1)->setCellValue('o'.$counter_1, $this->Globalrules->nilai_capaian_skp($total_realisasi_skp)['value']);
 			$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet(1).$counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet(1).$counter)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 			$this->excel->getActiveSheet(1)->getStyle('b'.$counter.':'.'n'.$counter_1)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -2282,17 +2337,31 @@ class Skp extends CI_Controller {
     public function history_skp($param=NULL)
 	{
 		# code...
+		$getMasaKerja = $this->Allcrud->getData('mr_masa_kerja', array('id_pegawai' => $this->session->userdata('sesUser'),'id_posisi' => $this->session->userdata('sesPosisi')))->result_array();		
+		if($getMasaKerja == array())
+		{
+			$data        = array
+						(
+							'id_pegawai' => $this->session->userdata('sesUser'),
+							'id_posisi'  => $this->session->userdata('sesPosisi'),
+							'StartDate'  => date('Y-m-d H:i:s'),
+							'EndDate'    => '9999-01-01',
+							'audit_user' => $this->session->userdata('sesNip'),
+							'audit_time' => date('Y-m-d H:i:s')
+						);		
+			$res_data    = $this->Allcrud->addData('mr_masa_kerja',$data);			
+		}
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 		$data['penilai']  = '';
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> History SKP';
+		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
 		$data['content']  = 'skp/skp_history_skp';
 		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function cetak_history_skp($id,$posisi,$nama_posisi)
+	public function cetak_history_skp($id,$posisi)
 	{
 		# code...
 		$this->Globalrules->session_rule();

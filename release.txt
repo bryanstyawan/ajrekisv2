@@ -1,3 +1,35 @@
+v4.1.2.5.3
+2019-09-18
+New:
+Improved:
+Fixed:
+- Cetak SKP
+- nama posisi di link [history skp]
+Canceled:
+
+v4.1.2.5.3
+2019-09-16
+New:
+Improved:
+Fixed:
+- Aspek Kuantitas
+- Aspek waktu
+- Check masakerja
+Canceled:
+
+v4.1.2.5.3
+2019-09-10
+New:
+- Layout dinilai, penilai, atasan penilai dengan menggunakan accordion [history skp] 
+Improved:
+- Pewarnaan di prilaku kerja [history skp]
+Fixed:
+- Check jabatan di history skp [history skp]
+- Css history skp [history skp]
+Canceled:
+- Css history skp [history skp]
+- datatable [history skp]
+
 v4.1.2.5.2
 2019-09-02
 New:

@@ -301,14 +301,26 @@ class Globalrules extends CI_Model
 		return $text_status;
 	}
 
-	public function aspek_kuantitas($realisasi_kuantitas,$target_qty)
+	public function aspek_kuantitas($realisasi_kuantitas,$target_qty,$realisasi_kualitasmutu)
 	{
 		# code...
-		$aspek_kuantitas = "";
-	    if ($realisasi_kuantitas != 0 && $target_qty != 0) {
-	        # code...
-	        $aspek_kuantitas = ($realisasi_kuantitas/$target_qty)*100;
-	    }
+		// print_r($realisasi_kualitasmutu);die();
+		$aspek_kuantitas = 0;
+		if ($realisasi_kualitasmutu == 0) {
+			# code...
+			$aspek_kuantitas = 0;
+		}
+		else
+		{
+			if ($realisasi_kuantitas != 0 && $target_qty != 0) {
+				# code...
+				if ($realisasi_kualitasmutu == 0) {
+					# code...
+					$realisasi_kuantitas = 0;
+				}
+				$aspek_kuantitas = ($realisasi_kuantitas/$target_qty)*100;
+			}
+		}		
 
 	    return $aspek_kuantitas;
 	}
@@ -328,9 +340,10 @@ class Globalrules extends CI_Model
 	public function aspek_waktu($realisasi_waktu,$target_waktu_bln,$kegiatan)
 	{
 		# code...
-		$aspek_waktu       = "";
-		$tingkat_efisiensi = "";
+		$aspek_waktu       = 0;
+		$tingkat_efisiensi = 0;
 
+		// $aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
 		if ($kegiatan == 0) {
 			// # code...
 			$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*0*100;
@@ -341,7 +354,7 @@ class Globalrules extends CI_Model
 			if ($tingkat_efisiensi <= 24) {
 				# code...
 				//nilai baik
-			$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
+				$aspek_waktu = ((1.76 * $target_waktu_bln - $realisasi_waktu)/$target_waktu_bln)*100;
 			}
 			elseif ($tingkat_efisiensi > 24) {
 					# code...
@@ -413,28 +426,37 @@ class Globalrules extends CI_Model
 	{
 		# code...
 		$nilai_skp = "";
+		$style     = "";
 		if ($parameter >= 91) {
 			# code...
 			$nilai_skp = "Sangat Baik";
+			$style     = "background:#00BCD4;";
 		}
 		elseif ($parameter >= 76) {
 			# code...
 			$nilai_skp = "Baik";
+			$style     = "background:#8BC34A;";
 		}
 		elseif ($parameter >= 61) {
 			# code...
 			$nilai_skp = "Cukup";
+			$style     = "background:#FFEB3B;";
 		}
 		elseif ($parameter >= 51) {
 			# code...
 			$nilai_skp = "Kurang";
+			$style     = "background:#F44336;";
 		}
 		elseif ($parameter <= 50) {
 			# code...
 			$nilai_skp = "Buruk";
+			$style     = "background:#F44336;";
 		}
 
-		return $nilai_skp;
+		return array(
+			'value' => $nilai_skp,
+			'css'   => $style
+		);
 	}
 
 	public function data_summary_skp_pegawai($id,$_id_posisi)
@@ -485,6 +507,8 @@ class Globalrules extends CI_Model
 						}
 						else
 						{
+							$_atasan_id = $this->list_atasan($data['atasan'][0]->posisi);
+							$_atasan_id = ($_atasan_id == 0) ? 0 : $_atasan_id[0]->id;							
 							$data['atasan_penilai'] = $this->get_info_pegawai($_atasan_id,'id');							
 						}
 					}
@@ -524,9 +548,9 @@ class Globalrules extends CI_Model
 			$total = "";
 			for ($i=0; $i < count($data['list_skp']); $i++) {
 				# code...
-				$data['list_skp'][$i]->aspek_kuantitas     = $this->aspek_kuantitas($data['list_skp'][$i]->realisasi_kuantitas,$data['list_skp'][$i]->target_qty);
 				$data['list_skp'][$i]->aspek_kualitas      = $this->aspek_kualitas($data['list_skp'][$i]->realisasi_kualitasmutu,$data['list_skp'][$i]->target_kualitasmutu);
-				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->realisasi_waktu,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
+				$data['list_skp'][$i]->aspek_kuantitas     = $this->aspek_kuantitas($data['list_skp'][$i]->realisasi_kuantitas,$data['list_skp'][$i]->target_qty,$data['list_skp'][$i]->realisasi_kualitasmutu);				
+				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->aspek_biaya         = $this->aspek_biaya($data['list_skp'][$i]->target_biaya,$data['list_skp'][$i]->realisasi_biaya,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya);
 				$data['summary_skp']['nilai_capaian_skp']  = $data['list_skp'][$i]->perhitungan['nilai_capaian_skp'];

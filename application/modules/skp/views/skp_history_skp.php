@@ -84,28 +84,30 @@ img {
 </style>
  
 <?php
-    for ($i=0; $i < count($request_history); $i++) { 
-?>
-<div id="card-container">
-    <div id="card">
-        <div class="front face" style="background: #f9f3e4">
-            <div style="margin-top: 80px;">
-                <h5 class="card-title"><?php echo $request_history[$i]->nama_pegawai ?></h5>
-            </div>
-            <div>
-                <p class="card-text" style="color:red;"><?php echo $request_history[$i]->nama_posisi ?></p>
-            </div>
-        </div>
-        <div class="back face">
-            <a href="<?php echo site_url()?>skp/cetak_history_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>/<?php echo $request_history[$i]->nama_posisi?>">
-                <h1><?php echo $request_history[$i]->nama_posisi ?></h1>
-            </a>        
-            <p class="artist"><?php echo $request_history[$i]->tanggal_laku?></p>
-            <!-- <p class="date">2015</p> -->
-        </div>
-    </div>
-</div>
-<?php
- }
-
+	if ($request_history != 0) {
+		# code...
+		for ($i=0; $i < count($request_history); $i++) { 
+			?>
+			<div id="card-container">
+				<div id="card">
+					<div class="front face" style="background: #f9f3e4">
+						<div style="margin-top: 80px;">
+							<h5 class="card-title"><?php echo $request_history[$i]->nama_pegawai ?></h5>
+						</div>
+						<div>
+							<p class="card-text" style="color:red;"><?php echo $request_history[$i]->nama_posisi ?></p>
+						</div>
+					</div>
+					<div class="back face">
+						<a href="<?php echo site_url()?>skp/cetak_history_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>">
+							<h1><?php echo $request_history[$i]->nama_posisi ?></h1>
+						</a>        
+						<p class="artist"><?php echo $request_history[$i]->tanggal_laku?></p>
+						<!-- <p class="date">2015</p> -->
+					</div>
+				</div>
+			</div>
+			<?php
+		}		
+	}
 ?>
