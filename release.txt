@@ -1,4 +1,12 @@
 v4.1.2.5.3
+2019-09-23
+New:
+Improved:
+- Layout SKP history
+Fixed:
+Canceled:
+
+v4.1.2.5.3
 2019-09-18
 New:
 Improved:

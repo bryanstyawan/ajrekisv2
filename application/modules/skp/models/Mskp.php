@@ -914,18 +914,28 @@ class Mskp extends CI_Model
 		# code...
 		
 		$sql = "SELECT a.id_pegawai as pegawai,
-				a.id_posisi as posisi,
-				b.nama_pegawai as nama_pegawai,
-				c.nama_posisi as nama_posisi,
-				a.audit_time as tanggal_laku
-				from mr_masa_kerja a,
-				mr_pegawai b, mr_posisi c WHERE
-				a.id_pegawai = '".$id."' AND
-				a.id_pegawai = b.id AND
-				a.id_posisi = c.id AND
-				substring(a.audit_time,1,4) = '".$tahun."' 
-				
-				";
+						a.id_posisi as posisi,
+						b.nama_pegawai as nama_pegawai,
+						c.nama_posisi as nama_posisi,
+						a.audit_time as tanggal_laku,
+						YEAR(a.audit_time) as tahun_berlaku,
+						es1.nama_eselon1,
+						es2.nama_eselon2,
+						es3.nama_eselon3,
+						es4.nama_eselon4
+				FROM mr_masa_kerja a
+				LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+				LEFT JOIN mr_posisi c ON a.id_posisi = c.id
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = c.eselon1
+				LEFT JOIN mr_eselon2 es2 ON es2.id_es2 = c.eselon2
+				LEFT JOIN mr_eselon3 es3 ON es3.id_es3 = c.eselon3
+				LEFT JOIN mr_eselon4 es4 ON es4.id_es4 = c.eselon4				
+				WHERE a.id_pegawai = '".$id."'   
+				AND YEAR(a.audit_time) = '".$tahun."'
+				AND a.id_posisi <> ''
+				AND c.nama_posisi <> ''
+				ORDER BY a.audit_time DESC";
+				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

@@ -51,6 +51,22 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
     $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
     $pangkat       = $infoPegawai[0]->nama_pangkat;
     $kat_posisi    = $infoPegawai[0]->kat_posisi;
+
+    if ($kat_posisi == 1) {
+        # code...
+        // $nama_jabatan = 
+    } 
+    elseif($kat_posisi == 2) {
+        # code...
+    }
+    elseif($kat_posisi == 4) {
+        # code...
+    }
+    elseif($kat_posisi == 6) {
+        # code...
+    }
+    
+
     if($infoPegawai[0]->nama_pangkat != '-')$pangkat      = $infoPegawai[0]->nama_pangkat;else $pangkat                                        = '-';
     if($infoPegawai[0]->nama_golongan != '-')$ruang       = '('.$infoPegawai[0]->nama_golongan.'/'.$infoPegawai[0]->nama_ruang.')';else $ruang = '';
     if($infoPegawai[0]->tmt_golongan != '-')$tmt_golongan = ', '.date("d-m-Y",strtotime($infoPegawai[0]->tmt_golongan));else $tmt_golongan = '';
@@ -204,10 +220,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                             </tr>
                                             <tr>
                                                 <td>d. Jabatan/Pekerjaan</td>
-                                                <td colspan="4"><?php 
-                                                $nama_posisi = $this->uri->segment(5);
-                                                //echo $nama_posisi; 
-                                                echo str_replace('%20',' ', $nama_posisi); ?></td>
+                                                <td colspan="4"><?=$nama_jabatan;?></td>
                                             </tr>
                                             <tr>
                                                 <td>e. Unit Organisasi</td>
