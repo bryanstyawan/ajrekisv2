@@ -866,7 +866,7 @@ class Globalrules extends CI_Model
 						6  => array('nama' => "Juni"),
 						7  => array('nama' => "Juli"),
 						8  => array('nama' => "Agustus"),
-						9  => array('nama' => "Sebtember"),
+						9  => array('nama' => "September"),
 						10 => array('nama' => "Oktober"),
 						11 => array('nama' => "November"),
 						12 => array('nama' => "Desember")
