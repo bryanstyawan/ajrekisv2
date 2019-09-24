@@ -219,6 +219,8 @@ class Dashboard extends CI_Controller {
 		if ($getdata == array()) {
 			# code...
 			// $res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$data);
+			$text_status    = "Pegawai yang bersangkutan belum memiliki kinerja sehingga tidak bisa dilakukan penilaian, silahkan periksa kinerja pegawai yang bersangkutan.";
+			$res_data 		= 0;			
 		}							
 		else {
 			# code...
@@ -236,6 +238,7 @@ class Dashboard extends CI_Controller {
 				'bulan'      => date('m')
 			);
 			$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$data,$flag);			
+			$text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');			
 		}
 
 		$text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');

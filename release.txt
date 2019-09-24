@@ -1,4 +1,13 @@
 v4.1.2.5.3
+2019-09-24
+New:
+Improved:
+- Pesan ketika atasan menilai skp bulanan dengan kondisi pegawai tidak memiliki kinerja
+Fixed:
+Canceled:
+- Informasi Di Dashboard
+
+v4.1.2.5.3
 2019-09-23
 New:
 Improved:
