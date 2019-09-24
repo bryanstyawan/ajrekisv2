@@ -95,16 +95,7 @@ class Skp extends CI_Controller {
 							'audit_priority'      => $param_pk
 						);
 						$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-						$data_notify  = array
-										(
-											'remarks'     => 'Target SKP baru yang diajukan oleh '.$this->session->userdata('sesNama'),
-											'url'         => "skp/skp_pegawai/",
-											'table_name'  => 'mr_skp_pegawai',
-											'receiver'	  => $get_friend[$i]->id,
-											'id_table'    => $res_data_id_friend
-										);
-
-						$res_data = $this->Globalrules->push_notifikasi($data_notify,'notify');
+						$res_data = 1;
 					}
 
 				}
@@ -112,15 +103,7 @@ class Skp extends CI_Controller {
 
 			if ($res_data_id != 0) {
 				# code...
-				$data_notify  = array
-								(
-									'remarks'     => $this->session->userdata('sesNama').' telah mengajukan Target SKP baru',
-									'url'         => "skp/skp_member_detail/".$this->session->userdata('sesUser'),
-									'table_name'  => 'mr_skp_pegawai',
-									'id_table'    => $res_data_id
-								);
-
-				$res_data = $this->Globalrules->push_notifikasi($data_notify,'approval');
+				$res_data = 1;
 			}
 			else
 			{
@@ -191,14 +174,6 @@ class Skp extends CI_Controller {
 		}
 		else {
 			# code...
-			$data_notify  = array
-							(
-								'remarks'     => $this->session->userdata('sesNama').' telah mengajukan perubahan Target SKP',
-								'url'         => "skp/skp_member_detail/".$this->session->userdata('sesUser'),
-								'table_name'  => 'mr_skp_pegawai',
-								'id_table'    => $res_data_id
-							);
-			$res_data = $this->Globalrules->push_notifikasi($data_notify,'approval');
 			$res_data = 1;
 		}
 	
@@ -280,14 +255,6 @@ class Skp extends CI_Controller {
 
 			$flag        = array('skp_id'=>$data_sender['id']);
 			$res_data    = $this->Allcrud->editData('mr_skp_pegawai',$data_change,$flag);
-			$data_notify  = array
-							(
-								'remarks'     => $this->session->userdata('sesNama').' telah mengajukan perubahan Target SKP',
-								'url'         => "skp/skp_member_detail/".$this->session->userdata('sesUser'),
-								'table_name'  => 'mr_skp_pegawai',
-								'id_table'    => $data_sender['id']
-							);
-			$res_data    = $this->Globalrules->push_notifikasi($data_notify,'approval');
 			$text_status = "Target SKP telah diubah, menunggu persetujuan atasan.";
 		}
 		elseif ($data_sender['before'] == 1) {
@@ -305,15 +272,6 @@ class Skp extends CI_Controller {
 				$res_data = $this->Allcrud->addData('mr_skp_pegawai_temp',$data);
 			}
 
-			$data_notify  = array
-							(
-								'remarks'     => $this->session->userdata('sesNama').' telah mengajukan perubahan Target SKP',
-								'url'         => "skp/skp_member_detail/".$this->session->userdata('sesUser'),
-								'table_name'  => 'mr_skp_pegawai',
-								'id_table'    => $data_sender['id']
-							);
-
-			$res_data = $this->Globalrules->push_notifikasi($data_notify,'approval');
 			$text_status = "Target SKP telah diubah, status menunggu persetujuan atasan.";
 		}
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
@@ -754,50 +712,36 @@ class Skp extends CI_Controller {
 
 		if ($res_data == 1) {
 			# code...
-			$data_notify  = array
-							(
-								'id_table'   => $id,
-								'table_name' => 'mr_skp_pegawai'
-							);
-			$this->Globalrules->push_notifikasi($data_notify,'read_data');
 			$detail_skp = $this->mskp->get_data_skp_pegawai_id($id);
 			if ($status_skp == 1) {
 				# code...
-				$data_notify  = array
-								(
-									'remarks'     => 'Target SKP yang anda ajukan telah disetujui',
-									'url'         => "skp/skp_pegawai/",
-									'table_name'  => 'mr_skp_pegawai',
-									'receiver'	  => $detail_skp->id_pegawai,
-									'id_table'    => $id
-								);
-				$res_data = $this->Globalrules->push_notifikasi($data_notify,'notify');
+				// $data_notify  = array
+				// 				(
+				// 					'remarks'     => 'Target SKP yang anda ajukan telah disetujui',
+				// 					'url'         => "skp/skp_pegawai/",
+				// 					'table_name'  => 'mr_skp_pegawai',
+				// 					'receiver'	  => $detail_skp->id_pegawai,
+				// 					'id_table'    => $id
+				// 				);
+				// $res_data = $this->Globalrules->push_notifikasi($data_notify,'notify');
 			}
 			else
 			{
-				$data_notify  = array
-								(
-									'remarks'     => 'Target SKP baru yang diajukan telah ditolak dengan alasan '.$data_sender['alasan'].', mohon direvisi kembali.',
-									'url'         => "skp/skp_pegawai/",
-									'table_name'  => 'mr_skp_pegawai',
-									'receiver'	  => $detail_skp->id_pegawai,
-									'id_table'    => $id
-								);
-				$res_data = $this->Globalrules->push_notifikasi($data_notify,'notify');
+				// $data_notify  = array
+				// 				(
+				// 					'remarks'     => 'Target SKP baru yang diajukan telah ditolak dengan alasan '.$data_sender['alasan'].', mohon direvisi kembali.',
+				// 					'url'         => "skp/skp_pegawai/",
+				// 					'table_name'  => 'mr_skp_pegawai',
+				// 					'receiver'	  => $detail_skp->id_pegawai,
+				// 					'id_table'    => $id
+				// 				);
+				// $res_data = $this->Globalrules->push_notifikasi($data_notify,'notify');
 			}
 		}
 		else
 		{
 			$text_status = "Telah terjadi kesalahan sistem";
 		}
-
-
-		$data_notify  = array
-						(
-							'id_table'   => $id,
-							'table_name' => 'tr_capaian_pekerjaan'
-						);
-		$this->Globalrules->push_notifikasi($data_notify,'read_data');
 
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
@@ -839,13 +783,6 @@ class Skp extends CI_Controller {
 		$flag_2     = array('skp_id' => $id);
 		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',$data_res_2,$flag_2);
 
-		$data_notify  = array
-						(
-							'id_table'   => $id,
-							'table_name' => 'mr_skp_pegawai'
-						);
-		$res_data = $this->Globalrules->push_notifikasi($data_notify,'delete_data');
-
 		$text_status = $this->Globalrules->check_status_res($res_data,"Target SKP telah dihapus.");
 		$res = array
 					(
@@ -862,7 +799,7 @@ class Skp extends CI_Controller {
 		$priority    = "";
 		$priority_2  = "";
 		$text_status = "";
-		// print_r($res_data);die();
+
 		if ($res_data) {
 			# code...
 			if ($param == 'up') {
@@ -984,9 +921,6 @@ class Skp extends CI_Controller {
 		$data['infoPegawai1'] = $this->Globalrules->get_info_pegawai($id,'id');
 		$data['list']         = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),'1','realisasi');
 		$data['content']      = 'skp/penilaian_skp';
-		// echo "<pre>";
-		// print_r($data['list']);die();		
-		// echo "</pre>";
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -1077,17 +1011,7 @@ class Skp extends CI_Controller {
 
 					if ($res_data_id != 0) {
 						# code...
-						$data_notify  = array
-										(
-											'remarks'     => $this->session->userdata('sesNama').' telah mengajukan penilaian prilaku.',
-											'url'         => "skp/penilaian_prilaku/",
-											'table_name'  => 'mr_skp_penilaian_prilaku',
-											'id_table'    => $res_data_id,
-											'sender'	  => $this->session->userdata('sesUser'),
-											'receiver'	  => $info_pegawai[0]->id,
-										);
-
-						$res_data = $this->Globalrules->push_notifikasi($data_notify,'notify');
+						$res_data = 1;
 					}
 				}
 				else
@@ -1581,15 +1505,58 @@ class Skp extends CI_Controller {
 		}
 	}
 
-	public function cetak_skp($param=NULL)
+	public function cetak_skp($id=NULL,$posisi=NULL)
 	{
 		# code...
+		if($id != NULL)
+		{
+			if($posisi != NULL)
+			{
+				$this->Globalrules->session_rule();
+				$this->Globalrules->notif_message();
+				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
+				// echo "<pre>";
+				// print_r($data);die();
+				// echo "</pre>";
+				$data['penilai']  = '';
+				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
+				$data['content']  = 'skp/cetak_history_skp';
+				$this->load->view('templateAdmin',$data);
+			}
+			else
+			{
+				$this->history_skp();				
+			}
+		}
+		else
+		{
+			$this->history_skp();
+		}
+	}
+
+    public function history_skp()
+	{
+		# code...
+		$getMasaKerja = $this->Allcrud->getData('mr_masa_kerja', array('id_pegawai' => $this->session->userdata('sesUser'),'id_posisi' => $this->session->userdata('sesPosisi')))->result_array();		
+		if($getMasaKerja == array())
+		{
+			$data_store        = array
+						(
+							'id_pegawai' => $this->session->userdata('sesUser'),
+							'id_posisi'  => $this->session->userdata('sesPosisi'),
+							'StartDate'  => date('Y-m-d H:i:s'),
+							'EndDate'    => '9999-01-01',
+							'audit_user' => $this->session->userdata('sesNip'),
+							'audit_time' => date('Y-m-d H:i:s')
+						);		
+			$res_data    = $this->Allcrud->addData('mr_masa_kerja',$data_store);			
+		}
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
 		$data['penilai']  = '';
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
-		$data['content']  = 'skp/cetak_skp';
+		$data['content']  = 'skp/skp_history_skp';
+		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
 		$this->load->view('templateAdmin',$data);
 	}
 
@@ -2332,44 +2299,6 @@ class Skp extends CI_Controller {
 		$data['id_posisi'] = $posisi;								
 		$data['member']  = $this->Globalrules->list_bawahan($posisi,NULL,'penilaian_skp');		
 		$this->load->view('templateAdmin',$data);		
-	}
-
-    public function history_skp($param=NULL)
-	{
-		# code...
-		$getMasaKerja = $this->Allcrud->getData('mr_masa_kerja', array('id_pegawai' => $this->session->userdata('sesUser'),'id_posisi' => $this->session->userdata('sesPosisi')))->result_array();		
-		if($getMasaKerja == array())
-		{
-			$data        = array
-						(
-							'id_pegawai' => $this->session->userdata('sesUser'),
-							'id_posisi'  => $this->session->userdata('sesPosisi'),
-							'StartDate'  => date('Y-m-d H:i:s'),
-							'EndDate'    => '9999-01-01',
-							'audit_user' => $this->session->userdata('sesNip'),
-							'audit_time' => date('Y-m-d H:i:s')
-						);		
-			$res_data    = $this->Allcrud->addData('mr_masa_kerja',$data);			
-		}
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$data             = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
-		$data['penilai']  = '';
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
-		$data['content']  = 'skp/skp_history_skp';
-		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
-		$this->load->view('templateAdmin',$data);
-	}
-
-	public function cetak_history_skp($id,$posisi)
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
-		$data['penilai']  = '';
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
-		$data['content']  = 'skp/cetak_history_skp';
-		$this->load->view('templateAdmin',$data);
 	}	
 }
+  

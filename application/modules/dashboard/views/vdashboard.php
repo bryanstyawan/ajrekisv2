@@ -173,13 +173,13 @@ else {
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
-        Lobibox.window({
-            title  : 'Informasi',
-            content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+            
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Berdasarkan Pasal 24 ayat (1) Permendagri 132 tahun 2018 tentang Tunjangan Kinerja Pegawai di Kementerian Dalam Negeri, "Pegawai mendapat pengurangan Tunjangan Kinerja sebesar 5% (lima persen) dari aspek Produktivitas Kerja apabila pegawai tidak mencapai sasaran target yang ditentukan."</h4></div>'+
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
-        });        
+        // Lobibox.window({
+        //     title  : 'Informasi',
+        //     content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+            
+        //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Berdasarkan Pasal 24 ayat (1) Permendagri 132 tahun 2018 tentang Tunjangan Kinerja Pegawai di Kementerian Dalam Negeri, "Pegawai mendapat pengurangan Tunjangan Kinerja sebesar 5% (lima persen) dari aspek Produktivitas Kerja apabila pegawai tidak mencapai sasaran target yang ditentukan."</h4></div>'+
+        //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
+        //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
+        // });        
 
         $('#gaugeContainer').jqxGauge({
                     ranges: [{ startValue: 0, endValue: 25, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
