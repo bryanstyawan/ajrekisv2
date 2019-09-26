@@ -105,7 +105,7 @@ class Api_get extends CI_Controller
 		}
 	}
 
-	public function simpeg_riwayat_pangkat($nip)
+	public function simpeg_riwayat_pangkat($nip,$id_pegawai)
 	{
 		# code...
 		$curl = curl_init();
@@ -140,13 +140,43 @@ class Api_get extends CI_Controller
 				for ($i=0; $i < count($data_decode); $i++) { 
 					# code...
 					$data_store_detail = array(
-						'jenis_naik_pangkat'       => $data_decode[$i]->jenis_naik_pangkat,						
-						'nama_gol'                 => $data_decode[$i]->nama_gol,
+						'id_pegawai'			   => $id_pegawai,
+						'id_golongan'              => $data_decode[$i]->kgolru,
+						'id_kenaikan_pangkat'      => $data_decode[$i]->knpang,						
 						'nomor_sk'                 => $data_decode[$i]->nomor_sk,
-						'pangkat'	               => $data_decode[$i]->pangkat,
 						'tmt_pangkat'              => $data_decode[$i]->tmt_pangkat,
-						'tmt_sk'                   => $data_decode[$i]->tmt_sk
+						'tmt_sk'                   => $data_decode[$i]->tmt_sk						
 					); 
+
+					$get_detail = $this->Allcrud->getData('mr_simpeg_riwayat_pangkat',$data_store_detail)->result_array();
+					if ($get_detail == array()) {
+						# code...
+						$res_data    = $this->Allcrud->addData('mr_simpeg_riwayat_pangkat',$data_store_detail);						
+					}					
+
+					$data_store_kenaikan_pangkat = array(
+						'jenis_naik_pangkat' => $data_decode[$i]->jenis_naik_pangkat,
+						'id'                 => $data_decode[$i]->knpang
+					);
+
+					$get_kp = $this->Allcrud->getData('mr_simpeg_kenaikan_pangkat',$data_store_kenaikan_pangkat)->result_array();
+					if ($get_kp == array()) {
+						# code...
+						$res_data    = $this->Allcrud->addData('mr_simpeg_kenaikan_pangkat',$data_store_kenaikan_pangkat);						
+					}
+
+
+					$data_store_golongan = array(
+						'id'           => $data_decode[$i]->kgolru,
+						'nama_pangkat' => $data_decode[$i]->pangkat,
+						'golongan'     => $data_decode[$i]->nama_gol
+					);
+
+					$get_gol = $this->Allcrud->getData('mr_simpeg_golongan',$data_store_golongan)->result_array();
+					if ($get_gol == array()) {
+						# code...
+						$res_data    = $this->Allcrud->addData('mr_simpeg_golongan',$data_store_golongan);						
+					}					
 				}				
 			}			
 		  	echo $response;

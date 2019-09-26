@@ -943,12 +943,12 @@ class Transaksi extends CI_Controller {
 		$flag        = array('id_pekerjaan'=>$data_sender['id_pekerjaan']);
 		$res_data    = $this->Allcrud->editData('tr_capaian_pekerjaan',$data,$flag);
 
-		$data_notify  = array
-						(
-							'id_table'   => $data_sender['id_pekerjaan'],
-							'table_name' => 'tr_capaian_pekerjaan'
-						);
-		$this->Globalrules->push_notifikasi($data_notify,'read_data');
+		// $data_notify  = array
+		// 				(
+		// 					'id_table'   => $data_sender['id_pekerjaan'],
+		// 					'table_name' => 'tr_capaian_pekerjaan'
+		// 				);
+		// $this->Globalrules->push_notifikasi($data_notify,'read_data');
 		// $this->notify_capaian_kerja('Pengajuan keberatan anda telah ditolak dan atasan anda mengatakan "'.$data_sender['komentar'].'"','transaksi/home/'.$data_sender['id_pekerjaan'].'/',$data_sender['id_pekerjaan'],'notify');
 		// $text_status = $this->Globalrules->check_status_res($res_data,'Status pekerjaan telah diubah');
 		$res = array
@@ -1046,41 +1046,41 @@ class Transaksi extends CI_Controller {
 		echo json_encode($res);
 	}
 
-	public function notify_capaian_kerja($remarks=NULL,$link,$id_table,$PARAM)
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$receiver    = "";
-		$data_notify = array
-						(
-							'remarks'     => $this->session->userdata('sesNama').' '.$remarks,
-							'url'         => $link.$this->session->userdata('sesUser'),
-							'table_name'  => 'tr_capaian_pekerjaan',
-							'id_table'    => $id_table
-						);
-		if ($PARAM == 'notify') {
-			# code...
-			$get_data_transact = $this->mtrx->get_transaksi_id($id_table);
+	// public function notify_capaian_kerja($remarks=NULL,$link,$id_table,$PARAM)
+	// {
+	// 	# code...
+	// 	$this->Globalrules->session_rule();
+	// 	$receiver    = "";
+	// 	$data_notify = array
+	// 					(
+	// 						'remarks'     => $this->session->userdata('sesNama').' '.$remarks,
+	// 						'url'         => $link.$this->session->userdata('sesUser'),
+	// 						'table_name'  => 'tr_capaian_pekerjaan',
+	// 						'id_table'    => $id_table
+	// 					);
+	// 	if ($PARAM == 'notify') {
+	// 		# code...
+	// 		$get_data_transact = $this->mtrx->get_transaksi_id($id_table);
 
-			if ($get_data_transact != 0) {
-				# code...
-				$receiver = $get_data_transact[0]->id_pegawai;
-			}
-			$data_notify['receiver'] = $receiver;
-			$data_notify['url']      = $link.$receiver;
-		}
-		elseif ($PARAM == 'approval-es2') {
-			# code...
-			$get_data_transact = $this->mtrx->get_transaksi_id($id_table);
+	// 		if ($get_data_transact != 0) {
+	// 			# code...
+	// 			$receiver = $get_data_transact[0]->id_pegawai;
+	// 		}
+	// 		$data_notify['receiver'] = $receiver;
+	// 		$data_notify['url']      = $link.$receiver;
+	// 	}
+	// 	elseif ($PARAM == 'approval-es2') {
+	// 		# code...
+	// 		$get_data_transact = $this->mtrx->get_transaksi_id($id_table);
 
-			if ($get_data_transact != 0) {
-				# code...
-				$receiver = $get_data_transact[0]->id_pegawai_es2_banding;
-			}
-			$data_notify['receiver'] = $receiver;
-		}
-		$res_data = $this->Globalrules->push_notifikasi($data_notify,$PARAM);
-	}
+	// 		if ($get_data_transact != 0) {
+	// 			# code...
+	// 			$receiver = $get_data_transact[0]->id_pegawai_es2_banding;
+	// 		}
+	// 		$data_notify['receiver'] = $receiver;
+	// 	}
+	// 	$res_data = $this->Globalrules->push_notifikasi($data_notify,$PARAM);
+	// }
 
 	public function get_delele_transaksi($id)
 	{
@@ -1382,38 +1382,38 @@ class Transaksi extends CI_Controller {
 					$flag     = array('id'=>$id);
 					$res_data = $this->Allcrud->editData('tr_tugas_tambahan_detail',$data,$flag);
 
-					$data_notify  = array
-									(
-										'id_table'   => $id,
-										'table_name' => 'tr_tugas_tambahan_detail'
-									);
-					$this->Globalrules->push_notifikasi($data_notify,'read_data');
+					// $data_notify  = array
+					// 				(
+					// 					'id_table'   => $id,
+					// 					'table_name' => 'tr_tugas_tambahan_detail'
+					// 				);
+					// $this->Globalrules->push_notifikasi($data_notify,'read_data');
 
 					if ($PARAM == 1) {
 						// code...
-						$data_notify  = array
-										(
-											'id_table'   => $id,
-											'remarks'    => $this->session->userdata('sesNama').' Pengajuan tugas tambahan/kreatifitas anda telah disetujui',
-											'url'        => 'transaksi/tugas_tambahan_dan_kreativitas',
-											'table_name' => 'tr_tugas_tambahan_detail',
-											'receiver'   => $iduser,
-											'sender'     => $this->session->userdata('sesUser')
-										);
-						$this->Globalrules->push_notifikasi($data_notify,'notify');
+						// $data_notify  = array
+						// 				(
+						// 					'id_table'   => $id,
+						// 					'remarks'    => $this->session->userdata('sesNama').' Pengajuan tugas tambahan/kreatifitas anda telah disetujui',
+						// 					'url'        => 'transaksi/tugas_tambahan_dan_kreativitas',
+						// 					'table_name' => 'tr_tugas_tambahan_detail',
+						// 					'receiver'   => $iduser,
+						// 					'sender'     => $this->session->userdata('sesUser')
+						// 				);
+						// $this->Globalrules->push_notifikasi($data_notify,'notify');
 					}
 					else {
 						// code...
-						$data_notify  = array
-										(
-											'id_table'   	=> $id,
-											'remarks'     => $this->session->userdata('sesNama').' Pengajuan tugas tambahan/kreatifitas anda telah ditolak',
-											'url'         => 'transaksi/tugas_tambahan_dan_kreativitas',
-											'table_name' 	=> 'tr_tugas_tambahan_detail',
-											'receiver' 		=> $iduser,
-											'sender'			=> $this->session->userdata('sesUser')
-										);
-						$this->Globalrules->push_notifikasi($data_notify,'notify');
+						// $data_notify  = array
+						// 				(
+						// 					'id_table'   	=> $id,
+						// 					'remarks'     => $this->session->userdata('sesNama').' Pengajuan tugas tambahan/kreatifitas anda telah ditolak',
+						// 					'url'         => 'transaksi/tugas_tambahan_dan_kreativitas',
+						// 					'table_name' 	=> 'tr_tugas_tambahan_detail',
+						// 					'receiver' 		=> $iduser,
+						// 					'sender'			=> $this->session->userdata('sesUser')
+						// 				);
+						// $this->Globalrules->push_notifikasi($data_notify,'notify');
 					}
 
 					$text_status = $this->Globalrules->check_status_res($res_data,'Tugas Tambahan telah diperiksa');

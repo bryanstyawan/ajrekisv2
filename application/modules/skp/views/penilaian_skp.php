@@ -197,7 +197,7 @@ if ($member != 0) {
     # code...
 ?>
 
-<div class="col-md-2">
+<div class="col-md-12">
     <div class="box box-solid" id="isi_kontak" style="">
 
         <div class="box-header with-border">
@@ -237,7 +237,7 @@ if ($member != 0) {
 ?>
 
 
-<div class="col-xs-10" style="overflow:auto;">
+<div class="col-xs-12" style="overflow:auto;">
     <div class="box">
         <div class="box-header">
             <div class="col-md-3">
@@ -248,7 +248,7 @@ if ($member != 0) {
             </div>
         </div>
         <div class="box-body">
-            <table id="table_skp" class="table table-bordered table-striped table-view">
+            <table id="table_skp" class="table table-bordered table-striped table-view-no-paging">
                 <thead>
                     <tr>
                         <th rowspan="2">No</th>
@@ -396,7 +396,7 @@ if ($member != 0) {
                         <td><?=number_format($realisasi_biaya,2);?></td>
                         <!-- <td><?=number_format($perhitungan['aspek'],2);?></td> -->
                         <td><?=number_format($perhitungan['nilai_capaian_skp'],2);?></td>
-                        <td><?=$this->Globalrules->nilai_capaian_skp(number_format($perhitungan['nilai_capaian_skp'],2));?></td>
+                        <td><?=$this->Globalrules->nilai_capaian_skp(number_format($perhitungan['nilai_capaian_skp'],2))['value'];?></td>
                     </tr>
                     <?php
                         }

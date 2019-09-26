@@ -336,11 +336,332 @@ $.widget.bridge('uibutton', $.ui.button);
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script type="text/javascript">
-  /*********************************************************************************************/
-/* function = numberWithCommas(x)
-/* used for = give comma in number
-/*
-/*********************************************************************************************/
+function profile(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_profile/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            var obj = jQuery.parseJSON (msg);
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_pendidikan(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pendidikan/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].ntpu+'</td>'+
+                                '<td>'+obj.results[i].njur+'</td>'+
+                                '<td>'+obj.results[i].nsek+'</td>'+
+                                '<td>'+obj.results[i].tempat+'</td>'+
+                                '<td>'+obj.results[i].thnlulus+'</td>'+
+                                // '<td>'+obj.results[i].scoring+'</td>'+
+                            '</tr>';                                          
+                }  
+                $("#li_pendidikan_umum > div > div > div > div > table > tbody").html(tr_insert);                
+            }                        
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_pangkat(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pangkat/<?=$this->session->userdata('sesNip');?>/<?=$this->session->userdata('sesUser');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].pangkat+'</td>'+
+                                '<td>'+obj.results[i].tmt_pangkat+'</td>'+
+                            '</tr>';                                          
+                }  
+                $("#li_pangkat > div > div > div > div > table > tbody").html(tr_insert);                            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_jabatan(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_jabatan/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].jataban+'</td>'+
+                                '<td>'+obj.results[i].jenisjab+'</td>'+
+                                '<td>'+obj.results[i].tmt_jabatan+'</td>'+                            
+                            '</tr>';                                          
+                }  
+                $("#li_jabatan > div > div > div > div > table > tbody").html(tr_insert);                
+            }            
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_diklat_struktural(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_struktural/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].ndik+'</td>'+
+                                '<td>'+obj.results[i].tempat+'</td>'+
+                                '<td>'+obj.results[i].panitia+'</td>'+
+                                '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>';                                          
+                }  
+                $("#li_diklat_struktural > div > div > div > div > table > tbody").html(tr_insert);            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_diklat_fungsional(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_fungsional/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+(i +1)+'</td>'+                                                                                                                            
+                            '</tr>';                                          
+                }  
+                $("#li_diklat_fungsional > div > div > div > div > table > tbody").html(tr_insert);            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_diklat_teknis(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_teknis/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                '<td>'+(i +1)+'</td>'+
+                                '<td>'+obj.results[i].ndiktek+'</td>'+
+                                '<td>'+obj.results[i].tempat+'</td>'+
+                                '<td>'+obj.results[i].panitia+'</td>'+
+                                '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                                '<td>'+obj.results[i].tgl_akhir+'</td>'+
+                                '<td></td>'+                                                                                                                
+                            '</tr>';                                          
+                }  
+                $("#li_teknis > div > div > div > div > table > tbody").html(tr_insert);            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function riwayat_konferensi(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_konferensi/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+obj.results[i].nseminar+'</td>'+
+                                    '<td>'+obj.results[i].peran+'</td>'+
+                                    '<td>'+obj.results[i].tempat+'</td>'+
+                                    '<td>'+obj.results[i].panitia+'</td>'+
+                                    '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                                    '<td>'+obj.results[i].tgl_akhir+'</td>'+                                                                                                                            
+                                    '<td></td>'+
+                            '</tr>';                                          
+                }  
+                $("#li_konferensi > div > div > div > div > table > tbody").html(tr_insert);            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function karya_tulis(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_karya_tulis/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+obj.results[i].judul_buku+'</td>'+
+                                    '<td>'+obj.results[i].tahun+'</td>'+                                                                                                                            
+                            '</tr>';                                          
+                }  
+                $("#li_KaryaTulis > div > div > div > div > table > tbody").html(tr_insert);            
+            }                
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function penghargaan(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_penghargaan/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+obj.results[i].nbintang+'</td>'+
+                                    '<td>'+obj.results[i].aoleh+'</td>'+
+                                    '<td>'+obj.results[i].nsk+'</td>'+
+                                    '<td>'+obj.results[i].tholeh+'</td>'+
+                            '</tr>';                                          
+                }  
+                $("#li_penghargaan > div > div > div > div > table > tbody").html(tr_insert);            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+function organisasi(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_organisasi/<?=$this->session->userdata('sesNip');?>",		
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {                            
+                var obj = jQuery.parseJSON (msg);
+                tr_insert = "";
+                for (i=0 ;i<obj.results.length;i++) {
+                    tr_insert += '<tr>'+
+                                    '<td>'+(i +1)+'</td>'+
+                                    '<td>'+obj.results[i].norg+'</td>'+                                
+                                    '<td>'+obj.results[i].jorg+'</td>'+                                                                                                                            
+                                    '<td>'+obj.results[i].jborg+'</td>'+
+                                    '<td>'+obj.results[i].tempat+'</td>'+
+                                    '<td>'+obj.results[i].tgl_mulai+'</td>'+
+                                    '<td>'+obj.results[i].tgl_akhir+'</td>'+                                
+                            '</tr>';                                          
+                }  
+                $("#li_organisasi > div > div > div > div > table > tbody").html(tr_insert);            
+            }
+        },
+        error:function(jqXHR,exception) {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -355,7 +676,6 @@ function ajax_status(obj,arg)
         setTimeout(function(){
             $("#loadprosess").modal('hide');
             setTimeout(function(){
-                // alert(arg);
                 if (arg == null) {
                     location.reload();                    
                 }

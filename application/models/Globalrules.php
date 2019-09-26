@@ -26,25 +26,25 @@ class Globalrules extends CI_Model
 	public function user_access_read()
 	{
 		# code...
-			$uri_segment_1 = $this->uri->segments[1];
-			$uri_segment_2 = $this->uri->segments[2];
-			$menu          = $uri_segment_1."/".$uri_segment_2;
-			$role_id       = $this->session->userdata('sesRole');
-			$get_menu      = $this->Allcrud->getData('config_menu',array('uri' => $menu))->result_array();			
-			if ($menu != 'dashboard/soon') {
+		$uri_segment_1 = $this->uri->segments[1];
+		$uri_segment_2 = $this->uri->segments[2];
+		$menu          = $uri_segment_1."/".$uri_segment_2;
+		$role_id       = $this->session->userdata('sesRole');
+		$get_menu      = $this->Allcrud->getData('config_menu',array('uri' => $menu))->result_array();			
+		if ($menu != 'dashboard/soon') {
+			# code...
+			if ($get_menu != array()) {
 				# code...
-				if ($get_menu != array()) {
+				$get_menu_access = $this->Allcrud->getData('config_menu_akses',array('id_menu' => $get_menu[0]['id_menu'], 'id_role' => $role_id))->result_array();					
+				if ($get_menu_access != array()) {
 					# code...
-					$get_menu_access = $this->Allcrud->getData('config_menu_akses',array('id_menu' => $get_menu[0]['id_menu'], 'id_role' => $role_id))->result_array();					
-					if ($get_menu_access != array()) {
+					if ($get_menu_access[0]['baca'] == 0) {
 						# code...
-						if ($get_menu_access[0]['baca'] == 0) {
-							# code...
-							redirect('dashboard/home');
-						}											
-					}
+						redirect('dashboard/home');
+					}											
 				}
 			}
+		}
 	}
 
 	public function trigger_insert_update()
@@ -167,17 +167,10 @@ class Globalrules extends CI_Model
 				AND a.id_table = '".$id_table."'
 				AND a.status_read = 0";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return ($query->num_rows() > 0) ? true : false;
 	}
 
-	public function get_info_pegawai($id=NULL,$param=NULL)
+	public function get_info_pegawai($id=NULL,$param=NULL,$id_posisi=NULL)
 	{
 		# code...
 		$sql = "";
@@ -185,12 +178,12 @@ class Globalrules extends CI_Model
 			# code...
 			if ($id==NULL) {
 				# code...
-				$sql = "a.nip = '".$this->session->userdata('sesNip')."' AND a.status = 1";
+				$sql = "a.nip = '".$this->session->userdata('sesNip')."' AND a.status = 1 AND b.id = '".$this->session->userdata('sesPosisi')."'";
 			}
 		}
 		elseif ($param == 'id') {
 			# code...
-			$sql = "a.id = '".$id."' AND a.status = 1";
+			$sql = "a.id = '".$id."' AND a.status = 1 AND b.id = '".$id_posisi."'";
 		}
 		elseif ($param == 'nama_pegawai') {
 			# code...
@@ -240,7 +233,7 @@ class Globalrules extends CI_Model
 						COALESCE(cls_jfu.posisi_class,'-') as grade_jfu,
 						COALESCE(cls_jfu.tunjangan,'-') as tunjangan_jfu						
 				FROM mr_pegawai a
-				LEFT JOIN mr_posisi b ON b.id = a.posisi
+				JOIN mr_posisi b
 				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
 				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft  = jft.id
 				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
@@ -254,15 +247,9 @@ class Globalrules extends CI_Model
 				LEFT OUTER JOIN mr_golongan gol ON gol.id = a.golongan				
 				WHERE ".$sql."";
 				// NOTE ==> Kolom Posisi_class pada mr_posisi dan ID pada mr_POSISI_CLASS
+				// print_r($sql);die();
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
 
 	public function get_log_notify_id($id)
@@ -272,14 +259,7 @@ class Globalrules extends CI_Model
 				FROM log_notifikasi a
 				WHERE a.id = '".$id."'";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
 
 	public function check_status_res($res_data,$text_status=NULL)
@@ -290,7 +270,7 @@ class Globalrules extends CI_Model
 			$text_status = $text_status;
 		}
 		elseif ($res_data == 2) {
-		// code...
+			# code...
 			$text_status = $text_status;
 		}
 		else
@@ -301,10 +281,9 @@ class Globalrules extends CI_Model
 		return $text_status;
 	}
 
-	public function aspek_kuantitas($realisasi_kuantitas,$target_qty,$realisasi_kualitasmutu)
+	public function aspek_kuantitas($realisasi_kuantitas=NULL,$target_qty=NULL,$realisasi_kualitasmutu=NULL)
 	{
 		# code...
-		// print_r($realisasi_kualitasmutu);die();
 		$aspek_kuantitas = 0;
 		if ($realisasi_kualitasmutu == 0) {
 			# code...
@@ -363,10 +342,11 @@ class Globalrules extends CI_Model
 			}
 		}
 
-		return array(
-					'aspek_waktu'       => $aspek_waktu,
-					'tingkat_efisiensi' => $tingkat_efisiensi
-                );
+		return array
+		(
+			'aspek_waktu'       => $aspek_waktu,
+			'tingkat_efisiensi' => $tingkat_efisiensi
+		);
 	}
 
 	public function aspek_biaya($realisasi_biaya,$target_biaya,$kegiatan)
@@ -416,10 +396,11 @@ class Globalrules extends CI_Model
 		if($aspek_kualitas == NULL)$aspek_kualitas   = 0;
 		if($aspek_waktu == NULL)$aspek_waktu         = 0;
 		if($aspek_biaya == NULL)$aspek_biaya         = 0;
-		return array(
-						'aspek'             => ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu),
-						'nilai_capaian_skp' => (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu)/3)
-					);
+		return array
+		(
+			'aspek'             => ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu),
+			'nilai_capaian_skp' => (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu)/3)
+		);
 	}
 
 	public function nilai_capaian_skp($parameter)
@@ -453,7 +434,8 @@ class Globalrules extends CI_Model
 			$style     = "background:#F44336;";
 		}
 
-		return array(
+		return array
+		(
 			'value' => $nilai_skp,
 			'css'   => $style
 		);
@@ -462,10 +444,6 @@ class Globalrules extends CI_Model
 	public function data_summary_skp_pegawai($id,$_id_posisi)
 	{
 		# code...
-		$data_atasan_real = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();		
-
-		$_atasan_id = $this->list_atasan($this->session->userdata('sesPosisi'));
-		$_atasan_id = ($_atasan_id == 0) ? 0 : $_atasan_id[0]->id;
 		$data['tugas_tambahan']        = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),NULL);
 		$data['kreativitas']           = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),'kreativitas');
 		$data['tr_tugas_tambahan']     = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan');
@@ -474,53 +452,28 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_atasan']  = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'atasan',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_peer']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_bawahan'] = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
-		$data['infoPegawai']           = $this->get_info_pegawai($id,'id');
+		$data['infoPegawai']           = $this->get_info_pegawai($id,'id',$_id_posisi);
 
-		if ($data_atasan_real != array()) {
-			# code...
-			if ($data_atasan_real[0]['atasan'] != 0) {
-				# code...
-				$data['atasan']                = $this->get_info_pegawai($_atasan_id,'id');
-			}
-			else
-			{
-				$data['atasan']                = 0;
-			}
-		}
-		else
-		{
-			$data['atasan_penilai'] = 0;	
-		}
-
+		$_atasan_data        = $this->list_atasan($_id_posisi);
+		$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+		$_atasan_id_posisi   = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+		$data['atasan']      = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
 		if ($data['atasan'] != 0) 
 		{
-			if ($data_atasan_real != array()) {
-				# code...
-				if ($data_atasan_real[0]['atasan'] != 0) {
+			$check_atasan_again = $this->Allcrud->getData('mr_posisi',array('id' => $data['atasan'][0]->posisi))->result_array();
+			if($check_atasan_again != array())
+			{
+				if ($check_atasan_again[0]['atasan'] == 0) {
 					# code...
-					$check_atasan_again = $this->Allcrud->getData('mr_posisi',array('id' => $data['atasan'][0]->posisi))->result_array();
-					if($check_atasan_again != array())
-					{
-						if ($check_atasan_again[0]['atasan'] == 0) {
-							# code...
-							$data['atasan_penilai'] = 0;
-						}
-						else
-						{
-							$_atasan_id = $this->list_atasan($data['atasan'][0]->posisi);
-							$_atasan_id = ($_atasan_id == 0) ? 0 : $_atasan_id[0]->id;							
-							$data['atasan_penilai'] = $this->get_info_pegawai($_atasan_id,'id');							
-						}
-					}
+					$data['atasan_penilai'] = 0;
 				}
 				else
 				{
-					$data['atasan_penilai'] = 0;
+					$_atasan_id_data        = $this->list_atasan($data['atasan'][0]->posisi);
+					$_atasan_id             = ($_atasan_id_data == 0) ? 0 : $_atasan_id_data[0]->id;
+					$_atasan_id_posisi      = ($_atasan_id_data == 0) ? 0 : $_atasan_id_data[0]->posisi;														
+					$data['atasan_penilai'] = $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi);							
 				}
-			}
-			else
-			{
-				$data['atasan_penilai'] = 0;	
 			}
 		}
 		else
@@ -528,8 +481,7 @@ class Globalrules extends CI_Model
 			$data['atasan_penilai'] = 0;			
 		}
 
-		$data['list_skp']              = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
-/**********************************************************************************************************/
+		$data['list_skp']                                   = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
 		$data['summary_prilaku_skp']['orientasi_pelayanan'] = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->orientasi_pelayanan,$data['nilai_prilaku_peer'][0]->orientasi_pelayanan,$data['nilai_prilaku_bawahan'][0]->orientasi_pelayanan);
 		$data['summary_prilaku_skp']['komitmen']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->komitmen,$data['nilai_prilaku_peer'][0]->komitmen,$data['nilai_prilaku_bawahan'][0]->komitmen);
@@ -540,12 +492,10 @@ class Globalrules extends CI_Model
 		$data['summary_prilaku_skp']['jumlah']              = $data['summary_prilaku_skp']['orientasi_pelayanan'] + $data['summary_prilaku_skp']['integritas'] + $data['summary_prilaku_skp']['komitmen'] + $data['summary_prilaku_skp']['disiplin'] + $data['summary_prilaku_skp']['kerjasama'] + $data['summary_prilaku_skp']['kepemimpinan'];
 		$data['summary_prilaku_skp']['rata_rata']           = $data['summary_prilaku_skp']['jumlah'] / 6;
 		$data['summary_prilaku_skp']['nilai_prilaku_kerja'] = ($data['summary_prilaku_skp']['rata_rata']*40)/100;
-/**********************************************************************************************************/
-		$data['summary_skp']['nilai_capaian_skp'] = "";
-		$data['summary_skp']['total_aspek']       = 0;
+		$data['summary_skp']['nilai_capaian_skp']           = "";
+		$data['summary_skp']['total_aspek']                 = 0;
 		if ($data['list_skp'] != 0) {
 				# code...
-			$total = "";
 			for ($i=0; $i < count($data['list_skp']); $i++) {
 				# code...
 				$data['list_skp'][$i]->aspek_kualitas      = $this->aspek_kualitas($data['list_skp'][$i]->realisasi_kualitasmutu,$data['list_skp'][$i]->target_kualitasmutu);
@@ -568,12 +518,12 @@ class Globalrules extends CI_Model
 			# code...
 			$data['summary_skp']['total_aspek'] = 0;		
 		}
-		$list_skp_count = ($data['list_skp'] == 0) ? 1 : count($data['list_skp']);
-		$data['persentase_target_realisasi']                  = $this->mskp->get_persentase_target_realisasi();
-		$data['summary_skp']['tugas_tambahan']                = $this->nilai_tugas_tambahan($data['tugas_tambahan']);
-		$data['summary_skp']['total']                         = $data['summary_skp']['total_aspek']/$list_skp_count + $data['summary_skp']['tugas_tambahan'] + $data['kreativitas'];
-		$data['summary_skp']['nilai_sasaran_kinerja_pegawai'] = ($data['summary_skp']['total']*60)/100;
-/**********************************************************************************************************/
+
+		$list_skp_count                                         = ($data['list_skp'] == 0) ? 1 : count($data['list_skp']);
+		$data['persentase_target_realisasi']                    = $this->mskp->get_persentase_target_realisasi();
+		$data['summary_skp']['tugas_tambahan']                  = $this->nilai_tugas_tambahan($data['tugas_tambahan']);
+		$data['summary_skp']['total']                           = $data['summary_skp']['total_aspek']/$list_skp_count + $data['summary_skp']['tugas_tambahan'] + $data['kreativitas'];
+		$data['summary_skp']['nilai_sasaran_kinerja_pegawai']   = ($data['summary_skp']['total']*60)/100;
 		$data['summary_skp_dan_prilaku']                        = $data['summary_skp']['nilai_sasaran_kinerja_pegawai'] + $data['summary_prilaku_skp']['nilai_prilaku_kerja'];
 		$data['summary_alpha']                                  = $this->nilai_capaian_skp($data['summary_skp_dan_prilaku']);
 		return $data;
@@ -591,14 +541,7 @@ class Globalrules extends CI_Model
 			    WHERE a.id = '".$posisi."'
 			    AND b.status = 1";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
 
 	public function list_bawahan($posisi,$parameter=NULL,$arg=NULL)
@@ -684,15 +627,7 @@ class Globalrules extends CI_Model
 		}
 
 		$query = $this->db->query($sql);
-		// print_r($sql);die()	;
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return array();
-		}
+		return ($query->num_rows() > 0) ? $query->result() : array();		
 	}
 
 	public function get_penilaian_prilaku($value_atasan,$value_peer,$value_bawahan,$PARAM=NULL,$counter=NULL)
@@ -1002,452 +937,8 @@ class Globalrules extends CI_Model
 				GROUP BY a.id_posisi";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
+		return ($query->num_rows() > 0) ? $query->result() : 0;		
 	}	
-
-	public function sync_data_transaction($data_sender,$bulan,$tahun)
-	{
-		# code...
-		ini_set('max_execution_time', 2500);
-		$infoPegawai            = $this->get_info_pegawai($data_sender['id_pegawai'],'id');
-		$get_kinerja            = array(); 
-
-		if ($infoPegawai != 0) {
-			# code...
-			$id_posisi_jabatan        = $infoPegawai[0]->id_posisi;
-			$tunjangan_session        = 0;				
-
-			if ($infoPegawai[0]->kat_posisi == 1) {
-				# code...
-				$tunjangan_session   = $infoPegawai[0]->tunjangan_raw;
-				$grade               = $infoPegawai[0]->grade_raw;
-				$nama_posisi         = $infoPegawai[0]->nama_posisi_raw;
-			}
-			elseif ($infoPegawai[0]->kat_posisi == 2) {
-				# code...
-				$tunjangan_session   = $infoPegawai[0]->tunjangan_jft;
-				$grade       = $infoPegawai[0]->grade_jft;
-				$nama_posisi = $infoPegawai[0]->nama_posisi_jft;
-			}
-			elseif ($infoPegawai[0]->kat_posisi == 4) {
-				# code...
-				$tunjangan_session   = $infoPegawai[0]->tunjangan_jfu;
-				$grade               = $infoPegawai[0]->grade_jfu;
-				$nama_posisi         = $infoPegawai[0]->nama_posisi_jfu;
-			}
-			elseif ($infoPegawai[0]->kat_posisi == 6) {
-				# code...
-				$tunjangan_session   = $infoPegawai[0]->tunjangan_raw;
-				$grade               = $infoPegawai[0]->grade_raw;
-				$nama_posisi         = $infoPegawai[0]->nama_posisi_raw;
-			}
-
-			$get_status_by_posisi['tr_approve']         = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
-			$get_status_by_posisi['tr_belum_diperiksa'] = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();						
-			$get_status_by_posisi['tr_tolak']           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-			$get_status_by_posisi['tr_revisi']          = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();			
-			$get_status_by_posisi['id_pegawai']         = $data_sender['id_pegawai'];
-			$get_status_by_posisi['id_posisi']          = $id_posisi_jabatan;	
-			$get_status_by_posisi['bulan']              = $bulan;
-			$get_status_by_posisi['tahun']              = $tahun;											
-
-			$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$id_posisi_jabatan,'bulan' => $bulan, 'tahun' => $tahun))->result_array();	
-			if ($get_report_kinerja == array()) {
-				# insert
-				$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_status_by_posisi);				
-			}
-			else
-			{
-				#update
-				$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$get_status_by_posisi,array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi'=>$id_posisi_jabatan,'bulan' => $bulan, 'tahun' => $tahun));				
-			}																								
-
-			$get_report_kinerja_all  = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'bulan' => $bulan, 'tahun' => $tahun))->result_array();
-			if ($get_report_kinerja_all != array()) {
-				# code...
-				if ($get_report_kinerja_all[0]['prosentase_menit_efektif'] < 100) {
-					# code...
-					$data_tr = $data_sender; 
-					$data_tr['flag_sync'] = 0;																		
-					$tr_disetujui             = $this->Allcrud->getData('tr_capaian_pekerjaan',$data_tr)->result_array();
-					$data_timeline            = array();
-					$get_kinerja              = array();
-					$menit_efektif_summary    = 0;
-					$tunjangan_summary        = 0;
-					$tr_approve               = 0;
-					$tr_tolak                 = 0;		
-					$tr_revisi                = 0;
-					$tr_realisasi_skp         = 0;
-					$prosentase_menit_efektif_summary = 0;		
-					if ($tr_disetujui != array()) {
-						# code...
-						for ($i=0; $i < count($tr_disetujui); $i++) { 
-							# code...		
-							$menit_efektif_calc                       = 0;
-							$start_actual_time                        = $tr_disetujui[$i]['tanggal_mulai'].' '.$tr_disetujui[$i]['jam_mulai'];
-							$end_actual_time                          = $tr_disetujui[$i]['tanggal_selesai'].' '.$tr_disetujui[$i]['jam_selesai'];				
-							$diff                                     = strtotime($end_actual_time) - strtotime($start_actual_time);
-							$data_timeline[$i]['menit_efektif']       = $diff / 60;
-							$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440);				 
-							$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];				 
-							$hari_kerja                               = $this->mtrx->get_hari_kerja($bulan,$tahun);
-							if ($hari_kerja != 0)
-							{												
-								if ($data_timeline1[$i]['menit_hari_efektif'] != 0) {
-									# code...
-									if ($data_timeline[$i]['menit_efektif'] >= $data_timeline1[$i]['menit_hari_efektif']) {
-										# code...
-										$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440) + 1;				 
-										$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];							
-										$menit_efektif_sisa        				  = 0;
-										$data_timeline_1['sisa_menit']   		  = ($data_timeline[$i]['menit_efektif'] + 1440) - $data_timeline1[$i]['menit_hari_efektif'];
-										$data_timeline[$i]['menit_efektif']		  = ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
-									}
-								}
-								// else
-								// {
-								// 	if($data_timeline[$i]['menit_efektif'] > $hari_kerja[0]->jml_menit_perhari)
-								// 	{
-								// 		$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']);
-								// 	}
-								// }			
-										
-								$menit_efektif_calc       		   = ($data_timeline[$i]['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
-								$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;								
-								$prosentase_menit_efektif_summary += $menit_efektif_calc;
-							}															
-
-							$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;							
-							$data_timeline[$i]['flag_sync'] = 1;
-							$data_timeline[$i]['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);					
-							$data_timeline[$i]['id_posisi'] = $id_posisi_jabatan;
-							$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline[$i],array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
-						}					
-						$data_sender['flag_sync']                  = 1;
-						$flag_sync_1                               = $this->get_summary_sikerja($data_sender);								
-						if ($flag_sync_1 != 0) {
-							# code...
-							for ($i=0; $i < count($flag_sync_1); $i++) { 
-								# code...												
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
-								if ($get_kinerja['menit_efektif'] > 6600) {
-									# code...
-									$get_kinerja['prosentase_menit_efektif'] = 100;				
-									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
-									$get_kinerja['menit_efektif']            = 6600;									
-								}						 
-								else
-								{
-									$get_kinerja['prosentase_menit_efektif'] = ($get_kinerja['menit_efektif']/6600)*100;									
-									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
-								}						
-
-								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
-								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				
-								$get_kinerja['tr_approve']               = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
-								$get_kinerja['tr_belum_diperiksa'] 		 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();						
-								$get_kinerja['tr_tolak']                 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-								$get_kinerja['tr_revisi']                = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();			
-								$get_kinerja['audit_user']               = 'system';
-								$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-								$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-								$get_kinerja['bulan']                    = $bulan;
-								$get_kinerja['tahun']                    = $tahun;
-								$get_kinerja['id_posisi']                = $flag_sync_1[$i]->id_posisi;											
-
-								$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
-								if ($get_report_kinerja == array()) {
-									# insert
-									$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-								}
-								else
-								{
-									#update
-									$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$get_kinerja,array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi'=>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')));				
-								}																					
-
-							}
-						}						
-					}	
-					else
-					{
-						$data_tr_1                                 = $data_sender;
-						$data_tr_1['flag_sync']                    = 1;
-						$flag_sync_1                               = $this->get_summary_sikerja($data_tr_1);
-						if ($flag_sync_1 != 0) {
-							# code...
-							for ($i=0; $i < count($flag_sync_1); $i++) { 
-								# code...
-								$get_kinerja['prosentase_menit_efektif']   = $flag_sync_1[$i]->prosentase;													
-
-								if ($get_kinerja['prosentase_menit_efektif'] > 100) {
-									# code...
-									$get_kinerja['prosentase_menit_efektif'] = 100;				
-									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
-									$get_kinerja['menit_efektif']            = 6600;									
-								}						 
-								else
-								{
-									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
-								}						
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
-								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
-								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				
-								$get_kinerja['tr_approve']               = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
-								$get_kinerja['tr_belum_diperiksa'] 		 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();						
-								$get_kinerja['tr_tolak']                 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-								$get_kinerja['tr_revisi']                = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();			
-								$get_kinerja['audit_user']               = 'system';
-								$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-								$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-								$get_kinerja['bulan']                    = $bulan;
-								$get_kinerja['tahun']                    = $tahun;
-								$get_kinerja['id_posisi']                = $flag_sync_1[$i]->id_posisi;											
-
-								$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$flag_sync_1[$i]->id_posisi,'bulan' => $bulan, 'tahun' => $tahun))->result_array();	
-								if ($get_report_kinerja == array()) {
-									# insert
-									$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-								}
-								else
-								{
-									#update
-									$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$get_kinerja,array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi'=>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')));				
-								}																					
-
-							}
-						}														
-						$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$id_posisi_jabatan,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
-						if ($get_report_kinerja == array()) {
-							# insert
-							$get_kinerja = array(
-													'menit_efektif'            => 0,
-													'tunjangan'                => 0,
-													'real_tunjangan'           => 0,										
-													'frekuensi_realisasi'      => 0,
-													'prosentase_menit_efektif' => 0
-												);
-							$get_kinerja['tr_approve']               = 0;
-							$get_kinerja['tr_tolak']                 = 0;
-							$get_kinerja['tr_revisi']                = 0;			
-							$get_kinerja['audit_user']               = 'system';
-							$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-							$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-							$get_kinerja['bulan']                    = date('m');
-							$get_kinerja['tahun']                    = date('Y');
-							$get_kinerja['id_posisi']                = $id_posisi_jabatan;
-							$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-						}
-					}							
-				}
-				else
-				{
-					$data_tr = $data_sender; 
-					$data_tr['flag_sync'] = 0;																		
-					$tr_disetujui             = $this->Allcrud->getData('tr_capaian_pekerjaan',$data_tr)->result_array();
-					$data_timeline            = array();
-					$get_kinerja              = array();
-					$menit_efektif_summary    = 0;
-					$tunjangan_summary        = 0;
-					$tr_approve               = 0;
-					$tr_tolak                 = 0;		
-					$tr_revisi                = 0;
-					$tr_realisasi_skp         = 0;
-					$prosentase_menit_efektif_summary = 0;		
-					if ($tr_disetujui != array()) {
-						# code...
-						for ($i=0; $i < count($tr_disetujui); $i++) { 
-							# code...					
-							$menit_efektif_calc                       = 0;
-							$start_actual_time                        = $tr_disetujui[$i]['tanggal_mulai'].' '.$tr_disetujui[$i]['jam_mulai'];
-							$end_actual_time                          = $tr_disetujui[$i]['tanggal_selesai'].' '.$tr_disetujui[$i]['jam_selesai'];				
-							$diff                                     = strtotime($end_actual_time) - strtotime($start_actual_time);
-							$data_timeline[$i]['menit_efektif']       = $diff / 60;
-							$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440);				 
-							$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];				 
-							$hari_kerja                               = $this->mtrx->get_hari_kerja($bulan,$tahun);
-							if ($hari_kerja != 0)
-							{												
-								if ($data_timeline1[$i]['menit_hari_efektif'] != 0) {
-									# code...
-									if ($data_timeline[$i]['menit_efektif'] >= $data_timeline1[$i]['menit_hari_efektif']) {
-										# code...
-										$data_timeline[$i]['hari_efektif']        = round(($diff / 60)/1440) + 1;				 
-										$data_timeline1[$i]['menit_hari_efektif'] = 1440 * $data_timeline[$i]['hari_efektif'];							
-										$menit_efektif_sisa        				  = 0;
-										$data_timeline_1['sisa_menit']   		  = ($data_timeline[$i]['menit_efektif']) - ($data_timeline1[$i]['menit_hari_efektif']);
-										$data_timeline[$i]['menit_efektif']		  = ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']) + $data_timeline_1['sisa_menit'];
-									}
-								}
-								// else
-								// {
-								// 	if($data_timeline[$i]['menit_efektif'] > $hari_kerja[0]->jml_menit_perhari)
-								// 	{
-								// 		$data_timeline[$i]['menit_efektif']	= ($hari_kerja[0]->jml_menit_perhari * $data_timeline[$i]['hari_efektif']);
-								// 	}
-								// }			
-										
-								$menit_efektif_calc       		   = ($data_timeline[$i]['menit_efektif'])/($hari_kerja[0]->jml_menit_perhari*$hari_kerja[0]->jml_hari_aktif);					
-								$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;								
-								$prosentase_menit_efektif_summary += $menit_efektif_calc;
-							}															
-							
-							$data_timeline[$i]['prosentase'] = $menit_efektif_calc*100;							
-							$data_timeline[$i]['flag_sync'] = 1;
-							$data_timeline[$i]['tunjangan'] = round($menit_efektif_calc * (50/100) * $tunjangan_session,3);					
-							$data_timeline[$i]['id_posisi'] = $id_posisi_jabatan;
-							$this->Allcrud->editData('tr_capaian_pekerjaan',$data_timeline[$i],array('id_pekerjaan'=>$tr_disetujui[$i]['id_pekerjaan']));					
-						}					
-						$data_sender['flag_sync']                  = 1;
-						$flag_sync_1                               = $this->get_summary_sikerja($data_sender);								
-						if ($flag_sync_1 != 0) {
-							# code...
-							for ($i=0; $i < count($flag_sync_1); $i++) { 
-								# code...
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
-								if ($get_kinerja['menit_efektif'] > 6600) {
-									# code...
-									$get_kinerja['prosentase_menit_efektif'] = 100;				
-									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
-									$get_kinerja['menit_efektif']            = 6600;									
-								}						 
-								else
-								{
-									$get_kinerja['prosentase_menit_efektif'] = ($get_kinerja['menit_efektif']/6600)*100;									
-									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
-								}						
-								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
-								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				
-								$get_kinerja['tr_approve']               = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
-								$get_kinerja['tr_belum_diperiksa'] 		 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();						
-								$get_kinerja['tr_tolak']                 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-								$get_kinerja['tr_revisi']                = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();			
-								$get_kinerja['audit_user']               = 'system';
-								$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-								$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-								$get_kinerja['bulan']                    = $bulan;
-								$get_kinerja['tahun']                    = $tahun;
-								$get_kinerja['id_posisi']                = $flag_sync_1[$i]->id_posisi;											
-
-								$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
-								if ($get_report_kinerja == array()) {
-									# insert
-									$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-								}
-								else
-								{
-									#update
-									$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$get_kinerja,array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi'=>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')));				
-								}																					
-
-							}
-						}						
-					}	
-					else
-					{
-						$data_tr_1                                 = $data_sender;
-						$data_tr_1['flag_sync']                    = 1;
-						$flag_sync_1                               = $this->get_summary_sikerja($data_tr_1);
-						if ($flag_sync_1 != 0) {
-							# code...
-							for ($i=0; $i < count($flag_sync_1); $i++) { 
-								# code...
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
-								if ($get_kinerja['menit_efektif'] > 6600) {
-									# code...
-									$get_kinerja['prosentase_menit_efektif'] = 100;				
-									$get_kinerja['real_tunjangan']           = $tunjangan_session/2;						
-									$get_kinerja['menit_efektif']            = 6600;									
-								}						 
-								else
-								{
-									$get_kinerja['prosentase_menit_efektif'] = ($get_kinerja['menit_efektif']/6600)*100;									
-									$get_kinerja['real_tunjangan'] = $flag_sync_1[$i]->tunjangan;						
-								}		
-								$get_kinerja['menit_efektif']            = $flag_sync_1[$i]->menit_efektif;
-								$get_kinerja['tunjangan']                = $flag_sync_1[$i]->tunjangan;
-								$get_kinerja['frekuensi_realisasi']      = $flag_sync_1[$i]->frekuensi_realisasi;																				
-								$get_kinerja['tr_approve']               = $this->Allcrud->getData('tr_capaian_pekerjaan', $data_sender)->num_rows();
-								$get_kinerja['tr_belum_diperiksa'] 		 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();						
-								$get_kinerja['tr_tolak']                 = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>2,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-								$get_kinerja['tr_revisi']                = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$data_sender['id_pegawai'],'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();			
-								$get_kinerja['audit_user']               = 'system';
-								$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-								$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-								$get_kinerja['bulan']                    = $bulan;
-								$get_kinerja['tahun']                    = $tahun;
-								$get_kinerja['id_posisi']                = $flag_sync_1[$i]->id_posisi;											
-
-								$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
-								if ($get_report_kinerja == array()) {
-									# insert
-									$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-								}
-								else
-								{
-									#update
-									$res_data    = $this->Allcrud->editData('rpt_capaian_kinerja',$get_kinerja,array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi'=>$flag_sync_1[$i]->id_posisi,'bulan' => date('m'), 'tahun' => date('Y')));				
-								}																					
-
-							}
-						}														
-						$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$id_posisi_jabatan,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
-						if ($get_report_kinerja == array()) {
-							# insert
-							$get_kinerja = array(
-													'menit_efektif'            => 0,
-													'tunjangan'                => 0,
-													'real_tunjangan'           => 0,										
-													'frekuensi_realisasi'      => 0,
-													'prosentase_menit_efektif' => 0
-												);
-							$get_kinerja['tr_approve']               = 0;
-							$get_kinerja['tr_tolak']                 = 0;
-							$get_kinerja['tr_revisi']                = 0;			
-							$get_kinerja['audit_user']               = 'system';
-							$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-							$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-							$get_kinerja['bulan']                    = $bulan;
-							$get_kinerja['tahun']                    = $tahun;
-							$get_kinerja['id_posisi']                = $id_posisi_jabatan;
-							$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-						}
-					}					
-				}
-			}
-			else
-			{
-				$get_report_kinerja = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai' =>$data_sender['id_pegawai'],'id_posisi' =>$id_posisi_jabatan,'bulan' => date('m'), 'tahun' => date('Y')))->result_array();	
-				if ($get_report_kinerja == array()) {
-					# insert
-					$get_kinerja = array(
-											'menit_efektif'            => 0,
-											'tunjangan'                => 0,
-											'real_tunjangan'           => 0,										
-											'frekuensi_realisasi'      => 0,
-											'prosentase_menit_efektif' => 0
-										);
-					$get_kinerja['tr_approve']               = 0;
-					$get_kinerja['tr_tolak']                 = 0;
-					$get_kinerja['tr_revisi']                = 0;			
-					$get_kinerja['audit_user']               = 'system';
-					$get_kinerja['audit_time']               = date('Y-m-d H:i:s');
-					$get_kinerja['id_pegawai']               = $data_sender['id_pegawai'];
-					$get_kinerja['bulan']                    = $bulan;
-					$get_kinerja['tahun']                    = $tahun;
-					$get_kinerja['id_posisi']                = $id_posisi_jabatan;
-					$res_data = $this->Allcrud->addData('rpt_capaian_kinerja',$get_kinerja);				
-				}				
-			}
-		}
-	}
 
 	public function get_history_golongan()
 	{
@@ -1460,14 +951,7 @@ class Globalrules extends CI_Model
 				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
 				ORDER BY a.tmt DESC";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}								
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
 
 	public function get_history_jabatan()
@@ -1482,14 +966,7 @@ class Globalrules extends CI_Model
 				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
 				ORDER BY a.StartDate DESC";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}								
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}	
 
 	public function get_history_pendidikan()
@@ -1503,14 +980,7 @@ class Globalrules extends CI_Model
 				WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'
 				ORDER BY a.tahun_lulus DESC";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}								
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
 	
 	public function get_history_diklat($id_diklat)
@@ -1522,13 +992,6 @@ class Globalrules extends CI_Model
 				AND a.id_diklat = '".$id_diklat."'
 				ORDER BY a.tgl_mulai DESC";
 		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}								
+		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}	
 }

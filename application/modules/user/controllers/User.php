@@ -28,7 +28,6 @@ class User extends CI_Controller
 		// print_r($data['infoPegawai']);die();
 		$data['agama']              = $this->Allcrud->listData('mr_agama');
 		$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
-		// $data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
 		$data['history_golongan']   = $this->Globalrules->get_history_golongan();
 		$data['history_jabatan']  	= $this->Globalrules->get_history_jabatan();
 		$data['history_pendidikan'] = $this->Globalrules->get_history_pendidikan();
