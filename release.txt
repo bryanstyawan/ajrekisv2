@@ -1,4 +1,33 @@
 v4.1.2.5.3
+2019-09-26
+New:
+- Pull data API simpeg_riwayat_pangkat dan push ke database mr_simpeg_riwayat_pangkat
+- Pull data API simpeg_riwayat_pangkat dan push ke database mr_simpeg_kenaikan_pangkat
+- Pull data API simpeg_riwayat_pangkat dan push ke database mr_simpeg_golongan 
+Improved:
+- Code review Globalrules
+- Nama Jabatan berdasarkan masa kerja di cetak skp
+- Code review Pencarian Atasan
+- Get API simpeg_riwayat_pangkat [+ id pegawai]
+- Pull data dari API Jabatan
+- Pull data dari API Diklat Struktural
+- Pull data dari API Diklat Fungsional
+- Pull data dari API Diklat Teknis
+- Pull data dari API Diklat Konferensi
+- Pull data dari API Diklat Karya tulis
+- Pull data dari API Organisasi
+- Pull data dari API Penghargaan
+Fixed:
+- aspek_kuantitas
+- Penilaian SKP
+Canceled:
+- sync_data_transaction di Globalrules
+- Notification di transaksi
+- info_kompetensi di info user
+- No HP di Info user
+- E-Mail di Infor User
+
+v4.1.2.5.3
 2019-09-24
 New:
 Improved:
