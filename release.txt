@@ -1,4 +1,12 @@
 v4.1.2.5.3
+2019-09-27
+New:
+Improved:
+Fixed:
+- Return Notif Penilaian skp bulanan
+Canceled:
+
+v4.1.2.5.3
 2019-09-26
 New:
 - Pull data API simpeg_riwayat_pangkat dan push ke database mr_simpeg_riwayat_pangkat
