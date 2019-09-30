@@ -19,7 +19,7 @@ class Transaksi extends CI_Controller {
 		# code...
 		$data['list']         = $this->mtrx->status_pekerjaan($param,$this->session->userdata('sesUser'));		
 		$data['hari_kerja']   = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
-		$data['infoPegawai']  = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');		
+		$data['infoPegawai']  = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$this->session->userdata('sesPosisi'));		
 		$data['id_html']      = $flag;
 		$this->load->view('transaksi/trx/refresh/index',$data);		
 	}
@@ -41,9 +41,11 @@ class Transaksi extends CI_Controller {
 		$data['tr_banding']           = $this->mtrx->status_pekerjaan('6',$this->session->userdata('sesUser'));
 		$data['tr_banding_ditolak']   = $this->mtrx->status_pekerjaan('7',$this->session->userdata('sesUser'));
 		$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
-		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
+		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$this->session->userdata('sesPosisi'));
 		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
-
+		// echo "<pre>";
+		// print_r($data['member']);die();		
+		// echo "</pre>";
 		if ($data['urtug'] != 0) {
 			# code...
 			for ($i=0; $i < count($data['urtug']); $i++) 
@@ -101,7 +103,8 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$pegawai                 = "";if ($id_pegawai != NULL)$pegawai = $this->Globalrules->get_info_pegawai($id_pegawai,'id');
+		$pegawai                 = "";
+		if ($id_pegawai != NULL)$pegawai = $this->Globalrules->get_info_pegawai($id_pegawai,'id');
 		$data['title']           = 'Transaksi';
 		$data['content']         = 'transaksi/trx/data_kinerja_anggota';
 		$data['kinerja_anggota'] = $this->mtrx->get_kinerja_anggota('0',$this->session->userdata('sesPosisi'),$id_pegawai);
@@ -690,7 +693,7 @@ class Transaksi extends CI_Controller {
 				$this->Globalrules->notif_message();
 				$data['title']       = 'Transaksi';
 				$data['content']     = 'transaksi/trx/data_edit_pekerjaan';
-				$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
+				$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$this->session->userdata('sesPosisi'));
 				$data['urtug']       = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'approve',1);
 				$data['pekerjaan']   = $get_data_transact;
 				// echo "<pre>";
@@ -1440,12 +1443,12 @@ class Transaksi extends CI_Controller {
 		}
 	}
 
-	public function detail_transaksi_pegawai($id_pegawai) 
+	public function detail_transaksi_pegawai($id_pegawai,$id_posisi) 
 	{
 		// code...
 		$res_data               	  = 1;
 		$text_status            	  = "";
-		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($id_pegawai,'id');
+		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($id_pegawai,'id',$id_posisi);
 		$data['tr_belum_diperiksa']   = $this->mtrx->status_pekerjaan('0',$id_pegawai);
 		$data['tr_disetujui']         = $this->mtrx->status_pekerjaan('1',$id_pegawai);
 		$data['tr_tolak']             = $this->mtrx->status_pekerjaan('2',$id_pegawai);

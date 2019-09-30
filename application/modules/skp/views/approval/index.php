@@ -1,5 +1,4 @@
 <?php
-$infoPegawai   = $this->Globalrules->get_info_pegawai($id,'id');
 $nama_pegawai  = "";
 $nama_jabatan  = "";
 $nama_eselon1  = "";
@@ -144,7 +143,7 @@ if ($member != 0) {
     # code...
 ?>
 
-<div class="col-md-3">
+<div class="col-md-12">
     <div class="box box-solid" id="isi_kontak" style="">
 
         <div class="box-header with-border">
@@ -162,7 +161,7 @@ if ($member != 0) {
                         $flag_counter = "display:none;";
                       }
                     ?>
-                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>')">
+                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>','<?=$member[$i]->posisi;?>')">
                           <a class="contact-name">
                             <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                             <sup style="<?=$flag_counter;?>">
@@ -185,7 +184,7 @@ if ($member != 0) {
 ?>
 
 
-<div class="col-xs-9">
+<div class="col-xs-12">
     <div class="box">
         <div class="box-header">
             <div class ="box-tools">

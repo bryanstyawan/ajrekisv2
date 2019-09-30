@@ -1,4 +1,13 @@
 v4.1.2.5.3
+2019-09-30
+New:
+Improved:
+Fixed:
+- Infopegawai di skp
+- posisi Infopegawai di skp
+Canceled:
+
+v4.1.2.5.3
 2019-09-27
 New:
 Improved:
