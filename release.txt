@@ -1,10 +1,15 @@
 v4.1.2.5.3
-2019-09-30
+2019-10-03
 New:
+- sync jabatan simpeg - sikerja
+- Pull data API simpeg_riwayat_pendidikan dan push ke database mr_simpeg_riwayat_pendidikan
+- Pull data API simpeg_riwayat_pendidikan dan push ke database mr_pendidikan
+- Pull data API simpeg_riwayat_pangkat dan push ke database mr_simpeg_kenaikan_pangkat
+- Pull data API simpeg_riwayat_jabatan dan push ke database mr_simpeg_riwayat_jabatan
+- riwayat_pendidikan, riwayat_pangkat, riwayat_jabatan sync ON
 Improved:
+- Hapus beforeSend API Simpeg
 Fixed:
-- Infopegawai di skp
-- posisi Infopegawai di skp
 Canceled:
 
 v4.1.2.5.3

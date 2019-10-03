@@ -340,9 +340,6 @@ function profile(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_profile/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
@@ -355,11 +352,8 @@ function profile(arg) {
 
 function riwayat_pendidikan(arg) {
     $.ajax({
-        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pendidikan/<?=$this->session->userdata('sesNip');?>",		
+        url :"<?php echo site_url()?>api_get/simpeg_riwayat_pendidikan/<?=$this->session->userdata('sesNip');?>/<?=$this->session->userdata('sesUser');?>",
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {
@@ -389,9 +383,6 @@ function riwayat_pangkat(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_riwayat_pangkat/<?=$this->session->userdata('sesNip');?>/<?=$this->session->userdata('sesUser');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {
@@ -417,9 +408,6 @@ function riwayat_jabatan(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_riwayat_jabatan/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {
@@ -446,9 +434,6 @@ function riwayat_diklat_struktural(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_struktural/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {            
@@ -478,9 +463,6 @@ function riwayat_diklat_fungsional(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_fungsional/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {            
@@ -510,9 +492,6 @@ function riwayat_diklat_teknis(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_riwayat_diklat_teknis/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {            
@@ -542,9 +521,6 @@ function riwayat_konferensi(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_riwayat_konferensi/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {            
@@ -575,9 +551,6 @@ function karya_tulis(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_karya_tulis/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {            
@@ -603,9 +576,6 @@ function penghargaan(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_penghargaan/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {            
@@ -633,9 +603,6 @@ function organisasi(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_organisasi/<?=$this->session->userdata('sesNip');?>",		
         type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
         success:function(msg){
             $("#loadprosess").modal('hide');
             if (arg != 'bypass') {                            
