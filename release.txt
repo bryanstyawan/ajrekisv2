@@ -1,6 +1,14 @@
 v4.1.2.5.3
 2019-10-03
 New:
+Improved:
+Fixed:
+- Data atasan di master pegawai
+Canceled:
+
+v4.1.2.5.3
+2019-10-03
+New:
 - sync jabatan simpeg - sikerja
 - Pull data API simpeg_riwayat_pendidikan dan push ke database mr_simpeg_riwayat_pendidikan
 - Pull data API simpeg_riwayat_pendidikan dan push ke database mr_pendidikan

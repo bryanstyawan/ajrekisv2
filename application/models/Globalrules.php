@@ -187,11 +187,11 @@ class Globalrules extends CI_Model
 		}
 		elseif ($param == 'nama_pegawai') {
 			# code...
-			$sql = "a.nama_pegawai = '".$id."' AND a.status = 1";
+			$sql = "a.nama_pegawai = '".$id."' AND a.status = 1 AND b.id = a.posisi";
 		}
 		elseif ($param == 'posisi') {
 			# code...
-			$sql = "b.id = '".$id."' AND a.status = 1";
+			$sql = "b.id = '".$id."' AND a.status = 1 AND b.id = a.posisi";
 		}		
 
 		$sql = "SELECT  a.id,
@@ -453,6 +453,8 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_peer']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_bawahan'] = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
 		$data['infoPegawai']           = $this->get_info_pegawai($id,'id',$_id_posisi);
+		// $nip              = $data['infoPegawai'][0]->nip;
+		// $data['infoPegawai'][0]->pangkat = $this->mskp->get_golongan($nip);
 
 		$_atasan_data        = $this->list_atasan($_id_posisi);
 		$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
