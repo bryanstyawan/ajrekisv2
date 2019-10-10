@@ -289,7 +289,7 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet(1)->getStyle('b2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		$this->excel->getActiveSheet(1)->getStyle('b3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-		$this->excel->getActiveSheet(1)->setCellValue('b6', 'Jangka Waktu Penilaian 2 Januari s.d 31 Desember '.date('Y'));
+		$this->excel->getActiveSheet(1)->setCellValue('b6', 'Jangka Waktu Penilaian . . . s.d . . . ');
 
 		$this->excel->getActiveSheet(1)->setCellValue('b7', 'NO');
 		$this->excel->getActiveSheet(1)->setCellValue('c7', 'KEGIATAN TUGAS JABATAN');
@@ -590,7 +590,7 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet(2)->setCellValue('b10', 'KEMENTERIAN DALAM NEGERI');
 		$this->excel->getActiveSheet(2)->setCellValue('b11', 'SEKRETARIAT JENDERAL');
 		$this->excel->getActiveSheet(2)->setCellValue('f10', 'JANGKA WAKTU PENILAIAN');
-		$this->excel->getActiveSheet(2)->setCellValue('f11', 'BULAN : Januari s.d 31 Desember');
+		$this->excel->getActiveSheet(2)->setCellValue('f11', 'BULAN : . . . s.d 31 . . . ');
 		$this->excel->getActiveSheet(2)->mergeCells('b10:c10');
 		$this->excel->getActiveSheet(2)->mergeCells('b11:c11');
 
