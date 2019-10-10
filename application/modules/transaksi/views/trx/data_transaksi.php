@@ -1,6 +1,3 @@
-<?php
-    $infoPegawai          = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id');
-?>
 <style>
     .label-info-pegawai
     {
@@ -61,7 +58,7 @@ else {
                                 $flag_struktural = 'background:#dddfff;';
                             }
                     ?>
-                            <li style="cursor: pointer;<?php echo $flag_struktural;?>" class="teamwork" id="li_kandidat_<?php echo $i;?>" onclick="view_option('<?php echo $member[$i]->id;?>','<?php echo $i;?>')">
+                            <li style="cursor: pointer;<?php echo $flag_struktural;?>" class="teamwork" id="li_kandidat_<?php echo $i;?>" onclick="view_option('<?php echo $member[$i]->id;?>','<?php echo $i;?>','<?=$member[$i]->posisi;?>')">
                                 <a class="contact-name">
                                     <i class="fa fa-circle-o text-red contact-name-list"></i><?php echo $member[$i]->nama_pegawai;?>
                                     <sup style="<?php echo $flag_counter;?>">
@@ -437,7 +434,7 @@ else {
                                     <?php
                                         if ($tr_disetujui != 0)
                                         {
-                                            # code...
+                                            # code...                                            
                                             for ($i=0; $i < count($tr_disetujui); $i++) {
                                                 # code...
                                                 $kegiatan = "";
@@ -1685,12 +1682,12 @@ function banding(id) {
     $("#oid_banding").val(id);
 }
 
-function view_option(id,i) {
+function view_option(id,i,posisi) {
     // $('.teamwork').css({"backgroundColor": "", "color": "", "pointer-events" : ""});
     // $('#li_kandidat_'+i).css({"backgroundColor": "#00a65a", "color": "#000", "pointer-events" : ""});
     oid_pegawai = id;
     $.ajax({
-        url :"<?php echo site_url();?>transaksi/detail_transaksi_pegawai/"+oid_pegawai,
+        url :"<?php echo site_url();?>transaksi/detail_transaksi_pegawai/"+oid_pegawai+"/"+posisi,
         type:"post",
         beforeSend:function(){
             $("#loadprosess").modal('show');

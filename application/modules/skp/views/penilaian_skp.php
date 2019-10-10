@@ -27,18 +27,18 @@ $kat_posisi    = "";
 // echo "<pre>";
 // print_r($infoPegawai);die();				
 // echo"</pre>";
-// if ($infoPegawai != 0 || $infoPegawai != '') {
-//     # code...
-//     $nama_pegawai  = $infoPegawai1[0]->nama_pegawai;
-//     $nama_jabatan  = $infoPegawai1[0]->nama_jabatan;
-//     $nama_eselon1  = $infoPegawai1[0]->nama_eselon1;
-//     $nama_eselon2  = $infoPegawai1[0]->nama_eselon2;
-//     $nama_eselon3  = $infoPegawai1[0]->nama_eselon3;
-//     $nama_eselon4  = $infoPegawai1[0]->nama_eselon4;
-//     $nip           = $infoPegawai1[0]->nip;
-//     $kelas_jabatan = $infoPegawai1[0]->kelas_jabatan;
-//     $kat_posisi    = $infoPegawai1[0]->kat_posisi;
-// }
+if ($infoPegawai != 0 || $infoPegawai != '') {
+    # code...
+    $nama_pegawai  = $infoPegawai[0]->nama_pegawai;
+    $nama_jabatan  = $infoPegawai[0]->nama_jabatan;
+    $nama_eselon1  = $infoPegawai[0]->nama_eselon1;
+    $nama_eselon2  = $infoPegawai[0]->nama_eselon2;
+    $nama_eselon3  = $infoPegawai[0]->nama_eselon3;
+    $nama_eselon4  = $infoPegawai[0]->nama_eselon4;
+    $nip           = $infoPegawai[0]->nip;
+    $kelas_jabatan = $infoPegawai[0]->kelas_jabatan;
+    $kat_posisi    = $infoPegawai[0]->kat_posisi;
+}
 ?>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <style type="text/css">
@@ -138,12 +138,12 @@ $kat_posisi    = "";
                             <div class="col-sm-6">
                                 <label>
                                     Pimpinan Tinggi Madya (Eselon I) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon1"><?php echo $this->session->userdata('nama_es1');?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon1"><?php echo $nama_eselon1;?></span>
                             </div>
                             <div class="col-sm-6">
                                 <label>
                                     Pimpinan Tinggi Pratama (Eselon II) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon2"><?php echo $this->session->userdata('nama_es2');?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon2"><?php echo $nama_eselon2;?></span>
                             </div>
                         </div>
                     </div>
@@ -152,12 +152,12 @@ $kat_posisi    = "";
                             <div class="col-sm-6">
                                 <label>
                                     Administrator (Eselon III) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon3"><?php echo $this->session->userdata('nama_es3');?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon3"><?php echo $nama_eselon3;?></span>
                             </div>
                             <div class="col-sm-6">
                                 <label>
                                     Pengawas (Eselon IV) :</label>
-                                <span id="ContentPlaceHolder1_lbl_eselon4"><?php echo $this->session->userdata('nama_es4');?></span>
+                                <span id="ContentPlaceHolder1_lbl_eselon4"><?php echo $nama_eselon4;?></span>
                             </div>
                         </div>
                     </div>
@@ -166,24 +166,15 @@ $kat_posisi    = "";
                             <div class="col-sm-6">
                                 <label>
                                     NIP:</label>
-                                <span id="ContentPlaceHolder1_lbl_nip"><?php echo $this->session->userdata('sesNip');?></span>
+                                <span id="ContentPlaceHolder1_lbl_nip"><?php echo $nip;?></span>
                             </div>
                             <div class="col-sm-6">
                                 <label>
                                     Nama Pegawai:</label>
-                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $this->session->userdata('sesNama');?></span>
+                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $nama_pegawai;?></span>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>
-                                    Kelas Jabatan:</label>
-                                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $this->session->userdata('sesNama');?></span>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
 
@@ -215,7 +206,7 @@ if ($member != 0) {
                         //   $flag_counter = "display:none;";
                         // }
                     ?>
-                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>')">
+                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$member[$i]->posisi;?>')">
                             <a class="contact-name">
                                 <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                                 <sup style="<?=$flag_counter;?>">
@@ -296,21 +287,21 @@ if ($member != 0) {
                             $kegiatan               = "";
 
                             $kegiatan            = $list[$i]->kegiatan;
-                            if($infoPegawai1[0]->kat_posisi == 1)
+                            if($infoPegawai[0]->kat_posisi == 1)
                             {
                                 if ($list[$i]->id_skp_master != '') {
                                     # code...
                                     $kegiatan = $list[$i]->kegiatan_skp;
                                 }
                             }
-                            elseif ($infoPegawai1[0]->kat_posisi == 2) {
+                            elseif ($infoPegawai[0]->kat_posisi == 2) {
                                 # code...
                                 if ($list[$i]->id_skp_jft != '') {
                                     # code...
                                     $kegiatan = $list[$i]->kegiatan_skp_jft;
                                 }                                
                             }                            
-                            elseif ($infoPegawai1[0]->kat_posisi == 4) {
+                            elseif ($infoPegawai[0]->kat_posisi == 4) {
                                 # code...
                                 if ($list[$i]->id_skp_jfu != '') {
                                     # code...
@@ -672,11 +663,11 @@ if ($member != 0) {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
 
-function detail_skp(id) {
+function detail_skp(id,posisi) {
     // body...
     $("#loadprosess").modal('show');
     setTimeout(function(){
-        window.location.href = "<?php echo base_url().'skp/penilaian_skp/'?>"+id;
+        window.location.href = "<?php echo base_url().'skp/penilaian_skp/'?>"+id+"/"+posisi;
     }, 1500);
 }
 function edit(id,before,after) {

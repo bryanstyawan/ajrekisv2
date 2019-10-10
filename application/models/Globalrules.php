@@ -187,11 +187,11 @@ class Globalrules extends CI_Model
 		}
 		elseif ($param == 'nama_pegawai') {
 			# code...
-			$sql = "a.nama_pegawai = '".$id."' AND a.status = 1";
+			$sql = "a.nama_pegawai = '".$id."' AND a.status = 1 AND b.id = a.posisi";
 		}
 		elseif ($param == 'posisi') {
 			# code...
-			$sql = "b.id = '".$id."' AND a.status = 1";
+			$sql = "b.id = '".$id."' AND a.status = 1 AND b.id = a.posisi";
 		}		
 
 		$sql = "SELECT  a.id,
@@ -453,6 +453,8 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_peer']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_bawahan'] = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
 		$data['infoPegawai']           = $this->get_info_pegawai($id,'id',$_id_posisi);
+		// $nip              = $data['infoPegawai'][0]->nip;
+		// $data['infoPegawai'][0]->pangkat = $this->mskp->get_golongan($nip);
 
 		$_atasan_data        = $this->list_atasan($_id_posisi);
 		$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
@@ -994,4 +996,43 @@ class Globalrules extends CI_Model
 		$query = $this->db->query($sql);
 		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}	
+
+	public function sync_jabatan_simpeg_sikerja($arg=NULL)
+	{
+		# code...
+		$sql = "SELECT a.id,
+						IF(a.kat_posisi = 2 || a.kat_posisi = 4,
+							CONCAT(a.nama_posisi, ' PADA ' , es4.nama_eselon4,' ' , es3.nama_eselon3,' ' , es2.nama_eselon2, ' ' , es1.nama_eselon1),
+							IF(a.eselon2 = 0,
+									CONCAT(a.nama_posisi, ' PADA KEMENTERIAN DALAM NEGERI'),
+								IF(a.eselon3 = 0,
+									CONCAT(a.nama_posisi, ' PADA ' , es1.nama_eselon1),
+									IF(a.eselon4 = 0,
+											CONCAT(a.nama_posisi, ' PADA ' , es2.nama_eselon2, ' ' , es1.nama_eselon1),
+											CONCAT(a.nama_posisi, ' PADA ' , es3.nama_eselon3,' ' , es2.nama_eselon2, ' ' , es1.nama_eselon1)
+									)
+								)
+							)
+						) as posisi
+				FROM mr_posisi a
+				LEFT JOIN mr_eselon1 es1 on a.eselon1 = es1.id_es1
+				LEFT JOIN mr_eselon2 es2 on a.eselon2 = es2.id_es2
+				LEFT JOIN mr_eselon3 es3 on a.eselon3 = es3.id_es3
+				LEFT JOIN mr_eselon4 es4 on a.eselon4 = es4.id_es4
+				WHERE IF(a.kat_posisi = 2 || a.kat_posisi = 4,
+							CONCAT(a.nama_posisi, ' PADA ' , es4.nama_eselon4,' ' , es3.nama_eselon3,' ' , es2.nama_eselon2, ' ' , es1.nama_eselon1),
+							IF(a.eselon2 = 0,
+									CONCAT(a.nama_posisi, ' PADA KEMENTERIAN DALAM NEGERI'),
+								IF(a.eselon3 = 0,
+									CONCAT(a.nama_posisi, ' PADA ' , es1.nama_eselon1),
+									IF(a.eselon4 = 0,
+											CONCAT(a.nama_posisi, ' PADA ' , es2.nama_eselon2, ' ' , es1.nama_eselon1),
+											CONCAT(a.nama_posisi, ' PADA ' , es3.nama_eselon3,' ' , es2.nama_eselon2, ' ' , es1.nama_eselon1)
+									)
+								)
+							)
+						) LIKE '%".$arg."%'";
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;		
+	}
 }

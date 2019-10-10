@@ -45,7 +45,7 @@ class Api_get extends CI_Controller
 		}		
 	}
 
-	public function simpeg_riwayat_pendidikan($nip)
+	public function simpeg_riwayat_pendidikan($nip,$id_pegawai)
 	{
 		# code...
 		$curl = curl_init();
@@ -83,22 +83,50 @@ class Api_get extends CI_Controller
 					$get_scoring = $this->Allcrud->getData('mr_pendidikan',array('id_pendidikan'=>$data_decode[$i]->ktp))->result_array();
 					$scoring = ($get_scoring != array()) ? $get_scoring[0]['skor'] : 0 ;
 
-					$data_store_detail[$i] = array(
-						'njur'         => $data_decode[$i]->njur,						
-						'nsek'         => $data_decode[$i]->nsek,
-						'ntpu'         => $data_decode[$i]->ntpu,
-						'tempat'       => $data_decode[$i]->tempat,
-						'thnlulus'     => $data_decode[$i]->thnlulus,
-						'tsttb2'       => $data_decode[$i]->tsttb2,
-						'sources'      => 'simpeg',
-						'scoring'      => $scoring
+					$data_store_riwayat_pendidikan = array(
+						'nip' 							 => $nip,
+						'id_jurusan'                     => $data_decode[$i]->kjur,
+						'id_pendidikan'                  => $data_decode[$i]->ktp,						
+						'jurusan'                        => $data_decode[$i]->njur,
+						'nama_pendidikan'                => $data_decode[$i]->ntpu,												
+						'n_institusi_pendidikan'         => $data_decode[$i]->nsek,
+						'tempat'                         => $data_decode[$i]->tempat,
+						'thnlulus'                       => $data_decode[$i]->thnlulus,
+						'tsttb2'                         => $data_decode[$i]->tsttb2,
+						'sources'                        => 'simpeg',
+						'audit_user' 					 => 'simpeg'
 					); 
+
+					$get_rp = $this->Allcrud->getData('mr_simpeg_riwayat_pendidikan',$data_store_riwayat_pendidikan)->result_array();
+					if ($get_rp == array()) {
+						# code...
+						$data_store_riwayat_pendidikan['scoring'] = $scoring;
+						$this->Allcrud->addData('mr_simpeg_riwayat_pendidikan',$data_store_riwayat_pendidikan);
+					}
+					else
+					{
+						$flag                                     = $data_store_riwayat_pendidikan; 
+						$data_store_riwayat_pendidikan['scoring'] = $scoring;
+						$this->Allcrud->editData('mr_simpeg_riwayat_pendidikan',$data_store_riwayat_pendidikan,$flag);
+					}
+
+					$get_kp = $this->Allcrud->getData('mr_pendidikan',array('id_pendidikan' => $data_decode[$i]->ktp))->result_array();
+					if ($get_kp == array()) {
+						# code...
+						$data_pendidikan = array(
+							'id_pendidikan'                  => $data_decode[$i]->ktp,						
+							'nama_pendidikan'                => $data_decode[$i]->ntpu
+						); 						
+						$this->Allcrud->addData('mr_pendidikan',$data_pendidikan);
+					}					
+
+					
 				}				
 			}			
 
 			$data_res = array(
 				'message' => json_decode($response)->message,
-				'results' => $data_store_detail,
+				'results' => $data_decode,
 				'status' => json_decode($response)->status
 			);
 		  	echo json_encode($data_res);
@@ -140,7 +168,7 @@ class Api_get extends CI_Controller
 				for ($i=0; $i < count($data_decode); $i++) { 
 					# code...
 					$data_store_detail = array(
-						'id_pegawai'			   => $id_pegawai,
+						'nip'                      => $nip,
 						'id_golongan'              => $data_decode[$i]->kgolru,
 						'id_kenaikan_pangkat'      => $data_decode[$i]->knpang,						
 						'nomor_sk'                 => $data_decode[$i]->nomor_sk,
@@ -151,7 +179,7 @@ class Api_get extends CI_Controller
 					$get_detail = $this->Allcrud->getData('mr_simpeg_riwayat_pangkat',$data_store_detail)->result_array();
 					if ($get_detail == array()) {
 						# code...
-						$res_data    = $this->Allcrud->addData('mr_simpeg_riwayat_pangkat',$data_store_detail);						
+						$this->Allcrud->addData('mr_simpeg_riwayat_pangkat',$data_store_detail);						
 					}					
 
 					$data_store_kenaikan_pangkat = array(
@@ -162,9 +190,8 @@ class Api_get extends CI_Controller
 					$get_kp = $this->Allcrud->getData('mr_simpeg_kenaikan_pangkat',$data_store_kenaikan_pangkat)->result_array();
 					if ($get_kp == array()) {
 						# code...
-						$res_data    = $this->Allcrud->addData('mr_simpeg_kenaikan_pangkat',$data_store_kenaikan_pangkat);						
+						$this->Allcrud->addData('mr_simpeg_kenaikan_pangkat',$data_store_kenaikan_pangkat);
 					}
-
 
 					$data_store_golongan = array(
 						'id'           => $data_decode[$i]->kgolru,
@@ -175,7 +202,7 @@ class Api_get extends CI_Controller
 					$get_gol = $this->Allcrud->getData('mr_simpeg_golongan',$data_store_golongan)->result_array();
 					if ($get_gol == array()) {
 						# code...
-						$res_data    = $this->Allcrud->addData('mr_simpeg_golongan',$data_store_golongan);						
+						$this->Allcrud->addData('mr_simpeg_golongan',$data_store_golongan);
 					}					
 				}				
 			}			
@@ -216,12 +243,21 @@ class Api_get extends CI_Controller
 				# code...
 				for ($i=0; $i < count($data_decode); $i++) { 
 					# code...
+					$get_id_posisi = $this->Globalrules->sync_jabatan_simpeg_sikerja($data_decode[$i]->jataban);
 					$data_store_detail = array(
-						'jabatan'     => $data_decode[$i]->jataban,						
-						'neselon'     => $data_decode[$i]->neselon,
-						'jenisjab'    => $data_decode[$i]->jenisjab,
-						'tmt_jabatan' => $data_decode[$i]->tmt_jabatan
+						'nip'				   => $nip,
+						'jabatan'              => $data_decode[$i]->jataban,						
+						'tmt_jabatan'          => $data_decode[$i]->tmt_jabatan,
+						'jenis_jabatan_simpeg' => $data_decode[$i]->jenisjab,
+						'sources'              => 'simpeg',						
 					); 
+					
+					$get_detail = $this->Allcrud->getData('mr_simpeg_riwayat_jabatan',$data_store_detail)->result_array();
+					if ($get_detail == array()) {
+						# code...
+						$data_store_detail['id_posisi'] = ($get_id_posisi != 0) ? $get_id_posisi[0]->id : 0;
+						$this->Allcrud->addData('mr_simpeg_riwayat_jabatan',$data_store_detail);						
+					}					
 				}				
 			}			
 		 	echo $response;

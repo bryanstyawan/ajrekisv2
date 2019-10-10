@@ -436,13 +436,13 @@ class Skp extends CI_Controller {
 		}
 	}	
 
-	public function get_target_skp_json($id)
+	public function get_target_skp_json($id,$id_posisi)
 	{
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
-		$id_posisi             = $infoPegawai[0]->posisi;		
+		$data['infoPegawai']   = $this->Globalrules->get_info_pegawai($id,'id',$id_posisi);
+		// print_r($data['infoPegawai']);die();
 		$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
 		$data['id']            = $id;
 		$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
@@ -878,7 +878,7 @@ class Skp extends CI_Controller {
 		return $param_pk;
 	}
 
-	public function penilaian_skp($param=NULL)
+	public function penilaian_skp($param=NULL,$id_posisi=NULL)
 	{
 		# code...
 		$this->Globalrules->session_rule();
@@ -918,7 +918,7 @@ class Skp extends CI_Controller {
 			}
 		}
 
-		$data['infoPegawai1'] = $this->Globalrules->get_info_pegawai($id,'id');
+		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($id,'id',$id_posisi);
 		$data['list']         = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),'1','realisasi');
 		$data['content']      = 'skp/penilaian_skp';
 		$this->load->view('templateAdmin',$data);
@@ -1515,9 +1515,6 @@ class Skp extends CI_Controller {
 				$this->Globalrules->session_rule();
 				$this->Globalrules->notif_message();
 				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
-				// echo "<pre>";
-				// print_r($data);die();
-				// echo "</pre>";
 				$data['penilai']  = '';
 				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
 				$data['content']  = 'skp/cetak_history_skp';

@@ -196,6 +196,7 @@ class Dashboard extends CI_Controller {
 	public function post_penilaian_skp_bulan($arg,$oid,$oid_posisi)
 	{
 		# code...
+		$text_status = "";		
 		$res_data = 0;
 		$getdata  = $this->Allcrud->getData('rpt_capaian_kinerja',array('id_pegawai'=>$oid,'id_posisi'=>$oid_posisi,'tahun'=>date('Y'),'bulan'=>date('m')))->result_array();
 		$persentase = '0';
@@ -241,7 +242,7 @@ class Dashboard extends CI_Controller {
 			$text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');			
 		}
 
-		$text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');
+		// $text_status    = $this->Globalrules->check_status_res($res_data,'Penilaian SKP Bulanan untuk pegawai ini telah dilakukan');
 		$res            = array
 						(
 							'status' => $res_data,

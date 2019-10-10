@@ -173,17 +173,17 @@ else {
     /** ----------------------------------------------------------------------- */    
     $(document).ready(function()
     {
-        profile('bypass');    
+        // profile('bypass');    
         riwayat_pendidikan('bypass');    
         riwayat_pangkat('bypass');    
         riwayat_jabatan('bypass');
-        riwayat_diklat_struktural('bypass');       
-        riwayat_diklat_fungsional('bypass');
-        riwayat_diklat_teknis('bypass');
-        riwayat_konferensi('bypass');
-        karya_tulis('bypass');
-        organisasi('bypass');
-        penghargaan('bypass');        
+        // riwayat_diklat_struktural('bypass');       
+        // riwayat_diklat_fungsional('bypass');
+        // riwayat_diklat_teknis('bypass');
+        // riwayat_konferensi('bypass');
+        // karya_tulis('bypass');
+        // organisasi('bypass');
+        // penghargaan('bypass');        
         // Lobibox.window({
         //     title  : 'Informasi',
         //     content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+            
