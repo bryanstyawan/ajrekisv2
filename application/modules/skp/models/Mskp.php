@@ -946,5 +946,27 @@ class Mskp extends CI_Model
 			return 0;
 		}
 	}	
+
+	public function get_golongan($nip)
+	{
+		# code...
+		$sql = "SELECT b.nama_pangkat, 
+						b.golongan,
+						a.tmt_pangkat
+				FROM mr_simpeg_riwayat_pangkat a
+				LEFT JOIN mr_simpeg_golongan b ON a.id_golongan = b.id
+				WHERE a.nip = '".$nip."'
+				ORDER BY a.tmt_pangkat DESC
+				LIMIT 1";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}
+	}	
 	
 }

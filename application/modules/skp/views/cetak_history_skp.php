@@ -9,7 +9,7 @@ $nip           = "";
 $kelas_jabatan = "";
 $pangkat       = "";
 $ruang         = "";
-$tmt_golongan  = "";
+$tmt_pangkat  = "";
 $kat_posisi    = "";
 $nama_posisi_cetak  = "";
 
@@ -23,7 +23,7 @@ $nip_atasan           = "";
 $kelas_jabatan_atasan = "";
 $pangkat_atasan       = "";
 $ruang_atasan         = "";
-$tmt_golongan_atasan  = "";
+$tmt_pangkat_atasan  = "";
 
 $nama_pegawai_atasan_penilai  = "";
 $nama_jabatan_atasan_penilai  = "";
@@ -35,7 +35,7 @@ $nip_atasan_penilai           = "";
 $kelas_jabatan_atasan_penilai = "";
 $pangkat_atasan_penilai       = "";
 $ruang_atasan_penilai         = "";
-$tmt_golongan_atasan_penilai  = "";
+$tmt_pangkat_atasan_penilai  = "";
 
 if ($infoPegawai != 0 || $infoPegawai != '') {
 
@@ -66,10 +66,9 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
         # code...
     }
     
-
-    if($infoPegawai[0]->nama_pangkat != '-')$pangkat      = $infoPegawai[0]->nama_pangkat;else $pangkat                                        = '-';
-    if($infoPegawai[0]->nama_golongan != '-')$ruang       = '('.$infoPegawai[0]->nama_golongan.'/'.$infoPegawai[0]->nama_ruang.')';else $ruang = '';
-    if($infoPegawai[0]->tmt_golongan != '-')$tmt_golongan = ', '.date("d-m-Y",strtotime($infoPegawai[0]->tmt_golongan));else $tmt_golongan = '';
+    $pangkat     = ($infoPegawai[0]->nama_pangkat != '-') ? $infoPegawai[0]->nama_pangkat : '' ;
+    $ruang       = ($infoPegawai[0]->nama_golongan != '-') ? ', ('.$infoPegawai[0]->nama_golongan.') ' : '' ;
+    $tmt_pangkat = ($infoPegawai[0]->tmt_pangkat != '-') ? $infoPegawai[0]->tmt_pangkat : '' ;    
 }
 
 if ($atasan != 0 || $atasan != '') {
@@ -82,9 +81,10 @@ if ($atasan != 0 || $atasan != '') {
     $nama_eselon4_atasan  = $atasan[0]->nama_eselon4;
     $nip_atasan           = $atasan[0]->nip;
     $kelas_jabatan_atasan = $atasan[0]->kelas_jabatan;
-    if($atasan[0]->nama_pangkat != '-')$pangkat_atasan      = $atasan[0]->nama_pangkat;else $pangkat_atasan                                        = '-';
-    if($atasan[0]->nama_golongan != '-')$ruang_atasan       = '('.$atasan[0]->nama_golongan.'/'.$atasan[0]->nama_ruang.')';else $ruang_atasan      = '';
-    if($atasan[0]->tmt_golongan != '-')$tmt_golongan_atasan = ', '.date("d-m-Y",strtotime($atasan[0]->tmt_golongan));else $tmt_golongan_atasan = '';
+
+    $pangkat_atasan     = ($atasan[0]->nama_pangkat != '-') ? $atasan[0]->nama_pangkat : '' ;
+    $ruang_atasan       = ($atasan[0]->nama_golongan != '-') ? ', ('.$atasan[0]->nama_golongan.') ' : '' ;
+    $tmt_pangkat_atasan = ($atasan[0]->tmt_pangkat != '-') ? $atasan[0]->tmt_pangkat : '' ;
 }
 
 if ($atasan_penilai != 0 || $atasan_penilai != '') {
@@ -97,9 +97,10 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     $nama_eselon4_atasan_penilai  = $atasan_penilai[0]->nama_eselon4;
     $nip_atasan_penilai           = $atasan_penilai[0]->nip;
     $kelas_jabatan_atasan_penilai = $atasan_penilai[0]->kelas_jabatan;
-    if($atasan_penilai[0]->nama_pangkat != '-')$pangkat_atasan_penilai      = $atasan_penilai[0]->nama_pangkat;else $pangkat_atasan_penilai                                           = '-';
-    if($atasan_penilai[0]->nama_golongan != '-')$ruang_atasan_penilai       = '('.$atasan_penilai[0]->nama_golongan.'/'.$atasan_penilai[0]->nama_ruang.')';else $ruang_atasan_penilai = '';
-    if($atasan_penilai[0]->tmt_golongan != '-')$tmt_golongan_atasan_penilai = ', '.date("d-m-Y",strtotime($atasan_penilai[0]->tmt_golongan));else $tmt_golongan_atasan_penilai        = '';
+
+    $pangkat_atasan_penilai     = ($atasan_penilai[0]->nama_pangkat != '-') ? $atasan_penilai[0]->nama_pangkat : '' ;
+    $ruang_atasan_penilai       = ($atasan_penilai[0]->nama_golongan != '-') ? ', ('.$atasan_penilai[0]->nama_golongan.') ' : '' ;
+    $tmt_pangkat_atasan_penilai = ($atasan_penilai[0]->tmt_pangkat != '-') ? $atasan_penilai[0]->tmt_pangkat : '' ;
 }
 ?>
 <style type="text/css">
@@ -185,7 +186,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     <div class="box">
         <div class="box-header">
             <div class="col-lg-12">
-                <a target="_blank" href="<?php echo site_url()?>skp/cetak_skp_excel/<?=$this->session->userdata('sesUser');?>" class="btn btn-success btn-md pull-right"><i class="fa fa-excel"></i> Excel</a>                            
+                <a target="_blank" href="<?php echo site_url()?>skp/prints_skp/skp_excel/<?=$this->session->userdata('sesUser');?>" class="btn btn-success btn-md pull-right"><i class="fa fa-excel"></i> Excel</a>                            
                 <h3 class="text-center">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
             </div>
         </div>
@@ -216,7 +217,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                             </tr>
                                             <tr>
                                                 <td>c. Pangkat, Golongan Ruang, TMT</td>
-                                                <td colspan="4"><?=$pangkat;?> <?=$ruang;?> <?=$tmt_golongan;?></td>
+                                                <td colspan="4"><?=$pangkat;?> <?=$ruang;?> <?=$tmt_pangkat;?></td>
                                             </tr>
                                             <tr>
                                                 <td>d. Jabatan/Pekerjaan</td>
@@ -253,7 +254,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                             </tr>
                                             <tr>
                                                 <td>c. Pangkat, Golongan Ruang, TMT</td>
-                                                <td colspan="4"><?=$pangkat_atasan;?> <?=$ruang_atasan;?> <?=$tmt_golongan_atasan;?></td>
+                                                <td colspan="4"><?=$pangkat_atasan;?> <?=$ruang_atasan;?> <?=$tmt_pangkat_atasan;?></td>
                                             </tr>
                                             <tr>
                                                 <td>d. Jabatan/Pekerjaan</td>
@@ -290,7 +291,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                             </tr>
                                             <tr>
                                                 <td>c. Pangkat, Golongan Ruang, TMT</td>
-                                                <td colspan="4"><?=$pangkat_atasan_penilai;?> <?=$ruang_atasan_penilai;?> <?=$tmt_golongan_atasan_penilai;?></td>
+                                                <td colspan="4"><?=$pangkat_atasan_penilai;?> <?=$ruang_atasan_penilai;?> <?=$tmt_pangkat_atasan_penilai;?></td>
                                             </tr>
                                             <tr>
                                                 <td>d. Jabatan/Pekerjaan</td>

@@ -345,7 +345,7 @@ function profile(arg) {
             var obj = jQuery.parseJSON (msg);
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -374,7 +374,7 @@ function riwayat_pendidikan(arg) {
             }                        
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -399,7 +399,7 @@ function riwayat_pangkat(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -425,7 +425,7 @@ function riwayat_jabatan(arg) {
             }            
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -454,7 +454,7 @@ function riwayat_diklat_struktural(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -483,7 +483,7 @@ function riwayat_diklat_fungsional(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -512,7 +512,7 @@ function riwayat_diklat_teknis(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -542,7 +542,7 @@ function riwayat_konferensi(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -567,7 +567,7 @@ function karya_tulis(arg) {
             }                
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -594,7 +594,7 @@ function penghargaan(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -623,7 +623,7 @@ function organisasi(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
