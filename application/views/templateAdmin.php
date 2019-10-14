@@ -343,6 +343,19 @@ function profile(arg) {
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
+            if (arg != 'bypass') {
+                console.log(obj.results)
+                $("#lbl_nip").html(obj.results.nip);
+                $("#lbl_nama").html(obj.results.nama);
+                $("#lbl_ttl").html(obj.results.ttl);
+                // $("#lbl_jenis_kelamin").html(obj.results.ttl);
+                $("#lbl_agama").html(obj.results.agama);
+                $("#lbl_alamat").html(obj.results.alamat1);                                
+                $("#lbl_jabatan").html(obj.results.jabatan)                                       
+                $("#lbl_tmt_jabatan").html(obj.results.tmtjabatan)
+                $("#lbl_pangkat").html(obj.results.pangkat+' ('+obj.results.nama_gol+')')
+                $("#lbl_tmt_pangkat").html(obj.results.tmtpang)
+            }
         },
         error:function(jqXHR,exception) {
             // ajax_catch(jqXHR,exception);					
