@@ -344,7 +344,6 @@ function profile(arg) {
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
             if (arg != 'bypass') {
-                console.log(obj.results)
                 $("#lbl_nip").html(obj.results.nip);
                 $("#lbl_nama").html(obj.results.nama);
                 $("#lbl_ttl").html(obj.results.ttl);
