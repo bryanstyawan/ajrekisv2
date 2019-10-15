@@ -2,6 +2,14 @@ v4.1.2.5.4
 2019-10-10
 New:
 Improved:
+Fixed:
+- Atasan penilai
+Canceled:
+
+v4.1.2.5.4
+2019-10-10
+New:
+Improved:
 - Profile page
 Fixed:
 Canceled:

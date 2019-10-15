@@ -488,19 +488,30 @@ class Globalrules extends CI_Model
 				$data['atasan'][0]->nama_pangkat  = '-';
 				$data['atasan'][0]->tmt_pangkat   = '-';				
 			}													
+
 			$check_atasan_again = $this->Allcrud->getData('mr_posisi',array('id' => $data['atasan'][0]->posisi))->result_array();
 			if($check_atasan_again != array())
-			{
-				if ($check_atasan_again[0]['atasan'] == 0) {
+			{			
+				if ($check_atasan_again[0]['id'] == 0) {
 					# code...
-					$data['atasan'] = 0;
+					// $data['atasan'] = 0;
 				}
 				else
 				{
-					$_atasan_id_data        = $this->list_atasan($data['atasan'][0]->posisi);
-					$_atasan_id             = ($_atasan_id_data == 0) ? 0 : $_atasan_id_data[0]->id;
-					$_atasan_id_posisi      = ($_atasan_id_data == 0) ? 0 : $_atasan_id_data[0]->posisi;														
-					$data['atasan_penilai'] = $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi);							
+
+					$_atasan_data                = $this->list_atasan($check_atasan_again[0]['id']);
+					$_atasan_id                  = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+					$_atasan_id_posisi           = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+					$data['atasan_penilai']      = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
+
+					if ($data['atasan_penilai'] == 0) {
+						# code...
+						$_atasan_data        = $this->list_atasan($_id_posisi);
+						$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+						$_atasan_id_posisi   = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+						$data['atasan_penilai']      = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
+
+					}
 					
 					$nip              = $data['atasan_penilai'][0]->nip;
 					$get_pangkat      = $this->mskp->get_golongan($nip);
@@ -516,12 +527,15 @@ class Globalrules extends CI_Model
 						$data['atasan_penilai'][0]->nama_pangkat  = '-';
 						$data['atasan_penilai'][0]->tmt_pangkat   = '-';									
 					}										
+
 				}
 			}
 		}
 		else
 		{
-			$data['atasan_penilai'] = 0;			
+			$data['atasan_penilai'][0]->nama_golongan = '-';
+			$data['atasan_penilai'][0]->nama_pangkat  = '-';
+			$data['atasan_penilai'][0]->tmt_pangkat   = '-';			
 		}
 
 		$data['list_skp']                                   = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
