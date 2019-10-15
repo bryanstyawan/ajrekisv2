@@ -458,14 +458,14 @@ class Globalrules extends CI_Model
 		if ($get_pangkat != array()) {
 			# code...
 			$data['infoPegawai'][0]->nama_golongan = $get_pangkat[0]->golongan;
-			$data['infoPegawai'][0]->nama_pangkat = $get_pangkat[0]->nama_pangkat;
-			$data['infoPegawai'][0]->tmt_pangkat = $get_pangkat[0]->tmt_pangkat;						
+			$data['infoPegawai'][0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
+			$data['infoPegawai'][0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
 		}
 		else
 		{
 			$data['infoPegawai'][0]->nama_golongan = '-';
-			$data['infoPegawai'][0]->nama_pangkat = '-';
-			$data['infoPegawai'][0]->tmt_pangkat = '-';			
+			$data['infoPegawai'][0]->nama_pangkat  = '-';
+			$data['infoPegawai'][0]->tmt_pangkat   = '-';			
 		}
 
 		$_atasan_data        = $this->list_atasan($_id_posisi);
@@ -479,8 +479,8 @@ class Globalrules extends CI_Model
 			if ($get_pangkat != array()) {
 				# code...
 				$data['atasan'][0]->nama_golongan = $get_pangkat[0]->golongan;
-				$data['atasan'][0]->nama_pangkat = $get_pangkat[0]->nama_pangkat;
-				$data['atasan'][0]->tmt_pangkat = $get_pangkat[0]->tmt_pangkat;						
+				$data['atasan'][0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
+				$data['atasan'][0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
 			}
 			else
 			{
@@ -506,36 +506,47 @@ class Globalrules extends CI_Model
 
 					if ($data['atasan_penilai'] == 0) {
 						# code...
-						$_atasan_data        = $this->list_atasan($_id_posisi);
-						$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
-						$_atasan_id_posisi   = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
-						$data['atasan_penilai']      = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
+						$_atasan_data           = $this->list_atasan($_id_posisi);
+						$_atasan_id             = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+						$_atasan_id_posisi      = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+						$data['atasan_penilai'] = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
 
 					}
-					
-					$nip              = $data['atasan_penilai'][0]->nip;
-					$get_pangkat      = $this->mskp->get_golongan($nip);
-					if ($get_pangkat != array()) {
+
+					if ($data['atasan_penilai'] != 0) {
 						# code...
-						$data['atasan_penilai'][0]->nama_golongan = $get_pangkat[0]->golongan;
-						$data['atasan_penilai'][0]->nama_pangkat = $get_pangkat[0]->nama_pangkat;
-						$data['atasan_penilai'][0]->tmt_pangkat = $get_pangkat[0]->tmt_pangkat;						
+						$nip              = $data['atasan_penilai'][0]->nip;
+						$get_pangkat      = $this->mskp->get_golongan($nip);
+						if ($get_pangkat != array()) {
+							# code...
+							$data['atasan_penilai'][0]->nama_golongan = $get_pangkat[0]->golongan;
+							$data['atasan_penilai'][0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
+							$data['atasan_penilai'][0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
+						}
+						else
+						{
+							$data['atasan_penilai'][0]->nama_golongan = '-';
+							$data['atasan_penilai'][0]->nama_pangkat  = '-';
+							$data['atasan_penilai'][0]->tmt_pangkat   = '-';									
+						}						
 					}
 					else
 					{
 						$data['atasan_penilai'][0]->nama_golongan = '-';
 						$data['atasan_penilai'][0]->nama_pangkat  = '-';
-						$data['atasan_penilai'][0]->tmt_pangkat   = '-';									
-					}										
+						$data['atasan_penilai'][0]->tmt_pangkat   = '-';						
+					}
+													
 
 				}
 			}
 		}
 		else
 		{
-			$data['atasan_penilai'][0]->nama_golongan = '-';
-			$data['atasan_penilai'][0]->nama_pangkat  = '-';
-			$data['atasan_penilai'][0]->tmt_pangkat   = '-';			
+			$data['atasan_penilai'] = 0;			
+			// $data['atasan'][0]->nama_golongan = '-';
+			// $data['atasan'][0]->nama_pangkat  = '-';
+			// $data['atasan'][0]->tmt_pangkat   = '-';			
 		}
 
 		$data['list_skp']                                   = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
