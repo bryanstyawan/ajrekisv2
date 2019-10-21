@@ -207,20 +207,31 @@
                                                             <span id="lbl_tmt_pangkat"></span><br>
                                                         </div>
                                                     </div>
+                                                          
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">No Hp</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_no_hp"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">E-mail</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_email"></span><br>
+                                                        </div>
+                                                    </div>                                                  
 
                                                     <!-- 
                                                     <label class="widget-user-desc" style="margin-top:5px;">Jenis Kelamin</label>
                                                     <span id="lbl_jenis_kelamin" style="margin-left:57px;">: </span><br> 
-                                                    -->
-
-                                                    <!-- 
-                                                    <label class="widget-user-desc" style="margin-top:5px;">No HP</label>
-                                                    <span style="margin-left:106px;">: <?php echo $infoPegawai[0]->no_hp;?></span><br> 
-                                                    -->
-
-                                                    <!-- 
-                                                    <label class="widget-user-desc" style="margin-top:5px;">E-Mail</label>
-                                                    <span style="margin-left:104px;">: <?php echo $infoPegawai[0]->email;?></span><br> 
                                                     -->
                                                 </div>
                                                 <!-- Profile Picture -->

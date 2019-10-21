@@ -1,5 +1,21 @@
-v4.1.2.5.4
-2019-10-10
+v4.1.2.5.5
+2019-10-21
+New:
+Improved:
+- API fingerprint
+Fixed:
+Canceled:
+
+v4.1.2.5.5
+2019-10-16
+New:
+Improved:
+- Email & No Hp di Biodata
+Fixed:
+Canceled:
+
+v4.1.2.5.5
+2019-10-15
 New:
 Improved:
 Fixed:
@@ -7,7 +23,7 @@ Fixed:
 Canceled:
 
 v4.1.2.5.4
-2019-10-10
+2019-10-14
 New:
 Improved:
 - Profile page

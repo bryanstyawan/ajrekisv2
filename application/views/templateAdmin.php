@@ -343,6 +343,7 @@ function profile(arg) {
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
+            console.log(obj.results)
             if (arg != 'bypass') {
                 $("#lbl_nip").html(obj.results.nip);
                 $("#lbl_nama").html(obj.results.nama);
@@ -354,6 +355,8 @@ function profile(arg) {
                 $("#lbl_tmt_jabatan").html(obj.results.tmtjabatan)
                 $("#lbl_pangkat").html(obj.results.pangkat+' ('+obj.results.nama_gol+')')
                 $("#lbl_tmt_pangkat").html(obj.results.tmtpang)
+                $("#lbl_no_hp").html(obj.results.nomorhp)
+                $("#lbl_email").html(obj.results.email)
             }
         },
         error:function(jqXHR,exception) {
