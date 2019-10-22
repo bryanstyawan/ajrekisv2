@@ -183,7 +183,12 @@ class Globalrules extends CI_Model
 		}
 		elseif ($param == 'id') {
 			# code...
-			$sql = "a.id = '".$id."' AND a.status = 1 AND b.id = '".$id_posisi."'";
+			if ($id_posisi==NULL) {
+				$sql = "a.id = '".$id."' AND a.status = 1";
+			}
+			else {
+				$sql = "a.id = '".$id."' AND a.status = 1 AND b.id = '".$id_posisi."'";
+			}
 		}
 		elseif ($param == 'nama_pegawai') {
 			# code...
