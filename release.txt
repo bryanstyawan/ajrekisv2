@@ -1,3 +1,46 @@
+v4.1.2.5.5
+2019-10-21
+New:
+Improved:
+- API fingerprint
+Fixed:
+Canceled:
+
+v4.1.2.5.5
+2019-10-16
+New:
+Improved:
+- Email & No Hp di Biodata
+Fixed:
+Canceled:
+
+v4.1.2.5.5
+2019-10-15
+New:
+Improved:
+Fixed:
+- Atasan penilai
+Canceled:
+
+v4.1.2.5.4
+2019-10-14
+New:
+Improved:
+- Profile page
+Fixed:
+Canceled:
+
+v4.1.2.5.4
+2019-10-10
+New:
+- Pangkat SKP
+- Print SKP
+Improved:
+- Print SKP
+Fixed:
+Canceled:
+- ajax_catch API
+
 v4.1.2.5.3
 2019-10-03
 New:

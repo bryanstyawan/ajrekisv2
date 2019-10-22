@@ -118,30 +118,121 @@
                                         <div class="box-body">
                                             <div class="row">
                                                 <div class="form-group col-md-10">
-                                                    <label class="widget-user-desc" style="margin-top:5px;">NIP</label>
-                                                        <span style="margin-left:121px;">: <?php echo $infoPegawai[0]->nip;?></span><br>
-                                                    <label class="widget-user-desc" style="margin-top:5px;">Nama</label>
-                                                        <span style="margin-left:107px;">: <?php echo $infoPegawai[0]->nama_pegawai;?></span><br>
-                                                    <label class="widget-user-desc" style="margin-top:5px;">Tempat/Tanggal Lahir</label>
-                                                        <span style="margin-left:9px;">: <?php echo (($infoPegawai[0]->TempatLahir == '') ? ' - , ' : $infoPegawai[0]->TempatLahir.', ').date('d F Y', strtotime($infoPegawai[0]->BirthDate));?></span><br>
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">NIP</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_nip"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">Nama</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_nama"></span><br>
+                                                        </div>
+                                                    </div>                                                    
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">Tempat, Tanggal Lahir</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_ttl"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">Agama</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_agama"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">Alamat</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_alamat"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">Jabatan</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_jabatan"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">TMT Jabatan</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_tmt_jabatan"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">Pangkat</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_pangkat"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">TMT Pangkat</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_tmt_pangkat"></span><br>
+                                                        </div>
+                                                    </div>
+                                                          
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">No Hp</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_no_hp"></span><br>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label class="widget-user-desc" style="margin-top:5px;">E-mail</label>                                                        
+                                                            <span class="pull-right">:</span>                                                            
+                                                        </div>
+                                                        <div class="col-lg-9">
+                                                            <span id="lbl_email"></span><br>
+                                                        </div>
+                                                    </div>                                                  
+
+                                                    <!-- 
                                                     <label class="widget-user-desc" style="margin-top:5px;">Jenis Kelamin</label>
-                                                        <span style="margin-left:57px;">: <?php echo ($infoPegawai[0]->Gender == 'L' ? 'Laki-laki' : 'Perempuan') ;?></span><br>
-                                                    <label class="widget-user-desc" style="margin-top:5px;">Agama</label>
-                                                        <span style="margin-left:101px;">: <?php echo $infoPegawai[0]->nama_agama;?></span><br>
-                                                    <!-- <label class="widget-user-desc" style="margin-top:5px;">No HP</label>
-                                                        <span style="margin-left:106px;">: <?php echo $infoPegawai[0]->no_hp;?></span><br> -->
-                                                    <!-- <label class="widget-user-desc" style="margin-top:5px;">E-Mail</label>
-                                                        <span style="margin-left:104px;">: <?php echo $infoPegawai[0]->email;?></span><br> -->
-                                                    <!-- <label class="widget-user-desc" style="margin-top:5px;">Jabatan</label>
-                                                        <span style="margin-left:93px;">: <?php echo $infoPegawai[0]->nama_jabatan;?></span><br>
-                                                    <label class="widget-user-desc" style="margin-left:153px;">TMT Jabatan</label>
-                                                        <span>: <?php echo date('d F Y', strtotime($infoPegawai[0]->tmt_jabatan));?></span><br>
-                                                    <label class="widget-user-desc" style="margin-top:5px;">Pangkat</label>
-                                                        <span style="margin-left:93px;">: <?php echo $infoPegawai[0]->nama_pangkat.'('.$infoPegawai[0]->nama_golongan.'/'.$infoPegawai[0]->nama_ruang.')';?></span><br>
-                                                    <label class="widget-user-desc" style="margin-left:153px;">TMT Pangkat</label>
-                                                        <span>: <?php echo date('d F Y', strtotime($infoPegawai[0]->tmt_golongan));?></span><br> -->
-                                                    <label class="widget-user-desc" style="margin-top:5px;">Alamat</label>
-                                                        <span style="margin-left:100px;">: <?php echo $infoPegawai[0]->alamat;?></span><br>
+                                                    <span id="lbl_jenis_kelamin" style="margin-left:57px;">: </span><br> 
+                                                    -->
                                                 </div>
                                                 <!-- Profile Picture -->
                                                 <div class="col-md-2">

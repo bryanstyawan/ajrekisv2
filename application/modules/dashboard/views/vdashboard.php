@@ -174,6 +174,7 @@ else {
     $(document).ready(function()
     {
         // profile('bypass');    
+        get_api_fingerprint();        
         riwayat_pendidikan('bypass');    
         riwayat_pangkat('bypass');    
         riwayat_jabatan('bypass');
@@ -191,7 +192,7 @@ else {
         //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
         //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
         // });        
-
+        $('#mydata').dataTable();
         $('#gaugeContainer').jqxGauge({
                     ranges: [{ startValue: 0, endValue: 25, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
                             { startValue: 25, endValue: 50, style: { fill: '#fbd109', stroke: '#fbd109' }, endWidth: 10, startWidth: 5 },
@@ -526,7 +527,7 @@ else {
                             $('#table_progress_skp tbody').remove();                                         
                             for(i=0;i<obj.data.skp.list_skp.length;i++)
                             {
-                                console.log(obj.data.skp.list_skp[i].kegiatan_skp_jfu);
+                                // console.log(obj.data.skp.list_skp[i].kegiatan_skp_jfu);
                                 realisasi_qty  = 0;
                                 persentase_qty = 0;
                                 if(obj.data.skp.list_skp[i].realisasi_kuantitas == null)
@@ -652,8 +653,44 @@ else {
                 }
             })
         }
-
     }   
+
+    function get_api_fingerprint(){
+        $.ajax({
+            type  : 'ajax',
+            url   : '<?php echo base_url()?>ro_peg/index',
+            async : false,
+            dataType : 'json',
+            success : function(object){
+                var html = '';
+                var i = "";
+                var j = "";
+                var k = "";
+                var sum_jumlah = 0;
+                var total_tunjangan_="";
+                
+                console.log(object)
+                //for(i in object)
+                // console.log('lengthnya adalah ' + object.results.data.length);
+
+                for(j=0;j < object.results.data.length;j++) 
+                {
+                    k = object.results.data[j].jumlah;
+                    sum_jumlah = sum_jumlah + k;
+                }
+
+                //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
+                total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
+                document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
+                //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
+            },
+            error:function(jqXHR,exception)
+            {
+                document.getElementById("total_tunjangan_").innerHTML = 'N/A';
+            }                
+
+        });
+    }    
 
     function formatRupiah(num) 
     {
@@ -704,46 +741,4 @@ else {
             }
         })    
     }    
-
-    $(document).ready(function(){
-        get_api_fingerprint();         
-        $('#mydata').dataTable();
-
-        function get_api_fingerprint(){
-            $.ajax({
-                type  : 'ajax',
-                url   : '<?php echo base_url()?>ro_peg/index',
-                async : false,
-                dataType : 'json',
-                success : function(object){
-                    var html = '';
-                    var i = "";
-                    var j = "";
-                    var k = "";
-                    var sum_jumlah = 0;
-                    var total_tunjangan_="";
-
-                    //for(i in object)
-                    // console.log('lengthnya adalah ' + object.results.data.length);
-
-                    for(j=0;j < object.results.data.length;j++) 
-                    {
-                        k = object.results.data[j].jumlah;
-                        sum_jumlah = sum_jumlah + k;
-                    }
-
-                    //console.log('sum_jumlah nya adlaah ' + sum_jumlah);
-                    total_tunjangan_= object.results.info_pegawai[0].tunjangan - sum_jumlah;
-                    document.getElementById("total_tunjangan_").innerHTML = formatRupiah(total_tunjangan_);
-                    //$('total_tunjangan_').val(formatRupiah(total_tunjangan_));
-                },
-                error:function(jqXHR,exception)
-                {
-                    document.getElementById("total_tunjangan_").innerHTML = 'N/A';
-                }                
- 
-            });
-        }
- 
-    }); 
 </script>

@@ -343,9 +343,24 @@ function profile(arg) {
         success:function(msg){
             $("#loadprosess").modal('hide');
             var obj = jQuery.parseJSON (msg);
+            console.log(obj.results)
+            if (arg != 'bypass') {
+                $("#lbl_nip").html(obj.results.nip);
+                $("#lbl_nama").html(obj.results.nama);
+                $("#lbl_ttl").html(obj.results.ttl);
+                // $("#lbl_jenis_kelamin").html(obj.results.ttl);
+                $("#lbl_agama").html(obj.results.agama);
+                $("#lbl_alamat").html(obj.results.alamat1);                                
+                $("#lbl_jabatan").html(obj.results.jabatan)                                       
+                $("#lbl_tmt_jabatan").html(obj.results.tmtjabatan)
+                $("#lbl_pangkat").html(obj.results.pangkat+' ('+obj.results.nama_gol+')')
+                $("#lbl_tmt_pangkat").html(obj.results.tmtpang)
+                $("#lbl_no_hp").html(obj.results.nomorhp)
+                $("#lbl_email").html(obj.results.email)
+            }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -374,7 +389,7 @@ function riwayat_pendidikan(arg) {
             }                        
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -399,7 +414,7 @@ function riwayat_pangkat(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -425,7 +440,7 @@ function riwayat_jabatan(arg) {
             }            
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -454,7 +469,7 @@ function riwayat_diklat_struktural(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -483,7 +498,7 @@ function riwayat_diklat_fungsional(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -512,7 +527,7 @@ function riwayat_diklat_teknis(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -542,7 +557,7 @@ function riwayat_konferensi(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -567,7 +582,7 @@ function karya_tulis(arg) {
             }                
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -594,7 +609,7 @@ function penghargaan(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
@@ -623,7 +638,7 @@ function organisasi(arg) {
             }
         },
         error:function(jqXHR,exception) {
-            ajax_catch(jqXHR,exception);					
+            // ajax_catch(jqXHR,exception);					
         }
     })    
 }
