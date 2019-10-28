@@ -22,6 +22,129 @@ class M_api extends CI_Model {
 			return 0;
 		}		
 	}
+
+	public function get_posisi($posisi)
+	{
+		# code...
+		$sql = "SELECT a.*
+						FROM mr_posisi a
+						WHERE a.id = '".$posisi."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}		
+	}	
+
+	public function get_data_evaluator($id,$tahun)
+	{
+		# code...
+		$sql = "SELECT a.*,
+						b.nama_pegawai
+				FROM mr_skp_penilaian_prilaku a
+				JOIN mr_pegawai b
+				ON a.id_pegawai_penilai = b.id
+				WHERE a.id_pegawai = '".$id."'
+				AND a.tahun = '".$tahun."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
+
+	public function get_nilai_prilaku($id,$id_param,$param,$tahun,$id_pegawai)
+	{
+		# code...
+		$sql_join  = "";
+		$sql_where = "";
+		$sql       = "";
+		if ($param == 'atasan') {
+			# code...
+			$sql = "SELECT DISTINCT COALESCE(c.orientasi_pelayanan,0) as orientasi_pelayanan,
+								COALESCE(c.integritas,0) as integritas,
+								COALESCE(c.komitmen,0) as komitmen,
+								COALESCE(c.disiplin,0) as disiplin,
+								COALESCE(c.kerjasama,0) as kerjasama,
+								COALESCE(c.kepemimpinan,0) as kepemimpinan,
+								COALESCE(c.status,0) as status
+			    FROM mr_pegawai a
+			    JOIN mr_posisi b
+			    ON b.atasan = a.posisi
+				LEFT JOIN mr_skp_penilaian_prilaku c
+				ON a.id = c.id_pegawai_penilai
+			    WHERE a.status = 1
+			    AND b.id = '".$id_param."'
+				AND c.id_pegawai = '".$id_pegawai."'
+				AND c.tahun = '".$tahun."'";
+		}
+		elseif ($param == 'peer') {
+			# code...
+			$sql = "SELECT DISTINCT COALESCE(AVG(c.orientasi_pelayanan),0) as orientasi_pelayanan,
+								COALESCE(AVG(c.integritas),0) as integritas,
+								COALESCE(AVG(c.komitmen),0) as komitmen,
+								COALESCE(AVG(c.disiplin),0) as disiplin,
+								COALESCE(AVG(c.kerjasama),0) as kerjasama,
+								COALESCE(AVG(c.kepemimpinan),0) as kepemimpinan,
+								COALESCE(SUM(c.status),0) as status
+			    FROM mr_pegawai a
+			    JOIN mr_posisi b
+			    ON a.posisi = b.id
+				LEFT JOIN mr_skp_penilaian_prilaku c
+				ON a.id = c.id_pegawai_penilai
+			    WHERE a.status = 1
+			    AND b.atasan = '".$id_param."'
+				AND c.status = 1
+				AND c.id_pegawai = ".$id_pegawai."
+				AND c.tahun = '".$tahun."'				
+				GROUP BY b.atasan";
+		}
+		elseif ($param == 'bawahan') {
+			# code...
+			$sql = "SELECT DISTINCT COALESCE(AVG(c.orientasi_pelayanan),0) as orientasi_pelayanan,
+								COALESCE(AVG(c.integritas),0) as integritas,
+								COALESCE(AVG(c.komitmen),0) as komitmen,
+								COALESCE(AVG(c.disiplin),0) as disiplin,
+								COALESCE(AVG(c.kerjasama),0) as kerjasama,
+								COALESCE(AVG(c.kepemimpinan),0) as kepemimpinan,
+								COALESCE(SUM(c.status),0) as status
+					FROM mr_pegawai a
+					JOIN mr_posisi b
+					ON a.posisi = b.id
+					LEFT JOIN mr_skp_penilaian_prilaku c
+					ON a.id = c.id_pegawai_penilai
+					WHERE b.atasan = '".$id_param."'
+					AND c.id_pegawai = ".$id_pegawai."
+					AND c.tahun = '".$tahun."'
+					AND a. STATUS = 1";
+		}
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			$data[0] = (object)array(
+							'orientasi_pelayanan' => 0,
+							'integritas'          => 0,
+							'komitmen'            => 0,
+							'disiplin'            => 0,
+							'kerjasama'           => 0,
+							'kepemimpinan'        => 0,
+							'status'              => 0
+						);
+			return $data;
+		}
+	}	
     
 	public function get_transact($nip=NULL,$status=NULL,$bulan=NULL,$tahun=NULL)
 	{
@@ -107,229 +230,634 @@ class M_api extends CI_Model {
 		}
 	}
 
-
-  public function get_menit_efektif_year($id)
+	public function api_kinerja($flag=NULL,$order_by=NULL,$filter=NULL)
 	{
-		$sql = "SELECT a.nama_bulan,
-            			 MONTH (b.tanggal_mulai) AS `month`,
-            			 COALESCE(b.id_pegawai,b.id_pegawai) as id_pegawai,
-            			 COALESCE(SUM(b.menit_efektif),0) AS menit_efektif,
-            			 COALESCE(COUNT(b.status_pekerjaan),0) AS counter_pekerjaan
-            FROM mr_bulan a
-            LEFT JOIN tr_capaian_pekerjaan b ON a.id = MONTH (b.tanggal_mulai)
-            AND b.id_pegawai = '".$id."'
-            AND b.status_pekerjaan = 1
-            AND YEAR(b.tanggal_mulai) = '".date('Y')."'
-            GROUP BY a.nama_bulan
-            ORDER BY a.id";
-		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-Create by : Bryan Setyawan Putra
-Last edit : 27/07/2016
-*/
-	public function rekap_kinerja(
-								$flag    =NULL,
-								$bulan   =NULL,
-								$tahun   =NULL,
-								$eselon1 =NULL,
-								$eselon2 =NULL,
-								$eselon3 =NULL,
-								$eselon4 =NULL
-							)
-	{
-		$sql_limit = "";
-
-		if ($flag == 'this_is_export') {
+		# code...
+		$sql_es1 = "";
+		$sql_es1a = "";			
+		if ($filter['eselon1'] != '') {
 			# code...
-			$sql_limit = "";
+			$sql_es1  = "AND b.eselon1 = '".$filter['eselon1']."'";
+			$sql_es1a = "AND c.eselon1 = '".$filter['eselon1']."'";				
 		}
-		elseif ($flag == 'preview') {
+
+		$sql_es2 = "";
+		$sql_es2a = "";
+		if ($filter['eselon2'] != '') {
 			# code...
-			$sql_limit = "LIMIT 100";
-		}
-		else
-		{
-			$sql_limit = "LIMIT 50";
+			$sql_es2  = "AND b.eselon2 = '".$filter['eselon2']."'";
+			$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";
 		}
 
-		$sql = "SELECT DISTINCT a.nama_pegawai,
-								a.nip,
-								b.nama_posisi,
-								a.id as `id_pegawai`,
-								c.tunjangan,
-								c.posisi_class,
-								c.tunjangan as `tunjangan_posisi`,
-								b.eselon1,
-								b.eselon2,
-								b.eselon3,
-								b.eselon4
-			    FROM mr_pegawai a
-			    JOIN mr_posisi b
-			    ON a.posisi = b.id
-			    JOIN mr_posisi_class c
-			    ON b.posisi_class = c.id
-			    WHERE b.eselon1 = '$eselon1'
-				OR b.eselon2   = '$eselon2'
-				OR b.eselon3   = '$eselon3'
-				OR b.eselon4   = '$eselon4'
-			    ORDER BY a.nama_pegawai asc
-			    $sql_limit";
+		$sql_es3 = "";
+		$sql_es3a = "";
+		if ($filter['eselon3'] != '') {
+			# code...
+			$sql_es3  = "AND b.eselon3 = '".$filter['eselon3']."'";
+			$sql_es3a = "AND c.eselon3 = '".$filter['eselon3']."'";				
+		}
 
+		$sql_es4 = "";
+		$sql_es4a = "";
+		if ($filter['eselon4'] != '') {
+			# code...
+			$sql_es4 = "AND b.eselon4 = '".$filter['eselon4']."'";
+			$sql_es4a = "AND c.eselon4 = '".$filter['eselon4']."'";				
+		}
+		
+		$sql_pegawai   = "";
+		$sql_pegawaia  = "";			
+		if ($filter['pegawai'] != '') {
+			# code...
+			$sql_pegawai  = "AND c.id = '".$filter['pegawai']."'";
+			$sql_pegawaia  = "AND a.id = '".$filter['pegawai']."'";
+		}
 
+		$sql_posisi   = "";
+		$sql_posisia   = "";			
+		if ($filter['posisi'] != '') {
+			# code...
+			$sql_posisi  = "AND b.id = '".$filter['posisi']."'";
+			$sql_posisia  = "AND c.id = '".$filter['posisi']."'";
+		}			
+
+		$sql = "SELECT    
+				a.id_pegawai,
+				b.eselon1,
+				b.eselon2,
+				b.eselon3,
+				b.eselon4,
+				IFNULL(c.posisi_akademik,0) as posisi_akademik, 
+				IFNULL(c.posisi_plt,0) as posisi_plt, 
+				c.nip,
+				c.`nama_pegawai`,
+				b.`nama_posisi`,
+				b.atasan as atasan,
+				d.nama_eselon1,
+				e.nama_eselon2,
+				f.nama_eselon3,
+				g.nama_eselon4,
+				a.bulan,
+				a.tahun,
+				a.tr_approve,
+				a.tr_tolak,
+				a.tr_revisi,
+				a.menit_efektif,
+				a.prosentase_menit_efektif,
+				a.tr_belum_diperiksa,
+				b.kat_posisi,
+				CASE
+						WHEN b.kat_posisi = 1 THEN h.posisi_class
+						WHEN b.kat_posisi = 2 THEN l.posisi_class
+						WHEN b.kat_posisi = 4 THEN j.posisi_class
+						WHEN b.kat_posisi = 6 THEN h.posisi_class
+				END as class_posisi_definitif,
+				CASE
+					WHEN b.kat_posisi = 1 THEN h.tunjangan
+					WHEN b.kat_posisi = 2 THEN l.tunjangan
+					WHEN b.kat_posisi = 4 THEN j.tunjangan
+					WHEN b.kat_posisi = 6 THEN h.tunjangan
+				END as tunjangan_definitif,
+				IF(b.atasan = 0 && b.kat_posisi = 1,0,
+					(
+						IF(a.bulan = 7 && a.tahun = 2019,0,
+							IFNULL(
+											CASE
+												WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = NULL THEN 5
+											END,5
+										)
+						)
+					)
+				) AS persentase_pemotongan_potongan_skp_bulanan,
+				IF(b.atasan = 0 && b.kat_posisi = 1,0,
+					(
+						IF(a.bulan = 7 && a.tahun = 2019,0,
+							IFNULL(
+											CASE
+												WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+												WHEN a.persentase_pemotongan = NULL THEN 5
+											END,5
+										)*a.real_tunjangan
+						)/100
+					)
+				) as nilai_potongan_skp_bulanan,
+				IFNULL(tp.tunjangan,0) as tunjangan_profesi,
+				IF(IFNULL(tp.tunjangan,0) = 0, 
+					(a.real_tunjangan -  IF(b.atasan = 0 && b.kat_posisi = 1,0,
+						(
+							IF(a.bulan = 7 && a.tahun = 2019,0,
+								IFNULL(
+									CASE
+										WHEN a.persentase_pemotongan = 0 THEN a.persentase_pemotongan
+										WHEN a.persentase_pemotongan = 5 THEN a.persentase_pemotongan
+										WHEN a.persentase_pemotongan = NULL THEN 5
+									END,5
+								)*a.real_tunjangan
+							)/100
+						)
+					))
+					,
+					(
+						IF(a.menit_efektif < (ha.jml_hari_aktif * ha.jml_menit_perhari),
+							(
+								(
+									CASE
+										WHEN b.kat_posisi = 1 THEN h.tunjangan
+										WHEN b.kat_posisi = 2 THEN l.tunjangan
+										WHEN b.kat_posisi = 4 THEN j.tunjangan
+										WHEN b.kat_posisi = 6 THEN h.tunjangan
+									END							
+								) - IFNULL(tp.tunjangan,0)
+							) * 0.5 * (a.menit_efektif/(ha.jml_hari_aktif * ha.jml_menit_perhari))
+							,
+							(
+								(
+									CASE
+										WHEN b.kat_posisi = 1 THEN h.tunjangan
+										WHEN b.kat_posisi = 2 THEN l.tunjangan
+										WHEN b.kat_posisi = 4 THEN j.tunjangan
+										WHEN b.kat_posisi = 6 THEN h.tunjangan
+									END							
+								) - IFNULL(tp.tunjangan,0)
+							) * 0.5															
+						)
+					)						
+				)  as real_tunjangan,
+				a.real_tunjangan as real_tunjangan_sb_potongan,
+				a.persentase_pemotongan,
+				a.audit_check_skp		
+			FROM `rpt_capaian_kinerja` a
+			LEFT JOIN mr_posisi b ON b.id = a.id_posisi
+			LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
+			LEFT JOIN mr_eselon1 d on b.eselon1 = d.id_es1
+			LEFT JOIN mr_eselon2 e on b.eselon2 = e.id_es2
+			LEFT JOIN mr_eselon3 f on b.eselon3 = f.id_es3
+			LEFT JOIN mr_eselon4 g on b.eselon4 = g.id_es4
+			LEFT JOIN mr_posisi_class h ON b.posisi_class = h.id
+			LEFT JOIN mr_jabatan_fungsional_umum i ON b.id_jfu = i.id
+			LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+			LEFT JOIN mr_jabatan_fungsional_tertentu k ON b.id_jft = k.id
+			LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+			LEFT JOIN mr_tunjangan_profesi tp ON tp.id_pegawai = a.id_pegawai				
+			AND tp.tgl_selesai = '9999-01-01'				
+			LEFT JOIN mr_hari_aktif ha ON ha.bulan = a.bulan
+			AND ha.tahun = ".$filter['tahun']." 				
+			WHERE c.id_role <> 7
+			AND c.id_role <> 6
+			AND a.`id_pegawai` IS NOT NULL		
+			AND a.id_posisi <> 0				
+			AND a.bulan = ".$filter['bulan']."
+			AND a.tahun = ".$filter['tahun']."		
+			".$sql_es1."
+			".$sql_es2."
+			".$sql_es3."
+			".$sql_es4."
+			".$sql_pegawai."
+			".$sql_posisi."				
+			UNION
+				SELECT
+					a.id,
+					c.eselon1,
+					c.eselon2,
+					c.eselon3,
+					c.eselon4,
+					IFNULL(a.posisi_akademik,0) as posisi_akademik, 
+					IFNULL(a.posisi_plt,0) as posisi_plt, 
+					a.nip,	
+					a.nama_pegawai,
+					c.`nama_posisi`,
+					c.atasan as atasan,
+					d.nama_eselon1,
+					e.nama_eselon2,
+					f.nama_eselon3,
+					g.nama_eselon4,
+					IFNULL(b.bulan, 0),
+					IFNULL(b.tahun, 0),
+					IFNULL(b.tr_approve, 0),
+					IFNULL(b.tr_tolak, 0),
+					IFNULL(b.tr_revisi,0),
+					IFNULL(b.menit_efektif,0),
+					IFNULL(b.prosentase_menit_efektif,0),
+					IFNULL(b.tr_belum_diperiksa,0),
+					c.kat_posisi,
+					CASE
+							WHEN c.kat_posisi = 1 THEN h.posisi_class
+							WHEN c.kat_posisi = 2 THEN l.posisi_class
+							WHEN c.kat_posisi = 4 THEN j.posisi_class
+							WHEN c.kat_posisi = 6 THEN h.posisi_class
+					END as class_posisi_definitif,
+					CASE
+						WHEN c.kat_posisi = 1 THEN h.tunjangan
+						WHEN c.kat_posisi = 2 THEN l.tunjangan
+						WHEN c.kat_posisi = 4 THEN j.tunjangan
+						WHEN c.kat_posisi = 6 THEN h.tunjangan
+					END as tunjangan_definitif,
+					IFNULL(b.persentase_pemotongan, 0) as persentase_potongan_skp_bulanan,
+					IFNULL(b.persentase_pemotongan, 0) as nilai_potongan_skp_bulanan,						
+					IFNULL(tp.tunjangan, 0) as tunjangan_profesi,						
+					IFNULL(b.real_tunjangan,0),
+					IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan,
+					IFNULL(b.persentase_pemotongan,5) as persentase_pemotongan,
+					IFNULL(b.audit_check_skp,0) as audit_check_skp   						
+				FROM mr_pegawai a
+				LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
+				AND b.bulan = ".$filter['bulan']."
+				AND b.tahun = ".$filter['tahun']."
+				LEFT JOIN mr_posisi c ON c.id = a.posisi
+				LEFT JOIN mr_eselon1 d on c.eselon1 = d.id_es1
+				LEFT JOIN mr_eselon2 e on c.eselon2 = e.id_es2
+				LEFT JOIN mr_eselon3 f on c.eselon3 = f.id_es3
+				LEFT JOIN mr_eselon4 g on c.eselon4 = g.id_es4
+				LEFT JOIN mr_posisi_class h ON c.posisi_class = h.id
+				LEFT JOIN mr_jabatan_fungsional_umum i ON c.id_jfu = i.id
+				LEFT JOIN mr_posisi_class j ON i.id_kelas_jabatan = j.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu k ON c.id_jft = k.id
+				LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
+				LEFT JOIN mr_tunjangan_profesi tp ON tp.id_pegawai = a.id					
+				AND tp.tgl_selesai = '9999-01-01'					
+				WHERE a.STATUS = 1
+				AND a.id_role <> 7
+				AND a.id_role <> 6					
+				".$sql_es1a."
+				".$sql_es2a."
+				".$sql_es3a."
+				".$sql_es4a."
+				".$sql_pegawaia."
+				".$sql_posisi."										
+				AND a.`id` NOT IN (
+					SELECT IFNULL(id_pegawai, 0)
+					FROM `rpt_capaian_kinerja`
+					WHERE bulan = ".$filter['bulan']."
+					AND tahun = ".$filter['tahun']."
+				)
+				ORDER BY ".$order_by."";
+				
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
-		{
+			{
 			return $query->result();
 		}
 		else
 		{
 			return 0;
-		}
+		}		
 	}
 
-/*
-Create by : Bryan Setyawan Putra
-Last edit : 19/07/2016
-*/
-	public function rekap_kinerja_wrap($id_pegawai)
+	public function get_summary_tugas_tambahan($id_user,$tahun,$PARAM=NULL)
 	{
-		$sql = "SELECT DISTINCT SUM(a.jam_kerja) as `jam_kerja`,
-								a.nama_pekerjaan,
-								a.output_pekerjaan,
-								DATE_FORMAT(a.tgl_mulai, '%d-%m-%Y') as tgl_mulai,
-								DATE_FORMAT(a.tgl_mulai, '%H:%s') as jam_mulai,
-								DATE_FORMAT(a.tgl_selesai, '%d-%m-%Y') as tgl_selesai,
-								DATE_FORMAT(a.tgl_selesai, '%H:%s') as jam_selesai
-			    FROM trx_detail a
-			    WHERE a.id_pegawai = '$id_pegawai'
-			    ";
-			    //			    AND DATE_FORMAT(a.date, '$date_format_sql') BETWEEN '".$newDate."' AND '".$newDate1."'
+		# code...
+		$sql_1  = "AND a.flag = ''";
+		$SELECT = "count(a.id) as `count`";
+		if ($PARAM == 'kreativitas') {
+			# code...
+			$SELECT = 'SUM(b.nilai) as `count`';
+			$sql_1 = "AND a.flag = '".$PARAM."'";
+		}
+
+
+		$sql = "SELECT ".$SELECT."
+				FROM tr_tugas_tambahan_detail a
+				LEFT JOIN mr_keterangan_kreativitas b
+				ON a.id_keterangan_kreativitas = b.id
+				WHERE a.id_pegawai = '".$id_user."'
+				AND a.tahun = '".$tahun."'
+				AND a.approve = '1'
+				".$sql_1."";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
-			return $query->result();
+			return $query->result()[0]->count;
 		}
 		else
 		{
 			return 0;
 		}
-	}
+	}	
 
-/*
-Create by : Bryan Setyawan Putra
-Last edit : 19/07/2016
-*/
-	public function rekap_kinerja_stat($id_pegawai,$stat)
+	public function get_data_skp_pegawai($id_pegawai,$id_posisi=NULL,$tahun,$param_status,$priority=NULL)
 	{
-		$sql = "SELECT DISTINCT count(a.id_trx_detail) as data_stat
-			    FROM trx_detail a
-			    WHERE a.id_pegawai = '$id_pegawai'
-			    AND a.stat = '$stat'";
-		$query = $this->db->query($sql);
-		if($query->num_rows() > 0)
-		{
-			return $query->result();
+		# code...
+		$query_1 = "";
+		$query_2 = "";
+
+		if ($id_posisi == NULL) {
+			# code...
+			$query_2 = '';
 		}
 		else
 		{
-			return 0;
+			$query_2 = "AND a.id_posisi = '".$id_posisi."'";
 		}
-	}
-
-/*
-Create by : Bryan Setyawan Putra
-Last edit : 27/07/2016
-*/
-	public function get_eselon($type,$flag=NULL,$value=NULL)
-	{
-		$sql_table       = "";
-		$sql             = "";
-		$sql_where       = "";
-		$sql_nama_eselon = "";
-
-		switch ($type) {
-			case '1':
+		$SELECT = "";
+		if ($param_status == 10) {
+			# code...
+			$query_1 = "";
+		}
+		elseif ($param_status == 11) {
+			# code...
+			$query_1 = "AND (a.status = '0' OR b.edit_status = '3')";
+		}
+		elseif ($param_status == 'PK') {
+			# code...
+			$query_1 = "AND a.PK = '1'";
+		}
+		elseif ($param_status == 'non_PK') {
+			# code...
+			$query_1 = "AND a.PK = '0'";
+		}
+		elseif ($param_status == 'none') {
+			# code...
+			if ($priority != NULL) {
 				# code...
-				$sql_table       = "mr_eselon1";
-				$sql_where       = "";
-				$sql_nama_eselon = "nama_eselon1";
-				break;
-			case '2':
-				$sql_table = "mr_eselon2";
-				$sql_where = "id_es1 = '$value'";
-				$sql_nama_eselon = "nama_eselon2";
-				break;
-			case '3':
-				$sql_table = "mr_eselon3";
-				$sql_where = "id_es2 = '$value'";
-				$sql_nama_eselon = "nama_eselon3";
-				break;
-			case '4':
-				$sql_table = "mr_eselon4";
-				$sql_where = "id_es3 = '$value'";
-				$sql_nama_eselon = "nama_eselon4";
-				break;
+				if ($priority != 'realisasi') {
+					# code...
+					$query_1 = "AND a.audit_priority = '".$priority."'";
+				}
+			}
 		}
-
-		if ($flag != "ajax") {
+		elseif ($param_status == 'approve') {
 			# code...
-			$sql = "SELECT *
-				    FROM $sql_table
-				    ORDER BY $sql_nama_eselon asc";
+					$query_1 = "AND a.status = '".$priority."'";
 		}
 		else
 		{
-			$sql = "SELECT *
-				    FROM $sql_table
-				    WHERE $sql_where
-				    ORDER BY $sql_nama_eselon asc";
+			if ($priority == 'realisasi') {
+				# code...
+				$SELECT = "	,COALESCE (
+								(
+									SELECT sum(cc.frekuensi_realisasi)
+									FROM tr_capaian_pekerjaan cc
+									WHERE cc.id_uraian_tugas = a.skp_id
+									AND cc.status_pekerjaan = '1'
+								),'0'
+							) AS `realisasi_kuantitas`,
+							COALESCE (
+								(
+									SELECT dd.tanggal_mulai
+									FROM tr_capaian_pekerjaan dd
+									WHERE dd.id_pegawai = a.id_pegawai
+									AND dd.id_uraian_tugas = a.skp_id
+									ORDER BY dd.tanggal_mulai ASC
+									LIMIT 1
+								),'0'
+							) AS `realisasi_awal_tanggal`,
+							COALESCE (
+								(
+									SELECT dd.tanggal_selesai
+									FROM tr_capaian_pekerjaan dd
+									WHERE dd.id_pegawai = a.id_pegawai
+									AND dd.id_uraian_tugas = a.skp_id
+									ORDER BY dd.tanggal_selesai DESC
+									LIMIT 1
+								),'0'
+							) AS `realisasi_akhir_tanggal`,
+							COALESCE(
+								round(
+									(
+										TIMESTAMPDIFF(
+											MONTH,
+											COALESCE (
+												(
+													SELECT dd.tanggal_mulai
+													FROM tr_capaian_pekerjaan dd
+													WHERE dd.id_pegawai = a.id_pegawai
+													AND dd.id_uraian_tugas = a.skp_id
+													ORDER BY dd.tanggal_mulai ASC
+													LIMIT 1
+												),'0'
+											),
+											COALESCE (
+												(
+													SELECT dd.tanggal_selesai
+													FROM tr_capaian_pekerjaan dd
+													WHERE dd.id_pegawai = a.id_pegawai
+													AND dd.id_uraian_tugas = a.skp_id
+													ORDER BY dd.tanggal_selesai DESC
+													LIMIT 1
+												),'0'
+											)
+										) +
+										DATEDIFF(
+											COALESCE (
+												(
+													SELECT dd.tanggal_selesai
+													FROM tr_capaian_pekerjaan dd
+													WHERE dd.id_pegawai = a.id_pegawai
+													AND dd.id_uraian_tugas = a.skp_id
+													ORDER BY dd.tanggal_selesai DESC
+													LIMIT 1
+												),'0'
+											),
+											COALESCE (
+												(
+													SELECT dd.tanggal_mulai
+													FROM tr_capaian_pekerjaan dd
+													WHERE dd.id_pegawai = a.id_pegawai
+													AND dd.id_uraian_tugas = a.skp_id
+													ORDER BY dd.tanggal_mulai ASC
+													LIMIT 1
+												),'0'
+											) + INTERVAL
+											TIMESTAMPDIFF(
+												MONTH,
+												COALESCE (
+													(
+														SELECT dd.tanggal_mulai
+														FROM tr_capaian_pekerjaan dd
+														WHERE dd.id_pegawai = a.id_pegawai
+														AND dd.id_uraian_tugas = a.skp_id
+														ORDER BY dd.tanggal_mulai ASC
+														LIMIT 1
+													),'0'
+												),
+												COALESCE (
+													(
+														SELECT dd.tanggal_selesai
+														FROM tr_capaian_pekerjaan dd
+														WHERE dd.id_pegawai = a.id_pegawai
+														AND dd.id_uraian_tugas = a.skp_id
+														ORDER BY dd.tanggal_selesai DESC
+														LIMIT 1
+													),'0'
+												)
+											) MONTH
+										)
+										/
+										DATEDIFF(
+											COALESCE (
+												(
+													SELECT dd.tanggal_mulai
+													FROM tr_capaian_pekerjaan dd
+													WHERE dd.id_pegawai = a.id_pegawai
+													AND dd.id_uraian_tugas = a.skp_id
+													ORDER BY dd.tanggal_mulai ASC
+													LIMIT 1
+												),'0'
+											) + INTERVAL
+											TIMESTAMPDIFF(
+												MONTH,
+												COALESCE (
+													(
+														SELECT dd.tanggal_mulai
+														FROM tr_capaian_pekerjaan dd
+														WHERE dd.id_pegawai = a.id_pegawai
+														AND dd.id_uraian_tugas = a.skp_id
+														ORDER BY dd.tanggal_mulai ASC
+														LIMIT 1
+													),'0'
+												),
+												COALESCE (
+													(
+														SELECT dd.tanggal_selesai
+														FROM tr_capaian_pekerjaan dd
+														WHERE dd.id_pegawai = a.id_pegawai
+														AND dd.id_uraian_tugas = a.skp_id
+														ORDER BY dd.tanggal_selesai DESC
+														LIMIT 1
+													),'0'
+												)
+											) + 1 MONTH,
+											COALESCE (
+												(
+												SELECT dd.tanggal_mulai
+												FROM tr_capaian_pekerjaan dd
+												WHERE dd.id_pegawai = a.id_pegawai
+												AND dd.id_uraian_tugas = a.skp_id
+												ORDER BY dd.tanggal_mulai ASC
+												LIMIT 1
+												),'0'
+											) + INTERVAL
+											TIMESTAMPDIFF(
+												MONTH,
+												COALESCE (
+													(
+														SELECT dd.tanggal_mulai
+														FROM tr_capaian_pekerjaan dd
+														WHERE dd.id_pegawai = a.id_pegawai
+														AND dd.id_uraian_tugas = a.skp_id
+														ORDER BY dd.tanggal_mulai ASC
+														LIMIT 1
+													),'0'
+												),
+												COALESCE (
+													(
+														SELECT dd.tanggal_selesai
+														FROM tr_capaian_pekerjaan dd
+														WHERE dd.id_pegawai = a.id_pegawai
+														AND dd.id_uraian_tugas = a.skp_id
+														ORDER BY dd.tanggal_selesai DESC
+														LIMIT 1
+													),'0'
+												)
+											) MONTH
+										)
+									),2
+								),0
+							) AS realisasi_waktu";
+			}
+			$query_1 = "AND a.status = '".$param_status."'";
 		}
 
 
+		$sql     = "SELECT a.*,
+							b.*,
+							COALESCE(c.nama,'-') as `nama_jenis_skp`,
+							COALESCE(
+								(
+									SELECT aa.nama
+									FROM mr_skp_jenis aa
+									WHERE aa.id = b.edit_jenis_skp
+								),'-'
+							) as `edit_nama_jenis_skp`,
+							COALESCE(
+								(
+									SELECT
+										bb.nama
+									FROM
+										mr_skp_satuan bb
+									WHERE
+										bb.id = b.edit_target_output
+								),'-'
+							) AS `edit_target_output_name`,
+							COALESCE(
+								(
+									SELECT
+										cc.kegiatan
+									FROM
+										mr_skp_master cc
+									WHERE
+										cc.id_skp = a.id_skp_master
+								),'-'
+							) AS `kegiatan_skp`,
+							COALESCE(
+								(
+									SELECT
+										cc.status
+									FROM
+										mr_skp_master cc
+									WHERE
+										cc.id_skp = a.id_skp_master
+								),'-'
+							) AS `kegiatan_skp_status`,							
+							COALESCE(
+								(
+									SELECT
+										jfu.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu`,
+							COALESCE(
+								(
+									SELECT
+										jfu.status
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu_status`,							
+							COALESCE(
+								(
+									SELECT
+										jft.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft`,	
+							COALESCE(
+								(
+									SELECT
+										jft.status
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft_status`,																					
+							COALESCE(d.nama,'-') as `target_output_name`
+							".$SELECT."
+					FROM mr_skp_pegawai a
+					LEFT OUTER JOIN mr_skp_pegawai_temp b
+					ON a.skp_id = b.edit_skp_id
+					LEFT OUTER JOIN mr_skp_jenis c
+					ON a.jenis_skp = c.id
+					LEFT OUTER JOIN mr_skp_satuan d
+					ON a.target_output = d.id
+					WHERE a.tahun = '".$tahun."'
+					AND a.id_pegawai = '".$id_pegawai."'
+					".$query_2."					
+					AND a.status <> '99'
+					".$query_1."
+					ORDER BY a.PK DESC, a.audit_priority ASC";
+		// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -340,4 +868,49 @@ Last edit : 27/07/2016
 			return 0;
 		}
 	}
+	
+	public function get_persentase_target_realisasi($id_pegawai,$id_posisi,$tahun)
+	{
+		// code...
+		$sql = "SELECT  SUM(a.target_qty) as `total_target_kuantitas`,
+						SUM(COALESCE((SELECT
+										SUM(cc.frekuensi_realisasi)
+									FROM
+										tr_capaian_pekerjaan cc
+									WHERE
+										cc.id_uraian_tugas = a.skp_id
+											AND cc.status_pekerjaan = '1'),
+								'0')) AS `total_realisasi_kuantitas`,
+						ROUND((SUM(COALESCE((SELECT
+										SUM(cc.frekuensi_realisasi)
+									FROM
+										tr_capaian_pekerjaan cc
+									WHERE
+										cc.id_uraian_tugas = a.skp_id
+											AND cc.status_pekerjaan = '1'),
+								'0'))/SUM(a.target_qty) * 100),2) AS `persentase`
+				FROM mr_skp_pegawai a
+				LEFT OUTER JOIN mr_skp_pegawai_temp b ON a.skp_id = b.edit_skp_id
+				LEFT OUTER JOIN mr_skp_jenis c ON a.jenis_skp = c.id
+				LEFT OUTER JOIN mr_skp_satuan d ON a.target_output = d.id
+				WHERE a.tahun = '".$tahun."'
+				AND a.id_pegawai = '".$id_pegawai."'
+				AND a.id_posisi = '".$id_posisi."'				
+				AND a.status <> '99'
+				AND a.status = '1'
+				GROUP BY a.id_pegawai";
+			$query = $this->db->query($sql);
+			if($query->num_rows() > 0)
+			{
+				return $query->result()[0];
+			}
+			else
+			{
+				return (object)array(
+						'total_target_kuantitas'    => 0,
+						'total_realisasi_kuantitas' => 0,
+						'persentase'                => 0
+					);
+			}
+	}	
 }

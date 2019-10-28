@@ -336,6 +336,37 @@ $.widget.bridge('uibutton', $.ui.button);
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script type="text/javascript">
+
+function simpeg_finger_kehadiran(arg) {
+    $.ajax({
+        url :"<?php echo site_url()?>api_get/simpeg_finger_kehadiran/<?=$this->session->userdata('sesNip');?>/<?=$this->session->userdata('sesUser');?>",
+        type:"post",
+        success:function(msg){
+            $("#loadprosess").modal('hide');
+            if (arg != 'bypass') {
+                var obj = jQuery.parseJSON (msg);
+                console.log(obj)
+                // tr_insert = "";
+                // for (i=0 ;i<obj.results.length;i++) {
+                //     tr_insert += '<tr>'+
+                //                 '<td>'+(i +1)+'</td>'+
+                //                 '<td>'+obj.results[i].ntpu+'</td>'+
+                //                 '<td>'+obj.results[i].njur+'</td>'+
+                //                 '<td>'+obj.results[i].nsek+'</td>'+
+                //                 '<td>'+obj.results[i].tempat+'</td>'+
+                //                 '<td>'+obj.results[i].thnlulus+'</td>'+
+                //                 // '<td>'+obj.results[i].scoring+'</td>'+
+                //             '</tr>';                                          
+                // }  
+                // $("#li_pendidikan_umum > div > div > div > div > table > tbody").html(tr_insert);                
+            }                        
+        },
+        error:function(jqXHR,exception) {
+            // ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
+
 function profile(arg) {
     $.ajax({
         url :"<?php echo site_url()?>api_get/simpeg_profile/<?=$this->session->userdata('sesNip');?>",		

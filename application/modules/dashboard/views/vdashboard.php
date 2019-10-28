@@ -178,6 +178,7 @@ else {
         riwayat_pendidikan('bypass');    
         riwayat_pangkat('bypass');    
         riwayat_jabatan('bypass');
+        simpeg_finger_kehadiran();
         // riwayat_diklat_struktural('bypass');       
         // riwayat_diklat_fungsional('bypass');
         // riwayat_diklat_teknis('bypass');

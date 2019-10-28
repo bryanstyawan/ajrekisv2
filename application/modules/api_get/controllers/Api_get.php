@@ -10,6 +10,37 @@ class Api_get extends CI_Controller
 		// $this->load->model ('admin/mlogin', '', TRUE);		
 	}
 
+	public function simpeg_finger_kehadiran($nip)
+	{
+		# code...
+		$curl            = curl_init();
+		$first_date_asu  = date('Y-m').'-01';
+		$second_date_asu = date('Y-m-d');		
+		curl_setopt_array($curl, array(
+		  CURLOPT_PORT => "8090",
+		  CURLOPT_URL => "http://absensi.setjen.kemendagri.go.id:8090/esidik/api/getdata/kehadiran/80f0d4e2dcda977afbfbed11de34b6b4/$nip/$first_date_asu/$second_date_asu",
+		  CURLOPT_RETURNTRANSFER => true,
+		  CURLOPT_ENCODING => "",
+		  CURLOPT_MAXREDIRS => 10,
+		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+		  CURLOPT_CUSTOMREQUEST => "GET",
+		  CURLOPT_POSTFIELDS => "",
+		  CURLOPT_COOKIE => "abs3nDagr1New=gafmam0u4pek422hmcigr1us30ddeob5",
+		));
+		
+		$response = curl_exec($curl);
+		$err = curl_error($curl);
+		
+		curl_close($curl);
+		
+		if ($err) {
+		  echo "cURL Error #:" . $err;
+		} else {
+		  echo $response;
+		}		
+	}
+
 	public function simpeg_finger_potongan()
 	{
 		# code...
