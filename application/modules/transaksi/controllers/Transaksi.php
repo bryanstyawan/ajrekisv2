@@ -24,7 +24,7 @@ class Transaksi extends CI_Controller {
 		$this->load->view('transaksi/trx/refresh/index',$data);		
 	}
 
-	public function home()
+	public function home2()
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
@@ -96,6 +96,107 @@ class Transaksi extends CI_Controller {
 		// echo "</pre>";
 
 		$this->load->view('templateAdmin',$data);
+	}
+
+	public function home()
+	{
+		$data['title']      	= 'Transaksi';
+		$data['content']    	= 'transaksi/trx/data_transaksi2';
+		$data['list']			= $this->mtrx->list_transaksi($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+		$data['urtug']          = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'approve',1);
+		$data['hari_kerja']     = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
+		$data['infoPegawai']    = $this->Globalrules->check_pegawai($this->session->userdata('sesUser'));
+		$data['member']         = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
+
+		if ($data['urtug'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['urtug']); $i++) 
+			{
+				if ($data['urtug'][$i]->id_skp_master == '') {
+					# code...
+					$data['urtug'][$i]->id_skp_master = 0;                                                                        
+				}
+
+				if ($data['urtug'][$i]->id_skp_jft == '') {
+					# code...
+					$data['urtug'][$i]->id_skp_jft = 0;                                                                        
+				}                         
+				
+				if ($data['urtug'][$i]->id_skp_jfu == '') {
+					# code...
+					$data['urtug'][$i]->id_skp_jfu = 0;                                                                        
+				}                                 				
+			}			
+		}
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
+				$get_data_keberatan = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
+				if ($get_data) {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = 0;
+				}
+
+				if ($get_data_keberatan) {
+					// code...
+					$data['member'][$i]->counter_keberatan = $get_data_keberatan;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_keberatan = 0;
+				}				
+			}
+		}
+		// print_r($data['list']);die();
+		$this->load->view('templateAdmin',$data);
+	}
+
+	Public function filter_transaksi()
+	{
+		$id			 = $this->session->userdata('sesUser');
+		$posisi		 = $this->session->userdata('sesPosisi');
+		$data_sender = $this->input->post('data_sender');	
+		$data_sender = array
+						(
+							'bulan'    => $data_sender['data_5'],
+							'tahun'    => $data_sender['data_6'],
+							'status'   => $data_sender['data_7'],
+							'member'   => $data_sender['data_8']
+						);
+		// print_r($data_sender);die();
+		if ($data_sender['member'] != 0) 
+		{
+			$data['infoPegawai']    = $this->Globalrules->check_pegawai($data_sender['member']);
+			// print_r($data['infoPegawai'][0]);die();
+			$member 				= $data['infoPegawai'][0]->id;
+			$posisi_member			= $data['infoPegawai'][0]->posisi;
+			$data['list'] 			= $this->mtrx->list_transaksi($member,$posisi_member,$data_sender);
+		}
+		else
+		{
+			$data['infoPegawai']    = $this->Globalrules->check_pegawai($id);
+			$data['list'] 			= $this->mtrx->list_transaksi($id,$posisi,$data_sender);
+		}
+		
+		if ($data['list'] != 0) 
+		{
+			$this->load->view('transaksi/trx/ajax_transaksi',$data);
+		}
+	}
+
+	public function get_detail_bawahan()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$id  = $this->input->post('id');
+		$res = $this->Globalrules->check_pegawai($id);
+		echo json_encode($res);
 	}
 
 	public function kinerja_anggota($param=NULL,$id_pegawai=NULL)

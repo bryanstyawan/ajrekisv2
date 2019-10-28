@@ -1620,6 +1620,7 @@ function approve(id) {
                         url :"<?php echo site_url()?>transaksi/approve/"+id,
                         type:"post",
                         beforeSend:function(){
+                            $("#td_last_belum_diperiksa_ket_"+id).html('');
                             $("#loadprosess").modal('show');
                         },
                         success:function(msg){
@@ -1641,7 +1642,8 @@ function approve(id) {
             url :"<?php echo site_url()?>transaksi/approve/"+id,
             type:"post",
             beforeSend:function(){
-                $("#tr_belum_diperiksa_"+id).css({"background-color": "yellow"});                        
+                $("#tr_belum_diperiksa_"+id).css({"background-color": "yellow"});
+                $("#td_last_belum_diperiksa_ket_"+id).html('');
             },
             success:function(msg){
                 var obj = jQuery.parseJSON (msg);

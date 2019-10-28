@@ -201,6 +201,66 @@ class Mtrx extends CI_Model
 		}
 	}
 
+	public function list_transaksi($id=NULL, $posisi=NULL, $filter=NULL)
+	{
+		$sql	= "";
+		$sql_6	= "";
+		$sql_7	= "";
+
+		if ($filter['bulan'] == '' || $filter['tahun'] == '') {
+			$sql_6 = "AND a.tanggal_mulai LIKE '%".date('Y-m')."%'";
+		}
+		else {
+			if ($filter['bulan'] < 10 ) {
+				$filter['bulan'] = sprintf("%'.02d", $filter['bulan']);
+			}
+			$sql_6 = "AND a.tanggal_mulai LIKE '%".$filter['tahun']."-".$filter['bulan']."%'";
+		}
+
+		if ($filter['status'] == '' || $filter['status'] == '8') {
+			$sql_7 = "";
+		}
+		else $sql_7 = "AND a.status_pekerjaan = '".$filter['status']."'";
+
+		$sql = "SELECT a.*,
+			 		   	b.kegiatan as `uraian_tugas`,
+					   	COALESCE(c.nama,'-') as `target_output_name`,
+					   	d.kegiatan as `kegiatan_skp`,
+						jfu.uraian_tugas as `kegiatan_skp_jfu`,
+						jft.uraian_tugas as `kegiatan_skp_jft`,																			   
+						COALESCE(
+						(
+							SELECT SUM(aa.frekuensi_realisasi)
+							FROM tr_capaian_pekerjaan aa
+							WHERE aa.id_pegawai = a.id_pegawai
+							AND aa.id_uraian_tugas = a.id_uraian_tugas
+							AND aa.status_pekerjaan = '1'
+						),0) as `realisasi_skp`,
+						b.target_qty as `target_skp`,
+						DATEDIFF(CONCAT(CURDATE(),' ',CURTIME()), CONCAT(a.tanggal_selesai,' ',a.jam_selesai)) as lasttime
+				FROM tr_capaian_pekerjaan a
+				JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
+				LEFT OUTER JOIN mr_skp_satuan c ON b.target_output = c.id
+				LEFT OUTER JOIN mr_skp_master d ON b.id_skp_master = d.id_skp
+				LEFT OUTER JOIN mr_jabatan_fungsional_umum_uraian_tugas jfu ON b.id_skp_jfu = jfu.id
+				LEFT OUTER JOIN mr_jabatan_fungsional_tertentu_uraian_tugas jft ON b.id_skp_jft = jft.id								
+				WHERE a.id_pegawai = '".$id."'
+				AND a.id_posisi = '".$posisi."'
+				".$sql_6."
+				".$sql_7."
+				ORDER BY a.tanggal_mulai DESC";
+				// print_r($sql);die();
+			$query = $this->db->query($sql);
+			if($query->num_rows() > 0)
+			{
+				return $query->result();
+			}
+			else
+			{
+				return 0;
+			}
+	}
+
 	public function get_kinerja_anggota($status,$id_posisi,$id_pegawai=NULL)
 	{
 		# code...
