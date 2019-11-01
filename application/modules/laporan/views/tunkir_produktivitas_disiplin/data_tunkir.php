@@ -130,6 +130,7 @@ $(document).ready(function(){
 		var select_tahun         = $("#select_tahun").val();				
 
 
+		es1 = (es1 == '') ? 0 : es1 ;
 		es2 = (es2 == '') ? 0 : es2 ;
 		es3 = (es3 == '') ? 0 : es3 ;
 		es4 = (es4 == '') ? 0 : es4 ;	
