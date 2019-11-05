@@ -779,6 +779,7 @@
 <script>
 $(document).ready(function()
 {
+	init_tr('<?=$arg;?>')
 	$('#btn_filter').click(function()
 	{
 		var select_bulan         = $("#select_bulan").val();
@@ -1329,6 +1330,15 @@ $(document).ready(function()
         }
     });
 });
+
+function init_tr(arg) {
+	if(arg == 'add')
+	{
+		$(".form-control-detail").val('');
+		$("#form_section").css({"display": ""})
+		$("#view_section").css({"display": "none"})			
+	}
+}
 
 function send_data_tambah_without_file(data_sender) {
     $.ajax({

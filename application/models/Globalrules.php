@@ -675,6 +675,21 @@ class Globalrules extends CI_Model
 		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
 
+	public function list_atasan_plt($posisi=NULL)
+	{
+		# code...
+		$sql = "SELECT DISTINCT b.*,
+								b.id AS `id_pegawai`,
+								a.nama_posisi
+			    FROM mr_posisi a
+			    JOIN mr_pegawai b
+			    ON a.atasan = b.posisi_plt
+			    WHERE a.id = '".$posisi."'
+			    AND b.status = 1";
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;
+	}
+
 	public function list_bawahan($posisi,$parameter=NULL,$arg=NULL)
 	{
 		# code...

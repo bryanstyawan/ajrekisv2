@@ -98,7 +98,7 @@ class Transaksi extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function home()
+	public function home($arg=NULL)
 	{
 		$data['title']      	= 'Transaksi';
 		$data['content']    	= 'transaksi/trx/data_transaksi2';
@@ -107,6 +107,7 @@ class Transaksi extends CI_Controller {
 		$data['hari_kerja']     = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 		$data['infoPegawai']    = $this->Globalrules->check_pegawai($this->session->userdata('sesUser'));
 		$data['member']         = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
+		$data['arg']            = $arg;
 
 		if ($data['urtug'] != 0) {
 			# code...
