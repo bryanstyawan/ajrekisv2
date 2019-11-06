@@ -58,7 +58,7 @@ else {
                                 $flag_struktural = 'background:#dddfff;';
                             }
                     ?>
-                            <li style="cursor: pointer;<?=$flag_struktural;?>" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>','<?=$i;?>')">
+                            <li style="cursor: pointer;<?=$flag_struktural;?>" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="view_option('<?=$member[$i]->id;?>','<?=$i;?>','<?=$member[$i]->posisi;?>')">
                                 <a class="contact-name">
                                     <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                                     <sup style="<?=$flag_counter;?>">
@@ -662,12 +662,12 @@ function banding(id) {
     $("#oid_banding").val(id);
 }
 
-function view_option(id,i) {
+function view_option(id,i,posisi) {
     $('.teamwork').css({"backgroundColor": "", "color": "", "pointer-events" : ""});
     $('#li_kandidat_'+i).css({"backgroundColor": "#00a65a", "color": "#000", "pointer-events" : ""});
     oid_pegawai = id;
     $.ajax({
-        url :"<?php echo site_url();?>transaksi/detail_transaksi_pegawai/"+oid_pegawai,
+        url :"<?php echo site_url();?>transaksi/detail_transaksi_pegawai/"+oid_pegawai+"/"+posisi,
         type:"post",
         beforeSend:function(){
             $("#loadprosess").modal('show');

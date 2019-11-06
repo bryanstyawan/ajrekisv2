@@ -24,6 +24,15 @@ class Transaksi extends CI_Controller {
 		$this->load->view('transaksi/trx/refresh/index',$data);		
 	}
 
+	public function refresh_data2()
+	{
+		# code...
+		$data['list']			= $this->mtrx->list_transaksi($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+		$data['hari_kerja']     = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
+		$data['infoPegawai']    = $this->Globalrules->check_pegawai($this->session->userdata('sesUser'));
+		$this->load->view('transaksi/trx/ajax_transaksi',$data);
+	}
+
 	public function home2()
 	{
 		$this->Globalrules->session_rule();

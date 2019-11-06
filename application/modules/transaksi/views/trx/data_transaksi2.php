@@ -120,7 +120,12 @@
 												$nip 	 = $member[$i]->nip;
 												$nama	 = $member[$i]->nama_pegawai;
 												$counter = $member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;
-												echo "<option value='$id'>$nama ($nip) | $counter transaksi belum diperiksa</option>";
+												if ($counter > 0) {
+													echo "<option value='$id'>$nama ($nip) | $counter transaksi belum diperiksa</option>";
+												}
+												else {
+													echo "<option value='$id'>$nama ($nip)</option>";
+												}
 											?>
 										<?php echo $member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;?>
 										<?php
@@ -282,8 +287,8 @@
 					<table class="table table-bordered table-striped table-view">
 					<thead>
 						<tr>
-							<th style="width:115px; padding-right: 10px;">Mulai Pekerjaan</th>
-							<th style="width:115px; padding-right: 10px;">Selesai Pekerjaan</th>
+							<th style="width:150px; padding-right: 10px;">Mulai Pekerjaan</th>
+							<th style="width:150px; padding-right: 10px;">Selesai Pekerjaan</th>
 							<th style="width:280px; padding-right: 10px;">Uraian Tugas</th>
 							<th style="width:280px; padding-right: 10px;">Keterangan Pekerjaan</th>							
 							<th style="width:80px; padding-right: 10px;">Output Kuantitas</th>
@@ -320,7 +325,7 @@
 										}
 										elseif ($infoPegawai[0]->kat_posisi == 6) {
 											$kegiatan = $list[$i]->kegiatan_skp;
-										}                                                                                                                                                    
+										}
 									}
 
 									$row_tr			  = "row_".$list[$i]->id_pekerjaan;
@@ -787,7 +792,7 @@ $(document).ready(function()
 		var select_member        = $("#select_member").val();
 
 		if (select_member == undefined) {
-			select_member = null;
+			select_member = 0;
 		}
 		
 		var data_link = {
@@ -920,7 +925,7 @@ $(document).ready(function()
 	$("#closeData").click(function()
 	{
 		$("#form_section").css({"display": "none"})
-        $("#view_section").css({"display": ""})		
+        $("#view_section").css({"display": ""})
 	});
 
 	// ComboBox Uraian Tugas
@@ -1341,34 +1346,62 @@ function send_data_tambah_without_file(data_sender) {
         success:function(msg){
             var obj = jQuery.parseJSON (msg);
             ajax_status(obj,'no-refresh');
-            if (obj.status == 1)
+			console.log(obj);
+			if (obj.status == 1)
             {
                 // $("#tab_sikerja").removeClass("active");
                 // $("#menu4").removeClass("fade in active");                
                 // $("#tab_belum_diperiksa").addClass("active");
                 // $("#home").addClass("fade in active");    
-                $.ajax({
-                    url :"<?php echo site_url();?>transaksi/refresh_data/0/counter_proses",
-                    type:"post",
-                    beforeSend:function(){
-                        $(".form-control").val('');
-                        $("#hdn_param_out_skp").val('');
-                        $("#hdn_param_qty_skp").val('');
-                        $("#hdn_param_realisasi_qty_skp").val('');
-                        $("#param_qty_skp").html("Target Kuantitas SKP : ");
-                        $("#param_realisasi_qty_skp").html("Realisasi :  ");                        
-                        $("#loadprosess").modal('show');                        
-                        // $("#table_belum_diperiksa tbody").html('');                        
-                    },
-                    success:function(msg){
-                        // $("#table_belum_diperiksa tbody").html(msg);
-                        $("#loadprosess").modal('hide');                        
-                    },
-                    error:function(jqXHR,exception)
-                    {
-                        ajax_catch(jqXHR,exception);					
-                    }
-                })                                                                            
+				$.ajax({
+					url :"<?php echo site_url();?>transaksi/refresh_data2",
+					type:"post",
+					// data: { data_sender : data_link},
+					beforeSend:function(){
+						$("#form_section").css({"display": "none"})
+						$("#view_section").css({"display": ""})
+						$("#loadprosess").modal('show');
+						$('.table-view').dataTable().fnDestroy();
+						var newrec  = '<tr">' +
+											'<td colspan="5" class="text-center">Memuat Data</td>'
+									'</tr>';
+						$('.table-view tbody').append(newrec);
+					},			
+					success:function(msg){
+						$(".form-control-detail").val('');
+						$("#hdn_param_out_skp").val('');
+						$("#hdn_param_qty_skp").val('');
+						$("#hdn_param_realisasi_qty_skp").val('');
+						$("#param_qty_skp").html("Target Kuantitas SKP : ");
+						$("#param_realisasi_qty_skp").html("Realisasi :  ");    
+						$(".table-view tbody tr").remove();
+						$("#table_content").html(msg);
+						$(".table-view").DataTable({
+							"oLanguage": {
+								"sSearch": "Pencarian :",
+								"sSearchPlaceholder" : "Ketik untuk mencari",
+								"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+								"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+								"sZeroRecords": "Data tidak ditemukan"
+							},
+							"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+									"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+									"<'row'<'col-sm-12'tr>>" +
+									"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+							"bSort": false,
+							"paging": false
+							// "dom": '<"top"f>rt'
+							// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+						});
+						setTimeout(function(){
+							$("#loadprosess").modal('hide');
+						}, 500);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})
             } 
         },
         error:function(jqXHR,exception)

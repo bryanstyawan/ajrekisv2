@@ -1,4 +1,15 @@
 v4.1.2.5.6
+2019-11-06
+New:
+Improved:
+Fixed:
+- Setelah tambah Transaksi balik ke list transaksi
+- Informasi pegawai hanya muncul di form atasan
+- Notifikasi transaksi belum diperiksa milik member
+- Pilih member di menu approval plt dan akademik
+Canceled:
+
+v4.1.2.5.6
 2019-10-28
 New:
 Improved:
