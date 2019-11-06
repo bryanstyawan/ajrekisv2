@@ -15,6 +15,7 @@
 </style>
 <?php
     $atasan1    = $atasan; 
+    $atasan2    = $atasan_plt;
     $evaluator1 = $evaluator;
 ?>
 <div class="col-md-12">
@@ -68,20 +69,31 @@
         </div>
         <div class="box-body no-padding" style="display: block;">
             <ul class="nav nav-pills nav-stacked contact-id">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Atasan</h3>
+                    </div>                                    
                     <?php
-                        if($atasan != 0){
-                            $i = "";
-                    ?>
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Atasan</h3>
-                        </div>                    
-                    <?php
-                            foreach($atasan as $atasan){
+                        $i = 0;
+                        if($atasan != 0)
+                        {
+                            foreach($atasan as $atasan)
+                            {
+                                $i++;
+                        ?>
+                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan->nama_pegawai;?>"></input></li>                                    
+                        <?php
+                            }
+                        }                    
+
+                        if ($atasan_plt != 0) {
+                            # code...
+                            foreach($atasan_plt as $atasan_plt)
+                            {
                                 $i++;
                     ?>
-                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan->nama_pegawai;?>"></input></li>                                    
+                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan_plt->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan_plt->nama_pegawai;?>"></input></li>                                    
                     <?php
-                            }
+                            }                            
                         }
                     ?>            
             </ul>
@@ -90,7 +102,7 @@
             <ul class="nav nav-pills nav-stacked contact-id">
                 <?php
                     if($peer != 0){
-                        $i = 0;
+                        // $i = 0;
                 ?>
                     <div class="box-header with-border">
                         <h3 class="box-title"><i>PEER</i></h3>
@@ -114,7 +126,7 @@
             <ul class="nav nav-pills nav-stacked contact-id">
                 <?php
                     if($bawahan != 0){
-                        $i = "";
+                        // $i = "";
                 ?>
                     <div class="box-header with-border">
                         <h3 class="box-title"><i>Bawahan</i></h3>
@@ -157,6 +169,17 @@
                         <?php
                                 }                                
                             }
+
+                            if ($atasan2 != 0) {
+                                # code...
+                                foreach($atasan2 as $atasan2){
+                                    $i++;
+                                    $atasan_temp = $atasan2->nama_pegawai;
+                        ?>
+                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan2->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan2->nama_pegawai;?>"></input><input type="hidden" id="sources_2" value="local"></li>
+                        <?php
+                                }                                
+                            }                            
                         }
                         else
                         {
