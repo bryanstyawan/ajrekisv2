@@ -968,5 +968,54 @@ class Mskp extends CI_Model
 			return array();
 		}
 	}	
+
+	public function questionnaires($id_pegawai,$id_posisi)
+	{
+		# code...
+		$sql = "SELECT a.qusioner_code, 
+						a.pertanyaan, 
+						b.nama, 
+						b.quisioner_kategori_id, 
+						a.prefix,
+						COALESCE(c.value,0) as value,
+						d.nama as kriteria
+				FROM questionnaires a
+				LEFT JOIN questionnaires_kategori b ON a.quisioner_kategori_id = b.quisioner_kategori_id
+				LEFT JOIN questionnaires_process c ON a.qusioner_code = c.qusioner_code
+				AND c.id_pegawai = '".$id_pegawai."'
+				AND c.id_posisi = '".$id_posisi."'
+				AND c.tahun = '".date('Y')."' 
+				LEFT JOIN questionnaires_kriteria d ON a.kriteria_id = d.quisioner_kategori_id";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}		
+	}
+
+	public function get_sum_questionnaires($id_pegawai,$id_posisi)
+	{
+		# code...
+		$sql = "SELECT SUM(c.value) as result
+				FROM questionnaires a
+				LEFT JOIN questionnaires_kategori b ON a.quisioner_kategori_id = b.quisioner_kategori_id
+				LEFT JOIN questionnaires_process c ON a.qusioner_code = c.qusioner_code
+				AND c.id_pegawai = '".$id_pegawai."'
+				AND c.id_posisi = '".$id_posisi."'
+				AND c.tahun = '".date('Y')."' ";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}		
+	}	
 	
 }
