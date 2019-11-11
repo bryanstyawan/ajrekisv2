@@ -33,10 +33,11 @@ class Transaksi extends CI_Controller {
 		$this->load->view('transaksi/trx/ajax_transaksi',$data);
 	}
 
-	public function home2()
+	public function home2($arg=NULL)
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
+		$data['arg']                  = $arg;		
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
 		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));		
