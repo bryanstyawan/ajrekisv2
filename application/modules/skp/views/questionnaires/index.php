@@ -40,7 +40,7 @@
                         //     }
                         // }                        
             ?>
-                        <tr onclick="view_option('<?=$member[$i]->id_pegawai;?>','<?=$member[$i]->id_posisi;?>')">
+                        <tr onclick="view_option('<?=$member[$i]->id_pegawai;?>','<?=$member[$i]->id_posisi;?>')" style="cursor: pointer;">
                             <td><i class="fa <?=$flag_icon;?> contact-name-list"></i></td>
                             <td>
                                 <?=$member[$i]->nama_pegawai;?>

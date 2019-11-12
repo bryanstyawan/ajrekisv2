@@ -6,6 +6,14 @@ Improved:
 Fixed:
 Canceled:
 
+v4.1.2.5.7
+2019-11-11
+New:
+Improved:
+- Questionnaires SKP
+Fixed:
+Canceled:
+
 v4.1.2.5.6
 2019-11-06
 New:

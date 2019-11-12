@@ -22,18 +22,50 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
 }
 ?>
 <div class="box box-info" style="height: 100%;">
-    <div class="box-header with-border">
-        <h3>Kriteria penilaian kualitas SKP</h3>
+    <div class="box-header with-border">        
         <div class="row">
             <div class="col-sm-6">
-                <label>
-                    NIP:</label>
-                <span id="ContentPlaceHolder1_lbl_nip"><?php echo $nip;?></span>
+                <div class="form-group">                
+                    <h4>NIP : <?php echo $nip;?></h4>
+                </div>
             </div>
             <div class="col-sm-6">
-                <label>
-                    Nama Pegawai:</label>
-                <span id="ContentPlaceHolder1_lbl_klsjabatan"><?php echo $nama_pegawai;?></span>
+                <div class="form-group">                
+                    <h4>Nama Pegawai : <?php echo $nama_pegawai;?></h4>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<div class="box box-info" style="height: 100%;">
+    <div class="box-header with-border">
+        <h1>Kriteria penilaian kualitas SKP</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">                
+                    <h4>91-100 : Amat Baik</h4>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">                
+                    <h4>76-90 : Baik</h4>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <h4>61-75 : Cukup</h4>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <h4>51-60 : Kurang</h4>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">                
+                    <h4>50 ke bawah : Buruk</h4>
+                </div>                
             </div>
         </div>        
     </div>
@@ -55,8 +87,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th style="width: 50%;">Pertanyaan</th>
-                            <th style="width: 30%;">Kriteria</th>
+                            <th style="width: 80%;">Pertanyaan</th>
                             <th>Nilai</th>
                         </tr>
                     </thead>
@@ -73,9 +104,8 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                                             <input type="hidden" id="qusioner_code_<?=$x;?>" value="<?=$questionnaires[$ii]->qusioner_code;?>">                                            
                                             <input type="hidden" id="id_pegawai_<?=$x;?>" value="<?=$infoPegawai[0]->id;?>">                                            
                                             <input type="hidden" id="id_posisi_<?=$x;?>" value="<?=$infoPegawai[0]->id_posisi;?>">                                            
-                                            <td><?=$questionnaires_kategori[$i]['quisioner_kategori_id'].'.'.$questionnaires[$ii]->prefix;?></td>
+                                            <td><h4><?=$questionnaires_kategori[$i]['quisioner_kategori_id'].'.'.$questionnaires[$ii]->prefix;?></h4></td>
                                             <td><?=$questionnaires[$ii]->pertanyaan;?></td>
-                                            <td><?=$questionnaires[$ii]->kriteria;?></td>
                                             <td>
                                                 <div class="form-group col-md-12">
                                                     <div class="input-group">
