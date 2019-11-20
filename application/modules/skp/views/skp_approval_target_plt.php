@@ -38,7 +38,7 @@ if ($member != 0) {
                         $flag_counter = "display:none;";
                       }
                     ?>
-                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>')">
+                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>','<?=$member[$i]->posisi;?>')">
                           <a class="contact-name">
                             <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                             <sup style="<?=$flag_counter;?>">
@@ -66,11 +66,11 @@ if ($member != 0) {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-function detail_skp(id) {
+function detail_skp(id,number,posisi) {
     // body...
     $("#loadprosess").modal('show');                                                    
     setTimeout(function(){
-        window.location.href = "<?php echo base_url().'skp/skp_member_detail_plt/'?>"+id;
+        window.location.href = "<?php echo base_url().'skp/skp_member_detail_plt/'?>"+id+"/"+posisi;
     }, 1500);                               
 }
 

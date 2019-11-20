@@ -1,5 +1,5 @@
 <?php
-$infoPegawai   = $this->Globalrules->get_info_pegawai($id,'id');
+$infoPegawai   = $this->Globalrules->get_info_pegawai($id,'id',$id_posisi);
 $nama_pegawai  = "";
 $nama_jabatan  = "";
 $nama_eselon1  = "";
@@ -162,7 +162,7 @@ if ($member != 0) {
                         $flag_counter = "display:none;";
                       }
                     ?>
-                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>')">
+                        <li style="cursor: pointer;" class="teamwork" id="li_kandidat_<?=$i;?>" onclick="detail_skp('<?=$member[$i]->id;?>','<?=$i;?>','<?=$member[$i]->posisi;?>')">
                           <a class="contact-name">
                             <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                             <sup style="<?=$flag_counter;?>">
@@ -581,11 +581,11 @@ function reject_skp(id,status,status_edit) {
     })
 }
 
-function detail_skp(id) {
+function detail_skp(id,number,posisi) {
     // body...
     $("#loadprosess").modal('show');                                                    
     setTimeout(function(){
-        window.location.href = "<?php echo base_url().'index.php/skp/skp_member_detail_plt/'?>"+id;
+        window.location.href = "<?php echo base_url().'index.php/skp/skp_member_detail_plt/'?>"+id+"/"+posisi;
     }, 500);                               
 }
 

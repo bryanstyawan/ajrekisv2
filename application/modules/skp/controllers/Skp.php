@@ -344,6 +344,9 @@ class Skp extends CI_Controller {
 				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
 				$data['subtitle'] = '';
 				$data['bawahan']  = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
+				// echo "<pre>";
+				// print_r($data['bawahan']);die();				
+				// echo "</pre>";
 				$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
 				$data['content']  = 'skp/skp_approval_target_plt';
 				$data['member']   = $this->mskp->get_member($get_data_pegawai[0]['posisi_plt']);
@@ -525,7 +528,7 @@ class Skp extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
-	public function skp_member_detail_plt($id)
+	public function skp_member_detail_plt($id,$POSISI=NULL)
 	{
 		# code...
 		$this->Globalrules->session_rule();
@@ -541,12 +544,14 @@ class Skp extends CI_Controller {
 			else
 			{
 
-				$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
-				$id_posisi             = $infoPegawai[0]->posisi;		
+				$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id',$POSISI);
+				// print_r($infoPegawai);die();
+				$id_posisi             = ($infoPegawai != 0) ? $infoPegawai[0]->posisi : 0 ;		
 				$data['title']         = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
 				$data['subtitle']      = '';
 				$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
 				$data['id']            = $id;
+				$data['id_posisi']     = $id_posisi;				
 				$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
 				$data['content']       = 'skp/skp_approval_pegawai_plt';		
 				$data['member']   	 = $this->mskp->get_member($get_data_pegawai[0]['posisi_plt']);
