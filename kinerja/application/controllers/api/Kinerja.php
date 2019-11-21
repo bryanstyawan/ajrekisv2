@@ -136,6 +136,20 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
             $skp_prilaku = $this->spk_prilaku($users,$tahun);
             $data_skp    = $this->result_skp($users,$tahun);
 
+            $menit_efektif_year = $this->m_api->get_menit_efektif_year($users[0]->id,$tahun);
+            $data_value[] = "";
+            
+            if ($menit_efektif_year != 0) {
+                // code...
+                for ($i=0; $i < count($menit_efektif_year); $i++) {
+                    // code...
+                    $data_value[$i] = array(
+                        'value' => $menit_efektif_year[$i]->menit_efektif,
+                        'month' => $menit_efektif_year[$i]->nama_bulan
+                    );
+                }
+            }                        
+
             $data_wrap = array(
                 'kinerja' => array(
                     'pekerjaan_belum_diperiksa'          => ($res_data != array()) ? $res_data[0]->tr_belum_diperiksa : 0,
@@ -152,7 +166,8 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
                     'nilai_capaian_skp'      => $data_skp['summary_skp']['nilai_sasaran_kinerja_pegawai'],
                     'nilai_prestasi_skp'     => $data_skp['summary_skp_dan_prilaku'],
                     'persentase_capaian_skp' => $data_skp['persentase_target_realisasi']->persentase
-                )
+                ),
+                'statistik' => $data_value                
                 
             );
 

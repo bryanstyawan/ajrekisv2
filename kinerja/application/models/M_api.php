@@ -913,4 +913,29 @@ class M_api extends CI_Model {
 					);
 			}
 	}	
+
+	public function get_menit_efektif_year($id,$tahun)
+	{
+		$sql = "SELECT a.nama_bulan,
+            			 MONTH (b.tanggal_mulai) AS `month`,
+            			 COALESCE(b.id_pegawai,b.id_pegawai) as id_pegawai,
+            			 COALESCE(SUM(b.menit_efektif),0) AS menit_efektif,
+            			 COALESCE(COUNT(b.status_pekerjaan),0) AS counter_pekerjaan
+            FROM mr_bulan a
+            LEFT JOIN tr_capaian_pekerjaan b ON a.id = MONTH (b.tanggal_mulai)
+            AND b.id_pegawai = '".$id."'
+            AND b.status_pekerjaan = 1
+            AND YEAR(b.tanggal_mulai) = '".$tahun."'
+            GROUP BY a.nama_bulan
+            ORDER BY a.id";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}	
 }

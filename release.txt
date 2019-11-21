@@ -1,3 +1,11 @@
+v4.1.2.5.8
+2019-11-21
+New:
+- API Statistik
+Improved:
+Fixed:
+Canceled:
+
 v4.1.2.5.7
 2019-11-11
 New:
