@@ -785,6 +785,34 @@
 $(document).ready(function()
 {
 	init_tr('<?=$arg;?>')
+    $("[data-mask]").inputmask();
+	$('#jam_mulai').on("change", function () {
+		var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+		if (!reg.test($('#jam_mulai').val())) {
+			alert("Mohon masukan format 24 jam");
+			time_flag = 0;
+			$('#jam_mulai').val('');
+			$('#jam_mulai').focus();
+		}
+		else
+		{
+			time_flag = 1;
+		}
+	});
+
+	$('#jam_selesai').on("change", function () {
+		var reg = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+		if (!reg.test($('#jam_selesai').val())) {
+			alert("Mohon masukan format 24 jam");
+			time_flag = 0;
+			$('#jam_selesai').val('');
+			$('#jam_selesai').focus();
+		}
+		else
+		{
+			time_flag = 1;
+		}
+	});	
 	$('#btn_filter').click(function()
 	{
 		var select_bulan         = $("#select_bulan").val();
