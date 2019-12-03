@@ -1,4 +1,14 @@
 v4.1.2.5.8
+2019-12-03
+New:
+Improved:
+- Hilangkan kata N/A atasan di pencarian pegawai (rekap dan filter pegawai)
+- Status bawahan yang telah diberi Questionnaires
+- Pemindahan tombol simpan di penilaian prilaku
+Fixed:
+Canceled:
+
+v4.1.2.5.8
 2019-11-21
 New:
 - API Statistik

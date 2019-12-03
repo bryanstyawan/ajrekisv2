@@ -21,24 +21,12 @@
                         $flag_counter = "text-yellow";
                         $flag_display = "display:none;";
                         $flag_icon    = 'fa-circle-o text-yellow';
-                        // if ($member[$i]->flag_sudah_diperiksa != 0) {
-                        //     // code...
-                        //     if ($member[$i]->persentase_pemotongan != array()) {
-                        //         # code...
-                        //         if ($member[$i]->persentase_pemotongan == 5) {
-                        //             # code...
-                        //             $flag_counter = "text-red";
-                        //             $flag_display = "display:'';";
-                        //             $flag_icon    = 'fa-circle text-red';                                                                    
-                        //         }
-                        //         else
-                        //         {
-                        //             $flag_counter = "";
-                        //             $flag_display = "display:'';";
-                        //             $flag_icon    = 'fa-circle text-green';
-                        //         }
-                        //     }
-                        // }                        
+                        if ($member[$i]->flag_sudah_diperiksa != 0) {
+                            // code...
+                            $flag_counter = "";
+                            $flag_display = "display:'';";
+                            $flag_icon    = 'fa-circle text-green';
+                        }                        
             ?>
                         <tr onclick="view_option('<?=$member[$i]->id_pegawai;?>','<?=$member[$i]->id_posisi;?>')" style="cursor: pointer;">
                             <td><i class="fa <?=$flag_icon;?> contact-name-list"></i></td>

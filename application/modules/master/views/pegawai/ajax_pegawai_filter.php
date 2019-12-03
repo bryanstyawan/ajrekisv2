@@ -58,35 +58,23 @@
 											<b>[Definitif]</b> <?=$list[$i]->nama_atasan;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan;?></i>)
 									<?php
 										}
-										else
-										{
-											echo "<b>[Definitif]</b> N/A";
-										}
 									?>					
-									<hr>
 									<?php
 										if ($list[$i]->avail_atasan_akademik == 1) {
 											# code...
 									?>
+											<hr>									
 											<b>[Akademik]</b> <?=$list[$i]->nama_atasan_akademik;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_akademik;?></i>)
 									<?php
 										}
-										else
-										{
-											echo "<b>[Akademik]</b> N/A";
-										}
 									?>
-									<hr>
 									<?php
 										if ($list[$i]->avail_atasan_plt == 1) {
 											# code...
 									?>
+											<hr>									
 											<b>[PLT]</b> <?=$list[$i]->nama_atasan_plt;?>&nbsp;(<i><?=$list[$i]->jabatan_atasan_plt;?></i>)
 									<?php
-										}
-										else
-										{
-											echo "<b>[PLT]</b> N/A";
 										}
 									?>																					
 								</td>								

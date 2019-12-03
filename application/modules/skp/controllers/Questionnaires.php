@@ -21,6 +21,17 @@ class Questionnaires extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['title']                   = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Kriteria penilaian kualitas SKP';
 		$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
+		if ($data['member'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['member']); $i++) { 
+				# code...
+				$questionnaires = $this->Allcrud->getData('questionnaires_process',array('id_pegawai' => $data['member'][$i]->id_pegawai ,'id_posisi' => $data['member'][$i]->id_posisi))->result_array();				
+				if (count($questionnaires) != 0) {
+					# code...
+					$data['member'][$i]->flag_sudah_diperiksa = 1;
+				}
+			}
+		}
 		$data['content']                 = 'skp/questionnaires/index';
 		$this->load->view('templateAdmin',$data);
 	}

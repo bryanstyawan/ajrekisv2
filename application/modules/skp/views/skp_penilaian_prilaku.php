@@ -288,16 +288,28 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Form Penilaian Prilaku</h4>
                     </div>
+
                     <div class="modal-body" style="background-color: #fff!important;height: 550px;overflow-y: auto;">
                         <form id="editForm" name="addForm">
                             <div class="container-fluid">
+
+                                <div class="row" style="background-color: #fff!important">
+                                    <div class="col-lg-6">
+                                        <a href="#" class="btn btn-danger pull-left" data-dismiss="modal">Keluar</a>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <a href="#" class="btn btn-primary pull-right" id="btn_simpan_prilaku">Simpan</a>
+                                    </div>                                    
+                                </div>
+                                <hr>
+
                                 <div class="row">                    
                                     <div class="col-md-6">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Nama</label>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="nama_pegawai" name="nama_pegawai" class="form-control" disabled="disabled">
+                                                <input type="text" id="nama_pegawai" name="nama_pegawai" class="form-control" disabled="disabled">
                                             </div>
                                         </div>                                        
                                     </div>
@@ -307,29 +319,21 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="nip" name="nip" class="form-control" disabled="disabled">
+                                                <input type="text" id="nip" name="nip" class="form-control" disabled="disabled">
                                                 <input type ="hidden" id="oid_skp" name="oid_skp">
                                             </div>
                                         </div>                          
                                     </div>    
                                 </div>
 
-                                <div class="row">                    
-                                    <div class="col-lg-12 text-center">
-                                        <h4 style="color: #000">Penilaian</h4>                                    
-                                    </div>
-                                </div>
-                                <hr>
-
                                 <div class="row">
-
                                     <div class="col-lg-6">
                                         <label style="color: #000;font-weight: 400;font-size: 19px;">Orientasi Pelayanan</label>
                                         <a class="pull-right text-center a-info-modal"  onclick="open_view_modal('orientasi_pelayanan',1)"><i class="fa fa-info"></i></a>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="orientasi_pelayanan" name="orientasi_pelayanan" class="form-control">
+                                                <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" id="orientasi_pelayanan" name="orientasi_pelayanan" class="form-control">
                                             </div>
                                         </div>
 
@@ -338,7 +342,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="integritas" name="integritas" class="form-control">
+                                                <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" id="integritas" name="integritas" class="form-control">
                                             </div>
                                         </div>
 
@@ -347,7 +351,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="komitmen" name="komitmen" class="form-control">
+                                                <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" id="komitmen" name="komitmen" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -359,7 +363,7 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="disiplin" name="disiplin" class="form-control">
+                                                <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" id="disiplin" name="disiplin" class="form-control">
                                             </div>
                                         </div>
 
@@ -368,16 +372,16 @@
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="kerjasama" name="kerjasama" class="form-control">
+                                                <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" id="kerjasama" name="kerjasama" class="form-control">
                                             </div>
                                         </div>                                                    
 
-                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Kepemimpinan</label>
+                                        <label style="color: #000;font-weight: 400;font-size: 19px;">Kepemimpinan (Diisi untuk Jabatan Struktural)</label>
                                         <a class="pull-right text-center a-info-modal"  onclick="open_view_modal('kepemimpinan',6)"><i class="fa fa-info"></i></a>
                                         <div class="form-group">
                                             <div class="input-group">
                                                 <span class ="input-group-addon"><i class="fa fa-star"></i></span>
-                                                <input type ="text" id="kepemimpinan" name="kepemimpinan" class="form-control">
+                                                <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" id="kepemimpinan" name="kepemimpinan" class="form-control">
                                             </div>
                                         </div>                                                                                                                        
 
@@ -406,17 +410,6 @@
                                         }
                                     ?>
                                 </div>
-
-                                <div class="row" style="background-color: #fff!important;border-top-color: #d2d6de;">
-                                    <hr>
-                                    <div class="col-lg-6">
-                                        <a href="#" class="btn btn-primary pull-right" id="btn_simpan_prilaku">Simpan</a>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <a href="#" class="btn btn-danger pull-left" data-dismiss="modal">Keluar</a>
-                                    </div>
-                                </div>
-
                             </div>
 
                         </form>
