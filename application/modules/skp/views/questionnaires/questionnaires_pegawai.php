@@ -109,7 +109,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
                                             <td>
                                                 <div class="form-group col-md-12">
                                                     <div class="input-group">
-                                                        <input type="number" name="indikator_value" id="f_value_indikator_<?=$x;?>" class="form-control" min="0" max="99" onKeyUp="if(this.value>99){this.value='100';}else if(this.value<0){this.value='0';}" value="<?=$questionnaires[$ii]->value;?>">
+                                                        <input type="number" onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}" name="indikator_value" id="f_value_indikator_<?=$x;?>" class="form-control" min="0" max="99" onKeyUp="if(this.value>99){this.value='100';}else if(this.value<0){this.value='0';}" value="<?=$questionnaires[$ii]->value;?>">
                                                     </div>
                                                 </div>                                                            
                                             </td>
