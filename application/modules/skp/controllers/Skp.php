@@ -604,13 +604,13 @@ class Skp extends CI_Controller {
 			}
 			else
 			{
-
-				$infoPegawai           = $this->Globalrules->get_info_pegawai($id,'id');
-				$id_posisi             = $infoPegawai[0]->posisi;		
+				$infoPegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$id))->result_array();
+				$id_posisi             = $infoPegawai[0]['posisi'];		
 				$data['title']         = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim <i class="fa fa-angle-double-right"></i> Approval Target SKP';
 				$data['subtitle']      = '';
 				$data['list']          = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),11);
 				$data['id']            = $id;
+				$data['id_posisi']	   = $id_posisi;
 				$data['satuan']        = $this->Allcrud->listData('mr_skp_satuan');
 				$data['content']       = 'skp/skp_approval_pegawai_akademik';		
 				$data['member']   	 = $this->mskp->get_member($get_data_pegawai[0]['posisi_akademik']);
@@ -618,29 +618,8 @@ class Skp extends CI_Controller {
 					// code...
 					for ($i=0; $i < count($data['member']); $i++) {
 						// code...
-						$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi))->num_rows();
-						$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id))->num_rows();								
-						$urtug_belum_diperiksa = 0;
-						$urtug_pergantian      = 0;
-						if ($get_data) {
-							// code...
-							$urtug_belum_diperiksa = $get_data;
-						}
-						else {
-							// code...
-							$urtug_belum_diperiksa = 0;
-						}
-
-						if ($get_data_temp) {
-							// code...
-							$urtug_pergantian = $get_data_temp;
-						}
-						else {
-							// code...
-							$urtug_pergantian = 0;
-						}				
-
-						$data['member'][$i]->counter_belum_diperiksa = $urtug_belum_diperiksa + $urtug_pergantian;
+						$get_data          = $this->mskp->get_data_skp_pegawai($data['member'][$i]->id,$data['member'][$i]->posisi,date('Y'),11);						
+						$data['member'][$i]->counter_belum_diperiksa = ($get_data != 0) ? count($get_data) : 0 ;;
 					}
 				}
 				$this->load->view('templateAdmin',$data);
