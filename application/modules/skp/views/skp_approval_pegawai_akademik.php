@@ -1,5 +1,5 @@
 <?php
-$infoPegawai   = $this->Globalrules->get_info_pegawai($id,'id');
+$infoPegawai   = $this->Globalrules->get_info_pegawai($id,'id',$id_posisi);
 $nama_pegawai  = "";
 $nama_jabatan  = "";
 $nama_eselon1  = "";
