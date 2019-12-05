@@ -36,6 +36,63 @@ class Questionnaires extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function plt()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		if ($this->session->userdata('posisi_plt') != '' || $this->session->userdata('posisi_plt') != 0) {
+			# code...
+			$data['title']                   = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Kriteria penilaian kualitas SKP';
+			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'),NULL,'penilaian_skp');
+			if ($data['member'] != 0) {
+				# code...
+				for ($i=0; $i < count($data['member']); $i++) { 
+					# code...
+					$questionnaires = $this->Allcrud->getData('questionnaires_process',array('id_pegawai' => $data['member'][$i]->id_pegawai ,'id_posisi' => $data['member'][$i]->id_posisi))->result_array();				
+					if (count($questionnaires) != 0) {
+						# code...
+						$data['member'][$i]->flag_sudah_diperiksa = 1;
+					}
+				}
+			}
+			$data['content']                 = 'skp/questionnaires/index';
+			$this->load->view('templateAdmin',$data);			
+		}
+		else
+		{
+			redirect('dashboard/home');			
+		}
+	}
+	
+	public function akademik()
+	{
+		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		if ($this->session->userdata('posisi_akademik') != '' || $this->session->userdata('posisi_akademik') != 0) {		
+			$data['title']                   = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Kriteria penilaian kualitas SKP';
+			$data['member']                  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_akademik'),NULL,'penilaian_skp');
+			if ($data['member'] != 0) {
+				# code...
+				for ($i=0; $i < count($data['member']); $i++) { 
+					# code...
+					$questionnaires = $this->Allcrud->getData('questionnaires_process',array('id_pegawai' => $data['member'][$i]->id_pegawai ,'id_posisi' => $data['member'][$i]->id_posisi))->result_array();				
+					if (count($questionnaires) != 0) {
+						# code...
+						$data['member'][$i]->flag_sudah_diperiksa = 1;
+					}
+				}
+			}
+			$data['content']                 = 'skp/questionnaires/index';
+			$this->load->view('templateAdmin',$data);			
+		}
+		else
+		{
+			redirect('dashboard/home');			
+		}		
+	}	
+
 	public function questionnaires_pegawai($id_pegawai,$id_posisi)
 	{
 		# code...
