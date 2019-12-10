@@ -849,12 +849,12 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet(2)->getStyle('b123:h123')->getBorders()->getbottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);		
 	}	
 
-	public function skp_excel($id)
+	public function skp_excel($id,$id_posisi)
 	{
 		# code...		
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 300);
-		$data = $this->Globalrules->data_summary_skp_pegawai($id,$this->session->userdata('sesPosisi'));				
+		$data = $this->Globalrules->data_summary_skp_pegawai($id,$id_posisi);				
 		$this->formulir_skp($data);
 		$this->penilaian_capaian_skp($data);		
 		$this->penilaian_prestasi_kerja($data);				

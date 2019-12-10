@@ -133,7 +133,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 
 #table_skp>tbody>tr>td
 {
-    text-align: ;
+    /* text-align: ; */
     border: 1px solid rgba(158, 158, 158, 0.2);
 }
 
@@ -159,7 +159,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 }
 
 #table_skp>tfoot>tr>td {
-    text-align: ;
+    /* text-align: ; */
     border: 1px solid rgba(158, 158, 158, 0.2);
 }
 </style>
@@ -186,7 +186,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     <div class="box">
         <div class="box-header">
             <div class="col-lg-12">
-                <a target="_blank" href="<?php echo site_url()?>skp/prints_skp/skp_excel/<?=$this->session->userdata('sesUser');?>" class="btn btn-success btn-md pull-right"><i class="fa fa-excel"></i> Excel</a>                            
+                <a target="_blank" href="<?php echo site_url()?>skp/prints_skp/skp_excel/<?=$id_pegawai;?>/<?=$id_posisi;?>" class="btn btn-success btn-md pull-right"><i class="fa fa-excel"></i> Excel</a>                            
                 <h3 class="text-center">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
             </div>
         </div>

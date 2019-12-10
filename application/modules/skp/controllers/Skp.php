@@ -1585,6 +1585,8 @@ class Skp extends CI_Controller {
 				// print_r($data['atasan']);die();
 				// echo "</pre>";
 				$data['penilai']  = '';
+				$data['id_pegawai'] = $id;
+				$data['id_posisi'] = $posisi;
 				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
 				$data['content']  = 'skp/cetak_history_skp';
 				$this->load->view('templateAdmin',$data);

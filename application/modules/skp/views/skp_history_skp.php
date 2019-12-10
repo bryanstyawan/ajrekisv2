@@ -1,113 +1,107 @@
 <style>
-@import url('https://fonts.googleapis.com/css?family=Questrial');
-html {
-  min-height: 100%;
+/* body {
+  padding: 50px;
+  display: flex;
+  flex-flow: wrap;
+  font-family: "Ubuntu", sans-serif;
 }
+body * {
+  box-sizing: border-box;
+} */
 
-.box {
-  width: 800px;
-  margin: 10% auto;
-  position: relative;
-}
-#card-container {
-  position: relative;
+.card-container {
+  flex: 300px;
   margin: 30px;
-  width: 200px;
-  height: 200px;
-  z-index: 1;
-  float: left;
-  perspective: 1000px;
 }
-img {
-  width: 200px;
-  height: 200px;
-}
-#card, #card2, #card3 {
+.card-container .card {
+  font-weight: bold;
+  position: relative;
   width: 100%;
-  height: 100%;
-  margin: 10%;
-  transform-style: preserve-3d;
-  transition: all 0.8s linear;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, .3);
 }
-#card:hover {
-  transform: rotateY(180deg);
-  box-shadow: -5px 5px 15px rgba(0, 0, 0, .3);
+.card-container .card a {
+  padding: 30px;
+  width: 100%;
+  height: 400px;
+  border: 2px solid black;
+  background: white;
+  text-decoration: none;
+  color: black;
+  display: block;
+  transition: 0.25s ease;
 }
-#card2:hover {
-  transform: rotateY(-180deg);
-  box-shadow: -5px 5px 15px rgba(0, 0, 0, .3);
+.card-container .card a:hover {
+  transform: translate(-30px, -30px);
+  border-color: #5bc0eb;
 }
-#card3:hover {
-  transform: rotateX(180deg);
-  box-shadow: 5px -5px 15px rgba(0, 0, 0, .3);
+.card-container .card a:hover .card--display {
+  display: none;
 }
-#card3 .back {
-  transform: rotateX(-180deg);
+.card-container .card a:hover .card--hover {
+  display: block;
 }
-.face {
+.card-container .card a .card--display i {
+  font-size: 45px;
+  margin-top: 180px;
+}
+.card-container .card a .card--display h2 {
+  margin: 20px 0 0;
+}
+.card-container .card a .card--hover {
+  display: none;
+}
+.card-container .card a .card--hover h2 {
+  margin: 20px 0;
+}
+.card-container .card a .card--hover p {
+  font-weight: normal;
+  line-height: 1.5;
+}
+.card-container .card a .card--hover p.link {
+  margin: 20px 0 0;
+  font-weight: bold;
+  color: #5bc0eb;
+}
+.card-container .card .card--border {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
+  left: 0;
+  top: 0;
+  border: 2px dashed black;
+  z-index: -1;
 }
-.back {
-  display: block;
-  transform: rotateY(180deg);
-  box-sizing: border-box;
-  padding: 10px;
-  text-align: center;
-  opacity: 0.7;
-  background: #f9f3e4;
+.card-container .card.card--dark a {
+  color: white;
+  background-color: black;
+  border-color: black;
 }
-
-.back.face > a > h1, 
-.back.face > a > p 
-{
-    font-family: 'Questrial', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;    
-    font-size: 1.2em;
-    padding-top: 15px;
-    color: #dd899e;    
-}
-
-.front.face > div > h5,
-.front.face > div > p
-{
-    padding-left: 10px;    
-}
-
-.date {
-  color: #d0b2af;
+.card-container .card.card--dark a .card--hover .link {
+  color: #fde74c;
 }
 </style>
- 
 <?php
 	if ($request_history != 0) {
 		# code...
 		for ($i=0; $i < count($request_history); $i++) { 
 			?>
-			<div id="card-container">
-				<div id="card">
-					<div class="front face" style="background: #f9f3e4">
-						<div style="margin-top: 80px;">
-							<h5 class="card-title"><?php echo $request_history[$i]->nama_pegawai ?></h5>
+			<div class="card-container col-lg-3"> 
+				<div class="card">
+					<a href="<?php echo site_url()?>skp/cetak_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>">
+						<div class="card--display">
+							<i class="fa fa-street-view"></i>
+							<?=$request_history[$i]->nama_pegawai;?>
+							<h2><?php echo $request_history[$i]->nama_posisi ?></h2>
 						</div>
-						<div>
-							<p class="card-text" style="color:red;"><?php echo $request_history[$i]->nama_posisi ?></p>
+						<div class="card--hover">
+							<h2><?php echo $request_history[$i]->nama_posisi ?></h2>
+							<p><?=$request_history[$i]->nama_eselon4.' '.$request_history[$i]->nama_eselon3.' '.$request_history[$i]->nama_eselon2.$request_history[$i]->nama_eselon1;?></p>
+							<p class="link">Klik untuk melihat</p>
 						</div>
-					</div>
-					<div class="back face">
-						<a href="<?php echo site_url()?>skp/cetak_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>">
-							<h3 style="font-size: 14px;color:#dd899e"><?=$request_history[$i]->nama_eselon4.' '.$request_history[$i]->nama_eselon3.' '.$request_history[$i]->nama_eselon2.$request_history[$i]->nama_eselon1;?></h3>
-						</a>        
-						<!-- <p class="artist"><?php echo $request_history[$i]->tanggal_laku?></p> -->
-						<!-- <p class="date">2015</p> -->
-					</div>
+					</a>
+					<div class="card--border"></div>
 				</div>
 			</div>
-			<?php
+<?php
 		}		
 	}
 ?>
