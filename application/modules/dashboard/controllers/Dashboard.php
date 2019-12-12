@@ -154,7 +154,7 @@ class Dashboard extends CI_Controller {
 		echo json_encode($res);						
 	}	
 
-	public function view_notification(Type $var = null)
+	public function view_notification()
 	{
 		# code...
 		$this->Globalrules->session_rule();
