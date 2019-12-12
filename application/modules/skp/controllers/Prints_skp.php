@@ -492,7 +492,9 @@ class Prints_skp extends CI_Controller {
 			$this->excel->getActiveSheet()->mergeCells('b'.$counter.':'.'t'.$counter_1);
 			$this->excel->getActiveSheet(1)->setCellValue('b'.$counter, 'NILAI CAPAIAN SKP');
 			$this->excel->getActiveSheet(1)->setCellValue('u'.$counter, number_format($data['summary_skp_dan_prilaku'],2));
-			$this->excel->getActiveSheet(1)->setCellValue('u'.$counter_1, $this->Globalrules->nilai_capaian_skp($total_realisasi_skp)['value']);
+			// $this->excel->getActiveSheet(1)->setCellValue('u'.$counter_1, $this->Globalrules->nilai_capaian_skp($total_realisasi_skp)['value']);
+			$this->excel->getActiveSheet(1)->setCellValue('u'.$counter_1, $this->Globalrules->nilai_capaian_skp($data['summary_skp_dan_prilaku'])['value']);
+
 			$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet(1).$counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$this->excel->getActiveSheet(1)->getStyle($this->Globalrules->data_alphabet(1).$counter)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 			$this->excel->getActiveSheet(1)->getStyle('b'.$counter.':'.'u'.$counter_1)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
