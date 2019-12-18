@@ -516,6 +516,9 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_peer']      = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_bawahan']   = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
 		$data['infoPegawai']             = $this->get_info_pegawai($id,'id',$_id_posisi);
+		// echo "<pre>";
+		// print_r($data['infoPegawai'][0]->kat_posisi);die();
+		// echo "</pre>";		
 		$data['is_bawahan']              = $this->Globalrules->list_bawahan($_id_posisi);
 		$nip                             = $data['infoPegawai'][0]->nip;
 		$get_pangkat                     = $this->mskp->get_golongan($nip);
@@ -619,10 +622,11 @@ class Globalrules extends CI_Model
 		$data['summary_prilaku_skp']['komitmen']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->komitmen,$data['nilai_prilaku_peer'][0]->komitmen,$data['nilai_prilaku_bawahan'][0]->komitmen);
 		$data['summary_prilaku_skp']['disiplin']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->disiplin,$data['nilai_prilaku_peer'][0]->disiplin,$data['nilai_prilaku_bawahan'][0]->disiplin);
 		$data['summary_prilaku_skp']['kerjasama']           = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kerjasama,$data['nilai_prilaku_peer'][0]->kerjasama,$data['nilai_prilaku_bawahan'][0]->kerjasama);
-		$data['summary_prilaku_skp']['kepemimpinan']        = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan);
+		
+		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0 ;
 		$data['summary_prilaku_skp']['status']              = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->status,$data['nilai_prilaku_peer'][0]->status,$data['nilai_prilaku_bawahan'][0]->status,'status',($data['evaluator'] == 0) ? 1 : count($data['evaluator']));
 		$data['summary_prilaku_skp']['jumlah']              = $data['summary_prilaku_skp']['orientasi_pelayanan'] + $data['summary_prilaku_skp']['integritas'] + $data['summary_prilaku_skp']['komitmen'] + $data['summary_prilaku_skp']['disiplin'] + $data['summary_prilaku_skp']['kerjasama'] + $data['summary_prilaku_skp']['kepemimpinan'];
-		$data['summary_prilaku_skp']['rata_rata']           = ($data['is_bawahan'] != array()) ? $data['summary_prilaku_skp']['jumlah'] / 6 : $data['summary_prilaku_skp']['jumlah'] / 5 ;
+		$data['summary_prilaku_skp']['rata_rata']           = ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $data['summary_prilaku_skp']['jumlah'] / 6 : $data['summary_prilaku_skp']['jumlah'] / 5 ;
 
 
 
