@@ -2,13 +2,25 @@
     if($member == array())
     {
 ?>
+<div class="col-md-5" style="height:50px;max-height: 50px;margin-bottom:1px;">
+    <!-- LINE CHART -->
+    <div class="widget-user-header bg-white-active text-center">
+        <div class="box-header with-border">
+            <h1 class="box-title"> <font color="blue" size="3">TATA CARA REVIEW & PENYESUAIAN TARGET SKP<a href="<?php echo base_url(); ?>assets_home/slider/TATACARAREVIEW_PENYESUAIANTARGETSKP.pdf">&nbsp&nbsp&nbsp<u>download</a></font></h1>
+        </div>
+       
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+
 <div class="col-md-5" style="height:415px;max-height: 415px;margin-bottom:25px;">
     <!-- LINE CHART -->
     <div class="box box-info">
         <div class="box-header with-border">
             <h2 class="box-title">Pencapaian Menit Efektif <?=date('Y');?></h3>
         </div>
-        <div class="box-body chart-responsive" style="height: 371px;">
+        <div class="box-body chart-responsive" style="height: 320px;">
             <canvas id="canvas"></canvas>
         </div>
         <!-- /.box-body -->

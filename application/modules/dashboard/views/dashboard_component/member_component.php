@@ -2,6 +2,18 @@
     if($member != array())
     {
 ?>
+<div class="col-md-5" style="height:50px;max-height: 50px;margin-bottom:1px;">
+    <!-- LINE CHART -->
+    <div class="widget-user-header bg-white-active text-center">
+        <div class="box-header with-border">
+            <h1 class="box-title"> <font color="blue" size="3">TATA CARA REVIEW & PENYESUAIAN TARGET SKP<a href="<?php echo base_url(); ?>assets_home/slider/TATACARAREVIEW_PENYESUAIANTARGETSKP.pdf">&nbsp&nbsp&nbsp<u>download</a></font></h1>
+        </div>
+       
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
+
 <div id="list_nilai_anggota_skp" class="col-md-5">    
     <div class="box box-info" style="height: 100%;">
         <div class="box-header with-border">

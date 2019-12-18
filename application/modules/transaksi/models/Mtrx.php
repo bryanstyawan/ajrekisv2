@@ -248,7 +248,7 @@ class Mtrx extends CI_Model
 				AND a.id_posisi = '".$posisi."'
 				".$sql_6."
 				".$sql_7."
-				ORDER BY a.tanggal_selesai, a.jam_selesai DESC";
+				ORDER BY a.tanggal_selesai DESC, a.jam_selesai DESC";
 				// print_r($sql);die();
 			$query = $this->db->query($sql);
 			if($query->num_rows() > 0)
