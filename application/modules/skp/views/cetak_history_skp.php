@@ -351,8 +351,22 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                     </tr>
                     <tr>
                         <td>6. Kepemimpinan</td>
-                        <td><?=number_format($summary_prilaku_skp['kepemimpinan'],2);?></td>
-                        <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan'])['value'];?></td>
+                        <?php
+                            if ($infoPegawai[0]->kat_posisi == 1 ||$infoPegawai[0]->kat_posisi == 6 ) {
+                                # code...
+                        ?>
+                                <td><?=number_format($summary_prilaku_skp['kepemimpinan'],2);?></td>
+                                <td style="<?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan'])['css'];?>"><?=$this->Globalrules->nilai_capaian_skp($summary_prilaku_skp['kepemimpinan'])['value'];?></td>                        
+                        <?php
+                            }
+                            else
+                            {
+                        ?>
+                                <td></td>
+                                <td></td>                                
+                        <?php
+                            }
+                        ?>                        
                     </tr>
                     <tr>
                         <td>7. Jumlah</td>

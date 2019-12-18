@@ -1582,7 +1582,7 @@ class Skp extends CI_Controller {
 				$this->Globalrules->notif_message();
 				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
 				// echo "<pre>";
-				// print_r($data['atasan']);die();
+				// print_r($data);die();
 				// echo "</pre>";
 				$data['penilai']  = '';
 				$data['id_pegawai'] = $id;

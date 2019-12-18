@@ -705,7 +705,12 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet(2)->setCellValue('g35', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['komitmen'])['value']);
 		$this->excel->getActiveSheet(2)->setCellValue('g36', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['disiplin'])['value']);
 		$this->excel->getActiveSheet(2)->setCellValue('g37', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kerjasama'])['value']);
-		$this->excel->getActiveSheet(2)->setCellValue('g38', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kepemimpinan'])['value']);
+
+		if ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) {
+			# code...
+			$this->excel->getActiveSheet(2)->setCellValue('g38', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['kepemimpinan'])['value']);			
+		}
+
 		$this->excel->getActiveSheet(2)->setCellValue('g40', $this->Globalrules->nilai_capaian_skp($data['summary_prilaku_skp']['rata_rata'])['value']);
 		$this->excel->getActiveSheet(2)->setCellValue('e41', number_format($data['summary_prilaku_skp']['rata_rata'],2)." x 40%");
 		$this->excel->getActiveSheet(2)->setCellValue('h42', number_format($data['summary_skp']['nilai_sasaran_kinerja_pegawai']+$data['summary_prilaku_skp']['nilai_prilaku_kerja'],2));
