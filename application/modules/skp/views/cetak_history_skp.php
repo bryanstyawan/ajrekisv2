@@ -481,7 +481,21 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                     <tr>
                         <td><?=$i+1;?></td>
                         <td style="text-align: -webkit-left;"><?=$kegiatan;?></td>
-                        <td></td>
+                        <?php
+                            if ($kat_posisi == 2) {
+                                # code...
+                        ?>
+                                <td><?=$list_skp[$i]->AK_target + 0;?></td>                                                                        
+                        <?php
+                            }
+                            else
+                            {
+                        ?>
+                                <td></td>                        
+                        <?php
+                            }
+                        ?>
+
                         <td><?=$list_skp[$i]->target_qty." ".$list_skp[$i]->target_output_name;?></td>
                         <td><?=$list_skp[$i]->target_kualitasmutu;?></td>
                         <td><?=$list_skp[$i]->target_waktu_bln." bln";?></td>

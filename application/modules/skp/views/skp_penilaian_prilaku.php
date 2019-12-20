@@ -14,12 +14,13 @@
 }
 </style>
 <?php
-    $atasan1    = $atasan; 
-    $atasan2    = $atasan_plt;
-    $evaluator1 = $evaluator;
+    $atasan1     = $atasan; 
+    $atasan2     = $atasan_plt;
+    $evaluator1  = $evaluator;
+    $atasan_nama = "";
 ?>
 <div class="col-md-12">
-    <div class="box box-solid" id="isi_kontak" style="">
+    <div class="box box-solid" id="isi_kontak">
         <div class="box-header with-border">
             <h3 class="box-title">Permintaan untuk Penilaian Prilaku</h3>
         </div>
@@ -48,7 +49,7 @@
                         $data_done_span = "";                                       
                     }
         ?>
-                    <a class="btn btn-app" onclick="send_penilaian_prilaku(<?=$request_eval[$i]->evaluator_id;?>,<?=$request_eval[$i]->id_pegawai;?>)" style="<?=$data_done;?>">
+                    <a class="btn btn-app" onclick="send_penilaian_prilaku('<?=$request_eval[$i]->evaluator_id;?>','<?=$request_eval[$i]->id_pegawai;?>')" style="<?=$data_done;?>">
                         <img src="<?=$data_link_a;?>" style="height: 100%">
                         <span style="<?=$data_done_span;?>"><?=$request_eval[$i]->nama_pegawai;?></span>                            
                     </a>                    
@@ -62,7 +63,7 @@
 
 
 <div class="col-md-3">
-    <div class="box box-solid" id="isi_kontak" style="">
+    <div class="box box-solid" id="isi_kontak">
 
         <div class="box-header with-border">
             <h3 class="box-title">Kandidat Evaluator</h3>
@@ -79,6 +80,7 @@
                             foreach($atasan as $atasan)
                             {
                                 $i++;
+                                $atasan_nama = $atasan->nama_pegawai;
                         ?>
                                 <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan->nama_pegawai;?>"></input></li>                                    
                         <?php
@@ -113,9 +115,12 @@
                             if ($this->session->userdata('sesNama') != $peer->nama_pegawai) 
                             {
                                 # code...
+                                if ($atasan_nama != $peer->nama_pegawai) {
+                                    # code...
                 ?>
                                     <li style="cursor: pointer;" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$peer->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$peer->nama_pegawai;?>"></input></li>                                    
-                <?php
+                <?php                                    
+                                }
                             }
                         }
                     }
@@ -147,7 +152,7 @@
 
 
 <div class="col-md-3">
-    <div class="box box-solid" id="isi_kontak" style="">
+    <div class="box box-solid" id="isi_kontak">
 
         <div class="box-header with-border">
             <h3 class="box-title">Evaluator (Max 5)</h3>
@@ -157,6 +162,7 @@
                     <?php
 
                         $atasan_temp = "";
+                        $atasan_nama = "";
                         if ($evaluator != 0) {
                             # code...
                             if ($atasan1 != 0) {
@@ -183,6 +189,16 @@
                         }
                         else
                         {
+                            if ($atasan1 != 0) {
+                                # code...
+                                foreach($atasan1 as $atasan1){
+                                    $i++;
+                                    $atasan_temp = $atasan1->nama_pegawai;
+                        ?>
+                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="local"></li>
+                        <?php
+                                }                                
+                            }                            
 
                         }
 
@@ -506,17 +522,7 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
 var counter_evaluator     = 1;
-var counter_evaluator_php = "<?php
-                                if ($evaluator != 0) 
-                                {
-                                    echo count($evaluator);
-                                }
-                                else
-                                {
-                                    echo "0";
-                                }
-                            ?>";
-
+var counter_evaluator_php = "<?=($evaluator != 0) ? count($evaluator) : 0 ;?>";
 if (counter_evaluator_php != 0) 
 {
     counter_evaluator = counter_evaluator_php;

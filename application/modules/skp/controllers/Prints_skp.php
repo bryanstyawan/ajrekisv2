@@ -354,7 +354,7 @@ class Prints_skp extends CI_Controller {
 					if ($data['list_skp'][$i]->id_skp_jfu) $kegiatan=$data['list_skp'][$i]->kegiatan_skp_jfu;							
 				}
 
-				$ak_target              = $data['list_skp'][$i]->AK_target;if ($data['list_skp'][$i]->AK_target == 0) $ak_target='-';
+				$ak_target              = ($data['infoPegawai'][0]->kat_posisi == 2) ? $data['list_skp'][$i]->AK_target : '' ;
 				$target_qty             = $data['list_skp'][$i]->target_qty;
 				$target_kualitasmutu    = $data['list_skp'][$i]->target_kualitasmutu;
 				$target_waktu_bln       = $data['list_skp'][$i]->target_waktu_bln;

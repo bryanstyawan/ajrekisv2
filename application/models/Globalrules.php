@@ -516,24 +516,25 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_peer']      = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
 		$data['nilai_prilaku_bawahan']   = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
 		$data['infoPegawai']             = $this->get_info_pegawai($id,'id',$_id_posisi);
-		// echo "<pre>";
-		// print_r($data['infoPegawai'][0]->kat_posisi);die();
-		// echo "</pre>";		
 		$data['is_bawahan']              = $this->Globalrules->list_bawahan($_id_posisi);
-		$nip                             = $data['infoPegawai'][0]->nip;
-		$get_pangkat                     = $this->mskp->get_golongan($nip);
-		if ($get_pangkat != array()) {
+		if ($data['infoPegawai'] != 0) {
 			# code...
-			$data['infoPegawai'][0]->nama_golongan = $get_pangkat[0]->golongan;
-			$data['infoPegawai'][0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
-			$data['infoPegawai'][0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
+			$nip                             = $data['infoPegawai'][0]->nip;
+			$get_pangkat                     = $this->mskp->get_golongan($nip);
+			if ($get_pangkat != array()) {
+				# code...
+				$data['infoPegawai'][0]->nama_golongan = $get_pangkat[0]->golongan;
+				$data['infoPegawai'][0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
+				$data['infoPegawai'][0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
+			}
+			else
+			{
+				$data['infoPegawai'][0]->nama_golongan = '-';
+				$data['infoPegawai'][0]->nama_pangkat  = '-';
+				$data['infoPegawai'][0]->tmt_pangkat   = '-';			
+			}			
 		}
-		else
-		{
-			$data['infoPegawai'][0]->nama_golongan = '-';
-			$data['infoPegawai'][0]->nama_pangkat  = '-';
-			$data['infoPegawai'][0]->tmt_pangkat   = '-';			
-		}
+
 
 		$_atasan_data        = $this->list_atasan($_id_posisi);
 		$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
@@ -623,10 +624,10 @@ class Globalrules extends CI_Model
 		$data['summary_prilaku_skp']['disiplin']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->disiplin,$data['nilai_prilaku_peer'][0]->disiplin,$data['nilai_prilaku_bawahan'][0]->disiplin);
 		$data['summary_prilaku_skp']['kerjasama']           = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kerjasama,$data['nilai_prilaku_peer'][0]->kerjasama,$data['nilai_prilaku_bawahan'][0]->kerjasama);
 		
-		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0 ;
+		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'] != 0) ? ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0  : 0;
 		$data['summary_prilaku_skp']['status']              = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->status,$data['nilai_prilaku_peer'][0]->status,$data['nilai_prilaku_bawahan'][0]->status,'status',($data['evaluator'] == 0) ? 1 : count($data['evaluator']));
 		$data['summary_prilaku_skp']['jumlah']              = $data['summary_prilaku_skp']['orientasi_pelayanan'] + $data['summary_prilaku_skp']['integritas'] + $data['summary_prilaku_skp']['komitmen'] + $data['summary_prilaku_skp']['disiplin'] + $data['summary_prilaku_skp']['kerjasama'] + $data['summary_prilaku_skp']['kepemimpinan'];
-		$data['summary_prilaku_skp']['rata_rata']           = ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $data['summary_prilaku_skp']['jumlah'] / 6 : $data['summary_prilaku_skp']['jumlah'] / 5 ;
+		$data['summary_prilaku_skp']['rata_rata']           = ($data['infoPegawai'] != 0) ? ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $data['summary_prilaku_skp']['jumlah'] / 6 : $data['summary_prilaku_skp']['jumlah'] / 5  : 0 ;
 
 
 
@@ -697,6 +698,21 @@ class Globalrules extends CI_Model
 		$query = $this->db->query($sql);
 		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}
+
+	public function list_atasan_akademik($posisi=NULL)
+	{
+		# code...
+		$sql = "SELECT DISTINCT b.*,
+								b.id AS `id_pegawai`,
+								a.nama_posisi
+			    FROM mr_posisi a
+			    JOIN mr_pegawai b
+			    ON a.atasan = b.posisi_akademik
+			    WHERE a.id = '".$posisi."'
+			    AND b.status = 1";
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;
+	}	
 
 	public function list_bawahan($posisi,$parameter=NULL,$arg=NULL)
 	{
@@ -784,6 +800,22 @@ class Globalrules extends CI_Model
 		return ($query->num_rows() > 0) ? $query->result() : array();		
 	}
 
+	public function get_peer($arg=NULL)
+	{
+		$sql = "SELECT DISTINCT a.*,
+								a.id as `id_pegawai`,
+								b.nama_posisi,
+								b.kat_posisi as b_kat_posisi
+				FROM mr_pegawai a
+				JOIN mr_posisi b
+				ON a.posisi = b.id
+				WHERE ".$arg[0]." = '".$arg[1]."'
+				AND a.status = 1
+				ORDER BY a.nama_pegawai asc";		
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : array();				
+	}
+
 	public function get_penilaian_prilaku($value_atasan,$value_peer,$value_bawahan,$PARAM=NULL,$counter=NULL)
 	{
 		# code...
@@ -796,14 +828,14 @@ class Globalrules extends CI_Model
 		{
 			if ($value_bawahan == 0) {
 				# code...
-				$value_atasan = ($value_atasan*80)/100;
-				$value_peer   = ($value_peer*20)/100;
+				$value_atasan = ($value_atasan*60)/100;
+				$value_peer   = ($value_peer*40)/100;
 			}
 			else
 			{
-				$value_atasan  = $value_atasan*70/100;
+				$value_atasan  = $value_atasan*60/100;
 				$value_peer    = $value_peer*20/100;
-				$value_bawahan = $value_bawahan*10/100;
+				$value_bawahan = $value_bawahan*20/100;
 			}
 			$data = $value_atasan + $value_peer + $value_bawahan;
 		}

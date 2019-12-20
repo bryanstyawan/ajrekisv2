@@ -1,3 +1,12 @@
+v4.1.2.6.1
+2019-12-20
+New:
+Improved:
+- Membuat peer secara bertingkat untuk kondisi tidak ada peer atau peer hanya sedikit
+- Tampilkan Nilai AK target
+Fixed:
+Canceled:
+
 v4.1.2.6.0
 2019-12-05
 New:

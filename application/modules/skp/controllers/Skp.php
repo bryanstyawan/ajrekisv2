@@ -975,13 +975,23 @@ class Skp extends CI_Controller {
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
 		$data['subtitle']     = '';
 		$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);
+		$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik($helper_posisi) : $data['atasan'] ;
 		$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);		
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
+		if ($data['peer'] == 0 || count($data['peer']) == 1) {
+			# code...
+			$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3'))) ;						
+			if ($data['peer'] == 0 || count($data['peer']) == 1) {
+				# code...
+				$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2'))) ;
+				if ($data['peer'] == 0 || count($data['peer']) == 1) {
+					# code...
+					$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1'))) ;
+				}				
+			}			
+		}
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
-		// echo "<pre>"; 
-		// print_r($data);
-		// echo "</pre>";
 		if($data['bawahan'] != 0){
 			for ($i=0; $i < count($data['bawahan']); $i++) { 
 				# code...
