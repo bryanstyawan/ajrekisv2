@@ -938,9 +938,18 @@ class Skp extends CI_Controller {
 	public function penilaian_prilaku($arg=NULL)
 	{
 		# code...
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();		
 		$helper_title  = "";
 		$helper_posisi = "";
 		$helper_atasan = "";
+		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi);
+		$data['content']      = 'skp/skp_penilaian_prilaku';
+		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
+		$data['subtitle']     = '';
+		// echo "<pre>";
+		// print_r($data);die();		
+		// echo "</pre>";		
 		if($arg != NULL)
 		{
 			if ($arg == "plt") {
@@ -961,15 +970,18 @@ class Skp extends CI_Controller {
 			$helper_atasan = $this->session->userdata('atasan');
 		}
 
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi);
-		$data['content']      = 'skp/skp_penilaian_prilaku';
-		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
-		$data['subtitle']     = '';
-		$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);
-		$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik($helper_posisi) : $data['atasan'] ;
-		$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);		
+		if ($helper_atasan != 0) {
+			# code...
+			$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);
+			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik(	) : $data['atasan'] ;			
+			$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);					
+		}
+		else
+		{
+			$data['atasan']       = 0;			
+			$data['atasan_plt']   = 0;			
+		}
+
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');

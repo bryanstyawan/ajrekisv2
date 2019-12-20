@@ -707,10 +707,12 @@ class Mskp extends CI_Model
 				LEFT JOIN mr_skp_penilaian_prilaku c
 				ON a.id = c.id_pegawai_penilai
 			    WHERE a.status = 1
-			    AND b.atasan = '".$id_param."'
+				-- AND b.atasan = '".$id_param."'
+				AND a.posisi <> '965'				
 				AND c.status = 1
 				AND c.id_pegawai = ".$id_pegawai."
 				GROUP BY b.atasan";
+				// print_r($sql);die();
 		}
 		elseif ($param == 'bawahan') {
 			# code...
