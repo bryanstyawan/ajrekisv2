@@ -800,7 +800,7 @@ class Globalrules extends CI_Model
 		return ($query->num_rows() > 0) ? $query->result() : array();		
 	}
 
-	public function get_peer($arg=NULL)
+	public function get_peer($arg=NULL,$arg1=NULL)
 	{
 		$sql = "SELECT DISTINCT a.*,
 								a.id as `id_pegawai`,
@@ -810,6 +810,7 @@ class Globalrules extends CI_Model
 				JOIN mr_posisi b
 				ON a.posisi = b.id
 				WHERE ".$arg[0]." = '".$arg[1]."'
+				AND ".$arg1[0]." = '".$arg1[1]."'
 				AND a.status = 1
 				ORDER BY a.nama_pegawai asc";		
 		$query = $this->db->query($sql);
