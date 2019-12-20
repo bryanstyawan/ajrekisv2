@@ -943,23 +943,16 @@ class Skp extends CI_Controller {
 		$helper_atasan = "";
 		if($arg != NULL)
 		{
-			if ($arg == "PLT") {
+			if ($arg == "plt") {
 				# code...
 				$helper_title = "PLT";
-				$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
-				if ($get_data_pegawai != array()) 
-				{
+				$get_data_posisi = $this->Allcrud->getData('mr_posisi',array('id'=>$this->session->userdata('posisi_plt')))->result_array();				
+				if ($get_data_posisi != array()) {
 					# code...
-					if ($get_data_pegawai[0]['posisi_plt'] != 0) {
-						$helper_posisi = $get_data_pegawai[0]['posisi_plt'];
-						$get_atasan    = $this->Globalrules->get_info_pegawai($get_data_pegawai[0]['posisi_plt'],'posisi');						
-						if ($get_atasan != 0) {
-							# code...
-							$helper_atasan = $get_atasan[0]->atasan;							
-						}
-					}
-				}				
-				
+					$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('posisi'=>$get_data_posisi[0]['atasan'],'status'=>1))->result_array();					
+					$helper_atasan = $get_data_posisi[0]['atasan'];					
+					$helper_posisi = $this->session->userdata('posisi_plt');					
+				}
 			}
 		}
 		else
@@ -978,20 +971,33 @@ class Skp extends CI_Controller {
 		$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik($helper_posisi) : $data['atasan'] ;
 		$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);		
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
-		if ($data['peer'] == 0 || count($data['peer']) < 5) {
-			# code...
-			$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
-			if ($data['peer'] == 0 || count($data['peer']) < 5) {
-				# code...
-				$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-				if ($data['peer'] == 0 || count($data['peer']) < 5) {
-					# code...
-					$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-				}				
-			}			
-		}
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
+		if ($arg == "plt") {
+		}
+		else
+		{
+			if ($this->session->userdata('kat_posisi') == 4 || $this->session->userdata('kat_posisi') == 2) {
+				# code...
+				if ($data['peer'] == 0 || count($data['peer']) < 5) {
+					# code...
+					$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
+					if ($data['peer'] == 0 || count($data['peer']) < 5) {
+						# code...
+						$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
+						if ($data['peer'] == 0 || count($data['peer']) < 5) {
+							# code...
+							$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
+						}				
+					}			
+				}			
+			}
+			else
+			{
+	
+			}
+		}		
+		
 		if($data['bawahan'] != 0){
 			for ($i=0; $i < count($data['bawahan']); $i++) { 
 				# code...
