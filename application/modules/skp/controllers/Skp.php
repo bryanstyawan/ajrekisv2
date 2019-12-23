@@ -1610,7 +1610,7 @@ class Skp extends CI_Controller {
 				$this->Globalrules->notif_message();
 				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
 				// echo "<pre>";
-				// print_r($data);die();
+				// print_r($data['list_skp']);die();
 				// echo "</pre>";
 				$data['penilai']  = '';
 				$data['id_pegawai'] = $id;
@@ -1678,5 +1678,19 @@ class Skp extends CI_Controller {
 		$data['member']  = $this->Globalrules->list_bawahan($posisi,NULL,'penilaian_skp');		
 		$this->load->view('templateAdmin',$data);		
 	}	
+
+	public function deactive_skp($id)
+	{
+		# code...
+		$flag        = array('skp_id'=>$id);		
+		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',array('status'=>0),array('skp_id'=>$id));		
+		$text_status = $this->Globalrules->check_status_res($res_data,'SKP ini dihentikan.');
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}
 }
   

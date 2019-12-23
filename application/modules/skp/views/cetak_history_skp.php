@@ -479,7 +479,29 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 
                     ?>
                     <tr>
-                        <td><?=$i+1;?></td>
+                        <td>
+                            <?php
+                                if ($list_skp[$i]->realisasi_kuantitas != 0) {
+                                    # code...
+                                    echo $i+1;
+                                }
+                                else
+                                {
+                                    if (date('m') == 12) {
+                                        # code...
+                            ?>
+                                        <a class="btn btn-danger" onclick="deactive('<?=$list_skp[$i]->skp_id;?>')">
+                                            <i class="fa fa-delete"></i> Tidak Aktif
+                                        </a>
+                            <?php                                        
+                                    }
+                                    else
+                                    {
+                                        echo $i+1;                                        
+                                    }
+                                }
+                            ?>
+                        </td>
                         <td style="text-align: -webkit-left;"><?=$kegiatan;?></td>
                         <?php
                             if ($kat_posisi == 2) {
@@ -642,6 +664,23 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+function deactive(id) {
+    $.ajax({
+        url :"<?php echo site_url();?>skp/deactive_skp/"+id,
+        type:"post",
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            var obj = jQuery.parseJSON (msg);
+            ajax_status(obj);
+        },
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
+        }
+    })    
+}
 $(document).ready(function()
 {
     // $("#data1").DataTable({
