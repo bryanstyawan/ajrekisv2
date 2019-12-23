@@ -491,7 +491,7 @@ class Prints_skp extends CI_Controller {
 			$counter_1 = $counter + 1;
 			$this->excel->getActiveSheet()->mergeCells('b'.$counter.':'.'t'.$counter_1);
 			$this->excel->getActiveSheet(1)->setCellValue('b'.$counter, 'NILAI CAPAIAN SKP');
-			$this->excel->getActiveSheet(1)->setCellValue('u'.$counter, number_format($data['summary_skp_dan_prilaku'],2));
+			$this->excel->getActiveSheet(1)->setCellValue('u'.$counter, number_format($data['summary_skp']['total'],2));
 			// $this->excel->getActiveSheet(1)->setCellValue('u'.$counter_1, $this->Globalrules->nilai_capaian_skp($total_realisasi_skp)['value']);
 			$this->excel->getActiveSheet(1)->setCellValue('u'.$counter_1, $this->Globalrules->nilai_capaian_skp($data['summary_skp_dan_prilaku'])['value']);
 

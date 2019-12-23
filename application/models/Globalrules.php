@@ -962,15 +962,37 @@ class Globalrules extends CI_Model
 		$value = "";
 		if ($param <= 3) {
 			# code...
-			$value = 1;
+			if($param == 0)
+			{
+				$value = 0;				
+			}
+			else
+			{
+				$value = 1;
+			}			
+
 		}
 		elseif ($param <= 6) {
 			# code...
-			$value = 2;
+			if($param == 0)
+			{
+				$value = 0;				
+			}
+			else
+			{
+				$value = 2;
+			}			
 		}
 		elseif ($param > 6) {
 			# code...
-			$value = 3;
+			if($param == 0)
+			{
+				$value = 0;				
+			}
+			else
+			{
+				$value = 3;
+			}						
 		}
 
 		return $value;
