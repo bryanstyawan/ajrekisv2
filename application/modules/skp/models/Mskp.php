@@ -685,7 +685,7 @@ class Mskp extends CI_Model
 								COALESCE(c.status,0) as status
 			    FROM mr_pegawai a
 			    JOIN mr_posisi b
-			    ON b.atasan = a.posisi
+			    ON b.atasan = a.posisi OR b.atasan=a.posisi_PLT or b.atasan = a.posisi_akademik
 				LEFT JOIN mr_skp_penilaian_prilaku c
 				ON a.id = c.id_pegawai_penilai
 			    WHERE a.status = 1

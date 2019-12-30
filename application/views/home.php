@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->            
+            </div>             
 			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/maulid1.gif);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
@@ -103,8 +103,9 @@
                         </div>
                     </div>
                 </div>
-            </div>  
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/pahlawan.jpg);background-size: 100% 100%;height: 555px;">
+            </div>  -->
+            
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PENILAIAN_KINERJA_PEGAWAI.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -115,6 +116,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/BELA_NEGARA.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
 
             <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/IZIN_BELAJAR.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
