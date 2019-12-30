@@ -88,15 +88,30 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet()->setCellValue('c9', 'Jabatan');
 		$this->excel->getActiveSheet()->setCellValue('c10', 'Unit Kerja');
 
-		$pangkat_atasan         = ($data['atasan'][0]->nama_pangkat != '-') ? $data['atasan'][0]->nama_pangkat : '' ;
-		$ruang_atasan           = ($data['atasan'][0]->nama_golongan != '-') ? ', ('.$data['atasan'][0]->nama_golongan.') ' : '' ;
-		$tmt_pangkat_atasan     = ($data['atasan'][0]->tmt_pangkat != '-') ? $data['atasan'][0]->tmt_pangkat : '' ;
+		if ($data['atasan'] != 0) {
+			# code...
+			$pangkat_atasan         = ($data['atasan'][0]->nama_pangkat != '-') ? $data['atasan'][0]->nama_pangkat : '' ;
+			$ruang_atasan           = ($data['atasan'][0]->nama_golongan != '-') ? ', ('.$data['atasan'][0]->nama_golongan.') ' : '' ;
+			$tmt_pangkat_atasan     = ($data['atasan'][0]->tmt_pangkat != '-') ? $data['atasan'][0]->tmt_pangkat : '' ;			
+		}
+		else
+		{
+			$pangkat_atasan         = '';
+			$ruang_atasan           = '';
+			$tmt_pangkat_atasan     = '';			
+		}
+
 		$remarks_pangkat_atasan = $pangkat_atasan.$ruang_atasan.$tmt_pangkat_atasan;		
-		$this->excel->getActiveSheet()->setCellValue('d6', $data['atasan'][0]->nama_pegawai);
-		$this->excel->getActiveSheet()->setCellValue('d7', "'".$data['atasan'][0]->nip);
-		$this->excel->getActiveSheet()->setCellValue('d8', $remarks_pangkat_atasan);
-		$this->excel->getActiveSheet()->setCellValue('d9', $data['atasan'][0]->nama_jabatan);
-		$this->excel->getActiveSheet()->setCellValue('d10', $data['atasan'][0]->nama_eselon2.' '.$data['atasan'][0]->nama_eselon1);				
+
+		if ($data['atasan'] != 0) {	
+			# code...
+			$this->excel->getActiveSheet()->setCellValue('d6', $data['atasan'][0]->nama_pegawai);
+			$this->excel->getActiveSheet()->setCellValue('d7', "'".$data['atasan'][0]->nip);
+			$this->excel->getActiveSheet()->setCellValue('d8', $remarks_pangkat_atasan);
+			$this->excel->getActiveSheet()->setCellValue('d9', $data['atasan'][0]->nama_jabatan);
+			$this->excel->getActiveSheet()->setCellValue('d10', $data['atasan'][0]->nama_eselon2.' '.$data['atasan'][0]->nama_eselon1);			
+		}		
+				
 		
 		$this->excel->getActiveSheet()->setCellValue('f6', 'Nama');
 		$this->excel->getActiveSheet()->setCellValue('f7', 'NIP.');
@@ -210,7 +225,11 @@ class Prints_skp extends CI_Controller {
 		$counter = $counter + 5;					
 		$this->excel->getActiveSheet()->mergeCells('c'.$counter.':d'.$counter);		
 		$this->excel->getActiveSheet()->setCellValue('i'.$counter, $data['infoPegawai'][0]->nama_pegawai);		
-		$this->excel->getActiveSheet()->setCellValue('c'.$counter, $data['atasan'][0]->nama_pegawai);
+		if ($data['atasan'] != 0) {	
+			# code...
+			$this->excel->getActiveSheet()->setCellValue('c'.$counter, $data['atasan'][0]->nama_pegawai);			
+		}			
+
 		$this->excel->getActiveSheet()->getStyle('c'.$counter.':i'.$counter)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);		
 	}	
 
