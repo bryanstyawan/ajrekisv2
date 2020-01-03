@@ -337,7 +337,7 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function get_persentase_target_realisasi($value='')
+	public function get_persentase_target_realisasi($year)
 	{
 		// code...
 		$sql = "SELECT  SUM(a.target_qty) as `total_target_kuantitas`,
@@ -361,7 +361,7 @@ class Mskp extends CI_Model
 				LEFT OUTER JOIN mr_skp_pegawai_temp b ON a.skp_id = b.edit_skp_id
 				LEFT OUTER JOIN mr_skp_jenis c ON a.jenis_skp = c.id
 				LEFT OUTER JOIN mr_skp_satuan d ON a.target_output = d.id
-				WHERE a.tahun = '".date('Y')."'
+				WHERE a.tahun = '".$year."'
 				AND a.id_pegawai = '".$this->session->userdata('sesUser')."'
 				AND a.id_posisi = '".$this->session->userdata('sesPosisi')."'				
 				AND a.status <> '99'
@@ -690,7 +690,8 @@ class Mskp extends CI_Model
 				ON a.id = c.id_pegawai_penilai
 			    WHERE a.status = 1
 			    AND b.id = '".$id_param."'
-			    AND c.id_pegawai = ".$id_pegawai."";
+				AND c.id_pegawai = '".$id_pegawai."'
+				AND c.tahun = '".$tahun."'";
 		}
 		elseif ($param == 'peer') {
 			# code...
@@ -708,8 +709,9 @@ class Mskp extends CI_Model
 				ON a.id = c.id_pegawai_penilai
 			    WHERE a.status = 1
 				-- AND b.atasan = '".$id_param."'
-				AND a.posisi <> '965'				
+				-- AND a.posisi <> '965'				
 				AND c.status = 1
+				AND c.tahun = '".$tahun."'
 				AND c.id_pegawai = ".$id_pegawai."
 				GROUP BY b.atasan";
 				// print_r($sql);die();
@@ -729,6 +731,7 @@ class Mskp extends CI_Model
 					LEFT JOIN mr_skp_penilaian_prilaku c
 					ON a.id = c.id_pegawai_penilai
 					WHERE b.atasan = '".$id_param."'
+					AND c.tahun = '".$tahun."'
 					AND c.id_pegawai = ".$id_pegawai."
 					AND a. STATUS = 1";
 		}
@@ -933,10 +936,10 @@ class Mskp extends CI_Model
 				LEFT JOIN mr_eselon3 es3 ON es3.id_es3 = c.eselon3
 				LEFT JOIN mr_eselon4 es4 ON es4.id_es4 = c.eselon4				
 				WHERE a.id_pegawai = '".$id."'   
-				AND YEAR(a.audit_time) = '".$tahun."'
+				-- AND YEAR(a.audit_time) = '".$tahun."'
 				AND a.id_posisi <> ''
 				AND c.nama_posisi <> ''
-				ORDER BY a.audit_time DESC";
+				ORDER BY a.id DESC";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

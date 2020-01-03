@@ -504,17 +504,17 @@ class Globalrules extends CI_Model
 		);
 	}
 
-	public function data_summary_skp_pegawai($id,$_id_posisi)
+	public function data_summary_skp_pegawai($id,$_id_posisi,$year_system)
 	{
 		# code...
-		$data['tugas_tambahan']          = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),NULL);
-		$data['kreativitas']             = $this->mskp->get_summary_tugas_tambahan($id,date('Y'),'kreativitas');
-		$data['tr_tugas_tambahan']       = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan');
-		$data['tr_kreativitas']          = $this->mtrx->tugas_tambahan($id,1,'kreativitas');
-		$data['evaluator']               = $this->mskp->get_data_evaluator($id,date('Y'));
-		$data['nilai_prilaku_atasan']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'atasan',date('Y'),$this->session->userdata('sesUser'));
-		$data['nilai_prilaku_peer']      = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',date('Y'),$this->session->userdata('sesUser'));
-		$data['nilai_prilaku_bawahan']   = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',date('Y'),$this->session->userdata('sesUser'));
+		$data['tugas_tambahan']          = $this->mskp->get_summary_tugas_tambahan($id,$year_system,NULL);
+		$data['kreativitas']             = $this->mskp->get_summary_tugas_tambahan($id,$year_system,'kreativitas');
+		$data['tr_tugas_tambahan']       = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan',$year_system);
+		$data['tr_kreativitas']          = $this->mtrx->tugas_tambahan($id,1,'kreativitas',$year_system);
+		$data['evaluator']               = $this->mskp->get_data_evaluator($id,$year_system);
+		$data['nilai_prilaku_atasan']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'atasan',$year_system,$this->session->userdata('sesUser'));
+		$data['nilai_prilaku_peer']      = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',$year_system,$this->session->userdata('sesUser'));
+		$data['nilai_prilaku_bawahan']   = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',$year_system,$this->session->userdata('sesUser'));
 		$data['infoPegawai']             = $this->get_info_pegawai($id,'id',$_id_posisi);
 		$data['is_bawahan']              = $this->Globalrules->list_bawahan($_id_posisi);
 		if ($data['infoPegawai'] != 0) {
@@ -539,7 +539,13 @@ class Globalrules extends CI_Model
 		$_atasan_data        = $this->list_atasan($_id_posisi);
 		$_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
 		$_atasan_id_posisi   = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
-		$data['atasan']      = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
+		$data['atasan']      = ($_atasan_data == 0) ? 0 : $this->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 		
+		if ($_atasan_data == 0) {
+			# code...
+			$data['atasan_akademik'] = $this->list_atasan_akademik($_id_posisi);			
+			$data['atasan_plt'] = $this->list_atasan_plt($_id_posisi);
+			// print_r($data['atasan_plt']);die();
+		}		
 		if ($data['atasan'] != 0) 
 		{
 			$nip              = $data['atasan'][0]->nip;
@@ -617,7 +623,7 @@ class Globalrules extends CI_Model
 			// $data['atasan'][0]->tmt_pangkat   = '-';			
 		}
 
-		$data['list_skp']                                   = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,date('Y'),'1','realisasi');
+		$data['list_skp']                                   = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,$year_system,'1','realisasi');
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
 		$data['summary_prilaku_skp']['orientasi_pelayanan'] = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->orientasi_pelayanan,$data['nilai_prilaku_peer'][0]->orientasi_pelayanan,$data['nilai_prilaku_bawahan'][0]->orientasi_pelayanan);
 		$data['summary_prilaku_skp']['komitmen']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->komitmen,$data['nilai_prilaku_peer'][0]->komitmen,$data['nilai_prilaku_bawahan'][0]->komitmen);
@@ -660,7 +666,7 @@ class Globalrules extends CI_Model
 		}
 
 		$list_skp_count                                         = ($data['list_skp'] == 0) ? 1 : count($data['list_skp']);
-		$data['persentase_target_realisasi']                    = $this->mskp->get_persentase_target_realisasi();
+		$data['persentase_target_realisasi']                    = $this->mskp->get_persentase_target_realisasi($year_system);
 		$data['summary_skp']['tugas_tambahan']                  = $this->nilai_tugas_tambahan($data['tugas_tambahan']);
 		$data['summary_skp']['total']                           = $data['summary_skp']['total_aspek']/$list_skp_count + $data['summary_skp']['tugas_tambahan'] + $data['kreativitas'];
 		$data['summary_skp']['nilai_sasaran_kinerja_pegawai']   = ($data['summary_skp']['total']*60)/100;

@@ -1599,24 +1599,26 @@ class Skp extends CI_Controller {
 		}
 	}
 
-	public function cetak_skp($id=NULL,$posisi=NULL)
+	public function cetak_skp($id=NULL,$posisi=NULL,$year_system=NULL)
 	{
 		# code...
+		$year_system = ($year_system == NULL) ? date('Y') : $year_system ;
 		if($id != NULL)
 		{
 			if($posisi != NULL)
 			{
 				$this->Globalrules->session_rule();
 				$this->Globalrules->notif_message();
-				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi);
+				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi,$year_system);
 				// echo "<pre>";
 				// print_r($data);die();
 				// echo "</pre>";
-				$data['penilai']  = '';
+				$data['year_pass']  = $year_system;
+				$data['penilai']    = '';
 				$data['id_pegawai'] = $id;
-				$data['id_posisi'] = $posisi;
-				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
-				$data['content']  = 'skp/cetak_history_skp';
+				$data['id_posisi']  = $posisi;
+				$data['title']      = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
+				$data['content']    = 'skp/cetak_history_skp';
 				$this->load->view('templateAdmin',$data);
 			}
 			else

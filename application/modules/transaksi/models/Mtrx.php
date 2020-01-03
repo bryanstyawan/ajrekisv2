@@ -477,7 +477,7 @@ class Mtrx extends CI_Model
 		}
 	}
 
-	public function tugas_tambahan($id_pegawai,$param=NULL,$param1=NULL)
+	public function tugas_tambahan($id_pegawai,$param=NULL,$param1=NULL,$year=NULL)
 	{
 		# code...
 		$sql_1 = "";
@@ -511,6 +511,7 @@ class Mtrx extends CI_Model
 				LEFT JOIN mr_keterangan_kreativitas b
 				ON a.id_keterangan_kreativitas = b.id
 				WHERE a.id_pegawai = '".$id_pegawai."'
+				AND a.tahun = '".$year."'
 				".$sql_1."
 				".$sql_2."";
 				// print_r($sql);die();

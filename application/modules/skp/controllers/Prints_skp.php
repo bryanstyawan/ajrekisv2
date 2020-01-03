@@ -875,12 +875,12 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet(2)->getStyle('b123:h123')->getBorders()->getbottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);		
 	}	
 
-	public function skp_excel($id,$id_posisi)
+	public function skp_excel($id,$id_posisi,$year_system)
 	{
 		# code...		
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 300);
-		$data = $this->Globalrules->data_summary_skp_pegawai($id,$id_posisi);				
+		$data = $this->Globalrules->data_summary_skp_pegawai($id,$id_posisi,$year_system);				
 		$this->formulir_skp($data);
 		$this->penilaian_capaian_skp($data);		
 		$this->penilaian_prestasi_kerja($data);				
@@ -893,7 +893,7 @@ class Prints_skp extends CI_Controller {
 		$this->excel->getActiveSheet(1)->getStyle('A1:Z9999')->applyFromArray($styleArray);
 		$this->excel->getActiveSheet(2)->getStyle('A1:Z9999')->applyFromArray($styleArray);								
 		ob_clean();
-		$filename = 'PENILAIAN CAPAIAN SKP  - '.date("Y").'.xlsx'; //save our workbook as this file name
+		$filename = 'PENILAIAN CAPAIAN SKP  - '.$year_system.'.xlsx'; //save our workbook as this file name
 		//header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //mime type excel 2007
 		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name

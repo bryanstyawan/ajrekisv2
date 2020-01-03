@@ -1,4 +1,12 @@
 v4.1.2.6.2
+2020-01-03
+New:
+Improved:
+- Tahun SKP
+Fixed:
+Canceled:
+
+v4.1.2.6.2
 2019-12-20
 New:
 - Nonaktif SKP yang tidak ada realisasi

@@ -86,6 +86,21 @@ if ($atasan != 0 || $atasan != '') {
     $ruang_atasan       = ($atasan[0]->nama_golongan != '-') ? ', ('.$atasan[0]->nama_golongan.') ' : '' ;
     $tmt_pangkat_atasan = ($atasan[0]->tmt_pangkat != '-') ? $atasan[0]->tmt_pangkat : '' ;
 }
+// else
+// {
+//     if ($atasan_akademik != 0 || $atasan_akademik != '') {
+//         # code...
+//     }
+//     else
+//     {
+//         if ($atasan_plt != 0 || $atasan_plt != '') {
+//             # code...
+//             $nama_pegawai_atasan  = $atasan_plt[0]->nama_pegawai;
+//             $nama_jabatan_atasan  = $atasan_plt[0]->nama_jabatan;            
+//         }        
+//     }
+// }
+
 
 if ($atasan_penilai != 0 || $atasan_penilai != '') {
     # code...
@@ -163,31 +178,31 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
     border: 1px solid rgba(158, 158, 158, 0.2);
 }
 </style>
-<!-- <div class="col-lg-6">
-    <label style="color: #000;font-weight: 400;font-size: 19px;">Tahun</label>
-    <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-star"></i></span>
-            <select name="f_tahun" id="f_tahun" class="form-control">
-            <?php
-                $now=date('Y');
-                $past=$now-5;
-                for ($a=$past;$a<=$now+5;$a++)
-                {
-                        echo "<option value='$a'>$a</option>";
-                }
-            ?>
-            </select>
-        </div>
-    </div>
-</div> -->
-
 <div class="col-xs-12">
     <div class="box">
         <div class="box-header">
             <div class="col-lg-12">
-                <a target="_blank" href="<?php echo site_url()?>skp/prints_skp/skp_excel/<?=$id_pegawai;?>/<?=$id_posisi;?>" class="btn btn-success btn-md pull-right"><i class="fa fa-excel"></i> Excel</a>                            
-                <h3 class="text-center">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
+                <div class="input-group col-lg-4">
+                    <select name="f_tahun" id="f_tahun" class="form-control">
+                    <?php
+                        $now=date('Y');
+                        $past=$now-5;
+                        for ($a=$past;$a<=$now+5;$a++)
+                        {
+                            $select ="";
+                            if ($a == $year_pass) {
+                                # code...
+                                $select = "selected";
+                            }
+                            echo "<option value='$a' $select>$a</option>";
+                        }
+                    ?>
+                    </select>
+                    <a class="btn btn-md pull-right" onclick="lookData('<?=$id_pegawai;?>','<?=$id_posisi;?>')" style="background:#00BCD4;color: #fff; margin:10px"><i class="fa fa-excel"></i> Lihat</a>
+                    <a onclick="excelData('<?=$id_pegawai;?>','<?=$id_posisi;?>')" class="btn btn-md pull-right" style="background:#00BCD4;color: #fff; margin:10px"><i class="fa fa-excel"></i> Excel</a>                    
+                </div>       
+                                                                    
+                <h3 class="text-center col-lg-12">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
             </div>
         </div>
         <div class="box-body">
@@ -681,6 +696,17 @@ function deactive(id) {
         }
     })    
 }
+
+function lookData(id,posisi) {
+    var f_tahun = $("#f_tahun").val();
+    window.location.href = "<?php echo site_url()?>skp/cetak_skp/"+id+"/"+posisi+"/"+f_tahun;
+}
+
+function excelData(id,posisi) {
+    var f_tahun = $("#f_tahun").val();
+    window.location.href = "<?php echo site_url()?>skp/prints_skp/skp_excel/"+id+"/"+posisi+"/"+f_tahun;
+}
+
 $(document).ready(function()
 {
     // $("#data1").DataTable({

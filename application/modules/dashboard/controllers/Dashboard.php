@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller {
 			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
 
 			$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();
-			$data['skp']                      = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+			$data['skp']                      = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
 			$data['menit_efektif_year']       = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['member']                   = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
 			$data['summary_tr']               = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,
