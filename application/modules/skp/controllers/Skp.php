@@ -943,7 +943,7 @@ class Skp extends CI_Controller {
 		$helper_title  = "";
 		$helper_posisi = "";
 		$helper_atasan = "";
-		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi);
+		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,date('Y'));
 		$data['content']      = 'skp/skp_penilaian_prilaku';
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
 		$data['subtitle']     = '';
@@ -1048,7 +1048,7 @@ class Skp extends CI_Controller {
 			{
 				$get_posisi = $this->Globalrules->get_info_pegawai($get_data_pegawai[0]['posisi_plt'],'posisi');
 
-				$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt']);
+				$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt'],date('Y'));
 				$data['content']      = 'skp/skp_penilaian_prilaku';
 				$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku PLT';
 				$data['subtitle']     = '';
@@ -1099,7 +1099,7 @@ class Skp extends CI_Controller {
 							(
 								'id_pegawai'         => $this->session->userdata('sesUser'),
 								'id_pegawai_penilai' => $info_pegawai[0]->id,
-								'tahun'              => date('Y')
+								'tahun'              => date('Y')-1
 							);
 					$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
 
