@@ -502,7 +502,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                 }
                                 else
                                 {
-                                    if (date('m') == 12) {
+                                    if (date('m') == 1) {
                                         # code...
                             ?>
                                         <a class="btn btn-danger" onclick="deactive('<?=$list_skp[$i]->skp_id;?>')">
@@ -512,7 +512,12 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                                     }
                                     else
                                     {
-                                        echo $i+1;                                        
+                            ?>
+                                        <a class="btn btn-danger" onclick="deactive('<?=$list_skp[$i]->skp_id;?>')">
+                                            <i class="fa fa-delete"></i> Tidak Aktif
+                                        </a>
+                            <?php                                                                                
+                                        // echo $i+1;                                        
                                     }
                                 }
                             ?>

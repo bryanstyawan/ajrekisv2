@@ -1003,7 +1003,7 @@ class Mskp extends CI_Model
 		}		
 	}
 
-	public function get_sum_questionnaires($id_pegawai,$id_posisi)
+	public function get_sum_questionnaires($id_pegawai,$id_posisi,$year)
 	{
 		# code...
 		$sql = "SELECT SUM(c.value) as result
@@ -1012,7 +1012,7 @@ class Mskp extends CI_Model
 				LEFT JOIN questionnaires_process c ON a.qusioner_code = c.qusioner_code
 				AND c.id_pegawai = '".$id_pegawai."'
 				AND c.id_posisi = '".$id_posisi."'
-				AND c.tahun = '".date('Y')."' ";
+				AND c.tahun = '".$year."' ";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

@@ -145,15 +145,16 @@ class Questionnaires extends CI_Controller {
 		(
 			'id_pegawai'    => $id_pegawai,
 			'id_posisi'     => $id_posisi,
-			'tahun'         => date('Y'),																																
+			'tahun'         => $year_system,																																
 		);
 		
 		$get_data = $this->Allcrud->getData('questionnaires_process',$data_flag)->result_array();
+		// print_r($get_data);die();
 		if ($get_data != array()) {
 			# code...
 			$result  = 0;			
 			$counter = count($get_data);
-			$sum     = $this->mskp->get_sum_questionnaires($id_pegawai,$id_posisi);
+			$sum     = $this->mskp->get_sum_questionnaires($id_pegawai,$id_posisi,$year_system);
 			if ($sum != 0) {
 				# code...
 				if ($sum[0]->result != 0) {

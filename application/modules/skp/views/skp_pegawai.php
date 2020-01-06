@@ -11,7 +11,7 @@
 
 #table_skp>tbody>tr>td
 {
-    text-align: ;
+    /* text-align: ; */
     border: 1px solid rgba(158, 158, 158, 0.2);
 }
 
@@ -637,16 +637,7 @@
     </div>
 </div>
 
-
-
-
-<!-- DataTables -->
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-1.12.4.js"></script>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-
-
 function edit(id,before,after) {
     // body...
     $.getJSON('<?php echo site_url() ?>/skp/get_detail_skp/'+id,
@@ -737,7 +728,7 @@ function del(id) {
         callback: function ($this, type) {
             if (type === 'yes'){
                 $.ajax({
-                    url :"<?php echo site_url()?>/skp/delete_skp/"+id,
+                    url :"<?php echo site_url()?>/skp/target_skp/delete_skp/"+id,
                     type:"post",
                     beforeSend:function(){
                         $("#loadprosess").modal('show');
@@ -929,7 +920,7 @@ $(document).ready(function()
                 if (crud == 'update') 
                 {
                     $.ajax({
-                        url :"<?php echo site_url();?>/skp/edit_skp_pegawai",
+                        url :"<?php echo site_url();?>/skp/target_skp/edit_skp_pegawai",
                         type:"post",
                         data:{data_sender : data_sender},
                         beforeSend:function(){
@@ -948,7 +939,7 @@ $(document).ready(function()
                 else if (crud == 'insert') 
                 {
                     $.ajax({
-                        url :"<?php echo site_url();?>/skp/ad_skp_pegawai_pk",
+                        url :"<?php echo site_url();?>/skp/target_skp/ad_skp_pegawai_pk",
                         type:"post",
                         data:{data_sender : data_sender},
                         beforeSend:function(){
@@ -1080,7 +1071,7 @@ $(document).ready(function()
                                         'biaya'        : biaya
                                 };
                 $.ajax({
-                    url :"<?php echo site_url();?>/skp/ad_skp_pegawai_pk",
+                    url :"<?php echo site_url();?>/skp/target_skp/ad_skp_pegawai_pk",
                     type:"post",
                     data:{data_sender : data_sender},
                     beforeSend:function(){

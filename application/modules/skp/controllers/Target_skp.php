@@ -14,16 +14,17 @@ class Target_skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function index()
+	public function data($year_system=NULL)
 	{
+		$year_system = ($year_system == NULL) ? 2019 : $year_system;
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2019);
 		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Target SKP';
+		$data['content']     = 'skp/skp_pegawai';		
 		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'10');
+		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year_system,'10');
 		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
-		$data['content']     = 'skp/skp_pegawai';
 		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
 		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
 		$data['jenis']       = $this->Allcrud->listData('mr_skp_jenis');
@@ -153,6 +154,293 @@ class Target_skp extends CI_Controller {
 				}								
 			}
 		}
+	}	
+
+	public function edit_skp_pegawai()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$res_data    = "";
+		$text_status = "";
+
+		$param_pk    = $this->parameter_pk($data_sender['pk']);
+
+		$data = array(
+			'edit_skp_id'              => $data_sender['id'],
+			'edit_id_pegawai'          => $this->session->userdata('sesUser'),
+			'edit_tahun'               => date('Y'),
+			'edit_PK'                  => $data_sender['pk'],
+			'edit_jenis_skp'           => $data_sender['jenis_skp'],
+			'edit_AK_target'           => $data_sender['ak_target'],
+			'edit_target_qty'          => $data_sender['jumlah'],
+			'edit_target_output'       => $data_sender['satuan'],
+			'edit_target_kualitasmutu' => $data_sender['kualitas_mutu'],
+			'edit_target_waktu_bln'    => $data_sender['waktu'],
+			'edit_target_biaya'        => $data_sender['biaya'],
+			'edit_status'              => '3',
+			'edit_audit_priority'      => $param_pk
+		);
+
+		if ($data_sender['before'] == 0 || $data_sender['before'] == 2 || $data_sender['before'] == 6)
+		{
+			# code...
+			$data_change = array(
+				'skp_id'              => $data_sender['id'],
+				'id_pegawai'          => $this->session->userdata('sesUser'),
+				'tahun'               => date('Y'),
+				'PK'                  => $data_sender['pk'],
+				'jenis_skp'			  => $data_sender['jenis_skp'],
+				'AK_target'           => $data_sender['ak_target'],
+				'target_qty'          => $data_sender['jumlah'],
+				'target_output'       => $data_sender['satuan'],
+				'target_kualitasmutu' => 100,
+				'target_waktu_bln'    => $data_sender['waktu'],
+				'target_biaya'        => $data_sender['biaya'],
+				'status'			  => 0,
+				'audit_update'        => date('Y-m-d H:i:s'),
+				'audit_priority'      => $param_pk,
+				'audit_user_update'   => $this->session->userdata('sesUser')
+			);
+
+			$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
+			if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
+				# code...
+				if ($this->session->userdata('kat_posisi') == 1) {
+					# code...
+					$data_change['status'] = 1;				
+				}
+				elseif ($this->session->userdata('kat_posisi') == 6) {
+					# code...
+					$data_change['status'] = 1;					
+				}
+				else
+				{
+					$data_change['status'] = 0;
+				}
+			}
+			else {
+				# code...
+				$data_change['status'] = 0;
+			}			
+
+			$flag        = array('skp_id'=>$data_sender['id']);
+			$res_data    = $this->Allcrud->editData('mr_skp_pegawai',$data_change,$flag);
+			$text_status = "Target SKP telah diubah, menunggu persetujuan atasan.";
+		}
+		elseif ($data_sender['before'] == 1) {
+			# code...
+			$check_data = $this->mskp->get_data_skp_pegawai_edit($data_sender['id']);
+			if ($check_data != false) {
+				# code...
+				//edit
+				$flag       = array('edit_skp_id'=>$data_sender['id']);
+				$res_data   = $this->Allcrud->editData('mr_skp_pegawai_temp',$data,$flag);
+			}
+			else
+			{
+				//add
+				$res_data = $this->Allcrud->addData('mr_skp_pegawai_temp',$data);
+			}
+
+			$text_status = "Target SKP telah diubah, status menunggu persetujuan atasan.";
+		}
+		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);
+	}	
+
+	public function parameter_pk($pk)
+	{
+		# code...
+		$param_pk = "";
+		if ($pk == 1)  $param_pk = 'PK';
+		else $param_pk = 'non_PK';
+
+		$data_list   = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),NULL,date('Y'),$param_pk);
+
+		if ($data_list != 0) {
+			# code...
+			$param_pk = count($data_list) + 1;
+		}
+		else
+		{
+			$param_pk = 1;
+		}
+
+		return $param_pk;
+	}	
+
+	public function ad_skp_pegawai_pk()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$param_pk    = $this->parameter_pk(1);				
+		$res_data    = "";
+		$text_status = "";
+		
+		$data = array(
+			'id_pegawai'          => $this->session->userdata('sesUser'),
+			'id_posisi'           => $this->session->userdata('sesPosisi'),
+			'tahun'               => date('Y'),
+			'kegiatan'            => $data_sender['kegiatan'],
+			'PK'                  => 1,
+			'AK_target'           => $data_sender['ak_target'],
+			'target_qty'          => $data_sender['jumlah'],
+			'target_output'       => $data_sender['satuan'],
+			'target_kualitasmutu' => 100,
+			'target_waktu_bln'    => $data_sender['waktu'],
+			'target_biaya'        => $data_sender['biaya'],
+			'audit_priority'      => $param_pk
+		);
+
+		$who_is = $this->Globalrules->who_is($this->session->userdata('sesUser'));		
+		if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
+			# code...
+			if ($this->session->userdata('kat_posisi') == 1) {
+				# code...
+				$data['status'] = 1;				
+			}
+			elseif ($this->session->userdata('kat_posisi') == 6) {
+				# code...
+				$data['status'] = 1;					
+			}
+			else
+			{
+				$data['status'] = 0;
+			}
+		}
+		else {
+			# code...
+			$data['status'] = 0;
+		}			
+
+	
+		$res_data_id    = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+
+		if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
+			# code...
+			$res_data = 1;
+		}
+		else {
+			# code...
+			$res_data = 1;
+		}
+	
+		$text_status = $this->Globalrules->check_status_res($res_data,'Target SKP Telah Ditambahkan.');
+		$res         = array
+						(
+							'status' => $res_data,
+							'text'   => $text_status
+						);
+		echo json_encode($res);
+	}	
+
+	public function delete_skp($id)
+	{
+		# code...
+		$data_res_2 = array
+						(
+							'status' => '99'
+						);
+
+		$flag_2     = array('skp_id' => $id);
+		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',$data_res_2,$flag_2);
+
+		$text_status = $this->Globalrules->check_status_res($res_data,"Target SKP telah dihapus.");
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);
+	}	
+
+	public function add_skp_pegawai()
+	{
+		# code...
+		$this->Allcrud->session_rule();
+		$data_sender = $this->input->post('data_sender');
+		$res_data    = "";
+		$param_pk    = "";
+		$text_status = "";
+
+		$param_pk    = $this->parameter_pk($data_sender['pk']);
+
+		$check_data_pekerjaan = $this->mskp->check_pekerjaan_pegawai($this->session->userdata('sesUser'),$data_sender['kegiatan'],date('Y'));
+		if ($check_data_pekerjaan) {
+			# code...
+			$res = 0;
+			$text_status = "Tidak bisa mengajukan kegiatan tugas jabatan yang telah diajukan.";
+		}
+		else
+		{
+			$data = array(
+				'id_pegawai'          => $this->session->userdata('sesUser'),
+				'id_posisi'           => $this->session->userdata('sesPosisi'),
+				'tahun'               => date('Y'),
+				'kegiatan'            => $data_sender['kegiatan'],
+				'PK'                  => $data_sender['pk'],
+				'jenis_skp'           => $data_sender['jenis_skp'],
+				'AK_target'           => $data_sender['ak_target'],
+				'target_qty'          => $data_sender['jumlah'],
+				'target_output'       => $data_sender['satuan'],
+				'target_kualitasmutu' => $data_sender['kualitas_mutu'],
+				'target_waktu_bln'    => $data_sender['waktu'],
+				'target_biaya'        => $data_sender['biaya'],
+				'status'              => '0',
+				'audit_priority'      => $param_pk
+			);
+			$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+				
+			$get_friend = $this->mskp->get_data_pegawai_by_posisi_ex($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
+			if ($get_friend != 0) {
+				# code...
+				for ($i=0; $i < count($get_friend); $i++) {
+					# code...
+					$check_data_pekerjaan_friend = $this->mskp->check_pekerjaan_pegawai($get_friend[$i]->id,$data_sender['kegiatan'],date('Y'));
+
+					if ($check_data_pekerjaan_friend) {
+						# code...
+					}
+					else
+					{
+						$data = array(
+							'id_pegawai'          => $get_friend[$i]->id,
+							'id_posisi'           => $this->session->userdata('sesPosisi'),
+							'tahun'               => date('Y'),
+							'kegiatan'            => $data_sender['kegiatan'],
+							'status'              => '6',
+							'audit_priority'      => $param_pk
+						);
+						$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+						$res_data = 1;
+					}
+
+				}
+			}
+
+			if ($res_data_id != 0) {
+				# code...
+				$res_data = 1;
+			}
+			else
+			{
+				$res_data = 0;
+			}
+
+			$text_status = $this->Globalrules->check_status_res($res_data,'SKP Telah ditambahkan');
+		}
+
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);
 	}	
 
 
