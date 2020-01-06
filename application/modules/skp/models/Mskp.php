@@ -691,7 +691,7 @@ class Mskp extends CI_Model
 			    WHERE a.status = 1
 			    AND b.id = '".$id_param."'
 				AND c.id_pegawai = '".$id_pegawai."'
-				AND c.tahun = '".$tahun."'";
+				AND c.tahun = '".$tahun."'";						
 		}
 		elseif ($param == 'peer') {
 			# code...

@@ -943,7 +943,7 @@ class Skp extends CI_Controller {
 		$helper_title  = "";
 		$helper_posisi = "";
 		$helper_atasan = "";
-		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,date('Y'));
+		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,2019);
 		$data['content']      = 'skp/skp_penilaian_prilaku';
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
 		$data['subtitle']     = '';
