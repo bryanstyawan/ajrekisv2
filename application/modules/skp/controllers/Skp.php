@@ -14,7 +14,7 @@ class Skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function index()
+	public function index($year=NULL)
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
@@ -23,18 +23,7 @@ class Skp extends CI_Controller {
 
 	public function skp_pegawai()
 	{
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
-		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Setup SKP';
-		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'10');
-		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
-		$data['content']     = 'skp/skp_pegawai';
-		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
-		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
-		$data['jenis']       = $this->Allcrud->listData('mr_skp_jenis');
-		$this->load->view('templateAdmin',$data);
+		redirect('skp/target_skp');
 	}
 
 	public function add_skp_pegawai()

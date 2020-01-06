@@ -529,7 +529,8 @@ class Mskp extends CI_Model
 				FROM mr_skp_pegawai a
 				WHERE a.id_pegawai  = '".$id_pegawai."'
 				AND a.id_posisi = '".$posisi."'
-				AND a.id_skp_master = '".$kegiatan."'";
+				AND a.id_skp_master = '".$kegiatan."'
+				AND a.tahun = '".$tahun."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
