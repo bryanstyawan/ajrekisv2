@@ -940,10 +940,11 @@ class Skp extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();		
-		$helper_title  = "";
-		$helper_posisi = "";
-		$helper_atasan = "";
-		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,2019);
+		$helper_title         = "";
+		$helper_posisi        = "";
+		$helper_atasan        = "";
+		$year_system          = 2019;
+		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,$year_system);
 		$data['content']      = 'skp/skp_penilaian_prilaku';
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
 		$data['subtitle']     = '';
@@ -1020,14 +1021,14 @@ class Skp extends CI_Controller {
 							(
 								'id_pegawai'         => $data['bawahan'][$i]->id,
 								'id_pegawai_penilai' => $this->session->userdata('sesUser'),
-								'tahun'              => date('Y')
+								'tahun'              => $year_system
 							);
 					$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
 				}
 			}
 		}
-		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),date('Y'));
-		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y'));				
+		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$year_system);
+		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$year_system);				
 		$this->load->view('templateAdmin',$data);
 	}
 
