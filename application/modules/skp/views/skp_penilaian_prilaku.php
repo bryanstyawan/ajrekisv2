@@ -266,7 +266,7 @@
                     <tr>
                         <td>Orientasi Pelayanan</td>
                         <td><?=number_format($orientasi_pelayanan,2);?></td>
-                        <!-- <td rowspan="6"><?=number_format($status);?>%</td> -->
+                        <!--<td rowspan="6"><?=number_format($status);?>%</td> -->
                         <td></td>
                     </tr>
                     <tr>

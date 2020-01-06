@@ -1340,9 +1340,9 @@ class Transaksi extends CI_Controller {
 
 		$this->load->library('upload', $config);
 
-		if(!is_dir("public/file_pendukung/".$nip."/"))
+		if(!is_dir("public/file_tugas_tambahan/".$nip."/"))
 		{
-			mkdir("public/file_pendukung/".$nip."/", 0755);
+			mkdir("public/file_tugas_tambahan/".$nip."/", 0755);
 		}        
 
 		if ( ! $this->upload->do_upload('file')){
