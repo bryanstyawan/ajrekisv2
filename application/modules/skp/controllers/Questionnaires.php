@@ -96,8 +96,9 @@ class Questionnaires extends CI_Controller {
 	public function questionnaires_pegawai($id_pegawai,$id_posisi)
 	{
 		# code...
+		$year_system                     = 2019;
 		$data['infoPegawai']             = $this->Globalrules->get_info_pegawai($id_pegawai,'id',$id_posisi);				
-		$data['questionnaires']               = $this->mskp->questionnaires($id_pegawai,$id_posisi); 
+		$data['questionnaires']          = $this->mskp->questionnaires($id_pegawai,$id_posisi,$year_system); 
 		$data['questionnaires_kategori'] = $this->Allcrud->listData('questionnaires_kategori')->result_array();
 		$this->load->view('skp/questionnaires/questionnaires_pegawai',$data);		
 	}
@@ -110,6 +111,7 @@ class Questionnaires extends CI_Controller {
 		$data_sender = $this->input->post('data_sender');
 		$id_pegawai  = 0;
 		$id_posisi   = 0;
+		$year_system = '2019';
 		for ($i=0; $i < count($data_sender); $i++) {
 			# code...
 			$id_pegawai  = $data_sender[$i]['id_pegawai'];
@@ -119,7 +121,7 @@ class Questionnaires extends CI_Controller {
 								'id_pegawai'    => $data_sender[$i]['id_pegawai'],
 								'id_posisi'     => $data_sender[$i]['id_posisi'],
 								'qusioner_code' => $data_sender[$i]['qusioner_code'],
-								'tahun'         => date('Y'),																																
+								'tahun'         => $year_system,																																
 							);
 			$data_store          = $data_flag;
 			$data_store['value'] = $data_sender[$i]['value'];							

@@ -974,7 +974,7 @@ class Mskp extends CI_Model
 		}
 	}	
 
-	public function questionnaires($id_pegawai,$id_posisi)
+	public function questionnaires($id_pegawai,$id_posisi,$year)
 	{
 		# code...
 		$sql = "SELECT a.qusioner_code, 
@@ -989,7 +989,7 @@ class Mskp extends CI_Model
 				LEFT JOIN questionnaires_process c ON a.qusioner_code = c.qusioner_code
 				AND c.id_pegawai = '".$id_pegawai."'
 				AND c.id_posisi = '".$id_posisi."'
-				AND c.tahun = '".date('Y')."' 
+				AND c.tahun = '".$year."' 
 				LEFT JOIN questionnaires_kriteria d ON a.kriteria_id = d.quisioner_kategori_id";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
