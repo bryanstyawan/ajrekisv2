@@ -833,7 +833,8 @@ class Skp extends CI_Controller {
 	public function get_detail_skp_penilaian($id)
 	{
 		# code...
-		$res_data = $this->mskp->get_detail_skp_penilaian($id);
+		$year_system          = 2019;		
+		$res_data = $this->mskp->get_detail_skp_penilaian($id,$year_system);
 		echo json_encode($res_data);
 	}
 
@@ -842,7 +843,8 @@ class Skp extends CI_Controller {
 		# code...
 		$res_data             = "";
 		$data_sender          = $this->input->post('data_sender');
-		$detail_skp_penilaian = $this->mskp->get_detail_skp_penilaian($data_sender['id']);
+		$year_system          = 2019;
+		$detail_skp_penilaian = $this->mskp->get_detail_skp_penilaian($data_sender['id'],$year_system);
 		if ($detail_skp_penilaian != 0) {
 			# code...
 			$data = array

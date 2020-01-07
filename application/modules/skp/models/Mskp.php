@@ -648,7 +648,7 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function get_detail_skp_penilaian($id)
+	public function get_detail_skp_penilaian($id,$year)
 	{
 		# code...
 		$sql = "SELECT 	a.*,
@@ -657,7 +657,8 @@ class Mskp extends CI_Model
 				FROM mr_skp_penilaian_prilaku a
 				JOIN mr_pegawai b
 				ON a.id_pegawai = b.id
-				WHERE a.id = '".$id."'";
+				WHERE a.id = '".$id."'
+				AND a.tahun = '".$year."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
