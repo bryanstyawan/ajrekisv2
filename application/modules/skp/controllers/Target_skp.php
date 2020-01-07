@@ -53,7 +53,7 @@ class Target_skp extends CI_Controller {
 							$data = array(
 								'id_pegawai'     => $id_pegawai,
 								'id_posisi'      => $posisi,
-								'tahun'          => date('Y'),
+								'tahun'          => $tahun,
 								'id_skp_master'  => $bind_data[$i]->id_skp,
 								'status'         => '6',
 								'audit_priority' => ''
@@ -78,7 +78,7 @@ class Target_skp extends CI_Controller {
 								$data = array(
 									'id_pegawai'     => $id_pegawai,
 									'id_posisi'      => $posisi,
-									'tahun'          => date('Y'),
+									'tahun'          => $tahun,
 									'id_skp_master'  => '',
 									'id_skp_jfu'     => '',
 									'id_skp_jft'     => $check_jft[$i]['id'],									
@@ -101,7 +101,6 @@ class Target_skp extends CI_Controller {
 				if ($check_posisi[0]['id_jfu'] != '') {
 					# code...
 					$check_jfu = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $check_posisi[0]['id_jfu']))->result_array();
-					// print_r($check_jfu);die();
 					if ($check_jfu != array()) {
 						# code...
 						for ($i=0; $i < count($check_jfu); $i++) { 
@@ -112,7 +111,7 @@ class Target_skp extends CI_Controller {
 								$data = array(
 									'id_pegawai'     => $id_pegawai,
 									'id_posisi'      => $posisi,
-									'tahun'          => date('Y'),
+									'tahun'          => $tahun,
 									'id_skp_master'  => '',
 									'id_skp_jfu'     => $check_jfu[$i]['id'],
 									'id_skp_jft'     => '',									
@@ -143,7 +142,7 @@ class Target_skp extends CI_Controller {
 							$data = array(
 								'id_pegawai'     => $id_pegawai,
 								'id_posisi'      => $posisi,
-								'tahun'          => date('Y'),
+								'tahun'          => $tahun,
 								'id_skp_master'  => $bind_data[$i]->id_skp,
 								'status'         => '6',
 								'audit_priority' => ''
@@ -159,6 +158,7 @@ class Target_skp extends CI_Controller {
 	public function edit_skp_pegawai()
 	{
 		# code...
+		$year_system = 2019;
 		$data_sender = $this->input->post('data_sender');
 		$res_data    = "";
 		$text_status = "";
@@ -168,7 +168,7 @@ class Target_skp extends CI_Controller {
 		$data = array(
 			'edit_skp_id'              => $data_sender['id'],
 			'edit_id_pegawai'          => $this->session->userdata('sesUser'),
-			'edit_tahun'               => date('Y'),
+			'edit_tahun'               => $year_system,
 			'edit_PK'                  => $data_sender['pk'],
 			'edit_jenis_skp'           => $data_sender['jenis_skp'],
 			'edit_AK_target'           => $data_sender['ak_target'],
@@ -187,7 +187,7 @@ class Target_skp extends CI_Controller {
 			$data_change = array(
 				'skp_id'              => $data_sender['id'],
 				'id_pegawai'          => $this->session->userdata('sesUser'),
-				'tahun'               => date('Y'),
+				'tahun'               => $year_system,
 				'PK'                  => $data_sender['pk'],
 				'jenis_skp'			  => $data_sender['jenis_skp'],
 				'AK_target'           => $data_sender['ak_target'],
@@ -277,6 +277,7 @@ class Target_skp extends CI_Controller {
 	public function ad_skp_pegawai_pk()
 	{
 		# code...
+		$year_system = 2019;
 		$data_sender = $this->input->post('data_sender');
 		$param_pk    = $this->parameter_pk(1);				
 		$res_data    = "";
@@ -285,7 +286,7 @@ class Target_skp extends CI_Controller {
 		$data = array(
 			'id_pegawai'          => $this->session->userdata('sesUser'),
 			'id_posisi'           => $this->session->userdata('sesPosisi'),
-			'tahun'               => date('Y'),
+			'tahun'               => $year_system,
 			'kegiatan'            => $data_sender['kegiatan'],
 			'PK'                  => 1,
 			'AK_target'           => $data_sender['ak_target'],
@@ -367,6 +368,7 @@ class Target_skp extends CI_Controller {
 		$res_data    = "";
 		$param_pk    = "";
 		$text_status = "";
+		$year_system = 2019;
 
 		$param_pk    = $this->parameter_pk($data_sender['pk']);
 
@@ -381,7 +383,7 @@ class Target_skp extends CI_Controller {
 			$data = array(
 				'id_pegawai'          => $this->session->userdata('sesUser'),
 				'id_posisi'           => $this->session->userdata('sesPosisi'),
-				'tahun'               => date('Y'),
+				'tahun'               => $year_system,
 				'kegiatan'            => $data_sender['kegiatan'],
 				'PK'                  => $data_sender['pk'],
 				'jenis_skp'           => $data_sender['jenis_skp'],
@@ -411,7 +413,7 @@ class Target_skp extends CI_Controller {
 						$data = array(
 							'id_pegawai'          => $get_friend[$i]->id,
 							'id_posisi'           => $this->session->userdata('sesPosisi'),
-							'tahun'               => date('Y'),
+							'tahun'               => $year_system,
 							'kegiatan'            => $data_sender['kegiatan'],
 							'status'              => '6',
 							'audit_priority'      => $param_pk

@@ -71,7 +71,7 @@ if ($member != 0) {
 function detail_skp(id,ii,posisi) {
     // body...
     $.ajax({
-        url :"<?php echo site_url()?>skp/get_target_skp_json/"+id+"/"+posisi,
+        url :"<?php echo site_url()?>skp/get_target_skp_json/"+id+"/"+posisi+"/<?=$id_posisi_atasan;?>",
         type:"post",
         beforeSend:function(){
             $("#loadprosess").modal('show');            

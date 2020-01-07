@@ -430,7 +430,7 @@ function approve_skp(id,status,status_edit) {
             callback: function ($this, type) {
                 if (type === 'yes'){
                     $.ajax({
-                        url :"<?php echo site_url()?>/skp/approve_and_reject_skp/"+id+"/1/"+status+'/'+status_edit,
+                        url :"<?php echo site_url()?>/skp/target_skp_approval/approve_and_reject_skp/"+id+"/1/"+status+'/'+status_edit,
                         type:"post",
                         beforeSend:function(){
                             $("#loadprosess").modal('show');                            
@@ -451,7 +451,7 @@ function approve_skp(id,status,status_edit) {
     else
     {
         $.ajax({
-            url :"<?php echo site_url()?>/skp/approve_and_reject_skp/"+id+"/1/"+status+'/'+status_edit,
+            url :"<?php echo site_url()?>/skp/target_skp_approval/approve_and_reject_skp/"+id+"/1/"+status+'/'+status_edit,
             type:"post",
             beforeSend:function(){
                 $("#tr_"+id).css({"background-color": "yellow"});
@@ -509,7 +509,7 @@ $(document).ready(function()
                                     'alasan'    : alasan
                               };
             $.ajax({
-                url :"<?php echo site_url()?>skp/approve_and_reject_skp/"+id+"/2/"+status+'/'+status_edit,
+                url :"<?php echo site_url()?>skp/target_skp_approval/approve_and_reject_skp/"+id+"/2/"+status+'/'+status_edit,
                 type:"post",
                 data:{data_sender : data_sender},
                 beforeSend:function(){
