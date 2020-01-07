@@ -715,22 +715,22 @@ class Skp extends CI_Controller {
 			}
 		}		
 		
-		if($data['bawahan'] != 0){
-			for ($i=0; $i < count($data['bawahan']); $i++) { 
-				# code...
-				$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
-				if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
-					# code...
-					$data_store = array
-							(
-								'id_pegawai'         => $data['bawahan'][$i]->id,
-								'id_pegawai_penilai' => $this->session->userdata('sesUser'),
-								'tahun'              => $year_system
-							);
-					$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
-				}
-			}
-		}
+		// if($data['bawahan'] != 0){
+		// 	for ($i=0; $i < count($data['bawahan']); $i++) { 
+		// 		# code...
+		// 		$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
+		// 		if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
+		// 			# code...
+		// 			$data_store = array
+		// 					(
+		// 						'id_pegawai'         => $data['bawahan'][$i]->id,
+		// 						'id_pegawai_penilai' => $this->session->userdata('sesUser'),
+		// 						'tahun'              => $year_system
+		// 					);
+		// 			$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
+		// 		}
+		// 	}
+		// }
 		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$year_system);
 		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$year_system);				
 		$this->load->view('templateAdmin',$data);
