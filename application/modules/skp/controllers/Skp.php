@@ -791,21 +791,21 @@ class Skp extends CI_Controller {
 		$res_data_id  = "";
 		$text_status  = "";
 		$data_sender  = $this->input->post('data_sender');
-		$year_system = 2019;
+		$year_system = '2019';
 		for ($i=0; $i < count($data_sender); $i++) {
 			# code...
 			$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender[$i]['evaluator'],'nama_pegawai');
 
 			if ($info_pegawai != 0) {
 				# code...
-				$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,2019);
+				$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,$year_system);
 				if ($check_data == 0) {
 					# code...
 					$data = array
 							(
 								'id_pegawai'         => $this->session->userdata('sesUser'),
 								'id_pegawai_penilai' => $info_pegawai[0]->id,
-								'tahun'              => 2019
+								'tahun'              => $year_system
 							);
 					$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
 
@@ -816,7 +816,7 @@ class Skp extends CI_Controller {
 				}
 				else
 				{
-					$res_data = 0;
+					$res_data = 1;
 				}
 			}
 		}
