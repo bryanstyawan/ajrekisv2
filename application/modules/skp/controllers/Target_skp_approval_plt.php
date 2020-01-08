@@ -29,12 +29,9 @@ class Target_skp_approval_plt extends CI_Controller {
 			}
 			else
 			{
-				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
+				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim [PLT]';
 				$data['subtitle'] = '';
 				$data['bawahan']  = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
-				// echo "<pre>";
-				// print_r($data['bawahan']);die();				
-				// echo "</pre>";
 				$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
 				$data['content']  = 'skp/skp_approval_target';
 				$data['id_posisi_atasan'] = $get_data_pegawai[0]['posisi_plt'];				

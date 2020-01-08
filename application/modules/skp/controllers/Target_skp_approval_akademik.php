@@ -29,7 +29,7 @@ class Target_skp_approval_akademik extends CI_Controller {
 			}
 			else
 			{
-				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
+				$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim [Akademik]';
 				$data['subtitle'] = '';
 				$data['bawahan']  = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_akademik']);
 				$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');

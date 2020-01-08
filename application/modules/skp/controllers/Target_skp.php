@@ -20,7 +20,7 @@ class Target_skp extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2019);
-		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Target SKP';
+		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Target SKP 2019';
 		$data['content']     = 'skp/skp_pegawai';		
 		$data['subtitle']    = '';
 		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year_system,'10');
