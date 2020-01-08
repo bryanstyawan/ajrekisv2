@@ -295,6 +295,13 @@ class Skp extends CI_Controller {
 			$data['atasan_plt']   = 0;			
 		}
 
+		if ($data['atasan'] == 0) {
+			# code...
+			$data['atasan']       = $this->Globalrules->list_atasan($this->session->userdata('atasan'));
+			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik($this->session->userdata('atasan')) : $data['atasan'] ;
+			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($this->session->userdata('atasan')) : $data['atasan'] ;									
+		}
+
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');

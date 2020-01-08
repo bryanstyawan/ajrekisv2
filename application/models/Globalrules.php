@@ -713,9 +713,9 @@ class Globalrules extends CI_Model
 								a.nama_posisi
 			    FROM mr_posisi a
 			    JOIN mr_pegawai b
-			    ON a.atasan = b.posisi_akademik
+			    ON a.id = b.posisi_akademik
 			    WHERE a.id = '".$posisi."'
-			    AND b.status = 1";
+				AND b.status = 1";
 		$query = $this->db->query($sql);
 		return ($query->num_rows() > 0) ? $query->result() : 0;
 	}	
