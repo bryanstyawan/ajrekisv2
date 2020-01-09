@@ -86,7 +86,7 @@ body * {
 			?>
 			<div class="card-container col-lg-3"> 
 				<div class="card">
-					<a href="<?php echo site_url()?>skp/cetak_skp/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>/<?=date('Y');?>">
+					<a href="<?php echo site_url()?>skp/cetak_skp/data/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>/<?=date('Y');?>">
 						<div class="card--display">
 							<i class="fa fa-street-view"></i>
 							<?=$request_history[$i]->nama_pegawai;?>

@@ -45,6 +45,32 @@ class Skp extends CI_Controller {
 		redirect('skp/target_skp_approval_akademik/data');
 	}	
 
+	public function cetak_skp($id=NULL,$posisi=NULL,$year_system=NULL)
+	{
+		# code...
+		redirect('skp/cetak_skp/data/');
+	}
+
+	public function penilaian_prilaku($arg=NULL)
+	{
+		# code...
+		redirect('skp/penilaian_prilaku/data');
+	}	
+
+	public function deactive_skp($id)
+	{
+		# code...
+		$flag        = array('skp_id'=>$id);		
+		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',array('status'=>0),array('skp_id'=>$id));		
+		$text_status = $this->Globalrules->check_status_res($res_data,'SKP ini dihentikan.');
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}	
+
 	public function get_target_skp_json($id,$id_posisi,$id_posisi_atasan)
 	{
 		# code...
@@ -174,51 +200,7 @@ class Skp extends CI_Controller {
 		echo json_encode($res);
 	}
 
-	public function penilaian_skp($param=NULL,$id_posisi=NULL)
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$id               = "";
-		$id_posisi        = "";
-		$data['penilai']  = '';
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian SKP';
-		$data['subtitle'] = '';
-		$data['member']   = $this->mskp->get_member($this->session->userdata('sesPosisi'));
-		$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
-		$data['jenis']    = $this->Allcrud->listData('mr_skp_jenis');
-		if ($param == NULL) {
-			# code...
-			$id                     = $this->session->userdata('sesUser');
-			$id_posisi              = $this->session->userdata('sesPosisi');			
-			$data['penilai']        = 0;
-		}
-		else
-		{
-			if ($data['member'] != 0) {
-				# code...
-				$data['penilai'] = 1;
-			}
-			else
-			{
-				$data['penilai'] = 0;
-			}
-			$id          = $param;			
-			$get_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$id))->result_array();
-			if ($get_pegawai != array()) {
-				# code...
-				$id_posisi = $get_pegawai[0]['posisi'];
-			} else {
-				# code...
-				$id_posisi = '';
-			}
-		}
 
-		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($id,'id',$id_posisi);
-		$data['list']         = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),'1','realisasi');
-		$data['content']      = 'skp/penilaian_skp';
-		$this->load->view('templateAdmin',$data);
-	}
 
 	public function penilaian_skp_kualmutu()
 	{
@@ -247,156 +229,12 @@ class Skp extends CI_Controller {
 		echo json_encode($res);
 	}
 
-	public function penilaian_prilaku($arg=NULL)
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();		
-		$helper_title         = "";
-		$helper_posisi        = "";
-		$helper_atasan        = "";
-		$year_system          = 2019;
-		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,$year_system);
-		$data['content']      = 'skp/skp_penilaian_prilaku';
-		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
-		$data['subtitle']     = '';
-		// echo "<pre>";
-		// print_r($data);die();		
-		// echo "</pre>";		
-		if($arg != NULL)
-		{
-			if ($arg == "plt") {
-				# code...
-				$helper_title = "PLT";
-				$get_data_posisi = $this->Allcrud->getData('mr_posisi',array('id'=>$this->session->userdata('posisi_plt')))->result_array();				
-				if ($get_data_posisi != array()) {
-					# code...
-					$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('posisi'=>$get_data_posisi[0]['atasan'],'status'=>1))->result_array();					
-					$helper_atasan = $get_data_posisi[0]['atasan'];					
-					$helper_posisi = $this->session->userdata('posisi_plt');					
-				}
-			}
-		}
-		else
-		{
-			$helper_posisi = $this->session->userdata('sesPosisi');
-			$helper_atasan = $this->session->userdata('atasan');
-		}
 
-		if ($helper_atasan != 0) {
-			# code...
-			$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);
-			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik(	) : $data['atasan'] ;			
-			$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);					
-		}
-		else
-		{
-			$data['atasan']       = 0;			
-			$data['atasan_plt']   = 0;			
-		}
-
-		if ($data['atasan'] == 0) {
-			# code...
-			$data['atasan']       = $this->Globalrules->list_atasan($this->session->userdata('atasan'));
-			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik($this->session->userdata('atasan')) : $data['atasan'] ;
-			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($this->session->userdata('atasan')) : $data['atasan'] ;									
-		}
-
-		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
-		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
-		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
-		if ($arg == "plt") {
-		}
-		else
-		{
-			if ($this->session->userdata('kat_posisi') == 4 || $this->session->userdata('kat_posisi') == 2) {
-				# code...
-				if ($data['peer'] == 0 || count($data['peer']) < 5) {
-					# code...
-					$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
-					if ($data['peer'] == 0 || count($data['peer']) < 5) {
-						# code...
-						$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-						if ($data['peer'] == 0 || count($data['peer']) < 5) {
-							# code...
-							$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-						}				
-					}			
-				}			
-			}
-			else
-			{
-	
-			}
-		}		
-		
-		// if($data['bawahan'] != 0){
-		// 	for ($i=0; $i < count($data['bawahan']); $i++) { 
-		// 		# code...
-		// 		$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
-		// 		if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
-		// 			# code...
-		// 			$data_store = array
-		// 					(
-		// 						'id_pegawai'         => $data['bawahan'][$i]->id,
-		// 						'id_pegawai_penilai' => $this->session->userdata('sesUser'),
-		// 						'tahun'              => $year_system
-		// 					);
-		// 			$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
-		// 		}
-		// 	}
-		// }
-		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$year_system);
-		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$year_system);				
-		$this->load->view('templateAdmin',$data);
-	}
 
 	public function penilaian_prilaku_plt()
 	{
 		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
-		if ($get_data_pegawai != array()) 
-		{
-			# code...
-			if ($get_data_pegawai[0]['posisi_plt'] == 0) {
-				# code...
-				redirect('dashboard/home');
-			}
-			else
-			{
-				$get_posisi = $this->Globalrules->get_info_pegawai($get_data_pegawai[0]['posisi_plt'],'posisi');
 
-				$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt'],date('Y'));
-				$data['content']      = 'skp/skp_penilaian_prilaku';
-				$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku PLT';
-				$data['subtitle']     = '';
-				$data['atasan']       = $this->Globalrules->list_atasan($get_data_pegawai[0]['posisi_plt']);
-				$data['peer']         = $this->Globalrules->list_bawahan($get_posisi[0]->atasan);
-				$data['bawahan']      = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
-				$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
-				if($data['bawahan'] != 0){
-					for ($i=0; $i < count($data['bawahan']); $i++) { 
-						# code...
-						$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
-						if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
-							# code...
-							$data_store = array
-									(
-										'id_pegawai'         => $data['bawahan'][$i]->id,
-										'id_pegawai_penilai' => $this->session->userdata('sesUser'),
-										'tahun'              => date('Y')
-									);
-							$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
-						}
-					}
-				}
-				$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),date('Y'));
-				$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y'));				
-				$this->load->view('templateAdmin',$data);				
-			}
-		}
 	}	
 
 	public function pengajuan_penilaian_prilaku()
@@ -797,65 +635,6 @@ class Skp extends CI_Controller {
 		redirect('master_skp_posisi/'.$id, false);
 	}
 
-	public function cetak_skp($id=NULL,$posisi=NULL,$year_system=NULL)
-	{
-		# code...
-		$year_system = ($year_system == NULL) ? date('Y') : $year_system ;
-		if($id != NULL)
-		{
-			if($posisi != NULL)
-			{
-				$this->Globalrules->session_rule();
-				$this->Globalrules->notif_message();
-				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi,$year_system);
-				// echo "<pre>";
-				// print_r($data);die();
-				// echo "</pre>";
-				$data['year_pass']  = $year_system;
-				$data['penilai']    = '';
-				$data['id_pegawai'] = $id;
-				$data['id_posisi']  = $posisi;
-				$data['title']      = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
-				$data['content']    = 'skp/cetak_history_skp';
-				$this->load->view('templateAdmin',$data);
-			}
-			else
-			{
-				$this->history_skp();				
-			}
-		}
-		else
-		{
-			$this->history_skp();
-		}
-	}
-
-    public function history_skp()
-	{
-		# code...
-		$getMasaKerja = $this->Allcrud->getData('mr_masa_kerja', array('id_pegawai' => $this->session->userdata('sesUser'),'id_posisi' => $this->session->userdata('sesPosisi')))->result_array();		
-		if($getMasaKerja == array())
-		{
-			$data_store        = array
-						(
-							'id_pegawai' => $this->session->userdata('sesUser'),
-							'id_posisi'  => $this->session->userdata('sesPosisi'),
-							'StartDate'  => date('Y-m-d H:i:s'),
-							'EndDate'    => '9999-01-01',
-							'audit_user' => $this->session->userdata('sesNip'),
-							'audit_time' => date('Y-m-d H:i:s')
-						);		
-			$res_data    = $this->Allcrud->addData('mr_masa_kerja',$data_store);			
-		}
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$data['penilai']  = '';
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
-		$data['content']  = 'skp/skp_history_skp';
-		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
-		$this->load->view('templateAdmin',$data);
-	}
-
 	public function penilaian_skp_bulanan_plt()
 	{
 		# code...
@@ -879,18 +658,50 @@ class Skp extends CI_Controller {
 		$this->load->view('templateAdmin',$data);		
 	}	
 
-	public function deactive_skp($id)
-	{
-		# code...
-		$flag        = array('skp_id'=>$id);		
-		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',array('status'=>0),array('skp_id'=>$id));		
-		$text_status = $this->Globalrules->check_status_res($res_data,'SKP ini dihentikan.');
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);		
-	}
+	// public function penilaian_skp($param=NULL,$id_posisi=NULL)
+	// {
+	// 	# code...
+	// 	$this->Globalrules->session_rule();
+	// 	$this->Globalrules->notif_message();
+	// 	$id               = "";
+	// 	$id_posisi        = "";
+	// 	$data['penilai']  = '';
+	// 	$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian SKP';
+	// 	$data['subtitle'] = '';
+	// 	$data['member']   = $this->mskp->get_member($this->session->userdata('sesPosisi'));
+	// 	$data['satuan']   = $this->Allcrud->listData('mr_skp_satuan');
+	// 	$data['jenis']    = $this->Allcrud->listData('mr_skp_jenis');
+	// 	if ($param == NULL) {
+	// 		# code...
+	// 		$id                     = $this->session->userdata('sesUser');
+	// 		$id_posisi              = $this->session->userdata('sesPosisi');			
+	// 		$data['penilai']        = 0;
+	// 	}
+	// 	else
+	// 	{
+	// 		if ($data['member'] != 0) {
+	// 			# code...
+	// 			$data['penilai'] = 1;
+	// 		}
+	// 		else
+	// 		{
+	// 			$data['penilai'] = 0;
+	// 		}
+	// 		$id          = $param;			
+	// 		$get_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$id))->result_array();
+	// 		if ($get_pegawai != array()) {
+	// 			# code...
+	// 			$id_posisi = $get_pegawai[0]['posisi'];
+	// 		} else {
+	// 			# code...
+	// 			$id_posisi = '';
+	// 		}
+	// 	}
+
+	// 	$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($id,'id',$id_posisi);
+	// 	$data['list']         = $this->mskp->get_data_skp_pegawai($id,$id_posisi,date('Y'),'1','realisasi');
+	// 	$data['content']      = 'skp/penilaian_skp';
+	// 	$this->load->view('templateAdmin',$data);
+	// }	
 }
   

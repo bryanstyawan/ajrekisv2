@@ -704,7 +704,7 @@ function deactive(id) {
 
 function lookData(id,posisi) {
     var f_tahun = $("#f_tahun").val();
-    window.location.href = "<?php echo site_url()?>skp/cetak_skp/"+id+"/"+posisi+"/"+f_tahun;
+    window.location.href = "<?php echo site_url()?>skp/cetak_skp/data/"+id+"/"+posisi+"/"+f_tahun;
 }
 
 function excelData(id,posisi) {
