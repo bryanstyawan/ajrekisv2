@@ -6,8 +6,6 @@ class Skp extends CI_Controller {
 	public function __construct () {
 		parent::__construct();
 		$this->load->model ('mskp', '', TRUE);
-		$this->load->model ('transaksi/mtrx', '', TRUE);
-		$this->load->model ('master/Mmaster', '', TRUE);
 		$this->load->library('Excel');
 		$this->load->library('image_lib');
 		$this->load->library('upload');
@@ -103,9 +101,6 @@ class Skp extends CI_Controller {
 		$this->load->view('skp/approval/index',$data);
 	}	
 
-
-
-
 	public function penilaian_skp_kualmutu()
 	{
 		# code...
@@ -133,164 +128,12 @@ class Skp extends CI_Controller {
 		echo json_encode($res);
 	}
 
-
-
 	public function penilaian_prilaku_plt()
 	{
 		# code...
 
 	}	
-
-	public function pengajuan_penilaian_prilaku()
-	{
-		# code...
-		$res_data     = "";
-		$res_data_id  = "";
-		$text_status  = "";
-		$data_sender  = $this->input->post('data_sender');
-		$year_system = $this->year_system;
-		for ($i=0; $i < count($data_sender); $i++) {
-			# code...
-			$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender[$i]['evaluator'],'nama_pegawai');
-
-			if ($info_pegawai != 0) {
-				# code...
-				$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,$year_system);
-				if ($check_data == 0) {
-					# code...
-					$data = array
-							(
-								'id_pegawai'         => $this->session->userdata('sesUser'),
-								'id_pegawai_penilai' => $info_pegawai[0]->id,
-								'tahun'              => $year_system
-							);
-					$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
-
-					if ($res_data_id != 0) {
-						# code...
-						$res_data = 1;
-					}
-				}
-				else
-				{
-					$res_data = 1;
-				}
-			}
-		}
-
-		$text_status = $this->Globalrules->check_status_res($res_data,"Anda telah mengajukan penilaian prilaku kepada Atasan dan rekan-rekan anda.");
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
-	}
-
-	public function get_detail_skp_penilaian($id)
-	{
-		# code...
-		$year_system          = $this->year_system;		
-		$res_data = $this->mskp->get_detail_skp_penilaian($id,$year_system);
-		echo json_encode($res_data);
-	}
-
-	public function proses_penilaian_prilaku()
-	{
-		# code...
-		$res_data             = "";
-		$data_sender          = $this->input->post('data_sender');
-		$year_system          = $this->year_system;
-		$detail_skp_penilaian = $this->mskp->get_detail_skp_penilaian($data_sender['id'],$year_system);
-		if ($detail_skp_penilaian != 0) {
-			# code...
-			$data = array
-					(
-						'orientasi_pelayanan' => $data_sender['orientasi_pelayanan'],
-						'integritas'          => $data_sender['integritas'],
-						'komitmen'            => $data_sender['komitmen'],
-						'disiplin'            => $data_sender['disiplin'],
-						'kerjasama'           => $data_sender['kerjasama'],
-						'kepemimpinan'        => $data_sender['kepemimpinan'],
-						'status'              => '1',
-						'rekomendasi'         => $data_sender['rekomendasi']	
-					);
-			$flag        = array('id'=>$data_sender['id']);
-			$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,$flag);
-		}
-		$text_status = $this->Globalrules->check_status_res($res_data,'Terima kasih telah memberikan penilai prilaku');
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
-	}
-
-	public function remove_pengajuan_penilaian_prilaku($value='')
-	{
-		# code...
-		$res_data     = "";
-		$res_data_id  = "";
-		$text_status  = "";
-		$data_sender  = $this->input->post('data_sender');
-		$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender['evaluator'],'nama_pegawai');
-		if ($info_pegawai != 0) {
-			# code...
-			$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,date('Y'));
-			if ($check_data != 0) {
-				# code...
-				$flag = array('id' => $check_data[0]->id);
-				$res_data = $this->Allcrud->delData('mr_skp_penilaian_prilaku',$flag);
-			}
-			else
-			{
-				$res_data = 0;
-			}
-		}
-
-		$text_status = $this->Globalrules->check_status_res($res_data,"Anda telah membatalkan pengajuan penilaian prilaku.");
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
-	}
-
-
-
-
-
-	public function get_indikator_prilaku($id)
-	{
-		# code...
-		$res_data    = '';
-		$text_status = ''; 
-		$get_data    = $this->mskp->get_indikator_prilaku($id);
-		if ($get_data != 0) {
-			# code...
-			$res_data    = 1;
-			$text_status = $get_data;
-		}
-		else {
-			# code...
-			$res_data    = 0;
-			$text_status = 'Data tidak ditemukan';
-		}
-		$res = array
-					(
-						'status' => $res_data,
-						'text'   => $text_status
-					);
-		echo json_encode($res);
-	}	
-
-
-
-
-
-
+	
 	public function penilaian_skp_bulanan_plt()
 	{
 		# code...

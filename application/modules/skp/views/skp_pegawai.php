@@ -105,21 +105,28 @@
             <div class ="box-tools">
                 <h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addDataSKP"><i class="fa fa-plus-square"></i> Tambah SKP Pegawai</button></h3>                
             </div>
-            <!-- <div class="col-md-3">
-                <label style="color: #000;font-weight: 400;font-size: 19px;display: -webkit-inline-box;">
-                    Tahun&nbsp;:&nbsp;&nbsp;
-                    <select class="form-control input-sm" name="tahun" id="tahun">
-                        <?php
-                            $now=date('Y');
-                            $past=$now-5;
-                            for ($a=$past;$a<=$now+5;$a++)
-                            {
-                                 echo "<option value='$a'>$a</option>";
+            <div class="col-lg-12">
+                <div class="input-group col-lg-4">
+                    <select name="f_tahun" id="f_tahun" class="form-control">
+                    <?php
+                        $now=date('Y');
+                        $past=$now-2;
+                        for ($a=$past;$a<=$now+5;$a++)
+                        {
+                            $select ="";
+                            if ($a == $year_pass) {
+                                # code...
+                                $select = "selected";
                             }
-                        ?>
+                            echo "<option value='$a' $select>$a</option>";
+                        }
+                    ?>
                     </select>
-                </label>
-            </div> -->
+                    <a class="btn btn-md pull-right" onclick="lookData('<?=$id_pegawai;?>','<?=$id_posisi;?>')" style="background:#00BCD4;color: #fff; margin:10px"><i class="fa fa-excel"></i> Lihat</a>                    
+                </div>       
+                                                                    
+                <h3 class="text-center col-lg-12">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
+            </div>
         </div>
         <div class="box-body">
             <table id="table_skp" class="table table-bordered table-striped table-view" style="font-size: 12px;">
@@ -161,20 +168,32 @@
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp;
                                 }
+                                else
+                                {
+                                    $list[$i]->id_skp_master = NULL;
+                                }
                             }
                             elseif ($info_posisi[0]['kat_posisi'] == 2) {
                                 # code...
                                 if ($list[$i]->id_skp_jft != 0) {
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp_jft;
-                                }                                
+                                }
+                                else
+                                {
+                                    $list[$i]->id_skp_jft = NULL;
+                                }                                                                
                             }                            
                             elseif ($info_posisi[0]['kat_posisi'] == 4) {
                                 # code...
                                 if ($list[$i]->id_skp_jfu != 0) {
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp_jfu;
-                                }                                
+                                }       
+                                else
+                                {
+                                    $list[$i]->id_skp_jfu = NULL;
+                                }                                                                                                                 
                             }
                             elseif($info_posisi[0]['kat_posisi'] == 6)
                             {
@@ -182,6 +201,10 @@
                                     # code...
                                     $kegiatan            = $list[$i]->kegiatan_skp;
                                 }
+                                else
+                                {
+                                    $list[$i]->id_skp_master = NULL;
+                                }                                                        
                             }
 
                             $AK_target           = $list[$i]->AK_target;
@@ -191,31 +214,6 @@
                             $target_waktu_bln    = $list[$i]->target_waktu_bln;
                             $target_biaya        = number_format($list[$i]->target_biaya,0);
                             $jenis_skp           = $list[$i]->nama_jenis_skp;
-
-                            if (count($list) == 1) {
-                                # code...
-                                $arrow_up   = "display:none;";
-                                $arrow_down = "display:none;";
-                            }
-                            else
-                            {
-                                if ($i == 0) {
-                                    # code...
-                                    $arrow_up   = "display:none;";
-                                    $arrow_down = "";
-                                }
-                                elseif ($i == (count($list)-1)) {
-                                    # code...
-                                    $arrow_up   = "";
-                                    $arrow_down = "display:none;";
-                                }
-                                else
-                                {
-                                    $arrow_up   = "";
-                                    $arrow_down = "";
-                                }
-                            }
-
 
 
                             if ($list[$i]->edit_status == 3) {
@@ -261,14 +259,8 @@
                                 }
                             }
 
-                            if ($list[$i]->PK == 1) {
-                                # code...
-                                $pk_status = "Ya";
-                            }
-                            else
-                            {
-                                $pk_status = "Tidak";
-                            }
+
+                            $pk_status = ($list[$i]->PK == 1) ? "Ya" : "Tidak" ;                            
 
                             if ($list[$i]->status == 1) {
                                 # code...
@@ -363,14 +355,7 @@
                                 ?>
                                 <tr style="<?=$style_tr;?>">
                                     <td style="<?=$style_td;?>">
-                                        <!-- <span class="col-md-12 pull-left" style="display: none;">
-                                            <a href="#" class="col-md-12" style="<?=$arrow_up;?><?=$style_tr;?>" onclick="arrow_up('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-up"></i></a>
-                                        </span> -->
-                                        <!-- <span class="col-md-12 text-center"><?=$i+1;?></span> -->
                                         <span class="col-md-12 text-center"><i class="fa fa-dot-circle-o"></i></span>
-                                        <!-- <span class="col-md-12 pull-left" style="display: none;">
-                                            <a href="#" class="col-md-12" style="<?=$arrow_down;?><?=$style_tr;?>" onclick="arrow_down('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-down"></i></a>
-                                        </span> -->
                                     </td>
                                     <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
                                     <td style="<?=$style_td;?>"><?=$AK_target;?></td>
@@ -391,20 +376,26 @@
                                         ?>
                                     </td>
                                     <td style="<?=$style_td;?>">
-                                        <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
-                                        &nbsp;
-                                        <?php
-                                            if ($list[$i]->id_skp_master == NULL && $list[$i]->id_skp_jfu == NULL && $list[$i]->id_skp_jft == NULL) 
-                                            {
+                                        <?php 
+                                            if ($year_pass == date('Y')) {
                                                 # code...
-                                                if ($list[$i]->status != 1) {
-                                                    # code...
                                         ?>
-                                                    <button class="btn btn-danger btn-xs" style="margin-top:10px;" onclick="del('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Hapus Target</button>                            
+                                            <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
+                                            &nbsp;
+                                        <?php
+                                                if ($list[$i]->kegiatan != NULL) 
+                                                {
+                                                    # code...
+                                                    if ($list[$i]->status != 1) {
+                                                        # code...
+                                        ?>
+                                                        <button class="btn btn-danger btn-xs" style="margin-top:10px;" onclick="del('<?=$list[$i]->skp_id;?>')"><i class="fa fa-edit"></i>&nbsp;Hapus Target</button>                            
                                         <?                                        
+                                                    }
                                                 }
                                             }
                                         ?>
+
                                         <?php 
                                         // if ($list[$i]->PK == 1) {
                                         //     # code...
@@ -516,11 +507,7 @@
                                     </div>
 
                                     <?php
-                                        $only_jft = "";
-                                        if ($this->session->userdata('kat_posisi') != 2) {
-                                            # code...
-                                            $only_jft = "style='display:none;'";
-                                        }
+                                        $only_jft = ($this->session->userdata('kat_posisi') != 2) ? "style='display:none;'" : '' ;
                                     ?>
 
                                     <div class="form-group col-md-12" <?=$only_jft;?>>
@@ -745,6 +732,11 @@ function del(id) {
             }
         }
     })
+}
+
+function lookData(id,posisi) {
+    var f_tahun = $("#f_tahun").val();
+    window.location.href = "<?php echo site_url()?>skp/target_skp/data/"+f_tahun+"/"+id+"/"+posisi+"/";
 }
 
 // function kegiatan_es2(params) {

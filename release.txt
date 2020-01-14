@@ -1,11 +1,14 @@
 v4.1.2.6.3
-2020-01-07
+2020-01-14
 New:
+- Filter Tahun di target SKP
 Improved:
 - Code Review Master SKP
 - Code Review Target SKP
 - Code Review Transaksi
 - Syncronisasi Target SKP berdasarkan skp tahun sebelumnya
+- Code Review SKP
+- Code Review Penilaian prilaku
 Fixed:
 Canceled:
 

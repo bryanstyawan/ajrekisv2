@@ -611,7 +611,7 @@ $(document).ready(function()
 
                     }
                     $.ajax({
-                        url :"<?php echo site_url();?>/skp/proses_penilaian_prilaku",
+                        url :"<?php echo site_url();?>/skp/penilaian_prilaku/proses_penilaian_prilaku",
                         data:{data_sender : data_sender},                                                
                         type:"post",
                         beforeSend:function(){
@@ -653,7 +653,7 @@ $(document).ready(function()
         if (send_data == 1) 
         {
             $.ajax({
-                url :"<?php echo site_url();?>/skp/pengajuan_penilaian_prilaku",
+                url :"<?php echo site_url();?>/skp/penilaian_prilaku/pengajuan_penilaian_prilaku",
                 type:"post",
                 data:{data_sender : data_sender_detail},
                 beforeSend:function(){
@@ -694,7 +694,7 @@ function remove_list_evaluator(PARAM)
 function send_penilaian_prilaku(id,id_pegawai) {
     // body...
     $.ajax({
-        url :"<?php echo site_url();?>/skp/get_detail_skp_penilaian/"+id,
+        url :"<?php echo site_url();?>/skp/penilaian_prilaku/get_detail_skp_penilaian/"+id,
         type:"post",
         beforeSend:function(){
             $("#form_penilaian").modal('hide');
@@ -733,7 +733,7 @@ function remove_list_evaluator_sync(PARAM) {
                             'evaluator' : x       
                         }
     $.ajax({
-        url :"<?php echo site_url();?>/skp/remove_pengajuan_penilaian_prilaku",
+        url :"<?php echo site_url();?>/skp/penilaian_prilaku/remove_pengajuan_penilaian_prilaku",
         type:"post",
         data:{data_sender : data_sender_detail},
         beforeSend:function(){
@@ -776,7 +776,7 @@ function open_view_modal(params,arg) {
     $("#loadprosess").modal('show');
 
     $.ajax({
-        url :"<?php echo site_url();?>/skp/get_indikator_prilaku/"+arg,
+        url :"<?php echo site_url();?>/skp/penilaian_prilaku/get_indikator_prilaku/"+arg,
         type:"post",
         beforeSend:function(){
             // $("#form_penilaian").modal('hide');

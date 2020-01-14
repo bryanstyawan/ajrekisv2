@@ -47,25 +47,25 @@ class penilaian_prilaku_plt extends CI_Controller {
 			$helper_posisi = $this->session->userdata('sesPosisi');
 			$helper_atasan = $this->session->userdata('atasan');
 		}
+		// print_r($this->Globalrules->list_atasan($helper_posisi));die();
+		$data['atasan']       = $this->Globalrules->list_atasan_plt($helper_posisi);
+		// if ($helper_atasan != 0) {
+		// 	# code...
+		// 	$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);
+		// 	$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik(	) : $data['atasan'] ;			
+					
+		// }
+		// else
+		// {
+		// 	$data['atasan']       = 0;			
+		// 	$data['atasan_plt']   = 0;			
+		// }
 
-		if ($helper_atasan != 0) {
-			# code...
-			$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);
-			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik(	) : $data['atasan'] ;			
-			$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);					
-		}
-		else
-		{
-			$data['atasan']       = 0;			
-			$data['atasan_plt']   = 0;			
-		}
-
-		if ($data['atasan'] == 0) {
-			# code...
-			$data['atasan']       = $this->Globalrules->list_atasan($this->session->userdata('atasan'));
-			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik($this->session->userdata('atasan')) : $data['atasan'] ;
-			$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($this->session->userdata('atasan')) : $data['atasan'] ;									
-		}
+		// if ($data['atasan'] == 0) {
+		// 	# code...
+		// 	$data['atasan']       = $this->Globalrules->list_atasan_plt($this->session->userdata('atasan')) ;
+									
+		// }
 
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);

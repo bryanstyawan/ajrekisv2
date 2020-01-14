@@ -25,9 +25,6 @@ class Cetak_skp extends CI_Controller {
 				$this->Globalrules->session_rule();
 				$this->Globalrules->notif_message();
 				$data             = $this->Globalrules->data_summary_skp_pegawai($id,$posisi,$year_system);
-				// echo "<pre>";
-				// print_r($data);die();
-				// echo "</pre>";
 				$data['year_pass']  = $year_system;
 				$data['penilai']    = '';
 				$data['id_pegawai'] = $id;

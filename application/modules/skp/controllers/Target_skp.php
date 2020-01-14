@@ -13,19 +13,18 @@ class Target_skp extends CI_Controller {
 
 	private $year_system = 2020;	
 
-	public function data($year=NULL)
+	public function data($year=NULL,$id_pegawai=NULL,$id_posisi=NULL)
 	{
-		$year = ($year == NULL) ? $this->year_system : $year;
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		if (date('Y') == $this->year_system) {
-			# code...
-			$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year);			
-		}
 		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Target SKP '.$year;
 		$data['content']     = 'skp/skp_pegawai';		
-		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year,'10');
+		$data['subtitle']    = '';		
+		$data['id_pegawai']  = ($id_pegawai == NULL) ? $this->session->userdata('sesUser') : $id_pegawai;
+		$data['id_posisi']   = ($id_pegawai == NULL) ? $this->session->userdata('sesPosisi') : $id_posisi;		
+		$data['year_pass']   = ($year == NULL) ? $this->year_system : $year;		
+		(date('Y') == $this->year_system) ? $this->syncronice_skp($data['id_pegawai'],$data['id_posisi'],$this->year_system) : '' ;
+		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$data['year_pass'],'10');
 		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
 		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
 		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
