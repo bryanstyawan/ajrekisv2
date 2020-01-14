@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-lg-2" style="padding-right: 0px;">
                         <h3 class="box-title pull-right">
-                            <a href="<?php echo site_url()?>skp/template_master_skp/<?=$oid;?>" class="btn btn-block btn-primary">Unduh Template</a>
+                            <a href="<?php echo site_url()?>skp/master_skp/template_master_skp/<?=$oid;?>" class="btn btn-block btn-primary">Unduh Template</a>
                         </h3>                           
                     </div>                
                 </div>                
@@ -98,7 +98,7 @@
             <hr>
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="upload_file" onsubmit="return validateForm()" method="post" action="<?php echo site_url()?>skp/import_master_skp/<?=$oid;?>" enctype="multipart/form-data">
+                    <form id="upload_file" onsubmit="return validateForm()" method="post" action="<?php echo site_url()?>skp/master_skp/import_master_skp/<?=$oid;?>" enctype="multipart/form-data">
                         <div class="col-lg-12">
                             <div class="col-lg-2"><span>Unggah dari Excel :</span></div>
                             <div class="col-lg-5">
@@ -285,7 +285,7 @@
 <script type="text/javascript">
 function ubah_master_skp(id) {
     // body...
-    $.getJSON('<?php echo site_url() ?>skp/get_master_skp_id/'+id,
+    $.getJSON('<?php echo site_url() ?>skp/master_skp/get_master_skp_id/'+id,
         function( response ) {
             $('#ubah_dataskp').attr('class', 'modal fade bs-example-modal-lg').attr('aria-labelledby','myLargeModalLabel');
             $('.modal-dialog').attr('class','modal-dialog modal-lg');        
@@ -319,7 +319,7 @@ function active_skp(id,stat) {
         callback: function ($this, type) {
             if (type === 'yes'){
                 $.ajax({
-                    url :"<?php echo site_url()?>skp/active_skp_master/"+id+"/"+stat,
+                    url :"<?php echo site_url()?>skp/master_skp/active_skp_master/"+id+"/"+stat,
                     type:"post",
                     beforeSend:function(){
                         $("#loadprosess").modal('show');                
@@ -347,7 +347,7 @@ function del(id) {
         callback: function ($this, type) {
             if (type === 'yes'){
                 $.ajax({
-                    url :"<?php echo site_url()?>skp/delete_skp/"+id,
+                    url :"<?php echo site_url()?>skp/target_skp/delete_skp/"+id,
                     type:"post",
                     beforeSend:function(){
                         $("#loadprosess").modal('show');                
@@ -449,7 +449,7 @@ $(document).ready(function()
                                     'keterangan': keterangan
                                 };                    
             $.ajax({
-                url :"<?php echo site_url();?>skp/add_master_skp_posisi/"+'<?=$oid;?>',
+                url :"<?php echo site_url();?>skp/master_skp/add_master_skp_posisi/"+'<?=$oid;?>',
                 type:"post",
                 data:{data_sender : data_sender},
                 beforeSend:function(){
@@ -492,7 +492,7 @@ $(document).ready(function()
                                     'keterangan'    : keterangan
                                 };                    
             $.ajax({
-                url :"<?php echo site_url();?>/skp/edit_master_skp",
+                url :"<?php echo site_url();?>/skp/master_skp/edit_master_skp",
                 type:"post",
                 data:{data_sender : data_sender},
                 beforeSend:function(){

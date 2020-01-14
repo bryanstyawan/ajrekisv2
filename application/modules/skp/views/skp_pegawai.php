@@ -363,14 +363,14 @@
                                 ?>
                                 <tr style="<?=$style_tr;?>">
                                     <td style="<?=$style_td;?>">
-                                        <span class="col-md-12 pull-left" style="display: none;">
+                                        <!-- <span class="col-md-12 pull-left" style="display: none;">
                                             <a href="#" class="col-md-12" style="<?=$arrow_up;?><?=$style_tr;?>" onclick="arrow_up('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-up"></i></a>
-                                        </span>
+                                        </span> -->
                                         <!-- <span class="col-md-12 text-center"><?=$i+1;?></span> -->
                                         <span class="col-md-12 text-center"><i class="fa fa-dot-circle-o"></i></span>
-                                        <span class="col-md-12 pull-left" style="display: none;">
+                                        <!-- <span class="col-md-12 pull-left" style="display: none;">
                                             <a href="#" class="col-md-12" style="<?=$arrow_down;?><?=$style_tr;?>" onclick="arrow_down('<?=$list[$i]->skp_id;?>')"><i class="fa fa-arrow-down"></i></a>
-                                        </span>
+                                        </span> -->
                                     </td>
                                     <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
                                     <td style="<?=$style_td;?>"><?=$AK_target;?></td>
@@ -640,7 +640,7 @@
 <script type="text/javascript">
 function edit(id,before,after) {
     // body...
-    $.getJSON('<?php echo site_url() ?>/skp/get_detail_skp/'+id,
+    $.getJSON('<?php echo site_url() ?>/skp/target_skp/get_detail_skp/'+id,
         function( response ) {
             $('#formdata').attr('class', 'modal fade bs-example-modal-lg')
                                 .attr('aria-labelledby','myLargeModalLabel');
@@ -747,51 +747,13 @@ function del(id) {
     })
 }
 
-function arrow_up(id) {
-    // body...
-    $.ajax({
-        url :"<?php echo site_url();?>/skp/change_priority/"+id+"/up",
-        type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
-        success:function(msg){
-            var obj = jQuery.parseJSON (msg);
-            ajax_status(obj);
-        },
-        error:function(jqXHR,exception)
-        {
-            ajax_catch(jqXHR,exception);					
-        }
-    })
-}
+// function kegiatan_es2(params) {
+//     window.location.href = "<?=base_url();?>skp/kegiatan_es3/"+params;
+// }
 
-function arrow_down(id) {
-    // body...
-    $.ajax({
-        url :"<?php echo site_url();?>/skp/change_priority/"+id+"/down",
-        type:"post",
-        beforeSend:function(){
-            $("#loadprosess").modal('show');
-        },
-        success:function(msg){
-            var obj = jQuery.parseJSON (msg);
-            ajax_status(obj);
-        },
-        error:function(jqXHR,exception)
-        {
-            ajax_catch(jqXHR,exception);					
-        }
-    })
-}
-
-function kegiatan_es2(params) {
-    window.location.href = "<?=base_url();?>skp/kegiatan_es3/"+params;
-}
-
-function kegiatan_es3(params) {
-    window.location.href = "<?=base_url();?>skp/kegiatan_es4/"+params;
-}
+// function kegiatan_es3(params) {
+//     window.location.href = "<?=base_url();?>skp/kegiatan_es4/"+params;
+// }
 
 $(document).ready(function()
 {

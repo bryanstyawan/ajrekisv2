@@ -8,22 +8,24 @@ class Target_skp extends CI_Controller {
 		$this->load->model ('mskp', '', TRUE);
 		$this->load->model ('transaksi/mtrx', '', TRUE);
 		$this->load->model ('master/Mmaster', '', TRUE);
-		$this->load->library('Excel');
-		$this->load->library('image_lib');
-		$this->load->library('upload');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function data($year_system=NULL)
+	private $year_system = 2020;	
+
+	public function data($year=NULL)
 	{
-		$year_system = ($year_system == NULL) ? 2019 : $year_system;
+		$year = ($year == NULL) ? $this->year_system : $year;
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2019);
-		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Target SKP 2019';
+		if (date('Y') == $this->year_system) {
+			# code...
+			$this->syncronice_skp($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year);			
+		}
+		$data['title']       = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Target SKP '.$year;
 		$data['content']     = 'skp/skp_pegawai';		
 		$data['subtitle']    = '';
-		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year_system,'10');
+		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year,'10');
 		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
 		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
 		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
@@ -34,131 +36,172 @@ class Target_skp extends CI_Controller {
 	public function syncronice_skp($id_pegawai,$posisi,$tahun)
 	{
 		# code...
-		$check_posisi = $this->Allcrud->getData('mr_posisi',array('id' => $posisi))->result_array();
-		if ($check_posisi != array()) {
+		$who_is      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
+		if ($who_is != 'eselon 2' && $who_is != 'eselon 1') {
 			# code...
-			$kat_posisi = $check_posisi[0]['kat_posisi']; 
-
-			if ($kat_posisi == 1) {
+			$check_posisi = $this->Allcrud->getData('mr_posisi',array('id' => $posisi))->result_array();
+			if ($check_posisi != array()) {
 				# code...
-				$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
-
-				if ($bind_data != 0) {
+				$kat_posisi = $check_posisi[0]['kat_posisi']; 
+				$data_skp_period = $this->mskp->get_data_skp_pegawai($id_pegawai,$posisi,$tahun-1,'1','realisasi');				
+				if ($data_skp_period != 0) {
 					# code...
-					for ($i=0; $i < count($bind_data); $i++) {
+					if ($data_skp_period != 0) {
 						# code...
-						$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
-						if ($check_data == false) {
+						for ($i=0; $i < count($data_skp_period); $i++) {
 							# code...
 							$data = array(
-								'id_pegawai'     => $id_pegawai,
-								'id_posisi'      => $posisi,
-								'tahun'          => $tahun,
-								'id_skp_master'  => $bind_data[$i]->id_skp,
-								'status'         => '6',
-								'audit_priority' => ''
+								'id_pegawai'          => $id_pegawai,
+								'id_posisi'           => $posisi,
+								'tahun'               => $tahun,
+								'id_skp_master'       => $data_skp_period[$i]->id_skp_master,
+								'id_skp_jfu'	      => $data_skp_period[$i]->id_skp_jfu,
+								'id_skp_jft'	      => $data_skp_period[$i]->id_skp_jft,
+								'kegiatan'		      => $data_skp_period[$i]->kegiatan
 							);
-							$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+	
+							$check_data = $this->Allcrud->getData('mr_skp_pegawai', $data)->result_array();		
+							if ($check_data == array()) {
+								# code...
+								$data['PK']					  = $data_skp_period[$i]->PK;
+								$data['status']               = 6;
+								$data['jenis_skp']            = $data_skp_period[$i]->jenis_skp;
+								$data['AK_target']            = $data_skp_period[$i]->AK_target;
+								$data['target_qty']		      = $data_skp_period[$i]->realisasi_kuantitas; 
+								$data['target_output']        = $data_skp_period[$i]->target_output; 
+								$data['target_kualitasmutu']  = $data_skp_period[$i]->target_kualitasmutu;
+								$data['target_waktu_bln']     = $data_skp_period[$i]->target_waktu_bln;
+								$data['target_biaya']		    = $data_skp_period[$i]->target_biaya;							
+								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);								
+							}
+						}
+					}					
+				}
+				else
+				{
+					if ($kat_posisi == 1) {
+						# code...
+						$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
+		
+						if ($bind_data != 0) {
+							# code...
+							for ($i=0; $i < count($bind_data); $i++) {
+								# code...
+								$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
+								if ($check_data == false) {
+									# code...
+									$data = array(
+										'id_pegawai'     => $id_pegawai,
+										'id_posisi'      => $posisi,
+										'tahun'          => $tahun,
+										'id_skp_master'  => $bind_data[$i]->id_skp,
+										'status'         => '6',
+										'audit_priority' => ''
+									);
+									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+								}
+							}
 						}
 					}
-				}				
-			}
-			elseif ($kat_posisi == 2) {
-				# code...
-				if ($check_posisi[0]['id_jft'] != '') {
-					# code...
-					$check_jft = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $check_posisi[0]['id_jft']))->result_array();
-					if ($check_jft != array()) {
+					elseif ($kat_posisi == 2) {
 						# code...
-						for ($i=0; $i < count($check_jft); $i++) { 
+						if ($check_posisi[0]['id_jft'] != '') {
 							# code...
-							$check_data = $this->mskp->check_pekerjaan_pegawai_jft($id_pegawai,$check_jft[$i]['id'],$tahun,$posisi);
-							if ($check_data == false) {
+							$check_jft = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $check_posisi[0]['id_jft']))->result_array();
+							if ($check_jft != array()) {
 								# code...
-								$data = array(
-									'id_pegawai'     => $id_pegawai,
-									'id_posisi'      => $posisi,
-									'tahun'          => $tahun,
-									'id_skp_master'  => '',
-									'id_skp_jfu'     => '',
-									'id_skp_jft'     => $check_jft[$i]['id'],									
-									'status'         => '6',
-									'audit_priority' => ''
-								);
-								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-							}							
+								for ($i=0; $i < count($check_jft); $i++) { 
+									# code...
+									$check_data = $this->mskp->check_pekerjaan_pegawai_jft($id_pegawai,$check_jft[$i]['id'],$tahun,$posisi);
+									if ($check_data == false) {
+										# code...
+										$data = array(
+											'id_pegawai'     => $id_pegawai,
+											'id_posisi'      => $posisi,
+											'tahun'          => $tahun,
+											'id_skp_master'  => '',
+											'id_skp_jfu'     => '',
+											'id_skp_jft'     => $check_jft[$i]['id'],									
+											'status'         => '6',
+											'audit_priority' => ''
+										);
+										$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+									}							
+								}
+							}		
 						}
-					}		
-				}
-				else {
-					# code...
-					// echo "cannot sync";
-				}				
-			}
-			elseif ($kat_posisi == 4) {
-				# code...
-					
-				if ($check_posisi[0]['id_jfu'] != '') {
-					# code...
-					$check_jfu = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $check_posisi[0]['id_jfu']))->result_array();
-					if ($check_jfu != array()) {
-						# code...
-						for ($i=0; $i < count($check_jfu); $i++) { 
+						else {
 							# code...
-							$check_data = $this->mskp->check_pekerjaan_pegawai_jfu($id_pegawai,$check_jfu[$i]['id'],$tahun,$posisi);
-							if ($check_data == false) {
+							// echo "cannot sync";
+						}				
+					}
+					elseif ($kat_posisi == 4) {
+						# code...
+							
+						if ($check_posisi[0]['id_jfu'] != '') {
+							# code...
+							$check_jfu = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $check_posisi[0]['id_jfu']))->result_array();
+							if ($check_jfu != array()) {
 								# code...
-								$data = array(
-									'id_pegawai'     => $id_pegawai,
-									'id_posisi'      => $posisi,
-									'tahun'          => $tahun,
-									'id_skp_master'  => '',
-									'id_skp_jfu'     => $check_jfu[$i]['id'],
-									'id_skp_jft'     => '',									
-									'status'         => '6',
-									'audit_priority' => ''
-								);
-								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-							}							
+								for ($i=0; $i < count($check_jfu); $i++) { 
+									# code...
+									$check_data = $this->mskp->check_pekerjaan_pegawai_jfu($id_pegawai,$check_jfu[$i]['id'],$tahun,$posisi);
+									if ($check_data == false) {
+										# code...
+										$data = array(
+											'id_pegawai'     => $id_pegawai,
+											'id_posisi'      => $posisi,
+											'tahun'          => $tahun,
+											'id_skp_master'  => '',
+											'id_skp_jfu'     => $check_jfu[$i]['id'],
+											'id_skp_jft'     => '',									
+											'status'         => '6',
+											'audit_priority' => ''
+										);
+										$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+									}							
+								}
+							}		
 						}
-					}		
-				}
-				else {
-					# code...
-					// echo "cannot sync";
-				}
-			}
-			elseif ($kat_posisi == 6) {
-				# code...
-				$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
-				// print_r($bind_data);die();
-				if ($bind_data != 0) {
-					# code...
-					for ($i=0; $i < count($bind_data); $i++) {
-						# code...
-						$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
-						if ($check_data == false) {
+						else {
 							# code...
-							$data = array(
-								'id_pegawai'     => $id_pegawai,
-								'id_posisi'      => $posisi,
-								'tahun'          => $tahun,
-								'id_skp_master'  => $bind_data[$i]->id_skp,
-								'status'         => '6',
-								'audit_priority' => ''
-							);
-							$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+							// echo "cannot sync";
 						}
 					}
-				}								
-			}
+					elseif ($kat_posisi == 6) {
+						# code...
+						$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
+						// print_r($bind_data);die();
+						if ($bind_data != 0) {
+							# code...
+							for ($i=0; $i < count($bind_data); $i++) {
+								# code...
+								$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
+								if ($check_data == false) {
+									# code...
+									$data = array(
+										'id_pegawai'     => $id_pegawai,
+										'id_posisi'      => $posisi,
+										'tahun'          => $tahun,
+										'id_skp_master'  => $bind_data[$i]->id_skp,
+										'status'         => '6',
+										'audit_priority' => ''
+									);
+									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+								}
+							}
+						}								
+					}
+				}
+			}			
 		}
+
 	}	
 
 	public function edit_skp_pegawai()
 	{
 		# code...
-		$year_system = 2019;
+		$year_system = $this->year_system;
 		$data_sender = $this->input->post('data_sender');
 		$res_data    = "";
 		$text_status = "";
@@ -277,7 +320,7 @@ class Target_skp extends CI_Controller {
 	public function ad_skp_pegawai_pk()
 	{
 		# code...
-		$year_system = 2019;
+		$year_system = $this->year_system;
 		$data_sender = $this->input->post('data_sender');
 		$param_pk    = $this->parameter_pk(1);				
 		$res_data    = "";
@@ -368,7 +411,7 @@ class Target_skp extends CI_Controller {
 		$res_data    = "";
 		$param_pk    = "";
 		$text_status = "";
-		$year_system = 2019;
+		$year_system = $this->year_system;
 
 		$param_pk    = $this->parameter_pk($data_sender['pk']);
 
@@ -445,6 +488,25 @@ class Target_skp extends CI_Controller {
 		echo json_encode($res);
 	}	
 
+	public function get_detail_skp($id)
+	{
+		# code...
+		$res_data = $this->mskp->get_data_skp_pegawai_id($id);
+		echo json_encode($res_data);
+	}	
 
+	public function deactive_skp($id)
+	{
+		# code...
+		$flag        = array('skp_id'=>$id);		
+		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',array('status'=>0),array('skp_id'=>$id));		
+		$text_status = $this->Globalrules->check_status_res($res_data,'SKP ini dihentikan.');
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}	
 }
   

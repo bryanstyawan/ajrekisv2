@@ -350,7 +350,7 @@ $(document).ready(function(){
 						'data_4': select_eselon_4
 		}
 		$.ajax({
-			url :"<?php echo site_url()?>skp/filter_data_master_skp",
+			url :"<?php echo site_url()?>skp/master_skp/filter_data_master_skp",
 			type:"post",
 			data: { data_sender : data_link},
 			beforeSend:function(){
@@ -402,7 +402,7 @@ $(document).ready(function(){
 
 function show_skp(id) {
 	// body...
-	window.location.href = "<?php echo site_url();?>skp/master_skp_posisi/"+id;	
+	window.location.href = "<?php echo site_url();?>skp/master_skp/master_skp_posisi/"+id;	
 }
 
 function delete_all_urtug(id) {
@@ -412,7 +412,7 @@ function delete_all_urtug(id) {
 		callback: function ($this, type) {
 			if (type === 'yes'){			
 				$.ajax({
-					url :"<?php echo site_url();?>skp/delete_master_skp_posisi/"+id,
+					url :"<?php echo site_url();?>skp/master_skp/delete_master_skp_posisi/"+id,
 					type:"post",
 					beforeSend:function(){
 						$("#editData").modal('hide');
