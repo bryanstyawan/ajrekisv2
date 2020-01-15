@@ -939,6 +939,7 @@ class Mskp extends CI_Model
 				JOIN mr_masa_kerja mk ON mk.id_pegawai = a.id_pegawai
 				AND mk.id_posisi = a.id_posisi				
 				WHERE a.id_pegawai = '".$id."'
+				AND c.nama_posisi IS NOT NULL				
 				GROUP BY a.id_pegawai, a.id_posisi, a.tahun";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
