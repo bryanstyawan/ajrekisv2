@@ -1,4 +1,13 @@
 v4.1.2.6.3
+2020-01-15
+New:
+Improved:
+Fixed:
+- Status warna di target skp
+- prioritas 
+Canceled:
+
+v4.1.2.6.3
 2020-01-14
 New:
 - Filter Tahun di target SKP

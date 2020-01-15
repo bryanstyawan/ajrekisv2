@@ -324,7 +324,7 @@ class Mskp extends CI_Model
 					".$query_2."					
 					AND a.status <> '99'
 					".$query_1."
-					ORDER BY a.PK DESC, a.audit_priority ASC";
+					ORDER BY a.PK DESC, a.audit_time DESC, a.audit_priority ASC";
 		// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

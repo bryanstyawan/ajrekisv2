@@ -290,6 +290,10 @@
                                     $style_td     = "border-bottom: 1px solid #fff;border-top: 1px solid #fff;";
                                 }
                             }
+                            elseif ($list[$i]->status == 0) {
+                                # code...
+                                $style_tr     = "background-color: #FFC107;color: #fff;";                                
+                            }
                             else
                             {
                                 $status       = "Open"; 
@@ -356,6 +360,7 @@
                                 <tr style="<?=$style_tr;?>">
                                     <td style="<?=$style_td;?>">
                                         <span class="col-md-12 text-center"><i class="fa fa-dot-circle-o"></i></span>
+                                        <?=$list[$i]->status;?>
                                     </td>
                                     <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
                                     <td style="<?=$style_td;?>"><?=$AK_target;?></td>
@@ -637,7 +642,7 @@ function edit(id,before,after) {
             
             if ($("#oid_kat_posisi").val() == 1) {
                 // $("#nkegiatan").val(response['kegiatan']);
-                if (response['id_skp_master'] != null)
+                if (response['id_skp_master'] != null && response['id_skp_master'] != 0)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp']);                    
                     $("#nkegiatan").val(response['kegiatan_skp']);
@@ -649,7 +654,7 @@ function edit(id,before,after) {
             } 
             else if($("#oid_kat_posisi").val() == 2) {
                 // $("#nkegiatan").val(response['kegiatan']);
-                if (response['id_skp_jft'] != null)
+                if (response['id_skp_jft'] != null && response['id_skp_jft'] != 0)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp_jft']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jft']);
@@ -663,7 +668,7 @@ function edit(id,before,after) {
                 // $("#nkegiatan").val(response['kegiatan']);
                 // console.log(response['kegiatan']);
                 // console.log(response['id_skp_jfu']);                                
-                if (response['id_skp_jfu'] != null)
+                if (response['id_skp_jfu'] != null && response['id_skp_jfu'] != 0)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp_jfu']);                    
                     $("#nkegiatan").val(response['kegiatan_skp_jfu']);
@@ -676,7 +681,7 @@ function edit(id,before,after) {
             }
             else if ($("#oid_kat_posisi").val() == 6) {
                 // $("#nkegiatan").val(response['kegiatan']);
-                if (response['id_skp_master'] != null)
+                if (response['id_skp_master'] != null && response['id_skp_master'] != 0)
                 {
                     // $("#header_kegiatan").html(response['kegiatan_skp']);                    
                     $("#nkegiatan").val(response['kegiatan_skp']);
