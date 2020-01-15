@@ -86,10 +86,11 @@ body * {
 			?>
 			<div class="card-container col-lg-3"> 
 				<div class="card">
-					<a href="<?php echo site_url()?>skp/cetak_skp/data/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>/<?=date('Y');?>">
+					<a href="<?php echo site_url()?>skp/cetak_skp/data/<?php echo $request_history[$i]->pegawai?>/<?php echo $request_history[$i]->posisi?>/<?=$request_history[$i]->tahun;?>">
+            <?=$request_history[$i]->tahun;?>          
 						<div class="card--display">
 							<i class="fa fa-street-view"></i>
-							<?=$request_history[$i]->nama_pegawai;?>
+							<?=$request_history[$i]->nama_pegawai;?>              
 							<h2><?php echo $request_history[$i]->nama_posisi ?></h2>
 						</div>
 						<div class="card--hover">
