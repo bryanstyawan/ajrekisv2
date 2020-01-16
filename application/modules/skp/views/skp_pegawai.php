@@ -102,10 +102,8 @@
 <div class="col-xs-12">
     <div class="box">
         <div class="box-header">
-            <div class ="box-tools">
-                <h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addDataSKP"><i class="fa fa-plus-square"></i> Tambah SKP Pegawai</button></h3>                
-            </div>
-            <div class="col-lg-12">
+
+            <div class="col-lg-6">
                 <div class="input-group col-lg-4">
                     <select name="f_tahun" id="f_tahun" class="form-control">
                     <?php
@@ -124,9 +122,14 @@
                     </select>
                     <a class="btn btn-md pull-right" onclick="lookData('<?=$id_pegawai;?>','<?=$id_posisi;?>')" style="background:#00BCD4;color: #fff; margin:10px"><i class="fa fa-excel"></i> Lihat</a>                    
                 </div>       
-                                                                    
-                <h3 class="text-center col-lg-12">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>
             </div>
+            <div class="col-lg-6">
+                <h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addDataSKP"><i class="fa fa-plus-square"></i> Tambah SKP Pegawai</button></h3>                
+            </div>      
+
+            <div class="col-lg-12">
+                <h3 class="text-center col-lg-12">PENILAIAN CAPAIAN SASARAN KERJA PEGAWAI NEGERI SIPIL</h3>            
+            </div>      
         </div>
         <div class="box-body">
             <table id="table_skp" class="table table-bordered table-striped table-view" style="font-size: 12px;">
