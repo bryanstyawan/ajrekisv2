@@ -686,7 +686,7 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
 <script type="text/javascript">
 function deactive(id) {
     $.ajax({
-        url :"<?php echo site_url();?>skp/deactive_skp/"+id,
+        url :"<?php echo site_url();?>skp/target_skp/deactive_skp/"+id,
         type:"post",
         beforeSend:function(){
             $("#loadprosess").modal('show');
