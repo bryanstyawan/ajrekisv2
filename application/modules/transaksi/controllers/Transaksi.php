@@ -85,6 +85,81 @@ class Transaksi extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function home2($arg=NULL)
+	{
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$data['arg']                  = $arg;		
+		$data['title']                = 'Transaksi';
+		$data['content']              = 'transaksi/trx/data_transaksi';
+		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));		
+		$data['urtug']                = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'approve',1);
+		$data['tr_belum_diperiksa']   = $this->mtrx->status_pekerjaan('0',$this->session->userdata('sesUser'));
+		$data['tr_disetujui']         = $this->mtrx->status_pekerjaan('1',$this->session->userdata('sesUser'));
+		$data['tr_tolak']             = $this->mtrx->status_pekerjaan('2',$this->session->userdata('sesUser'));
+		$data['tr_revisi']            = $this->mtrx->status_pekerjaan('3',$this->session->userdata('sesUser'));
+		$data['tr_keberatan']         = $this->mtrx->status_pekerjaan('4',$this->session->userdata('sesUser'));
+		$data['tr_keberatan_ditolak'] = $this->mtrx->status_pekerjaan('5',$this->session->userdata('sesUser'));
+		$data['tr_banding']           = $this->mtrx->status_pekerjaan('6',$this->session->userdata('sesUser'));
+		$data['tr_banding_ditolak']   = $this->mtrx->status_pekerjaan('7',$this->session->userdata('sesUser'));
+		$data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
+		$data['infoPegawai']          = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$this->session->userdata('sesPosisi'));
+		$data['member']               = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
+		// echo "<pre>";
+		// print_r($data['member']);die();		
+		// echo "</pre>";
+		if ($data['urtug'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['urtug']); $i++) 
+			{
+				if ($data['urtug'][$i]->id_skp_master == '') {
+					# code...
+					$data['urtug'][$i]->id_skp_master = 0;                                                                        
+				}
+
+				if ($data['urtug'][$i]->id_skp_jft == '') {
+					# code...
+					$data['urtug'][$i]->id_skp_jft = 0;                                                                        
+				}                         
+				
+				if ($data['urtug'][$i]->id_skp_jfu == '') {
+					# code...
+					$data['urtug'][$i]->id_skp_jfu = 0;                                                                        
+				}                                 				
+			}			
+		}
+		if ($data['member'] != 0) {
+			// code...
+			for ($i=0; $i < count($data['member']); $i++) {
+				// code...
+				$get_data           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
+				$get_data_keberatan = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
+				if ($get_data) {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = $get_data;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_belum_diperiksa = 0;
+				}
+
+				if ($get_data_keberatan) {
+					// code...
+					$data['member'][$i]->counter_keberatan = $get_data_keberatan;
+				}
+				else {
+					// code...
+					$data['member'][$i]->counter_keberatan = 0;
+				}				
+			}
+		}
+		// echo "<pre>";
+		// print_r($data['urtug']);die();
+		// echo "</pre>";
+
+		$this->load->view('templateAdmin',$data);
+	}	
+
 	Public function filter_transaksi()
 	{
 		$id			 = $this->session->userdata('sesUser');
