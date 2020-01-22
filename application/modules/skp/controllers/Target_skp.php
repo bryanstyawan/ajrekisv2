@@ -25,9 +25,6 @@ class Target_skp extends CI_Controller {
 		$data['year_pass']   = ($year == NULL) ? $this->year_system : $year;		
 		(date('Y') == $this->year_system) ? $this->syncronice_skp($data['id_pegawai'],$data['id_posisi'],$this->year_system) : '' ;
 		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$data['year_pass'],'10');
-		// echo "<pre>";
-		// print_r($data['list']);die();
-		// echo "</pre>";
 		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
 		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));
 		$data['satuan']      = $this->Allcrud->listData('mr_skp_satuan');
@@ -79,122 +76,122 @@ class Target_skp extends CI_Controller {
 						}
 					}					
 				}
-				else
-				{
-					if ($kat_posisi == 1) {
+
+				if ($kat_posisi == 1) {
+					# code...
+					$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
+	
+					if ($bind_data != 0) {
 						# code...
-						$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
-		
-						if ($bind_data != 0) {
+						for ($i=0; $i < count($bind_data); $i++) {
 							# code...
-							for ($i=0; $i < count($bind_data); $i++) {
+							$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
+							if ($check_data == false) {
 								# code...
-								$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
-								if ($check_data == false) {
-									# code...
-									$data = array(
-										'id_pegawai'     => $id_pegawai,
-										'id_posisi'      => $posisi,
-										'tahun'          => $tahun,
-										'id_skp_master'  => $bind_data[$i]->id_skp,
-										'status'         => '6',
-										'audit_priority' => ''
-									);
-									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-								}
+								$data = array(
+									'id_pegawai'     => $id_pegawai,
+									'id_posisi'      => $posisi,
+									'tahun'          => $tahun,
+									'id_skp_master'  => $bind_data[$i]->id_skp,
+									'status'         => '6',
+									'audit_priority' => ''
+								);
+								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
 							}
 						}
-					}
-					elseif ($kat_posisi == 2) {
-						# code...
-						if ($check_posisi[0]['id_jft'] != '') {
-							# code...
-							$check_jft = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $check_posisi[0]['id_jft']))->result_array();
-							if ($check_jft != array()) {
-								# code...
-								for ($i=0; $i < count($check_jft); $i++) { 
-									# code...
-									$check_data = $this->mskp->check_pekerjaan_pegawai_jft($id_pegawai,$check_jft[$i]['id'],$tahun,$posisi);
-									if ($check_data == false) {
-										# code...
-										$data = array(
-											'id_pegawai'     => $id_pegawai,
-											'id_posisi'      => $posisi,
-											'tahun'          => $tahun,
-											'id_skp_master'  => '',
-											'id_skp_jfu'     => '',
-											'id_skp_jft'     => $check_jft[$i]['id'],									
-											'status'         => '6',
-											'audit_priority' => ''
-										);
-										$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-									}							
-								}
-							}		
-						}
-						else {
-							# code...
-							// echo "cannot sync";
-						}				
-					}
-					elseif ($kat_posisi == 4) {
-						# code...
-							
-						if ($check_posisi[0]['id_jfu'] != '') {
-							# code...
-							$check_jfu = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $check_posisi[0]['id_jfu']))->result_array();
-							if ($check_jfu != array()) {
-								# code...
-								for ($i=0; $i < count($check_jfu); $i++) { 
-									# code...
-									$check_data = $this->mskp->check_pekerjaan_pegawai_jfu($id_pegawai,$check_jfu[$i]['id'],$tahun,$posisi);
-									if ($check_data == false) {
-										# code...
-										$data = array(
-											'id_pegawai'     => $id_pegawai,
-											'id_posisi'      => $posisi,
-											'tahun'          => $tahun,
-											'id_skp_master'  => '',
-											'id_skp_jfu'     => $check_jfu[$i]['id'],
-											'id_skp_jft'     => '',									
-											'status'         => '6',
-											'audit_priority' => ''
-										);
-										$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-									}							
-								}
-							}		
-						}
-						else {
-							# code...
-							// echo "cannot sync";
-						}
-					}
-					elseif ($kat_posisi == 6) {
-						# code...
-						$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
-						// print_r($bind_data);die();
-						if ($bind_data != 0) {
-							# code...
-							for ($i=0; $i < count($bind_data); $i++) {
-								# code...
-								$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
-								if ($check_data == false) {
-									# code...
-									$data = array(
-										'id_pegawai'     => $id_pegawai,
-										'id_posisi'      => $posisi,
-										'tahun'          => $tahun,
-										'id_skp_master'  => $bind_data[$i]->id_skp,
-										'status'         => '6',
-										'audit_priority' => ''
-									);
-									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
-								}
-							}
-						}								
 					}
 				}
+				elseif ($kat_posisi == 2) {
+					# code...
+					if ($check_posisi[0]['id_jft'] != '') {
+						# code...
+						$check_jft = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $check_posisi[0]['id_jft']))->result_array();
+						if ($check_jft != array()) {
+							# code...
+							for ($i=0; $i < count($check_jft); $i++) { 
+								# code...
+								$check_data = $this->mskp->check_pekerjaan_pegawai_jft($id_pegawai,$check_jft[$i]['id'],$tahun,$posisi);
+								if ($check_data == false) {
+									# code...
+									$data = array(
+										'id_pegawai'     => $id_pegawai,
+										'id_posisi'      => $posisi,
+										'tahun'          => $tahun,
+										'id_skp_master'  => '',
+										'id_skp_jfu'     => '',
+										'id_skp_jft'     => $check_jft[$i]['id'],									
+										'status'         => '6',
+										'audit_priority' => ''
+									);
+									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+								}							
+							}
+						}		
+					}
+					else {
+						# code...
+						// echo "cannot sync";
+					}				
+				}
+				elseif ($kat_posisi == 4) {
+					# code...
+						
+					if ($check_posisi[0]['id_jfu'] != '') {
+						# code...
+						$check_jfu = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $check_posisi[0]['id_jfu']))->result_array();
+						if ($check_jfu != array()) {
+							# code...
+							for ($i=0; $i < count($check_jfu); $i++) { 
+								# code...
+								$check_data = $this->mskp->check_pekerjaan_pegawai_jfu($id_pegawai,$check_jfu[$i]['id'],$tahun,$posisi);
+								if ($check_data == false) {
+									# code...
+									$data = array(
+										'id_pegawai'     => $id_pegawai,
+										'id_posisi'      => $posisi,
+										'tahun'          => $tahun,
+										'id_skp_master'  => '',
+										'id_skp_jfu'     => $check_jfu[$i]['id'],
+										'id_skp_jft'     => '',									
+										'status'         => '6',
+										'audit_priority' => ''
+									);
+									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+								}							
+							}
+						}		
+					}
+					else {
+						# code...
+						// echo "cannot sync";
+					}
+				}
+				elseif ($kat_posisi == 6) {
+					# code...
+					$bind_data = $this->mskp->get_master_skp_id($posisi,'posisi');
+					// print_r($bind_data);die();
+					if ($bind_data != 0) {
+						# code...
+						for ($i=0; $i < count($bind_data); $i++) {
+							# code...
+							$check_data = $this->mskp->check_pekerjaan_pegawai($id_pegawai,$bind_data[$i]->id_skp,$tahun,$posisi);
+							if ($check_data == false) {
+								# code...
+								$data = array(
+									'id_pegawai'     => $id_pegawai,
+									'id_posisi'      => $posisi,
+									'tahun'          => $tahun,
+									'id_skp_master'  => $bind_data[$i]->id_skp,
+									'status'         => '6',
+									'audit_priority' => ''
+								);
+								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
+							}
+						}
+					}								
+				}		
+				
+				
 			}			
 		}
 

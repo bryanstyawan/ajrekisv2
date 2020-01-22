@@ -16,6 +16,16 @@ class Transaksi extends CI_Controller {
 		redirect('dashboard/home');
 	}
 
+	public function refresh_data($param=NULL,$flag=NULL)
+	{
+		# code...
+		$data['list']         = $this->mtrx->status_pekerjaan($param,$this->session->userdata('sesUser'));		
+		$data['hari_kerja']   = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
+		$data['infoPegawai']  = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$this->session->userdata('sesPosisi'));		
+		$data['id_html']      = $flag;
+		$this->load->view('transaksi/trx/refresh/index',$data);		
+	}	
+
 	public function refresh_data2()
 	{
 		# code...

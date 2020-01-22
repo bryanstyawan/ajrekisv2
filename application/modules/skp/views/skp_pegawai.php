@@ -363,7 +363,6 @@
                                 <tr style="<?=$style_tr;?>">
                                     <td style="<?=$style_td;?>">
                                         <span class="col-md-12 text-center"><i class="fa fa-dot-circle-o"></i></span>
-                                        <?=$list[$i]->status;?>
                                     </td>
                                     <td style="<?=$style_td;?>text-align: -webkit-left;"><?=$kegiatan;?></td>
                                     <td style="<?=$style_td;?>"><?=$AK_target;?></td>
