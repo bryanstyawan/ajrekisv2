@@ -4,14 +4,14 @@ $data_value[] = "";
 
 if ($menit_efektif_year != 0) {
     // code...
-    for ($i=0; $i < count($menit_efektif_year); $i++) {
-        // code...
-        $data_bulan[$i] = $menit_efektif_year[$i]->nama_bulan;
-        $data_value[$i] = $menit_efektif_year[$i]->menit_efektif;
-    }
+    // for ($i=0; $i < count($menit_efektif_year); $i++) {
+    //     // code...
+    //     $data_bulan[$i] = $menit_efektif_year[$i]->nama_bulan;
+    //     $data_value[$i] = $menit_efektif_year[$i]->menit_efektif;
+    // }
 
-    $data_bulan = json_encode($data_bulan);
-    $data_value = json_encode($data_value);
+    // $data_bulan = json_encode($data_bulan);
+    // $data_value = json_encode($data_value);
 }
 
 $nama_pegawai  = "";
@@ -70,7 +70,20 @@ if ($this->session->userdata('sesPosisi') != 0)
         'who_is'       => $who_is));
     $this->load->view('dashboard_component/persentase_speedometer_component');                
     $this->load->view('dashboard_component/member_component');                                
-    $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
+    ?>
+    <div class="col-md-5" style="height:50px;max-height: 50px;margin-bottom:1px;">
+        <!-- LINE CHART -->
+        <div class="widget-user-header bg-white-active text-center">
+            <div class="box-header with-border">
+                <h1 class="box-title"> <font color="blue" size="3">TATA CARA REVIEW & PENYESUAIAN TARGET SKP<a href="<?php echo base_url(); ?>assets_home/slider/TATACARAREVIEW_PENYESUAIANTARGETSKP.pdf">&nbsp&nbsp&nbsp<u>download</a></font></h1>
+            </div>
+        
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>    
+    <?php
+    // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
     ?>
     </div>
         
