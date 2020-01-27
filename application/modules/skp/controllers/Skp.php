@@ -202,5 +202,20 @@ class Skp extends CI_Controller {
 	// 	$data['content']      = 'skp/penilaian_skp';
 	// 	$this->load->view('templateAdmin',$data);
 	// }	
+
+	public function realisasi_biaya_skp($id)
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');		
+		$flag        = array('skp_id'=>$id);		
+		$res_data    = $this->Allcrud->editData('mr_skp_pegawai',array('realisasi_biaya'=>$data_sender['realisasi_biaya']),array('skp_id'=>$id));		
+		$text_status = $this->Globalrules->check_status_res($res_data,'SKP ini dihentikan.');
+		$res = array
+					(
+						'status' => $res_data,
+						'text'   => $text_status
+					);
+		echo json_encode($res);		
+	}		
 }
   

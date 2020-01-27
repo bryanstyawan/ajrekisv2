@@ -559,7 +559,29 @@ if ($atasan_penilai != 0 || $atasan_penilai != '') {
                             ?>
                         </td>
                         <td><?=$list_skp[$i]->target_waktu_bln." bln";?></td>
-                        <td><?=number_format($list_skp[$i]->realisasi_biaya);?></td>
+
+                        <td>
+                            <?php
+                                if ($who_is == 'eselon 2' || $who_is == 'eselon 1') {
+                                    # code...                                    
+                                    echo number_format($list_skp[$i]->realisasi_biaya);                                    
+                                    if ($list_skp[$i]->target_biaya != 0) {
+                                        # code...
+                            ?>
+                                        <input type="text" class="form-controll" style="margin-top: 20px;"  id="realisasi_biaya_<?=$list_skp[$i]->skp_id;?>" name="realisasi_biaya"  value="<?=$list_skp[$i]->realisasi_biaya;?>">                            
+                                        <a class="btn btn-success" onclick="send_realisasi_biaya('<?=$list_skp[$i]->skp_id;?>')">
+                                            <i class="fa fa-delete"></i> Simpan
+                                        </a>
+                            <?php                                        
+                                    }
+                                } else {
+                                    # code...
+                                    echo number_format($list_skp[$i]->realisasi_biaya);                                    
+                                }
+                                
+                            ?>
+                        </td>
+
                         <!-- <td><?=$list_skp[$i]->aspek_kuantitas;?></td>
                         <td><?=$list_skp[$i]->aspek_kualitas;?></td>
                         <td><?=$list_skp[$i]->aspek_waktu['aspek_waktu'];?></td> -->
@@ -710,6 +732,29 @@ function lookData(id,posisi) {
 function excelData(id,posisi) {
     var f_tahun = $("#f_tahun").val();
     window.location.href = "<?php echo site_url()?>skp/prints_skp/skp_excel/"+id+"/"+posisi+"/"+f_tahun;
+}
+
+function send_realisasi_biaya(id) {
+    var realisasi_biaya = $("#realisasi_biaya_"+id).val();
+    var data_sender = {
+                            'realisasi_biaya'      : realisasi_biaya
+                    };    
+    $.ajax({
+        url :"<?php echo site_url();?>skp/realisasi_biaya_skp/"+id,
+        type:"post",
+        data:{data_sender : data_sender},        
+        beforeSend:function(){
+            $("#loadprosess").modal('show');
+        },
+        success:function(msg){
+            var obj = jQuery.parseJSON (msg);
+            ajax_status(obj);
+        },
+        error:function(jqXHR,exception)
+        {
+            ajax_catch(jqXHR,exception);					
+        }
+    })        
 }
 
 $(document).ready(function()

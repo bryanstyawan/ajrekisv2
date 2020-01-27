@@ -452,17 +452,20 @@ class Globalrules extends CI_Model
 	    return $tingkat_efisiensi;
 	}
 
-	public function perhitungan_skp($aspek_kuantitas=NULL,$aspek_kualitas=NULL,$aspek_waktu=NULL,$aspek_biaya=NULL)
+	public function perhitungan_skp($aspek_kuantitas=NULL,$aspek_kualitas=NULL,$aspek_waktu=NULL,$aspek_biaya=NULL,$target_biaya=NULL)
 	{
 		# code...
 		if($aspek_kuantitas == NULL)$aspek_kuantitas = 0;
 		if($aspek_kualitas == NULL)$aspek_kualitas   = 0;
 		if($aspek_waktu == NULL)$aspek_waktu         = 0;
 		if($aspek_biaya == NULL)$aspek_biaya         = 0;
+
+		$aspek = ($target_biaya == 0) ? ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu) : ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu + $aspek_biaya) ;
+		$nilai_capaian_skp = ($target_biaya == 0) ? (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu)/3) : (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu + $aspek_biaya)/4) ;
 		return array
 		(
-			'aspek'             => ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu),
-			'nilai_capaian_skp' => (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu)/3)
+			'aspek'             => $aspek,
+			'nilai_capaian_skp' => $nilai_capaian_skp
 		);
 	}
 
@@ -648,7 +651,7 @@ class Globalrules extends CI_Model
 				$data['list_skp'][$i]->aspek_kuantitas     = $this->aspek_kuantitas($data['list_skp'][$i]->realisasi_kuantitas,$data['list_skp'][$i]->target_qty,$data['list_skp'][$i]->realisasi_kualitasmutu);				
 				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->aspek_biaya         = $this->aspek_biaya($data['list_skp'][$i]->target_biaya,$data['list_skp'][$i]->realisasi_biaya,$data['list_skp'][$i]->realisasi_kuantitas);
-				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya);
+				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya,$data['list_skp'][$i]->target_biaya);
 				$data['summary_skp']['nilai_capaian_skp']  = $data['list_skp'][$i]->perhitungan['nilai_capaian_skp'];
 				if($data['summary_skp']['nilai_capaian_skp'] != 0)
 				{
