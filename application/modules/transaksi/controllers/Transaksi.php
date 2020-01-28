@@ -1226,8 +1226,8 @@ class Transaksi extends CI_Controller {
 					// code...
 					for ($i=0; $i < count($data['member']); $i++) {
 						// code...
-						$get_data           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
-						$get_data_keberatan = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
+						$get_data           = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>0,'id_pegawai'=>$data['member'][$i]->id,'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
+						$get_data_keberatan = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>4,'id_pegawai'=>$data['member'][$i]->id,'tanggal_mulai LIKE'=>date('Y-m').'%'))->num_rows();
 						if ($get_data) {
 							// code...
 							$data['member'][$i]->counter_belum_diperiksa = $get_data;
