@@ -103,6 +103,7 @@
 														AND b.status = 1 
 														AND a.status_pekerjaan = 0
 														AND MONTH(a.tanggal_mulai) = '".date('m')."'
+														AND YEAR(a.tanggal_mulai) = '".date('Y')."'														
 														ORDER BY b.nama_pegawai asc"
 													);
 						$counter_trx_home = count($sql_trx->result_array());
@@ -119,6 +120,7 @@
 														AND b.status = 1 
 														AND a.status_pekerjaan = 0
 														AND MONTH(a.tanggal_mulai) = '".date('m')."'
+														AND YEAR(a.tanggal_mulai) = '".date('Y')."'														
 														ORDER BY b.nama_pegawai asc"
 													);
 						$counter_trx_plt = count($sql_trx->result_array());
@@ -135,6 +137,7 @@
 														AND b.status = 1 
 														AND a.status_pekerjaan = 0
 														AND MONTH(a.tanggal_mulai) = '".date('m')."'
+														AND YEAR(a.tanggal_mulai) = '".date('Y')."'														
 														ORDER BY b.nama_pegawai asc"
 													);
 						$counter_trx_akademik = count($sql_trx->result_array());
