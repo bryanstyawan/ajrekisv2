@@ -1,4 +1,13 @@
 v4.1.2.6.4
+2020-01-31
+New:
+- Sync rpt_skp_prilaku_skp & rpt_skp_sasaran_kerja
+Improved:
+- Penambahan id_posisi di mr_skp_penilaian_prilaku
+Fixed:
+Canceled:
+
+v4.1.2.6.4
 2020-01-27
 New:
 - Realisasi biaya

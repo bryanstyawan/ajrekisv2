@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model ('mdashboard', '', TRUE);
 		$this->load->model ('transaksi/mtrx', '', TRUE);		
 		$this->load->model ('laporan/mlaporan', '', TRUE);
+		$this->load->model ('skp/mskp', '', TRUE);
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -17,17 +18,89 @@ class Dashboard extends CI_Controller {
 
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
+			$get_evaluator = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),2019);
+			if ($get_evaluator != 0) {
+				# code...
+				for ($i=0; $i < count($get_evaluator); $i++) { 
+					# code...
+					if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL) {
+						# code...
+						$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,2019,'on');					
+						if ($get_posisi != 0) {
+							# code...
+							$data = array
+							(
+								'id_posisi_pegawai_penilai' => $get_posisi[0]->posisi
+							);
+							$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id'=>$get_evaluator[$i]->id));									
+						}						
+					}
+				}
+
+				$get_posisi = $this->mskp->get_request_history($this->session->userdata('sesUser'),2019,'on');
+				if ($get_posisi != 0) {
+					# code...
+					$data = array
+					(
+						'id_posisi_pegawai' => $get_posisi[0]->posisi
+					);
+					$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>2019));					
+
+					$data_s = array();
+					for ($i=0; $i < count($get_posisi); $i++) { 
+						# code...					
+						$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_posisi[$i]->posisi,2019);						
+						$data_parameter = array(
+							'id_pegawai'					=> $this->session->userdata('sesUser'),
+							'id_posisi'						=> $get_posisi[$i]->posisi,
+							'tahun'							=> '2019'
+						);
+						$check_data = $this->Allcrud->getData('rpt_skp_sasaran_kerja',$data_parameter)->result_array();						
+						if ($check_data == array()) {
+							# code...
+							$summary_skp = array(
+								'id_pegawai'					=> $this->session->userdata('sesUser'),
+								'id_posisi'						=> $get_posisi[$i]->posisi,
+								'tahun'							=> '2019',
+								'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+								'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+								'total'                         => $data_s[$i]['summary_skp']['total'],
+								'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+							);							
+							$this->Allcrud->addData('rpt_skp_sasaran_kerja',$summary_skp);							
+						}
+
+						$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
+						if ($check_data == array()) {
+							# code...
+							$summary_prilaku_skp = array(
+								'id_pegawai'					=> $this->session->userdata('sesUser'),
+								'id_posisi'						=> $get_posisi[$i]->posisi,
+								'tahun'							=> '2019',
+								'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
+								'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
+								'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
+								'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'status'                 		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['disiplin']
+							);							
+							$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
+						}						
+					}			
+				}
+
+			}
 			$data['title']                   = '';
 			$data['content']                 = 'vdashboard';
 			$data['id_posisi']               = $this->session->userdata('sesPosisi');
 			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
-
 			$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();
-			$data['skp']                      = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
-			echo "<pre>";
-			print_r($data['skp']);			
-			echo "</pre>";
-			die();
+			// $skp                      		= $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
+			$data['skp']					  = $this->mskp->get_persentase_target_realisasi(date('Y'));
 			$data['menit_efektif_year']       = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['member']                   = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
 			$data['summary_tr']               = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,
