@@ -96,9 +96,9 @@ if ($this->session->userdata('sesPosisi') != 0)
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
-        'value_php' => $skp['persentase_target_realisasi']->persentase,
+        'value_php' => $skp->persentase,
         'title'     => 'CAPAIAN SKP',
-        'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
+        'html'      => "<label>".$skp->total_realisasi_kuantitas.' / '.$skp->total_target_kuantitas."</label>"));                                        
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_tunjangan',

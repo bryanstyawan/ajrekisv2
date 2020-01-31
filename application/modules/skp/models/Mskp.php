@@ -670,7 +670,89 @@ class Mskp extends CI_Model
 		}
 	}
 
-	public function get_nilai_prilaku($id,$id_param,$param,$tahun,$id_pegawai)
+	public function _get_nilai_prilaku($id_pegawai,$id_posisi,$parameter,$tahun)
+	{
+		# code...
+		$sql = "";
+		if ($parameter == 'atasan') {
+			# code...
+			$sql = "SELECT DISTINCT 	
+						COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+						COALESCE (a.integritas, 0) AS integritas,
+						COALESCE (a.komitmen, 0) AS komitmen,
+						COALESCE (a.disiplin, 0) AS disiplin,
+						COALESCE (a.kerjasama, 0) AS kerjasama,
+						COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+						COALESCE (a. STATUS, 0) AS status
+					FROM mr_skp_penilaian_prilaku a 
+					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+					WHERE a.id_pegawai = '".$id_pegawai."'
+					AND a.tahun = '".$tahun."'
+					AND a.id_posisi_pegawai = '".$id_posisi."'
+					AND a.id_posisi_pegawai_penilai = pos1.atasan";
+		}
+		elseif ($parameter == 'peer') {
+			# code...
+			$sql = "SELECT DISTINCT 
+								COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+								COALESCE (a.integritas, 0) AS integritas,
+								COALESCE (a.komitmen, 0) AS komitmen,
+								COALESCE (a.disiplin, 0) AS disiplin,
+								COALESCE (a.kerjasama, 0) AS kerjasama,
+								COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+								COALESCE (a. STATUS, 0) AS status
+					FROM mr_skp_penilaian_prilaku a 
+					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+					LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+					LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+					WHERE a.id_pegawai = '".$id_pegawai."'
+					AND a.tahun = '".$tahun."'
+					AND a.id_posisi_pegawai = '".$id_posisi."'
+					AND pos1.atasan = pos2.atasan";
+		}
+		elseif ($parameter == 'bawahan') {
+			$sql = "SELECT DISTINCT 
+						COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+						COALESCE (a.integritas, 0) AS integritas,
+						COALESCE (a.komitmen, 0) AS komitmen,
+						COALESCE (a.disiplin, 0) AS disiplin,
+						COALESCE (a.kerjasama, 0) AS kerjasama,
+						COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+						COALESCE (a. STATUS, 0) AS status
+					FROM mr_skp_penilaian_prilaku a 
+					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+					LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+					LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+					WHERE a.id_pegawai = '".$id_pegawai."'
+					AND a.tahun = '".$tahun."'
+					AND a.id_posisi_pegawai = '".$id_posisi."'
+					AND a.id_posisi_pegawai = pos2.atasan";			
+		}
+
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			$data[0] = (object)array(
+							'orientasi_pelayanan' => 0,
+							'integritas'          => 0,
+							'komitmen'            => 0,
+							'disiplin'            => 0,
+							'kerjasama'           => 0,
+							'kepemimpinan'        => 0,
+							'status'              => 0
+						);
+			return $data;
+		}		
+	}
+
+	public function get_nilai_prilaku($id,$id_posisi,$param,$tahun,$id_pegawai)
 	{
 		# code...
 		$sql_join  = "";
@@ -691,9 +773,10 @@ class Mskp extends CI_Model
 				LEFT JOIN mr_skp_penilaian_prilaku c
 				ON a.id = c.id_pegawai_penilai
 			    WHERE a.status = 1
-			    AND b.id = '".$id_param."'
+			    AND b.id = '".$id_posisi."'
 				AND c.id_pegawai = '".$id_pegawai."'
-				AND c.tahun = '".$tahun."'";						
+				AND c.tahun = '".$tahun."'";	
+				// print_r($sql);die();					
 		}
 		elseif ($param == 'peer') {
 			# code...
@@ -710,7 +793,7 @@ class Mskp extends CI_Model
 				LEFT JOIN mr_skp_penilaian_prilaku c
 				ON a.id = c.id_pegawai_penilai
 			    WHERE a.status = 1
-				-- AND b.atasan = '".$id_param."'
+				-- AND b.atasan = '".$id_posisi."'
 				-- AND a.posisi <> '965'				
 				AND c.status = 1
 				AND c.tahun = '".$tahun."'
@@ -732,7 +815,7 @@ class Mskp extends CI_Model
 					ON a.posisi = b.id
 					LEFT JOIN mr_skp_penilaian_prilaku c
 					ON a.id = c.id_pegawai_penilai
-					WHERE b.atasan = '".$id_param."'
+					WHERE b.atasan = '".$id_posisi."'
 					AND c.tahun = '".$tahun."'
 					AND c.id_pegawai = ".$id_pegawai."
 					AND a. STATUS = 1";
@@ -916,15 +999,28 @@ class Mskp extends CI_Model
 		}
 	}	
 
-    public function get_request_history($id,$tahun)
+    public function get_request_history($id,$tahun,$stat=NULL)
 	{
 		# code...
+		$and = "";
+		if ($stat != NULL) {
+			# code...
+			if ($stat == 'on') {
+				# code...
+				$and = "AND a.tahun = '".$tahun."'";				
+			}
+			else
+			{
+				$and = "";				
+			}
+		}
 		
 		$sql = "SELECT a.id_pegawai as pegawai,
 						a.id_posisi as posisi,
 						a.tahun,
 						b.nama_pegawai as nama_pegawai,
 						c.nama_posisi as nama_posisi,
+						b.nip,
 						es1.nama_eselon1,
 						es2.nama_eselon2,
 						es3.nama_eselon3,
@@ -939,8 +1035,10 @@ class Mskp extends CI_Model
 				JOIN mr_masa_kerja mk ON mk.id_pegawai = a.id_pegawai
 				AND mk.id_posisi = a.id_posisi				
 				WHERE a.id_pegawai = '".$id."'
-				AND c.nama_posisi IS NOT NULL				
-				GROUP BY a.id_pegawai, a.id_posisi, a.tahun";
+				AND c.nama_posisi IS NOT NULL
+				".$and."				
+				GROUP BY a.id_pegawai, a.id_posisi, a.tahun
+				";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

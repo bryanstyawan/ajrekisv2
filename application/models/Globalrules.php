@@ -515,9 +515,10 @@ class Globalrules extends CI_Model
 		$data['tr_tugas_tambahan']       = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan',$year_system);
 		$data['tr_kreativitas']          = $this->mtrx->tugas_tambahan($id,1,'kreativitas',$year_system);
 		$data['evaluator']               = $this->mskp->get_data_evaluator($id,$year_system);
-		$data['nilai_prilaku_atasan']    = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'atasan',$year_system,$this->session->userdata('sesUser'));
-		$data['nilai_prilaku_peer']      = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('atasan'),'peer',$year_system,$this->session->userdata('sesUser'));
-		$data['nilai_prilaku_bawahan']   = $this->mskp->get_nilai_prilaku($id,$this->session->userdata('sesPosisi'),'bawahan',$year_system,$this->session->userdata('sesUser'));
+		$data['nilai_prilaku_atasan']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan',$year_system);
+		$data['nilai_prilaku_peer']      = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'peer',$year_system);
+		$data['nilai_prilaku_bawahan']   = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'bawahan',$year_system);
+
 		$data['infoPegawai']             = $this->get_info_pegawai($id,'id',$_id_posisi);
 		$data['is_bawahan']              = $this->Globalrules->list_bawahan($_id_posisi);
 		if ($data['infoPegawai'] != 0) {
