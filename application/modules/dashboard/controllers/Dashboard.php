@@ -81,12 +81,12 @@ class Dashboard extends CI_Controller {
 								'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
 								'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
 								'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'status'                 		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['disiplin']
+								'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
+								'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
+								'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
+								'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
+								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
 							);							
 							$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
 						}						
@@ -99,7 +99,7 @@ class Dashboard extends CI_Controller {
 			$data['id_posisi']               = $this->session->userdata('sesPosisi');
 			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
 			$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();
-			// $skp                      		= $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'));
+			// $skp                      		= $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2019);	
 			$data['skp']					  = $this->mskp->get_persentase_target_realisasi(date('Y'));
 			$data['menit_efektif_year']       = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['member']                   = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
