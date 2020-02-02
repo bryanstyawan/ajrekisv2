@@ -1121,5 +1121,106 @@ class Mskp extends CI_Model
 			return array();
 		}		
 	}	
+
+	public function rekap_skp_tahunan($flag=NULL,$order_by=NULL,$filter=NULL)
+	{
+		# code...
+		$sql        = "";
+		$sql_1      = "";
+		$sql_2      = "";
+		$sql_3      = "";
+		$sql_4      = "";
+		$sql_5      = "";
+
+		if ($flag['eselon1'] == '') {
+			# code...
+			$sql_1 = "";
+		}
+		else $sql_1 = "AND a.es1 = '".$flag['eselon1']."'";
+
+		if ($flag['eselon2'] == '') {
+			# code...
+			$sql_2 = "";
+		}
+		else $sql_2 = "AND a.es2 = '".$flag['eselon2']."'";
+
+		if ($flag['eselon3'] == '') {
+			# code...
+			$sql_3 = "";
+		}
+		else $sql_3 = "AND a.es3 = '".$flag['eselon3']."'";
+
+		if ($flag['eselon4'] == '') {
+			# code...
+			$sql_4 = "";
+		}
+		else $sql_4 = "AND a.es4 = '".$flag['eselon4']."'";
+
+		$sql = "SELECT
+						a.id AS id_pegawai,
+						a.nip,
+						a.nama_pegawai,
+						a.posisi_akademik,
+						a.posisi_plt,
+						a.photo AS photo,
+						a. STATUS,
+						COALESCE (b.kat_posisi, '-') AS kat_posisi,
+						COALESCE (b.nama_posisi, '-') AS nama_posisi,
+						COALESCE (c.posisi_class, '-') AS posisi_class_raw,
+						COALESCE (cls_jft.posisi_class, '-') AS posisi_class_jft,
+						COALESCE (cls_jfu.posisi_class, '-') AS posisi_class_jfu,
+						COALESCE (es1.nama_eselon1, '-') AS nama_eselon1,
+						COALESCE (es2.nama_eselon2, '-') AS nama_eselon2,
+						COALESCE (es3.nama_eselon3, '-') AS nama_eselon3,
+						COALESCE (es4.nama_eselon4, '-') AS nama_eselon4,
+						a. LOCAL,
+						a.es1,
+						a.es2,
+						a.es3,
+						a.es4,
+						a.id,
+						b.id AS `id_posisi`,
+						b.kat_posisi,
+						c.posisi_class,
+						b.atasan,
+						'2019-02-01' AS tmt,
+						rptp.nilai_prilaku_kerja,
+						rpts.nilai_capaian_skp,
+						rpts.nilai_sasaran_kinerja_pegawai,
+						(rpts.nilai_sasaran_kinerja_pegawai + rptp.nilai_prilaku_kerja) as total_skp
+					FROM
+						mr_pegawai a
+					LEFT JOIN mr_posisi b ON b.id = a.posisi
+					LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+					LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft = jft.id
+					LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
+					LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu = jfu.id
+					LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id
+					LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = b.eselon1
+					LEFT JOIN mr_eselon2 es2 ON es2.id_es2 = b.eselon2
+					LEFT JOIN mr_eselon3 es3 ON es3.id_es3 = b.eselon3
+					LEFT JOIN mr_eselon4 es4 ON es4.id_es4 = b.eselon4
+					LEFT JOIN rpt_skp_prilaku_skp rptp ON a.id = rptp.id_pegawai 
+					AND rptp.tahun = '".$flag['tahun']."'
+					LEFT JOIN rpt_skp_sasaran_kerja rpts on rptp.id_pegawai = rpts.id_pegawai
+					AND rptp.id_posisi = rpts.id_posisi 
+					AND rptp.tahun = '".$flag['tahun']."'					
+					WHERE a. STATUS = '1'
+					".$sql_1."
+					".$sql_2."
+					".$sql_3."
+					".$sql_4."
+					".$sql_5."				
+					ORDER BY ".$order_by."";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}		
+	}		
 	
 }
