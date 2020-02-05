@@ -24,7 +24,7 @@
 					</thead>
 					<tbody>
 					<?php
-						if ($list != array()) {
+						if ($list != 0) {
 							# code...
 							for ($i=0; $i < count($list); $i++) { 
 								# code...
