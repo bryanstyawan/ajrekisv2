@@ -18,14 +18,14 @@ class Dashboard extends CI_Controller {
 
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
-			$get_evaluator = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),2019);
+			$get_evaluator = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y')-1);
 			if ($get_evaluator != 0) {
 				# code...
 				for ($i=0; $i < count($get_evaluator); $i++) { 
 					# code...
 					if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL) {
 						# code...
-						$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,2019,'on');					
+						$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,date('Y')-1,'on');					
 						if ($get_posisi != 0) {
 							# code...
 							$data = array
@@ -37,23 +37,23 @@ class Dashboard extends CI_Controller {
 					}
 				}
 
-				$get_posisi = $this->mskp->get_request_history($this->session->userdata('sesUser'),2019,'on');
+				$get_posisi = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y')-1,'on');
 				if ($get_posisi != 0) {
 					# code...
 					$data = array
 					(
 						'id_posisi_pegawai' => $get_posisi[0]->posisi
 					);
-					$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>2019));					
+					$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1));					
 
 					$data_s = array();
 					for ($i=0; $i < count($get_posisi); $i++) { 
 						# code...					
-						$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_posisi[$i]->posisi,2019);						
+						$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_posisi[$i]->posisi,date('Y')-1);						
 						$data_parameter = array(
 							'id_pegawai'					=> $this->session->userdata('sesUser'),
 							'id_posisi'						=> $get_posisi[$i]->posisi,
-							'tahun'							=> '2019'
+							'tahun'							=> date('Y')-1
 						);
 						$check_data = $this->Allcrud->getData('rpt_skp_sasaran_kerja',$data_parameter)->result_array();						
 						if ($check_data == array()) {
@@ -61,7 +61,7 @@ class Dashboard extends CI_Controller {
 							$summary_skp = array(
 								'id_pegawai'					=> $this->session->userdata('sesUser'),
 								'id_posisi'						=> $get_posisi[$i]->posisi,
-								'tahun'							=> '2019',
+								'tahun'							=> date('Y')-1,
 								'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
 								'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
 								'total'                         => $data_s[$i]['summary_skp']['total'],
@@ -76,7 +76,7 @@ class Dashboard extends CI_Controller {
 							$summary_prilaku_skp = array(
 								'id_pegawai'					=> $this->session->userdata('sesUser'),
 								'id_posisi'						=> $get_posisi[$i]->posisi,
-								'tahun'							=> '2019',
+								'tahun'							=> date('Y')-1,
 								'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
 								'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
 								'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
@@ -99,7 +99,7 @@ class Dashboard extends CI_Controller {
 			$data['id_posisi']               = $this->session->userdata('sesPosisi');
 			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
 			$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();
-			// $skp                      		= $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2019);	
+			// $skp                      		= $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y')-1);	
 			$data['skp']					  = $this->mskp->get_persentase_target_realisasi(date('Y'));
 			$data['menit_efektif_year']       = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));
 			$data['member']                   = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');
@@ -121,8 +121,12 @@ class Dashboard extends CI_Controller {
 		}
 		else
 		{
-			$data['title']              = '';
-			$data['content']            = 'vdashboard_empty';	
+			$data['title']      = '';
+			$data['baru']       = $this->Allcrud->getData('tr_request_bug_fixing_fitur',array('status'=>0))->num_rows();
+			$data['proses']     = $this->Allcrud->getData('tr_request_bug_fixing_fitur',array('status'=>1))->num_rows();
+			$data['verifikasi'] = $this->Allcrud->getData('tr_request_bug_fixing_fitur',array('status'=>2))->num_rows();									
+			$data['selesai']    = $this->Allcrud->getData('tr_request_bug_fixing_fitur',array('status'=>3))->num_rows();			
+			$data['content']    = 'vdashboard_monitoring';	
 		}		
 
 		$this->load->view('templateAdmin',$data);
