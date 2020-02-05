@@ -14,8 +14,8 @@
             'id'        => 'btn_masih_diproses',
             'color_box' => 'background-color: #d2d6de !important;',
             'icon'      => '',
-            'value_php' => 0,
-            'title'     => 'SEDANG DIKERJAKAN',
+            'value_php' => $proses,
+            'title'     => 'REVISI',
             'html'      => ''));        
 
         $this->load->view('dashboard_component/common_component',array(
@@ -23,7 +23,7 @@
             'id'        => 'btn_masih_diproses',
             'color_box' => 'background-color: #d2d6de !important;',
             'icon'      => '',
-            'value_php' => 0,
+            'value_php' => $verifikasi,
             'title'     => 'BUTUH VERIFIKASI',
             'html'      => ''));
             
@@ -32,7 +32,7 @@
                 'id'        => 'btn_masih_diproses',
                 'color_box' => 'background-color: #d2d6de !important;',
                 'icon'      => '',
-                'value_php' => 0,
+                'value_php' => $selesai,
                 'title'     => 'TELAH SELESAI',
                 'html'      => ''));            
 ?>
