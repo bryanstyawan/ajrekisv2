@@ -43,11 +43,22 @@ class Dashboard extends CI_Controller {
 				$get_posisi = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y')-1,'on');
 				if ($get_posisi != 0) {
 					# code...
-					$data = array
-					(
-						'id_posisi_pegawai' => $get_posisi[0]->posisi
-					);
-					$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1));					
+
+					$check_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1))->result_array();					
+					if ($check_data != array()) {
+						# code...
+						for ($i=0; $i < count($check_data); $i++) { 
+							# code...
+							if ($check_data[$i]['id_posisi_pegawai'] == null || $check_data[$i]['id_posisi_pegawai'] == '') {
+								# code...
+								$data = array
+								(
+									'id_posisi_pegawai' => $get_posisi[0]->posisi
+								);
+								$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1));								
+							}
+						}
+					}					
 
 					$data_s = array();
 					for ($i=0; $i < count($get_posisi); $i++) { 
