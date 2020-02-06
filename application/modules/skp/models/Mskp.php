@@ -714,7 +714,8 @@ class Mskp extends CI_Model
 					WHERE a.id_pegawai = '".$id_pegawai."'
 					AND a.tahun = '".$tahun."'
 					AND a.id_posisi_pegawai = '".$id_posisi."'
-					AND pos1.atasan = pos2.atasan";
+					AND pos1.atasan <> a.id_posisi_pegawai_penilai
+					AND pos2.atasan <> a.id_posisi_pegawai";
 		}
 		elseif ($parameter == 'bawahan') {
 			$sql = "SELECT DISTINCT 
@@ -733,7 +734,7 @@ class Mskp extends CI_Model
 					WHERE a.id_pegawai = '".$id_pegawai."'
 					AND a.tahun = '".$tahun."'
 					AND a.id_posisi_pegawai = '".$id_posisi."'
-					AND a.id_posisi_pegawai = pos2.atasan";			
+					AND pos2.atasan <> a.id_posisi_pegawai";			
 		}
 
 		$query = $this->db->query($sql);
