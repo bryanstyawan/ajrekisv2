@@ -28,11 +28,14 @@ class Dashboard extends CI_Controller {
 						$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,date('Y')-1,'on');					
 						if ($get_posisi != 0) {
 							# code...
-							$data = array
-							(
-								'id_posisi_pegawai_penilai' => $get_posisi[0]->posisi
-							);
-							$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id'=>$get_evaluator[$i]->id));									
+							if ($get_evaluator[$i]->id_posisi_pegawai_penilai != NULL || $get_evaluator[$i]->id_posisi_pegawai_penilai != '') {
+								# code...
+								$data = array
+								(
+									'id_posisi_pegawai_penilai' => $get_posisi[0]->posisi
+								);
+								$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id'=>$get_evaluator[$i]->id));								
+							}									
 						}						
 					}
 				}
