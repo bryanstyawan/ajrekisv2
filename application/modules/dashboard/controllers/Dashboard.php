@@ -77,7 +77,7 @@ class Dashboard extends CI_Controller {
 								'total'                         => $data_s[$i]['summary_skp']['total'],
 								'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
 							);														
-							$this->Allcrud->editData('rpt_skp_sasaran_kerja',$data_store,$data_parameter);										
+							$this->Allcrud->editData('rpt_skp_sasaran_kerja',$summary_skp,$data_parameter);										
 						}
 
 						$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
@@ -114,7 +114,7 @@ class Dashboard extends CI_Controller {
 								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
 								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
 							);														
-							$this->Allcrud->editData('rpt_skp_prilaku_skp',$data_store,$data_parameter);										
+							$this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
 						}												
 					}			
 				}
