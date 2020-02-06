@@ -586,10 +586,12 @@ class Mskp extends CI_Model
 	{
 		# code...
 		$sql = "SELECT a.*,
-						b.nama_pegawai
+						b.nama_pegawai,
+						pnpos.nama_posisi
 				FROM mr_skp_penilaian_prilaku a
 				JOIN mr_pegawai b
 				ON a.id_pegawai_penilai = b.id
+				LEFT JOIN mr_posisi pnpos ON a.id_posisi_pegawai_penilai = pnpos.id
 				WHERE a.id_pegawai = '".$id."'
 				AND a.tahun = '".$tahun."'";
 		$query = $this->db->query($sql);
@@ -676,21 +678,23 @@ class Mskp extends CI_Model
 		$sql = "";
 		if ($parameter == 'atasan') {
 			# code...
-			$sql = "SELECT DISTINCT 	
-						COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
-						COALESCE (a.integritas, 0) AS integritas,
-						COALESCE (a.komitmen, 0) AS komitmen,
-						COALESCE (a.disiplin, 0) AS disiplin,
-						COALESCE (a.kerjasama, 0) AS kerjasama,
-						COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
-						COALESCE (a. STATUS, 0) AS status
-					FROM mr_skp_penilaian_prilaku a 
-					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
-					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
-					WHERE a.id_pegawai = '".$id_pegawai."'
-					AND a.tahun = '".$tahun."'
-					AND a.id_posisi_pegawai = '".$id_posisi."'
-					AND a.id_posisi_pegawai_penilai = pos1.atasan";
+				$sql = "SELECT DISTINCT 	
+								COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+								COALESCE (a.integritas, 0) AS integritas,
+								COALESCE (a.komitmen, 0) AS komitmen,
+								COALESCE (a.disiplin, 0) AS disiplin,
+								COALESCE (a.kerjasama, 0) AS kerjasama,
+								COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+								COALESCE (a. STATUS, 0) AS status
+						FROM mr_skp_penilaian_prilaku a 
+						LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+						LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+						LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+						LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+						WHERE a.id_pegawai = '".$id_pegawai."'
+						AND a.tahun = '".$tahun."'
+						AND a.id_posisi_pegawai = '".$id_posisi."'
+						AND pos1.atasan = a.id_posisi_pegawai_penilai";
 		}
 		elseif ($parameter == 'peer') {
 			# code...
