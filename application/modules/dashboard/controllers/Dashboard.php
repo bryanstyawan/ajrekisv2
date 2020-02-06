@@ -69,6 +69,16 @@ class Dashboard extends CI_Controller {
 							);							
 							$this->Allcrud->addData('rpt_skp_sasaran_kerja',$summary_skp);							
 						}
+						else
+						{
+							$summary_skp = array(
+								'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+								'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+								'total'                         => $data_s[$i]['summary_skp']['total'],
+								'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+							);														
+							$this->Allcrud->editData('rpt_skp_sasaran_kerja',$data_store,$data_parameter);										
+						}
 
 						$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
 						if ($check_data == array()) {
@@ -89,7 +99,23 @@ class Dashboard extends CI_Controller {
 								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
 							);							
 							$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
-						}						
+						}
+						else
+						{
+							$summary_prilaku_skp = array(
+								'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
+								'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
+								'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
+								'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+								'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
+								'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
+								'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
+								'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
+								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
+							);														
+							$this->Allcrud->editData('rpt_skp_prilaku_skp',$data_store,$data_parameter);										
+						}												
 					}			
 				}
 
