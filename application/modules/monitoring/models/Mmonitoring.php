@@ -18,7 +18,7 @@ class Mmonitoring extends CI_Model
 				LEFT JOIN mr_pegawai pel ON a.id_pegawai = pel.id
 				LEFT JOIN lt_bug_fixing_status bfstat ON a.status = bfstat.id				
 				WHERE a.status <> 4
-				ORDER BY a.audit_time ASC";
+				ORDER BY a.status ASC, a.audit_time ASC";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

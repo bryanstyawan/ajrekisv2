@@ -1,5 +1,67 @@
+<style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <div id="viewdata">
 	<div class="col-xs-3">
+		<div class="box box-solid" style="">
+			<div class="box-header with-border">
+				<h3 class="box-title">Prioritas</h3>
+			</div>
+			<div class="box-body no-padding" style="display: block;">
+				<ul class="nav nav-pills nav-stacked contact-id">
+					<?php
+						if ($priority != array()) {
+							# code...
+							for ($i=0; $i < count($priority); $i++) { 
+								# code...
+					?>
+					<li style="cursor: pointer;" class="teamwork" id="li_kandidat_0" onclick="detail_skp('3433','0','14265')">
+						<a class="contact-name">
+							<i class="fa fa-circle-o text-red contact-name-list"></i>                            
+							<?=$priority[$i]['nama'];?>
+							<sup>
+								<span class="notif-count pull-right">
+								<span><?=$priority[$i]['counter'];?></span>
+								</span>
+							</sup>
+						</a>
+					</li>
+					<?php
+							}
+						}
+					?>
+				</ul>
+			</div>
+		</div>
+
+		<div class="box box-solid" style="">
+			<div class="box-header with-border">
+				<h3 class="box-title">Status</h3>
+			</div>
+			<div class="box-body no-padding" style="display: block;">
+				<ul class="nav nav-pills nav-stacked contact-id">
+					<?php
+						if ($status != array()) {
+							# code...
+							for ($i=0; $i < count($status); $i++) { 
+								# code...
+					?>
+					<li style="cursor: pointer;" class="teamwork" id="li_kandidat_0" onclick="detail_skp('3433','0','14265')">
+						<a class="contact-name">
+							<i class="fa fa-circle-o text-red contact-name-list"></i>                            
+							<?=$status[$i]['nama'];?>
+							<sup>
+								<span class="notif-count pull-right">
+								<span><?=$status[$i]['counter'];?></span>
+								</span>
+							</sup>
+						</a>
+					</li>
+					<?php
+							}
+						}
+					?>
+				</ul>
+			</div>
+		</div>		
 	</div>
 	<div class="col-xs-9" >
 		<div class="box">
@@ -37,7 +99,47 @@
 									<td><?=$list[$i]->isi;?></td>
 									<td><?=$list[$i]->status_report;?></td>
 									<td><?=$list[$i]->audit_time;?></td>									
-									<td></td>								
+									<td>
+					<?php
+										switch ($list[$i]->status) {
+											case '0':
+												# code...
+					?>
+												<a class="btn btn-primary col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','2','none')">
+													<i class="fa fa-edit"></i>
+													Selesai dikerjakan
+												</a>					
+					<?php												
+												break;
+											case '1':
+												# code...
+					?>
+												<a class="btn btn-primary col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','2','none')">
+													<i class="fa fa-edit"></i>
+													Selesai dikerjakan
+												</a>					
+					<?php												
+												break;
+											case '2':
+												# code...
+					?>
+												<a class="btn btn-warning col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','1','note')">
+													<i class="fa fa-edit"></i>
+													Perlu revisi
+												</a>					
+
+												<a class="btn btn-success col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','3','none')">
+													<i class="fa fa-edit"></i>
+													Telah selesai
+												</a>												
+					<?php												
+												break;
+											default:
+												# code...
+												break;
+										}
+					?>
+									</td>								
 								</tr>
 					<?php
 							}
@@ -174,6 +276,33 @@ function edit(id)
 	})
 }
 
+	function change_status(id,status,arg) {
+		if (arg == 'none') {
+			data_sender = {
+				'oid' 		: id,
+				'crud' 		: 'change_status',				
+				'status'	: status,
+			}			
+
+			$.ajax({
+				url : "<?php echo site_url()?>monitoring/bug_fixing/store",
+				type: "post",
+				data: {data_sender:data_sender},
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					ajax_status(obj);
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
+			})				
+		}
+	}
+
 	function upload_data(crud) {
 		var form_data = new FormData();
 		res_id_x = 0;
@@ -220,7 +349,7 @@ function edit(id)
 						},
 						success:function(msg){
 							var obj = jQuery.parseJSON (msg);
-							// ajax_status(obj);
+							ajax_status(obj);
 						},
 						error:function(jqXHR,exception)
 						{

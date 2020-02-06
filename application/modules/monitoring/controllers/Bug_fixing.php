@@ -20,6 +20,26 @@ class Bug_fixing extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['title']      = 'Request Perbaikan Bug & Fitur';
 		$data['list']       = $this->Mmonitoring->get_data_report_bug_by_time();		
+		$data['priority']   = $this->Allcrud->listData('lt_bug_fixing_priority')->result_array();
+		$data['status']     = $this->Allcrud->listData('lt_bug_fixing_status')->result_array();
+		if ($data['status'] != array()) {
+			# code...
+			for ($i=0; $i < count($data['status']); $i++) { 
+				# code...
+				$getData = $this->Allcrud->getData('tr_request_bug_fixing_fitur',array('status'=>$data['status'][$i]['id']))->result_array();
+				$data['status'][$i]['counter'] = ($getData != array()) ? count($getData) : '';
+			}
+		}
+		
+		if ($data['priority'] != array()) {
+			# code...
+			for ($i=0; $i < count($data['priority']); $i++) { 
+				# code...
+				$getData = $this->Allcrud->getData('tr_request_bug_fixing_fitur',array('priority'=>$data['priority'][$i]['id']))->result_array();
+				$data['priority'][$i]['counter'] = ($getData != array()) ? count($getData) : '';
+			}			
+		}
+
 		$data['content']    = 'monitoring/bug_fixing/index';
 		$this->load->view('templateAdmin',$data);		
 	}
@@ -59,6 +79,16 @@ class Bug_fixing extends CI_Controller {
 			$data_store['status']     = 0;
 			$res_data                 = $this->Allcrud->editData('tr_request_bug_fixing_fitur',$data_store,array('id'=>$data_sender['oid']));			
 			$text_status              = $this->Globalrules->check_status_res($res_data,'Data telah berhasil ditambahkan.');			
+		}
+		elseif ($data_sender['crud'] == 'change_status') {
+			# code...
+			if ($data_sender['status'] == '2') {
+				# code...
+				$data_store['id_pic'] = $this->session->userdata('sesUser');				
+			}
+			$data_store['status']     = $data_sender['status'];
+			$res_data                 = $this->Allcrud->editData('tr_request_bug_fixing_fitur',$data_store,array('id'=>$data_sender['oid']));			
+			$text_status              = $this->Globalrules->check_status_res($res_data,'Status telah diubah.');			
 		}		
 
 		$res = array
