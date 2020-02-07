@@ -38,12 +38,22 @@ class Mmonitoring extends CI_Model
 		//2 = Butuh verifikasi
 		//3 = selesai
 		//4 = pending
+		$order = "";
+		if ($data['value'] == 'status') {
+			# code...
+			$order = "a.status ASC, a.audit_time DESC";
+		}
+		else
+		{
+			$order = "a.status ASC, a.audit_time ASC";			
+		}
+
 		$sql = "SELECT DISTINCT a.*, pel.nama_pegawai, pel.nip, bfstat.nama as status_report
 				FROM tr_request_bug_fixing_fitur a
 				LEFT JOIN mr_pegawai pel ON a.id_pegawai = pel.id
 				LEFT JOIN lt_bug_fixing_status bfstat ON a.status = bfstat.id				
 				WHERE ".$data['name']." = ".$data['value']."
-				ORDER BY a.status ASC, a.audit_time DESC";
+				ORDER BY ".$order."";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

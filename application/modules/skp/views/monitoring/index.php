@@ -58,6 +58,49 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
+				<div class="col-lg-6">
+					<div class="col-lg-3">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Baik</label>
+						<div id="isies2">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" disabled="disabled" id="f_baik">									
+								</div>
+							</div>															
+						</div>				
+					</div>
+					<div class="col-lg-3">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Cukup</label>
+						<div id="isies2">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" disabled="disabled" id="f_cukup">									
+								</div>
+							</div>															
+						</div>				
+					</div>
+					<div class="col-lg-3">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Kurang</label>
+						<div id="isies2">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" disabled="disabled" id="f_kurang">									
+								</div>
+							</div>															
+						</div>				
+					</div>
+
+					<div class="col-lg-3">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Buruk</label>
+						<div id="isies2">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" disabled="disabled" id="f_buruk">									
+								</div>
+							</div>															
+						</div>				
+					</div>																			
+				</div>
 			</div>
 			<div class="box-body" id="isi">
 				<div>
@@ -70,6 +113,7 @@
                             <th>Sasaran Kerja Pegawai</th>
                             <th>Perilaku Kerja</th>
                             <th>Total</th>							
+							<th>Status</th>
 							<th>Tahun</th>                            
 						</tr>
 					</thead>
