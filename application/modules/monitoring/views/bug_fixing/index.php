@@ -13,7 +13,7 @@
 							for ($i=0; $i < count($priority); $i++) { 
 								# code...
 					?>
-					<li style="cursor: pointer;" class="teamwork" id="li_kandidat_0" onclick="detail_skp('3433','0','14265')">
+					<li style="cursor: pointer;" class="teamwork" id="li_kandidat_0" onclick="show_data('priority','<?=$priority[$i]['id'];?>','<?=$priority[$i]['nama'];?>')">
 						<a class="contact-name">
 							<i class="fa fa-circle-o text-red contact-name-list"></i>                            
 							<?=$priority[$i]['nama'];?>
@@ -44,7 +44,7 @@
 							for ($i=0; $i < count($status); $i++) { 
 								# code...
 					?>
-					<li style="cursor: pointer;" class="teamwork" id="li_kandidat_0" onclick="detail_skp('3433','0','14265')">
+					<li style="cursor: pointer;" class="teamwork" id="li_kandidat_0" onclick="show_data('status','<?=$status[$i]['id'];?>','<?=$status[$i]['nama'];?>')">
 						<a class="contact-name">
 							<i class="fa fa-circle-o text-red contact-name-list"></i>                            
 							<?=$status[$i]['nama'];?>
@@ -66,6 +66,7 @@
 	<div class="col-xs-9" >
 		<div class="box">
 			<div class="box-header">
+				<h3 class="pull-left" id="subtitle-module"></h3>
 				<h3 class="box-title pull-right"><button class="btn btn-block btn-primary" id="addData"><i class="fa fa-plus-square"></i> Request</button></h3>
 				<div class="box-tools">
 				</div>
@@ -84,7 +85,7 @@
 						<th>Aksi</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="table_content">
 					<?php
 						if ($list != 0) {
 							# code...
@@ -104,35 +105,50 @@
 										switch ($list[$i]->status) {
 											case '0':
 												# code...
+												if ($this->session->userdata('sesNip') != '999') {
+													# code...
+												}
+												else
+												{
 					?>
-												<a class="btn btn-primary col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','2','none')">
-													<i class="fa fa-edit"></i>
-													Selesai dikerjakan
-												</a>					
-					<?php												
+													<a class="btn btn-primary col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','2','none')">
+														<i class="fa fa-edit"></i>
+														Selesai dikerjakan
+													</a>					
+					<?php
+												}												
 												break;
 											case '1':
 												# code...
+												if ($this->session->userdata('sesNip') != '999') {
+													# code...
+												}
+												else
+												{
 					?>
-												<a class="btn btn-primary col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','2','none')">
-													<i class="fa fa-edit"></i>
-													Selesai dikerjakan
-												</a>					
-					<?php												
+													<a class="btn btn-primary col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','2','none')">
+														<i class="fa fa-edit"></i>
+														Selesai dikerjakan
+													</a>					
+					<?php
+												}																								
 												break;
 											case '2':
 												# code...
+												if ($this->session->userdata('sesNip') != '999') {
+													# code...
 					?>
-												<a class="btn btn-warning col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','1','note')">
-													<i class="fa fa-edit"></i>
-													Perlu revisi
-												</a>					
+													<a class="btn btn-warning col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','1','note')">
+														<i class="fa fa-edit"></i>
+														Perlu revisi
+													</a>					
 
-												<a class="btn btn-success col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','3','none')">
-													<i class="fa fa-edit"></i>
-													Telah selesai
-												</a>												
-					<?php												
+													<a class="btn btn-success col-lg-12" style="margin:10px;" onclick="change_status('<?=$list[$i]->id;?>','3','none')">
+														<i class="fa fa-edit"></i>
+														Telah selesai
+													</a>												
+					<?php
+												}																								
 												break;
 											default:
 												# code...
@@ -276,94 +292,146 @@ function edit(id)
 	})
 }
 
-	function change_status(id,status,arg) {
-		if (arg == 'none') {
-			data_sender = {
-				'oid' 		: id,
-				'crud' 		: 'change_status',				
-				'status'	: status,
-			}			
+function change_status(id,status,arg) {
+	if (arg == 'none') {
+		data_sender = {
+			'oid' 		: id,
+			'crud' 		: 'change_status',				
+			'status'	: status,
+		}			
 
-			$.ajax({
-				url : "<?php echo site_url()?>monitoring/bug_fixing/store",
-				type: "post",
-				data: {data_sender:data_sender},
-				beforeSend:function(){
-					$("#loadprosess").modal('show');
-				},
-				success:function(msg){
-					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj);
-				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			})				
-		}
+		$.ajax({
+			url : "<?php echo site_url()?>monitoring/bug_fixing/store",
+			type: "post",
+			data: {data_sender:data_sender},
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success:function(msg){
+				var obj = jQuery.parseJSON (msg);
+				ajax_status(obj);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})				
+	}
+}
+
+function upload_data(crud) {
+	var form_data = new FormData();
+	res_id_x = 0;
+	var f_file    = $("#f_attachment").prop('files')[0];			
+	if (f_file != undefined) {
+		form_data.append('file', f_file);			
+		$.ajax({
+			url :"<?php echo site_url();?>monitoring/bug_fixing/upload_data/"+crud, // point to server-side PHP script
+			// dataType: 'json',  // what to expect back from the PHP script, if anything
+			cache: false,
+			contentType: false,
+			processData: false,
+			data: form_data,
+			type: 'post',
+			// xhr : function() {
+			// 	var xhr = new window.XMLHttpRequest();
+			// 	xhr.upload.addEventListener('progressBar', function(e){
+			// 		if(e.lengthComputable){								
+			// 			var percent = Math.round((e.loaded / e.total) * 100);
+			// 			$('#progressBar').attr('aria-valuenow', percent).css('width', percent + '%').text(percent + '%');
+			// 		}
+			// 	});
+			// 	return xhr;
+			// },					
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success: function(msg){
+				var obj = jQuery.parseJSON (msg);
+				ajax_status(obj,'no-refresh');				
+				data_sender = {
+					'oid' 		: obj.id,
+					'crud' 		: 'insert_upload',
+					'f_judul' 	: $("#f_judul").val(),
+					'f_isi'		: $("#f_isi").val()
+				}			
+
+				$.ajax({
+					url : "<?php echo site_url()?>monitoring/bug_fixing/store",
+					type: "post",
+					data: {data_sender:data_sender},
+					beforeSend:function(){
+						$("#loadprosess").modal('show');
+					},
+					success:function(msg){
+						var obj = jQuery.parseJSON (msg);
+						ajax_status(obj);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})								
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		});				
 	}
 
-	function upload_data(crud) {
-		var form_data = new FormData();
-		res_id_x = 0;
-		var f_file    = $("#f_attachment").prop('files')[0];			
-		if (f_file != undefined) {
-			form_data.append('file', f_file);			
-			$.ajax({
-				url :"<?php echo site_url();?>monitoring/bug_fixing/upload_data/"+crud, // point to server-side PHP script
-				// dataType: 'json',  // what to expect back from the PHP script, if anything
-				cache: false,
-				contentType: false,
-				processData: false,
-				data: form_data,
-				type: 'post',
-				// xhr : function() {
-				// 	var xhr = new window.XMLHttpRequest();
-				// 	xhr.upload.addEventListener('progressBar', function(e){
-				// 		if(e.lengthComputable){								
-				// 			var percent = Math.round((e.loaded / e.total) * 100);
-				// 			$('#progressBar').attr('aria-valuenow', percent).css('width', percent + '%').text(percent + '%');
-				// 		}
-				// 	});
-				// 	return xhr;
-				// },					
-				beforeSend:function(){
-					$("#loadprosess").modal('show');
-				},
-				success: function(msg){
-					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj,'no-refresh');				
-					data_sender = {
-						'oid' 		: obj.id,
-						'crud' 		: 'insert_upload',
-						'f_judul' 	: $("#f_judul").val(),
-						'f_isi'		: $("#f_isi").val()
-					}			
+	return res_id_x;
+}
 
-					$.ajax({
-						url : "<?php echo site_url()?>monitoring/bug_fixing/store",
-						type: "post",
-						data: {data_sender:data_sender},
-						beforeSend:function(){
-							$("#loadprosess").modal('show');
-						},
-						success:function(msg){
-							var obj = jQuery.parseJSON (msg);
-							ajax_status(obj);
-						},
-						error:function(jqXHR,exception)
-						{
-							ajax_catch(jqXHR,exception);					
-						}
-					})								
+function show_data(arg,id,remark) {
+	$.ajax({
+		url : "<?php echo site_url()?>monitoring/bug_fixing/show/"+arg+"/"+id,
+		type: "post",
+		beforeSend:function(){
+			$("#loadprosess").modal('show');
+			$('.table-view').dataTable().fnDestroy();
+			$(".table-view tbody tr").remove();
+			var newrec  = '<tr">' +
+								'<td colspan="5" class="text-center">Memuat Data</td>'
+						'</tr>';
+			$('.table-view tbody').append(newrec);			
+		},
+		success:function(msg){
+			textHeader = '';
+			if (arg == 'priority') {
+				textHeader = 'Prioritas ' + remark; 
+			}
+			else if(arg == 'status')
+			{
+				textHeader = 'Status ' + remark; 
+			}
+			$("#subtitle-module").html(textHeader);
+			$(".table-view tbody tr").remove();	
+			$("#table_content").html(msg);
+			$(".table-view").DataTable({
+				"oLanguage": {
+					"sSearch": "Pencarian :",
+					"sSearchPlaceholder" : "Ketik untuk mencari",
+					"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+					"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+					"sZeroRecords": "Data tidak ditemukan"
 				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			});				
+				"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+						"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+						"<'row'<'col-sm-12'tr>>" +
+						"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+				"bSort": false
+				// "dom": '<"top"f>rt'
+				// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+			});
+			setTimeout(function(){
+				$("#loadprosess").modal('hide');
+			}, 500);					
+		},
+		error:function(jqXHR,exception)
+		{
+			ajax_catch(jqXHR,exception);					
 		}
-
-		return res_id_x;
-	}
+	})			
+}
 </script>

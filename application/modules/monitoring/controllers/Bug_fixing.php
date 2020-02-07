@@ -19,7 +19,7 @@ class Bug_fixing extends CI_Controller {
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$data['title']      = 'Request Perbaikan Bug & Fitur';
-		$data['list']       = $this->Mmonitoring->get_data_report_bug_by_time();		
+		$data['list']       = $this->Mmonitoring->get_data_report_bug();		
 		$data['priority']   = $this->Allcrud->listData('lt_bug_fixing_priority')->result_array();
 		$data['status']     = $this->Allcrud->listData('lt_bug_fixing_status')->result_array();
 		if ($data['status'] != array()) {
@@ -97,6 +97,25 @@ class Bug_fixing extends CI_Controller {
 						'text'   => $text_status
 					);
 		echo json_encode($res);		
+	}
+
+	public function show($arg=NULL,$id=NULL)
+	{
+		# code...
+		$data['list'] = '';
+		if ($arg == 'priority') {
+			# code...
+			$data['list'] = $this->Mmonitoring->get_data_report_bug_by_status(array('name'=>'a.priority','value'=>$id));			
+		}
+		elseif ($arg == 'status') {
+			# code...
+			$data['list'] = $this->Mmonitoring->get_data_report_bug_by_status(array('name'=>'a.status','value'=>$id));			
+		}
+		else {
+			# code...
+		}
+		// print_r($data);die();
+		$this->load->view('monitoring/bug_fixing/ajax_data',$data);		
 	}
 
 	public function upload_data($arg)
