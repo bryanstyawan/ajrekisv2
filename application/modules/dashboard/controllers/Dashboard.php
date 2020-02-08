@@ -28,7 +28,7 @@ class Dashboard extends CI_Controller {
 						$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,date('Y')-1,'on');					
 						if ($get_posisi != 0) {
 							# code...
-							if ($get_evaluator[$i]->id_posisi_pegawai_penilai != NULL || $get_evaluator[$i]->id_posisi_pegawai_penilai != '') {
+							if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL || $get_evaluator[$i]->id_posisi_pegawai_penilai == '') {
 								# code...
 								$data = array
 								(
