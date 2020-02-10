@@ -1,12 +1,18 @@
 <?php
-	$nilai_baik   = 0;
-	$nilai_cukup  = 0;
-	$nilai_kurang = 0;
-	$nilai_buruk  = 0;
+	$nilai_sangat_baik = 0;
+	$nilai_baik        = 0;
+	$nilai_cukup       = 0;
+	$nilai_kurang      = 0;
+	$nilai_buruk       = 0;
 	if ($list != 0) {
 		# code...
 		for ($i=0; $i < count($list); $i++) {
 			# code...
+			if ($this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['value'] == 'Sangat Baik') {
+				# code...
+				$nilai_sangat_baik += 1;
+			}
+
 			if ($this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['value'] == 'Baik') {
 				# code...
 				$nilai_baik += 1;
@@ -44,6 +50,7 @@
 
 
 <script>
+$('#f_sangat_baik').val('<?=$nilai_sangat_baik;?>');
 $('#f_baik').val('<?=$nilai_baik;?>');
 $('#f_cukup').val('<?=$nilai_cukup;?>');
 $('#f_kurang').val('<?=$nilai_kurang;?>');

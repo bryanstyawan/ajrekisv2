@@ -60,6 +60,16 @@
 			<div class="box-header">
 				<div class="col-lg-6">
 					<div class="col-lg-3">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Sangat Baik</label>
+						<div id="isies2">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" class="form-control" disabled="disabled" id="f_sangat_baik">									
+								</div>
+							</div>															
+						</div>				
+					</div>				
+					<div class="col-lg-3">
 						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Baik</label>
 						<div id="isies2">
 							<div class="form-group">
