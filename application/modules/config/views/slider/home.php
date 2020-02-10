@@ -23,7 +23,7 @@
                 ?>
                             <tr>
                                 <td></td>
-                                <td><?=$list[$i]->title;?></td>
+                                <td><?=$list[$i]['title'];?></td>
                                 <td></td>
                             </tr>
                 <?php
@@ -94,40 +94,31 @@ $(document).ready(function(){
 	$("#btn-trigger-controll").click(function(){
 		var oid         = $("#oid").val();
 		var crud        = $("#crud").val();
-		var f_es1       = $("#f_es1").val();
+		var f_judul       = $("#f_judul").val();
+        file_pendukung     = $('#file_pendukung').prop('files')[0];		
 		var data_sender = "";
-		if (f_es1.length <= 0)
-		{
-			Lobibox.alert("warning", //AVAILABLE TYPES: "error", "info", "success", "warning"
-			{
-				msg: "Data Eselon 1 tidak boleh kosong."
-			});
+		data_sender = {
+			'oid' : oid,
+			'crud': crud,
+			'title' : f_judul
 		}
-		else
-		{
-			data_sender = {
-				'oid' : oid,
-				'crud': crud,
-				'es1' : f_es1
-			}
 
-			$.ajax({
-				url : "<?php echo site_url()?>master/data_eselon1/store",
-				type: "post",
-				data: {data_sender:data_sender},
-				beforeSend:function(){
-					$("#loadprosess").modal('show');
-				},
-				success:function(msg){
-					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj);
-				},
-				error:function(jqXHR,exception)
-				{
-					ajax_catch(jqXHR,exception);					
-				}
-			})
-		}
+		$.ajax({
+			url : "<?php echo site_url()?>config/store_slider",
+			type: "post",
+			data: {data_sender:data_sender},
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},
+			success:function(msg){
+				var obj = jQuery.parseJSON (msg);
+				ajax_status(obj);
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})
 	})
 })
 
