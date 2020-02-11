@@ -17,7 +17,7 @@
                     if ($list[$i]->file != NULL) {
                         # code...
         ?>
-                            <a class="btn btn-success col-lg-12" style="margin:10px;" target="_blank" href="<?php echo site_url();?>public/public/bug_report/<?=date('Y-m',strtotime($list[$i]->audit_time));?>/<?=$list[$i]->file;?>">
+                            <a class="btn btn-success col-lg-12" style="margin:10px;" target="_blank" href="<?php echo site_url();?>public/bug_report/<?=date('Y-m',strtotime($list[$i]->audit_time));?>/<?=$list[$i]->file;?>">
                                 <i class="fa fa-download"></i>
                                 Download File
                             </a>									
