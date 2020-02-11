@@ -36,7 +36,7 @@ class Statistik extends CI_Controller {
 		$data['revisi']             = $this->Allcrud->getData('tr_capaian_pekerjaan',array('status_pekerjaan'=>3,'id_pegawai'=>$oid,'tanggal_selesai LIKE'=>date('Y-m').'%'))->num_rows();
 		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai($oid,'id',$id_posisi);
 		$data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$oid))->result_array();
-		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($oid,$id_posisi);
+		$data['skp']                = $this->Globalrules->data_summary_skp_pegawai($oid,$id_posisi,date('Y'));
 		$data['data_transaksi']     = $this->mlaporan->get_transact($oid,1,date('m'),date('Y'));
 		$data['menit_efektif_year'] = $this->mlaporan->get_menit_efektif_year($oid);
 		$res = array

@@ -61,9 +61,9 @@ class Bug_fixing extends CI_Controller {
 			$data_sender['oid']  = $oid;
 		}
 
-		$data_store = $this->Globalrules->trigger_insert_update();
 		if ($data_sender['crud'] == 'insert') {
 			# code...
+			$data_store = $this->Globalrules->trigger_insert_update();			
 			$data_store['id_pegawai'] = $this->session->userdata('sesUser');
 			$data_store['judul']      = $data_sender['f_judul'];
 			$data_store['isi']        = $data_sender['f_isi'];
@@ -73,6 +73,7 @@ class Bug_fixing extends CI_Controller {
 		}
 		elseif ($data_sender['crud'] == 'insert_upload') {
 			# code...
+			$data_store = $this->Globalrules->trigger_insert_update();			
 			$data_store['id_pegawai'] = $this->session->userdata('sesUser');
 			$data_store['judul']      = $data_sender['f_judul'];
 			$data_store['isi']        = $data_sender['f_isi'];

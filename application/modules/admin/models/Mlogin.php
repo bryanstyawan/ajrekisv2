@@ -26,7 +26,7 @@ class Mlogin extends CI_Model {
 						),						
 						array
 						(
-							'password' => '',
+							'password' => '|',
 							'except'   => 'none'
 						),
 						array
