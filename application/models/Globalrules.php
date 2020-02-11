@@ -415,7 +415,8 @@ class Globalrules extends CI_Model
 	public function aspek_biaya($realisasi_biaya,$target_biaya,$kegiatan)
 	{
 		# code...
-		$aspek_biaya = "";
+		$aspek_biaya = 0;
+		$tingkat_efisiensi = 0;		
 		if ($kegiatan == 0) {
 			# code...
         if ($target_biaya != 0 && $realisasi_biaya != 0) {
@@ -439,6 +440,12 @@ class Globalrules extends CI_Model
 				}
 			}
 		}
+
+		return array
+		(
+			'aspek_biaya'       => $aspek_biaya,
+			'tingkat_efisiensi' => $tingkat_efisiensi
+		);		
 	}
 
 	public function tingkat_efisiensi($target,$realisasi)
@@ -652,7 +659,7 @@ class Globalrules extends CI_Model
 				$data['list_skp'][$i]->aspek_kuantitas     = $this->aspek_kuantitas($data['list_skp'][$i]->realisasi_kuantitas,$data['list_skp'][$i]->target_qty,$data['list_skp'][$i]->realisasi_kualitasmutu);				
 				$data['list_skp'][$i]->aspek_waktu         = $this->aspek_waktu($data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->target_waktu_bln,$data['list_skp'][$i]->realisasi_kuantitas);
 				$data['list_skp'][$i]->aspek_biaya         = $this->aspek_biaya($data['list_skp'][$i]->target_biaya,$data['list_skp'][$i]->realisasi_biaya,$data['list_skp'][$i]->realisasi_kuantitas);
-				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya,$data['list_skp'][$i]->target_biaya);
+				$data['list_skp'][$i]->perhitungan         = $this->perhitungan_skp($data['list_skp'][$i]->aspek_kuantitas,$data['list_skp'][$i]->aspek_kualitas,$data['list_skp'][$i]->aspek_waktu['aspek_waktu'],$data['list_skp'][$i]->aspek_biaya['aspek_biaya'],$data['list_skp'][$i]->target_biaya);
 				$data['summary_skp']['nilai_capaian_skp']  = $data['list_skp'][$i]->perhitungan['nilai_capaian_skp'];
 				if($data['summary_skp']['nilai_capaian_skp'] != 0)
 				{

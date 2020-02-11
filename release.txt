@@ -1,3 +1,12 @@
+v4.1.2.7.1
+2020-02-11
+New:
+Improved:
+- Tombol Download di halaman bug fixing
+Fixed:
+- Aspek Biaya yang belum dihitung
+Canceled:
+
 v4.1.2.7.0
 2020-02-10
 New:
