@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller {
 
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
-			$get_evaluator = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y')-1,$this->session->userdata('sesPosisi'));
+			$get_evaluator = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y')-1);
 			if ($get_evaluator != 0) {
 				# code...
 				for ($i=0; $i < count($get_evaluator); $i++) { 
