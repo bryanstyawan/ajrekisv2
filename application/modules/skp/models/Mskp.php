@@ -582,7 +582,7 @@ class Mskp extends CI_Model
 		}
 	}	
 
-	public function get_data_evaluator($id,$tahun)
+	public function get_data_evaluator($id,$tahun,$id_posisi)
 	{
 		# code...
 		$sql = "SELECT a.*,
@@ -593,6 +593,7 @@ class Mskp extends CI_Model
 				ON a.id_pegawai_penilai = b.id
 				LEFT JOIN mr_posisi pnpos ON a.id_posisi_pegawai_penilai = pnpos.id
 				WHERE a.id_pegawai = '".$id."'
+				AND a.id_posisi_pegawai = '".$id_posisi."'
 				AND a.tahun = '".$tahun."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

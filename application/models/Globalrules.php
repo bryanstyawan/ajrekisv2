@@ -521,7 +521,7 @@ class Globalrules extends CI_Model
 		$data['kreativitas']             = $this->mskp->get_summary_tugas_tambahan($id,$year_system,'kreativitas');
 		$data['tr_tugas_tambahan']       = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan',$year_system);
 		$data['tr_kreativitas']          = $this->mtrx->tugas_tambahan($id,1,'kreativitas',$year_system);
-		$data['evaluator']               = $this->mskp->get_data_evaluator($id,$year_system);
+		$data['evaluator']               = $this->mskp->get_data_evaluator($id,$year_system,$_id_posisi);
 		$data['nilai_prilaku_atasan']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan',$year_system);
 		$data['nilai_prilaku_peer']      = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'peer',$year_system);
 		$data['nilai_prilaku_bawahan']   = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'bawahan',$year_system);
