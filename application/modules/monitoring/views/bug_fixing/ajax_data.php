@@ -13,11 +13,16 @@
                 <td><?=$list[$i]->status_report;?></td>
                 <td><?=$list[$i]->audit_time;?></td>									
                 <td>
-                    <a class="btn btn-primary col-lg-12" target="_blank" href="<?php echo site_url();?>public/public/bug_report/<?=date('Y-m',strtotime($list[$i]->audit_time));?>/<?=$list[$i]->file;?>">
-                        <i class="fa fa-edit"></i>
-                        Download File
-                    </a>                                					                
-<?php
+        <?php
+                    if ($list[$i]->file != NULL) {
+                        # code...
+        ?>
+                            <a class="btn btn-success col-lg-12" style="margin:10px;" target="_blank" href="<?php echo site_url();?>public/public/bug_report/<?=date('Y-m',strtotime($list[$i]->audit_time));?>/<?=$list[$i]->file;?>">
+                                <i class="fa fa-download"></i>
+                                Download File
+                            </a>									
+        <?php
+                    }					
                     switch ($list[$i]->status) {
                         case '0':
                             # code...
