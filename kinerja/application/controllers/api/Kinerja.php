@@ -114,7 +114,6 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         $bulan = htmlspecialchars($month, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
         $tahun  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');        
         $users = $this->m_api->get_pegawai($nip);
-
         if ($users != 0)
         {
             $res_data = $this->m_api->api_kinerja('kinerja','eselon2 ASC,
@@ -133,9 +132,6 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
                 'posisi'	 => $users[0]->posisi																		
             ));
 
-            $skp_prilaku = $this->spk_prilaku($users,$tahun);
-            $data_skp    = $this->result_skp($users,$tahun);
-
             $menit_efektif_year = $this->m_api->get_menit_efektif_year($users[0]->id,$tahun);
             $data_value[] = "";
             
@@ -152,20 +148,11 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
 
             $data_wrap = array(
                 'kinerja' => array(
-                    'pekerjaan_belum_diperiksa'          => ($res_data != array()) ? $res_data[0]->tr_belum_diperiksa : 0,
-                    'pekerjaan_disetujui'                => ($res_data != array()) ? $res_data[0]->tr_approve : 0,
-                    'tunjangan'                          => ($res_data != array()) ? $res_data[0]->real_tunjangan : 0,
-                    'menit_efektif'                      => ($res_data != array()) ? $res_data[0]->menit_efektif : 0,
-                    'persentase_realisasi_menit_efektif' => ($res_data != array()) ? $res_data[0]->prosentase_menit_efektif : 0,                    
-                ),
-                'skp' => array(
-                    'tugas_tambahan'         => $this->tugas_tambahan_kreatifitas($users[0]->id,$tahun,NULL),
-                    'kreativitas'            => $this->tugas_tambahan_kreatifitas($users[0]->id,$tahun,'kreativitas'),
-                    'penilaian_prilaku'      => $skp_prilaku['summary_prilaku_skp'],
-                    'nilai_prilaku_kerja'    => $skp_prilaku['result']['nilai_prilaku_kerja'],
-                    'nilai_capaian_skp'      => $data_skp['summary_skp']['nilai_sasaran_kinerja_pegawai'],
-                    'nilai_prestasi_skp'     => $data_skp['summary_skp_dan_prilaku'],
-                    'persentase_capaian_skp' => $data_skp['persentase_target_realisasi']->persentase
+                    'pekerjaan_belum_diperiksa'          => ($res_data != 0) ? $res_data[0]->tr_belum_diperiksa : 0,
+                    'pekerjaan_disetujui'                => ($res_data != 0) ? $res_data[0]->tr_approve : 0,
+                    'tunjangan'                          => ($res_data != 0) ? $res_data[0]->real_tunjangan : 0,
+                    'menit_efektif'                      => ($res_data != 0) ? $res_data[0]->menit_efektif : 0,
+                    'persentase_realisasi_menit_efektif' => ($res_data != 0) ? $res_data[0]->prosentase_menit_efektif : 0,                    
                 ),
                 'statistik' => $data_value                
                 
@@ -186,6 +173,51 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         }        
     }
 
+    public function summary_skp_post()
+    {
+        # code...
+        $nip   = $this->input->post('nip');
+        $month = $this->input->post('bulan');
+        $year  = $this->input->post('tahun');                
+        $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
+        $bulan = htmlspecialchars($month, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
+        $tahun  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');        
+        $users = $this->m_api->get_pegawai($nip);
+
+        if ($users != 0)
+        {
+
+            $skp_prilaku = $this->spk_prilaku($users,$tahun);
+            $data_skp    = $this->result_skp($users,$tahun);
+
+
+            $data_wrap = array(
+                'skp' => array(
+                    'tugas_tambahan'         => $this->tugas_tambahan_kreatifitas($users[0]->id,$tahun,NULL),
+                    'kreativitas'            => $this->tugas_tambahan_kreatifitas($users[0]->id,$tahun,'kreativitas'),
+                    'penilaian_prilaku'      => $skp_prilaku['summary_prilaku_skp'],
+                    'nilai_prilaku_kerja'    => $skp_prilaku['result']['nilai_prilaku_kerja'],
+                    'nilai_capaian_skp'      => $data_skp['summary_skp']['nilai_sasaran_kinerja_pegawai'],
+                    'nilai_prestasi_skp'     => $data_skp['summary_skp_dan_prilaku'],
+                    'persentase_capaian_skp' => $data_skp['persentase_target_realisasi']->persentase
+                )
+            );
+
+            $data = array
+                    (
+                        // 'res_pegawai'   => $users,
+                        'res_data' => $data_wrap,
+                        // 'res_trans'     => $res_data 
+                    );
+
+            $res_data = array(
+                                'status' => TRUE,
+                                'data'   => $data
+                            );
+            $this->response($res_data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code            
+        }        
+    }    
+
     public function tugas_tambahan_kreatifitas($id,$tahun,$arg)
     {
         # code...
@@ -204,14 +236,14 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
 		{
 			if ($value_bawahan == 0) {
 				# code...
-				$value_atasan = ($value_atasan*80)/100;
-				$value_peer   = ($value_peer*20)/100;
+				$value_atasan = ($value_atasan*60)/100;
+				$value_peer   = ($value_peer*40)/100;
 			}
 			else
 			{
-				$value_atasan  = $value_atasan*70/100;
+				$value_atasan  = $value_atasan*60/100;
 				$value_peer    = $value_peer*20/100;
-				$value_bawahan = $value_bawahan*10/100;
+				$value_bawahan = $value_bawahan*20/100;
 			}
 			$data = $value_atasan + $value_peer + $value_bawahan;
 		}
@@ -222,11 +254,12 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
     public function spk_prilaku($users,$tahun)
     {
         # code...
+        // print_r($users);die();
         $jabatan = $this->m_api->get_posisi($users[0]->posisi);            
         $atasan = ($jabatan != array()) ? $jabatan[0]->atasan : '' ;
         $data['evaluator']               = $this->m_api->get_data_evaluator($users[0]->id,$tahun);            
         $data['nilai_prilaku_atasan']    = $this->m_api->get_nilai_prilaku($users[0]->id,$users[0]->posisi,'atasan',$tahun,$users[0]->id);
-        $data['nilai_prilaku_peer']      = $this->m_api->get_nilai_prilaku($users[0]->id,$atasan,'peer',$tahun,$users[0]->id);
+        $data['nilai_prilaku_peer']      = $this->m_api->get_nilai_prilaku($users[0]->id,$users[0]->posisi,'peer',$tahun,$users[0]->id);
         $data['nilai_prilaku_bawahan']   = $this->m_api->get_nilai_prilaku($users[0]->id,$users[0]->posisi,'bawahan',$tahun,$users[0]->id);            
 
         $data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->integritas,$data['nilai_prilaku_peer'][0]->integritas,$data['nilai_prilaku_bawahan'][0]->integritas);
@@ -235,10 +268,10 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         $data['summary_prilaku_skp']['disiplin']            = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->disiplin,$data['nilai_prilaku_peer'][0]->disiplin,$data['nilai_prilaku_bawahan'][0]->disiplin);
         $data['summary_prilaku_skp']['kerjasama']           = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kerjasama,$data['nilai_prilaku_peer'][0]->kerjasama,$data['nilai_prilaku_bawahan'][0]->kerjasama);
         $data['summary_prilaku_skp']['kepemimpinan']        = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan);
-        $data['result']['status']              = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->status,$data['nilai_prilaku_peer'][0]->status,$data['nilai_prilaku_bawahan'][0]->status,'status',($data['evaluator'] == 0) ? 1 : count($data['evaluator']));
-        $data['result']['jumlah']              = $data['summary_prilaku_skp']['orientasi_pelayanan'] + $data['summary_prilaku_skp']['integritas'] + $data['summary_prilaku_skp']['komitmen'] + $data['summary_prilaku_skp']['disiplin'] + $data['summary_prilaku_skp']['kerjasama'] + $data['summary_prilaku_skp']['kepemimpinan'];
-        $data['result']['rata_rata']           = $data['result']['jumlah'] / 6;
-        $data['result']['nilai_prilaku_kerja'] = ($data['result']['rata_rata']*40)/100;        
+        $data['result']['status']                           = $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->status,$data['nilai_prilaku_peer'][0]->status,$data['nilai_prilaku_bawahan'][0]->status,'status',($data['evaluator'] == 0) ? 1 : count($data['evaluator']));
+        $data['result']['jumlah']                           = $data['summary_prilaku_skp']['orientasi_pelayanan'] + $data['summary_prilaku_skp']['integritas'] + $data['summary_prilaku_skp']['komitmen'] + $data['summary_prilaku_skp']['disiplin'] + $data['summary_prilaku_skp']['kerjasama'] + $data['summary_prilaku_skp']['kepemimpinan'];
+		$data['result']['rata_rata']                         = ($users != 0) ? ($users[0]->kat_posisi == 1 || $users[0]->kat_posisi == 6) ? $data['result']['jumlah'] / 6 : $data['result']['jumlah'] / 5  : 0 ;
+        $data['result']['nilai_prilaku_kerja']              = ($data['result']['rata_rata']*40)/100;        
 
         return $data;
     }
@@ -257,8 +290,8 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
             $skp_prilaku = $this->spk_prilaku($users,$tahun);
             $data = array
                     (
-                        'res_pegawai'   => $users,
-                        'res_data'      => $skp_prilaku 
+                        // 'res_pegawai'   => $users,
+                        'res_data'      => $skp_prilaku['result'] 
                     );
 
             $res_data = array(
@@ -267,7 +300,40 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
                             );
             $this->response($res_data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code            
         }        
-    }   
+    }
+    
+    public function summary_skp_prestasi_post()
+    {
+        # code...
+        $nip   = $this->input->post('nip');
+        $month = $this->input->post('bulan');
+        $year  = $this->input->post('tahun');                
+        $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
+        $tahun  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');        
+        $users = $this->m_api->get_pegawai($nip);
+        if ($users != 0)
+        {
+            $data_skp    = $this->result_skp($users,$tahun);            
+            $data_wrap = array(
+                'skp' => array(
+                    'nilai_capaian_skp'      => $data_skp['summary_skp']['nilai_sasaran_kinerja_pegawai']
+                )                
+            );
+
+            
+            $data = array
+                    (
+                        // 'res_pegawai'   => $users,
+                        'res_data' => $data_wrap 
+                    );
+
+            $res_data = array(
+                                'status' => TRUE,
+                                'data'   => $data
+                            );
+            $this->response($res_data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code            
+        }        
+    }    
     
 	public function aspek_kuantitas($realisasi_kuantitas=NULL,$target_qty=NULL,$realisasi_kualitasmutu=NULL)
 	{
@@ -377,19 +443,22 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
 	    return $tingkat_efisiensi;
     }
 
-	public function perhitungan_skp($aspek_kuantitas=NULL,$aspek_kualitas=NULL,$aspek_waktu=NULL,$aspek_biaya=NULL)
+	public function perhitungan_skp($aspek_kuantitas=NULL,$aspek_kualitas=NULL,$aspek_waktu=NULL,$aspek_biaya=NULL,$target_biaya=NULL)
 	{
 		# code...
 		if($aspek_kuantitas == NULL)$aspek_kuantitas = 0;
 		if($aspek_kualitas == NULL)$aspek_kualitas   = 0;
 		if($aspek_waktu == NULL)$aspek_waktu         = 0;
 		if($aspek_biaya == NULL)$aspek_biaya         = 0;
+
+		$aspek = ($target_biaya == 0) ? ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu) : ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu + $aspek_biaya) ;
+		$nilai_capaian_skp = ($target_biaya == 0) ? (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu)/3) : (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu + $aspek_biaya)/4) ;
 		return array
 		(
-			'aspek'             => ($aspek_kuantitas + $aspek_kualitas + $aspek_waktu),
-			'nilai_capaian_skp' => (($aspek_kuantitas + $aspek_kualitas + $aspek_waktu)/3)
+			'aspek'             => $aspek,
+			'nilai_capaian_skp' => $nilai_capaian_skp
 		);
-    }
+	}
 
 	public function nilai_tugas_tambahan($param)
 	{
@@ -455,38 +524,5 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         $data['summary_skp_dan_prilaku']                        = $data['summary_skp']['nilai_sasaran_kinerja_pegawai'] + $data['summary_prilaku_skp']['nilai_prilaku_kerja'];        
 
         return $data;
-    }
-        
-    public function summary_spk_prestasi_post()
-    {
-        # code...
-        # code...
-        $nip   = $this->input->post('nip');
-        $month = $this->input->post('bulan');
-        $year  = $this->input->post('tahun');                
-        $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
-        $tahun  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');        
-        $users = $this->m_api->get_pegawai($nip);
-        if ($users != 0)
-        {
-
-            $data_skp = $this->result_skp($users,$tahun);
-
-            $data_wrap = array(
-                'nilai_perilaku_kerja' => $data_skp['summary_skp']['nilai_sasaran_kinerja_pegawai']
-            );
-
-            $data = array
-                    (
-                        'res_pegawai'   => $users,
-                        'res_data'      => $data_wrap,
-                    );
-
-            $res_data = array(
-                                'status' => TRUE,
-                                'data'   => $data
-                            );
-            $this->response($res_data, \Restserver\Libraries\REST_Controller::HTTP_OK); // OK (200) being the HTTP response code            
-        }                
     }
 }

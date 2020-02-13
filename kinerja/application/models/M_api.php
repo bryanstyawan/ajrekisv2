@@ -9,8 +9,9 @@ class M_api extends CI_Model {
 	public function get_pegawai($nip)
 	{
 		# code...
-		$sql = "SELECT a.*
+		$sql = "SELECT a.*,b.kat_posisi
 						FROM mr_pegawai a
+						LEFT JOIN mr_posisi b on a.posisi = b.id
 						WHERE a.nip = '".$nip."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
@@ -69,62 +70,66 @@ class M_api extends CI_Model {
 		$sql       = "";
 		if ($param == 'atasan') {
 			# code...
-			$sql = "SELECT DISTINCT COALESCE(c.orientasi_pelayanan,0) as orientasi_pelayanan,
-								COALESCE(c.integritas,0) as integritas,
-								COALESCE(c.komitmen,0) as komitmen,
-								COALESCE(c.disiplin,0) as disiplin,
-								COALESCE(c.kerjasama,0) as kerjasama,
-								COALESCE(c.kepemimpinan,0) as kepemimpinan,
-								COALESCE(c.status,0) as status
-			    FROM mr_pegawai a
-			    JOIN mr_posisi b
-			    ON b.atasan = a.posisi
-				LEFT JOIN mr_skp_penilaian_prilaku c
-				ON a.id = c.id_pegawai_penilai
-			    WHERE a.status = 1
-			    AND b.id = '".$id_param."'
-				AND c.id_pegawai = '".$id_pegawai."'
-				AND c.tahun = '".$tahun."'";
+			$sql = "SELECT DISTINCT 	
+							COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+							COALESCE (a.integritas, 0) AS integritas,
+							COALESCE (a.komitmen, 0) AS komitmen,
+							COALESCE (a.disiplin, 0) AS disiplin,
+							COALESCE (a.kerjasama, 0) AS kerjasama,
+							COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+							COALESCE (a. STATUS, 0) AS status
+					FROM mr_skp_penilaian_prilaku a 
+					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+					LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+					LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+					WHERE a.id_pegawai = '".$id_pegawai."'
+					AND a.tahun = '".$tahun."'
+					AND a.id_posisi_pegawai = '".$id_param."'
+					AND pos1.atasan = a.id_posisi_pegawai_penilai";
 		}
 		elseif ($param == 'peer') {
 			# code...
-			$sql = "SELECT DISTINCT COALESCE(AVG(c.orientasi_pelayanan),0) as orientasi_pelayanan,
-								COALESCE(AVG(c.integritas),0) as integritas,
-								COALESCE(AVG(c.komitmen),0) as komitmen,
-								COALESCE(AVG(c.disiplin),0) as disiplin,
-								COALESCE(AVG(c.kerjasama),0) as kerjasama,
-								COALESCE(AVG(c.kepemimpinan),0) as kepemimpinan,
-								COALESCE(SUM(c.status),0) as status
-			    FROM mr_pegawai a
-			    JOIN mr_posisi b
-			    ON a.posisi = b.id
-				LEFT JOIN mr_skp_penilaian_prilaku c
-				ON a.id = c.id_pegawai_penilai
-			    WHERE a.status = 1
-			    AND b.atasan = '".$id_param."'
-				AND c.status = 1
-				AND c.id_pegawai = ".$id_pegawai."
-				AND c.tahun = '".$tahun."'				
-				GROUP BY b.atasan";
+			$sql = "SELECT DISTINCT 
+								COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+								COALESCE (a.integritas, 0) AS integritas,
+								COALESCE (a.komitmen, 0) AS komitmen,
+								COALESCE (a.disiplin, 0) AS disiplin,
+								COALESCE (a.kerjasama, 0) AS kerjasama,
+								COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+								COALESCE (a. STATUS, 0) AS status
+					FROM mr_skp_penilaian_prilaku a 
+					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+					LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+					LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+					WHERE a.id_pegawai = '".$id_pegawai."'
+					AND a.tahun = '".$tahun."'
+					AND a.id_posisi_pegawai = '".$id_param."'
+					AND pos1.atasan <> a.id_posisi_pegawai_penilai
+					AND pos2.atasan <> a.id_posisi_pegawai
+					GROUP BY a.id_pegawai";
 		}
 		elseif ($param == 'bawahan') {
 			# code...
-			$sql = "SELECT DISTINCT COALESCE(AVG(c.orientasi_pelayanan),0) as orientasi_pelayanan,
-								COALESCE(AVG(c.integritas),0) as integritas,
-								COALESCE(AVG(c.komitmen),0) as komitmen,
-								COALESCE(AVG(c.disiplin),0) as disiplin,
-								COALESCE(AVG(c.kerjasama),0) as kerjasama,
-								COALESCE(AVG(c.kepemimpinan),0) as kepemimpinan,
-								COALESCE(SUM(c.status),0) as status
-					FROM mr_pegawai a
-					JOIN mr_posisi b
-					ON a.posisi = b.id
-					LEFT JOIN mr_skp_penilaian_prilaku c
-					ON a.id = c.id_pegawai_penilai
-					WHERE b.atasan = '".$id_param."'
-					AND c.id_pegawai = ".$id_pegawai."
-					AND c.tahun = '".$tahun."'
-					AND a. STATUS = 1";
+			$sql = "SELECT DISTINCT 
+						COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+						COALESCE (a.integritas, 0) AS integritas,
+						COALESCE (a.komitmen, 0) AS komitmen,
+						COALESCE (a.disiplin, 0) AS disiplin,
+						COALESCE (a.kerjasama, 0) AS kerjasama,
+						COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+						COALESCE (a. STATUS, 0) AS status
+					FROM mr_skp_penilaian_prilaku a 
+					LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+					LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+					LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+					LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+					WHERE a.id_pegawai = '".$id_pegawai."'
+					AND a.tahun = '".$tahun."'
+					AND a.id_posisi_pegawai = '".$id_param."'
+					AND pos2.atasan <> a.id_posisi_pegawai
+					GROUP BY a.id_pegawai";
 		}
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
