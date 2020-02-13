@@ -42,6 +42,9 @@
 			<td><?=number_format($list[$i]->total_skp,2);?></td>			
 			<td><?=$this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['value'];?></td>
 			<td><?=$tahun;?></td>
+			<td>
+				<a class="btn btn-md bg-purple color-palette" onclick="getValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-refresh"></i> Ambil Nilai</a>
+			</td>
 		</tr>
 	<?php
 		}		

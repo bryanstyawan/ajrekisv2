@@ -58,9 +58,9 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
-				<div class="col-lg-6">
-					<div class="col-lg-3">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Sangat Baik</label>
+				<div class="col-lg-3">
+					<div class="col-lg-12">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Jumlah Nilai Sangat Baik</label>
 						<div id="isies2">
 							<div class="form-group">
 								<div class="input-group">
@@ -69,8 +69,8 @@
 							</div>															
 						</div>				
 					</div>				
-					<div class="col-lg-3">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Baik</label>
+					<div class="col-lg-12">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Jumlah Nilai Baik</label>
 						<div id="isies2">
 							<div class="form-group">
 								<div class="input-group">
@@ -79,8 +79,8 @@
 							</div>															
 						</div>				
 					</div>
-					<div class="col-lg-3">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Cukup</label>
+					<div class="col-lg-12">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Jumlah Nilai Cukup</label>
 						<div id="isies2">
 							<div class="form-group">
 								<div class="input-group">
@@ -89,8 +89,8 @@
 							</div>															
 						</div>				
 					</div>
-					<div class="col-lg-3">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Kurang</label>
+					<div class="col-lg-12">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Jumlah Nilai Kurang</label>
 						<div id="isies2">
 							<div class="form-group">
 								<div class="input-group">
@@ -100,8 +100,8 @@
 						</div>				
 					</div>
 
-					<div class="col-lg-3">
-						<label style="color: #000;font-weight: 400;font-size: 19px;">Nilai Buruk</label>
+					<div class="col-lg-12">
+						<label style="color: #000;font-weight: 400;font-size: 19px;">Jumlah Nilai Buruk</label>
 						<div id="isies2">
 							<div class="form-group">
 								<div class="input-group">
@@ -124,7 +124,8 @@
                             <th>Perilaku Kerja</th>
                             <th>Total</th>							
 							<th>Status</th>
-							<th>Tahun</th>                            
+							<th>Tahun</th> 
+							<th>Aksi</th>                           
 						</tr>
 					</thead>
 					<tbody id="table_content">
@@ -141,6 +142,76 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
+	function getValue(id) {
+		$.ajax({
+			url :"<?php echo site_url()?>skp/skp_tahunan/get_value/"+id,
+			type:"post",
+			beforeSend:function(){
+				$("#loadprosess").modal('show');
+			},			
+			success:function(msg){
+				var select_eselon_1      = $("#select_eselon_1").val();
+				var select_eselon_2      = $("#select_eselon_2").val();
+				var select_eselon_3      = $("#select_eselon_3").val();
+				var select_eselon_4      = $("#select_eselon_4").val();
+				var select_tahun         = $("#select_tahun").val();				
+				var data_link = {
+								'data_1': select_eselon_1,
+								'data_2': select_eselon_2,
+								'data_3': select_eselon_3,
+								'data_4': select_eselon_4,
+								'data_5': select_tahun
+				}
+				$.ajax({
+					url :"<?php echo site_url()?>skp/skp_tahunan/filter_skp_tahunan",
+					type:"post",
+					data: { data_sender : data_link},
+					beforeSend:function(){
+						$("#loadprosess").modal('show');
+						$("#halaman_header").html("");
+						$("#halaman_footer").html("");
+						$('.table-view').dataTable().fnDestroy();
+						$(".table-view tbody tr").remove();
+						var newrec  = '<tr">' +
+											'<td colspan="5" class="text-center">Memuat Data</td>'
+									'</tr>';
+						$('.table-view tbody').append(newrec);
+					},			
+					success:function(msg){
+						$(".table-view tbody tr").remove();
+						$("#table_content").html(msg);
+						$(".table-view").DataTable({
+							"oLanguage": {
+								"sSearch": "Pencarian :",
+								"sSearchPlaceholder" : "Ketik untuk mencari",
+								"sLengthMenu": "Menampilkan data&nbsp; _MENU_ &nbsp;Data",
+								"sInfo": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+								"sZeroRecords": "Data tidak ditemukan"
+							},
+							"dom": "<'row'<'col-sm-6'f><'col-sm-6'l>>" +
+									"<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+									"<'row'<'col-sm-12'tr>>" +
+									"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+							"bSort": false
+							// "dom": '<"top"f>rt'
+							// "dom": '<"top"fl>rt<"bottom"ip><"clear">'
+						});
+						setTimeout(function(){
+							$("#loadprosess").modal('hide');
+						}, 500);
+					},
+					error:function(jqXHR,exception)
+					{
+						ajax_catch(jqXHR,exception);					
+					}
+				})				
+			},
+			error:function(jqXHR,exception)
+			{
+				ajax_catch(jqXHR,exception);					
+			}
+		})		
+	}	
 $(document).ready(function(){
 	$('#btn_export_excel').click(function() {
 		var es1                  = $("#select_eselon_1").val();

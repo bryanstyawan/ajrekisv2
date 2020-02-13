@@ -47,6 +47,12 @@ class Skp_tahunan extends CI_Controller {
 		$this->load->view('skp/monitoring/ajax_skp_tahunan',$data);
 	}	
 
+	public function get_value($id_pegawai)
+	{
+		# code...
+		$this->Globalrules->trigger_skp_tahunan($id_pegawai);		
+	}
+
 
 }
   
