@@ -36,7 +36,7 @@
 		<tr style="<?=$this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['css'];?>">
 			<td><?=$list[$i]->nip;?></td>								
 			<td><?=$list[$i]->nama_pegawai;?></td>
-			<td><?=$list[$i]->nama_posisi;?></td>			
+			<td><?=$list[$i]->nama_posisi;?>(<?=$list[$i]->id_posisi;?>)</td>			
 			<td><?=number_format($list[$i]->nilai_sasaran_kinerja_pegawai,2);?></td>
 			<td><?=number_format($list[$i]->nilai_prilaku_kerja,2);?></td>
 			<td><?=number_format($list[$i]->total_skp,2);?></td>			
