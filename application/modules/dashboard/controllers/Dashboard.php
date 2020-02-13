@@ -39,101 +39,100 @@ class Dashboard extends CI_Controller {
 						}						
 					}
 				}
+			}
 
-				$get_posisi = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y')-1,'on');
-				if ($get_posisi != 0) {
+			$get_posisi = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y')-1,'on');
+			if ($get_posisi != 0) {
+				# code...
+
+				$check_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1))->result_array();					
+				if ($check_data != array()) {
 					# code...
-
-					$check_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1))->result_array();					
-					if ($check_data != array()) {
+					for ($i=0; $i < count($check_data); $i++) { 
 						# code...
-						for ($i=0; $i < count($check_data); $i++) { 
+						if ($check_data[$i]['id_posisi_pegawai'] == null || $check_data[$i]['id_posisi_pegawai'] == '') {
 							# code...
-							if ($check_data[$i]['id_posisi_pegawai'] == null || $check_data[$i]['id_posisi_pegawai'] == '') {
-								# code...
-								$data = array
-								(
-									'id_posisi_pegawai' => $get_posisi[0]->posisi
-								);
-								$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1));								
-							}
+							$data = array
+							(
+								'id_posisi_pegawai' => $get_posisi[0]->posisi
+							);
+							$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')-1));								
 						}
-					}					
+					}
+				}					
 
-					$data_s = array();
-					for ($i=0; $i < count($get_posisi); $i++) { 
-						# code...					
-						$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_posisi[$i]->posisi,date('Y')-1);						
-						$data_parameter = array(
+				$data_s = array();
+				for ($i=0; $i < count($get_posisi); $i++) { 
+					# code...					
+					$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_posisi[$i]->posisi,date('Y')-1);						
+					$data_parameter = array(
+						'id_pegawai'					=> $this->session->userdata('sesUser'),
+						'id_posisi'						=> $get_posisi[$i]->posisi,
+						'tahun'							=> date('Y')-1
+					);
+					$check_data = $this->Allcrud->getData('rpt_skp_sasaran_kerja',$data_parameter)->result_array();						
+					if ($check_data == array()) {
+						# code...
+						$summary_skp = array(
 							'id_pegawai'					=> $this->session->userdata('sesUser'),
 							'id_posisi'						=> $get_posisi[$i]->posisi,
-							'tahun'							=> date('Y')-1
-						);
-						$check_data = $this->Allcrud->getData('rpt_skp_sasaran_kerja',$data_parameter)->result_array();						
-						if ($check_data == array()) {
-							# code...
-							$summary_skp = array(
-								'id_pegawai'					=> $this->session->userdata('sesUser'),
-								'id_posisi'						=> $get_posisi[$i]->posisi,
-								'tahun'							=> date('Y')-1,
-								'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
-								'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
-								'total'                         => $data_s[$i]['summary_skp']['total'],
-								'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
-							);							
-							$this->Allcrud->addData('rpt_skp_sasaran_kerja',$summary_skp);							
-						}
-						else
-						{
-							$summary_skp = array(
-								'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
-								'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
-								'total'                         => $data_s[$i]['summary_skp']['total'],
-								'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
-							);														
-							$this->Allcrud->editData('rpt_skp_sasaran_kerja',$summary_skp,$data_parameter);										
-						}
+							'tahun'							=> date('Y')-1,
+							'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+							'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+							'total'                         => $data_s[$i]['summary_skp']['total'],
+							'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+						);							
+						$this->Allcrud->addData('rpt_skp_sasaran_kerja',$summary_skp);							
+					}
+					else
+					{
+						$summary_skp = array(
+							'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+							'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+							'total'                         => $data_s[$i]['summary_skp']['total'],
+							'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+						);														
+						$this->Allcrud->editData('rpt_skp_sasaran_kerja',$summary_skp,$data_parameter);										
+					}
 
-						$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
-						if ($check_data == array()) {
-							# code...
-							$summary_prilaku_skp = array(
-								'id_pegawai'					=> $this->session->userdata('sesUser'),
-								'id_posisi'						=> $get_posisi[$i]->posisi,
-								'tahun'							=> date('Y')-1,
-								'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
-								'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
-								'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
-								'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
-								'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
-								'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
-								'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
-								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
-								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
-							);							
-							$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
-						}
-						else
-						{
-							$summary_prilaku_skp = array(
-								'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
-								'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
-								'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
-								'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
-								'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
-								'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
-								'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
-								'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
-								'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
-								'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
-							);														
-							$this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
-						}												
-					}			
-				}
-
-			}
+					$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
+					if ($check_data == array()) {
+						# code...
+						$summary_prilaku_skp = array(
+							'id_pegawai'					=> $this->session->userdata('sesUser'),
+							'id_posisi'						=> $get_posisi[$i]->posisi,
+							'tahun'							=> date('Y')-1,
+							'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
+							'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
+							'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
+							'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+							'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
+							'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
+							'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
+							'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
+							'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+							'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
+						);							
+						$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
+					}
+					else
+					{
+						$summary_prilaku_skp = array(
+							'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
+							'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
+							'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
+							'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+							'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
+							'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
+							'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
+							'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
+							'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+							'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
+						);														
+						$this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
+					}												
+				}			
+			}			
 			$data['title']                   = '';
 			$data['content']                 = 'vdashboard';
 			$data['id_posisi']               = $this->session->userdata('sesPosisi');
