@@ -53,6 +53,11 @@ class Skp_tahunan extends CI_Controller {
 		$this->Globalrules->trigger_skp_tahunan($id_pegawai);		
 	}
 
-
+	public function get_delete($id_pegawai)
+	{
+		# code...
+		$this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
+		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));		
+	}
 }
   

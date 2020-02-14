@@ -35,15 +35,16 @@
 	?>
 		<tr style="<?=$this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['css'];?>">
 			<td><?=$list[$i]->nip;?></td>								
-			<td><?=$list[$i]->nama_pegawai;?></td>
-			<td><?=$list[$i]->nama_posisi;?>(<?=$list[$i]->id_posisi;?>)</td>			
+			<td><?=$list[$i]->nama_pegawai;?>(<?=$list[$i]->id_pegawai;?>)</td>
+			<td><?=$list[$i]->nama_posisi;?>(<?=$list[$i]->id_posisi_ts;?>)</td>			
 			<td><?=number_format($list[$i]->nilai_sasaran_kinerja_pegawai,2);?></td>
 			<td><?=number_format($list[$i]->nilai_prilaku_kerja,2);?></td>
 			<td><?=number_format($list[$i]->total_skp,2);?></td>			
 			<td><?=$this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['value'];?></td>
 			<td><?=$tahun;?></td>
 			<td>
-				<a class="btn btn-md bg-purple color-palette" onclick="getValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-refresh"></i> Ambil Nilai</a>
+				<a class="btn btn-md bg-purple color-palette col-lg-12" style="margin-top:5px;" onclick="getValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-refresh"></i> Ambil Nilai</a>
+				<a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-trash"></i> Reset</a>
 			</td>
 		</tr>
 	<?php
