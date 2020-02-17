@@ -58,6 +58,14 @@ class Skp_tahunan extends CI_Controller {
 		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));		
 	}
 
+	public function get_delete_root($id_pegawai,$id_posisi)
+	{
+		# code...
+		$this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
+		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));
+		$this->Allcrud->delData('mr_masa_kerja',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi));				
+	}	
+
 	public function data_grafik()
 	{
 		# code...
@@ -147,7 +155,6 @@ class Skp_tahunan extends CI_Controller {
 			}			
 		}
 		echo json_encode($data['list']);
-		// $this->load->view('monitoring/skp_tahunan/ajax_skp_tahunan',$data);		
 	}
 }
   

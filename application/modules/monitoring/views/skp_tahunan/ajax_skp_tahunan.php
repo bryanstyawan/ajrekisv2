@@ -43,8 +43,22 @@
 			<td><?=$this->Globalrules->nilai_capaian_skp($list[$i]->total_skp)['value'];?></td>
 			<td><?=$tahun;?></td>
 			<td>
-				<a class="btn btn-md bg-purple color-palette col-lg-12" style="margin-top:5px;" onclick="getValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-refresh"></i> Ambil Nilai</a>
-				<a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-trash"></i> Reset</a>
+				<a class="btn btn-md bg-purple color-palette col-lg-12" style="margin-top:5px;" onclick="getValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-download"></i> Ambil Nilai</a>
+				<a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-refresh"></i> Reset</a>
+<?php
+				if ($list[$i]->id_posisi_ts != null) {
+					# code...
+					if ($list[$i]->nilai_sasaran_kinerja_pegawai == 0) {
+						# code...
+						if ($list[$i]->nilai_prilaku_kerja == 0) {
+							# code...
+?>
+							<a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteHardValue('<?=$list[$i]->id_pegawai;?>','<?=$list[$i]->id_posisi_ts;?>')"><i class="fa fa-trash"></i> Hapus</a>
+<?php							
+						}						
+					}
+				}
+?>
 			</td>
 		</tr>
 	<?php
