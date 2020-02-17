@@ -113,22 +113,24 @@ $(document).ready(function(){
 						var myChart = new Chart(ctx, {
 												type: 'doughnut',
 												data: {
-													labels: ['Sangat Baik', 'Baik', 'Cukup', 'Kurang', 'Buruk'],													
+													labels: ['Sangat Baik', 'Baik', 'Cukup', 'Kurang', 'Buruk','Tidak diketahui'],													
 													datasets: [{
 														label: '# of Votes',
-														data: [obj[index].sangat_baik, obj[index].baik, obj[index].cukup, obj[index].kurang, obj[index].buruk],
+														data: [obj[index].sangat_baik, obj[index].baik, obj[index].cukup, obj[index].kurang, obj[index].buruk, obj[index].tidak_diketahui],
 														backgroundColor: [
 															'rgba(26, 82, 118)',
 															'rgba(88, 214, 141)',
 															'rgba(245, 176, 65)',
 															'rgba(241, 148, 138)',
-															'rgba(148, 49, 38)'
+															'rgba(148, 49, 38)',
+															'rgba(128, 128, 128)'															
 														],
 														borderColor: [
 															'rgba(255, 99, 132, 1)',
 															'rgba(54, 162, 235, 1)',
 															'rgba(255, 206, 86, 1)',
 															'rgba(75, 192, 192, 1)',
+															'rgba(75, 192, 192, 1)',															
 															'rgba(153, 102, 255, 1)'
 														],
 														borderWidth: 1

@@ -142,7 +142,7 @@ class Skp_tahunan extends CI_Controller {
 					$data['list'][$i]['kurang']                = $nilai_kurang;
 					$data['list'][$i]['buruk']                 = $nilai_buruk;
 					$data['list'][$i]['total']                 = $total_pegawai;
-					$data['list'][$i]['Tidak Diketahui']       = $total_pegawai - ($nilai_sangat_baik + $nilai_baik + $nilai_cukup + $nilai_kurang + $nilai_buruk);																														
+					$data['list'][$i]['tidak_diketahui']       = $total_pegawai - ($nilai_sangat_baik + $nilai_baik + $nilai_cukup + $nilai_kurang + $nilai_buruk);																														
 				}
 			}			
 		}
