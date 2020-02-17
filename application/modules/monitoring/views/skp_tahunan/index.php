@@ -42,7 +42,7 @@
 						</div>
 						<div class="row col-xs-12" style="margin-top:10px;">
 							<div class="box-title pull-left">	
-								<!-- <button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-refresh"></i> OLAH DATA TRANSAKSI SIKERJA</button>																	 -->
+								<a href="<?php echo site_url()?>monitoring/skp_tahunan/data_grafik/" class="btn btn-block btn-primary"><i class="fa fa-chart"></i> Grafik</a>
 							</div>																							
 							<div class="box-title pull-right">							
 								<!-- <button class="btn btn-block btn-success" id="btn_export_excel"><i class="fa fa-print"></i> Export Excel</button>							 -->
@@ -144,7 +144,7 @@
 <script>
 	function getValue(id) {
 		$.ajax({
-			url :"<?php echo site_url()?>skp/skp_tahunan/get_value/"+id,
+			url :"<?php echo site_url()?>monitoring/skp_tahunan/get_value/"+id,
 			type:"post",
 			beforeSend:function(){
 				$("#loadprosess").modal('show');
@@ -163,7 +163,7 @@
 								'data_5': select_tahun
 				}
 				$.ajax({
-					url :"<?php echo site_url()?>skp/skp_tahunan/filter_skp_tahunan",
+					url :"<?php echo site_url()?>monitoring/skp_tahunan/filter_skp_tahunan",
 					type:"post",
 					data: { data_sender : data_link},
 					beforeSend:function(){
@@ -215,7 +215,7 @@
 
 	function deleteValue(id) {
 		$.ajax({
-			url :"<?php echo site_url()?>skp/skp_tahunan/get_delete/"+id,
+			url :"<?php echo site_url()?>monitoring/skp_tahunan/get_delete/"+id,
 			type:"post",
 			beforeSend:function(){
 				$("#loadprosess").modal('show');
@@ -234,7 +234,7 @@
 								'data_5': select_tahun
 				}
 				$.ajax({
-					url :"<?php echo site_url()?>skp/skp_tahunan/filter_skp_tahunan",
+					url :"<?php echo site_url()?>monitoring/skp_tahunan/filter_skp_tahunan",
 					type:"post",
 					data: { data_sender : data_link},
 					beforeSend:function(){
@@ -324,7 +324,7 @@ $(document).ready(function(){
 							'data_5': select_tahun
 			}
 			$.ajax({
-				url :"<?php echo site_url()?>skp/skp_tahunan/filter_skp_tahunan",
+				url :"<?php echo site_url()?>monitoring/skp_tahunan/filter_skp_tahunan",
 				type:"post",
 				data: { data_sender : data_link},
 				beforeSend:function(){
