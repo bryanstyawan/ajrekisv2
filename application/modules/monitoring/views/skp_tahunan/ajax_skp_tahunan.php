@@ -53,7 +53,7 @@
 						if ($list[$i]->nilai_prilaku_kerja == 0) {
 							# code...
 ?>
-							<a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteHardValue('<?=$list[$i]->id_pegawai;?>','<?=$list[$i]->id_posisi_ts;?>')"><i class="fa fa-trash"></i> Hapus</a>
+							<a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteHardValue('<?=$list[$i]->id_pegawai;?>','<?=$list[$i]->id_posisi_ts;?>','<?=$tahun;?>')"><i class="fa fa-trash"></i> Hapus</a>
 <?php							
 						}						
 					}

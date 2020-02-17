@@ -213,9 +213,9 @@
 		})		
 	}
 
-	function deleteHardValue(id_pegawai,id_posisi) {
+	function deleteHardValue(id_pegawai,id_posisi,tahun) {
 		$.ajax({
-			url :"<?php echo site_url()?>monitoring/skp_tahunan/get_delete_root/"+id_pegawai+"/"+id_posisi,
+			url :"<?php echo site_url()?>monitoring/skp_tahunan/get_delete_root/"+id_pegawai+"/"+id_posisi+"/"+tahun,
 			type:"post",
 			beforeSend:function(){
 				$("#loadprosess").modal('show');

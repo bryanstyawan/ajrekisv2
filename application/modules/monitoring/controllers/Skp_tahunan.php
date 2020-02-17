@@ -58,12 +58,13 @@ class Skp_tahunan extends CI_Controller {
 		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));		
 	}
 
-	public function get_delete_root($id_pegawai,$id_posisi)
+	public function get_delete_root($id_pegawai,$id_posisi,$tahun)
 	{
 		# code...
 		$this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
 		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));
 		$this->Allcrud->delData('mr_masa_kerja',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi));				
+		$this->Allcrud->delData('mr_skp_pegawai',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi, 'tahun'=>$tahun));		
 	}	
 
 	public function data_grafik()
