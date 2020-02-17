@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-6 col-lg-12">
+    <div class="col-xs-6">
         <h4>Pimpinan Tinggi Madya (Eselon I) :</h4>
         <div class="input-group">
             <span class="input-group-addon">
