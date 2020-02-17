@@ -1,6 +1,6 @@
 <?=$this->load->view('templates/common/preloader');?>
 <section id="view_section">
-	<div class="col-xs-12">
+	<div class="col-lg-3">
 		<div class="box">
 			<div class="box-header">
 
@@ -8,43 +8,39 @@
 					<div class="container-fluid">
 
 						<?=$this->load->view('templates/filter/eselon',array('eselon1'=>$es1,'jenis_jabatan_stat'=>'off'));?>
-							<div class="col-lg-6">
-
-								<div class="col-lg-12">
-									<h4>Tahun</h4>
-									<div style="height: 34px;">
-										<div class="input-group">
-											<span class="input-group-addon">
-												<i class="fa fa-calendar"></i>
-											</span>
-											<select class="form-control" name="select_tahun" id="select_tahun">
-												<option value="">------------NONE------------</option>
-												<?php
-													$now=date('Y');
-													$past=$now-5;
-													for ($a=$past;$a<=$now+5;$a++)
-													{
-														if ($a == $now) {
-															# code...
-															echo "<option value='$a' selected>$a</option>";														
-														}
-														else
-														{
-															echo "<option value='$a'>$a</option>";
-														}
+							<div class="col-lg-12">
+								<div style="height: 34px;">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</span>
+										<select class="form-control" name="select_tahun" id="select_tahun">
+											<option value="">------------NONE------------</option>
+											<?php
+												$now=date('Y');
+												$past=$now-5;
+												for ($a=$past;$a<=$now+5;$a++)
+												{
+													if ($a == $now) {
+														# code...
+														echo "<option value='$a' selected>$a</option>";														
 													}
-												?>											
-											</select>
-										</div>
-									</div>								
-								</div>															
+													else
+													{
+														echo "<option value='$a'>$a</option>";
+													}
+												}
+											?>											
+										</select>
+									</div>
+								</div>								
 							</div>
 						</div>
-						<div class="row col-xs-12" style="margin-top:10px;">
-							<div class="box-title pull-left">	
+						<div class="row col-lg-12" style="margin-top:10px;">
+							<div class="box-title col-lg-12 pull-left" style="margin:10px;">	
 								<a href="<?php echo site_url()?>monitoring/skp_tahunan/data/" class="btn btn-block btn-primary"><i class="fa fa-chart"></i> Rekapitulasi</a>
 							</div>																							
-							<div class="box-title pull-right">							
+							<div class="box-title col-lg-12 pull-left" style="margin:10px;">								
 								<button class="btn btn-block btn-primary" id="btn_filter"><i class="fa fa-search"></i> FILTER DATA</button>											
 							</div>											
 						</div>						
@@ -54,7 +50,7 @@
 		</div>
 	</div>
 
-	<div id="content_chart">
+	<div class="col-lg-9" id="content_chart">
 	</div>	
 </section>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" /> -->
@@ -101,7 +97,7 @@ $(document).ready(function(){
 					var obj = jQuery.parseJSON (msg);	
 					console.log(obj)				
 					for (let index = 0; index < obj.length; index++) {
-						$("#content_chart").append("<div class='col-xs-4' style='height: 530px;'>"+
+						$("#content_chart").append("<div class='col-lg-6' style='height: 530px;'>"+
 														"<div class='box'>"+
 															"<div class='box-header'>"+
 																"<h4 style='color: #000;font-weight: 400;font-size: 19px;'>"+obj[index].nama_eselon1+"</h4>"+
