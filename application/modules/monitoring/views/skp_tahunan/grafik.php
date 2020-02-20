@@ -83,19 +83,19 @@ function filter(data_link) {
 															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Sangat Baik : "+obj[index].sangat_baik+"</label>"+
 														"</div>"+
 														"<div class='col-lg-12'>"+
-															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Baik : "+obj[index].sangat_baik+"</label>"+
+															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Baik : "+obj[index].baik+"</label>"+
 														"</div>"+
 														"<div class='col-lg-12'>"+
-															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Cukup : "+obj[index].sangat_baik+"</label>"+
+															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Cukup : "+obj[index].cukup+"</label>"+
 														"</div>"+
 														"<div class='col-lg-12'>"+
-															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Kurang : "+obj[index].sangat_baik+"</label>"+
+															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Kurang : "+obj[index].kurang+"</label>"+
 														"</div>"+
 														"<div class='col-lg-12'>"+
-															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Buruk : "+obj[index].sangat_baik+"</label>"+
+															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Buruk : "+obj[index].buruk+"</label>"+
 														"</div>"+
 														"<div class='col-lg-12'>"+
-															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Tidak diketahui : "+obj[index].sangat_baik+"</label>"+
+															"<label style='color: #000;font-weight: 400;font-size: 19px;'>Jumlah Nilai Tidak diketahui : "+obj[index].tidak_diketahui+"</label>"+
 														"</div>"+																																																																																
 													"</div>"+																																									
 												"</div>"+

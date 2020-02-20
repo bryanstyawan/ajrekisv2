@@ -4,6 +4,7 @@ New:
 - Grafik skp tahunan per Komponen
 Improved:
 - Penyederhaaan layout grafik skp tahunan
+- Preloader
 Fixed:
 Canceled:
 
