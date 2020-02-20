@@ -100,7 +100,6 @@ class Skp_tahunan extends CI_Controller {
 																		b.eselon4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
-
 		if ($data_sender['data_6']  == 'all') {
 			# code...
 			$data['list']        = $this->Allcrud->listData('mr_eselon1')->result_array();
@@ -152,9 +151,202 @@ class Skp_tahunan extends CI_Controller {
 					$data['list'][$i]['buruk']                 = $nilai_buruk;
 					$data['list'][$i]['total']                 = $total_pegawai;
 					$data['list'][$i]['tidak_diketahui']       = $total_pegawai - ($nilai_sangat_baik + $nilai_baik + $nilai_cukup + $nilai_kurang + $nilai_buruk);																														
+					$data['list'][$i]['id_es2']                = 0;
+					$data['list'][$i]['id_es3']                = 0;										
+					$data['list'][$i]['id_es4']                = 0;
+					$data['list'][$i]['arg']                   = '1';
+					$data['list'][$i]['tahun']                 = $data_sender['data_5'];
+					$data['list'][$i]['nama_eselon']           = $data['list'][$i]['nama_eselon1'];
+					$data['list'][$i]['id_chart']              = $data['list'][$i]['id_es1'];					
 				}
 			}			
 		}
+		elseif ($data_sender['data_6'] == '1') {
+			# code...
+			$data['list']        = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data_sender['data_1']))->result_array();
+			if ($data['list'] != array()) {
+				# code...
+				for ($i=0; $i < count($data['list']); $i++) { 
+					# code...
+					$nilai_sangat_baik = 0;
+					$nilai_baik        = 0;
+					$nilai_cukup       = 0;
+					$nilai_kurang      = 0;
+					$nilai_buruk       = 0;					
+					$total_pegawai     = 0;
+					for ($j=0; $j < count($data_temp); $j++) { 
+						# code...
+						if ($data['list'][$i]['id_es2'] == $data_temp[$j]->eselon2) {
+							# code...
+							$total_pegawai += 1;							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Sangat Baik') {
+								# code...
+								$nilai_sangat_baik += 1;
+							}
+
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Baik') {
+								# code...
+								$nilai_baik += 1;
+							}
+				
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Cukup') {
+								# code...
+								$nilai_cukup += 1;
+							}
+							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Kurang') {
+								# code...
+								$nilai_kurang += 1;
+							}
+							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Buruk') {
+								# code...
+								$nilai_buruk += 1;
+							}							
+						}
+					}
+					$data['list'][$i]['sangat_baik']           = $nilai_sangat_baik;
+					$data['list'][$i]['baik']                  = $nilai_baik;
+					$data['list'][$i]['cukup']                 = $nilai_cukup;
+					$data['list'][$i]['kurang']                = $nilai_kurang;
+					$data['list'][$i]['buruk']                 = $nilai_buruk;
+					$data['list'][$i]['total']                 = $total_pegawai;
+					$data['list'][$i]['tidak_diketahui']       = $total_pegawai - ($nilai_sangat_baik + $nilai_baik + $nilai_cukup + $nilai_kurang + $nilai_buruk);																														
+					$data['list'][$i]['id_es1']                = $data['list'][$i]['id_es1'];
+					$data['list'][$i]['id_es2']                = $data['list'][$i]['id_es2'];
+					$data['list'][$i]['id_es3']                = 0;										
+					$data['list'][$i]['id_es4']                = 0;
+					$data['list'][$i]['arg']                   = '2';
+					$data['list'][$i]['tahun']                 = $data_sender['data_5'];
+					$data['list'][$i]['nama_eselon']           = $data['list'][$i]['nama_eselon2'];
+					$data['list'][$i]['id_chart']              = $data['list'][$i]['id_es2'];					
+				}
+			}				
+		}
+		elseif ($data_sender['data_6'] == '2') {
+			# code...
+			$data['list']        = $this->Allcrud->getData('mr_eselon3',array('id_es2'=>$data_sender['data_2']))->result_array();
+			if ($data['list'] != array()) {
+				# code...
+				for ($i=0; $i < count($data['list']); $i++) { 
+					# code...
+					$nilai_sangat_baik = 0;
+					$nilai_baik        = 0;
+					$nilai_cukup       = 0;
+					$nilai_kurang      = 0;
+					$nilai_buruk       = 0;					
+					$total_pegawai     = 0;
+					for ($j=0; $j < count($data_temp); $j++) { 
+						# code...
+						if ($data['list'][$i]['id_es3'] == $data_temp[$j]->eselon3) {
+							# code...
+							$total_pegawai += 1;							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Sangat Baik') {
+								# code...
+								$nilai_sangat_baik += 1;
+							}
+
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Baik') {
+								# code...
+								$nilai_baik += 1;
+							}
+				
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Cukup') {
+								# code...
+								$nilai_cukup += 1;
+							}
+							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Kurang') {
+								# code...
+								$nilai_kurang += 1;
+							}
+							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Buruk') {
+								# code...
+								$nilai_buruk += 1;
+							}							
+						}
+					}
+					$data['list'][$i]['sangat_baik']           = $nilai_sangat_baik;
+					$data['list'][$i]['baik']                  = $nilai_baik;
+					$data['list'][$i]['cukup']                 = $nilai_cukup;
+					$data['list'][$i]['kurang']                = $nilai_kurang;
+					$data['list'][$i]['buruk']                 = $nilai_buruk;
+					$data['list'][$i]['total']                 = $total_pegawai;
+					$data['list'][$i]['tidak_diketahui']       = $total_pegawai - ($nilai_sangat_baik + $nilai_baik + $nilai_cukup + $nilai_kurang + $nilai_buruk);																														
+					$data['list'][$i]['id_es1']                = $data['list'][$i]['id_es1'];
+					$data['list'][$i]['id_es2']                = $data['list'][$i]['id_es2'];
+					$data['list'][$i]['id_es3']                = $data['list'][$i]['id_es3'];										
+					$data['list'][$i]['id_es4']                = 0;
+					$data['list'][$i]['arg']                   = '3';
+					$data['list'][$i]['tahun']                 = $data_sender['data_5'];
+					$data['list'][$i]['nama_eselon']           = $data['list'][$i]['nama_eselon3'];
+					$data['list'][$i]['id_chart']              = $data['list'][$i]['id_es3'];					
+				}
+			}				
+		}
+		elseif ($data_sender['data_6'] == '3') {
+			# code...
+			$data['list']        = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$data_sender['data_3']))->result_array();
+			if ($data['list'] != array()) {
+				# code...
+				for ($i=0; $i < count($data['list']); $i++) { 
+					# code...
+					$nilai_sangat_baik = 0;
+					$nilai_baik        = 0;
+					$nilai_cukup       = 0;
+					$nilai_kurang      = 0;
+					$nilai_buruk       = 0;					
+					$total_pegawai     = 0;
+					for ($j=0; $j < count($data_temp); $j++) { 
+						# code...
+						if ($data['list'][$i]['id_es4'] == $data_temp[$j]->eselon4) {
+							# code...
+							$total_pegawai += 1;							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Sangat Baik') {
+								# code...
+								$nilai_sangat_baik += 1;
+							}
+
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Baik') {
+								# code...
+								$nilai_baik += 1;
+							}
+				
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Cukup') {
+								# code...
+								$nilai_cukup += 1;
+							}
+							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Kurang') {
+								# code...
+								$nilai_kurang += 1;
+							}
+							
+							if ($this->Globalrules->nilai_capaian_skp($data_temp[$j]->total_skp)['value'] == 'Buruk') {
+								# code...
+								$nilai_buruk += 1;
+							}							
+						}
+					}
+					$data['list'][$i]['sangat_baik']           = $nilai_sangat_baik;
+					$data['list'][$i]['baik']                  = $nilai_baik;
+					$data['list'][$i]['cukup']                 = $nilai_cukup;
+					$data['list'][$i]['kurang']                = $nilai_kurang;
+					$data['list'][$i]['buruk']                 = $nilai_buruk;
+					$data['list'][$i]['total']                 = $total_pegawai;
+					$data['list'][$i]['tidak_diketahui']       = $total_pegawai - ($nilai_sangat_baik + $nilai_baik + $nilai_cukup + $nilai_kurang + $nilai_buruk);																														
+					$data['list'][$i]['id_es1']                = $data['list'][$i]['id_es1'];
+					$data['list'][$i]['id_es2']                = $data['list'][$i]['id_es2'];
+					$data['list'][$i]['id_es3']                = $data['list'][$i]['id_es3'];										
+					$data['list'][$i]['id_es4']                = $data['list'][$i]['id_es4'];
+					$data['list'][$i]['arg']                   = 'off';
+					$data['list'][$i]['tahun']                 = $data_sender['data_5'];
+					$data['list'][$i]['nama_eselon']           = $data['list'][$i]['nama_eselon4'];
+					$data['list'][$i]['id_chart']              = $data['list'][$i]['id_es4'];					
+				}
+			}				
+		}				
 		echo json_encode($data['list']);
 	}
 }
