@@ -333,14 +333,137 @@ class Data_pegawai extends CI_Controller {
 		echo json_encode($res);											
 	}
 
-	public function ajaxPegawai(){
-		$this->Globalrules->session_rule();
-		$flag          = array('es1.id_es1'=>'1');
-		$data['list']  = $this->Mmaster->dataUser($flag,NULL,NULL);
-		$data['es1']   = $this->Allcrud->listData('mr_eselon1');
-		$data['agama'] = $this->Allcrud->listData('mr_agama');
-		$this->load->view('master/pegawai/ajaxPegawai',$data);
-	}
+	public function filter_data_pegawai()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$data_sender = array
+						(
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'kat_posisi' => $data_sender['data_5']
+						);
+
+		$data['list'] = $this->Mmaster->data_pegawai($data_sender,'a.es2 ASC,
+																		a.es3 ASC,
+																		a.es4 ASC,
+																		b.kat_posisi asc,
+																		b.atasan ASC');
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
+				if ($get_data_struktur_organisasi != array()) {
+					# code...
+					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+					$atasan_pegawai_akademik                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi[0]->atasan,'posisi');				
+					if ($atasan_pegawai_akademik != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_akademik    = 1;					
+						$data['list'][$i]->id_atasan_akademik       = $atasan_pegawai_akademik[0]->id;
+						$data['list'][$i]->nip_atasan_akademik      = $atasan_pegawai_akademik[0]->nip;										
+						$data['list'][$i]->nama_atasan_akademik     = $atasan_pegawai_akademik[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_akademik  = $atasan_pegawai_akademik[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_akademik    = 0;					
+						$data['list'][$i]->id_atasan_akademik       = '-';					
+						$data['list'][$i]->nip_atasan_akademik      = '-';					
+						$data['list'][$i]->nama_atasan_akademik     = '-';
+						$data['list'][$i]->jabatan_atasan_akademik  = '-';															
+					}
+				}
+				else
+				{
+					$data['list'][$i]->posisi_akademik_name = '-';					
+					$data['list'][$i]->avail_atasan_akademik    = 0;					
+					$data['list'][$i]->id_atasan_akademik       = '-';					
+					$data['list'][$i]->nip_atasan_akademik      = '-';					
+					$data['list'][$i]->nama_atasan_akademik     = '-';
+					$data['list'][$i]->jabatan_atasan_akademik  = '-';																				
+				}			
+				
+				$get_data_struktur_organisasi1 = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_plt);				
+				if ($get_data_struktur_organisasi1 != array()) {
+					# code...
+					$data['list'][$i]->posisi_plt_name = $get_data_struktur_organisasi1[0]->nama_posisi;
+					$atasan_pegawai_plt                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi1[0]->atasan,'posisi');				
+					if ($atasan_pegawai_plt != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_plt    = 1;					
+						$data['list'][$i]->id_atasan_plt       = $atasan_pegawai_plt[0]->id;
+						$data['list'][$i]->nip_atasan_plt      = $atasan_pegawai_plt[0]->nip;										
+						$data['list'][$i]->nama_atasan_plt     = $atasan_pegawai_plt[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_plt  = $atasan_pegawai_plt[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_plt    = 0;					
+						$data['list'][$i]->id_atasan_plt       = '-';					
+						$data['list'][$i]->nip_atasan_plt      = '-';					
+						$data['list'][$i]->nama_atasan_plt     = '-';
+						$data['list'][$i]->jabatan_atasan_plt  = '-';															
+					}					
+				}
+				else
+				{
+					$data['list'][$i]->posisi_plt_name = '-';		
+					$data['list'][$i]->avail_atasan_plt    = 0;					
+					$data['list'][$i]->id_atasan_plt       = '-';					
+					$data['list'][$i]->nip_atasan_plt      = '-';					
+					$data['list'][$i]->nama_atasan_plt     = '-';
+					$data['list'][$i]->jabatan_atasan_plt  = '-';								
+				}							
+
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->avail_atasan    = 1;					
+					$data['list'][$i]->id_atasan       = $data_pegawai[0]->id;
+					$data['list'][$i]->nip_atasan      = $data_pegawai[0]->nip;										
+					$data['list'][$i]->nama_atasan     = $data_pegawai[0]->nama_pegawai;
+					$data['list'][$i]->jabatan_atasan  = $data_pegawai[0]->nama_jabatan;										
+				}
+				else
+				{
+					$data['list'][$i]->avail_atasan    = 0;					
+					$data['list'][$i]->id_atasan       = '-';					
+					$data['list'][$i]->nip_atasan      = '-';					
+					$data['list'][$i]->nama_atasan     = '-';
+					$data['list'][$i]->jabatan_atasan  = '-';															
+				}
+
+				// $data_eselon_1 = $this->Allcrud->getData('mr_eselon1',array('id_es1'=>$data['list'][$i]['eselon1']))->result_array();
+				// $data_eselon_2 = $this->Allcrud->getData('mr_eselon2',array('id_es2'=>$data['list'][$i]['eselon2']))->result_array();
+				// $data_eselon_3 = $this->Allcrud->getData('mr_eselon3',array('id_es3'=>$data['list'][$i]['eselon3']))->result_array();
+				// $data_eselon_4 = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$data['list'][$i]['eselon4']))->result_array();												
+				// $data['list'][$i]->nama_eselon1 = ($data_eselon_1 != array()) ? $data_eselon_1[0]['nama_eselon1'] : '' ;
+				// $data['list'][$i]->nama_eselon2 = ($data_eselon_2 != array()) ? $data_eselon_2[0]['nama_eselon2'] : '' ;
+				// $data['list'][$i]->nama_eselon3 = ($data_eselon_3 != array()) ? $data_eselon_3[0]['nama_eselon3'] : '' ;
+				// $data['list'][$i]->nama_eselon4 = ($data_eselon_4 != array()) ? $data_eselon_4[0]['nama_eselon4'] : '' ;				
+
+			}
+			// die();
+		}
+
+		echo json_encode($data);
+		// $this->load->view('master/pegawai/ajax_pegawai_filter',$data);
+	}	
+
+	/******************** */
+	// public function ajaxPegawai(){
+	// 	$this->Globalrules->session_rule();
+	// 	$flag          = array('es1.id_es1'=>'1');
+	// 	$data['list']  = $this->Mmaster->dataUser($flag,NULL,NULL);
+	// 	$data['es1']   = $this->Allcrud->listData('mr_eselon1');
+	// 	$data['agama'] = $this->Allcrud->listData('mr_agama');
+	// 	$this->load->view('master/pegawai/ajaxPegawai',$data);
+	// }
+	/******************** */	
 
 	public function delete_masa_kerja($id){
 		$this->Globalrules->session_rule();

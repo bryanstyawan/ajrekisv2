@@ -1,3 +1,11 @@
+v4.1.2.7.5
+2020-02-20
+New:
+Improved:
+- View Data Pegawai
+Fixed:
+Canceled:
+
 v4.1.2.7.4
 2020-02-20
 New:

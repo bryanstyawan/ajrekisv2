@@ -67,7 +67,7 @@ function filter(data_link) {
 		},			
 		success:function(msg){
 			var obj = jQuery.parseJSON (msg);	
-			console.log(obj)				
+			// console.log(obj)				
 			for (let index = 0; index < obj.length; index++) 
 			{
 				$("#content_chart").append("<div class='col-xs-4' style='height: 740px;'>"+
@@ -137,25 +137,25 @@ function filter(data_link) {
 											},
 											tooltips: {
 												callbacks: {
-												label: function (tooltipItem, data) {
-													try {
-													let label = ' ' + data.labels[tooltipItem.index] || '';
+													label: function (tooltipItem, data) {
+														try {
+															let label = ' ' + data.labels[tooltipItem.index] || '';
 
-													if (label) {
-														label += ': ';
+															if (label) {
+																label += ': ';
+															}
+
+															const sum = data.datasets[0].data.reduce((accumulator, curValue) => {
+																return accumulator + curValue;
+															});
+															const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+
+															label += Number((value / sum) * 100).toFixed(2) + '%';
+															return label;
+														} catch (error) {
+															console.log(error);
+														}
 													}
-
-													const sum = data.datasets[0].data.reduce((accumulator, curValue) => {
-														return accumulator + curValue;
-													});
-													const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-
-													label += Number((value / sum) * 100).toFixed(2) + '%';
-													return label;
-													} catch (error) {
-													console.log(error);
-													}
-												}
 												}
 											}													
 										}

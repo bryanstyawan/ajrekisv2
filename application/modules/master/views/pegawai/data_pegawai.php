@@ -281,17 +281,46 @@
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
-function preview_image(id,url) {
-    // body...
-    content = '<form id="editForm" name="addForm"><div class="col-lg-12">'+
-				'<img class="col-lg-12" style="padding-bottom: 15px;width: 410px !important;height: 450px !important;" src="'+url+'">'+
-			'</div></form>';
-	$("#preview_image_content").html(content);
-    $("#preview_image_popup").modal('show');
-}
+    LobiboxBase = {
+        //DO NOT change this value. Lobibox depended on it
+        bodyClass       : 'lobibox-open',
+        //DO NOT change this object. Lobibox is depended on it
+        modalClasses : {
+            'error'     : 'lobibox-error',
+            'success'   : 'lobibox-success',
+            'info'      : 'lobibox-info',
+            'warning'   : 'lobibox-warning',
+            'confirm'   : 'lobibox-confirm',
+            'progress'  : 'lobibox-progress',
+            'prompt'    : 'lobibox-prompt',
+            'default'   : 'lobibox-default',
+            'window'    : 'lobibox-window'
+        },
+        buttons: {
+            ok: {
+                'class': 'lobibox-btn lobibox-btn-default',
+                text: 'OK',
+                closeOnClick: true
+            },
+            cancel: {
+                'class': 'lobibox-btn lobibox-btn-cancel',
+                text: 'Cancel',
+                closeOnClick: true
+            },
+            yes: {
+                'class': 'lobibox-btn lobibox-btn-yes',
+                text: 'Ya',
+                closeOnClick: true
+            },
+            no: {
+                'class': 'lobibox-btn lobibox-btn-no',
+                text: 'Tidak',
+                closeOnClick: true
+            }
+        }
+    }
 
-$(document).ready(function(){
-	$('#btn_filter').click(function() {
+	function getData() {
 		var select_eselon_1      = $("#select_eselon_1").val();
 		var select_eselon_2      = $("#select_eselon_2").val();
 		var select_eselon_3      = $("#select_eselon_3").val();
@@ -305,7 +334,7 @@ $(document).ready(function(){
 						'data_5': select_jenis_jabatan
 		}
 		$.ajax({
-			url :"<?php echo site_url()?>master/filter_data_pegawai",
+			url :"<?php echo site_url()?>master/data_pegawai/filter_data_pegawai",
 			type:"post",
 			data: { data_sender : data_link},
 			beforeSend:function(){
@@ -315,13 +344,91 @@ $(document).ready(function(){
 				$('.table-view').dataTable().fnDestroy();
 				$(".table-view tbody tr").remove();
 				var newrec  = '<tr">' +
-		        					'<td colspan="5" class="text-center">Memuat Data</td>'
-		    				   '</tr>';
-		        $('.table-view tbody').append(newrec);
+									'<td colspan="8" class="text-center">Memuat Data</td>'
+								'</tr>';
+				$('.table-view tbody').append(newrec);
 			},			
 			success:function(msg){
 				$(".table-view tbody tr").remove();
-				$("#table_content").html(msg);
+				var obj = jQuery.parseJSON (msg);				
+				// console.log(obj.list);
+				tr_insert = "";
+				for (i=0 ;i<obj.list.length;i++) {
+					console.log(obj.list[i])				
+					id_posisi = 0;
+					
+					switch (obj.list[i].kat_posisi) {
+						case '1':
+							id_posisi = obj.list[i].posisi_class_raw
+							break;
+						case '2':
+							id_posisi = obj.list[i].posisi_class_jft
+							break;
+						case '4':
+							id_posisi = obj.list[i].posisi_class_jfu
+							break;
+						case '6':
+							id_posisi = obj.list[i].posisi_class_raw
+							break;
+						default:
+							break;
+					}				
+
+					atasan_definitif = (obj.list[i].avail_atasan == 1) ? '<b>[Definitif]</b> : '+obj.list[i].nama_atasan+' (<i>'+obj.list[i].jabatan_atasan+'</i>)'+'<hr>' : '<b>[Definitif]</b> : '+'-'+'<hr>' ;
+					atasan_akademik  = (obj.list[i].avail_atasan_akademik == 1) ? '<b>[Akademik]</b> : '+obj.list[i].nama_atasan_akademik+' (<i>'+obj.list[i].jabatan_atasan_akademik+'</i>)'+'<hr>' : '<b>[Akademik]</b> : '+'-'+'<hr>' ;
+					atasan_plt       = (obj.list[i].avail_atasan_plt == 1) ? '<b>[PLT]</b> : '+obj.list[i].nama_atasan_plt+' (<i>'+obj.list[i].jabatan_atasan_plt+'</i>)'+'<hr>' : '<b>[PLT]</b> : '+'-'+'<hr>' ;										
+					tr_insert += '<tr>'+
+								'<td>'+
+									'(<b>'+obj.list[i].id_pegawai+'</b>)'+
+									obj.list[i].nip+									
+								'</td>'+
+								'<td>'+
+									obj.list[i].nama_pegawai+									
+								'</td>'+
+								'<td>'+
+									obj.list[i].nama_posisi+								
+									'(<b>'+id_posisi+'</b>)'+									
+								'</td>'+
+								'<td>'+
+									obj.list[i].posisi_akademik_name+									
+								'</td>'+
+								'<td>'+
+									obj.list[i].posisi_plt_name+									
+								'</td>'+
+								'<td>'+
+									atasan_definitif+
+									atasan_akademik+
+									atasan_plt+																											
+								'</td>'+
+								'<td>'+
+									(obj.list[i].nama_eselon4 != '-' ? obj.list[i].nama_eselon4 : ''  ) + ' ' +
+									(obj.list[i].nama_eselon3 != '-' ? obj.list[i].nama_eselon3 : ''  ) + ' ' +
+									(obj.list[i].nama_eselon2 != '-' ? obj.list[i].nama_eselon2 : ''  ) + ' ' +
+									(obj.list[i].nama_eselon1 != '-' ? obj.list[i].nama_eselon1 : ''  ) + ' ' +																																				
+								'</td>'+
+								'<td>'+
+									'<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('+"'update'"+','+obj.list[i].id+')">'+
+										'<i class="fa fa-edit"></i> UBAH DATA'+
+									'</button>'+
+									'<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="del('+obj.list[i].id+')">'+
+										'<i class="fa fa-trash"></i> HAPUS DATA'+
+									'</button>'+
+									'<button class="btn btn-danger btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="data_status('+obj.list[i].id+','+((obj.list[i].status == 0)? '1' : '0')+')">'+
+										'<i class="fa fa-power-off"></i> '+
+										((obj.list[i].status == 0) ? 'AKTIFKAN' : 'NONAKTIFKAN')+ 									
+									'</button>'+
+									'<button class="btn btn-primary btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="change_password('+obj.list[i].id+')">'+
+										'<i class="fa fa-edit"></i> DEFAULT PASSWORD'+
+									'</button>'+									
+									'<a href="#" class="btn btn-success btn-xs col-lg-12" onclick="preview_image('+obj.list[i].id+','+"'"+((obj.list[i].photo == '-')? 'none' : '<?=base_url().'public/images/pegawai/';?>'+obj.list[i].photo)+"'"+')">'+
+										'<i class="fa fa-search-plus"></i>&nbsp;'+
+										((obj.list[i].photo == '-')? 'TIDAK ADA FOTO' : 'LIHAT FOTO' )+
+									'</a>'+									
+
+								'</td>'+																								
+							'</tr>';                                          
+				}  
+				$("#table_content").html(tr_insert);				
 				$(".table-view").DataTable({
 					"oLanguage": {
 						"sSearch": "Pencarian :",
@@ -346,439 +453,336 @@ $(document).ready(function(){
 			{
 				ajax_catch(jqXHR,exception);					
 			}
-		})		
-	})
+		})			
+	}	
 
-	$("#closeData").click(function(){
-		$("#form_section").css({"display": "none"})
-		$("#view_section").css({"display": ""})		
-	})		
-})
-
-function get_eselon(arg) {
-	var data_sender = "";
-	if (arg == 1) 
-	{
-		data_sender = {
-			'arg' : arg,
-			'es1' : 'none'
-		}
-	} 
-	else if(arg == 2) 
-	{
-		data_sender = {
-			'arg' : arg,			
-			'es1' : $("#f_es1").val()			
-		}		
+	function preview_image(id,url) {
+		// body...
+		content = '<form id="editForm" name="addForm"><div class="col-lg-12">'+
+					'<img class="col-lg-12" style="padding-bottom: 15px;width: 410px !important;height: 450px !important;" src="'+url+'">'+
+				'</div></form>';
+		$("#preview_image_content").html(content);
+		$("#preview_image_popup").modal('show');
 	}
-	else if(arg == 3) 
-	{
-		data_sender = {
-			'arg' : arg,			
-			'es1' : $("#f_es1").val(),
-			'es2' : $("#f_es2").val()						
-		}		
-	}
-	else if(arg == 4) 
-	{
-		data_sender = {
-			'arg' : arg,			
-			'es1' : $("#f_es1").val(),
-			'es2' : $("#f_es2").val(),
-			'es3' : $("#f_es3").val()	
-		}				
-	}		
 
-	$.ajax({
-		url :"<?php echo site_url()?>master/data_struktur/get_struktur_eselon/",
-		type:"post",
-		data: { data_sender : data_sender},		
-		beforeSend:function(){
-			$("#loadprosess").modal('show');
-			$("#get-datatable").html('');			
-		},
-		success:function(msg){
-			$('#modal-datatable > div > div > div > div.modal-header > h3').html("Eselon "+arg);													
-			$("#get-datatable").html(msg);					
-			$("#modal-datatable").modal('show');				
-			$("#loadprosess").modal('hide');							
-		},
-		error:function(jqXHR,exception)
+	function get_eselon(arg) {
+		var data_sender = "";
+		if (arg == 1) 
 		{
-			ajax_catch(jqXHR,exception);					
-		}
-	})	
-
-	console.table(data_sender);
-}
-
-function data_status(oid,status) {
-	var text = '';
-	if (status == 1) {
-		text = 'Aktifkan Pegawai ini';
-	} else {
-		text = 'Nonaktifkan Pegawai ini';
-	}
-
-    LobiboxBase = {
-        //DO NOT change this value. Lobibox depended on it
-        bodyClass       : 'lobibox-open',
-        //DO NOT change this object. Lobibox is depended on it
-        modalClasses : {
-            'error'     : 'lobibox-error',
-            'success'   : 'lobibox-success',
-            'info'      : 'lobibox-info',
-            'warning'   : 'lobibox-warning',
-            'confirm'   : 'lobibox-confirm',
-            'progress'  : 'lobibox-progress',
-            'prompt'    : 'lobibox-prompt',
-            'default'   : 'lobibox-default',
-            'window'    : 'lobibox-window'
-        },
-        buttons: {
-            ok: {
-                'class': 'lobibox-btn lobibox-btn-default',
-                text: 'OK',
-                closeOnClick: true
-            },
-            cancel: {
-                'class': 'lobibox-btn lobibox-btn-cancel',
-                text: 'Cancel',
-                closeOnClick: true
-            },
-            yes: {
-                'class': 'lobibox-btn lobibox-btn-yes',
-                text: 'Ya',
-                closeOnClick: true
-            },
-            no: {
-                'class': 'lobibox-btn lobibox-btn-no',
-                text: 'Tidak',
-                closeOnClick: true
-            }
-        }
-    }
-
-	Lobibox.confirm({
-		title: "Konfirmasi",
-		msg: text,
-		callback: function ($this, type) {
-			if (type === 'yes'){
-				$.ajax({
-					url :"<?php echo site_url()?>master/data_pegawai/store/data_status/"+oid+"/"+status,					
-					type:"post",
-					beforeSend:function(){
-						$("#loadprosess").modal('show');
-					},
-					success:function(msg){
-						var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-					},
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-				})
+			data_sender = {
+				'arg' : arg,
+				'es1' : 'none'
 			}
+		} 
+		else if(arg == 2) 
+		{
+			data_sender = {
+				'arg' : arg,			
+				'es1' : $("#f_es1").val()			
+			}		
 		}
-    })	
-}
-
-function del(id){
-    LobiboxBase = {
-        //DO NOT change this value. Lobibox depended on it
-        bodyClass       : 'lobibox-open',
-        //DO NOT change this object. Lobibox is depended on it
-        modalClasses : {
-            'error'     : 'lobibox-error',
-            'success'   : 'lobibox-success',
-            'info'      : 'lobibox-info',
-            'warning'   : 'lobibox-warning',
-            'confirm'   : 'lobibox-confirm',
-            'progress'  : 'lobibox-progress',
-            'prompt'    : 'lobibox-prompt',
-            'default'   : 'lobibox-default',
-            'window'    : 'lobibox-window'
-        },
-        buttons: {
-            ok: {
-                'class': 'lobibox-btn lobibox-btn-default',
-                text: 'OK',
-                closeOnClick: true
-            },
-            cancel: {
-                'class': 'lobibox-btn lobibox-btn-cancel',
-                text: 'Cancel',
-                closeOnClick: true
-            },
-            yes: {
-                'class': 'lobibox-btn lobibox-btn-yes',
-                text: 'Ya',
-                closeOnClick: true
-            },
-            no: {
-                'class': 'lobibox-btn lobibox-btn-no',
-                text: 'Tidak',
-                closeOnClick: true
-            }
-        }
-    }
-
-	Lobibox.confirm({
-		title: "Konfirmasi",
-		msg: "Anda yakin akan menghapus data ini ?",
-		callback: function ($this, type) {
-			if (type === 'yes'){
-				$.ajax({
-					url :"<?php echo site_url()?>master/data_pegawai/store/delete/"+id,					
-					type:"post",
-					beforeSend:function(){
-						$("#loadprosess").modal('show');
-					},
-					success:function(msg){
-						var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-					},
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-				})
-			}
+		else if(arg == 3) 
+		{
+			data_sender = {
+				'arg' : arg,			
+				'es1' : $("#f_es1").val(),
+				'es2' : $("#f_es2").val()						
+			}		
 		}
-    })
-}
+		else if(arg == 4) 
+		{
+			data_sender = {
+				'arg' : arg,			
+				'es1' : $("#f_es1").val(),
+				'es2' : $("#f_es2").val(),
+				'es3' : $("#f_es3").val()	
+			}				
+		}		
 
-function change_password(id){
-    LobiboxBase = {
-        //DO NOT change this value. Lobibox depended on it
-        bodyClass       : 'lobibox-open',
-        //DO NOT change this object. Lobibox is depended on it
-        modalClasses : {
-            'error'     : 'lobibox-error',
-            'success'   : 'lobibox-success',
-            'info'      : 'lobibox-info',
-            'warning'   : 'lobibox-warning',
-            'confirm'   : 'lobibox-confirm',
-            'progress'  : 'lobibox-progress',
-            'prompt'    : 'lobibox-prompt',
-            'default'   : 'lobibox-default',
-            'window'    : 'lobibox-window'
-        },
-        buttons: {
-            ok: {
-                'class': 'lobibox-btn lobibox-btn-default',
-                text: 'OK',
-                closeOnClick: true
-            },
-            cancel: {
-                'class': 'lobibox-btn lobibox-btn-cancel',
-                text: 'Cancel',
-                closeOnClick: true
-            },
-            yes: {
-                'class': 'lobibox-btn lobibox-btn-yes',
-                text: 'Ya',
-                closeOnClick: true
-            },
-            no: {
-                'class': 'lobibox-btn lobibox-btn-no',
-                text: 'Tidak',
-                closeOnClick: true
-            }
-        }
-    }
-
-	Lobibox.confirm({
-		title: "Konfirmasi",
-		msg: "Password Standar adalah 'usersikerja', Lanjutkan ?",
-		callback: function ($this, type) {
-			if (type === 'yes'){
-				$.ajax({
-					url :"<?php echo site_url()?>/master/data_pegawai/store/password/"+id,					
-					type:"post",
-					beforeSend:function(){
-						$("#loadprosess").modal('show');
-					},
-					success:function(msg){
-						var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-					},
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-				})
-			}
-		}
-    })
-}
-
-
-function main_form(params,id) {
-	if (params == 'insert') {
-		$(".form-control-detail").val('');
-		$("#form_section").css({"display": ""})
-		$("#view_section").css({"display": "none"})
-		$("#form_section > div > div > div.box-header > h3").html("Tambah Data Pegawai");		
-		$("#crud").val('insert');		
-	} else if(params == 'update') {
 		$.ajax({
-			url :"<?php echo site_url()?>master/data_pegawai/get_data_pegawai/"+id,		
+			url :"<?php echo site_url()?>master/data_struktur/get_struktur_eselon/",
 			type:"post",
+			data: { data_sender : data_sender},		
 			beforeSend:function(){
 				$("#loadprosess").modal('show');
+				$("#get-datatable").html('');			
 			},
 			success:function(msg){
-				var obj = jQuery.parseJSON (msg);
-				console.log(obj.jabatan_akademik);
-				$(".form-control-detail").val('');
-				$("#form_section").css({"display": ""})
-				$("#view_section").css({"display": "none"})
-				$("#form_section > div > div > div.box-header > h3").html("Ubah Data Pegawai");
-				$("#crud").val('update');
-				$("#oid").val(obj.pegawai[0].id);
-				$("#f_es1").val(obj.pegawai[0].es1);
-
-				if (obj.pegawai != 0) {
-
-					if (obj.list_eselon2.length != 0) 
-					{
-						var toAppend = '<option value=""> - - - </option>';				
-						for (index = 0; index < obj.list_eselon2.length; index++) 
-						{
-							_text = "";
-							if (obj.list_eselon2[index].id_es2 == obj.pegawai[0].es2) {
-								_text = "selected";
-							}
-
-							toAppend += '<option value="'+obj.list_eselon2[index].id_es2+'" '+_text+'>'+obj.list_eselon2[index].nama_eselon2+'</option>';					
-						}
-						$('#f_es2').append(toAppend);					
-					}
-									
-					if (obj.list_eselon3.length != 0) 
-					{
-						var toAppend1 = '<option value=""> - - - </option>';					
-						for (index = 0; index < obj.list_eselon3.length; index++) 
-						{
-							_text = "";
-							if (obj.list_eselon3[index].id_es3 == obj.pegawai[0].es3) {
-								_text = "selected";
-							}
-
-							toAppend1 += '<option value="'+obj.list_eselon3[index].id_es3+'" '+_text+'>'+obj.list_eselon3[index].nama_eselon3+'</option>';					
-						}
-						$('#f_es3').append(toAppend1);					
-					}
-
-					if (obj.list_eselon4.length != 0) 
-					{
-						var toAppend2 = '<option value=""> - - - </option>';					
-						for (index = 0; index < obj.list_eselon4.length; index++) 
-						{
-							_text = "";
-							if (obj.list_eselon4[index].id_es4 == obj.pegawai[0].es4) {
-								_text = "selected";
-							}
-
-							toAppend2 += '<option value="'+obj.list_eselon4[index].id_es4+'" '+_text+'>'+obj.list_eselon4[index].nama_eselon4+'</option>';					
-						}
-						$('#f_es4').append(toAppend2);					
-					}
-
-
-
-					$("#f_nip").val(obj.pegawai[0].nip);
-					$("#f_nama").val(obj.pegawai[0].nama_pegawai);
-
-					if (obj.jabatan_raw != '') {
-						$("#f_jabatan_id").val(obj.jabatan_raw[0].id);
-						if (obj.jabatan_raw[0].kat_posisi == 1) {
-							$("#f_jabatan").val(obj.jabatan_raw[0].nama_posisi);										
-						}
-						else if (obj.jabatan_raw[0].kat_posisi == 2) {
-							$("#f_jabatan").val(obj.jabatan_jft[0].nama_jabatan);					
-						}
-						else if (obj.jabatan_raw[0].kat_posisi == 4) {
-							$("#f_jabatan").val(obj.jabatan_jfu[0].nama_jabatan);					
-						}														
-					}
-
-					$("#f_tmt").val(obj.pegawai[0].tmt_jabatan);				
-
-					toAppend_tmt = "";
-					$('#table_tmt').html('');															
-					for (let index = 0; index < obj.tmt_pegawai.length; index++) {
-						// console.log(obj.tmt_pegawai[index].nama_posisi);
-						if (obj.tmt_pegawai[index].nama_posisi != null) {
-							toAppend_tmt += '<tr>'+
-												'<td>'+obj.tmt_pegawai[index].nama_posisi+'</td>'+
-												'<td>'+obj.tmt_pegawai[index].StartDate+'</td>'+
-												'<td>'+obj.tmt_pegawai[index].EndDate+'</td>'+
-												'<td>'+obj.tmt_pegawai[index].status_masakerja+'</td>'+
-												'<td></td>'+																																												
-											'</tr>';																		
-						}
-
-					}
-					$('#table_tmt').append(toAppend_tmt);										
-					// console.table(obj.tmt_pegawai);
-
-					// obj.jabatan_akademik[0].nama_posisi
-					jabatan_akademik = '';
-					if (obj.jabatan_akademik == '') {
-						jabatan_akademik = '-';
-					}
-					else
-					{
-						jabatan_akademik = obj.jabatan_akademik[0].nama_posisi;
-					}
-					$("#f_jabatan_akademik").val(jabatan_akademik);
-					$("#f_jabatan_akademik_id").val(obj.pegawai[0].posisi_akademik);
-
-					jabatan_plt = '';
-					if (obj.jabatan_plt == '') {
-						jabatan_plt = '-';
-					}
-					else
-					{
-						jabatan_plt = obj.jabatan_plt[0].nama_posisi;
-					}
-					$("#f_jabatan_plt").val(jabatan_plt);
-					$("#f_jabatan_plt_id").val(obj.pegawai[0].posisi_plt);														
-				}
-
-				$("#loadprosess").modal('hide');				
+				$('#modal-datatable > div > div > div > div.modal-header > h3').html("Eselon "+arg);													
+				$("#get-datatable").html(msg);					
+				$("#modal-datatable").modal('show');				
+				$("#loadprosess").modal('hide');							
 			},
 			error:function(jqXHR,exception)
 			{
 				ajax_catch(jqXHR,exception);					
 			}
-		})		
+		})	
+	}	
+
+	function data_status(oid,status) {
+		var text = '';
+		if (status == 1) {
+			text = 'Aktifkan Pegawai ini';
+		} else {
+			text = 'Nonaktifkan Pegawai ini';
+		}
+		
+		Lobibox.confirm({
+			title: "Konfirmasi",
+			msg: text,
+			callback: function ($this, type) {
+				if (type === 'yes'){
+					$.ajax({
+						url :"<?php echo site_url()?>master/data_pegawai/store/data_status/"+oid+"/"+status,					
+						type:"post",
+						beforeSend:function(){
+							$("#loadprosess").modal('show');
+						},
+						success:function(msg){
+							var obj = jQuery.parseJSON (msg);
+							ajax_status(obj,'no-refresh');
+							getData();						
+						},
+						error:function(jqXHR,exception)
+						{
+							ajax_catch(jqXHR,exception);					
+						}
+					})
+				}
+			}
+		})	
 	}
-}
 
-function print_excel() {
-	var es1        = $("#select_eselon_1").val();
-	var es2        = $("#select_eselon_2").val();	
-	var es3        = $("#select_eselon_3").val();
-	var es4        = $("#select_eselon_4").val();
-	var kat_posisi = $("#select_jenis_jabatan").val();
-	if (kat_posisi == '') {
-		kat_posisi = '-';
+	function del(id){
+		Lobibox.confirm({
+			title: "Konfirmasi",
+			msg: "Anda yakin akan menghapus data ini ?",
+			callback: function ($this, type) {
+				if (type === 'yes'){
+					$.ajax({
+						url :"<?php echo site_url()?>master/data_pegawai/store/delete/"+id,					
+						type:"post",
+						beforeSend:function(){
+							$("#loadprosess").modal('show');
+						},
+						success:function(msg){
+							var obj = jQuery.parseJSON (msg);
+							ajax_status(obj,'no-refresh');
+							getData();
+						},
+						error:function(jqXHR,exception)
+						{
+							ajax_catch(jqXHR,exception);					
+						}
+					})
+				}
+			}
+		})
+	}	
+
+	function change_password(id)
+	{
+		Lobibox.confirm({
+			title: "Konfirmasi",
+			msg: "Password Standar adalah 'usersikerja', Lanjutkan ?",
+			callback: function ($this, type) {
+				if (type === 'yes'){
+					$.ajax({
+						url :"<?php echo site_url()?>/master/data_pegawai/store/password/"+id,					
+						type:"post",
+						beforeSend:function(){
+							$("#loadprosess").modal('show');
+						},
+						success:function(msg){
+							var obj = jQuery.parseJSON (msg);
+							ajax_status(obj,'no-refresh');
+							getData();
+						},
+						error:function(jqXHR,exception)
+						{
+							ajax_catch(jqXHR,exception);					
+						}
+					})
+				}
+			}
+		})
 	}
 
-	es2 = (es2 == '') ? 0 : es2 ;
-	es3 = (es3 == '') ? 0 : es3 ;
-	es4 = (es4 == '') ? 0 : es4 ;	
+	function main_form(params,id) {
+		if (params == 'insert') {
+			$(".form-control-detail").val('');
+			$("#form_section").css({"display": ""})
+			$("#view_section").css({"display": "none"})
+			$("#form_section > div > div > div.box-header > h3").html("Tambah Data Pegawai");		
+			$("#crud").val('insert');		
+		} else if(params == 'update') {
+			$.ajax({
+				url :"<?php echo site_url()?>master/data_pegawai/get_data_pegawai/"+id,		
+				type:"post",
+				beforeSend:function(){
+					$("#loadprosess").modal('show');
+				},
+				success:function(msg){
+					var obj = jQuery.parseJSON (msg);
+					console.log(obj.jabatan_akademik);
+					$(".form-control-detail").val('');
+					$("#form_section").css({"display": ""})
+					$("#view_section").css({"display": "none"})
+					$("#form_section > div > div > div.box-header > h3").html("Ubah Data Pegawai");
+					$("#crud").val('update');
+					$("#oid").val(obj.pegawai[0].id);
+					$("#f_es1").val(obj.pegawai[0].es1);
 
-	window.open('<?=base_url();?>master/data_pegawai/print_pegawai/'+kat_posisi+'/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");	
-	// window.location.href = "<?=base_url();?>master/data_pegawai/print_pegawai/"+kat_posisi+"/"+es1+"/"+es2+"/"+es3+"/"+es4";	
+					if (obj.pegawai != 0) {
 
-}
+						if (obj.list_eselon2.length != 0) 
+						{
+							var toAppend = '<option value=""> - - - </option>';				
+							for (index = 0; index < obj.list_eselon2.length; index++) 
+							{
+								_text = "";
+								if (obj.list_eselon2[index].id_es2 == obj.pegawai[0].es2) {
+									_text = "selected";
+								}
 
-$(document).ready(function(){
+								toAppend += '<option value="'+obj.list_eselon2[index].id_es2+'" '+_text+'>'+obj.list_eselon2[index].nama_eselon2+'</option>';					
+							}
+							$('#f_es2').append(toAppend);					
+						}
+										
+						if (obj.list_eselon3.length != 0) 
+						{
+							var toAppend1 = '<option value=""> - - - </option>';					
+							for (index = 0; index < obj.list_eselon3.length; index++) 
+							{
+								_text = "";
+								if (obj.list_eselon3[index].id_es3 == obj.pegawai[0].es3) {
+									_text = "selected";
+								}
+
+								toAppend1 += '<option value="'+obj.list_eselon3[index].id_es3+'" '+_text+'>'+obj.list_eselon3[index].nama_eselon3+'</option>';					
+							}
+							$('#f_es3').append(toAppend1);					
+						}
+
+						if (obj.list_eselon4.length != 0) 
+						{
+							var toAppend2 = '<option value=""> - - - </option>';					
+							for (index = 0; index < obj.list_eselon4.length; index++) 
+							{
+								_text = "";
+								if (obj.list_eselon4[index].id_es4 == obj.pegawai[0].es4) {
+									_text = "selected";
+								}
+
+								toAppend2 += '<option value="'+obj.list_eselon4[index].id_es4+'" '+_text+'>'+obj.list_eselon4[index].nama_eselon4+'</option>';					
+							}
+							$('#f_es4').append(toAppend2);					
+						}
+
+
+
+						$("#f_nip").val(obj.pegawai[0].nip);
+						$("#f_nama").val(obj.pegawai[0].nama_pegawai);
+
+						if (obj.jabatan_raw != '') {
+							$("#f_jabatan_id").val(obj.jabatan_raw[0].id);
+							if (obj.jabatan_raw[0].kat_posisi == 1) {
+								$("#f_jabatan").val(obj.jabatan_raw[0].nama_posisi);										
+							}
+							else if (obj.jabatan_raw[0].kat_posisi == 2) {
+								$("#f_jabatan").val(obj.jabatan_jft[0].nama_jabatan);					
+							}
+							else if (obj.jabatan_raw[0].kat_posisi == 4) {
+								$("#f_jabatan").val(obj.jabatan_jfu[0].nama_jabatan);					
+							}														
+						}
+
+						$("#f_tmt").val(obj.pegawai[0].tmt_jabatan);				
+
+						toAppend_tmt = "";
+						$('#table_tmt').html('');															
+						for (let index = 0; index < obj.tmt_pegawai.length; index++) {
+							// console.log(obj.tmt_pegawai[index].nama_posisi);
+							if (obj.tmt_pegawai[index].nama_posisi != null) {
+								toAppend_tmt += '<tr>'+
+													'<td>'+obj.tmt_pegawai[index].nama_posisi+'</td>'+
+													'<td>'+obj.tmt_pegawai[index].StartDate+'</td>'+
+													'<td>'+obj.tmt_pegawai[index].EndDate+'</td>'+
+													'<td>'+obj.tmt_pegawai[index].status_masakerja+'</td>'+
+													'<td></td>'+																																												
+												'</tr>';																		
+							}
+
+						}
+						$('#table_tmt').append(toAppend_tmt);										
+						// console.table(obj.tmt_pegawai);
+
+						// obj.jabatan_akademik[0].nama_posisi
+						jabatan_akademik = '';
+						if (obj.jabatan_akademik == '') {
+							jabatan_akademik = '-';
+						}
+						else
+						{
+							jabatan_akademik = obj.jabatan_akademik[0].nama_posisi;
+						}
+						$("#f_jabatan_akademik").val(jabatan_akademik);
+						$("#f_jabatan_akademik_id").val(obj.pegawai[0].posisi_akademik);
+
+						jabatan_plt = '';
+						if (obj.jabatan_plt == '') {
+							jabatan_plt = '-';
+						}
+						else
+						{
+							jabatan_plt = obj.jabatan_plt[0].nama_posisi;
+						}
+						$("#f_jabatan_plt").val(jabatan_plt);
+						$("#f_jabatan_plt_id").val(obj.pegawai[0].posisi_plt);														
+					}
+
+					$("#loadprosess").modal('hide');				
+				},
+				error:function(jqXHR,exception)
+				{
+					ajax_catch(jqXHR,exception);					
+				}
+			})		
+		}
+	}
+
+	function print_excel() {
+		var es1        = $("#select_eselon_1").val();
+		var es2        = $("#select_eselon_2").val();	
+		var es3        = $("#select_eselon_3").val();
+		var es4        = $("#select_eselon_4").val();
+		var kat_posisi = $("#select_jenis_jabatan").val();
+		if (kat_posisi == '') {
+			kat_posisi = '-';
+		}
+
+		es2 = (es2 == '') ? 0 : es2 ;
+		es3 = (es3 == '') ? 0 : es3 ;
+		es4 = (es4 == '') ? 0 : es4 ;	
+
+		window.open('<?=base_url();?>master/data_pegawai/print_pegawai/'+kat_posisi+'/'+es1+'/'+es2+'/'+es3+'/'+es4, "_blank");	
+		// window.location.href = "<?=base_url();?>master/data_pegawai/print_pegawai/"+kat_posisi+"/"+es1+"/"+es2+"/"+es3+"/"+es4";	
+
+	}	
+
+$(document).ready(function()
+{
+	$('#btn_filter').click(function() {
+		getData();
+	})
+
+	$("#closeData").click(function(){
+		$("#form_section").css({"display": "none"})
+		$("#view_section").css({"display": ""})		
+	})
+
 	$("#f_es1").change(function(){
 		$("#f_es2").html("<option value=''>------Pilih Salah Satu------</option>");
 		$("#f_es3").html("<option value=''>------Pilih Salah Satu------</option>");
@@ -1011,7 +1015,8 @@ $(document).ready(function(){
 				},
 				success:function(msg){
 					var obj = jQuery.parseJSON (msg);
-					ajax_status(obj);
+					ajax_status(obj,'no-refresh');
+					getData();
 				},
 				error:function(jqXHR,exception)
 				{
