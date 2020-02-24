@@ -75,8 +75,9 @@
 							<th>Jabatan Strutur Akademik (Kelas Jabatan)</th>							
 							<th>PLH/PLT</th>							
 							<th>Data Atasan</th>																												
-							<th>Komponen</th>							
-							<th>Action</th>
+							<th>Komponen</th>
+							<th>Status</th>							
+							<th>Aksi</th>
 						</tr>
 					</thead>
 					<tbody id="table_content">
@@ -126,6 +127,7 @@
 							</div>
 							<a class="btn btn-default" onclick="get_eselon(1)"><i class="fa fa-search"></i></a>														
 						</div>
+
 						<div class="form-group">
 							<label class="col-md-2 control-label">Eselon II</label>
 							<div class="col-md-9">
@@ -134,6 +136,7 @@
 							</div>
 							<a class="btn btn-default" onclick="get_eselon(2)"><i class="fa fa-search"></i></a>							
 						</div>
+
 						<div class="form-group">
 							<label class="col-md-2 control-label">Eselon III</label>
 							<div class="col-md-9">
@@ -142,6 +145,7 @@
 							</div>
 							<a class="btn btn-default" onclick="get_eselon(3)"><i class="fa fa-search"></i></a>							
 						</div>
+						
 						<div class="form-group">
 							<label class="col-md-2 control-label">Eselon IV</label>
 							<div class="col-md-9">
@@ -219,7 +223,19 @@
 							<div class="col-md-9">
 								<input type="text" id="f_tmt_plt" name="f_tmt_plt" class="form-control form-control-detail timerange-normal" data-inputmask="'alias': 'yyyy-mm-dd'" data-mask> 
 							</div>
-						</div>																		
+						</div>
+						<hr>
+
+						<div class="form-group">
+							<label class="col-md-2 control-label">Status Pegawai</label>
+							<div class="col-md-9">
+								<select name="f_status_pegawai" id="f_status_pegawai" class="form-control form-control-detail">
+									<option value="0">Tidak Aktif</option>
+									<option value="1">PNS Aktif</option>									
+									<option value="2">CPNS</option>									
+								</select>
+							</div>
+						</div>																								
 
 					</div>
 				</div>
@@ -338,6 +354,7 @@
 			type:"post",
 			data: { data_sender : data_link},
 			beforeSend:function(){
+				close()				
 				$("#loadprosess").modal('show');
 				$("#halaman_header").html("");
 				$("#halaman_footer").html("");
@@ -353,11 +370,11 @@
 				var obj = jQuery.parseJSON (msg);				
 				// console.log(obj.list);
 				tr_insert = "";
-				for (i=0 ;i<obj.list.length;i++) {
-					console.log(obj.list[i])				
-					id_posisi = 0;
-					
-					switch (obj.list[i].kat_posisi) {
+				for (i=0 ;i<obj.list.length;i++) 
+				{
+					id_posisi = 0;					
+					switch (obj.list[i].kat_posisi) 
+					{
 						case '1':
 							id_posisi = obj.list[i].posisi_class_raw
 							break;
@@ -372,7 +389,22 @@
 							break;
 						default:
 							break;
-					}				
+					}
+					
+					status_pegawai = "";
+					switch (obj.list[i].status) {
+						case '0':
+							status_pegawai = 'Tidak Aktif'
+							break;
+						case '1':
+							status_pegawai = 'PNS Aktif'
+							break;
+						case '2':
+							status_pegawai = 'CPNS'
+							break;							
+						default:
+							break;
+					}
 
 					atasan_definitif = (obj.list[i].avail_atasan == 1) ? '<b>[Definitif]</b> : '+obj.list[i].nama_atasan+' (<i>'+obj.list[i].jabatan_atasan+'</i>)'+'<hr>' : '<b>[Definitif]</b> : '+'-'+'<hr>' ;
 					atasan_akademik  = (obj.list[i].avail_atasan_akademik == 1) ? '<b>[Akademik]</b> : '+obj.list[i].nama_atasan_akademik+' (<i>'+obj.list[i].jabatan_atasan_akademik+'</i>)'+'<hr>' : '<b>[Akademik]</b> : '+'-'+'<hr>' ;
@@ -405,6 +437,9 @@
 									(obj.list[i].nama_eselon3 != '-' ? obj.list[i].nama_eselon3 : ''  ) + ' ' +
 									(obj.list[i].nama_eselon2 != '-' ? obj.list[i].nama_eselon2 : ''  ) + ' ' +
 									(obj.list[i].nama_eselon1 != '-' ? obj.list[i].nama_eselon1 : ''  ) + ' ' +																																				
+								'</td>'+
+								'<td>'+
+									status_pegawai+								
 								'</td>'+
 								'<td>'+
 									'<button class="btn btn-warning btn-xs col-lg-12" style="margin-bottom: 5px;" onclick="main_form('+"'update'"+','+obj.list[i].id+')">'+
@@ -633,6 +668,7 @@
 					$("#crud").val('update');
 					$("#oid").val(obj.pegawai[0].id);
 					$("#f_es1").val(obj.pegawai[0].es1);
+					$("#f_status_pegawai").val(obj.pegawai[0].status);
 
 					if (obj.pegawai != 0) {
 
@@ -772,6 +808,11 @@
 
 	}	
 
+	function close() {
+		$("#form_section").css({"display": "none"})
+		$("#view_section").css({"display": ""})		
+	}
+
 $(document).ready(function()
 {
 	$('#btn_filter').click(function() {
@@ -779,8 +820,7 @@ $(document).ready(function()
 	})
 
 	$("#closeData").click(function(){
-		$("#form_section").css({"display": "none"})
-		$("#view_section").css({"display": ""})		
+		close();
 	})
 
 	$("#f_es1").change(function(){
@@ -949,6 +989,7 @@ $(document).ready(function()
 		var f_tmt_akademik 		  = $("#f_tmt_akademik").val();
 		var f_tmt_plt			  = $("#f_tmt_plt").val();				
 		var oid                   = $("#oid").val();
+		var status_pegawai 		  = $("#f_status_pegawai").val();
 		var crud                  = $("#crud").val();
 		if (f_es1.length <= 0)
 		{
@@ -1003,7 +1044,8 @@ $(document).ready(function()
 					'jabatan_plt' 		: f_jabatan_plt, 
 					'tmt'    			: f_tmt,
 					'tmt_akademik'		: f_tmt_akademik,
-					'tmt_plt'    		: f_tmt_plt										
+					'tmt_plt'    		: f_tmt_plt,
+					'status'			: status_pegawai										
 				}				
 			
 			$.ajax({

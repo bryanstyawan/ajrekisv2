@@ -140,7 +140,7 @@ class Mmaster extends CI_Model {
 					LEFT JOIN mr_eselon2 es2 on es2.id_es2 = b.eselon2
 					LEFT JOIN mr_eselon3 es3 on es3.id_es3 = b.eselon3
 					LEFT JOIN mr_eselon4 es4 on es4.id_es4 = b.eselon4
-					WHERE a. STATUS = '1'
+					WHERE a. STATUS <> 0
 					".$sql_1."
 					".$sql_2."
 					".$sql_3."
@@ -324,6 +324,7 @@ class Mmaster extends CI_Model {
 				AND ha.tahun = ".$filter['tahun']." 				
 				WHERE c.id_role <> 7
 				AND c.id_role <> 6
+				AND c.STATUS <> 0
 				AND a.`id_pegawai` IS NOT NULL		
 				AND a.id_posisi <> 0				
 				AND a.bulan = ".$filter['bulan']."
@@ -395,7 +396,7 @@ class Mmaster extends CI_Model {
 					LEFT JOIN mr_posisi_class l ON k.id_kelas_jabatan = l.id
 					LEFT JOIN mr_tunjangan_profesi tp ON tp.id_pegawai = a.id					
 					AND tp.tgl_selesai = '9999-01-01'					
-					WHERE a.STATUS = 1
+					WHERE a.STATUS <> 0
 					AND a.id_role <> 7
 					AND a.id_role <> 6					
 					".$sql_es1a."

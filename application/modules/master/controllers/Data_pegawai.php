@@ -108,7 +108,7 @@ class Data_pegawai extends CI_Controller {
 				// $data_store = $this->Globalrules->trigger_insert_update($data_sender['crud']);				
 				if ($data_sender['crud'] == 'insert') {
 					# code...
-					$data_store['status']     = 1;
+					$data_store['status']     = $data_sender['status'];
 					$data_store['id_role']    = 2;
 					$data_store['user_input'] = date('y-m-d');
 					$data_store['audit_user'] = $this->session->userdata('sesNip');					
@@ -118,6 +118,7 @@ class Data_pegawai extends CI_Controller {
 				}
 				elseif ($data_sender['crud'] == 'update') {
 					# code...
+					$data_store['status']     = $data_sender['status'];					
 					$data_store['user_update'] = date('y-m-d');
 					$data_store['audit_user'] = $this->session->userdata('sesNip');					
 					$res_data    = $this->Allcrud->editData('mr_pegawai',$data_store,array('id'=>$data_sender['oid']));
@@ -300,16 +301,19 @@ class Data_pegawai extends CI_Controller {
 													'audit_user'            => $this->session->userdata('sesNip')
 												);
 						$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_plt,array('id' => $get_masa_kerja_detail_plt[0]->id));
-		
+
 						if (count($get_masa_kerja_pegawai_plt) > 1) {
 							# code...
-							$data_masa_kerja_lama_plt = array
-														(
-															'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt_plt'] . "-1 days")),
-															'audit_time'            => date('Y-m-d H:i:s'), 
-															'audit_user'            => $this->session->userdata('sesNip')
-														);		
-							$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_detail_plt[1]->id));
+							if (count($get_masa_kerja_detail_plt) > 1) {
+								# code...
+								$data_masa_kerja_lama_plt = array
+															(
+																'EndDate'               => date('Y-m-d',strtotime($data_sender['tmt_plt'] . "-1 days")),
+																'audit_time'            => date('Y-m-d H:i:s'), 
+																'audit_user'            => $this->session->userdata('sesNip')
+															);		
+								$this->Allcrud->editData('mr_masa_kerja_plt',$data_masa_kerja_lama_plt,array('id' => $get_masa_kerja_detail_plt[1]->id));								
+							}
 						}
 					}
 				}					

@@ -1,3 +1,11 @@
+v4.1.2.7.6
+2020-02-24
+New:
+Improved:
+- Status Pegawai (CPNS)
+Fixed:
+Canceled:
+
 v4.1.2.7.5
 2020-02-20
 New:

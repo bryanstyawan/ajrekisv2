@@ -89,7 +89,7 @@ class Mlogin extends CI_Model {
 					LEFT JOIN mr_eselon2 es2 ON es2.id_es2                    = b.eselon2
 					LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = b.eselon1
 					WHERE a.nip = '$nip' 
-					AND a.status='1' 
+					AND a.status <> 0 
 					ORDER BY a.id ASC
 					LIMIT 1";			
 		}
@@ -133,7 +133,7 @@ class Mlogin extends CI_Model {
 					LEFT JOIN mr_eselon1 es1 ON es1.id_es1                    = b.eselon1
 					WHERE a.nip = '$nip' 
 					AND a.password = '$secured_pass'
-					AND a.status='1' 
+					AND a.status <> 0 
 					ORDER BY a.id ASC
 					LIMIT 1";			
 		}
