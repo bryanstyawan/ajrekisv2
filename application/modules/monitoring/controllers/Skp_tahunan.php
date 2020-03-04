@@ -287,7 +287,7 @@ class Skp_tahunan extends CI_Controller {
 		}
 		elseif ($data_sender['data_6'] == '3') {
 			# code...
-			$data['list']        = $this->Allcrud->getData('mr_eselon4',array('id_es4'=>$data_sender['data_4']))->result_array();
+			$data['list']        = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data_sender['data_3']))->result_array();
 			if ($data['list'] != array()) {
 				# code...
 				for ($i=0; $i < count($data['list']); $i++) { 
