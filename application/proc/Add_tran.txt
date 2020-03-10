@@ -35,6 +35,8 @@ DECLARE rl_tnj double;
 DECLARE bln, thn int;
 DECLARE datenow datetime;
 
+DECLARE stat_peg int;
+
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
 BEGIN
 	ROLLBACK;
@@ -69,6 +71,11 @@ ELSE
 	SET hari = 1;
 	SET menit = diff;
 END IF;
+
+SELECT a.status
+	INTO stat_peg
+	FROM mr_pegawai a
+	WHERE a.id=id_pgw;
 
 SELECT a.eselon1, a.eselon2, a.eselon3, a.eselon4, a.id_jft, a.id_jfu, a.kat_posisi, a.posisi_class
 	INTO es1, es2, es3, es4, id_jft, id_jfu, kat_posisi, cls
@@ -126,11 +133,11 @@ IF ROW_COUNT() > 0 THEN
 		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
 		AND bulan = bln AND tahun = thn;
 		
--- 	SELECT COUNT(*), SUM(frekuensi_realisasi), sum(menit_efektif)
--- 		INTO approve, freq, mnt
--- 		FROM tr_capaian_pekerjaan
--- 		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
--- 		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=1;
+	SELECT SUM(frekuensi_realisasi), sum(menit_efektif)
+		INTO freq, mnt
+		FROM tr_capaian_pekerjaan
+		WHERE id_pegawai = id_pgw AND id_posisi = pos_id
+		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=1;
 		
 -- 	IF approve = 0 THEN
 -- 		SET freq = 0;
@@ -139,14 +146,14 @@ IF ROW_COUNT() > 0 THEN
 -- 		SET prsn = 0;
 -- 		SET rl_tnj = 0;
 -- 	ELSE
--- 		IF mnt >= tot_menit THEN
--- 			SET prsn = 100;
--- 			SET rl_tnj = tnj/2;
--- 		ELSE
--- 			SET prsn = (mnt/tot_menit)*100;
--- 			SET rl_tnj = (((mnt/tot_menit)*tnj)/2);
--- 		END IF;
--- 		SET tun = (((mnt/tot_menit)*tnj)/2);
+	IF mnt >= tot_menit THEN
+		SET prsn = 100;
+		SET rl_tnj = tnj/2;
+	ELSE
+		SET prsn = (mnt/tot_menit)*100;
+		SET rl_tnj = (((mnt/tot_menit)*tnj)/2);
+	END IF;
+	SET tun = (((mnt/tot_menit)*tnj)/2);
 -- 	END IF;
 		
 -- 	SELECT COUNT(*)
@@ -156,23 +163,40 @@ IF ROW_COUNT() > 0 THEN
 -- 		AND month(tanggal_mulai) = bln AND year(tanggal_mulai) = thn AND status_pekerjaan=0;
 	
 	IF avail > 0 THEN
-		UPDATE rpt_capaian_kinerja SET
-			-- tr_approve = approve,
-			tr_belum_diperiksa = tr_belum_diperiksa+1,
-			-- menit_efektif = mnt,
-			-- prosentase_menit_efektif = prsn,
-			-- tunjangan = tun,
-			-- real_tunjangan = rl_tnj,
-			-- frekuensi_realisasi = freq,
-			audit_time = datenow
-		WHERE id = id_rpt;
+		IF stat = 0 THEN
+			UPDATE rpt_capaian_kinerja SET
+				tr_belum_diperiksa = tr_belum_diperiksa+1,
+				audit_time = datenow,
+				status_pegawai = stat_peg
+			WHERE id = id_rpt;
+		ELSE
+			UPDATE rpt_capaian_kinerja SET
+				tr_approve = tr_approve+1,
+				-- tr_belum_diperiksa = tr_belum_diperiksa+1,
+				menit_efektif = mnt,
+				prosentase_menit_efektif = prsn,
+				tunjangan = (((mnt/tot_menit)*tnj)/2),
+				real_tunjangan = rl_tnj,
+				frekuensi_realisasi = freq,
+				audit_time = datenow,
+				status_pegawai = stat_peg
+			WHERE id = id_rpt;
+		END IF;
 	ELSE
-		INSERT INTO rpt_capaian_kinerja(
-			id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi,
-			menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time)
-		VALUES (
-			-- id_pgw, pos_id, bln, thn, approve, periksa, 0, 0, mnt, prsn, tun, rl_tnj, freq, 'system', datenow);
-			id_pgw, pos_id, bln, thn, 0, 1, 0, 0, 0, 0, 0, 0, 0, 'system', datenow);
+		IF stat = 0 THEN
+			INSERT INTO rpt_capaian_kinerja(
+				id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi,
+				menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time, status_pegawai)
+			VALUES (
+				-- id_pgw, pos_id, bln, thn, approve, periksa, 0, 0, mnt, prsn, tun, rl_tnj, freq, 'system', datenow);
+				id_pgw, pos_id, bln, thn, 0, 1, 0, 0, 0, 0, 0, 0, 0, 'system', datenow, stat_peg);
+		ELSE
+			INSERT INTO rpt_capaian_kinerja(
+				id_pegawai, id_posisi, bulan, tahun, tr_approve, tr_belum_diperiksa, tr_tolak, tr_revisi,
+				menit_efektif, prosentase_menit_efektif, tunjangan, real_tunjangan, frekuensi_realisasi, audit_user, audit_time, status_pegawai)
+			VALUES (
+				id_pgw, pos_id, bln, thn, 1, 0, 0, 0, mnt, prsn, tun, rl_tnj, freq, 'system', datenow, stat_peg);
+			END IF;
 	END IF;
 END IF;
 COMMIT;

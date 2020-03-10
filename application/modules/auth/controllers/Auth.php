@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Loginadmin extends CI_Controller {
+class Auth extends CI_Controller {
 
 	public function __construct () {
 		parent::__construct();
@@ -9,16 +9,8 @@ class Loginadmin extends CI_Controller {
 	}
 	
 	public function index()
-	{
-		// echo CI_VERSION;die();
-		// error_reporting(E_ALL ^ E_WARNING);				
-		$this->load->view('loginAdmin');
-	}
-
-	public function test()
-	{
-		# code...
-		echo 'hello world';
+	{				
+		$this->load->view('auth');
 	}
 
 	public function login(){
@@ -107,7 +99,14 @@ class Loginadmin extends CI_Controller {
 	public function signout()
 	{
 		$this->session->sess_destroy();
-		redirect('admin/loginadmin');
+		redirect('auth');
+	}
+
+	public function v()
+	{
+		# code...
+		echo CI_VERSION;die();
+		error_reporting(E_ALL ^ E_WARNING);		
 	}
 	
 }

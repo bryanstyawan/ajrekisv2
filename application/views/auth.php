@@ -571,7 +571,7 @@ function login() {
 	else
 	{
 		$.ajax({
-			url :"<?php echo base_url();?>admin/loginadmin/login",
+			url :"<?php echo base_url();?>auth/login",
 			type:"post",
 			data:{
 					nip     : nip,

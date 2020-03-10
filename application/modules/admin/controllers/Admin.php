@@ -17,31 +17,6 @@ class Admin extends CI_Controller
 		redirect('dashboard/home');
 	}
 
-	public function change_password()
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();		
-		$data['title']      		= 'Ubah Password';		
-		$data['subtitle']   		= '';
-		$data['content']    		= 'admin/profile/data_profile';
-		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
-		$data['agama']              = $this->Allcrud->listData('mr_agama')->result_array();
-		$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
-		// $data['info_kompetensi']    = $this->Allcrud->getData('mr_kompetensi',array('id_pegawai'=>$this->session->userdata('sesUser')))->result_array();
-		$data['history_golongan']   = $this->Globalrules->get_history_golongan();
-		$data['history_jabatan']  	= $this->Globalrules->get_history_jabatan();
-		$data['history_pendidikan'] = $this->Globalrules->get_history_pendidikan();
-		$data['diklat_struktural'] 	= $this->Globalrules->get_history_diklat('1');
-		$data['diklat_fungsional'] 	= $this->Globalrules->get_history_diklat('2');
-		$data['diklat_teknis'] 		= $this->Globalrules->get_history_diklat('3');
-		$data['pendidikan'] 		= $this->Allcrud->listData('mr_pendidikan');
-		$data['diklat'] 			= $this->Allcrud->listData('mr_diklat');		
-		$this->load->view('templateAdmin',$data);		
-	}
-
-
-
 	public function redirect_notifikasi($id)
 	{
 		# code...
@@ -57,66 +32,6 @@ class Admin extends CI_Controller
 			$this->Globalrules->push_notifikasi($data_notify,'read_data');			
 			redirect($res[0]->url);
 		}
-	}
-
-	// public function user()
-	// {
-	// 	$this->Globalrules->session_rule();
-	// 	$this->Globalrules->notif_message();	
-
-	// 	$data['title']   = 'Administrator';
-	// 	$data['content'] = 'admin/user/data_user';
-	// 	$data['role']    = $this->Allcrud->listData('user_role');
-	// 	$data['user']    = $this->madmin->datauser();
-	// 	$this->load->view('templateAdmin',$data);
-	// }
-
-	public function adduser()
-	{
-		$this->Globalrules->session_rule();		
-		$this->Globalrules->notif_message();		
-		$add = array
-				(
-					'nama'     => modif_kata($this->input->post('nama')),
-					'email'    => $this->input->post('email'),
-					'password' => sha1(md5('gsi123')),
-					'no_hp'    => $this->input->post('hp'),
-					'id_role'  => $this->input->post('role')
-				);
-
-		$this->Allcrud->addData('user',$add);
-	}
-
-	// public function ajaxuser(){
-	// 	$this->Globalrules->notif_message();		
-	// 	$data['user'] = $this->madmin->datauser();
-	// 	$this->load->view('admin/user/ajaxuser',$data);
-	// }
-
-	public function edituser($id){
-		$this->Globalrules->notif_message();		
-		$flag = array('id_user'=>$id);
-		$q    = $this->Allcrud->getData('user',$flag)->row();
-		echo json_encode($q);
-	}
-
-	public function pedituser(){
-		$this->Globalrules->notif_message();		
-		$flag = array('id_user'=>$this->input->post('oid'));
-		$edit = array(
-						'nama'    => modif_kata($this->input->post('nnama')),
-						'email'   => $this->input->post('nemail'),
-						'no_hp'   => $this->input->post('nhp'),
-						'id_role' => $this->input->post('nrole')
-					);
-		$this->Allcrud->editData('user',$edit,$flag);
-	}
-
-	public function deluser($id)
-	{
-		$this->Globalrules->notif_message();		
-		$flag = array('id_user' => $id);
-		$this->Allcrud->delData('user',$flag);
 	}
 	
 	public function role()

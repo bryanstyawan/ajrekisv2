@@ -53,7 +53,7 @@ $(document).ready(function()
 			if (pass_baru == re_pass_baru ) 
 			{
 				$.ajax({
-					url :"<?php echo site_url()?>/user/do_change_password",
+					url :"<?php echo site_url()?>user/do_change_password",
 					type:"post",
 					data:$("#form_password").serialize(),
 					beforeSend:function(){
@@ -70,7 +70,7 @@ $(document).ready(function()
 		                    setTimeout(function(){ 
 		                        $("#loadprosess").modal('hide');
 		                        setTimeout(function(){
-									window.location.href = "<?php echo site_url()?>/admin/loginadmin/signout";
+									window.location.href = "<?php echo site_url()?>auth/signout";
 		                        }, 1500);                                                                   
 		                    }, 5000);                
 		                }
@@ -85,9 +85,7 @@ $(document).ready(function()
 		                }           					
 					},
 					error:function(){
-						Lobibox.notify('error', {
-							msg: 'Terjadi kesalahan, Gagal melakukan perintah.'
-						});
+						ajax_catch(jqXHR,exception);
 					}			
 				})
 			}	

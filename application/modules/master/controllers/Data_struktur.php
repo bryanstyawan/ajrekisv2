@@ -21,6 +21,85 @@ class Data_struktur extends CI_Controller {
 		$this->load->view('templateAdmin',$data);
 	}
 
+	public function filter_struktur_org($param=NULL)
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$data_sender = array
+						(
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'kat_posisi' => $data_sender['data_5']
+						);
+		$data['param'] = "";
+		if ($param != NULL) {
+			# code...
+			$data['param'] = $param;
+		}
+		$data['list'] = $this->Mmaster->get_struktur_organisasi($data_sender,$data_sender['kat_posisi']);
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) {
+				# code...
+				if($data['list'][$i]->kat_posisi == 1)
+				{
+					$get_summary_urtug = $this->mskp->get_summary_master_skp($data['list'][$i]->id);
+					if ($get_summary_urtug != 0) {
+						# code...
+						$data['list'][$i]->counter_skp = $get_summary_urtug;
+					}
+					else
+					{
+						$data['list'][$i]->counter_skp = 0;
+					}
+				}
+				elseif ($data['list'][$i]->kat_posisi == 2) {
+					# code...
+					$get_data = $this->Allcrud->getData('mr_jabatan_fungsional_tertentu_uraian_tugas',array('id_jft' => $data['list'][$i]->id_jft));
+					if($get_data->result_array() != array())
+					{					
+						$data['list'][$i]->counter_skp = count($get_data->result_array());
+					}
+					else {	
+						# code...
+						$data['list'][$i]->counter_skp = 0;
+					}					
+				}
+				elseif ($data['list'][$i]->kat_posisi == 4) {
+					# code...
+					$get_data = $this->Allcrud->getData('mr_jabatan_fungsional_umum_uraian_tugas',array('id_jfu' => $data['list'][$i]->id_jfu));
+					if($get_data->result_array() != array())
+					{					
+						$data['list'][$i]->counter_skp = count($get_data->result_array());
+					}
+					else {	
+						# code...
+						$data['list'][$i]->counter_skp = 0;
+					}					
+				}				
+				elseif($data['list'][$i]->kat_posisi == 6)
+				{
+					$get_summary_urtug = $this->mskp->get_summary_master_skp($data['list'][$i]->id);
+					if ($get_summary_urtug != 0) {
+						# code...
+						$data['list'][$i]->counter_skp = $get_summary_urtug;
+					}
+					else
+					{
+						$data['list'][$i]->counter_skp = 0;
+					}
+				}				
+				else {
+					# code...
+					$data['list'][$i]->counter_skp = 0;					
+				}
+			}
+		}			
+		$this->load->view('master/struktur/ajax_Struktur',$data);
+	}	
+	
 	public function store(){
 		$this->Globalrules->session_rule();							
 		$res_data    = "";
@@ -97,6 +176,43 @@ class Data_struktur extends CI_Controller {
 		echo json_encode($res);								
 	}
 
+	public function cari_atasan_baru()
+	{
+		$this->Globalrules->session_rule();
+		$data_var = "";
+		$data_sql = "";
+		if($this->input->post('kat') == 1 || $this->input->post('nkat') == 1)
+		{
+			$data_var = array(
+							'eselon4'    => $this->input->post('es4'),
+							'eselon3'    => $this->input->post('es3'),
+							'eselon2'    => $this->input->post('es2'),
+							'eselon1'    => $this->input->post('es1'),
+							'kat_posisi' => $this->input->post('kat')
+						);
+			$data_sql = $this->Mmaster->cari_atasan_STRUKTURAL($data_var);
+
+		}
+		elseif($this->input->post('kat') == 4 || $this->input->post('nkat') == 4)
+		{
+			$data_var = array(
+							'eselon4'    => $this->input->post('es4'),
+							'kat_posisi' => $this->input->post('kat')
+						);
+			$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL($data_var);
+		}
+		elseif($this->input->post('kat') == 2 || $this->input->post('nkat') == 2)
+		{
+			$data_var = array(
+							'eselon2'    => $this->input->post('es2'),
+							'kat_posisi' => $this->input->post('kat')
+						);
+			$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL_TERTENTU($data_var);
+		}
+		$data['atasan'] = $data_sql;
+		$this->load->view('master/struktur/ajaxAtasan',$data);
+	}	
+
 	// By Bryan
 	// Last Edited : 2019-02-21
 	public function get_data_organisasi($id){
@@ -161,20 +277,21 @@ class Data_struktur extends CI_Controller {
 	{
 		# code...
 		$data_sender = $this->input->post('data_sender');
+		$data = array();
 		if ($data_sender['arg'] == 1) {
 			# code...
 			$data['list'] = $this->Allcrud->listData('mr_eselon1')->result_array();			
-			$this->load->view('master/struktur/eselon/es1',$data);			
+			// $this->load->view('master/struktur/eselon/es1',$data);			
 		}
 		elseif ($data_sender['arg'] == 2) {
 			# code...
 			$data['list'] = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data_sender['es1']))->result_array();						
-			$this->load->view('master/struktur/eselon/es2',$data);			
+			// $this->load->view('master/struktur/eselon/es2',$data);			
 		}
 		elseif ($data_sender['arg'] == 3) {
 			# code...
 			$data['list'] = $this->Allcrud->getData('mr_eselon3',array('id_es1'=>$data_sender['es1'],'id_es2'=>$data_sender['es2']))->result_array();			
-			$this->load->view('master/struktur/eselon/es3',$data);			
+			// $this->load->view('master/struktur/eselon/es3',$data);			
 		}
 		elseif ($data_sender['arg'] == 4) {
 			# code...
@@ -187,69 +304,87 @@ class Data_struktur extends CI_Controller {
 				$data['list'] = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data_sender['es3']))->result_array();				
 			}
 
-			$this->load->view('master/struktur/eselon/es4',$data);			
+			// $this->load->view('master/struktur/eselon/es4',$data);			
 		}				
+
+		echo json_encode($data);
 	}
 
-	public function get_atasan()
+	public function get_atasan($arg)
 	{
 		# code...
 		$this->Globalrules->session_rule();
 		$data_var    = "";
 		$data_sql    = "";
 		$data_sender = $this->input->post('data_sender');
-		if($data_sender['kat'] == 1)
-		{
-			$data_var = array(
-							'eselon4'    => $data_sender['es4'],
-							'eselon3'    => $data_sender['es3'],
-							'eselon2'    => $data_sender['es2'],
-							'eselon1'    => $data_sender['es1'],
-							'kat_posisi' => $data_sender['kat']
-						);
-			$data_sql = $this->Mmaster->cari_atasan_STRUKTURAL($data_var);
-
-		}
-		elseif($data_sender['kat'] == 4)
-		{
-			if ($data_sender['es3'] == '') {
-				# code...
-				$data_var = array(
-					'eselon2'    => $data_sender['es2'],
-					'eselon3'    => $data_sender['es3'],					
-					'kat_posisi' => $data_sender['kat']
-				);				
-			}
-			else
+		// print_r($arg);die();
+		if ($arg == 'null') {
+			# code...
+			if($data_sender['kat'] == 1)
 			{
 				$data_var = array(
-					'eselon4'    => $data_sender['es4'],
-					'eselon3'    => $data_sender['es3'],					
-					'kat_posisi' => $data_sender['kat']
-				);
-			}
+								'eselon4'    => $data_sender['es4'],
+								'eselon3'    => $data_sender['es3'],
+								'eselon2'    => $data_sender['es2'],
+								'eselon1'    => $data_sender['es1'],
+								'kat_posisi' => $data_sender['kat']
+							);
+				$data_sql = $this->Mmaster->cari_atasan_STRUKTURAL($data_var);
 
-			$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL($data_var);
+			}
+			elseif($data_sender['kat'] == 4)
+			{
+				if ($data_sender['es3'] == '') {
+					# code...
+					$data_var = array(
+						'eselon2'    => $data_sender['es2'],
+						'eselon3'    => $data_sender['es3'],					
+						'kat_posisi' => $data_sender['kat']
+					);				
+				}
+				else
+				{
+					$data_var = array(
+						'eselon4'    => $data_sender['es4'],
+						'eselon3'    => $data_sender['es3'],					
+						'kat_posisi' => $data_sender['kat']
+					);
+				}
+
+				$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL($data_var);
+			}
+			elseif($data_sender['kat'] == 2)
+			{
+				$data_var = array(
+								'eselon2'    => $data_sender['es2'],
+								'kat_posisi' => $data_sender['kat']
+							);
+				$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL_TERTENTU($data_var);
+			}
+			elseif($data_sender['kat'] == 6)
+			{
+				$data_var = array(
+								'eselon4'    => $data_sender['es4'],
+								'eselon3'    => $data_sender['es3'],
+								'eselon2'    => $data_sender['es2'],
+								'eselon1'    => $data_sender['es1'],
+								'kat_posisi' => 1
+							);
+				$data_sql = $this->Mmaster->cari_atasan_STRUKTURAL($data_var);
+			}			
 		}
-		elseif($data_sender['kat'] == 2)
-		{
-			$data_var = array(
-							'eselon2'    => $data_sender['es2'],
-							'kat_posisi' => $data_sender['kat']
-						);
-			$data_sql = $this->Mmaster->cari_atasan_FUNGSIONAL_TERTENTU($data_var);
-		}
-		elseif($data_sender['kat'] == 6)
+		else
 		{
 			$data_var = array(
 							'eselon4'    => $data_sender['es4'],
 							'eselon3'    => $data_sender['es3'],
 							'eselon2'    => $data_sender['es2'],
 							'eselon1'    => $data_sender['es1'],
-							'kat_posisi' => 1
+							'kat_posisi' => $data_sender['kat']
 						);
-			$data_sql = $this->Mmaster->cari_atasan_STRUKTURAL($data_var);
+			$data_sql = $this->Mmaster->cari_atasan_all($data_var);
 		}
+
 
 		$data['list'] = $data_sql;
 		if ($data['list'] != 0) {
@@ -267,42 +402,7 @@ class Data_struktur extends CI_Controller {
 				}
 			}
 		}
-		$this->load->view('master/struktur/eselon/atasan',$data);		
+		
+		echo json_encode($data);
 	}
-
-	public function get_atasan_all()
-	{
-		# code...
-		$this->Globalrules->session_rule();
-		$data_var    = "";
-		$data_sql    = "";
-		$data_sender = $this->input->post('data_sender');
-
-		$data_var = array(
-						'eselon4'    => $data_sender['es4'],
-						'eselon3'    => $data_sender['es3'],
-						'eselon2'    => $data_sender['es2'],
-						'eselon1'    => $data_sender['es1'],
-						'kat_posisi' => $data_sender['kat']
-					);
-		$data_sql = $this->Mmaster->cari_atasan_all($data_var);		
-
-		$data['list'] = $data_sql;
-		if ($data['list'] != 0) {
-			# code...
-			for ($i=0; $i < count($data['list']); $i++) { 
-				# code...
-				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->id,'posisi');				
-				if ($data_pegawai != 0) {
-					# code...
-					$data['list'][$i]->nama_pegawai = $data_pegawai[0]->nama_pegawai;					
-				}
-				else
-				{
-					$data['list'][$i]->nama_pegawai = "-";					
-				}
-			}
-		}
-		$this->load->view('master/struktur/eselon/atasan',$data);		
-	}	
 }

@@ -220,7 +220,12 @@ class Mmaster extends CI_Model {
 					a.tr_tolak,
 					a.tr_revisi,
 					a.menit_efektif,
-					a.prosentase_menit_efektif,
+					IF(IFNULL(a.status_pegawai, 1) = 1, a.prosentase_menit_efektif,
+						IF(IFNULL(a.status_pegawai, 1) = 2, 
+							IF(a.prosentase_menit_efektif > 80, 80, a.prosentase_menit_efektif), 
+						a.prosentase_menit_efektif	
+						)						
+					) as prosentase_menit_efektif,					
 					a.tr_belum_diperiksa,
 					b.kat_posisi,
 					CASE
@@ -305,7 +310,12 @@ class Mmaster extends CI_Model {
 					)  as real_tunjangan,
 					a.real_tunjangan as real_tunjangan_sb_potongan,
 					a.persentase_pemotongan,
-					a.audit_check_skp		
+					a.audit_check_skp,
+					CASE
+						WHEN IFNULL(a.status_pegawai,1) = 0 THEN 'Tidak Aktif'
+						WHEN IFNULL(a.status_pegawai,1) = 1 THEN 'PNS Aktif'
+						WHEN IFNULL(a.status_pegawai,1) = 2 THEN 'CPNS'
+					END as status_pegawai		
 				FROM `rpt_capaian_kinerja` a
 				LEFT JOIN mr_posisi b ON b.id = a.id_posisi
 				LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
@@ -379,7 +389,12 @@ class Mmaster extends CI_Model {
 						IFNULL(b.real_tunjangan,0),
 						IFNULL(b.real_tunjangan,0) as real_tunjangan_sb_potongan,
 						IFNULL(b.persentase_pemotongan,5) as persentase_pemotongan,
-						IFNULL(b.audit_check_skp,0) as audit_check_skp   						
+						IFNULL(b.audit_check_skp,0) as audit_check_skp,
+						CASE
+							WHEN IFNULL(b.status_pegawai,1) = 0 THEN 'Tidak Aktif'
+							WHEN IFNULL(b.status_pegawai,1) = 1 THEN 'PNS Aktif'
+							WHEN IFNULL(b.status_pegawai,1) = 2 THEN 'CPNS'
+						END as status_pegawai
 					FROM mr_pegawai a
 					LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
 					AND b.bulan = ".$filter['bulan']."
@@ -413,10 +428,96 @@ class Mmaster extends CI_Model {
 					)
 					ORDER BY ".$order_by."";
 		}
+		// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
-		 {
-			return $query->result();
+		{
+			$data = $query->result();
+			for ($i=0; $i < count($data); $i++) { 
+				# code...
+				$get_data_struktur_organisasi = $this->get_data_struktur_organisasi($data[$i]->posisi_akademik);				
+				if ($get_data_struktur_organisasi != array()) {
+					# code...
+					$data[$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+					$atasan_pegawai_akademik                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi[0]->atasan,'posisi');				
+					if ($atasan_pegawai_akademik != 0) {
+						# code...
+						$data[$i]->avail_atasan_akademik    = 1;					
+						$data[$i]->id_atasan_akademik       = $atasan_pegawai_akademik[0]->id;
+						$data[$i]->nip_atasan_akademik      = $atasan_pegawai_akademik[0]->nip;										
+						$data[$i]->nama_atasan_akademik     = $atasan_pegawai_akademik[0]->nama_pegawai;
+						$data[$i]->jabatan_atasan_akademik  = $atasan_pegawai_akademik[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data[$i]->avail_atasan_akademik    = 0;					
+						$data[$i]->id_atasan_akademik       = '-';					
+						$data[$i]->nip_atasan_akademik      = '-';					
+						$data[$i]->nama_atasan_akademik     = '-';
+						$data[$i]->jabatan_atasan_akademik  = '-';															
+					}
+				}
+				else
+				{
+					$data[$i]->posisi_akademik_name = '-';					
+					$data[$i]->avail_atasan_akademik    = 0;					
+					$data[$i]->id_atasan_akademik       = '-';					
+					$data[$i]->nip_atasan_akademik      = '-';					
+					$data[$i]->nama_atasan_akademik     = '-';
+					$data[$i]->jabatan_atasan_akademik  = '-';																				
+				}		
+				
+				$get_data_plt = $this->get_data_struktur_organisasi($data[$i]->posisi_plt);				
+				if ($get_data_plt != array()) {
+					# code...
+					$data[$i]->posisi_plt_name = $get_data_plt[0]->nama_posisi;
+					$atasan_pegawai_plt                = $this->Globalrules->get_info_pegawai($get_data_plt[0]->atasan,'posisi');				
+					if ($atasan_pegawai_plt != 0) {
+						# code...
+						$data[$i]->avail_atasan_plt    = 1;					
+						$data[$i]->id_atasan_plt       = $atasan_pegawai_plt[0]->id;
+						$data[$i]->nip_atasan_plt      = $atasan_pegawai_plt[0]->nip;										
+						$data[$i]->nama_atasan_plt     = $atasan_pegawai_plt[0]->nama_pegawai;
+						$data[$i]->jabatan_atasan_plt  = $atasan_pegawai_plt[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data[$i]->avail_atasan_plt    = 0;					
+						$data[$i]->id_atasan_plt       = '-';					
+						$data[$i]->nip_atasan_plt      = '-';					
+						$data[$i]->nama_atasan_plt     = '-';
+						$data[$i]->jabatan_atasan_plt  = '-';															
+					}					
+				}
+				else
+				{
+					$data[$i]->posisi_plt_name = '-';		
+					$data[$i]->avail_atasan_plt    = 0;					
+					$data[$i]->id_atasan_plt       = '-';					
+					$data[$i]->nip_atasan_plt      = '-';					
+					$data[$i]->nama_atasan_plt     = '-';
+					$data[$i]->jabatan_atasan_plt  = '-';								
+				}	
+				
+				$data_atasan = $this->Globalrules->get_info_pegawai($data[$i]->atasan,'posisi');				
+				if ($data_atasan != 0) {
+					# code...
+					$data[$i]->avail_atasan    = 1;					
+					$data[$i]->id_atasan       = $data_atasan[0]->id;
+					$data[$i]->nip_atasan      = $data_atasan[0]->nip;										
+					$data[$i]->nama_atasan     = $data_atasan[0]->nama_pegawai;
+					$data[$i]->jabatan_atasan  = $data_atasan[0]->nama_jabatan;										
+				}
+				else
+				{
+					$data[$i]->avail_atasan    = 0;					
+					$data[$i]->id_atasan       = '-';					
+					$data[$i]->nip_atasan      = '-';					
+					$data[$i]->nama_atasan     = '-';
+					$data[$i]->jabatan_atasan  = '-';															
+				}				
+			}
+			return $data;
 		}
 		else
 		{

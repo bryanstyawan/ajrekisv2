@@ -24,7 +24,7 @@
         <li class="user-footer">
             <div style="padding-bottom: 40px;"><?php echo anchor('user/info','Info Pegawai',array('class'=>'btn btn-default btn-flat col-lg-12'));?></div>
             <div style="padding-bottom: 40px;"><?php echo anchor('user/change_password','Ubah Password',array('class'=>'btn btn-default btn-flat col-lg-12'));?></div>
-            <div style="padding-bottom: 40px;"><?php echo anchor('admin/loginadmin/signout','Keluar',array('class'=>'btn btn-default btn-flat col-lg-12'));?></div>
+            <div style="padding-bottom: 40px;"><?php echo anchor('auth/signout','Keluar',array('class'=>'btn btn-default btn-flat col-lg-12'));?></div>
         </li>
     </ul>
 </li>

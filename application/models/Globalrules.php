@@ -19,7 +19,7 @@ class Globalrules extends CI_Model
 		if($this->session->userdata('login') == "")
 		{
 			//get user data
-			redirect('admin/loginadmin');
+			redirect('auth');
 		}
 	}
 
@@ -241,20 +241,20 @@ class Globalrules extends CI_Model
 			# code...
 			if ($id==NULL) {
 				# code...
-				$con = "a.nip = '".$this->session->userdata('sesNip')."' AND a.status = 1 AND b.id = '".$this->session->userdata('sesPosisi')."'";
+				$con = "a.nip = '".$this->session->userdata('sesNip')."' AND a.status <> 0 AND b.id = '".$this->session->userdata('sesPosisi')."'";
 			}
 		}
 		elseif ($param == 'id') {
 			# code...
-			$con = "a.id = '".$id."' AND a.status = 1 AND b.id = '".$id_posisi."'";
+			$con = "a.id = '".$id."' AND a.status <> 0 AND b.id = '".$id_posisi."'";
 		}
 		elseif ($param == 'nama_pegawai') {
 			# code...
-			$con = "a.nama_pegawai = '".$id."' AND a.status = 1 AND b.id = a.posisi";
+			$con = "a.nama_pegawai = '".$id."' AND a.status <> 0 AND b.id = a.posisi";
 		}
 		elseif ($param == 'posisi') {
 			# code...
-			$con = "b.id = '".$id."' AND a.status = 1 AND b.id = a.posisi";
+			$con = "b.id = '".$id."' AND a.status <> 0 AND b.id = a.posisi";
 		}		
 
 		$sql = "SELECT  a.id,

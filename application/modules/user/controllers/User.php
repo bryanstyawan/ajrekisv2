@@ -7,7 +7,7 @@ class User extends CI_Controller
 	{
 		parent::__construct();
 		date_default_timezone_set('Asia/Jakarta');		
-		$this->load->model ('admin/mlogin', '', TRUE);		
+		$this->load->model('auth/mlogin', '', TRUE);		
 	}
 	
 	public function index()
@@ -25,7 +25,6 @@ class User extends CI_Controller
 		$data['subtitle']   		= '';
 		$data['content']    		= 'user/profile/data_profile';
 		$data['infoPegawai']        = $this->Globalrules->get_info_pegawai();
-		// print_r($data['infoPegawai']);die();
 		$data['agama']              = $this->Allcrud->listData('mr_agama');
 		$data['golongan']           = $this->Allcrud->listData('mr_golongan')->result_array();
 		$data['history_golongan']   = $this->Globalrules->get_history_golongan();
