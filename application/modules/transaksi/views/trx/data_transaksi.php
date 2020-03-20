@@ -1765,8 +1765,8 @@ function view_option(id,i,posisi) {
                                     "<td>"+obj.data.tr_belum_diperiksa[i].target_skp+"</td>"+
                                     "<td>"+obj.data.tr_belum_diperiksa[i].nama_pekerjaan+"</td>"+
                                     "<td>"+obj.data.tr_belum_diperiksa[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_belum_diperiksa[i].target_output_name+"</td>"+
-                                    "<td></td>"+
-                                    // "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                                    // "<td></td>"+
+                                    "<td><a class='btn btn-success btn-xs' target='_blank' href='https://sikerja.kemendagri.go.id/public/file_pendukung/"+obj.data.infoPegawai[0].nip+"/"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
                                     "<td id='td_last_belum_diperiksa_ket_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
                                         "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
                                         // "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
