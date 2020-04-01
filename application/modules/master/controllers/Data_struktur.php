@@ -273,6 +273,44 @@ class Data_struktur extends CI_Controller {
 		echo json_encode($res);										
 	}
 
+	// sementara
+	public function get_struktur_eselon1()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$data = array();
+		if ($data_sender['arg'] == 1) {
+			# code...
+			$data['list'] = $this->Allcrud->listData('mr_eselon1')->result_array();			
+			// $this->load->view('master/struktur/eselon/es1',$data);			
+		}
+		elseif ($data_sender['arg'] == 2) {
+			# code...
+			$data['list'] = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$data_sender['es1']))->result_array();						
+			// $this->load->view('master/struktur/eselon/es2',$data);			
+		}
+		elseif ($data_sender['arg'] == 3) {
+			# code...
+			$data['list'] = $this->Allcrud->getData('mr_eselon3',array('id_es1'=>$data_sender['es1'],'id_es2'=>$data_sender['es2']))->result_array();			
+			// $this->load->view('master/struktur/eselon/es3',$data);			
+		}
+		elseif ($data_sender['arg'] == 4) {
+			# code...
+			if ($data_sender['es3'] == '') {
+				# code...
+				$data['list'] = $this->Allcrud->getData('mr_eselon4',array('id_es2'=>$data_sender['es2']))->result_array();				
+			}
+			else
+			{
+				$data['list'] = $this->Allcrud->getData('mr_eselon4',array('id_es3'=>$data_sender['es3']))->result_array();				
+			}
+
+			// $this->load->view('master/struktur/eselon/es4',$data);			
+		}				
+
+		echo json_encode($data);
+	}	
+
 	public function get_struktur_eselon()
 	{
 		# code...

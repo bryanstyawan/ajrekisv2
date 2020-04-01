@@ -456,7 +456,7 @@ function get_eselon(arg) {
 	}		
 
 	$.ajax({
-		url :"<?php echo site_url()?>master/data_struktur/get_struktur_eselon/",
+		url :"<?php echo site_url()?>master/data_struktur/get_struktur_eselon1/",
 		type:"post",
 		data: { data_sender : data_sender},		
 		beforeSend:function(){
