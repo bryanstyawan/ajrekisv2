@@ -184,14 +184,114 @@ class Kinerja extends \Restserver\Libraries\REST_Controller {
         $tahun  = htmlspecialchars($year, ENT_QUOTES| ENT_COMPAT, 'UTF-8');        
         $users = $this->m_api->get_pegawai($nip);
 
+
+        $data_atasan = array();
+        $data_atasan_penilai = array();
+        $data_atasan_akademik = array();
+        $data_atasan_plt = array();
         if ($users != 0)
         {
 
             $skp_prilaku = $this->spk_prilaku($users,$tahun);
             $data_skp    = $this->result_skp($users,$tahun);
 
+            $_id_posisi = $users[0]->posisi;
+            $_atasan_data        = $this->m_api->list_atasan($_id_posisi);
+            $_atasan_id          = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+            $_atasan_id_posisi   = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+            $data_atasan      = ($_atasan_data == 0) ? 0 : $this->m_api->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 		
+            if ($_atasan_data == 0) {
+                # code...
+                $data_atasan_akademik = $this->m_api->list_atasan_akademik($_id_posisi);			
+                $data_atasan_plt = $this->m_api->list_atasan_plt($_id_posisi);
+                // print_r($data['atasan_plt']);die();
+            }		
+            
+            if ($data_atasan != 0) 
+            {
+                $nip              = $data_atasan[0]->nip;
+                $get_pangkat      = $this->m_api->get_golongan($nip);
+                if ($get_pangkat != array()) {
+                    # code...
+                    $data_atasan[0]->nama_golongan = $get_pangkat[0]->golongan;
+                    $data_atasan[0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
+                    $data_atasan[0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
+                }
+                else
+                {
+                    $data_atasan[0]->nama_golongan = '-';
+                    $data_atasan[0]->nama_pangkat  = '-';
+                    $data_atasan[0]->tmt_pangkat   = '-';				
+                }													
+    
+                $check_atasan_again = $this->m_api->getData('mr_posisi',array('id' => $data_atasan[0]->posisi))->result_array();
+                if($check_atasan_again != array())
+                {			
+                    if ($check_atasan_again[0]['id'] == 0) {
+                        # code...
+                        // $data_atasan = 0;
+                    }
+                    else
+                    {
+    
+                        $_atasan_data                = $this->m_api->list_atasan($check_atasan_again[0]['id']);
+                        $_atasan_id                  = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+                        $_atasan_id_posisi           = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+                        $data_atasan_penilai      = ($_atasan_data == 0) ? 0 : $this->m_api->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
+    
+                        if ($data_atasan_penilai == 0) {
+                            # code...
+                            $_atasan_data           = $this->m_api->list_atasan($_id_posisi);
+                            $_atasan_id             = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->id;
+                            $_atasan_id_posisi      = ($_atasan_data == 0) ? 0 : $_atasan_data[0]->posisi;		
+                            $data_atasan_penilai = ($_atasan_data == 0) ? 0 : $this->m_api->get_info_pegawai($_atasan_id,'id',$_atasan_id_posisi); 
+    
+                        }
+    
+                        if ($data_atasan_penilai != 0) {
+                            # code...
+                            $nip              = $data_atasan_penilai[0]->nip;
+                            $get_pangkat      = $this->m_api->m_api->get_golongan($nip);
+                            if ($get_pangkat != array()) {
+                                # code...
+                                $data_atasan_penilai[0]->nama_golongan = $get_pangkat[0]->golongan;
+                                $data_atasan_penilai[0]->nama_pangkat  = $get_pangkat[0]->nama_pangkat;
+                                $data_atasan_penilai[0]->tmt_pangkat   = $get_pangkat[0]->tmt_pangkat;						
+                            }
+                            else
+                            {
+                                $data_atasan_penilai[0]->nama_golongan = '-';
+                                $data_atasan_penilai[0]->nama_pangkat  = '-';
+                                $data_atasan_penilai[0]->tmt_pangkat   = '-';									
+                            }						
+                        }
+                        else
+                        {
+                            $data_atasan_penilai[0]->nama_golongan = '-';
+                            $data_atasan_penilai[0]->nama_pangkat  = '-';
+                            $data_atasan_penilai[0]->tmt_pangkat   = '-';						
+                        }
+                                                        
+    
+                    }
+                }
+            }
+            else
+            {
+                $data_atasan_penilai = 0;			
+                // $data['atasan'][0]->nama_golongan = '-';
+                // $data['atasan'][0]->nama_pangkat  = '-';
+                // $data['atasan'][0]->tmt_pangkat   = '-';			
+            }            
+
 
             $data_wrap = array(
+                'atasan' => array(
+                    'atasan'          => $data_atasan,
+                    'atasan_akademik' => $data_atasan_akademik,
+                    'atasan_plt'      => $data_atasan_plt,
+                    'atasan_penilai'  => $data_atasan_penilai
+                ),
                 'skp' => array(
                     'tugas_tambahan'         => $this->tugas_tambahan_kreatifitas($users[0]->id,$tahun,NULL),
                     'kreativitas'            => $this->tugas_tambahan_kreatifitas($users[0]->id,$tahun,'kreativitas'),

@@ -943,4 +943,168 @@ class M_api extends CI_Model {
 			return 0;
 		}
 	}	
+
+	public function list_atasan($posisi=NULL)
+	{
+		# code...
+		$sql = "SELECT DISTINCT b.*,
+								b.id AS `id_pegawai`,
+								a.nama_posisi
+			    FROM mr_posisi a
+			    JOIN mr_pegawai b
+			    ON a.atasan = b.posisi
+			    WHERE a.id = '".$posisi."'
+			    AND b.status = 1";
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;
+	}
+
+	public function list_atasan_plt($posisi=NULL)
+	{
+		# code...
+		$sql = "SELECT DISTINCT b.*,
+								b.id AS `id_pegawai`,
+								a.nama_posisi
+			    FROM mr_posisi a
+			    JOIN mr_pegawai b
+			    ON a.atasan = b.posisi_plt
+			    WHERE a.id = '".$posisi."'
+			    AND b.status = 1";
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;
+	}
+
+	public function list_atasan_akademik($posisi=NULL)
+	{
+		# code...
+		$sql = "SELECT DISTINCT b.*,
+								b.id AS `id_pegawai`,
+								a.nama_posisi
+			    FROM mr_posisi a
+			    JOIN mr_pegawai b
+			    ON a.id = b.posisi_akademik
+			    WHERE a.id = '".$posisi."'
+				AND b.status = 1";
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;
+	}
+
+	public function get_info_pegawai($id=NULL,$param=NULL,$id_posisi=NULL)
+	{
+		# code...
+		$sql = "";
+		if ($param == NULL) {
+			# code...
+			if ($id==NULL) {
+				# code...
+				$con = "a.nip = '".$this->session->userdata('sesNip')."' AND a.status <> 0 AND b.id = '".$this->session->userdata('sesPosisi')."'";
+			}
+		}
+		elseif ($param == 'id') {
+			# code...
+			$con = "a.id = '".$id."' AND a.status <> 0 AND b.id = '".$id_posisi."'";
+		}
+		elseif ($param == 'nama_pegawai') {
+			# code...
+			$con = "a.nama_pegawai = '".$id."' AND a.status <> 0 AND b.id = a.posisi";
+		}
+		elseif ($param == 'posisi') {
+			# code...
+			$con = "b.id = '".$id."' AND a.status <> 0 AND b.id = a.posisi";
+		}		
+
+		$sql = "SELECT  a.id,
+						COALESCE(a.tmt_golongan,'-') as tmt_golongan,
+						a.nama_pegawai,
+						a.posisi,
+						a.nip,
+						a.TempatLahir,
+						a.BirthDate,
+						a.Gender,
+						a.email,
+						a.no_hp,
+						a.alamat,
+						a.golongan,						
+						b.nama_posisi as `nama_jabatan`,
+						a.tmt_jabatan,
+						b.atasan,
+						b.id as `id_posisi`,
+						b.kat_posisi,
+						c.posisi_class as `kelas_jabatan`,
+						es1.nama_eselon1,
+						es2.nama_eselon2,
+						es3.nama_eselon3,
+						es4.nama_eselon4,
+						COALESCE(a.posisi_plt,0) as posisi_plt,
+						COALESCE(a.posisi_akademik,0) as posisi_akademik,						
+						COALESCE(a.photo,'-') as photo,
+						COALESCE(agm.nama_agama,'-') as nama_agama,
+						COALESCE(gol.ruang,'-') as nama_ruang,
+						COALESCE(gol.nama_pangkat,'-') as nama_pangkat,
+						COALESCE(gol.golongan,'-') as nama_golongan,
+						COALESCE(b.nama_posisi,'-') as nama_posisi_raw,										
+						COALESCE(c.posisi_class,'-') as grade_raw,
+						COALESCE(c.tunjangan,'-') as tunjangan_raw,					
+						COALESCE(jft.nama_jabatan,'-') as nama_posisi_jft,					
+						COALESCE(cls_jft.posisi_class,'-') as grade_jft,
+						COALESCE(cls_jft.tunjangan,'-') as tunjangan_jft,					
+						COALESCE(jfu.nama_jabatan,'-') as nama_posisi_jfu,										
+						COALESCE(cls_jfu.posisi_class,'-') as grade_jfu,
+						COALESCE(cls_jfu.tunjangan,'-') as tunjangan_jfu						
+				FROM mr_pegawai a
+				JOIN mr_posisi b
+				LEFT JOIN mr_posisi_class c ON b.posisi_class = c.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu jft ON b.id_jft  = jft.id
+				LEFT JOIN mr_posisi_class cls_jft ON jft.id_kelas_jabatan = cls_jft.id
+				LEFT JOIN mr_jabatan_fungsional_umum jfu ON b.id_jfu      = jfu.id
+				LEFT JOIN mr_posisi_class cls_jfu ON jfu.id_kelas_jabatan = cls_jfu.id				
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = a.es1
+				LEFT OUTER JOIN mr_eselon2 es2 ON es2.id_es2 = b.eselon2
+				LEFT OUTER JOIN mr_eselon3 es3 ON es3.id_es3 = b.eselon3
+				LEFT OUTER JOIN mr_eselon4 es4 ON es4.id_es4 = b.eselon4
+				LEFT OUTER JOIN mr_agama agm on agm.id_agama = a.id_agama				
+				LEFT OUTER JOIN mr_golongan gol ON gol.id = a.golongan				
+				WHERE ".$con."";
+				// NOTE ==> Kolom Posisi_class pada mr_posisi dan ID pada mr_POSISI_CLASS
+				// print_r($sql);die();
+		$query = $this->db->query($sql);
+		return ($query->num_rows() > 0) ? $query->result() : 0;
+	}
+	
+	public function get_golongan($nip)
+	{
+		# code...
+		$sql = "SELECT b.nama_pangkat, 
+						b.golongan,
+						a.tmt_pangkat
+				FROM mr_simpeg_riwayat_pangkat a
+				LEFT JOIN mr_simpeg_golongan b ON a.id_golongan = b.id
+				WHERE a.nip = '".$nip."'
+				ORDER BY a.tmt_pangkat DESC
+				LIMIT 1";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return array();
+		}
+	}
+	
+	public function getData($table,$flag,$like=NULL,$or=NULL){
+		$this->db->where($flag);
+		
+		if ($or != NULL) {
+			# code...
+			$this->db->or_where($or);			
+		}
+
+		if ($like != NULL) {
+			# code...
+			$this->db->like($like);			
+		}
+		return $this->db->get($table);
+	}	
 }
