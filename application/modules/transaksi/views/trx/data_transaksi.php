@@ -208,41 +208,41 @@ else {
                                             $active_banding = "";
                                             if ($hari_kerja != 0) {
                                                 # code...
-                                                // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_keberatan))
-                                                // {
-                                                //     # code...
-                                                //     $active_keberatan = "hide_keberatan";
-                                                // }
-                                                // else
-                                                // {
-                                                //     $active_keberatan = "show_keberatan";
-                                                // }
+                                                if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_keberatan))
+                                                {
+                                                    # code...
+                                                    $active_keberatan = "hide_keberatan";
+                                                }
+                                                else
+                                                {
+                                                    $active_keberatan = "show_keberatan";
+                                                }
 
-                                                // if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_keberatan))
-                                                // {
-                                                //     # code...
-                                                //     $active_keberatan = "hide_keberatan";
-                                                // }
-                                                // else
-                                                // {
-                                                //     $active_keberatan = "show_keberatan";
-                                                // }
+                                                if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_keberatan))
+                                                {
+                                                    # code...
+                                                    $active_keberatan = "hide_keberatan";
+                                                }
+                                                else
+                                                {
+                                                    $active_keberatan = "show_keberatan";
+                                                }
 
 
-                                                // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_banding))
-                                                // {
-                                                //     # code...
-                                                //     $active_banding = "hide_banding";
-                                                //     if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_banding))
-                                                //     {
-                                                //         # code...
-                                                //         $active_banding = "hide_banding";
-                                                //     }
-                                                // }
-                                                // else
-                                                // {
-                                                //     $active_banding = "show_banding";
-                                                // }
+                                                if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_banding))
+                                                {
+                                                    # code...
+                                                    $active_banding = "hide_banding";
+                                                    if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_banding))
+                                                    {
+                                                        # code...
+                                                        $active_banding = "hide_banding";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    $active_banding = "show_banding";
+                                                }
                                             }
                                             for ($i=0; $i < count($tr_belum_diperiksa); $i++) {
                                                 # code...
@@ -309,6 +309,7 @@ else {
                                                                 # code...
                                                         ?>
                                                             <button class="btn btn-warning btn-xs" style="color: #fff;" onclick="keberatan('<?php echo $tr_belum_diperiksa[$i]->id_pekerjaan;?>')"><i class="fa fa-balance-scale"></i>&nbsp;Keberatan</button>&nbsp;&nbsp;
+
                                                         <?php
                                                             }
                                                         ?>
