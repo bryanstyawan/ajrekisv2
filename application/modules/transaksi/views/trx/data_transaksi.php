@@ -229,20 +229,20 @@ else {
                                                 }
 
 
-                                                if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_banding))
-                                                {
-                                                    # code...
-                                                    $active_banding = "hide_banding";
-                                                    if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_banding))
-                                                    {
-                                                        # code...
-                                                        $active_banding = "hide_banding";
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    $active_banding = "show_banding";
-                                                }
+                                                // if (strtotime(date('Y-m-d')) < strtotime($hari_kerja[0]->tgl_awal_banding))
+                                                // {
+                                                //     # code...
+                                                //     $active_banding = "hide_banding";
+                                                //     if (strtotime(date('Y-m-d')) > strtotime($hari_kerja[0]->tgl_akhir_banding))
+                                                //     {
+                                                //         # code...
+                                                //         $active_banding = "hide_banding";
+                                                //     }
+                                                // }
+                                                // else
+                                                // {
+                                                //     $active_banding = "show_banding";
+                                                // }
                                             }
                                             for ($i=0; $i < count($tr_belum_diperiksa); $i++) {
                                                 # code...
