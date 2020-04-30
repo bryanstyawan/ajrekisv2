@@ -77,4 +77,45 @@
 
 <script>
 $("#profile-dashboard").hide();
+function approve_good_kinerja(arg,oid,oid_posisi) 
+    {
+        if (oid == 0) {
+            var oid = $("#member_section_oid").val();            
+        }
+        
+        tagline = '';
+        if (arg == 'yes') {
+            tagline = 'berkinerja baik dan mencapai skp bulan ini.';
+        }
+        else
+        {
+            tagline = 'berkinerja kurang baik dan belum mencapai skp bulan ini.'
+        }
+
+        tagline = "Apakah benar bahwa pegawai ini "+tagline;
+
+        Lobibox.confirm({
+            title: "Konfirmasi",
+            msg  : tagline,
+            callback: function ($this, type) {
+                if (type === 'yes'){
+                    $.ajax({
+                        url :"<?php echo site_url()?>dashboard/post_penilaian_skp_bulan/"+arg+'/'+oid+'/'+oid_posisi,
+                        type:"post",
+                        beforeSend:function(){
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
+            }
+        })    
+    }    
 </script>
