@@ -32,7 +32,8 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
         $this->load->model('m_api', '', TRUE);
         $this->load->model('mskp', '', TRUE);
         $this->load->model('mtrx', '', TRUE);
-        $this->load->model('Globalrules', '', TRUE);                              
+        $this->load->model('Globalrules', '', TRUE);
+        $this->load->model('Allcrud', '', TRUE);                                      
         $this->load->database();          
     }
 
@@ -446,8 +447,8 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                 'nip'                    => $users[0]->nip,
                 'nama'                   => $users[0]->nama_pegawai,
             );
-            // print_r($users[0]->posisi);die();
-            $this->Globalrules->session_rule();
+
+
             $res_data        = "";
             $res_data_id     = $this->Allcrud->insert_transaksi
                             (
