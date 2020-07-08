@@ -56,7 +56,7 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                 for ($i=0; $i < count($urtug); $i++) 
                 {
                     $data['uraian_tugas'][$i] = new stdClass;
-                    $data['uraian_tugas'][$i]->id_pekerjaan = $urtug[$i]->skp_id;                                        
+                    $data['uraian_tugas'][$i]->id_uraian_tugas = $urtug[$i]->skp_id;                                        
 
                     if ($users[0]->kat_posisi == 1) {
                         # code...
