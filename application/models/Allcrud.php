@@ -71,7 +71,7 @@ class Allcrud extends CI_Model {
     //     return $this->db->affected_rows();
 	// }
 
-	public function insert_transaksi($id_pegawai,$id_posisi,$urtug,$tgl_mulai,$tgl_selesai,$jam_mulai,$jam_selesai,$ket,$qty,$file){
+	public function insert_transaksi($id_pegawai,$id_posisi,$urtug,$tgl_mulai,$tgl_selesai,$jam_mulai,$jam_selesai,$ket,$qty,$file,$source_data){
 		$SQL = "call add_tran
 				(
 					'".$id_pegawai."',
@@ -83,7 +83,8 @@ class Allcrud extends CI_Model {
 					'".$jam_selesai."',
 					'".$ket."',
 					'".$qty."',
-					'".$file."'
+					'".$file."',
+					'".$source_data."'					
 				)";
 		// print_r($SQL);die();
 		$query = $this->db->query($SQL);

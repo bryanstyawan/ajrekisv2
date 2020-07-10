@@ -81,6 +81,31 @@
 
     <section id="main-slider">
         <div class="owl-carousel">
+			
+
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/selamat_datang.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                    
 
             <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/bahan_paparan_terbaru.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
@@ -105,7 +130,7 @@
                 </div>
             </div>  -->
             
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PENILAIAN_KINERJA_PEGAWAI.jpg);background-size: 100% 100%;height: 555px;">
+            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/TAHUNBARU2020.gif);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -115,9 +140,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>   -->
 
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/NATAL2019.gif);background-size: 100% 100%;height: 555px;">
+            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PENILAIAN_KINERJA_PEGAWAI.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -127,7 +152,19 @@
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div> -->
+
+            <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/NATAL2019.gif);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            -->
 
             <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/HARI_IBU.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
@@ -152,19 +189,7 @@
                     </div>
                 </div>
             </div>
-			
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
-                <div class="slider-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="carousel-content"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+		
             <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/equal.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">

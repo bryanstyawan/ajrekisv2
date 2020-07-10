@@ -455,11 +455,10 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                                 $jam_selesai,
                                 $keterangan,
                                 $kuantitas,
-                                '' //file_pendukung
+                                '', //file_pendukung,
+                                'API'
                             );
-
-            $this->Allcrud->editData('tr_capaian_pekerjaan',array('source_data'=>'API'),array('id_pekerjaan'=>$res_data_id));
-    
+                                
             if ($res_data_id != 0) {
                 # code...
                 $res_data = 1;
