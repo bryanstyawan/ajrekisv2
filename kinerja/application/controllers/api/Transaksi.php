@@ -374,7 +374,7 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                 }			
             }
             
-            $data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
+            // $data['hari_kerja']           = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
             // $data['infoPegawai']          = $this->Globalrules->get_info_pegawai($users[0]->id,'id',$users[0]->posisi);
             // $data['member']               = $this->Globalrules->list_bawahan($users[0]->posisi);            
             // if ($data['member'] != 0) {
@@ -442,13 +442,7 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
         $users = $this->m_api->get_pegawai($nip);
         if ($users != 0)
         {          
-            $res_pegawai = array
-            (
-                'nip'                    => $users[0]->nip,
-                'nama'                   => $users[0]->nama_pegawai,
-            );
-
-
+            
             $res_data        = "";
             $res_data_id     = $this->Allcrud->insert_transaksi
                             (
