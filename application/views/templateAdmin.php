@@ -46,6 +46,9 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'; ?>");</style>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/loadme/style/loadme.css'; ?>");</style>
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/fullcalendar/fullcalendar.min.css'; ?>");</style>
+
+<!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="http://chatbot.kemendagri.go.id/assets/css/main.css" rel="stylesheet"> -->
 <!-- Jquery -->
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <style>
@@ -247,6 +250,36 @@ $(document).click(function(e) {
 
     </div>
 
+    <!-- <div class="chat_wrapper">
+        <section class="chatboxRL-popup">
+            <header class="chatboxRL-popup_header">
+                <aside>
+                    <i class="fa fa-user-circle fa-3x chatboxRL-popup_avatar" aria-hidden="true"></i>
+                </aside>
+                <aside>
+                    <h1>Rita</h1> Chatbot (Online)
+                </aside>
+                <button id="buttonCloseRL" class="chatboxRL-close">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                </button>
+            </header>
+            <main class="chatboxRL-popup_main">
+                <ul id="chatListRL"></ul>
+            </main>
+            <footer class="chatboxRL-popup_footer">
+                <aside style="flex:1;color:#888;text-align:center;">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </aside>
+                <aside style="flex:10">
+                    <textarea type="text" class="textareaChatRL" id="textareaChatRL" placeholder="Type your message here..." autofocus></textarea>
+                </aside>
+            </footer>
+        </section>
+    </div>
+    <button id="buttonOpenRL" class="chatboxRL-open">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+    </button>     -->
+
     <footer class="main-footer" style="margin-left:0px;background-color: #00a7d0;padding:15px;">
         <div class="container-fluid">
             <div class="row">
@@ -280,7 +313,7 @@ $(document).click(function(e) {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/daterangepicker/moment.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-$.widget.bridge('uibutton', $.ui.button);
+// $.widget.bridge('uibutton', $.ui.button);
 
 </script>
 <!-- Bootstrap 3.3.5 -->
@@ -335,6 +368,13 @@ $.widget.bridge('uibutton', $.ui.button);
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/fullcalendar/fullcalendar.min.js"></script>
+
+
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script> -->
+<!-- <script src="http://chatbot.kemendagri.go.id/assets/js/signalr.js"></script>
+<script src="http://chatbot.kemendagri.go.id/assets/js/widget.js"></script> -->
+
 <script type="text/javascript">
 
 function simpeg_finger_kehadiran(arg) {

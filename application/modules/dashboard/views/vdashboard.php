@@ -1,3 +1,7 @@
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+<!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
+<!-- <link href="http://chatbot.kemendagri.go.id/assets/css/main.css" rel="stylesheet"> -->
+<link href="https://gribot.radyalabs.id/assets/css/main.css" rel="stylesheet">
 <?php
 $data_bulan[] = "";
 $data_value[] = "";
@@ -176,11 +180,52 @@ else {
 }
 ?>
 
+<div class="chat_wrapper">
+    <section class="chatboxRL-popup" style="margin-top: 79px;height: 540px;">
+        <header class="chatboxRL-popup_header">
+            <aside> 
+                <img src="https://gribot.radyalabs.id/assets/media/rita.png" class="chatboxRL-popup_avatar" alt="rita"> 
+            </aside>
+            <aside>
+                <h1>Rita</h1> Chatbot (Online)
+            </aside>
+            <button id="buttonCloseRL" class="chatboxRL-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </button>
+        </header>
+        <main class="chatboxRL-popup_main">
+            <ul id="chatListRL" class="chatRL-ul"><li class="chatRLhim">Halo,, saya Rita Kemendagri, dari Biro Kepegawaian, your virtual personal assisstant. Siap melayani anda</li></ul>
+        </main>
+        <footer class="chatboxRL-popup_footer">
+            <aside style="flex:1;color:#888;text-align:center;">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            </aside>
+            <aside style="flex:10">
+                <textarea type="text" class="textareaChatRL" id="textareaChatRL" placeholder="Type your message here..." autofocus=""></textarea>
+            </aside>
+        </footer>
+    </section>
+</div>
+<div id="greeting" class="hide">
+    <p>Halo,, saya Rita Kemendagri, dari Biro Kepegawaian, your virtual personal assisstant. Siap melayani anda</p>
+</div>
+<button id="buttonOpenRL" class="chatboxRL-open">
+    <img src="https://gribot.radyalabs.id/assets/media/rita.png" alt="rita"> 
+</button>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/knob/jquery.knob.js"></script>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxcore.js"></script>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxdraw.js"></script>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/jqWidget/js/jqxgauge.js"></script>
+<!-- <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script> -->
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/clockpicker/dist/bootstrap-clockpicker.min.js"></script>
+<!-- <script src="http://chatbot.kemendagri.go.id/assets/js/signalr.js"></script>
+<script src="http://chatbot.kemendagri.go.id/assets/js/widget.js"></script> -->
+
+<script src="https://gribot.radyalabs.id/assets/js/signalr.js"></script>
+<script src="https://gribot.radyalabs.id/assets/js/widget.js"></script>
 <script>
     $("#profile-dashboard").hide();
     /** ----------------------------------------------------------------------- */    
@@ -199,15 +244,15 @@ else {
         // karya_tulis('bypass');
         // organisasi('bypass');
         // penghargaan('bypass');        
-        Lobibox.window({
-            title  : 'Informasi',
-            content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Penyesuian menit efektif Sikerja selama bulan Ramadhan 1441 H."</h4></div>'+
-                      '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Menit Efektif Sikerja Bulan April 2020 sebanyak 6450 Menit, Bulan Mei 2020 sebanyak 5220 menit."</h4></div>'+                                  
-                    //   '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Berdasarkan Pasal 24 ayat (1) Permendagri 132 tahun 2018 tentang Tunjangan Kinerja Pegawai di Kementerian Dalam Negeri, "Pegawai mendapat pengurangan Tunjangan Kinerja sebesar 5% (lima persen) dari aspek Produktivitas Kerja apabila pegawai tidak mencapai sasaran target yang ditentukan."</h4></div>'+
-                    //   '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
-                    //   '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
-        });        
+        // Lobibox.window({
+        //     title  : 'Informasi',
+        //     content: '<div class="row" style="margin: 1px;"><h2>Yth, Pegawai di Lingkungan Kemendagri</h2></div>'+
+        //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Penyesuian menit efektif Sikerja selama bulan Ramadhan 1441 H."</h4></div>'+
+        //               '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Menit Efektif Sikerja Bulan April 2020 sebanyak 6450 Menit, Bulan Mei 2020 sebanyak 5220 menit."</h4></div>'                                  
+        //             //   '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Berdasarkan Pasal 24 ayat (1) Permendagri 132 tahun 2018 tentang Tunjangan Kinerja Pegawai di Kementerian Dalam Negeri, "Pegawai mendapat pengurangan Tunjangan Kinerja sebesar 5% (lima persen) dari aspek Produktivitas Kerja apabila pegawai tidak mencapai sasaran target yang ditentukan."</h4></div>'+
+        //             //   '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Untuk itu, pegawai dimohon terus meningkatkan kinerja dan berkoordinasi dengan atasan langsung perihal capaian target kinerja bulanan. Kepada atasan dimohon terus memonitoring kinerja bawahan dan memberikan penilaian capaian kinerja bulanan pada fitur menu dalam sistem SIkerja.</h4></div>'+
+        //             //   '<div class="row" style="margin: 1px;"><h4 style="text-align: JUSTIFY;">Pemotongan akan berlaku terhitung mulai bulan Agustus 2019.</h4></div>'                                              
+        // });        
         $('#mydata').dataTable();
         $('#gaugeContainer').jqxGauge({
                     ranges: [{ startValue: 0, endValue: 25, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 5, startWidth: 1 },
