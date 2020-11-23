@@ -22,7 +22,7 @@ class Penilaian_prilaku_akademik extends CI_Controller {
 		$helper_title         = "";
 		$helper_posisi        = "";
 		$helper_atasan        = "";
-		$year_system          = 2019;
+		$year_system          = date('Y');
 		$helper_posisi        = $this->session->userdata('posisi_akademik');
 		$helper_atasan        = $this->session->userdata('atasan');		
 		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,$year_system);

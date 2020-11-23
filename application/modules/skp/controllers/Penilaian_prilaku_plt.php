@@ -23,7 +23,7 @@ class penilaian_prilaku_plt extends CI_Controller {
 		$helper_title         = "";
 		$helper_posisi        = "";
 		$helper_atasan        = "";
-		$year_system          = 2019;
+		$year_system          = date('Y');
 		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,$year_system);
 		$data['content']      = 'skp/skp_penilaian_prilaku';
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;

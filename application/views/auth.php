@@ -6,8 +6,9 @@
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/loadme/style/loadme.css'; ?>");</style>
 <!-- Lobi box -->
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/lobibox/dist/css/Lobibox.min.css'; ?>");</style>
-<script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/lobibox/js/Lobibox.js"></script>
+<script type='text/javascript' src="https://gribot.radyalabs.id/assets/css/main.css"></script>
 <style>
+
 
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
@@ -390,6 +391,7 @@ input {
 	padding: 8px 0;
 	margin-top: 20px;
 }
+
 </style>
 
 <div class="example-modal">
@@ -609,3 +611,4 @@ function login() {
 	}	
 }
 </script>
+
