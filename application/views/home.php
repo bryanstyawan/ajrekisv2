@@ -25,12 +25,15 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url();?>assets_home/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url();?>assets_home/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url();?>assets_home/images/ico/apple-touch-icon-57-precomposed.png">
+	<link href="https://chatbot.kemendagri.go.id/assets/css/main.css" rel="stylesheet">
+	
 </head><!--/head-->
 
 <body id="home" class="homepage">
-
+	
+	
     <header id="header">
-        <nav id="main-menu" class="navbar navbar-default navbar-fixed-top" role="banner">
+        <nav id="main-menu" class="navbar navbar-default navbar-top" role="banner">
             <div class="container" style="width:95%;">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -50,7 +53,7 @@
                     </a>
                     <a class="navbar-brand" href="tel:0213524543">
                         <label class="col-lg-6" style="cursor: pointer;">Layanan</label>
-                        <label class="col-lg-10" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp;  kemendagri.sikerja@gmail.com</label>
+                        <label class="col-lg-10" style="cursor: pointer;color: #000000;"><i class="glyphicon glyphicon-envelope"></i>&nbsp;  sikerja@kemendagri.go.id</label>
                     </a>
                 </div>
 
@@ -77,10 +80,23 @@
             </div><!--/.container-->
         </nav><!--/nav-->
     </header><!--/header-->
-
+	
+	
+	
 
     <section id="main-slider">
         <div class="owl-carousel">
+			 <!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/HUTRI75.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  -->
 			
 
             <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
@@ -408,7 +424,7 @@
                               <abbr title="Phone">Telp:</abbr> (021) 3450038 <abbr title="Phone">Ext:</abbr> 2349 & 2355<br>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (021) 3524543<br>
                               <abbr title="Whatsapp">Whatsapp:</abbr> 087884576154<br>
-                              Email : kemendagri.sikerja@gmail.com
+                              Email : sikerja@kemendagri.go.id
                             </address>
                         </div>
                     </div>
@@ -429,7 +445,10 @@
         </div>
         </div>
     </section>
+	
+	
 
+	
     <footer id="footer">
         <div class="container">
             <div class="row">
@@ -454,7 +473,45 @@
             </div>
         </div>
     </footer><!--/#footer-->
-
+	
+	<div class="chat_wrapper">
+        <section class="chatboxRL-popup">
+            <header class="chatboxRL-popup_header">
+                <aside> 
+                    <img src="https://chatbot.kemendagri.go.id/assets/media/rita2.png" class="chatboxRL-popup_avatar" alt="rita" /> 
+                </aside>
+                <aside>
+                    <h1>Rita</h1> Chatbot (Online)
+                </aside>
+                <button id="buttonCloseRL" class="chatboxRL-close">
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                </button>
+            </header>
+            <main class="chatboxRL-popup_main">
+                <ul id="chatListRL"></ul>
+            </main>
+            <footer class="chatboxRL-popup_footer">
+                <aside style="flex:1;color:#888;text-align:center;">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </aside>
+                <aside style="flex:10">
+                    <textarea type="text" class="textareaChatRL" id="textareaChatRL" placeholder="Type your message here..." autofocus></textarea>
+                </aside>
+            </footer>
+        </section>
+    </div>
+    <div id="greeting">
+        <p>Halo,, saya Rita Kemendagri, dari Biro Kepegawaian, your virtual personal assisstant. Siap melayani anda</p>
+    </div>
+    <button id="buttonOpenRL" class="chatboxRL-open">
+        <img src="https://chatbot.kemendagri.go.id/assets/media/rita.png" alt="rita" /> 
+    </button>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://chatbot.kemendagri.go.id/assets/js/signalr.js"></script>
+    <script src="https://chatbot.kemendagri.go.id/assets/js/widget.js"></script>
+	
+	
     <script src="<?php echo base_url();?>assets_home/js/jquery.js"></script>
     <script src="<?php echo base_url();?>assets_home/js/bootstrap.min.js"></script>
     <!-- <script src="http://maps.google.com/maps/api/js?sensor=true"></script> -->
