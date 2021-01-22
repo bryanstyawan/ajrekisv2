@@ -14,10 +14,12 @@ class Cetak_skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
+	private $year_system = 2021;
+
 	public function data($id=NULL,$posisi=NULL,$year_system=NULL)
 	{
 		# code...
-		$year_system = ($year_system == NULL) ? date('Y') : $year_system ;
+		$year_system = ($year_system == NULL) ? $this->year_system : $year_system ;
 		if($id != NULL)
 		{
 			if($posisi != NULL)
@@ -48,7 +50,7 @@ class Cetak_skp extends CI_Controller {
 	public function var_dump($id=NULL,$posisi=NULL,$year_system=NULL)
 	{
 		# code...
-		$year_system = ($year_system == NULL) ? date('Y') : $year_system ;
+		$year_system = ($year_system == NULL) ? $this->year_system : $year_system ;
 		if($id != NULL)
 		{
 			if($posisi != NULL)
@@ -103,7 +105,7 @@ class Cetak_skp extends CI_Controller {
 		$data['penilai']  = '';
 		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
 		$data['content']  = 'skp/skp_history_skp';
-		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),date('Y'));
+		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),$this->year_system);
 		$this->load->view('templateAdmin',$data);
 	}
 }

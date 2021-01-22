@@ -12,7 +12,7 @@ class Skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2020;
+	private $year_system = 2021;
 
 	public function index($year=NULL)
 	{

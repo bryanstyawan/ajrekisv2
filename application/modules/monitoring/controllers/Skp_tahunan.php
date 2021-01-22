@@ -42,6 +42,10 @@ class Skp_tahunan extends CI_Controller {
 																		a.es4 ASC,
 																		b.kat_posisi asc,
 																		b.atasan ASC');
+		// echo "<pre>";
+		// print_r($data['list']);
+		// echo "</pre>";
+		// die();
 		$this->load->view('monitoring/skp_tahunan/ajax_skp_tahunan',$data);
 	}	
 
@@ -54,17 +58,17 @@ class Skp_tahunan extends CI_Controller {
 	public function get_delete($id_pegawai)
 	{
 		# code...
-		$this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
-		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));		
+		// $this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
+		// $this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));		
 	}
 
 	public function get_delete_root($id_pegawai,$id_posisi,$tahun)
 	{
 		# code...
-		$this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
-		$this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));
-		$this->Allcrud->delData('mr_masa_kerja',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi));				
-		$this->Allcrud->delData('mr_skp_pegawai',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi, 'tahun'=>$tahun));		
+		// $this->Allcrud->delData('rpt_skp_prilaku_skp',array('id_pegawai'=>$id_pegawai));
+		// $this->Allcrud->delData('rpt_skp_sasaran_kerja',array('id_pegawai'=>$id_pegawai));
+		// $this->Allcrud->delData('mr_masa_kerja',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi));				
+		// $this->Allcrud->delData('mr_skp_pegawai',array('id_pegawai'=>$id_pegawai, 'id_posisi'=>$id_posisi, 'tahun'=>$tahun));		
 	}	
 
 	public function data_grafik()

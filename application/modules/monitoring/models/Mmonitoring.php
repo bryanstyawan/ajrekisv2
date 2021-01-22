@@ -118,7 +118,9 @@ class Mmonitoring extends CI_Model
 						(
 							rpts.nilai_sasaran_kinerja_pegawai + rptp.nilai_prilaku_kerja
 						) AS total_skp,
-						rpts.id_posisi AS id_posisi_ts						
+						rpts.id_posisi AS id_posisi_ts,
+						rptp.tahun as tahun_1,
+						rpts.tahun as tahun_2
 					FROM mr_pegawai a
 					LEFT JOIN mr_posisi b ON b.id = a.posisi
 					LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = b.eselon1
@@ -129,7 +131,7 @@ class Mmonitoring extends CI_Model
 					AND rptp.tahun = '".$flag['tahun']."'
 					LEFT JOIN rpt_skp_sasaran_kerja rpts on rptp.id_pegawai = rpts.id_pegawai
 					AND rptp.id_posisi = rpts.id_posisi 
-					AND rptp.tahun = '".$flag['tahun']."'					
+					AND rpts.tahun = '".$flag['tahun']."'					
 					LEFT JOIN mr_posisi pos1 ON rpts.id_posisi = pos1.id					
 					WHERE a. STATUS = '1'
 					AND	a.id_role <> 7

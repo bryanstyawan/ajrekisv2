@@ -11,7 +11,7 @@ class Target_skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2020;	
+	private $year_system = 2021;	
 
 	public function data($year=NULL,$id_pegawai=NULL,$id_posisi=NULL)
 	{
@@ -302,7 +302,7 @@ class Target_skp extends CI_Controller {
 		if ($pk == 1)  $param_pk = 'PK';
 		else $param_pk = 'non_PK';
 
-		$data_list   = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),NULL,date('Y'),$param_pk);
+		$data_list   = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),NULL,$this->year_system,$param_pk);
 
 		if ($data_list != 0) {
 			# code...
@@ -414,7 +414,7 @@ class Target_skp extends CI_Controller {
 
 		$param_pk    = $this->parameter_pk($data_sender['pk']);
 
-		$check_data_pekerjaan = $this->mskp->check_pekerjaan_pegawai($this->session->userdata('sesUser'),$data_sender['kegiatan'],date('Y'));
+		$check_data_pekerjaan = $this->mskp->check_pekerjaan_pegawai($this->session->userdata('sesUser'),$data_sender['kegiatan'],$this->year_system);
 		if ($check_data_pekerjaan) {
 			# code...
 			$res = 0;
@@ -445,7 +445,7 @@ class Target_skp extends CI_Controller {
 				# code...
 				for ($i=0; $i < count($get_friend); $i++) {
 					# code...
-					$check_data_pekerjaan_friend = $this->mskp->check_pekerjaan_pegawai($get_friend[$i]->id,$data_sender['kegiatan'],date('Y'));
+					$check_data_pekerjaan_friend = $this->mskp->check_pekerjaan_pegawai($get_friend[$i]->id,$data_sender['kegiatan'],$this->year_system);
 
 					if ($check_data_pekerjaan_friend) {
 						# code...

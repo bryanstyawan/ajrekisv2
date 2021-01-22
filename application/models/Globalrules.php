@@ -14,6 +14,8 @@ class Globalrules extends CI_Model
 		$this->load->model ('master/Mmaster', '', TRUE);
 	}
 
+	private $year_system = 2021;
+
 	public function session_rule()
 	{
 		if($this->session->userdata('login') == "")
@@ -772,7 +774,7 @@ class Globalrules extends CI_Model
 					LEFT JOIN mr_posisi c ON b.posisi = c.id
 					WHERE ".$sql_where."
 					AND b.status = 1
-					AND a.tahun = '".date('Y')."'
+					AND a.tahun = '".$this->year_system."'
 					AND a.bulan = '".date('m')."'
 					UNION 
 						SELECT 	a.id,
@@ -780,12 +782,12 @@ class Globalrules extends CI_Model
 								a.nip,
 								a.nama_pegawai,
 								IFNULL(bulan,".date('m')."),
-								IFNULL(tahun,".date('Y')."),
+								IFNULL(tahun,".$this->year_system."),
 								IFNULL(persentase_pemotongan, 5),
 								IF(b.audit_check_skp = 1,1,0) as flag_sudah_diperiksa
 						FROM mr_pegawai a
 						LEFT JOIN rpt_capaian_kinerja b ON b.id_pegawai = a.`id`
-						AND b.tahun = '".date('Y')."'
+						AND b.tahun = '".$this->year_system."'
 						AND b.bulan = '".date('m')."'
 						LEFT JOIN mr_posisi c ON a.posisi = c.id
 						WHERE ".$sql_where_1."
@@ -794,7 +796,7 @@ class Globalrules extends CI_Model
 									SELECT IFNULL(id_pegawai, 0)
 									FROM `rpt_capaian_kinerja`
 									WHERE bulan = '".date('m')."'
-									AND tahun = '".date('Y')."'
+									AND tahun = '".$this->year_system."'
 								)
 					ORDER BY flag_sudah_diperiksa ASC, nama_pegawai ASC";
 		}
@@ -1263,14 +1265,15 @@ class Globalrules extends CI_Model
 	public function trigger_skp_tahunan($id_pegawai)
 	{
 		# code...
-		$get_evaluator = $this->mskp->get_data_evaluator($id_pegawai,date('Y'));
+
+		$get_evaluator = $this->mskp->get_data_evaluator($id_pegawai,$this->year_system);
 		if ($get_evaluator != 0) {
 			# code...
 			for ($i=0; $i < count($get_evaluator); $i++) { 
 				# code...
 				if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL) {
 					# code...
-					$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,date('Y'),'on');					
+					$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,$this->year_system,'on');					
 					if ($get_posisi != 0) {
 						# code...
 						if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL || $get_evaluator[$i]->id_posisi_pegawai_penilai == '') {
@@ -1286,11 +1289,11 @@ class Globalrules extends CI_Model
 			}
 		}
 
-		$get_posisi = $this->mskp->get_request_history($id_pegawai,date('Y'),'on');
+		$get_posisi = $this->mskp->get_request_history($id_pegawai,$this->year_system,'on');
 		if ($get_posisi != 0) {
 			# code...
 
-			$check_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$id_pegawai,'tahun'=>date('Y')))->result_array();					
+			$check_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$id_pegawai,'tahun'=>$this->year_system))->result_array();					
 			if ($check_data != array()) {
 				# code...
 				for ($i=0; $i < count($check_data); $i++) { 
@@ -1301,7 +1304,7 @@ class Globalrules extends CI_Model
 						(
 							'id_posisi_pegawai' => $get_posisi[0]->posisi
 						);
-						$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$id_pegawai,'tahun'=>date('Y')));								
+						$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$id_pegawai,'tahun'=>$this->year_system));								
 					}
 				}
 			}					
@@ -1309,11 +1312,11 @@ class Globalrules extends CI_Model
 			$data_s = array();
 			for ($i=0; $i < count($get_posisi); $i++) { 
 				# code...					
-				$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($id_pegawai,$get_posisi[$i]->posisi,date('Y'));						
+				$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($id_pegawai,$get_posisi[$i]->posisi,$this->year_system);						
 				$data_parameter = array(
 					'id_pegawai'					=> $id_pegawai,
 					'id_posisi'						=> $get_posisi[$i]->posisi,
-					'tahun'							=> date('Y')
+					'tahun'							=> $this->year_system
 				);
 				$check_data = $this->Allcrud->getData('rpt_skp_sasaran_kerja',$data_parameter)->result_array();						
 				if ($check_data == array()) {
@@ -1321,7 +1324,7 @@ class Globalrules extends CI_Model
 					$summary_skp = array(
 						'id_pegawai'					=> $id_pegawai,
 						'id_posisi'						=> $get_posisi[$i]->posisi,
-						'tahun'							=> date('Y'),
+						'tahun'							=> $this->year_system,
 						'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
 						'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
 						'total'                         => $data_s[$i]['summary_skp']['total'],
@@ -1346,7 +1349,7 @@ class Globalrules extends CI_Model
 					$summary_prilaku_skp = array(
 						'id_pegawai'					=> $id_pegawai,
 						'id_posisi'						=> $get_posisi[$i]->posisi,
-						'tahun'							=> date('Y'),
+						'tahun'							=> $this->year_system,
 						'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
 						'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
 						'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],

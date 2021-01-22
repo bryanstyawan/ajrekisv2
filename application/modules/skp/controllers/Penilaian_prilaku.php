@@ -14,7 +14,7 @@ class Penilaian_prilaku extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2020;	
+	private $year_system = 2021;	
 
 	public function index($arg=NULL)
 	{
@@ -25,14 +25,12 @@ class Penilaian_prilaku extends CI_Controller {
 		$helper_posisi        = "";
 		//$helper_posisi        = session->userdata('posisi');
 		$helper_atasan        = "";
-		$year_system          = date('Y');
+		$year_system          = $this->year_system;
 		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$year_system);
 		$data['content']      = 'skp/skp_penilaian_prilaku';
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
 		$data['subtitle']     = '';
-		// // echo "<pre>";
-		// // print_r($data);die();		
-		// // echo "</pre>";		
+
 		if($arg != NULL)
 		{
 			if ($arg == "plt") {
@@ -73,7 +71,7 @@ class Penilaian_prilaku extends CI_Controller {
 			// echo "</pre>";
 
 		// $data['atasan']       = $this->Globalrules->list_atasan($this->session->userdata('atasan'));
-		$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($this->session->userdata('atasan')) : $data['atasan'] ;									
+		// $data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($this->session->userdata('atasan')) : $data['atasan'] ;									
 		// echo "<pre>";
 		// print_r($data['atasan']);die();		
 		// echo "</pre>";		
@@ -110,7 +108,7 @@ class Penilaian_prilaku extends CI_Controller {
 		// if($data['bawahan'] != 0){
 		// 	for ($i=0; $i < count($data['bawahan']); $i++) { 
 		// 		# code...
-		// 		$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
+		// 		$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>$this->year_system));
 		// 		if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
 		// 			# code...
 		// 			$data_store = array
@@ -145,7 +143,7 @@ class Penilaian_prilaku extends CI_Controller {
 			{
 				$get_posisi = $this->Globalrules->get_info_pegawai($get_data_pegawai[0]['posisi_plt'],'posisi');
 
-				$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt'],date('Y'));
+				$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt'],$this->year_system);
 				$data['content']      = 'skp/skp_penilaian_prilaku';
 				$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku PLT';
 				$data['subtitle']     = '';
@@ -156,21 +154,21 @@ class Penilaian_prilaku extends CI_Controller {
 				if($data['bawahan'] != 0){
 					for ($i=0; $i < count($data['bawahan']); $i++) { 
 						# code...
-						$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>date('Y')));
+						$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>$this->year_system));
 						if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
 							# code...
 							$data_store = array
 									(
 										'id_pegawai'         => $data['bawahan'][$i]->id,
 										'id_pegawai_penilai' => $this->session->userdata('sesUser'),
-										'tahun'              => date('Y')
+										'tahun'              => $this->year_system
 									);
 							$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
 						}
 					}
 				}
-				$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),date('Y'));
-				$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),date('Y'));				
+				$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$this->year_system);
+				$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$this->year_system);				
 				$this->load->view('templateAdmin',$data);				
 			}
 		}
@@ -220,7 +218,7 @@ class Penilaian_prilaku extends CI_Controller {
 		$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender['evaluator'],'nama_pegawai');
 		if ($info_pegawai != 0) {
 			# code...
-			$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,date('Y'));
+			$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,$this->year_system);
 			if ($check_data != 0) {
 				# code...
 				$flag = array('id' => $check_data[0]->id);

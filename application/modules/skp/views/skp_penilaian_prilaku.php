@@ -93,7 +93,7 @@
                             {
                                 $i++;
                     ?>
-                                <!-- <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan_plt->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan_plt->nama_pegawai;?>"></input></li>                                     -->
+                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan_plt->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan_plt->nama_pegawai;?>"></input></li>                                    
                     <?php
                             }                            
                         }
@@ -650,30 +650,48 @@ $(document).ready(function()
             }                                
         }
 
-        if (send_data == 1) 
-        {
-            $.ajax({
-                url :"<?php echo site_url();?>/skp/penilaian_prilaku/pengajuan_penilaian_prilaku",
-                type:"post",
-                data:{data_sender : data_sender_detail},
-                beforeSend:function(){
-                    $("#form_penilaian").modal('hide');
-                    $("#loadprosess").modal('show');                                                
-                },
-                success:function(msg){
-                    var obj = jQuery.parseJSON (msg);
-                    ajax_status(obj);
-                },
-                error:function(jqXHR,exception)
-                {
-                    ajax_catch(jqXHR,exception);
-                }
-            }) 
-        }
-        else
-        {
-            alert("Silahkan pilih kandidat lainnya");
-        }       
+        $.ajax({
+            url :"<?php echo site_url();?>/skp/penilaian_prilaku/pengajuan_penilaian_prilaku",
+            type:"post",
+            data:{data_sender : data_sender_detail},
+            beforeSend:function(){
+                $("#form_penilaian").modal('hide');
+                $("#loadprosess").modal('show');                                                
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj);
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);
+            }
+        })        
+
+        // if (send_data == 1) 
+        // {
+        //     $.ajax({
+        //         url :"<?php echo site_url();?>/skp/penilaian_prilaku/pengajuan_penilaian_prilaku",
+        //         type:"post",
+        //         data:{data_sender : data_sender_detail},
+        //         beforeSend:function(){
+        //             $("#form_penilaian").modal('hide');
+        //             $("#loadprosess").modal('show');                                                
+        //         },
+        //         success:function(msg){
+        //             var obj = jQuery.parseJSON (msg);
+        //             ajax_status(obj);
+        //         },
+        //         error:function(jqXHR,exception)
+        //         {
+        //             ajax_catch(jqXHR,exception);
+        //         }
+        //     }) 
+        // }
+        // else
+        // {
+        //     alert("Silahkan pilih kandidat lainnya");
+        // }       
     })        
 
 });    

@@ -14,11 +14,13 @@ class Target_skp_approval extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
+	private $year_system = 2021;	
+
 	public function data($year_system=NULL)
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$year_system              = ($year_system == NULL) ? 2019 : $year_system;
+		$year_system              = ($year_system == NULL) ? 2021 : $year_system;
 		$data['title']            = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
 		$data['subtitle']         = '';
 		$data['bawahan']          = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
@@ -30,8 +32,8 @@ class Target_skp_approval extends CI_Controller {
 			// code...
 			for ($i=0; $i < count($data['member']); $i++) {
 				// code...
-				$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi,'tahun'=>date('Y')))->num_rows();
-				$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id,'edit_tahun'=>date('Y')))->num_rows();								
+				$get_data              = $this->Allcrud->getData('mr_skp_pegawai',array('status'=>0,'id_pegawai'=>$data['member'][$i]->id,'id_posisi'=>$data['member'][$i]->posisi,'tahun'=>$this->year_system))->num_rows();
+				$get_data_temp         = $this->Allcrud->getData('mr_skp_pegawai_temp',array('edit_status'=>3,'edit_id_pegawai'=>$data['member'][$i]->id,'edit_tahun'=>$this->year_system))->num_rows();								
 				$urtug_belum_diperiksa = 0;
 				$urtug_pergantian      = 0;
 				if ($get_data) {

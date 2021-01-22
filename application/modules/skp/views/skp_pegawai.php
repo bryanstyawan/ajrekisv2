@@ -1,3 +1,6 @@
+<?php
+$year_system = '2021';
+?>
 <input type="hidden" id="oid_kat_posisi" value="<?=$this->session->userdata('kat_posisi');?>">
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>
 <style type="text/css">
@@ -107,7 +110,7 @@
                 <div class="input-group col-lg-4">
                     <select name="f_tahun" id="f_tahun" class="form-control">
                     <?php
-                        $now=date('Y');
+                        $now=$year_system;
                         $past=$now-2;
                         for ($a=$past;$a<=$now+5;$a++)
                         {
@@ -384,7 +387,7 @@
                                     </td>
                                     <td style="<?=$style_td;?>">
                                         <?php 
-                                            if ($year_pass == date('Y')) {
+                                            if ($year_pass == $year_system) {
                                                 # code...
                                         ?>
                                             <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
