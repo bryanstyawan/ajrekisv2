@@ -63,7 +63,7 @@ else {
                                     <i class="fa fa-circle-o text-red contact-name-list"></i><?=$member[$i]->nama_pegawai;?>
                                     <sup style="<?=$flag_counter;?>">
                                         <span class="notif-count pull-right">
-                                            <span><?=$member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;?></span>
+                                            <span id="counter_<?=$member[$i]->id;?>"><?=$member[$i]->counter_belum_diperiksa+$member[$i]->counter_keberatan;?></span>
                                         </span>
                                     </sup>
                                 </a>
@@ -217,11 +217,20 @@ else {
 
                     <div class="tab-content">
                         <div id="home_atasan" class="tab-pane fade in active" style="padding-top: 15px;">
-                            <div class="col-lg-12">
+                            <div class="table-responsive">
                                 <h2>Tahap Anda Periksa</h2>
+                                <div class="col-md-3 pull-right">
+                                    <div class="checkbox pull-right">
+                                        <label>
+                                        <input type="checkbox" id="multi_approve" style="width: 19px;height: 21px;margin-top: 0px;margin-left: -25px;">
+                                        Multi Approve
+                                        </label>
+                                    </div>            
+                                </div>                                
                                 <table id="table_belum_diperiksa_atasan" class="table table-bordered table-striped table-view1">
                                     <thead>
                                         <tr>
+                                            <th>Aktivitas</th>
                                             <th>Tanggal, Jam Mulai</th>
                                             <th>Tanggal, Jam Selesai</th>
                                             <th>Uraian Tugas</th>
@@ -601,6 +610,7 @@ else {
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type='text/javascript' src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+$("#multi_approve").prop('checked', true);
 function current_time() {
     // body...
     var d  = new Date(); // for now
@@ -613,29 +623,80 @@ function current_time() {
 }
 
 function approve(id) {
-    Lobibox.confirm({
-        title: "Konfirmasi",
-        msg: "Anda akan menyetujui pekerjaan ini ?",
-        callback: function ($this, type) {
-            if (type === 'yes'){
-                $.ajax({
-                    url :"<?php echo site_url()?>transaksi/approve_plt/"+id,
-                    type:"post",
-                    beforeSend:function(){
-                        $("#loadprosess").modal('show');
-                    },
-					success:function(msg){
-						var obj = jQuery.parseJSON (msg);
-						ajax_status(obj);
-					},
-					error:function(jqXHR,exception)
-					{
-						ajax_catch(jqXHR,exception);					
-					}
-                })
+    var multi_approve = $("#multi_approve").is(":checked");
+    var multi_approve = $("#multi_approve").is(":checked");    
+    if (multi_approve == false) 
+    {
+        Lobibox.confirm({
+            title: "Konfirmasi",
+            msg: "Anda akan menyetujui pekerjaan ini ?",
+            callback: function ($this, type) {
+                if (type === 'yes'){
+                    $.ajax({
+                        url :"<?php echo site_url()?>transaksi/approve_plt/"+id,
+                        type:"post",
+                        beforeSend:function(){
+                            $("#td_last_belum_diperiksa_ket_"+id).html('');
+                            $("#loadprosess").modal('show');
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            ajax_status(obj);
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);					
+                        }
+                    })
+                }
             }
-        }
-    })
+        })        
+    }
+    else 
+    {
+        $.ajax({
+            url :"<?php echo site_url()?>transaksi/approve_plt/"+id,
+            type:"post",
+            beforeSend:function(){
+                $("#tr_belum_diperiksa_"+id).css({"background-color": "yellow"});
+                $("#td_last_belum_diperiksa_ket_"+id).html('');
+            },
+            success:function(msg){
+                var obj = jQuery.parseJSON (msg);
+                ajax_status(obj,'no-refresh');
+                $("#tr_belum_diperiksa_"+id).css({"background-color": "green","color": "#fff"});
+                // $(".skp_btn_"+id).css({"display": "none"});                                
+                $("#td_last_belum_diperiksa_ket_"+id).html('Sikerja telah disetujui');
+            },
+            error:function(jqXHR,exception)
+            {
+                ajax_catch(jqXHR,exception);					
+            }
+        })
+    }    
+    // Lobibox.confirm({
+    //     title: "Konfirmasi",
+    //     msg: "Anda akan menyetujui pekerjaan ini ?",
+    //     callback: function ($this, type) {
+    //         if (type === 'yes'){
+    //             $.ajax({
+    //                 url :"<?php echo site_url()?>transaksi/approve_plt/"+id,
+    //                 type:"post",
+    //                 beforeSend:function(){
+    //                     $("#loadprosess").modal('show');
+    //                 },
+	// 				success:function(msg){
+	// 					var obj = jQuery.parseJSON (msg);
+	// 					ajax_status(obj);
+	// 				},
+	// 				error:function(jqXHR,exception)
+	// 				{
+	// 					ajax_catch(jqXHR,exception);					
+	// 				}
+    //             })
+    //         }
+    //     }
+    // })
 }
 
 function revisi(id) {
@@ -724,22 +785,33 @@ function view_option(id,i,posisi) {
                             }
                         }
 
+                        param_history_time = '';
+                        if (obj.data.tr_belum_diperiksa[i].lasttime == 0) {
+                            param_history_time = 'Hari ini.'
+                        }
+                        else
+                        {
+                            param_history_time = obj.data.tr_belum_diperiksa[i].lasttime+' Hari Yang Lalu';
+                        }
 
-                        row_data = "<tr>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
-                        "<td>"+kegiatan+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].realisasi_skp+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].target_skp+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].nama_pekerjaan+"</td>"+
-                        "<td>"+obj.data.tr_belum_diperiksa[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_belum_diperiksa[i].target_output_name+"</td>"+
-                        "<td><a class='btn btn-success btn-xs' href='<?php echo base_url() . 'public/file_pendukung/';?>"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
-                        "<td>"+
-                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
-                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
-                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-danger btn-xs' onclick='reject("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-close'></i>&nbsp;Tolak</a></div><br>"+
-                        "</td>"+
-                        "</tr>";
+
+                        row_data = "<tr id='tr_belum_diperiksa_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
+                                    "<td>"+param_history_time+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_mulai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_mulai+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].tanggal_selesai+"&nbsp;"+obj.data.tr_belum_diperiksa[i].jam_selesai+"</td>"+
+                                    "<td>"+kegiatan+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].realisasi_skp+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].target_skp+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].nama_pekerjaan+"</td>"+
+                                    "<td>"+obj.data.tr_belum_diperiksa[i].frekuensi_realisasi+"&nbsp;"+obj.data.tr_belum_diperiksa[i].target_output_name+"</td>"+
+                                    // "<td></td>"+
+                                    "<td><a class='btn btn-success btn-xs' target='_blank' href='https://sikerja.kemendagri.go.id/public/file_pendukung/"+obj.data.infoPegawai[0].nip+"/"+obj.data.tr_belum_diperiksa[i].file_pendukung+"'><i class='fa fa-download'></i>&nbsp;Unduh</a></td>"+
+                                    "<td id='td_last_belum_diperiksa_ket_"+obj.data.tr_belum_diperiksa[i].id_pekerjaan+"'>"+
+                                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-success btn-xs' onclick='approve("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-check'></i>&nbsp;Setuju</a></div><br>"+
+                                        // "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-warning btn-xs' onclick='revisi("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-edit'></i>&nbsp;Revisi</a></div><br>"+
+                                        "<div class='col-lg-12' style='padding-bottom: 10px;'><a class='btn btn-danger btn-xs' onclick='reject("+obj.data.tr_belum_diperiksa[i].id_pekerjaan+")'><i class='fa fa-close'></i>&nbsp;Tolak</a></div><br>"+
+                                    "</td>"+
+                                    "</tr>";
                         $('#table_belum_diperiksa_atasan tbody').append(row_data);
                     }
                 }
