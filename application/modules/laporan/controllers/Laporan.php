@@ -32,6 +32,20 @@ class Laporan extends CI_Controller {
 		$data['role']       = $this->Allcrud->listData('user_role');
 		$this->load->view('templateAdmin',$data);
 	}
+	
+	public function rekap_survey()
+	{
+		$this->Globalrules->session_rule();
+		$this->Globalrules->notif_message();
+		$data['title']      = 'Rekapitulasi Data Survey Indeks Profesionalitas';
+		$data['content']    = 'laporan/kinerja/data_survey';
+		$data['bulan_list'] = $this->Globalrules->data_bulan();
+		$data['list']       = '';
+		$data['es1']        = $this->Allcrud->listData('mr_eselon1');
+		$data['es2']        = $this->Allcrud->getData('mr_eselon2',array('id_es1'=>$this->session->userdata('sesEs1')));
+		$data['role']       = $this->Allcrud->listData('user_role');
+		$this->load->view('templateAdmin',$data);
+	}
 
 	public function filter_kinerja()
 	{
@@ -149,6 +163,126 @@ class Laporan extends CI_Controller {
 		$this->load->view('laporan/kinerja/ajax_kinerja',$data);
 	}
 
+	public function filter_survey()
+	{
+		# code...
+		$data_sender = $this->input->post('data_sender');
+		$data_sender = array
+						(
+							'eselon1'    => $data_sender['data_1'],
+							'eselon2'    => $data_sender['data_2'],
+							'eselon3'    => $data_sender['data_3'],
+							'eselon4'    => $data_sender['data_4'],
+							'bulan'      => $data_sender['data_5'],
+							'tahun'		 => $data_sender['data_6'],
+							'pegawai'	 => '',
+							'posisi'	 => ''
+						);
+		$data['sender'] = $data_sender;
+		$data['list']   = $this->Mmaster->data_pegawai('surveyip','eselon2 ASC,
+																eselon3 ASC,
+																eselon4 ASC,
+																kat_posisi ASC,
+																atasan ASC',$data_sender);		
+
+		if ($data['list'] != 0) {
+			# code...
+			for ($i=0; $i < count($data['list']); $i++) { 
+				# code...
+				$get_data_struktur_organisasi = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_akademik);				
+				if ($get_data_struktur_organisasi != array()) {
+					# code...
+					$data['list'][$i]->posisi_akademik_name = $get_data_struktur_organisasi[0]->nama_posisi;
+					$atasan_pegawai_akademik                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi[0]->atasan,'posisi');				
+					if ($atasan_pegawai_akademik != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_akademik    = 1;					
+						$data['list'][$i]->id_atasan_akademik       = $atasan_pegawai_akademik[0]->id;
+						$data['list'][$i]->nip_atasan_akademik      = $atasan_pegawai_akademik[0]->nip;										
+						$data['list'][$i]->nama_atasan_akademik     = $atasan_pegawai_akademik[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_akademik  = $atasan_pegawai_akademik[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_akademik    = 0;					
+						$data['list'][$i]->id_atasan_akademik       = '-';					
+						$data['list'][$i]->nip_atasan_akademik      = '-';					
+						$data['list'][$i]->nama_atasan_akademik     = '-';
+						$data['list'][$i]->jabatan_atasan_akademik  = '-';															
+					}
+				}
+				else
+				{
+					$data['list'][$i]->posisi_akademik_name = '-';					
+					$data['list'][$i]->avail_atasan_akademik    = 0;					
+					$data['list'][$i]->id_atasan_akademik       = '-';					
+					$data['list'][$i]->nip_atasan_akademik      = '-';					
+					$data['list'][$i]->nama_atasan_akademik     = '-';
+					$data['list'][$i]->jabatan_atasan_akademik  = '-';																				
+				}			
+				
+				$get_data_struktur_organisasi1 = $this->Mmaster->get_data_struktur_organisasi($data['list'][$i]->posisi_plt);				
+				if ($get_data_struktur_organisasi1 != array()) {
+					# code...
+					$data['list'][$i]->posisi_plt_name = $get_data_struktur_organisasi1[0]->nama_posisi;
+					$atasan_pegawai_plt                = $this->Globalrules->get_info_pegawai($get_data_struktur_organisasi1[0]->atasan,'posisi');				
+					if ($atasan_pegawai_plt != 0) {
+						# code...
+						$data['list'][$i]->avail_atasan_plt    = 1;					
+						$data['list'][$i]->id_atasan_plt       = $atasan_pegawai_plt[0]->id;
+						$data['list'][$i]->nip_atasan_plt      = $atasan_pegawai_plt[0]->nip;										
+						$data['list'][$i]->nama_atasan_plt     = $atasan_pegawai_plt[0]->nama_pegawai;
+						$data['list'][$i]->jabatan_atasan_plt  = $atasan_pegawai_plt[0]->nama_jabatan;										
+					}
+					else
+					{
+						$data['list'][$i]->avail_atasan_plt    = 0;					
+						$data['list'][$i]->id_atasan_plt       = '-';					
+						$data['list'][$i]->nip_atasan_plt      = '-';					
+						$data['list'][$i]->nama_atasan_plt     = '-';
+						$data['list'][$i]->jabatan_atasan_plt  = '-';															
+					}					
+				}
+				else
+				{
+					$data['list'][$i]->posisi_plt_name = '-';		
+					$data['list'][$i]->avail_atasan_plt    = 0;					
+					$data['list'][$i]->id_atasan_plt       = '-';					
+					$data['list'][$i]->nip_atasan_plt      = '-';					
+					$data['list'][$i]->nama_atasan_plt     = '-';
+					$data['list'][$i]->jabatan_atasan_plt  = '-';								
+				}							
+
+				$data_pegawai = $this->Globalrules->get_info_pegawai($data['list'][$i]->atasan,'posisi');				
+				if ($data_pegawai != 0) {
+					# code...
+					$data['list'][$i]->avail_atasan    = 1;					
+					$data['list'][$i]->id_atasan       = $data_pegawai[0]->id;
+					$data['list'][$i]->nip_atasan      = $data_pegawai[0]->nip;										
+					$data['list'][$i]->nama_atasan     = $data_pegawai[0]->nama_pegawai;
+					$data['list'][$i]->jabatan_atasan  = $data_pegawai[0]->nama_jabatan;										
+				}
+				else
+				{
+					$data['list'][$i]->avail_atasan    = 0;					
+					$data['list'][$i]->id_atasan       = '-';					
+					$data['list'][$i]->nip_atasan      = '-';					
+					$data['list'][$i]->nama_atasan     = '-';
+					$data['list'][$i]->jabatan_atasan  = '-';															
+				}
+			}
+			// die();
+		}
+		else
+		{
+			die();
+		}																
+		//echo "<pre>";
+		//print_r($data['list']);die();
+		//echo "</pre>";		
+		$this->load->view('laporan/kinerja/ajax_survey',$data);
+	}
+	
 	public function export_kinerja_excel($es1=NULL,$es2=NULL,$es3=NULL,$es4=NULL,$bulan=NULL,$tahun=NULL)
 	{
 		# code...

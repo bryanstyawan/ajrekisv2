@@ -163,8 +163,9 @@ class Mtrx extends CI_Model
 	public function status_pekerjaan($status,$id_pegawai)
 	{
 		# code...
-		$sql = "SELECT a.*,
-			 		   	b.kegiatan as `uraian_tugas`,
+		$sql = "SELECT b.kegiatan as `uraian_tugas`,
+						b.id_skp_jfu,
+						b.id_skp_jft,
 					   	COALESCE(c.nama,'-') as `target_output_name`,
 					   	d.kegiatan as `kegiatan_skp`,
 						jfu.uraian_tugas as `kegiatan_skp_jfu`,
@@ -178,18 +179,20 @@ class Mtrx extends CI_Model
 							AND aa.status_pekerjaan = '1'
 						),0) as `realisasi_skp`,
 						b.target_qty as `target_skp`,
-						DATEDIFF(CONCAT(CURDATE(),' ',CURTIME()), CONCAT(a.tanggal_selesai,' ',a.jam_selesai)) as lasttime
+						DATEDIFF(CONCAT(CURDATE(),' ',CURTIME()), CONCAT(a.tanggal_selesai,' ',a.jam_selesai)) as lasttime,
+						a.*
 				FROM tr_capaian_pekerjaan a
-				JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
-				LEFT OUTER JOIN mr_skp_satuan c ON b.target_output = c.id
-				LEFT OUTER JOIN mr_skp_master d ON b.id_skp_master = d.id_skp
-				LEFT OUTER JOIN mr_jabatan_fungsional_umum_uraian_tugas jfu ON b.id_skp_jfu = jfu.id
-				LEFT OUTER JOIN mr_jabatan_fungsional_tertentu_uraian_tugas jft ON b.id_skp_jft = jft.id								
+				LEFT JOIN mr_skp_pegawai b ON a.id_uraian_tugas = b.skp_id
+				LEFT JOIN mr_skp_satuan c ON b.target_output = c.id
+				LEFT JOIN mr_skp_master d ON b.id_skp_master = d.id_skp
+				LEFT JOIN mr_jabatan_fungsional_umum_uraian_tugas jfu ON b.id_skp_jfu = jfu.id
+				LEFT JOIN mr_jabatan_fungsional_tertentu_uraian_tugas jft ON b.id_skp_jft = jft.id								
 				WHERE a.tanggal_mulai LIKE '%".date('Y-m')."%'
 				AND a.tanggal_selesai LIKE '%".date('Y-m')."%'
 				AND a.status_pekerjaan = '".$status."'
 				AND a.id_pegawai = '".$id_pegawai."'
 				ORDER BY a.tanggal_selesai DESC, a.jam_selesai DESC";
+				// print_r($sql);die();
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{

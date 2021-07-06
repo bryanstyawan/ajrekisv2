@@ -82,7 +82,9 @@
                                 $i++;
                                 $atasan_nama = $atasan->nama_pegawai;
                         ?>
-                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan->nama_pegawai;?>"></input></li>                                    
+                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan->id;?>"></input>
+                                    <input type="hidden" id="hdn_pegawai_posisi_<?=$i;?>" value="<?=$atasan->posisi;?>"></input>                                
+                                </li>                                    
                         <?php
                             }
                         }                    
@@ -93,7 +95,11 @@
                             {
                                 $i++;
                     ?>
-                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan_plt->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan_plt->nama_pegawai;?>"></input></li>                                    
+                                <li style="cursor: pointer;background-color: rgb(76, 175, 80);color: rgb(255, 255, 255);" id="li_kandidat_<?=$i;?>">
+                                    <a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan_plt->nama_pegawai;?></a>
+                                    <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$atasan_plt->id;?>"></input>
+                                    <input type="hidden" id="hdn_pegawai_posisi_<?=$i;?>" value="<?=$atasan_plt->posisi;?>"></input>                                    
+                                </li>                                    
                     <?php
                             }                            
                         }
@@ -118,7 +124,11 @@
                                 if ($atasan_nama != $peer->nama_pegawai) {
                                     # code...
                 ?>
-                                    <li style="cursor: pointer;" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$peer->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$peer->nama_pegawai;?>"></input></li>                                    
+                                    <li style="cursor: pointer;" onclick="set_evaluator('<?=$peer->id;?>','<?=$peer->nama_pegawai;?>','<?=$peer->posisi;?>')" id="li_kandidat_<?=$i;?>">
+                                        <a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$peer->nama_pegawai;?></a>
+                                        <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$peer->id;?>"></input>
+                                        <input type="hidden" id="hdn_pegawai_posisi_<?=$i;?>" value="<?=$peer->posisi;?>"></input>                                        
+                                    </li>                                    
                 <?php                                    
                                 }
                             }
@@ -140,11 +150,31 @@
                         foreach($bawahan as $bawahan){
                             $i++;
                 ?>
-                            <li style="cursor: pointer;" id="li_kandidat_<?=$i;?>"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$bawahan->nama_pegawai;?></a><input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$bawahan->nama_pegawai;?>"></input></li>                                    
+                            <li style="cursor: pointer;" onclick="set_evaluator('<?=$bawahan->id;?>','<?=$bawahan->nama_pegawai;?>','<?=$bawahan->posisi;?>')" id="li_kandidat_<?=$i;?>">
+                                <a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$bawahan->nama_pegawai;?></a>
+                                <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$bawahan->id;?>"></input>
+                                <input type="hidden" id="hdn_pegawai_posisi_<?=$i;?>" value="<?=$bawahan->posisi;?>"></input>                                
+                            </li>                            
                 <?php
                         }
                     }
-                ?>            
+                ?>
+
+                <?php
+                    if($bawahan_plt != 0){
+                        // $i = "";
+                        foreach($bawahan_plt as $bawahan){
+                            $i++;
+                ?>
+                            <li style="cursor: pointer;" onclick="set_evaluator('<?=$bawahan->id;?>','<?=$bawahan->nama_pegawai;?>','<?=$bawahan->posisi;?>')" id="li_kandidat_<?=$i;?>">
+                                <a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$bawahan->nama_pegawai;?></a>
+                                <input type="hidden" id="hdn_pegawai_<?=$i;?>" name="list_kandidat" value="<?=$bawahan->id;?>"></input>
+                                <input type="hidden" id="hdn_pegawai_posisi_<?=$i;?>" value="<?=$bawahan->posisi;?>"></input>                                
+                            </li>                            
+                <?php
+                        }
+                    }
+                ?>                            
             </ul>
         </div>
     </div>
@@ -171,7 +201,12 @@
                                     $i++;
                                     $atasan_temp = $atasan1->nama_pegawai;
                         ?>
-                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="local"></li>
+                                    <li style="cursor: pointer;" id="1">
+                                        <a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a>
+                                        <input type="hidden" name="list_evaluator" id="list_evaluator_0" value="<?=$atasan1->id;?>"></input>
+                                        <input type="hidden" id="list_evaluator_posisi_0" value="<?=$atasan1->posisi;?>"></input>                                            
+                                        <input type="hidden" id="sources_1" value="local">
+                                    </li>
                         <?php
                                 }                                
                             }
@@ -182,7 +217,9 @@
                                     $i++;
                                     $atasan_temp = $atasan2->nama_pegawai;
                         ?>
-                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan2->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan2->nama_pegawai;?>"></input><input type="hidden" id="sources_2" value="local"></li>
+                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan2->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_0" value="<?=$atasan2->id;?>"></input><input type="hidden" id="sources_2" value="local">
+                                        <input type="hidden" id="list_evaluator_posisi_0" value="<?=$atasan2->posisi;?>"></input>                                    
+                                    </li>
                         <?php
                                 }                                
                             }                            
@@ -195,7 +232,22 @@
                                     $i++;
                                     $atasan_temp = $atasan1->nama_pegawai;
                         ?>
-                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_1" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="local"></li>
+                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i><?=$atasan1->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_0" value="<?=$atasan1->nama_pegawai;?>"></input><input type="hidden" id="sources_1" value="local">
+                                        <input type="hidden" id="list_evaluator_posisi_0" value="<?=$atasan1->posisi;?>"></input>                                    
+                                    </li>
+                        <?php
+                                }                                
+                            }
+
+                            if ($atasan2 != 0) {
+                                # code...
+                                foreach($atasan2 as $atasan2){
+                                    $i++;
+                                    $atasan_temp = $atasan2->nama_pegawai;
+                        ?>
+                                    <li style="cursor: pointer;" id="1"><a class="contact-name"><i class="fa fa-circle-o text-red contact-name-list"></i>[PLT] <?=$atasan2->nama_pegawai;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_0" value="<?=$atasan2->id;?>"></input><input type="hidden" id="sources_2" value="local">
+                                        <input type="hidden" id="list_evaluator_posisi_0" value="<?=$atasan2->posisi;?>"></input>                                    
+                                    </li>
                         <?php
                                 }                                
                             }                            
@@ -204,9 +256,9 @@
 
                         if ($evaluator != 0) {
                             # code...
+                            $x = 1;
                             for ($i=0; $i < count($evaluator); $i++) { 
                                 # code...
-                                $x = 1 + $i;
                                 if ($atasan_temp != $evaluator[$i]->nama_pegawai) {
                                     # code...
                                     $remove_icon = "";
@@ -215,7 +267,7 @@
                                     if ($evaluator[$i]->status == 0) {
                                         # code...
                                         $remove_icon = '<span class="pull-right" style="padding-bottom: 0px;padding-top: 0px;"><i class="fa fa-close"></i></span>';
-                                        $remove_cmd = 'onclick="remove_list_evaluator_sync('.$x.')"';
+                                        $remove_cmd = 'onclick="remove_list_evaluator_sync('.$x.','.$evaluator[$i]->id_pegawai_penilai.')"';
                                         $lock_icon = 'fa-circle-o';
                                     }
                                     else
@@ -223,8 +275,14 @@
                                         $lock_icon = 'fa-lock';                                        
                                     }
                     ?>
-                                    <li style="cursor: pointer;" id="li_evaluator_<?=$x;?>" <?=$remove_cmd;?>><a class="contact-name"><i class="fa <?=$lock_icon;?> text-red contact-name-list"></i><?=$evaluator[$i]->nama_pegawai.$remove_icon;?></a><input type="hidden" name="list_evaluator" id="list_evaluator_<?=$x;?>" value="<?=$evaluator[$i]->nama_pegawai;?>"></input><input type="hidden" id="sources_<?=$x;?>" value="server"></li></li>                    
+                                    <li style="cursor: pointer;" id="li_evaluator_<?=$x;?>" <?=$remove_cmd;?>>
+                                        <a class="contact-name"><i class="fa <?=$lock_icon;?> text-red contact-name-list"></i><?=$evaluator[$i]->nama_pegawai.$remove_icon;?></a>
+                                        <input type="hidden" name="list_evaluator" id="list_evaluator_<?=$x;?>" value="<?=$evaluator[$i]->id_pegawai_penilai;?>"></input>
+                                        <input type="hidden" id="list_evaluator_posisi_<?=$x;?>" value="<?=$evaluator[$i]->id_posisi_pegawai_penilai;?>"></input>                                        
+                                        <input type="hidden" id="sources_<?=$x;?>" value="server"></li>
+                                    </li>                    
                     <?php                                    
+                    $x++;
                                 }
                             }
                         }
@@ -554,44 +612,6 @@ $(document).ready(function()
         // "dom": '<"top"fl>rt<"bottom"ip><"clear">'            
     });
 
-    $('.contact-id li').click(function(){
-        var index = $(this).index();
-        var text = $(this).text();
-        var inputs              = document.getElementsByName('list_evaluator');
-        if (inputs.length < 5) 
-        {
-            if (inputs.length == 0) 
-            {
-                $(this).css({"backgroundColor": "#4CAF50", "color": "white", "pointer-events" : "none"});            
-                counter_evaluator++;
-                $("#evaluator ul").append('<li style="cursor: pointer;" id="li_evaluator_'+counter_evaluator+'"><a class="evaluator_a"><i class="fa fa-circle-o text-red contact-name-list"></i>'+text+'<span class="pull-right" style="padding-bottom: 0px;padding-top: 0px;"><i class="fa fa-close"></i></span></a><input type="hidden" name="list_evaluator" id="list_evaluator_'+counter_evaluator+'" value="'+text+'"><input type="hidden" id="sources_'+counter_evaluator+'" value="local"></li>');
-            }
-            else if(inputs.length >= 1)
-            {
-                avail = 0;
-                for (var i = 1; i <= inputs.length; i++) {
-                    x = $("#list_evaluator_"+i).val();
-                    if (x != text) 
-                    {
-                        avail = 1;
-                    }
-                    else
-                    {
-                        avail = 0;
-                    }
-                }
-
-                if (avail == 1) 
-                {
-                    $(this).css({"backgroundColor": "#4CAF50", "color": "white", "pointer-events" : "none"});            
-                    counter_evaluator++;
-                    $("#evaluator ul").append('<li style="cursor: pointer;" id="li_evaluator_'+counter_evaluator+'" onclick="remove_list_evaluator('+counter_evaluator+')"><a class="evaluator_a"><i class="fa fa-circle-o text-red contact-name-list"></i>'+text+'<span class="pull-right" style="padding-bottom: 0px;padding-top: 0px;"><i class="fa fa-close"></i></span></a><input type="hidden" name="list_evaluator" id="list_evaluator_'+counter_evaluator+'" value="'+text+'"><input type="hidden" id="sources_'+counter_evaluator+'" value="local"></li>');
-                }
-                
-            }
-        }        
-    });
-
     $("#btn_simpan_prilaku").click(function() {
         // body...
         Lobibox.confirm({
@@ -638,18 +658,16 @@ $(document).ready(function()
         var inputs             = document.getElementsByName('list_evaluator');
         var data_sender_detail = [];
         send_data              = 0;
-        for (var i = 1; i <= inputs.length; i++) {
+        for (var i = 0; i < inputs.length; i++) {
             var evaluator = $('#list_evaluator_'+i).val();                    
             var sources   = $('#sources_'+i).val();
-            if (sources == 'local' || sources == 'atasan') 
-            {
-                data_sender_detail.push({
-                    'evaluator' : evaluator
-                });  
-                send_data = 1;
-            }                                
+            data_sender_detail.push({
+                'evaluator' : evaluator,
+                'posisi' : $('#list_evaluator_posisi_'+i).val()
+            });  
         }
 
+        console.log(inputs.length,data_sender_detail)
         $.ajax({
             url :"<?php echo site_url();?>/skp/penilaian_prilaku/pengajuan_penilaian_prilaku",
             type:"post",
@@ -696,17 +714,43 @@ $(document).ready(function()
 
 });    
 
+function set_evaluator(id, name, posisi) {
+    var inputs              = document.getElementsByName('list_evaluator');
+    var allowData = 1;
+    for (var i = 0; i < inputs.length; i++) {
+        if (id === $("#list_evaluator_"+i).val()) {
+            allowData = 0
+            break;
+        }
+        else
+        {
+            allowData = 1
+            // break;
+        }
+        // console.log()
+    }    
+
+    if (inputs.length < 5) {
+        if (allowData == 1) {
+            $("#evaluator ul").append('<li style="cursor: pointer;" id="li_evaluator_'+i+'"><a class="evaluator_a"><i class="fa fa-circle-o text-red contact-name-list"></i>'+name+'<span class="pull-right" style="padding-bottom: 0px;padding-top: 0px;"><i class="fa fa-close"></i></span></a><input type="hidden" name="list_evaluator" id="list_evaluator_'+i+'" value="'+id+'"><input type="hidden" id="list_evaluator_posisi_'+i+'" value="'+posisi+'"></input><input type="hidden" id="sources_'+i+'" value="local"></li>');        
+        }        
+    }
+    
+    // console.log(inputs.length)
+    // console.log(id, name)
+}
+
 function remove_list_evaluator(PARAM)
 {
-    var x      = $('#list_evaluator_'+PARAM).val();
-    var inputs = document.getElementsByName('list_kandidat');
-    for (var i = 1; i <= inputs.length; i++) {
-        if (x == $('#hdn_pegawai_'+i).val()) {
-            $('#li_kandidat_'+i).css({"backgroundColor": "", "color": "", "pointer-events" : ""});                        
-        }
-    }
-    $('#li_evaluator_'+PARAM).remove();
-    counter_evaluator--;    
+    // var x      = $('#list_evaluator_'+PARAM).val();
+    // var inputs = document.getElementsByName('list_kandidat');
+    // for (var i = 1; i <= inputs.length; i++) {
+    //     if (x == $('#hdn_pegawai_'+i).val()) {
+    //         $('#li_kandidat_'+i).css({"backgroundColor": "", "color": "", "pointer-events" : ""});                        
+    //     }
+    // }
+    // $('#li_evaluator_'+PARAM).remove();
+    // counter_evaluator--;    
 }
 
 function send_penilaian_prilaku(id,id_pegawai) {
@@ -744,11 +788,11 @@ function send_penilaian_prilaku(id,id_pegawai) {
     })
 }
 
-function remove_list_evaluator_sync(PARAM) {
+function remove_list_evaluator_sync(PARAM,id) {
     // body...
     var x              = $('#list_evaluator_'+PARAM).val();
     data_sender_detail = {
-                            'evaluator' : x       
+                            'evaluator' : id       
                         }
     $.ajax({
         url :"<?php echo site_url();?>/skp/penilaian_prilaku/remove_pengajuan_penilaian_prilaku",

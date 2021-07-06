@@ -341,6 +341,32 @@ class Mtrx extends CI_Model
 		}
 	}
 
+	public function get_transaksi_id_x($id)
+	{
+		# code...
+		$sql = "SELECT a.*,
+						COALESCE(c.nama,'-') as `target_output_name`,
+						COALESCE(b.target_qty,0) as `target_qty`,
+						bb.status as status_pegawai												
+				FROM tr_capaian_pekerjaan a
+				LEFT JOIN mr_skp_pegawai b
+				ON a.id_uraian_tugas = b.skp_id
+				LEFT JOIN mr_pegawai bb
+				ON a.id_pegawai = bb.id
+				LEFT OUTER JOIN mr_skp_satuan c
+				ON b.target_output = c.id
+				WHERE a.id_pekerjaan = '".$id."'";
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 	public function get_member($posisi)
 	{
 		# code...
@@ -351,7 +377,7 @@ class Mtrx extends CI_Model
 			    JOIN mr_posisi b
 			    ON a.posisi = b.id
 			    WHERE b.atasan = '$posisi'
-			    AND a.status = 1
+			    AND a.status in (1,2)
 			    ORDER BY a.nama_pegawai asc";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)

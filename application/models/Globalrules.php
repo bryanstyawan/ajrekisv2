@@ -15,6 +15,7 @@ class Globalrules extends CI_Model
 	}
 
 	private $year_system = 2021;
+	private $prev_year_system = 2021-1;
 
 	public function session_rule()
 	{
@@ -773,7 +774,7 @@ class Globalrules extends CI_Model
 					LEFT JOIN mr_pegawai b ON b.id = a.id_pegawai
 					LEFT JOIN mr_posisi c ON b.posisi = c.id
 					WHERE ".$sql_where."
-					AND b.status = 1
+					AND b.status in (1,2)
 					AND a.tahun = '".$this->year_system."'
 					AND a.bulan = '".date('m')."'
 					UNION 
@@ -791,7 +792,7 @@ class Globalrules extends CI_Model
 						AND b.bulan = '".date('m')."'
 						LEFT JOIN mr_posisi c ON a.posisi = c.id
 						WHERE ".$sql_where_1."
-						AND a.status = 1
+						AND a.status in (1,2)
 						AND a.`id` NOT IN (
 									SELECT IFNULL(id_pegawai, 0)
 									FROM `rpt_capaian_kinerja`
@@ -810,7 +811,7 @@ class Globalrules extends CI_Model
 					JOIN mr_posisi b
 					ON a.posisi = b.id
 					WHERE b.atasan = '$posisi'
-					AND a.status = 1
+					AND a.status in (1,2)
 					".$sql_where."
 					ORDER BY a.nama_pegawai asc";
 		}
@@ -1350,6 +1351,127 @@ class Globalrules extends CI_Model
 						'id_pegawai'					=> $id_pegawai,
 						'id_posisi'						=> $get_posisi[$i]->posisi,
 						'tahun'							=> $this->year_system,
+						'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
+						'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
+						'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
+						'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+						'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
+						'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
+						'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
+						'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
+						'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+						'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
+					);							
+					$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
+				}
+				else
+				{
+					$summary_prilaku_skp = array(
+						'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
+						'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
+						'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],
+						'disiplin'               		=> $data_s[$i]['summary_prilaku_skp']['disiplin'],
+						'kerjasama'              		=> $data_s[$i]['summary_prilaku_skp']['kerjasama'],
+						'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
+						'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
+						'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
+						'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+						'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
+					);														
+					$this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
+				}												
+			}			
+		}		
+	}
+	
+	public function trigger_skp_tahunan_prev($id_pegawai)
+	{
+		# code...
+
+		$get_evaluator = $this->mskp->get_data_evaluator($id_pegawai,$this->prev_year_system);
+		if ($get_evaluator != 0) {
+			# code...
+			for ($i=0; $i < count($get_evaluator); $i++) { 
+				# code...
+				if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL) {
+					# code...
+					$get_posisi = $this->mskp->get_request_history($get_evaluator[$i]->id_pegawai_penilai,$this->prev_year_system,'on');					
+					if ($get_posisi != 0) {
+						# code...
+						if ($get_evaluator[$i]->id_posisi_pegawai_penilai == NULL || $get_evaluator[$i]->id_posisi_pegawai_penilai == '') {
+							# code...
+							$data = array
+							(
+								'id_posisi_pegawai_penilai' => $get_posisi[0]->posisi
+							);
+							$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id'=>$get_evaluator[$i]->id));								
+						}									
+					}						
+				}
+			}
+		}
+
+		$get_posisi = $this->mskp->get_request_history($id_pegawai,$this->prev_year_system,'on');
+		if ($get_posisi != 0) {
+			# code...
+
+			$check_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$id_pegawai,'tahun'=>$this->prev_year_system))->result_array();					
+			if ($check_data != array()) {
+				# code...
+				for ($i=0; $i < count($check_data); $i++) { 
+					# code...
+					if ($check_data[$i]['id_posisi_pegawai'] == null || $check_data[$i]['id_posisi_pegawai'] == '') {
+						# code...
+						$data = array
+						(
+							'id_posisi_pegawai' => $get_posisi[0]->posisi
+						);
+						$res_data    = $this->Allcrud->editData('mr_skp_penilaian_prilaku',$data,array('id_pegawai'=>$id_pegawai,'tahun'=>$this->prev_year_system));								
+					}
+				}
+			}					
+
+			$data_s = array();
+			for ($i=0; $i < count($get_posisi); $i++) { 
+				# code...					
+				$data_s[$i] = $this->Globalrules->data_summary_skp_pegawai($id_pegawai,$get_posisi[$i]->posisi,$this->prev_year_system);						
+				$data_parameter = array(
+					'id_pegawai'					=> $id_pegawai,
+					'id_posisi'						=> $get_posisi[$i]->posisi,
+					'tahun'							=> $this->prev_year_system
+				);
+				$check_data = $this->Allcrud->getData('rpt_skp_sasaran_kerja',$data_parameter)->result_array();						
+				if ($check_data == array()) {
+					# code...
+					$summary_skp = array(
+						'id_pegawai'					=> $id_pegawai,
+						'id_posisi'						=> $get_posisi[$i]->posisi,
+						'tahun'							=> $this->prev_year_system,
+						'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+						'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+						'total'                         => $data_s[$i]['summary_skp']['total'],
+						'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+					);							
+					$this->Allcrud->addData('rpt_skp_sasaran_kerja',$summary_skp);							
+				}
+				else
+				{
+					$summary_skp = array(
+						'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+						'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+						'total'                         => $data_s[$i]['summary_skp']['total'],
+						'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+					);														
+					$this->Allcrud->editData('rpt_skp_sasaran_kerja',$summary_skp,$data_parameter);										
+				}
+
+				$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
+				if ($check_data == array()) {
+					# code...
+					$summary_prilaku_skp = array(
+						'id_pegawai'					=> $id_pegawai,
+						'id_posisi'						=> $get_posisi[$i]->posisi,
+						'tahun'							=> $this->prev_year_system,
 						'integritas'             		=> $data_s[$i]['summary_prilaku_skp']['integritas'],
 						'orientasi_pelayanan'    		=> $data_s[$i]['summary_prilaku_skp']['orientasi_pelayanan'],
 						'komitmen'               		=> $data_s[$i]['summary_prilaku_skp']['komitmen'],

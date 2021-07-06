@@ -44,6 +44,8 @@
 			<td><?=$tahun;?></td>
 			<td>
 				<a class="btn btn-md bg-purple color-palette col-lg-12" style="margin-top:5px;" onclick="getValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-download"></i> Ambil Nilai</a>
+				
+				<a class="btn btn-md bg-purple color-palette col-lg-12" style="margin-top:5px;" onclick="getValuePrev('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-download"></i> Ambil Nilai 2020</a>
 				<!-- <a class="btn btn-md bg-red color-palette col-lg-12" style="margin-top:5px;" onclick="deleteValue('<?=$list[$i]->id_pegawai;?>')"><i class="fa fa-refresh"></i> Reset</a> -->
 <?php
 				if ($list[$i]->id_posisi_ts != null) {

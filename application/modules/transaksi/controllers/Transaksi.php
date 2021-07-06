@@ -325,10 +325,29 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$id_atasan 	 = $this->session->userdata('sesUser');
-		$res_data    = $this->Allcrud->approve_transaksi(1,$id,$id_atasan);
-		if ($res_data > 0) {
-			$res_data = 1;
-		}
+		$info         = $this->mtrx->get_transaksi_id_x($id);
+		$res_data = 0;
+		if ($info != 0) {
+			# code...
+			if ($info[0]->status_pegawai == 1) {
+				# code...
+				$res_data    = $this->Allcrud->approve_transaksi(1,$id,$id_atasan);
+				if ($res_data > 0) {
+					$res_data = 1;
+				}
+			}
+			else
+			{
+				$res_data    = $this->Allcrud->approve_transaksi_cpns(1,$id,$id_atasan);
+				if ($res_data > 0) {
+					$res_data = 1;
+				}
+			}
+		}		
+		// $res_data    = $this->Allcrud->approve_transaksi(1,$id,$id_atasan);
+		// if ($res_data > 0) {
+		// 	$res_data = 1;
+		// }
 
 		$text_status = $this->Globalrules->check_status_res($res_data,"Data pekerjaan telah disetujui");
 		$res = array
@@ -344,10 +363,29 @@ class Transaksi extends CI_Controller {
 		# code...
 		$this->Globalrules->session_rule();
 		$id_atasan 	 = $this->session->userdata('sesUser');
-		$res_data    = $this->Allcrud->approve_transaksi(2,$id,$id_atasan);
-		if ($res_data > 0) {
-			$res_data = 1;
+		$data = array('trx' => $id,'atasan' => $id_atasan);
+
+		$info         = $this->mtrx->get_transaksi_id_x($id);
+		$res_data = 0;
+		if ($info != 0) {
+			# code...
+			if ($info[0]->status_pegawai == 1) {
+				# code...
+				$res_data    = $this->Allcrud->approve_transaksi(2,$id,$id_atasan);
+				if ($res_data > 0) {
+					$res_data = 1;
+				}
+			}
+			else
+			{
+				$res_data    = $this->Allcrud->approve_transaksi_cpns(2,$id,$id_atasan);
+				if ($res_data > 0) {
+					$res_data = 1;
+				}
+			}
 		}
+		// print_r();die();
+
 		$text_status = "Data pekerjaan telah disetujui";
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array
@@ -367,6 +405,28 @@ class Transaksi extends CI_Controller {
 		if ($res_data > 0) {
 			$res_data = 1;
 		}
+		$data = array('trx' => $id,'atasan' => $id_atasan);
+
+		$info         = $this->mtrx->get_transaksi_id_x($id);
+		$res_data = 0;
+		if ($info != 0) {
+			# code...
+			if ($info[0]->status_pegawai == 1) {
+				# code...
+				$res_data    = $this->Allcrud->approve_transaksi(3,$id,$id_atasan);
+				if ($res_data > 0) {
+					$res_data = 1;
+				}
+			}
+			else
+			{
+				$res_data    = $this->Allcrud->approve_transaksi_cpns(3,$id,$id_atasan);
+				if ($res_data > 0) {
+					$res_data = 1;
+				}
+			}
+		}
+
 		$text_status = "Data pekerjaan telah disetujui";
 		$text_status = $this->Globalrules->check_status_res($res_data,$text_status);
 		$res = array

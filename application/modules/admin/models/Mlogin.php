@@ -185,7 +185,21 @@ class Mlogin extends CI_Model {
 		}
 		return $query;
 	}
-
+	
+	public function ceksurvey($id){
+		$sql = "SELECT id_pegawai from tr_survey_ip where id_pegawai = '$id' ";
+		$query = $this->db->query($sql);
+		if($query->num_rows() == 1)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	
 	public function datauser($id){
 		$this->db->where('a.id',$id);
 		$this->db->select('a.*, b.nama_role, c.nama_posisi');

@@ -54,6 +54,12 @@ class Skp_tahunan extends CI_Controller {
 		# code...
 		$this->Globalrules->trigger_skp_tahunan($id_pegawai);		
 	}
+	
+	public function get_value_prev($id_pegawai)
+	{
+		# code...
+		$this->Globalrules->trigger_skp_tahunan_prev($id_pegawai);		
+	}
 
 	public function get_delete($id_pegawai)
 	{

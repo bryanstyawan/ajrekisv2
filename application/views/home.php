@@ -47,7 +47,7 @@
                         <label class="col-lg-6" style="cursor: pointer;">Kontak</label>
                         <label class="col-lg-9" style="cursor: pointer;color: #000000;">
                             <i class="fa fa-phone"></i>&nbsp; (021) 3524543<br>
-                            <i class="fa fa-phone"></i>&nbsp; 087884576154
+<!--                            <i class="fa fa-phone"></i>&nbsp; 087884576154 -->
                         </label>
                         
                     </a>
@@ -97,9 +97,7 @@
                     </div>
                 </div>
             </div>  -->
-			
-
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PosterSikerjaZI.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -110,8 +108,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/selamat_datang.jpg);background-size: 100% 100%;height: 555px;">
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/POSTERORTALA2.jpeg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -121,7 +119,55 @@
                         </div>
                     </div>
                 </div>
-            </div>                    
+            </div>
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/POSTERORTALA.png);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+          <!--  <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->               
+
+           <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/selamat_datang.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>     -->               
 
             <!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/bahan_paparan_terbaru.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">

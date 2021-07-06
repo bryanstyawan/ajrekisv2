@@ -62,3 +62,5 @@ application/config/database.php
 /erekom/
 /erekomx/
 /dev/*
+/assets_home/
+/tester/*

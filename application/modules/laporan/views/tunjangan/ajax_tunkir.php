@@ -18,7 +18,7 @@
 		<td><?=number_format($list[$i]->tunjangan_profesi,0);?></td>
 		<td><?=number_format($list[$i]->real_tunjangan,0);?></td>        
 		<td><?=$this->Globalrules->set_bulan($sender['bulan']);?> <?=$sender['tahun'];?></td>
-        <td></td>        
+        <td><?=$list[$i]->status_pegawai;?></td>        
 	</tr>
 <?php
 	}

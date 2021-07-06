@@ -127,12 +127,6 @@ class Skp extends CI_Controller {
 					);
 		echo json_encode($res);
 	}
-
-	public function penilaian_prilaku_plt()
-	{
-		# code...
-
-	}	
 	
 	public function penilaian_skp_bulanan_plt()
 	{

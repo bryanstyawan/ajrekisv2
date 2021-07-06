@@ -52,14 +52,16 @@ class Penilaian_prilaku extends CI_Controller {
 		}
 
 		// echo "<pre>";
-		// print_r($helper_atasan);die();		
+		// print_r($data['infoPegawai']);die();		
+		// // print_r($this->session->userdata('posisi_plt'));die();		
 		// echo "</pre>";		
 
 		if ($helper_atasan != 0) {
 			# code...
 			$data['atasan']       = $this->Globalrules->list_atasan($helper_posisi);			
 			// $data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_akademik(	) : $data['atasan'] ;			
-			$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);					
+			$data['atasan_plt']       = $this->Globalrules->list_atasan_plt($this->session->userdata('posisi_plt'));			
+			// $data['atasan_plt']   = $this->Globalrules->list_atasan_plt($helper_posisi);					
 		}
 		else
 		{
@@ -79,6 +81,26 @@ class Penilaian_prilaku extends CI_Controller {
 
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
+
+		$data['bawahan_plt']  = array();
+		if ($this->session->userdata('posisi_plt') != 0) {
+			# code...
+			$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));			
+		}
+
+		if ($data['bawahan_plt'] != array()) {
+			# code...
+			$data['atasan_plt']       = $this->Globalrules->list_atasan_plt($this->session->userdata('posisi_plt'));			
+		// echo "<pre>";
+		// // print_r();die();				
+		// print_r($data['atasan_plt']);die();		
+		// echo "</pre>";		
+			if ($data['atasan_plt'] != 0) {
+				# code...
+				$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);				
+			}						
+		}
+
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
 		if ($arg == "plt") {
 		}
@@ -104,7 +126,10 @@ class Penilaian_prilaku extends CI_Controller {
 	
 			}
 		}		
-		
+
+		// echo "<pre>";
+		// print_r($data['atasan_plt']);die();		
+		// echo "</pre>";		
 		// if($data['bawahan'] != 0){
 		// 	for ($i=0; $i < count($data['bawahan']); $i++) { 
 		// 		# code...
@@ -123,12 +148,20 @@ class Penilaian_prilaku extends CI_Controller {
 		// }
 		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$year_system);
 		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$year_system);				
+		// echo "<pre>";
+		// // print_r($data['atasan']);die();		
+		// print_r($data['atasan_plt']);die();		
+		// echo "</pre>";
 		$this->load->view('templateAdmin',$data);
 	}
 
 	public function penilaian_prilaku_plt()
 	{
 		# code...
+		// echo "<pre>";
+		// print_r($get_posisi);die();				
+		// // print_r($data['bawahan_plt']);die();		
+		// echo "</pre>";						
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
@@ -150,6 +183,28 @@ class Penilaian_prilaku extends CI_Controller {
 				$data['atasan']       = $this->Globalrules->list_atasan($get_data_pegawai[0]['posisi_plt']);
 				$data['peer']         = $this->Globalrules->list_bawahan($get_posisi[0]->atasan);
 				$data['bawahan']      = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
+
+				// $data['bawahan_plt']  = 0;
+				// if ($this->session->userdata('posisi_plt') != 0) {
+				// 	# code...
+				// 	$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));			
+				// }
+				
+		
+				// if ($data['bawahan_plt'] != 0) {
+				// 	# code...
+				// 	$data['atasan_plt']       = $this->Globalrules->list_atasan_plt($this->session->userdata('posisi_plt'));			
+				// // echo "<pre>";
+				// // // print_r();die();				
+				// // print_r($data['atasan_plt']);die();		
+				// // echo "</pre>";		
+				// 	if ($data['atasan_plt'] != 0) {
+				// 		# code...
+				// 		$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);				
+				// 	}						
+				// }				
+
+				$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));
 				$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
 				if($data['bawahan'] != 0){
 					for ($i=0; $i < count($data['bawahan']); $i++) { 
@@ -215,19 +270,15 @@ class Penilaian_prilaku extends CI_Controller {
 		$res_data_id  = "";
 		$text_status  = "";
 		$data_sender  = $this->input->post('data_sender');
-		$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender['evaluator'],'nama_pegawai');
-		if ($info_pegawai != 0) {
+		$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$data_sender['evaluator'],$this->year_system);
+		if ($check_data != 0) {
 			# code...
-			$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,$this->year_system);
-			if ($check_data != 0) {
-				# code...
-				$flag = array('id' => $check_data[0]->id);
-				$res_data = $this->Allcrud->delData('mr_skp_penilaian_prilaku',$flag);
-			}
-			else
-			{
-				$res_data = 0;
-			}
+			$flag = array('id' => $check_data[0]->id);
+			$res_data = $this->Allcrud->delData('mr_skp_penilaian_prilaku',$flag);
+		}
+		else
+		{
+			$res_data = 0;
 		}
 
 		$text_status = $this->Globalrules->check_status_res($res_data,"Anda telah membatalkan pengajuan penilaian prilaku.");
@@ -271,32 +322,32 @@ class Penilaian_prilaku extends CI_Controller {
 		$text_status  = "";
 		$data_sender  = $this->input->post('data_sender');
 		$year_system = $this->year_system;
+		// print_r($data_sender);die();
 		for ($i=0; $i < count($data_sender); $i++) {
 			# code...
 			$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender[$i]['evaluator'],'nama_pegawai');
 
-			if ($info_pegawai != 0) {
+			$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$data_sender[$i]['evaluator'],$year_system);
+			if ($check_data == 0) {
 				# code...
-				$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$info_pegawai[0]->id,$year_system);
-				if ($check_data == 0) {
-					# code...
-					$data = array
-							(
-								'id_pegawai'         => $this->session->userdata('sesUser'),
-								'id_pegawai_penilai' => $info_pegawai[0]->id,
-								'tahun'              => $year_system
-							);
-					$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
+				$data = array
+						(
+							'id_pegawai'         => $this->session->userdata('sesUser'),
+							'id_posisi_pegawai' => $this->session->userdata('sesPosisi'),
+							'id_pegawai_penilai' => $data_sender[$i]['evaluator'],
+							'id_posisi_pegawai_penilai' => $data_sender[$i]['posisi'],							
+							'tahun'              => $year_system
+						);
+				$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
 
-					if ($res_data_id != 0) {
-						# code...
-						$res_data = 1;
-					}
-				}
-				else
-				{
+				if ($res_data_id != 0) {
+					# code...
 					$res_data = 1;
 				}
+			}
+			else
+			{
+				$res_data = 1;
 			}
 		}
 

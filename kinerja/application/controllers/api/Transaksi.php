@@ -42,6 +42,7 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
         $nip   = $this->input->post('nip');
         $nip   = htmlspecialchars($nip, ENT_QUOTES| ENT_COMPAT, 'UTF-8');
         $users = $this->m_api->get_pegawai($nip);
+        // print_r($users);die();
         if ($users != 0)
         {          
             $res_pegawai = array
@@ -54,26 +55,42 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
             $urtug         = $this->mskp->get_data_skp_pegawai($users[0]->id,$users[0]->posisi,date('Y'),'approve',1);
             if ($urtug != 0) {
                 # code...
+                // print_r($urtug);die();
                 for ($i=0; $i < count($urtug); $i++) 
                 {
+
                     $data['uraian_tugas'][$i] = new stdClass;
                     $data['uraian_tugas'][$i]->id_uraian_tugas = $urtug[$i]->skp_id;                                        
-
+                    $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan;
                     if ($users[0]->kat_posisi == 1) {
                         # code...
-                        $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp;                        
+                        if ($urtug[$i]->id_skp_master != 0) {
+                            # code...
+                            $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp;
+                        }
                     }
                     elseif ($users[0]->kat_posisi == 2) {
                         # code...
-                        $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp_jft;                        
+                        if ($urtug[$i]->id_skp_jft != 0) {
+                            # code...
+                            $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp_jft;
+                        }                                                
+                        $data['uraian_tugas'][$i]->state = 'jft';                        
                     }                    
                     elseif ($users[0]->kat_posisi == 4) {
                         # code...
-                        $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp_jfu;                        
+                        if ($urtug[$i]->id_skp_jfu != 0) {
+                            # code...
+                            $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp_jfu;                            
+                        }                        
+                        $data['uraian_tugas'][$i]->state = 'jfu';                        
                     }                    
                     elseif ($users[0]->kat_posisi == 6) {
                         # code...
-                        $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp;                        
+                        if ($urtug[$i]->id_skp_master != 0) {
+                            # code...
+                            $data['uraian_tugas'][$i]->kegiatan_skp = $urtug[$i]->kegiatan_skp;
+                        }
                     }                    
 
                     // if ($urtug[$i]->id_skp_master == '') {
@@ -97,6 +114,7 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
             $belum_diperiksa   = $this->mtrx->status_pekerjaan('0',$users[0]->id);
             if ($belum_diperiksa != 0) {
                 # code...
+                // print_r($belum_diperiksa);die();                
                 for ($i=0; $i < count($belum_diperiksa); $i++) 
                 {
                     $data['belum_diperiksa'][$i] = new stdClass;
@@ -107,19 +125,30 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['belum_diperiksa'][$i]->jam_selesai = $belum_diperiksa[$i]->jam_selesai;
                     $data['belum_diperiksa'][$i]->menit_efektif = $belum_diperiksa[$i]->menit_efektif;
                     $data['belum_diperiksa'][$i]->tunjangan = $belum_diperiksa[$i]->tunjangan;                    
-                    $data['belum_diperiksa'][$i]->frekuensi_realisasi = $belum_diperiksa[$i]->frekuensi_realisasi;                    
+                    $data['belum_diperiksa'][$i]->frekuensi_realisasi = $belum_diperiksa[$i]->frekuensi_realisasi;
 
+                    $data['belum_diperiksa'][$i]->keterangan_pekerjaan = $belum_diperiksa[$i]->nama_pekerjaan;
+
+                    $data['belum_diperiksa'][$i]->kegiatan_skp = $belum_diperiksa[$i]->uraian_tugas;
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['belum_diperiksa'][$i]->kegiatan_skp = $belum_diperiksa[$i]->kegiatan_skp;                        
                     }
                     elseif ($users[0]->kat_posisi == 2) {
                         # code...
-                        $data['belum_diperiksa'][$i]->kegiatan_skp = $belum_diperiksa[$i]->kegiatan_skp_jft;                        
+                        if ($belum_diperiksa[$i]->id_skp_jft != 0) {
+                            # code...
+                            $data['belum_diperiksa'][$i]->kegiatan_skp = $belum_diperiksa[$i]->kegiatan_skp_jft;
+                        } 
+                        $data['belum_diperiksa'][$i]->state = 'jft';
                     }                    
                     elseif ($users[0]->kat_posisi == 4) {
                         # code...
-                        $data['belum_diperiksa'][$i]->kegiatan_skp = $belum_diperiksa[$i]->kegiatan_skp_jfu;                        
+                        if ($belum_diperiksa[$i]->id_skp_jfu != 0) {
+                            # code...
+                            $data['belum_diperiksa'][$i]->kegiatan_skp = $belum_diperiksa[$i]->kegiatan_skp_jfu;
+                        }
+                        $data['belum_diperiksa'][$i]->state = 'jfu';                        
                     }                    
                     elseif ($users[0]->kat_posisi == 6) {
                         # code...
@@ -143,6 +172,7 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['disetujui'][$i]->menit_efektif = $disetujui[$i]->menit_efektif;
                     $data['disetujui'][$i]->tunjangan = $disetujui[$i]->tunjangan;                    
                     $data['disetujui'][$i]->frekuensi_realisasi = $disetujui[$i]->frekuensi_realisasi;                    
+                    $data['disetujui'][$i]->keterangan_pekerjaan = $disetujui[$i]->nama_pekerjaan;
 
                     if ($users[0]->kat_posisi == 1) {
                         # code...
@@ -180,18 +210,29 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['tolak'][$i]->tunjangan = $tolak[$i]->tunjangan;                    
                     $data['tolak'][$i]->frekuensi_realisasi = $tolak[$i]->frekuensi_realisasi;                    
 
+                    $data['tolak'][$i]->keterangan_pekerjaan = $tolak[$i]->nama_pekerjaan;
+
+                    $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->uraian_tugas;
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->kegiatan_skp;                        
                     }
                     elseif ($users[0]->kat_posisi == 2) {
                         # code...
-                        $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->kegiatan_skp_jft;                        
+                        if ($tolak[$i]->id_skp_jft != 0) {
+                            # code...
+                            $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->kegiatan_skp_jft;
+                        } 
+                        $data['tolak'][$i]->state = 'jft';
                     }                    
                     elseif ($users[0]->kat_posisi == 4) {
                         # code...
-                        $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->kegiatan_skp_jfu;                        
-                    }                    
+                        if ($tolak[$i]->id_skp_jfu != 0) {
+                            # code...
+                            $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->kegiatan_skp_jfu;
+                        }
+                        $data['tolak'][$i]->state = 'jfu';                        
+                    }                        
                     elseif ($users[0]->kat_posisi == 6) {
                         # code...
                         $data['tolak'][$i]->kegiatan_skp = $tolak[$i]->kegiatan_skp;                        
@@ -215,6 +256,9 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['revisi'][$i]->tunjangan = $revisi[$i]->tunjangan;                    
                     $data['revisi'][$i]->frekuensi_realisasi = $revisi[$i]->frekuensi_realisasi;                    
 
+                    $data['revisi'][$i]->keterangan_pekerjaan = $revisi[$i]->nama_pekerjaan;
+
+                    $data['revisi'][$i]->kegiatan_skp = $revisi[$i]->uraian_tugas;                    
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['revisi'][$i]->kegiatan_skp = $revisi[$i]->kegiatan_skp;                        
@@ -250,6 +294,9 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['keberatan'][$i]->tunjangan = $keberatan[$i]->tunjangan;                    
                     $data['keberatan'][$i]->frekuensi_realisasi = $keberatan[$i]->frekuensi_realisasi;                    
 
+                    $data['keberatan'][$i]->keterangan_pekerjaan = $keberatan[$i]->nama_pekerjaan;
+
+                    $data['keberatan'][$i]->kegiatan_skp = $keberatan[$i]->uraian_tugas;                    
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['keberatan'][$i]->kegiatan_skp = $keberatan[$i]->kegiatan_skp;                        
@@ -285,6 +332,9 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['keberatan_ditolak'][$i]->tunjangan = $keberatan_ditolak[$i]->tunjangan;                    
                     $data['keberatan_ditolak'][$i]->frekuensi_realisasi = $keberatan_ditolak[$i]->frekuensi_realisasi;                    
 
+                    $data['keberatan_ditolak'][$i]->keterangan_pekerjaan = $keberatan_ditolak[$i]->nama_pekerjaan;
+
+                    $data['keberatan_ditolak'][$i]->kegiatan_skp = $keberatan_ditolak[$i]->uraian_tugas;                    
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['keberatan_ditolak'][$i]->kegiatan_skp = $keberatan_ditolak[$i]->kegiatan_skp;                        
@@ -320,6 +370,9 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['banding'][$i]->tunjangan = $banding[$i]->tunjangan;                    
                     $data['banding'][$i]->frekuensi_realisasi = $banding[$i]->frekuensi_realisasi;                    
 
+                    $data['banding'][$i]->keterangan_pekerjaan = $banding[$i]->nama_pekerjaan;
+
+                    $data['banding'][$i]->kegiatan_skp = $banding[$i]->uraian_tugas;                    
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['banding'][$i]->kegiatan_skp = $banding[$i]->kegiatan_skp;                        
@@ -355,6 +408,9 @@ class Transaksi extends \Restserver\Libraries\REST_Controller {
                     $data['banding_ditolak'][$i]->tunjangan = $banding_ditolak[$i]->tunjangan;                    
                     $data['banding_ditolak'][$i]->frekuensi_realisasi = $banding_ditolak[$i]->frekuensi_realisasi;                    
 
+                    $data['banding_ditolak'][$i]->keterangan_pekerjaan = $banding_ditolak[$i]->nama_pekerjaan;
+
+                    $data['banding_ditolak'][$i]->kegiatan_skp = $banding_ditolak[$i]->uraian_tugas;                    
                     if ($users[0]->kat_posisi == 1) {
                         # code...
                         $data['banding_ditolak'][$i]->kegiatan_skp = $banding_ditolak[$i]->kegiatan_skp;                        

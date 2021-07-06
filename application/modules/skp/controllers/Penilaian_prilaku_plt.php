@@ -72,6 +72,26 @@ class penilaian_prilaku_plt extends CI_Controller {
 		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
 		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
+
+		$data['bawahan_plt']  = array();
+		if ($this->session->userdata('posisi_plt') != 0) {
+			# code...
+			$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));			
+		}
+
+		if ($data['bawahan_plt'] != array()) {
+			# code...
+			$data['atasan_plt']       = $this->Globalrules->list_atasan_plt($this->session->userdata('posisi_plt'));			
+		// echo "<pre>";
+		// // print_r();die();				
+		// print_r($data['atasan_plt']);die();		
+		// echo "</pre>";		
+			if ($data['atasan_plt'] != 0) {
+				# code...
+				$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);				
+			}						
+		}
+
 		if ($arg == "plt") {
 		}
 		else

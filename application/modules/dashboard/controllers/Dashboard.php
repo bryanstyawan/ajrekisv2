@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model ('transaksi/mtrx', '', TRUE);		
 		$this->load->model ('laporan/mlaporan', '', TRUE);
 		$this->load->model ('skp/mskp', '', TRUE);
+		$this->load->model ('admin/mlogin', '', TRUE);
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -15,7 +16,16 @@ class Dashboard extends CI_Controller {
 	{
 		error_reporting(E_ALL ^ E_WARNING);
 		$this->Globalrules->session_rule();
-
+		
+		 $ceksurvey = 0;
+		$ceksurvey	= $this->mlogin->ceksurvey($this->session->userdata('sesUser'));
+		if ($ceksurvey == 0) {
+			$this->session->set_userdata('surveysess', 0);
+		}
+		else{
+			$this->session->set_userdata('surveysess', 1);
+		} 
+ 
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
 			$this->Globalrules->trigger_skp_tahunan($this->session->userdata('sesUser'));			
@@ -265,4 +275,29 @@ class Dashboard extends CI_Controller {
 		$data['content'] = 'dashboard/soon/index';
 		$this->load->view('templateAdmin',$data);		
 	}	
+	
+	public function add_survey()
+    {
+      
+		
+		$this->mdashboard->save_survey($this->session->userdata('sesUser'));
+		
+		$this->mdashboard->save_survey_diklatpim($this->session->userdata('sesUser'));
+		
+		$this->mdashboard->save_survey_diklatjafung($this->session->userdata('sesUser'));
+		
+		$this->mdashboard->save_survey_diklat20jp($this->session->userdata('sesUser'));
+		
+		$this->mdashboard->save_survey_seminar($this->session->userdata('sesUser'));
+		
+		$this->mdashboard->save_survey_hukuman($this->session->userdata('sesUser')); 
+		
+
+	     $this->session->set_userdata('surveysess', 1);		
+       // $this->load->view("dashboard/home");
+	    
+		redirect('dashboard/home');
+		//return 1;
+		
+    }
 }

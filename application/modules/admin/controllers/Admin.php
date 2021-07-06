@@ -14,6 +14,17 @@ class Admin extends CI_Controller
 	public function index()
 	{
 		$this->Globalrules->session_rule();
+		
+		$ceksurvey = 0;
+		$ceksurvey	= $this->mlogin->ceksurvey($this->session->userdata('sesUser'));
+		if ($ceksurvey == 0) {
+			$this->session->set_userdata('surveysess', 0);
+		}
+		else{
+			$this->session->set_userdata('surveysess', 1);
+		} 
+		
+		
 		redirect('dashboard/home');
 	}
 

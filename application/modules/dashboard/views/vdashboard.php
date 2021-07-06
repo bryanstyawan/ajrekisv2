@@ -135,7 +135,13 @@ if ($this->session->userdata('sesPosisi') != 0)
 ?>
 </div>
 <?php
+
 $this->load->view('dashboard_component/bawahan_component');
+
+if ($this->session->userdata('surveysess') == 0) 
+{
+   // $this->load->view('dashboard_component/survey');
+}
 // $this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
 $this->load->view('dashboard_component/information_emp_component',array(
     'nama_eselon1'  => $nama_eselon1,
@@ -280,6 +286,8 @@ else {
         {
             $("#modal-info-pegawai").modal('show');
         });
+		
+		//$("#modal-kuisioner").modal('show');
 
         $("#btn_masih_diproses").click(function() 
         {

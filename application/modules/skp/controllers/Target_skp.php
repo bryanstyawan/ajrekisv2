@@ -23,7 +23,7 @@ class Target_skp extends CI_Controller {
 		$data['id_pegawai']  = ($id_pegawai == NULL) ? $this->session->userdata('sesUser') : $id_pegawai;
 		$data['id_posisi']   = ($id_pegawai == NULL) ? $this->session->userdata('sesPosisi') : $id_posisi;		
 		$data['year_pass']   = ($year == NULL) ? $this->year_system : $year;		
-		(date('Y') == $this->year_system) ? $this->syncronice_skp($data['id_pegawai'],$data['id_posisi'],$this->year_system) : '' ;
+		(date('Y') == $this->year_system) ? $this->syncronice_skp($data['id_pegawai'],$data['id_posisi'],$this->year_system) : '' ; 
 		$data['list']        = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$data['year_pass'],'10');
 		$data['info_posisi'] = $this->Allcrud->getData('mr_posisi',array('id' => $this->session->userdata('sesPosisi')))->result_array();
 		$data['who_is']      = $this->Globalrules->who_is($this->session->userdata('sesUser'));

@@ -510,7 +510,7 @@ class Mskp extends CI_Model
 				JOIN mr_posisi b
 				ON a.posisi = b.id
 				WHERE b.atasan = '".$posisi."'
-				AND a.status = '1'";
+				AND a.status in (1,2) ";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -621,6 +621,7 @@ class Mskp extends CI_Model
 				WHERE a.id_pegawai = '".$id."'
 				AND a.id_pegawai_penilai = '".$id_evaluator."'
 				AND a.tahun = '".$tahun."'";
+		// print_r($sql);die();				
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
@@ -644,6 +645,7 @@ class Mskp extends CI_Model
 				ON a.id_pegawai = b.id
 				WHERE a.id_pegawai_penilai = '".$id."'
 				AND a.tahun = '".$tahun."'";
+		// print_r($sql);die();						
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
 		{
