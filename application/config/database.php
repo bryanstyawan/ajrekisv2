@@ -75,10 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.193.15',
-	'username' => 'sikerja_asn',
-	'password' => 'asnsikerja_2019',
-	'database' => 'sikerja_new_build',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	// 'database' => 'sikerja_test',
+	'database' => 'sikerja_new_build',	
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
