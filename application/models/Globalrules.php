@@ -1404,9 +1404,10 @@ class Globalrules extends CI_Model
 						'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
 						'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
 						'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
-						'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+						// 'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
 						'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
-					);							
+					);						
+					// print_r($summary_prilaku_skp);die();	
 					$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
 				}
 				else
@@ -1423,7 +1424,7 @@ class Globalrules extends CI_Model
 						'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
 						'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
 					);														
-					$this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
+					// $this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
 				}												
 			}			
 		}		
@@ -1525,7 +1526,7 @@ class Globalrules extends CI_Model
 						'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
 						'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
 						'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
-						'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+						// 'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
 						'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
 					);							
 					$this->Allcrud->addData('rpt_skp_prilaku_skp',$summary_prilaku_skp);							
@@ -1541,7 +1542,7 @@ class Globalrules extends CI_Model
 						'kepemimpinan'           		=> $data_s[$i]['summary_prilaku_skp']['kepemimpinan'],
 						'status'                 		=> $data_s[$i]['summary_prilaku_skp']['status'],
 						'jumlah'                 		=> $data_s[$i]['summary_prilaku_skp']['jumlah'],
-						'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
+						// 'rata_rata'              		=> $data_s[$i]['summary_prilaku_skp']['rata_rata'],
 						'nilai_prilaku_kerja'    		=> $data_s[$i]['summary_prilaku_skp']['nilai_prilaku_kerja']
 					);														
 					$this->Allcrud->editData('rpt_skp_prilaku_skp',$summary_prilaku_skp,$data_parameter);										
