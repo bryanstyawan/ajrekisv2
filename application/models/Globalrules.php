@@ -531,10 +531,13 @@ class Globalrules extends CI_Model
 		$data['nilai_prilaku_bawahan']   = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'bawahan',$year_system);
 		
 
-		// echo "<pre>";
-		// print_r($data['nilai_prilaku_atasan_plt']);die();		
-		// echo "</pre>";		
-
+		if ($data['nilai_prilaku_atasan'][0]->orientasi_pelayanan == 0) {
+			# code...
+			if ($data['nilai_prilaku_atasan_plt'][0]->orientasi_pelayanan != 0) {
+				# code...
+				$data['nilai_prilaku_atasan'] = $data['nilai_prilaku_atasan_plt'];
+			}			
+		}
 
 		$data['infoPegawai']             = $this->get_info_pegawai($id,'id',$_id_posisi);
 		$data['is_bawahan']              = $this->Globalrules->list_bawahan($_id_posisi);
@@ -647,28 +650,28 @@ class Globalrules extends CI_Model
 		$data['list_skp']                                   = $this->mskp->get_data_skp_pegawai($id,$_id_posisi,$year_system,'1','realisasi');
 		$data['summary_prilaku_skp']['integritas']          = $this->get_penilaian_prilaku(
 																$data['nilai_prilaku_atasan'][0]->integritas,
-																$data['nilai_prilaku_atasan_plt'][0]->integritas,
+																// $data['nilai_prilaku_atasan_plt'][0]->integritas,
 																$data['nilai_prilaku_peer'][0]->integritas,
 																$data['nilai_prilaku_bawahan'][0]->integritas
 															);
 
 		$data['summary_prilaku_skp']['orientasi_pelayanan'] = $this->get_penilaian_prilaku(
 																$data['nilai_prilaku_atasan'][0]->orientasi_pelayanan,
-																$data['nilai_prilaku_atasan_plt'][0]->orientasi_pelayanan,			
+																// $data['nilai_prilaku_atasan_plt'][0]->orientasi_pelayanan,			
 																$data['nilai_prilaku_peer'][0]->orientasi_pelayanan,
 																$data['nilai_prilaku_bawahan'][0]->orientasi_pelayanan
 															);
 
 		$data['summary_prilaku_skp']['komitmen']            = $this->get_penilaian_prilaku(
 																$data['nilai_prilaku_atasan'][0]->komitmen,
-																$data['nilai_prilaku_atasan_plt'][0]->komitmen,			
+																// $data['nilai_prilaku_atasan_plt'][0]->komitmen,			
 																$data['nilai_prilaku_peer'][0]->komitmen,
 																$data['nilai_prilaku_bawahan'][0]->komitmen
 															);
 
 		$data['summary_prilaku_skp']['disiplin']            = $this->get_penilaian_prilaku(
 																$data['nilai_prilaku_atasan'][0]->disiplin,
-																$data['nilai_prilaku_atasan_plt'][0]->disiplin,			
+																// $data['nilai_prilaku_atasan_plt'][0]->disiplin,			
 																$data['nilai_prilaku_peer'][0]->disiplin,
 																$data['nilai_prilaku_bawahan'][0]->disiplin
 															);
@@ -680,7 +683,7 @@ class Globalrules extends CI_Model
 																$data['nilai_prilaku_bawahan'][0]->kerjasama
 															);
 
-		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'] != 0) ? ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0  : 0;
+		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'] != 0) ? ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_atasan_plt'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0  : 0;
 		$data['summary_prilaku_skp']['status']              = $this->get_penilaian_prilaku(
 																$data['nilai_prilaku_atasan'][0]->status,
 																$data['nilai_prilaku_atasan_plt'][0]->status,			
@@ -879,47 +882,24 @@ class Globalrules extends CI_Model
 		return ($query->num_rows() > 0) ? $query->result() : array();				
 	}
 
-	public function get_penilaian_prilaku($value_atasan,$value_atasan_plt,$value_peer,$value_bawahan,$PARAM=NULL,$counter=NULL)
+	public function get_penilaian_prilaku($value_atasan,$value_peer,$value_bawahan,$PARAM=NULL,$counter=NULL)
 	{
 		# code...
 		$data = "";
 		if ($PARAM == 'status') {
 			# code...
-			if ($value_atasan != 0) {
-				# code...
-				$data = (($value_atasan + $value_peer + $value_bawahan)/$counter)*100;				
-			}
-			else
-			{
-				$data = (($value_atasan_plt + $value_peer + $value_bawahan)/$counter)*100;
-			}
+			$data = (($value_atasan + $value_peer + $value_bawahan)/$counter)*100;
 		}
 		else
 		{
 			if ($value_bawahan == 0) {
 				# code...
-				if ($value_atasan != 0) {
-					# code...
-					$value_atasan = ($value_atasan*60)/100;
-				}
-				else
-				{
-					$value_atasan = ($value_atasan_plt*60)/100;
-				}				
-
+				$value_atasan = ($value_atasan*60)/100;
 				$value_peer   = ($value_peer*40)/100;
 			}
 			else
 			{
-				if ($value_atasan != 0) {
-					# code...
-					$value_atasan = ($value_atasan*60)/100;
-				}
-				else
-				{
-					$value_atasan = ($value_atasan_plt*60)/100;
-				}
-
+				$value_atasan = ($value_atasan*60)/100;
 				$value_peer    = $value_peer*20/100;
 				$value_bawahan = $value_bawahan*20/100;
 			}

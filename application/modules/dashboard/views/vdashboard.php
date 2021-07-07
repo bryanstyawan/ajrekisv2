@@ -108,14 +108,14 @@ if ($this->session->userdata('sesPosisi') != 0)
         'value_php' => (($summary_tr == '') ? 0 : $summary_tr[0]->menit_efektif),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
         'html'      => ''));                       
-    $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-2 col-xs-8',
-        'id'        => '',
-        'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => '',
-        'value_php' => $skp->persentase,
-        'title'     => 'CAPAIAN SKP',
-        'html'      => "<label>".$skp->total_realisasi_kuantitas.' / '.$skp->total_target_kuantitas."</label>"));                                        
+    // $this->load->view('dashboard_component/common_component',array(
+    //     'class'     => 'col-lg-2 col-xs-8',
+    //     'id'        => '',
+    //     'color_box' => 'background-color: #d2d6de !important;',
+    //     'icon'      => '',
+    //     'value_php' => $skp->persentase,
+    //     'title'     => 'CAPAIAN SKP',
+    //     'html'      => "<label>".$skp->total_realisasi_kuantitas.' / '.$skp->total_target_kuantitas."</label>"));                                        
     $this->load->view('dashboard_component/common_component',array(
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_tunjangan',
