@@ -683,7 +683,7 @@ class Globalrules extends CI_Model
 																$data['nilai_prilaku_bawahan'][0]->kerjasama
 															);
 
-		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'] != 0) ? ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_atasan_plt'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0  : 0;
+		$data['summary_prilaku_skp']['kepemimpinan']        = ($data['infoPegawai'] != 0) ? ($data['infoPegawai'][0]->kat_posisi == 1 || $data['infoPegawai'][0]->kat_posisi == 6) ? $this->get_penilaian_prilaku($data['nilai_prilaku_atasan'][0]->kepemimpinan,$data['nilai_prilaku_peer'][0]->kepemimpinan,$data['nilai_prilaku_bawahan'][0]->kepemimpinan) : 0  : 0;
 		$data['summary_prilaku_skp']['status']              = $this->get_penilaian_prilaku(
 																$data['nilai_prilaku_atasan'][0]->status,
 																// $data['nilai_prilaku_atasan_plt'][0]->status,			
@@ -888,7 +888,16 @@ class Globalrules extends CI_Model
 		$data = "";
 		if ($PARAM == 'status') {
 			# code...
-			$data = (($value_atasan + $value_peer + $value_bawahan)/$counter)*100;
+			// print_r($value_bawahan);die();
+			if($value_atasan != 0 || $value_peer != 0 || $value_bawahan != 0 )
+			{
+				$data = (($value_atasan + $value_peer + $value_bawahan)/$counter)*100;
+			}
+			else
+			{
+				$data = 0;
+			}
+
 		}
 		else
 		{
