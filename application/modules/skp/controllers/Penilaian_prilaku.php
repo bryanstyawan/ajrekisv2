@@ -325,24 +325,27 @@ class Penilaian_prilaku extends CI_Controller {
 		// print_r($data_sender);die();
 		for ($i=0; $i < count($data_sender); $i++) {
 			# code...
-			$info_pegawai = $this->Globalrules->get_info_pegawai($data_sender[$i]['evaluator'],'nama_pegawai');
-
 			$check_data = $this->mskp->get_info_evaluator($this->session->userdata('sesUser'),$data_sender[$i]['evaluator'],$year_system);
 			if ($check_data == 0) {
 				# code...
-				$data = array
-						(
-							'id_pegawai'         => $this->session->userdata('sesUser'),
-							'id_posisi_pegawai' => $this->session->userdata('sesPosisi'),
-							'id_pegawai_penilai' => $data_sender[$i]['evaluator'],
-							'id_posisi_pegawai_penilai' => $data_sender[$i]['posisi'],							
-							'tahun'              => $year_system
-						);
-				$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
-
-				if ($res_data_id != 0) {
+				if ($data_sender[$i]['evaluator'] != '' || $data_sender[$i]['evaluator'] != NULL) {
 					# code...
-					$res_data = 1;
+					$data = array
+							(
+								'id_pegawai'         => $this->session->userdata('sesUser'),
+								'id_posisi_pegawai' => $this->session->userdata('sesPosisi'),
+								'id_pegawai_penilai' => $data_sender[$i]['evaluator'],
+								'id_posisi_pegawai_penilai' => $data_sender[$i]['posisi'],							
+								'tahun'              => $year_system
+							);
+					$res_data_id = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data);
+
+					if ($res_data_id != 0) {
+						# code...
+						$res_data = 1;
+					}					
+				} else {
+					# code...
 				}
 			}
 			else
@@ -367,5 +370,43 @@ class Penilaian_prilaku extends CI_Controller {
 		$res_data = $this->mskp->get_detail_skp_penilaian($id,$year_system);
 		echo json_encode($res_data);
 	}	
+
+	public function set_evaluator_prilaku()
+	{
+		$year_system          = $this->year_system;		
+		$data_sender          = $this->input->post('data_sender');
+		$text_status = "";
+		$res_data = 0; $resMessage = 0;
+		$data = array
+				(
+					'id_pegawai'         => $this->session->userdata('sesUser'),
+					'id_posisi_pegawai' => $this->session->userdata('sesPosisi'),
+					'id_pegawai_penilai' => $data_sender['id_pegawai'],
+					'id_posisi_pegawai_penilai' => $data_sender['id_posisi'],							
+					'tahun'              => $year_system
+				);
+		$get_data = $this->Allcrud->getData('mr_skp_penilaian_prilaku',$data)->result_array();				
+
+		if ($get_data == array()) {
+			# code...
+			$res_data = $this->Allcrud->addData('mr_skp_penilaian_prilaku',$data);			
+			$text_status = $this->Globalrules->check_status_res($res_data,"Anda telah mengajukan penilaian prilaku kepada Atasan dan rekan-rekan anda.");
+			$resMessage = 1;			
+		}
+		else
+		{
+			$res_data = 1;
+			$resMessage = 0;
+			$text_status = "Pegawai ini telah menjadi evaluator anda";
+		}		
+
+		$res = array
+					(
+						'status' => $res_data,
+						'flag' => $resMessage,
+						'text'   => $text_status
+					);
+		echo json_encode($res);
+	}
 }
   

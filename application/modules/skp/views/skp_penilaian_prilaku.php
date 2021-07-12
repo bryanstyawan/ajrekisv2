@@ -290,9 +290,9 @@
             </ul>
         </div>
         <div class="box-body">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <button class="btn btn-default pull-right" id="btn-save-eval">Ajukan Penilai</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -678,7 +678,7 @@ $(document).ready(function()
             },
             success:function(msg){
                 var obj = jQuery.parseJSON (msg);
-                ajax_status(obj);
+                // ajax_status(obj);
             },
             error:function(jqXHR,exception)
             {
@@ -717,24 +717,67 @@ $(document).ready(function()
 function set_evaluator(id, name, posisi) {
     var inputs              = document.getElementsByName('list_evaluator');
     var allowData = 1;
-    for (var i = 0; i < inputs.length; i++) {
-        if (id === $("#list_evaluator_"+i).val()) {
-            allowData = 0
-            break;
-        }
-        else
-        {
-            allowData = 1
-            // break;
-        }
-        // console.log()
-    }    
+    Lobibox.confirm({
+        title: "Konfirmasi",
+        msg: "Ajukan pegawai ini sebagai evaluator anda ?",
+        callback: function ($this, type) {
+            var data_sender = {
+                id_pegawai : id,
+                id_posisi : posisi
+            }
 
-    if (inputs.length < 5) {
-        if (allowData == 1) {
-            $("#evaluator ul").append('<li style="cursor: pointer;" id="li_evaluator_'+i+'"><a class="evaluator_a"><i class="fa fa-circle-o text-red contact-name-list"></i>'+name+'<span class="pull-right" style="padding-bottom: 0px;padding-top: 0px;"><i class="fa fa-close"></i></span></a><input type="hidden" name="list_evaluator" id="list_evaluator_'+i+'" value="'+id+'"><input type="hidden" id="list_evaluator_posisi_'+i+'" value="'+posisi+'"></input><input type="hidden" id="sources_'+i+'" value="local"></li>');        
-        }        
-    }
+            for (var i = 0; i < inputs.length; i++) {
+                if (id === $("#list_evaluator_"+i).val()) {
+                    allowData = 0
+                    break;
+                }
+                else
+                {
+                    allowData = 1
+                    // break;
+                }
+                // console.log()
+            }    
+
+            if (inputs.length < 5) {
+                if (allowData == 1) {
+                    $.ajax({
+                        url :"<?php echo site_url();?>/skp/penilaian_prilaku/set_evaluator_prilaku",
+                        type:"post",
+                        data:{data_sender : data_sender},
+                        beforeSend:function(){
+                            $("#form_penilaian").modal('hide');
+                            $("#loadprosess").modal('show');                                                
+                        },
+                        success:function(msg){
+                            var obj = jQuery.parseJSON (msg);
+                            console.log(obj)
+                            $("#loadprosess").modal('hide');
+                            if (obj.flag == 1) {
+                                $("#evaluator ul").append('<li style="cursor: pointer;" id="li_evaluator_'+i+'"><a class="evaluator_a"><i class="fa fa-circle-o text-red contact-name-list"></i>'+name+'<span class="pull-right" style="padding-bottom: 0px;padding-top: 0px;"><i class="fa fa-close"></i></span></a><input type="hidden" name="list_evaluator" id="list_evaluator_'+i+'" value="'+id+'"><input type="hidden" id="list_evaluator_posisi_'+i+'" value="'+posisi+'"></input><input type="hidden" id="sources_'+i+'" value="local"></li>');                    
+                            }
+                            else
+                            {
+                                Lobibox.notify('warning', {msg: obj.text});                        
+                            }                    
+                        },
+                        error:function(jqXHR,exception)
+                        {
+                            ajax_catch(jqXHR,exception);
+                        }
+                    })
+                }
+                else
+                {
+                    Lobibox.notify('warning', {msg: 'Pegawai ini telah menjadi evaluator anda'});                    
+                }        
+            }  
+            else
+            {
+                Lobibox.notify('warning', {msg: 'Jumlah evaluator anda sudah melebihi syarat'});                
+            }            
+        }
+    })
     
     // console.log(inputs.length)
     // console.log(id, name)
@@ -790,46 +833,52 @@ function send_penilaian_prilaku(id,id_pegawai) {
 
 function remove_list_evaluator_sync(PARAM,id) {
     // body...
-    var x              = $('#list_evaluator_'+PARAM).val();
-    data_sender_detail = {
-                            'evaluator' : id       
+    Lobibox.confirm({
+        title: "Konfirmasi",
+        msg: "Anda ingin menghapus pegawai ini sebagai evaluator anda ?",
+        callback: function ($this, type) {
+            var x              = $('#list_evaluator_'+PARAM).val();
+            data_sender_detail = {
+                                    'evaluator' : id       
+                                }
+            $.ajax({
+                url :"<?php echo site_url();?>/skp/penilaian_prilaku/remove_pengajuan_penilaian_prilaku",
+                type:"post",
+                data:{data_sender : data_sender_detail},
+                beforeSend:function(){
+                    $("#form_penilaian").modal('hide');
+                    $("#loadprosess").modal('show');                                                
+                },
+                success:function(msg){
+                    var obj = jQuery.parseJSON (msg);             
+                    if (obj.status == 1) 
+                    {
+                        // alert(x);
+                        var inputs = document.getElementsByName('list_kandidat');
+                        for (var i = 1; i <= inputs.length; i++) {
+                            if (x == $('#hdn_pegawai_'+i).val()) {
+                                $('#li_kandidat_'+i).css({"backgroundColor": "", "color": "", "pointer-events" : ""});                        
+                            }
                         }
-    $.ajax({
-        url :"<?php echo site_url();?>/skp/penilaian_prilaku/remove_pengajuan_penilaian_prilaku",
-        type:"post",
-        data:{data_sender : data_sender_detail},
-        beforeSend:function(){
-            $("#form_penilaian").modal('hide');
-            $("#loadprosess").modal('show');                                                
-        },
-        success:function(msg){
-            var obj = jQuery.parseJSON (msg);             
-            if (obj.status == 1) 
-            {
-                // alert(x);
-                var inputs = document.getElementsByName('list_kandidat');
-                for (var i = 1; i <= inputs.length; i++) {
-                    if (x == $('#hdn_pegawai_'+i).val()) {
-                        $('#li_kandidat_'+i).css({"backgroundColor": "", "color": "", "pointer-events" : ""});                        
+                        $('#li_evaluator_'+PARAM).remove();
+                        counter_evaluator--;    
+                        $("#loadprosess").modal('hide');                                                
                     }
+                    else
+                    {
+                        Lobibox.notify('warning', {
+                            msg: obj.text
+                            });
+                        setTimeout(function(){ 
+                            $("#loadprosess").modal('hide');                                
+                        }, 500);                                                                           
+                    }           
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);
                 }
-                $('#li_evaluator_'+PARAM).remove();
-                counter_evaluator--;    
-                $("#loadprosess").modal('hide');                                                
-            }
-            else
-            {
-                Lobibox.notify('warning', {
-                    msg: obj.text
-                    });
-                setTimeout(function(){ 
-                    $("#loadprosess").modal('hide');                                
-                }, 500);                                                                           
-            }           
-        },
-        error:function(jqXHR,exception)
-        {
-            ajax_catch(jqXHR,exception);
+            })            
         }
     })     
 }
