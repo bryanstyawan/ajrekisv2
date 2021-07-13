@@ -69,7 +69,7 @@ class Penilaian_prilaku extends CI_Controller {
 			$data['atasan_plt']   = 0;			
 		}
 
-		if ($data['atasan_plt'] != array()) {
+		if ($data['atasan_plt'] != 0) {
 			# code...
 			$dataStorePLT = array
 					(
@@ -88,7 +88,7 @@ class Penilaian_prilaku extends CI_Controller {
 		}
 		else
 		{
-			if ($data['atasan'] != array()) {
+			if ($data['atasan'] != 0) {
 				# code...
 				$dataStorePLT = array
 						(
