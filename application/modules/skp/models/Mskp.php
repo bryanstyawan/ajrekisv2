@@ -598,6 +598,7 @@ class Mskp extends CI_Model
 				ON a.id_pegawai_penilai = b.id
 				LEFT JOIN mr_posisi pnpos ON a.id_posisi_pegawai_penilai = pnpos.id
 				WHERE a.id_pegawai = '".$id."'
+				".$sql_where."
 				AND a.tahun = '".$tahun."'";
 		$query = $this->db->query($sql);
 		if($query->num_rows() > 0)
@@ -1077,6 +1078,44 @@ class Mskp extends CI_Model
 				AND c.nama_posisi IS NOT NULL
 				".$and."				
 				GROUP BY a.id_pegawai, a.id_posisi, a.tahun
+				";
+				// print_r($sql);die();
+		$query = $this->db->query($sql);
+		if($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+    public function get_request_history1($id,$stat=NULL)
+	{
+		# code...		
+		$sql = "SELECT a.id_pegawai as pegawai,
+						a.id_posisi as posisi,
+						a.tahun,
+						b.nama_pegawai as nama_pegawai,
+						c.nama_posisi as nama_posisi,
+						b.nip,
+						es1.nama_eselon1,
+						es2.nama_eselon2,
+						es3.nama_eselon3,
+						es4.nama_eselon4
+				FROM mr_skp_pegawai a
+				LEFT JOIN mr_pegawai b ON a.id_pegawai = b.id
+				LEFT JOIN mr_posisi c ON a.id_posisi = c.id
+				LEFT JOIN mr_eselon1 es1 ON es1.id_es1 = c.eselon1
+				LEFT JOIN mr_eselon2 es2 ON es2.id_es2 = c.eselon2
+				LEFT JOIN mr_eselon3 es3 ON es3.id_es3 = c.eselon3
+				LEFT JOIN mr_eselon4 es4 ON es4.id_es4 = c.eselon4
+				JOIN mr_masa_kerja mk ON mk.id_pegawai = a.id_pegawai
+				AND mk.id_posisi = a.id_posisi				
+				WHERE a.id_pegawai = '".$id."'
+				AND c.nama_posisi IS NOT NULL
+				GROUP BY a.id_pegawai, a.id_posisi
 				";
 				// print_r($sql);die();
 		$query = $this->db->query($sql);
