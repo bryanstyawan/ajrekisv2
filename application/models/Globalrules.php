@@ -857,6 +857,7 @@ class Globalrules extends CI_Model
 					ON a.posisi = b.id
 					WHERE b.atasan = '$posisi'
 					AND a.status in (1,2)
+					AND a.id <> '".$this->session->userdata('sesUser')."'
 					".$sql_where."
 					ORDER BY a.nama_pegawai asc";
 		}
