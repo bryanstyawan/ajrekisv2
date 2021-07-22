@@ -322,7 +322,7 @@ class Penilaian_prilaku extends CI_Controller {
 		$this->Globalrules->notif_message();
 		$data['penilai']  = '';
 		$data['tahun'] = $this->year_system;
-		$data['title']    = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Cetak SKP';
+		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku ';
 		$data['content']  = 'skp/skp_penilaian_prilaku_jabatan';
 		$data['request_history'] = $this->mskp->get_request_history1($this->session->userdata('sesUser'));
 		$this->load->view('templateAdmin',$data);
