@@ -327,7 +327,7 @@ class Penilaian_prilaku extends CI_Controller {
 		$data['tahun'] = $this->year_system;
 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku ';
 		$data['content']  = 'skp/skp_penilaian_prilaku_jabatan';
-		$data['request_history'] = $this->mskp->get_request_history1($this->session->userdata('sesUser'));
+		$data['request_history'] = $this->mskp->get_request_history($this->session->userdata('sesUser'),$this->year_system);
 		$this->load->view('templateAdmin',$data);
 	}	
 
