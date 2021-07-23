@@ -233,7 +233,10 @@ class Penilaian_prilaku extends CI_Controller {
 				// Koordinator/subkoordinator
 				if ($data['infoPegawai'][0]->kat_posisi == 2) {
 					# code...
-					$data['bawahan_koor']      = $this->Globalrules->list_bawahan($data['infoPegawai'][0]->posisi_plt);					
+					if ($data['infoPegawai'][0]->posisi_plt != 0 || $data['infoPegawai'][0]->posisi_plt != null) {
+						# code...
+						$data['bawahan_koor']      = $this->Globalrules->list_bawahan($data['infoPegawai'][0]->posisi_plt);						
+					}					
 				}
 
 		// echo "<pre>";
