@@ -80,6 +80,7 @@ body * {
 }
 </style>
 <?php
+  $status = 0;
 	if ($request_history != 0) {
 		# code...
 		for ($i=0; $i < count($request_history); $i++) { 
@@ -105,6 +106,13 @@ body * {
           </div>
         </div>
         <?php        
+      }
+      else
+      {
+        ?>
+        <h2 align="center">Anda belum membuat target skp untuk tahun ini</h2>
+        <?php
+        break;
       }
 		}		
 	}
