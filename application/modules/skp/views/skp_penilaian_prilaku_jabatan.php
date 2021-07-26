@@ -110,9 +110,9 @@ body * {
       else
       {
         ?>
-        <h2 align="center">Anda belum membuat target skp untuk tahun ini</h2>
+        <!-- <h2 align="center">Anda belum membuat target skp untuk tahun ini</h2> -->
         <?php
-        break;
+        // break;
       }
 		}		
 	}
