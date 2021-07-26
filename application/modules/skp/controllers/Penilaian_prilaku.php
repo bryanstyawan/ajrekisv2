@@ -229,6 +229,26 @@ class Penilaian_prilaku extends CI_Controller {
 					$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);
 					$data['atasan_plt'] = array();										
 				}
+									
+
+				if ($data['peer'] == array()) {
+					# code...
+					if ($this->session->userdata('kat_posisi') == 4 || $this->session->userdata('kat_posisi') == 2) {
+						# code...
+						if ($data['peer'] == 0 || count($data['peer']) < 5) {
+							# code...
+							$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
+							if ($data['peer'] == 0 || count($data['peer']) < 5) {
+								# code...
+								$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
+								if ($data['peer'] == 0 || count($data['peer']) < 5) {
+									# code...
+									$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
+								}				
+							}			
+						}			
+					}					
+				}
 				
 				// Koordinator/subkoordinator
 				if ($data['infoPegawai'][0]->kat_posisi == 2) {
@@ -238,11 +258,6 @@ class Penilaian_prilaku extends CI_Controller {
 						$data['bawahan_koor']      = $this->Globalrules->list_bawahan($data['infoPegawai'][0]->posisi_plt);						
 					}					
 				}
-
-		// echo "<pre>";
-		// print_r($data['infoPegawai'][0]->kat_posisi);die();				
-		// // print_r($data['bawahan_plt']);die();		
-		// echo "</pre>";										
 
 				$dataStorePLT = array
 						(
@@ -264,21 +279,7 @@ class Penilaian_prilaku extends CI_Controller {
 				// }
 				// else
 				// {
-				// 	if ($this->session->userdata('kat_posisi') == 4 || $this->session->userdata('kat_posisi') == 2) {
-				// 		# code...
-				// 		if ($data['peer'] == 0 || count($data['peer']) < 5) {
-				// 			# code...
-				// 			$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
-				// 			if ($data['peer'] == 0 || count($data['peer']) < 5) {
-				// 				# code...
-				// 				$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-				// 				if ($data['peer'] == 0 || count($data['peer']) < 5) {
-				// 					# code...
-				// 					$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-				// 				}				
-				// 			}			
-				// 		}			
-				// 	}
+
 				// 	else
 				// 	{
 			
