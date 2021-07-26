@@ -80,12 +80,13 @@ body * {
 }
 </style>
 <?php
-  $status = 0;
+  $counter = 0;
 	if ($request_history != 0) {
 		# code...
 		for ($i=0; $i < count($request_history); $i++) { 
       if ($request_history[$i]->tahun == date('Y')) {
         # code...
+        $counter++;
         ?>
         <div class="card-container col-lg-3"> 
           <div class="card">
@@ -109,11 +110,15 @@ body * {
       }
       else
       {
-        ?>
-        <!-- <h2 align="center">Anda belum membuat target skp untuk tahun ini</h2> -->
-        <?php
-        // break;
+
       }
 		}		
 	}
+
+  if ($counter == 0) {
+    # code...
+    ?>
+    <h2 align="center">Anda belum membuat target skp untuk tahun ini</h2>
+    <?php    
+  }
 ?>
