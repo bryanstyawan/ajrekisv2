@@ -19,44 +19,45 @@ class Penilaian_prilaku_akademik extends CI_Controller {
 	public function index($arg=NULL)
 	{
 		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();		
-		$helper_title         = "";
-		$helper_posisi        = "";
-		$helper_atasan        = "";
-		$year_system          = $this->year_system;
-		$helper_posisi        = $this->session->userdata('posisi_akademik');
-		$helper_atasan        = $this->session->userdata('atasan');		
-		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,$year_system);
-		$data['content']      = 'skp/skp_penilaian_prilaku';
-		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
-		$data['subtitle']     = '';
+		redirect('skp/penilaian_prilaku/data');		
+		// $this->Globalrules->session_rule();
+		// $this->Globalrules->notif_message();		
+		// $helper_title         = "";
+		// $helper_posisi        = "";
+		// $helper_atasan        = "";
+		// $year_system          = $this->year_system;
+		// $helper_posisi        = $this->session->userdata('posisi_akademik');
+		// $helper_atasan        = $this->session->userdata('atasan');		
+		// $data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$helper_posisi,$year_system);
+		// $data['content']      = 'skp/skp_penilaian_prilaku';
+		// $data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku '.$helper_title;
+		// $data['subtitle']     = '';
 
 
-		$data['atasan']       = $this->Globalrules->list_atasan_akademik($this->session->userdata('atasan'));
-		$data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($helper_atasan) : $data['atasan'] ;		
-		$data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
-		$data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
-		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
-		if ($this->session->userdata('kat_posisi') == 4 || $this->session->userdata('kat_posisi') == 2) {
-			# code...
-			if ($data['peer'] == 0 || count($data['peer']) < 5) {
-				# code...
-				$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
-				if ($data['peer'] == 0 || count($data['peer']) < 5) {
-					# code...
-					$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-					if ($data['peer'] == 0 || count($data['peer']) < 5) {
-						# code...
-						$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
-					}				
-				}			
-			}			
-		}		
+		// $data['atasan']       = $this->Globalrules->list_atasan_akademik($this->session->userdata('atasan'));
+		// $data['atasan']       = ($data['atasan'] == 0) ? $this->Globalrules->list_atasan_plt($helper_atasan) : $data['atasan'] ;		
+		// $data['peer']         = $this->Globalrules->list_bawahan($helper_atasan);
+		// $data['bawahan']      = $this->Globalrules->list_bawahan($helper_posisi);
+		// $data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
+		// if ($this->session->userdata('kat_posisi') == 4 || $this->session->userdata('kat_posisi') == 2) {
+		// 	# code...
+		// 	if ($data['peer'] == 0 || count($data['peer']) < 5) {
+		// 		# code...
+		// 		$data['peer'] = ($this->session->userdata('sesEs4') != 0) ? $this->Globalrules->get_peer(array('b.eselon4',$this->session->userdata('sesEs4')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;						
+		// 		if ($data['peer'] == 0 || count($data['peer']) < 5) {
+		// 			# code...
+		// 			$data['peer'] = ($this->session->userdata('sesEs3') != 0) ? $this->Globalrules->get_peer(array('b.eselon3',$this->session->userdata('sesEs3')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
+		// 			if ($data['peer'] == 0 || count($data['peer']) < 5) {
+		// 				# code...
+		// 				$data['peer'] = ($this->session->userdata('sesEs2') != 0) ? $this->Globalrules->get_peer(array('b.eselon2',$this->session->userdata('sesEs2')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) : $this->Globalrules->get_peer(array('b.eselon1',$this->session->userdata('sesEs1')),array('b.kat_posisi',$this->session->userdata('kat_posisi'))) ;
+		// 			}				
+		// 		}			
+		// 	}			
+		// }		
 		
-		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$year_system);
-		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$year_system);				
-		$this->load->view('templateAdmin',$data);
+		// $data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$year_system);
+		// $data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$year_system);				
+		// $this->load->view('templateAdmin',$data);
 	}
 
 	public function penilaian_prilaku_plt()

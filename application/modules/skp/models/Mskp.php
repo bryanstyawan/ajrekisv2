@@ -723,11 +723,28 @@ class Mskp extends CI_Model
 			AND a.id_posisi_pegawai = '".$id_posisi."'
 			-- AND pos1.atasan = a.id_posisi_pegawai_penilai
 			AND peg2.`posisi_plt` = pos1.`atasan`			
-			";
-		// echo "<pre>";
-		// print_r($sql);die();		
-		// echo "</pre>";						
+			";						
 		}
+		elseif ($parameter == 'atasan_akademik') {
+			$sql = "SELECT DISTINCT 	
+			COALESCE (a.orientasi_pelayanan, 0) AS orientasi_pelayanan,
+			COALESCE (a.integritas, 0) AS integritas,
+			COALESCE (a.komitmen, 0) AS komitmen,
+			COALESCE (a.disiplin, 0) AS disiplin,
+			COALESCE (a.kerjasama, 0) AS kerjasama,
+			COALESCE (a.kepemimpinan, 0) AS kepemimpinan,
+			COALESCE (a. STATUS, 0) AS status
+			FROM mr_skp_penilaian_prilaku a 
+			LEFT JOIN mr_pegawai peg1 ON peg1.id = a.id_pegawai
+			LEFT JOIN mr_posisi pos1 ON pos1.id = a.id_posisi_pegawai
+			LEFT JOIN mr_pegawai peg2 ON peg2.id = a.id_pegawai_penilai
+			LEFT JOIN mr_posisi pos2 ON pos2.id = a.id_posisi_pegawai_penilai
+			WHERE a.id_pegawai = '".$id_pegawai."'
+			AND a.tahun = '".$tahun."'
+			AND a.id_posisi_pegawai = '".$id_posisi."'		
+			AND pos1.`atasan` = peg2.`posisi_akademik`			
+			";						
+		}		
 		elseif ($parameter == 'peer') {
 			# code...
 			$sql = "SELECT DISTINCT 
@@ -746,8 +763,9 @@ class Mskp extends CI_Model
 					WHERE a.id_pegawai = '".$id_pegawai."'
 					AND a.tahun = '".$tahun."'
 					AND a.id_posisi_pegawai = '".$id_posisi."'
-					AND pos1.atasan <> a.id_posisi_pegawai_penilai
-					AND pos2.atasan <> a.id_posisi_pegawai
+					AND pos2.`atasan` = pos1.`atasan`					
+					-- AND pos1.atasan <> a.id_posisi_pegawai_penilai
+					-- AND pos2.atasan <> a.id_posisi_pegawai
 					GROUP BY a.id_pegawai";
 		}
 		elseif ($parameter == 'bawahan') {

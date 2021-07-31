@@ -525,18 +525,22 @@ class Globalrules extends CI_Model
 		$data['tr_tugas_tambahan']       = $this->mtrx->tugas_tambahan($id,1,'tugas-tambahan',$year_system);
 		$data['tr_kreativitas']          = $this->mtrx->tugas_tambahan($id,1,'kreativitas',$year_system);
 		$data['evaluator']               = $this->mskp->get_data_evaluator($id,$year_system,$_id_posisi);
-		$data['nilai_prilaku_atasan']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan',$year_system);
-		$data['nilai_prilaku_atasan_plt']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan_plt',$year_system);		
+
+		$data['nilai_prilaku_atasan']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan',$year_system);		
 		$data['nilai_prilaku_peer']      = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'peer',$year_system);
 		$data['nilai_prilaku_bawahan']   = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'bawahan',$year_system);
 		
-
 		if ($data['nilai_prilaku_atasan'][0]->orientasi_pelayanan == 0) {
 			# code...
+			$data['nilai_prilaku_atasan_plt']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan_plt',$year_system);			
 			if ($data['nilai_prilaku_atasan_plt'][0]->orientasi_pelayanan != 0) {
 				# code...
 				$data['nilai_prilaku_atasan'] = $data['nilai_prilaku_atasan_plt'];
 			}			
+			else
+			{
+				$data['nilai_prilaku_atasan']    = $this->mskp->_get_nilai_prilaku($id,$_id_posisi,'atasan_akademik',$year_system);	
+			}
 		}
 
 		$data['infoPegawai']             = $this->get_info_pegawai($id,'id',$_id_posisi);

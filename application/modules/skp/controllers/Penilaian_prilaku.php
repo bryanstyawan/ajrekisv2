@@ -216,6 +216,7 @@ class Penilaian_prilaku extends CI_Controller {
 
 				$data['atasan']       = $this->Globalrules->list_atasan($id_posisi);
 				$data['atasan_plt']   = $this->Globalrules->list_atasan_plt($id_posisi);											
+				$data['atasan_akademik']   = $this->Globalrules->list_atasan_akademik($data['infoPegawai'][0]->posisi);				
 
 				// echo "<pre>";
 				// // print_r($data['atasan']);die();		
@@ -253,8 +254,8 @@ class Penilaian_prilaku extends CI_Controller {
 
 					$dataStorePLT = array
 							(
-								'id_pegawai'         => $this->session->userdata('sesUser'),
-								'id_posisi_pegawai' => $this->session->userdata('sesPosisi'),
+								'id_pegawai'         => $id_pegawai,
+								'id_posisi_pegawai' => $id_posisi,
 								'id_pegawai_penilai' => $data['atasan'][0]->id,
 								'id_posisi_pegawai_penilai' => $data['atasan'][0]->posisi,							
 								'tahun'              => $year_system
@@ -272,14 +273,42 @@ class Penilaian_prilaku extends CI_Controller {
 						# code...
 						
 						$data['atasan'] = $data['atasan_plt'];
+						$dataStorePLT = array
+								(
+									'id_pegawai'         => $id_pegawai,
+									'id_posisi_pegawai' => $id_posisi,
+									'id_pegawai_penilai' => $data['atasan'][0]->id,
+									'id_posisi_pegawai_penilai' => $data['atasan'][0]->posisi,							
+									'tahun'              => $year_system
+								);
+						$get_data_atasan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',$dataStorePLT)->result_array();				
+
+						if ($get_data_atasan == array()) {
+							# code...
+							$res_data = $this->Allcrud->addData('mr_skp_penilaian_prilaku',$dataStorePLT);			
+						}													
 						$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);
 						$data['atasan_plt'] = array();										
 					}
 					else
 					{
-						$data['atasan'] = $this->Globalrules->list_atasan_akademik($id_posisi);
+						$data['atasan'] = $data['atasan_akademik'];
 						if ($data['atasan'] != 0 ) {
 							# code...
+							$dataStorePLT = array
+									(
+										'id_pegawai'         => $id_pegawai,
+										'id_posisi_pegawai' => $id_posisi,
+										'id_pegawai_penilai' => $data['atasan'][0]->id,
+										'id_posisi_pegawai_penilai' => $data['atasan'][0]->posisi,							
+										'tahun'              => $year_system
+									);
+							$get_data_atasan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',$dataStorePLT)->result_array();				
+
+							if ($get_data_atasan == array()) {
+								# code...
+								$res_data = $this->Allcrud->addData('mr_skp_penilaian_prilaku',$dataStorePLT);			
+							}							
 							$data['peer']         = $this->Globalrules->list_bawahan($data['atasan'][0]->posisi_akademik);							
 						}
 						else
@@ -303,6 +332,10 @@ class Penilaian_prilaku extends CI_Controller {
 				$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
 		
 				$data['request_eval'] = $this->mskp->get_request_eval($id_pegawai,$year_system);
+				// echo "<pre>";
+				// // print_r($data['atasan']);die();		
+				// print_r($data);die();		
+				// echo "</pre>";								
 				$data['evaluator']    = $this->mskp->get_data_evaluator($id_pegawai,$year_system,$id_posisi);				
 				$this->load->view('templateAdmin',$data);		
 			}
@@ -353,68 +386,69 @@ class Penilaian_prilaku extends CI_Controller {
 	public function penilaian_prilaku_plt()
 	{
 		# code...
-		$this->Globalrules->session_rule();
-		$this->Globalrules->notif_message();
-		$get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
-		if ($get_data_pegawai != array()) 
-		{
-			# code...
-			if ($get_data_pegawai[0]['posisi_plt'] == 0) {
-				# code...
-				redirect('dashboard/home');
-			}
-			else
-			{
-				$get_posisi = $this->Globalrules->get_info_pegawai($get_data_pegawai[0]['posisi_plt'],'posisi');
+		redirect('skp/penilaian_prilaku/data');		
+		// $this->Globalrules->session_rule();
+		// $this->Globalrules->notif_message();
+		// $get_data_pegawai = $this->Allcrud->getData('mr_pegawai',array('id'=>$this->session->userdata('sesUser')))->result_array();
+		// if ($get_data_pegawai != array()) 
+		// {
+		// 	# code...
+		// 	if ($get_data_pegawai[0]['posisi_plt'] == 0) {
+		// 		# code...
+		// 		redirect('dashboard/home');
+		// 	}
+		// 	else
+		// 	{
+		// 		$get_posisi = $this->Globalrules->get_info_pegawai($get_data_pegawai[0]['posisi_plt'],'posisi');
 
-				$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt'],$this->year_system);
-				$data['content']      = 'skp/skp_penilaian_prilaku';
-				$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku PLT';
-				$data['subtitle']     = '';
-				$data['atasan']       = $this->Globalrules->list_atasan($get_data_pegawai[0]['posisi_plt']);
-				$data['peer']         = $this->Globalrules->list_bawahan($get_posisi[0]->atasan);
-				$data['bawahan']      = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
+		// 		$data                 = $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$get_data_pegawai[0]['posisi_plt'],$this->year_system);
+		// 		$data['content']      = 'skp/skp_penilaian_prilaku';
+		// 		$data['title']        = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Penilaian Prilaku PLT';
+		// 		$data['subtitle']     = '';
+		// 		$data['atasan']       = $this->Globalrules->list_atasan($get_data_pegawai[0]['posisi_plt']);
+		// 		$data['peer']         = $this->Globalrules->list_bawahan($get_posisi[0]->atasan);
+		// 		$data['bawahan']      = $this->Globalrules->list_bawahan($get_data_pegawai[0]['posisi_plt']);
 
-				// $data['bawahan_plt']  = 0;
-				// if ($this->session->userdata('posisi_plt') != 0) {
-				// 	# code...
-				// 	$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));			
-				// }
+		// 		// $data['bawahan_plt']  = 0;
+		// 		// if ($this->session->userdata('posisi_plt') != 0) {
+		// 		// 	# code...
+		// 		// 	$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));			
+		// 		// }
 				
 		
-				// if ($data['bawahan_plt'] != 0) {
-				// 	# code...
-				// 	$data['atasan_plt']       = $this->Globalrules->list_atasan_plt($this->session->userdata('posisi_plt'));			
-				// 	if ($data['atasan_plt'] != 0) {
-				// 		# code...
-				// 		$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);				
-				// 	}						
-				// }				
+		// 		// if ($data['bawahan_plt'] != 0) {
+		// 		// 	# code...
+		// 		// 	$data['atasan_plt']       = $this->Globalrules->list_atasan_plt($this->session->userdata('posisi_plt'));			
+		// 		// 	if ($data['atasan_plt'] != 0) {
+		// 		// 		# code...
+		// 		// 		$data['peer']         = $this->Globalrules->list_bawahan($data['atasan_plt'][0]->posisi_plt);				
+		// 		// 	}						
+		// 		// }				
 
-				$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));
-				$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
-				if($data['bawahan'] != 0){
-					for ($i=0; $i < count($data['bawahan']); $i++) { 
-						# code...
-						$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>$this->year_system));
-						if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
-							# code...
-							$data_store = array
-									(
-										'id_pegawai'         => $data['bawahan'][$i]->id,
-										'id_pegawai_penilai' => $this->session->userdata('sesUser'),
-										'tahun'              => $this->year_system
-									);
-							$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
-						}
-					}
-				}
+		// 		$data['bawahan_plt']  = $this->Globalrules->list_bawahan($this->session->userdata('posisi_plt'));
+		// 		$data['satuan']       = $this->Allcrud->listData('mr_skp_satuan');
+		// 		if($data['bawahan'] != 0){
+		// 			for ($i=0; $i < count($data['bawahan']); $i++) { 
+		// 				# code...
+		// 				$get_data_bawahan = $this->Allcrud->getData('mr_skp_penilaian_prilaku',array('id_pegawai'=>$data['bawahan'][$i]->id,'id_pegawai_penilai'=>$this->session->userdata('sesUser'),'tahun'=>$this->year_system));
+		// 				if ($get_data_bawahan->result_array() == array() || $get_data_bawahan->result_array() == 0) {
+		// 					# code...
+		// 					$data_store = array
+		// 							(
+		// 								'id_pegawai'         => $data['bawahan'][$i]->id,
+		// 								'id_pegawai_penilai' => $this->session->userdata('sesUser'),
+		// 								'tahun'              => $this->year_system
+		// 							);
+		// 					$res_data = $this->Allcrud->addData_with_return_id('mr_skp_penilaian_prilaku',$data_store);					
+		// 				}
+		// 			}
+		// 		}
 					
-				$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$this->year_system);
-				$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$this->year_system);				
-				$this->load->view('templateAdmin',$data);				
-			}
-		}
+		// 		$data['request_eval'] = $this->mskp->get_request_eval($this->session->userdata('sesUser'),$this->year_system);
+		// 		$data['evaluator']    = $this->mskp->get_data_evaluator($this->session->userdata('sesUser'),$this->year_system);				
+		// 		$this->load->view('templateAdmin',$data);				
+		// 	}
+		// }
 	}	
 
 
