@@ -673,12 +673,12 @@ else {
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-12" style="background-color:#fcff37">
+                                            <div class="form-group col-md-12" style="">
                                                 <div class="form-group col-md-12">
-                                                    <label style="color: #000;font-weight: 400;font-size: 19px;">*Diisi jika sudah ada output</label>
+                                                    <label style="color: #000;font-weight: 400;font-size: 19px;display:none">*Diisi jika sudah ada output</label>
                                                 </div>
 
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-6" style="display:none">
                                                     <input type="hidden" id="hdn_param_out_skp">
                                                     <input type="hidden" id="hdn_param_qty_skp">
                                                     <input type="hidden" id="hdn_param_realisasi_qty_skp">
@@ -693,7 +693,7 @@ else {
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group col-md-6">
+                                                <!-- <div class="form-group col-md-6"> -->
                                                     <div class="col-lg-12">
                                                         <label class="pull-left" style="color: #000;font-weight: 400;font-size: 19px;">File Pendukung</label>
                                                     </div>
@@ -705,7 +705,7 @@ else {
                                                         <label class="pull-right" style="color: #000;font-weight: 400;font-size: 14px;">*Maksimal 3MB (pdf|csv|docx|doc|xlsx|xl|xls|jpg|jpeg|png)</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            <!-- </div> -->
 
                                             <div class="form-group col-md-12">
                                                 <div class="row">
