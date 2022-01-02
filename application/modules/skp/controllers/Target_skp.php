@@ -11,7 +11,7 @@ class Target_skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2021;	
+	private $year_system = 2022;	
 
 	public function data($year=NULL,$id_pegawai=NULL,$id_posisi=NULL)
 	{
@@ -43,6 +43,11 @@ class Target_skp extends CI_Controller {
 				# code...
 				$kat_posisi = $check_posisi[0]['kat_posisi']; 
 				$data_skp_period = $this->mskp->get_data_skp_pegawai($id_pegawai,$posisi,$tahun-1,'1','realisasi');				
+				// echo "<pre>";
+				// // print_r($tahun);				
+				// print_r($data_skp_period);				
+				// echo "</pre>";
+				// die();
 				if ($data_skp_period != 0) {
 					# code...
 					if ($data_skp_period != 0) {
@@ -63,14 +68,15 @@ class Target_skp extends CI_Controller {
 							if ($check_data == array()) {
 								# code...
 								$data['PK']					  = $data_skp_period[$i]->PK;
-								$data['status']               = 6;
+								// $data['status']               = 6;
+								$data['status']               = 1;								
 								$data['jenis_skp']            = $data_skp_period[$i]->jenis_skp;
 								$data['AK_target']            = $data_skp_period[$i]->AK_target;
-								$data['target_qty']		      = $data_skp_period[$i]->realisasi_kuantitas; 
+								$data['target_qty']		      = $data_skp_period[$i]->target_qty; 
 								$data['target_output']        = $data_skp_period[$i]->target_output; 
 								$data['target_kualitasmutu']  = $data_skp_period[$i]->target_kualitasmutu;
 								$data['target_waktu_bln']     = $data_skp_period[$i]->target_waktu_bln;
-								$data['target_biaya']		    = $data_skp_period[$i]->target_biaya;							
+								$data['target_biaya']		    = $data_skp_period[$i]->target_biaya;
 								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);								
 							}
 						}

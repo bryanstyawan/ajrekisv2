@@ -14,7 +14,7 @@ class Master_skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2021;
+	private $year_system = 2022;
 
 	public function index()
 	{

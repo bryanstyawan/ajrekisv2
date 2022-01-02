@@ -14,7 +14,7 @@ class Globalrules extends CI_Model
 		$this->load->model ('master/Mmaster', '', TRUE);
 	}
 
-	private $year_system = 2021;
+	private $year_system = 2022;
 	private $prev_year_system = 2021-1;
 
 	public function session_rule()
