@@ -1593,8 +1593,8 @@ while ($row=mysqli_fetch_object($result))
 						?>
 					</TABLE> <p>
 					
-					<!-- <label for="add"><a onclick="addRow('dataTable1')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					 <label for="del"><a onclick="deleteRow('dataTable1')">Hapus Diklat</a></label> -->
+					 <label for="add"><a onclick="addRow('dataTable1')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
+					 <label for="del"><a onclick="deleteRow('dataTable1')">Hapus Diklat</a></label>
 			  </div>
 			  <div class="tab">Anda Pernah Diklat Jabatan Fungsional ?
 				<p><select id="tampiljafung" name="tampiljafung" onchange="cekdiklatjafung()" class="form-control"> 
@@ -1694,8 +1694,8 @@ while ($row=mysqli_fetch_object($result))
 						   }
 						 ?> 
 						</TABLE> <p>
-					<!--	<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>-->
+						<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
+					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>
 			  </div>
 			  <div class="tab">Dalam 1 tahun terakhir (2021), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
 					 <p><select id="tampil20jp" name="tampil20jp" onchange="cekdiklatjp()" class="form-control">
@@ -1800,8 +1800,8 @@ while ($row=mysqli_fetch_object($result))
 						 ?> 
 						
 						</TABLE> <p>
-						<!--<label for="add"><a onclick="addRow('dataTable3')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>-->
+						<label for="add"><a onclick="addRow('dataTable3')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
+					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>
 					 
 			  </div>
 			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2021), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
@@ -1903,8 +1903,8 @@ while ($row=mysqli_fetch_object($result))
 						 ?> 
 						
 					</TABLE> <p>
-					<!--<label for="add"><a onclick="addRow('dataTable4')">Tambah Seminar</a></label> &nbsp &nbsp &nbsp
-					<label for="del"><a onclick="deleteRow('dataTable4')">Hapus Seminar</a></label>-->
+					<label for="add"><a onclick="addRow('dataTable4')">Tambah Seminar</a></label> &nbsp &nbsp &nbsp
+					<label for="del"><a onclick="deleteRow('dataTable4')">Hapus Seminar</a></label>
 			  </div>
 			  
 			  <div class="tab"> Pendidikan Terakhir Anda:
@@ -2226,10 +2226,6 @@ function nextPrev(n) {
 	  alert("Lengkapi Pengisian Data !");
 	return false; } */
 	//alert(currentTab);
-	// if (!ValidateFile()) {
-	 // alert("Lengkapi Pengisian Data !");
-	// return false; }
-	
     if (currentTab==0 && document.getElementById("form1").jabatan.value=='CPNS') {
 		sessionStorage.setItem("showw", 0);
 	  alert("Status anda masih CPNS, Anda dapat melewati survey Indeks Profesionalitas");
@@ -2238,13 +2234,6 @@ function nextPrev(n) {
 	}  
 	  
 	  if (currentTab == 2){
-		  
-		
-		if (!ValidateFile()) {
-			return false;
-		}
-		
-		
 		var jnsdiklat=document.getElementById("form1").tampil.value;
 		
 		  if (jnsdiklat=='sdhpim') 
@@ -2289,24 +2278,14 @@ function nextPrev(n) {
 							alert("Anda belum mengisi Jumlah Jam!");
 							return false;
 					}
-					
 					if (id=="") {
 						if (berkas=="") {
 								alert("Anda belum mengupload sertifikat!");
 								return false;
 						}
-					} 
-					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
 					}
-						
+					
+					
 				}
 			  
 		  }
@@ -2315,28 +2294,6 @@ function nextPrev(n) {
 	   }
 	   
 	   if (currentTab == 1){
-		
-			// if (!ValidSizeSKP()) {
-				// return false;
-			// }
-			
-			var berkasskp=document.getElementById("form1").berkasskp.value;
-
-			if (!berkasskp=="") {
-				
-				if (!ValidateFile()) {
-					return false;
-				}
-				
-				const oFile =  document.getElementById("berkasskp").files[0];  
-
-				if (oFile.size > 1000000) // 2 MiB for bytes.
-				{
-				  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-				  return false;
-				}
-			}
-			
 			var niltotal=document.getElementById("form1").niltotal.value;
 			if ((niltotal==0) || (niltotal=='')) {
 					alert("Anda belum mengisi SKP");
@@ -2352,40 +2309,9 @@ function nextPrev(n) {
 					alert("Anda belum mengisi data atasan pejabat penilai");
 					return false;
 			}
-			
-			// var _validFileExtensions = [".jpg", ".jpeg", ".pdf", ".png"];    
-			
-			// var arrInputs = document.getElementById("form1").berkasskp.value;;
-			// for (var i = 0; i < arrInputs.length; i++) {
-				// var oInput = arrInputs[i];
-				// if (oInput.type == "file") {
-					// var sFileName = oInput.value;
-					// if (sFileName.length > 0) {
-						// var blnValid = false;
-						// for (var j = 0; j < _validFileExtensions.length; j++) {
-							// var sCurExtension = _validFileExtensions[j];
-							// if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-								// blnValid = true;
-								// break;
-							// }
-						// }
-						
-						// if (!blnValid) {
-							// alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
-							// return false;
-						// }
-					// }
-				// }
-			// }
-		 
-			
 	   }
 	  
 	   if (currentTab == 3){
-		   if (!ValidateFile()) {
-				return false;
-			}
-		
 		var jnsdiklat=document.getElementById("form1").tampiljafung.value;
 	
 		  if (jnsdiklat=='sdhdiklatjafung') 
@@ -2442,15 +2368,6 @@ function nextPrev(n) {
 						}
 					}
 					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
 					
 				}
 			  
@@ -2460,9 +2377,6 @@ function nextPrev(n) {
 	   }
 		 
 		if (currentTab == 5){
-			if (!ValidateFile()) {
-				return false;
-			}
 		var jnsdiklat=document.getElementById("form1").tampilseminar.value;
 		
 		  if (jnsdiklat=='sdhseminar') 
@@ -2522,24 +2436,12 @@ function nextPrev(n) {
 						}
 					}
 					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
 					
 				}
 		  }
 		}
   
 	if (currentTab == 4){
-		if (!ValidateFile()) {
-			return false;
-		}
 		var jnsdiklat=document.getElementById("form1").tampil20jp.value;
 
 		  if (jnsdiklat=='sdhdiklat20jp') 
@@ -2599,15 +2501,7 @@ function nextPrev(n) {
 						}
 					}
 					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
+					
 					
 					
 				}
@@ -2615,10 +2509,6 @@ function nextPrev(n) {
 	}
   
   if (currentTab == 7){
-		if (!ValidateFile()) {
-			return false;
-		}
-		
 		var jnsdiklat=document.getElementById("form1").hukuman.value;
 	//alert(jnsdiklat);
 		  if (jnsdiklat!="Tidak Pernah") 
@@ -2647,19 +2537,9 @@ function nextPrev(n) {
 					if (berkas=="") {
 								alert("Anda belum Mengupload SK");
 								return false;
-					}
+						}
 				}
-				
-				if (!berkas=="") {
-							const oFile =  document.getElementById("berkashukuman").files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-				}
-				
+			    
 		  }
 	}
 	
@@ -2893,45 +2773,6 @@ function validateForm() {
   
   return valid; // return the valid status
 }
-
-function ValidateFile() {
-	var _validFileExtensions = [".jpg", ".jpeg", ".pdf"];  
-    var arrInputs = form1.getElementsByTagName("input");
-    for (var i = 0; i < arrInputs.length; i++) {
-        var oInput = arrInputs[i];
-        if (oInput.type == "file") {
-            var sFileName = oInput.value;
-            if (sFileName.length > 0) {
-                var blnValid = false;
-                for (var j = 0; j < _validFileExtensions.length; j++) {
-                    var sCurExtension = _validFileExtensions[j];
-                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                        blnValid = true;
-                        break;
-                    }
-                }
-                
-                if (!blnValid) {
-                    alert("Maaf, File " + sFileName + " tidak dapat diupload, Jenis File upload harus : " + _validFileExtensions.join(", "));
-                    return false;
-                }
-            }
-        }
-    }
-  
-    return true;
-}
-
-function ValidSizeSKP() {
-		const oFile = document.getElementById("fileUpload").files[0]; // <input type="file" id="fileUpload" accept=".jpg,.png,.gif,.jpeg"/>
-
-		if (oFile.size > 2097152) // 2 MiB for bytes.
-		{
-		  alert("File size must under 2MiB!");
-		  return;
-		}
-}
-
 
 function validateForm2() {
   // This function deals with validation of the form fields

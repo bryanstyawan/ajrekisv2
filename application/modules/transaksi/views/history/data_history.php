@@ -38,7 +38,7 @@
 						</span>
 						<select class="form-control" name="select_tahun" id="select_tahun">
 							<?php
-								$now=date('Y');
+								$now=date('Y')-2;
 								for ($a=$now;$a<=$now+5;$a++)
 								{
 									if ($a == $now) {

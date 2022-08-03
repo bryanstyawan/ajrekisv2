@@ -387,7 +387,7 @@ $year_system = '2021';
                                     </td>
                                     <td style="<?=$style_td;?>">
                                         <?php 
-                                            if ($year_pass == $year_system) {
+                                           // if ($year_pass == $year_system) {
                                                 # code...
                                         ?>
                                             <button class="btn btn-warning btn-xs" onclick="edit('<?=$list[$i]->skp_id;?>','<?=$list[$i]->status;?>','<?=$list[$i]->edit_status;?>')"><i class="fa fa-edit"></i>&nbsp;Ubah Target</button>
@@ -403,7 +403,7 @@ $year_system = '2021';
                                         <?                                        
                                                     }
                                                 }
-                                            }
+                                           // }
                                         ?>
 
                                         <?php 

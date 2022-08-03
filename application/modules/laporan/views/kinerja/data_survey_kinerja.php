@@ -46,7 +46,7 @@
 								<!-- <button class="btn btn-block btn-primary" id="btn_sync"><i class="fa fa-refresh"></i> OLAH DATA TRANSAKSI SIKERJA</button>																	 -->
 							</div>																							
 							<div class="box-title pull-right">							
-								<!--<button class="btn btn-block btn-success" id="btn_export_excel"><i class="fa fa-print"></i> Export Excel</button>-->
+								<button class="btn btn-block btn-success" id="btn_export_excel"><i class="fa fa-print"></i> Export Excel</button>
 								<button class="btn btn-block btn-primary" id="btn_filter"><i class="fa fa-search"></i> FILTER DATA</button>											
 							</div>											
 						</div>						
@@ -67,22 +67,10 @@
 						<tr>
 							<th>NIP</th>
 							<th>Nama Pegawai</th>	
-							<th>Jenis Jabatan</th>	
-                            <th>Diklat PIM</th>												
-							<th>Nilai Diklat PIM</th>
-							<th>Diklat jafung</th>												
-							<th>Nilai Diklat Jafung</th>							
-							<th>Diklat 20 JP</th>												
-							<th>Nilai Diklat 20 JP</th>	
-							<th>Seminar</th>
-							<th>Nilai Seminar</th>		
-							<th>Kualifikasi</th>
-							<th>Nilai Kualifikasi</th>
-							<th>Kinerja</th>
-							<th>Nilai Kinerja</th>
-							<th>Hukuman Disiplin</th>
-							<th>Nilai Hukuman Disiplin</th>
-							<th>Total</th>
+							<th>Nilai Prestasi Kerja Periode I</th>	
+                            <th>Nilai Konversi Periode I</th>												
+							<th>Nilai Prestasi Kerja Periode II</th>	
+                            <th>Nilai Total SKP</th>
 						</tr>
 					</thead>
 					<tbody id="table_content">
@@ -106,7 +94,7 @@ $(document).ready(function(){
 		var es3                  = $("#select_eselon_3").val();
 		var es4                  = $("#select_eselon_4").val();
 		var select_bulan         = 1;
-		var select_tahun         = 2021;	
+		var select_tahun         = $("#select_tahun").val();;	
 
 
 		es1 = (es1 == '') ? 0 : es1 ;
@@ -114,7 +102,7 @@ $(document).ready(function(){
 		es3 = (es3 == '') ? 0 : es3 ;
 		es4 = (es4 == '') ? 0 : es4 ;	
 
-		window.open('<?=base_url();?>laporan/export_kinerja_excel/'+es1+'/'+es2+'/'+es3+'/'+es4+'/'+select_bulan+'/'+select_tahun, "_blank");			
+		window.open('<?=base_url();?>laporan/export_survey_kinerja_excel/'+es1+'/'+es2+'/'+es3+'/'+es4+'/'+select_bulan+'/'+select_tahun, "_blank");			
 	})
 
 	$('#btn_filter').click(function() {
@@ -142,7 +130,7 @@ $(document).ready(function(){
 							'data_6': select_tahun
 			}
 			$.ajax({
-				url :"<?php echo site_url()?>laporan/filter_survey",
+				url :"<?php echo site_url()?>laporan/filter_survey_kinerja",
 				type:"post",
 				data: { data_sender : data_link},
 				beforeSend:function(){

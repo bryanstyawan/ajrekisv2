@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // $config['base_url'] = 'https' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 's' : '')
 //                     .'://'.$_SERVER['HTTP_HOST'].str_replace('//','/',dirname($_SERVER['SCRIPT_NAME']).'');
 
-
+$config['base_url'] = 'http://sikerja.kemendagri.go.id';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -504,3 +504,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['popup'] = '1';

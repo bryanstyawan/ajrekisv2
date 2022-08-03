@@ -54,7 +54,7 @@ class Mmaster extends CI_Model {
 	public function data_pegawai($flag=NULL,$order_by=NULL,$filter=NULL)
 	{
 		# code...
-		if ($flag != 'kinerja' && $flag != 'surveyip') {
+		if ($flag != 'kinerja' && $flag != 'surveyip' && $flag != 'surveyKinerja') {
 			# code...
 			$sql        = "";
 			$sql_1      = "";
@@ -256,6 +256,97 @@ class Mmaster extends CI_Model {
 						".$sql_posisi."				
 						ORDER BY ".$order_by."";
 			}
+			elseif ($flag == 'surveyKinerja') 
+			{
+					$sql_es1 = "";
+					$sql_es1a = "";			
+					if ($filter['eselon1'] != '') {
+						# code...
+						$sql_es1  = "AND b.eselon1 = '".$filter['eselon1']."'";
+						$sql_es1a = "AND c.eselon1 = '".$filter['eselon1']."'";				
+					}
+
+					$sql_es2 = "";
+					$sql_es2a = "";
+					if ($filter['eselon2'] != '') {
+						# code...
+						$sql_es2  = "AND b.eselon2 = '".$filter['eselon2']."'";
+						$sql_es2a = "AND c.eselon2 = '".$filter['eselon2']."'";
+					}
+
+					$sql_es3 = "";
+					$sql_es3a = "";
+					if ($filter['eselon3'] != '') {
+						# code...
+						$sql_es3  = "AND b.eselon3 = '".$filter['eselon3']."'";
+						$sql_es3a = "AND c.eselon3 = '".$filter['eselon3']."'";				
+					}
+
+					$sql_es4 = "";
+					$sql_es4a = "";
+					if ($filter['eselon4'] != '') {
+						# code...
+						$sql_es4 = "AND b.eselon4 = '".$filter['eselon4']."'";
+						$sql_es4a = "AND c.eselon4 = '".$filter['eselon4']."'";				
+					}
+					
+					$sql_pegawai   = "";
+					$sql_pegawaia  = "";			
+					if ($filter['pegawai'] != '') {
+						# code...
+						$sql_pegawai  = "AND c.id = '".$filter['pegawai']."'";
+						$sql_pegawaia  = "AND a.id = '".$filter['pegawai']."'";
+					}
+
+					$sql_posisi   = "";
+					$sql_posisia   = "";			
+					if ($filter['posisi'] != '') {
+						# code...
+						$sql_posisi  = "AND b.id = '".$filter['posisi']."'";
+						$sql_posisia  = "AND c.id = '".$filter['posisi']."'";
+					}			
+
+					$sql = "SELECT 
+							a.id_pegawai,
+							b.eselon1,
+							b.eselon2,
+							b.eselon3,
+							b.eselon4,
+							IFNULL(c.posisi_akademik,0) AS posisi_akademik, 
+							IFNULL(c.posisi_plt,0) AS posisi_plt, 
+							c.nip,
+							c.`nama_pegawai`,
+							b.`nama_posisi`,
+							b.atasan AS atasan,
+							d.nama_eselon1,
+							e.nama_eselon2,
+							f.nama_eselon3,
+							g.nama_eselon4,
+							a.nilaiprestasikerja,
+							a.nilaikonversi,
+							h.nilaiprestasikerja as nilaiprestasikerja2,
+							h.nilaitotal							
+							FROM `tr_survey_kinerja_1` a
+							LEFT JOIN mr_pegawai c ON c.id = a.`id_pegawai`
+							LEFT JOIN mr_posisi b ON b.id = c.posisi
+							LEFT JOIN mr_eselon1 d ON b.eselon1 = d.id_es1
+							LEFT JOIN mr_eselon2 e ON b.eselon2 = e.id_es2
+							LEFT JOIN mr_eselon3 f ON b.eselon3 = f.id_es3
+							LEFT JOIN mr_eselon4 g ON b.eselon4 = g.id_es4
+							LEFT JOIN tr_survey_kinerja_2 h ON h.`id_pegawai` = a.`id_pegawai`							
+							WHERE c.id_role <> 7
+							AND c.id_role <> 6
+							AND c.STATUS <> 0
+							and a.tahun=".$filter['tahun']."
+							AND a.`id_pegawai` IS NOT NULL			
+						".$sql_es1."
+						".$sql_es2."
+						".$sql_es3."
+						".$sql_es4."
+						".$sql_pegawai."
+						".$sql_posisi."				
+						ORDER BY ".$order_by."";
+			}			
 			else {
 			
 				$sql_es1 = "";

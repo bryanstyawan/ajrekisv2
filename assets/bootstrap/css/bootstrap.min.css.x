@@ -6680,7 +6680,7 @@
  
  
  .close{
- 	float:right;font-size:40px;font-weight:700;line-height:1;color:#ff0000;text-shadow:0 1px 0 #fff;
+ 	float:right;font-size:21px;font-weight:700;line-height:1;color:#000;text-shadow:0 1px 0 #fff;filter:alpha(opacity=20);opacity:.2;
  }
  
  
@@ -6695,13 +6695,12 @@
  
  
  .modal-open{
- 	overflow:scroll;
-	
+ 	overflow:hidden;
  }
  
  
  .modal{
- 	position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;display:none;overflow:scroll;-webkit-overflow-scrolling:touch;outline:0;
+ 	position:fixed;top:0;right:0;bottom:0;left:0;z-index:1050;display:none;overflow:hidden;-webkit-overflow-scrolling:touch;outline:0;
  }
  
  
@@ -6716,7 +6715,7 @@
  
  
  .modal-open .modal{
- 	overflow-x:scroll;overflow-y:auto;
+ 	overflow-x:hidden;overflow-y:auto;
  }
  
  
@@ -6792,7 +6791,7 @@
  
  @media (min-width:1000px){
  	.modal-dialog{
- 	width:1700px;margin:30px auto;
+ 	width:1300px;margin:30px auto;
  }
  
  
@@ -6812,7 +6811,7 @@
  
  @media (min-width:992px){
  	.modal-lg{
- 	width:1000px;
+ 	width:900px;
  }
  
  

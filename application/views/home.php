@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="propeller" content="e13c7f4697625ade386d92ed4f7e77ac">
     <title>SIKERJA | Sistem Penilaian Kinerja Aparatur</title>
 	<!-- core CSS -->
     <link href="<?php echo base_url();?>assets_home/css/bootstrap.min.css" rel="stylesheet">
@@ -96,7 +97,69 @@
                         </div>
                     </div>
                 </div>
-            </div>  -->
+            </div> 
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/ISRAMIRAJ2022.png);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+			
+			<!-- <div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/iduladha1443.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/spi.png);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/budayakerja.jpeg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/zonaintegritas.jpeg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
 			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PosterSikerjaZI.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
@@ -519,7 +582,7 @@
             </div>
         </div>
     </footer><!--/#footer-->
-	
+	<!--
 	<div class="chat_wrapper">
         <section class="chatboxRL-popup">
             <header class="chatboxRL-popup_header">
@@ -557,7 +620,7 @@
     <script src="https://chatbot.kemendagri.go.id/assets/js/signalr.js"></script>
     <script src="https://chatbot.kemendagri.go.id/assets/js/widget.js"></script>
 	
-	
+	-->
     <script src="<?php echo base_url();?>assets_home/js/jquery.js"></script>
     <script src="<?php echo base_url();?>assets_home/js/bootstrap.min.js"></script>
     <!-- <script src="http://maps.google.com/maps/api/js?sensor=true"></script> -->

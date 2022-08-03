@@ -1,6 +1,24 @@
 <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
 <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> -->
 <!-- <link href="http://chatbot.kemendagri.go.id/assets/css/main.css" rel="stylesheet"> -->
+ <?php
+	// $link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
+	// $nip = $this->session->userdata('sesNip') ;
+	//jalankan query
+	// $result = mysqli_query($link, "SELECT * FROM mr_pegawai_surveydca WHERE nip='".$nip."'");
+	// $row_cnt = $result->num_rows;
+																			 
+	// if ($row_cnt != 0) {	
+		 // $this->load->view('dashboard_component/notifsurveydca');
+		 // echo "<script>
+				// $(document).ready(function()
+			// {
+					
+					// $('#modal-surveydca').modal('show');
+			// }) </script>";
+	// }
+ ?>
+
 
 <?php
 $data_bulan[] = "";
@@ -76,15 +94,15 @@ if ($this->session->userdata('sesPosisi') != 0)
     $this->load->view('dashboard_component/member_component');                                
     ?>
     <div class="col-md-5" style="height:50px;max-height: 50px;margin-bottom:1px;">
-        <!-- LINE CHART -->
+       
         <div class="widget-user-header bg-white-active text-center">
             <div class="box-header with-border">
                 <h1 class="box-title"> <font color="blue" size="3">TATA CARA REVIEW & PENYESUAIAN TARGET SKP<a href="<?php echo base_url(); ?>assets_home/slider/TATACARAREVIEW_PENYESUAIANTARGETSKP.pdf">&nbsp&nbsp&nbsp<u>download</a></font></h1>
             </div>
         
-            <!-- /.box-body -->
+            
         </div>
-        <!-- /.box -->
+        
     </div>    
     <?php
     // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
@@ -107,7 +125,15 @@ if ($this->session->userdata('sesPosisi') != 0)
         'icon'      => '',
         'value_php' => (($summary_tr == '') ? 0 : $summary_tr[0]->menit_efektif),
         'title'     => 'REALISASI MENIT KERJA EFEKTIF',
-        'html'      => ''));                       
+        'html'      => ''));                  
+	// $this->load->view('dashboard_component/common_component',array(
+        // 'class'     => 'col-lg-3 col-xs-8',
+        // 'id'        => 'btn_ip',
+        // 'color_box' => 'background-color: #ffffcc !important;',
+        // 'icon'      => '',
+        // 'value_php' => (($totalip == '') ? 0 : $totalip),
+        // 'title'     => 'INDEKS PROFESIONALITAS TAHUN 2021 <br/> (Klik disini untuk mengupdate survey)',
+        // 'html'      => ''));     				
     // $this->load->view('dashboard_component/common_component',array(
     //     'class'     => 'col-lg-2 col-xs-8',
     //     'id'        => '',
@@ -117,7 +143,7 @@ if ($this->session->userdata('sesPosisi') != 0)
     //     'title'     => 'CAPAIAN SKP',
     //     'html'      => "<label>".$skp->total_realisasi_kuantitas.' / '.$skp->total_target_kuantitas."</label>"));                                        
     $this->load->view('dashboard_component/common_component',array(
-        'class'     => 'col-lg-3 col-xs-8',
+        'class'     => 'col-lg-2 col-xs-8',
         'id'        => 'btn_tunjangan',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
@@ -125,7 +151,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'title'     => 'TUNJANGAN',
         'html'      => ''));    
     $this->load->view('dashboard_component/common_finger',array(
-        'class'     => 'col-lg-3 col-xs-8',
+        'class'     => 'col-lg-2 col-xs-8',
         'id'        => 'btn_fingerprint',
         'color_box' => 'background-color: #d2d6de !important;',
         'icon'      => '',
@@ -138,12 +164,86 @@ if ($this->session->userdata('sesPosisi') != 0)
 
 $this->load->view('dashboard_component/bawahan_component');
 
-if ($this->session->userdata('surveysess') == 0) 
-{
-   // $this->load->view('dashboard_component/survey');
-}
+// $this->load->view('dashboard_component/survey');
+
+// $this->load->view('dashboard_component/notifsurvey');
+
+// echo "<script>
+			// $(document).ready(function()
+    // {
+			// $('#modal-infosurvey').modal('show');
+	// }) </script>";
+
+ // if ($_SESSION['popup'] == '1') {
+	
+	
+	  // $this->load->view('dashboard_component/survey');
+	  // echo "<script>
+				// $(document).ready(function()
+		// {
+				
+				// $('#modal-kuisioner').modal('show');
+		// }) </script>";
+	
+	 
+  // }
+  
+  // $this->load->view('dashboard_component/survey');
+  // echo "<script>
+		// $(document).ready(function()
+		// {
+			// if (sessionStorage.getItem('showw')==1) {
+			// $('#modal-kuisioner').modal('show'); }
+	// }) </script>";
+	
+	// if echo "<script>(sessionStorage.getItem('showw')==1) {
+		// $this->load->view('dashboard_component/survey');
+	// }
+	
+	// $link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
+	// $idpeg = $this->session->userdata('sesUser') ;
+	// $result = mysqli_query($link, "SELECT disclaimer, jns_jabatan FROM tr_survey_ip WHERE id_pegawai='".$idpeg."' and tahun=2021");
+	// $row_cnt = $result->num_rows;
+	// $disclaimer = 0;																		 
+	// if ($row_cnt != 0) {	
+		// while ($row=mysqli_fetch_object($result))
+		// {
+			// $disclaimer = $row->disclaimer;
+			// $jabatan = $row->jns_jabatan;
+			// if ($jabatan!='CPNS') {
+				// if ($disclaimer==1) {
+							// $this->load->view('dashboard_component/survey');
+							// echo "<script>
+									// alert('Terima Kasih telah mengisi Indeks Profesionalitas, Anda dapat mengupdate data dengan mengklik Icon angka Indeks Profesionalitas di kotak berwarna kuning');
+								// </script>";
+								
+					
+					// }else{
+							// $this->load->view('dashboard_component/survey');
+							// echo "<script>
+									// $(document).ready(function()
+									// {
+										// $('#modal-kuisioner').modal('show'); 
+								// }) </script>";
+					// }
+			// }
+		// }
+	// }else{
+		// $this->load->view('dashboard_component/survey');
+		// echo "<script>
+				// $(document).ready(function()
+				// {
+					// $('#modal-kuisioner').modal('show'); 
+			// }) </script>";
+	// }
+		
+	
+
+
+	
+
 // $this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
-$this->load->view('dashboard_component/information_emp_component',array(
+	$this->load->view('dashboard_component/information_emp_component',array(
     'nama_eselon1'  => $nama_eselon1,
     'nama_eselon2'  => $nama_eselon2,
     'nama_eselon3'  => $nama_eselon3,
@@ -246,7 +346,7 @@ else {
         // profile('bypass');    
         get_api_fingerprint();        
         riwayat_pendidikan('bypass');    
-        riwayat_pangkat('bypass');    
+        riwayat_pangkat();    
         riwayat_jabatan('bypass');
         simpeg_finger_kehadiran();
         // riwayat_diklat_struktural('bypass');       
@@ -288,6 +388,17 @@ else {
         });
 		
 		//$("#modal-kuisioner").modal('show');
+		
+		$("#btn_ip").click(function() 
+		{
+				//alert("survey sementara dalam proses backup data !");
+				//<?php $_SESSION['popup']=1;?>
+				//window.location.href = "<?php echo site_url()?>dashboard/home";
+				sessionStorage.setItem("showw", 1);
+				$('#modal-kuisioner').modal('show');
+				
+			
+		});
 
         $("#btn_masih_diproses").click(function() 
         {

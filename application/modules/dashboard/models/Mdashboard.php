@@ -38,7 +38,7 @@ class Mdashboard extends CI_Model
 		}
 		
 		$this->diklat_jafung = $post["tampiljafung"];
-		if ($post["tampiljafung"]=='sdhdiklatjafung') {
+		if (($post["tampiljafung"]=='sdhdiklatjafung') && ($post["jabatan"]=='fungsional')) {
 				$this->n_diklat_jafung = 15;
 		}
 		else
@@ -70,12 +70,12 @@ class Mdashboard extends CI_Model
 		
 		
 		$this->seminar = $post["tampilseminar"];
-		if ($post["tampilseminar"]=='sdhseminar' && $post["jabatan"]=='struktural') {
+		if ($post["tampilseminar"]=='sdhseminar' && (($post["jabatan"]=='struktural') || ($post["jabatan"]=='fungsional')) ) {
 				$this->n_seminar = 10;
 		}
 		else
 		{ 	
-			if ($post["tampilseminar"]=='sdhseminar' && $post["jabatan"]<>'struktural') {
+			if ($post["tampilseminar"]=='sdhseminar' && $post["jabatan"]='pelaksana') {
 				$this->n_seminar = 17.5;
 			}
 			else
@@ -114,19 +114,19 @@ class Mdashboard extends CI_Model
 			$this->n_penilaian_kinerja = 0;
 		}
 		else {
-			$this->penilaian_kinerja = $post["kinerja"];
+			$this->penilaian_kinerja = $post["predikat"];
 			
-			switch ($post["kinerja"]) {
-			  case "Sangat Baik":
+			switch ($post["predikat"]) {
+			  case "SANGAT BAIK":
 				$this->n_penilaian_kinerja = 30;
 				break;
-			  case "Baik":
+			  case "BAIK":
 				$this->n_penilaian_kinerja = 25;
 				break;
-			  case "Cukup":
+			  case "CUKUP":
 				$this->n_penilaian_kinerja = 15;
 				break;
-			  case "Kurang":
+			  case "KURANG":
 				$this->n_penilaian_kinerja = 5;
 				break;
 			  default:
@@ -179,10 +179,10 @@ class Mdashboard extends CI_Model
 								if(!empty($_FILES['berkashukuman']['name'])){
 										
 									$config['upload_path']          = './uploads/';
-									$config['allowed_types']        = 'gif|jpg|png|pdf';
+									$config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
 									$config['max_size']             = 1000;
-									$config['max_width']            = 2048;
-									$config['max_height']           = 1000;
+									// $config['max_width']            = 2048;
+									// $config['max_height']           = 1000;
 									$this->load->library('upload',$config);
 									
 									$_FILES['file']['name'] = $_FILES['berkashukuman']['name']; 
@@ -274,6 +274,343 @@ class Mdashboard extends CI_Model
 		
     }
 	
+	public function save_survey_skp1($id_pegawai)
+    {
+				//periode 1
+				$idskp1 =  $this->input->post("idskp1");
+				$nilaiskp = $this->input->post("nilaiskp");
+				$orientasi = $this->input->post("orientasi");
+				$integritas = $this->input->post("integritas");
+				$komitmen = $this->input->post("komitmen");
+				$kerjasama = $this->input->post("kerjasama");
+				$disiplin = $this->input->post("disiplin");
+				$kepemimpinan = $this->input->post("kepemimpinan");
+				$nilperilakukerja = $this->input->post("nilperilakukerja");
+				$nilprestasikerja = $this->input->post("nilprestasikerja");
+				$nilkonversi = $this->input->post("nilkonversi");
+				$berkasskp = $this->input->post("berkasskp");
+				$filedok = $this->input->post("fileskp");
+				$tahun = 2021;
+				
+				if(!empty($_FILES['berkasskp']['name'])){
+										
+						$config['upload_path']          = './uploads/';
+						$config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
+						$config['max_size']             = 1000;
+						// $config['max_width']            = 2048;
+						// $config['max_height']           = 1000;
+						$this->load->library('upload',$config);
+						
+						$_FILES['file']['name'] = $_FILES['berkasskp']['name']; 
+						$_FILES['file']['type'] = $_FILES['berkasskp']['type'];
+						$_FILES['file']['tmp_name'] = $_FILES['berkasskp']['tmp_name'];
+						$_FILES['file']['error'] = $_FILES['berkasskp']['error'];
+						$_FILES['file']['size'] = $_FILES['berkasskp']['size'];
+						
+						if($this->upload->do_upload('file')){
+							
+							$uploadData = $this->upload->data();
+							$new_name = $id_pegawai.'_'.$uploadData['file_name'];
+							rename($uploadData['full_path'],$uploadData['file_path'].$new_name);
+						}
+					
+						if ($idskp1!='') {
+									$data = array(
+									'id_pegawai'=>$id_pegawai,
+									'nilaiskp'=>$nilaiskp,
+									'orientasipelayanan'=>$orientasi,
+									'integritas'=>$integritas,
+									'komitmen'=>$komitmen,
+									'kerjasama'=>$kerjasama,
+									'disiplin'=>$disiplin,
+									'kepemimpinan'=>$kepemimpinan,
+									'nilaiprilakukerja'=>$nilperilakukerja,
+									'nilaiprestasikerja'=>$nilprestasikerja,
+									'nilaikonversi'=>$nilkonversi,
+									'file_skp1'=>$new_name,
+									'updatedate'=>date('y-m-d H:i:s'),
+									'tahun'=>$tahun
+									);				
+									
+									$this->db->trans_start();
+									$this->db->where('id', $idskp1);
+									$this->db->update('tr_survey_kinerja_1',$data);
+									$this->db->trans_complete();
+								
+						}
+						else {
+									$datainsert = array(
+									'id_pegawai'=>$id_pegawai,
+									'nilaiskp'=>$nilaiskp,
+									'orientasipelayanan'=>$orientasi,
+									'integritas'=>$integritas,
+									'komitmen'=>$komitmen,
+									'kerjasama'=>$kerjasama,
+									'disiplin'=>$disiplin,
+									'kepemimpinan'=>$kepemimpinan,
+									'nilaiprilakukerja'=>$nilperilakukerja,
+									'nilaiprestasikerja'=>$nilprestasikerja,
+									'nilaikonversi'=>$nilkonversi,
+									'file_skp1'=> $new_name,
+									'updatedate'=>date('y-m-d H:i:s'),
+									'tahun'=>$tahun
+									);
+										$this->db->insert('tr_survey_kinerja_1',$datainsert);
+									
+						
+						}
+					}else {
+						if ($idskp1!='') {
+									$data = array(
+									'id_pegawai'=>$id_pegawai,
+									'nilaiskp'=>$nilaiskp,
+									'orientasipelayanan'=>$orientasi,
+									'integritas'=>$integritas,
+									'komitmen'=>$komitmen,
+									'kerjasama'=>$kerjasama,
+									'disiplin'=>$disiplin,
+									'kepemimpinan'=>$kepemimpinan,
+									'nilaiprilakukerja'=>$nilperilakukerja,
+									'nilaiprestasikerja'=>$nilprestasikerja,
+									'nilaikonversi'=>$nilkonversi,
+									'file_skp1'=> $filedok,
+									'updatedate'=>date('y-m-d H:i:s'),
+									'tahun'=>$tahun
+									);				
+									
+									$this->db->trans_start();
+									$this->db->where('id', $idskp1);
+									$this->db->update('tr_survey_kinerja_1',$data);
+									$this->db->trans_complete();
+								
+						}
+						else {
+									$datainsert = array(
+									'id_pegawai'=>$id_pegawai,
+									'nilaiskp'=>$nilaiskp,
+									'orientasipelayanan'=>$orientasi,
+									'integritas'=>$integritas,
+									'komitmen'=>$komitmen,
+									'kerjasama'=>$kerjasama,
+									'disiplin'=>$disiplin,
+									'kepemimpinan'=>$kepemimpinan,
+									'nilaiprilakukerja'=>$nilperilakukerja,
+									'nilaiprestasikerja'=>$nilprestasikerja,
+									'nilaikonversi'=>$nilkonversi,
+									'file_skp1'=> '',
+									'updatedate'=>date('y-m-d H:i:s'),
+									'tahun'=>$tahun
+									);
+										$this->db->insert('tr_survey_kinerja_1',$datainsert);
+									
+						
+						}
+					}
+
+				
+				
+    }
+	
+	
+	
+	public function save_survey_skp2($id_pegawai)
+    {
+				//periode 2
+				$idskp2 =  $this->input->post("idskp2");
+				$nilaiskp2 = $this->input->post("nilaiskp2");
+				$orientasi2 = $this->input->post("orientasi2");
+				$komitmen2 = $this->input->post("komitmen2");
+				$kerjasama2 = $this->input->post("kerjasama2");
+				$inisiatif2 = $this->input->post("inisiatif");
+				$kepemimpinan2 = $this->input->post("kepemimpinan2");
+				$nilperilakukerja2 = $this->input->post("nilperilakukerja2");
+				$nilprestasikerja2 = $this->input->post("nilprestasikerja2");
+				$niltotal2 = $this->input->post("niltotal");
+				$nipatasan = $this->input->post("nipatasan");
+				$namaatasan = $this->input->post("namaatasan");
+				$golatasan = $this->input->post("golatasan");
+				$jabatasan = $this->input->post("jabatasan");
+				$nippejabat = $this->input->post("nippejabat");
+				$namapejabat = $this->input->post("namapejabat");
+				$golpejabat = $this->input->post("golpejabat");
+				$jabpejabat= $this->input->post("jabpejabat");
+				// $berkasskp2 = $this->input->post("berkasskp2");
+				// $filedok2 = $this->input->post("fileskp2");
+				$tahun=2021;
+				
+				if ($idskp2!='') {
+									$data = array(
+									'id_pegawai'=>$id_pegawai,
+									'nilaiskp'=>$nilaiskp2,
+									'orientasipelayanan'=>$orientasi2,
+									'inisiatifkerja'=>$inisiatif2,									
+									'komitmen'=>$komitmen2,
+									'kerjasama'=>$kerjasama2,
+									'kepemimpinan'=>$kepemimpinan2,
+									'nilaiprilakukerja'=>$nilperilakukerja2,
+									'nilaiprestasikerja'=>$nilprestasikerja2,
+									'nilaitotal'=>$niltotal2,
+									'nip_penilai'=>$nipatasan,
+									'nama_penilai'=>$namaatasan,
+									'gol_penilai'=>$golatasan,
+									'jab_penilai'=>$jabatasan,
+									'nip_atasanpenilai'=>$nippejabat,
+									'nama_atasanpenilai'=>$namapejabat,
+									'gol_atasanpenilai'=>$golpejabat,
+									'jab_atasanpenilai'=>$jabpejabat,
+									'updatedate'=>date('y-m-d H:i:s'),
+									'tahun'=>$tahun
+									);				
+									
+									$this->db->trans_start();
+									$this->db->where('id', $idskp2);
+									$this->db->update('tr_survey_kinerja_2',$data);
+									$this->db->trans_complete();
+								
+				}
+				else {
+							$datainsert = array(
+							'id_pegawai'=>$id_pegawai,
+							'nilaiskp'=>$nilaiskp2,
+							'orientasipelayanan'=>$orientasi2,
+							'inisiatifkerja'=>$inisiatif2,									
+							'komitmen'=>$komitmen2,
+							'kerjasama'=>$kerjasama2,
+							'kepemimpinan'=>$kepemimpinan2,
+							'nilaiprilakukerja'=>$nilperilakukerja2,
+							'nilaiprestasikerja'=>$nilprestasikerja2,
+							'nilaitotal'=>$niltotal2,
+							'nip_penilai'=>$nipatasan,
+							'nama_penilai'=>$namaatasan,
+							'gol_penilai'=>$golatasan,
+							'jab_penilai'=>$jabatasan,
+							'nip_atasanpenilai'=>$nippejabat,
+							'nama_atasanpenilai'=>$namapejabat,
+							'gol_atasanpenilai'=>$golpejabat,
+							'jab_atasanpenilai'=>$jabpejabat,
+							'updatedate'=>date('y-m-d H:i:s'),
+							'tahun'=>$tahun
+							);
+								$this->db->insert('tr_survey_kinerja_2',$datainsert);
+							
+				
+				}
+				
+				// if(!empty($_FILES['berkasskp2']['name'])){
+										
+						// $config['upload_path']          = './uploads/';
+						// $config['allowed_types']        = 'gif|jpg|png|pdf';
+						// $config['max_size']             = 1000;
+						// $config['max_width']            = 2048;
+						// $config['max_height']           = 1000;
+						// $this->load->library('upload',$config);
+						
+						// $_FILES['file']['name'] = $_FILES['berkasskp2']['name']; 
+						// $_FILES['file']['type'] = $_FILES['berkasskp2']['type'];
+						// $_FILES['file']['tmp_name'] = $_FILES['berkasskp2']['tmp_name'];
+						// $_FILES['file']['error'] = $_FILES['berkasskp2']['error'];
+						// $_FILES['file']['size'] = $_FILES['berkasskp2']['size'];
+						
+						// if($this->upload->do_upload('file')){
+							
+							// $uploadData = $this->upload->data();
+							// $new_name = $id_pegawai.'_'.$uploadData['file_name'];
+							// rename($uploadData['full_path'],$uploadData['file_path'].$new_name);
+						// }
+					
+						// if ($idskp2!='') {
+									// $data = array(
+									// 'id_pegawai'=>$id_pegawai,
+									// 'nilaiskp'=>$nilaiskp2,
+									// 'orientasipelayanan'=>$orientasi2,
+									// 'inisiatifkerja'=>$inisiatif2,									
+									// 'komitmen'=>$komitmen2,
+									// 'kerjasama'=>$kerjasama2,
+									// 'kepemimpinan'=>$kepemimpinan2,
+									// 'nilaiprilakukerja'=>$nilperilakukerja2,
+									// 'nilaiprestasikerja'=>$nilprestasikerja2,
+									// 'nilaitotal'=>$niltotal2,
+									// 'file_skp2'=>$new_name,
+									// 'updatedate'=>date('y-m-d H:i:s'),
+									// 'tahun'=>$tahun
+									// );				
+									
+									// $this->db->trans_start();
+									// $this->db->where('id', $idskp2);
+									// $this->db->update('tr_survey_kinerja_2',$data);
+									// $this->db->trans_complete();
+								
+						// }
+						// else {
+									// $datainsert = array(
+									// 'id_pegawai'=>$id_pegawai,
+									// 'nilaiskp'=>$nilaiskp2,
+									// 'orientasipelayanan'=>$orientasi2,
+									// 'inisiatifkerja'=>$inisiatif2,									
+									// 'komitmen'=>$komitmen2,
+									// 'kerjasama'=>$kerjasama2,
+									// 'kepemimpinan'=>$kepemimpinan2,
+									// 'nilaiprilakukerja'=>$nilperilakukerja2,
+									// 'nilaiprestasikerja'=>$nilprestasikerja2,
+									// 'nilaitotal'=>$niltotal2,
+									// 'file_skp2'=> $new_name,
+									// 'updatedate'=>date('y-m-d H:i:s'),
+									// 'tahun'=>$tahun
+									// );
+										// $this->db->insert('tr_survey_kinerja_2',$datainsert);
+									
+						
+						// }
+					// }else {
+						// if ($idskp2!='') {
+									// $data = array(
+									// 'id_pegawai'=>$id_pegawai,
+									// 'nilaiskp'=>$nilaiskp2,
+									// 'orientasipelayanan'=>$orientasi2,
+									// 'inisiatifkerja'=>$inisiatif2,									
+									// 'komitmen'=>$komitmen2,
+									// 'kerjasama'=>$kerjasama2,
+									// 'kepemimpinan'=>$kepemimpinan2,
+									// 'nilaiprilakukerja'=>$nilperilakukerja2,
+									// 'nilaiprestasikerja'=>$nilprestasikerja2,
+									// 'nilaitotal'=>$niltotal2,
+									// 'file_skp2'=> $filedok2,
+									// 'updatedate'=>date('y-m-d H:i:s'),
+									// 'tahun'=>$tahun
+									// );				
+									
+									// $this->db->trans_start();
+									// $this->db->where('id', $idskp2);
+									// $this->db->update('tr_survey_kinerja_2',$data);
+									// $this->db->trans_complete();
+								
+						// }
+						// else {
+									// $datainsert = array(
+									// 'id_pegawai'=>$id_pegawai,
+									// 'nilaiskp'=>$nilaiskp2,
+									// 'orientasipelayanan'=>$orientasi2,
+									// 'inisiatifkerja'=>$inisiatif2,									
+									// 'komitmen'=>$komitmen2,
+									// 'kerjasama'=>$kerjasama2,
+									// 'kepemimpinan'=>$kepemimpinan2,
+									// 'nilaiprilakukerja'=>$nilperilakukerja2,
+									// 'nilaiprestasikerja'=>$nilprestasikerja2,
+									// 'nilaitotal'=>$niltotal2,
+									// 'file_skp2'=> '',
+									// 'updatedate'=>date('y-m-d H:i:s'),
+									// 'tahun'=>$tahun
+									// );
+										// $this->db->insert('tr_survey_kinerja_2',$datainsert);
+									
+						
+						// }
+					// }
+
+				
+				
+    }
+	
 	public function save_survey_diklatpim($id_pegawai)
     {
 			
@@ -302,10 +639,10 @@ class Mdashboard extends CI_Model
 								if(!empty($_FILES['berkas']['name'][$i])){
 										
 									$config['upload_path']          = './uploads/';
-									$config['allowed_types']        = 'gif|jpg|png|pdf';
+									$config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
 									$config['max_size']             = 1000;
-									$config['max_width']            = 2048;
-									$config['max_height']           = 1000;
+									// $config['max_width']            = 2048;
+									// $config['max_height']           = 1000;
 									$this->load->library('upload',$config);
 									
 									$_FILES['file']['name'] = $_FILES['berkas']['name'][$i]; 
@@ -439,10 +776,10 @@ class Mdashboard extends CI_Model
 								if(!empty($_FILES['berkasjafung']['name'][$i])){
 										
 									$config['upload_path']          = './uploads/';
-									$config['allowed_types']        = 'gif|jpg|png|pdf';
+									$config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
 									$config['max_size']             = 1000;
-									$config['max_width']            = 2048;
-									$config['max_height']           = 1000;
+									// $config['max_width']            = 2048;
+									// $config['max_height']           = 1000;
 									$this->load->library('upload',$config);
 									
 									$_FILES['file']['name'] = $_FILES['berkasjafung']['name'][$i]; 
@@ -573,10 +910,10 @@ class Mdashboard extends CI_Model
 								if(!empty($_FILES['berkasseminar']['name'][$i])){
 										
 									$config['upload_path']          = './uploads/';
-									$config['allowed_types']        = 'gif|jpg|png|pdf';
+									$config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
 									$config['max_size']             = 1000;
-									$config['max_width']            = 2048;
-									$config['max_height']           = 1000;
+									// $config['max_width']            = 2048;
+									// $config['max_height']           = 1000;
 									$this->load->library('upload',$config);
 									
 									$_FILES['file']['name'] = $_FILES['berkasseminar']['name'][$i]; 
@@ -708,10 +1045,10 @@ class Mdashboard extends CI_Model
 								if(!empty($_FILES['berkasjp']['name'][$i])){
 										
 									$config['upload_path']          = './uploads/';
-									$config['allowed_types']        = 'gif|jpg|png|pdf';
+									$config['allowed_types']        = 'gif|jpg|jpeg|png|pdf';
 									$config['max_size']             = 1000;
-									$config['max_width']            = 2048;
-									$config['max_height']           = 1000;
+									// $config['max_width']            = 2048;
+									// $config['max_height']           = 1000;
 									$this->load->library('upload',$config);
 									
 									$_FILES['file']['name'] = $_FILES['berkasjp']['name'][$i]; 

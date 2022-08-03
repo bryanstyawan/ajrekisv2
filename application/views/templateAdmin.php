@@ -483,6 +483,10 @@ function riwayat_pangkat(arg) {
                 }  
                 $("#li_pangkat > div > div > div > div > table > tbody").html(tr_insert);                            
             }
+            else
+            {
+                
+            }
         },
         error:function(jqXHR,exception) {
             // ajax_catch(jqXHR,exception);					

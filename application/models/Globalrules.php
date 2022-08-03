@@ -1394,16 +1394,17 @@ class Globalrules extends CI_Model
 					);							
 					$this->Allcrud->addData('rpt_skp_sasaran_kerja',$summary_skp);							
 				}
-				else
-				{
-					$summary_skp = array(
-						'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
-						'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
-						'total'                         => $data_s[$i]['summary_skp']['total'],
-						'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
-					);														
-					$this->Allcrud->editData('rpt_skp_sasaran_kerja',$summary_skp,$data_parameter);										
-				}
+				// else
+				// {
+					// $summary_skp = array(
+						
+						// 'nilai_capaian_skp'             => $data_s[$i]['summary_skp']['nilai_capaian_skp'],
+						// 'total_aspek'                   => $data_s[$i]['summary_skp']['total_aspek'],
+						// 'total'                         => $data_s[$i]['summary_skp']['total'],
+						// 'nilai_sasaran_kinerja_pegawai' => $data_s[$i]['summary_skp']['nilai_sasaran_kinerja_pegawai']
+					// );														
+					// $this->Allcrud->editData('rpt_skp_sasaran_kerja',$summary_skp,$data_parameter);										
+				// }
 
 				$check_data = $this->Allcrud->getData('rpt_skp_prilaku_skp',$data_parameter)->result_array();						
 				if ($check_data == array()) {

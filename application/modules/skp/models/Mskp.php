@@ -319,7 +319,7 @@ class Mskp extends CI_Model
 					ON a.jenis_skp = c.id
 					LEFT OUTER JOIN mr_skp_satuan d
 					ON a.target_output = d.id
-					WHERE a.tahun = '".$tahun."'
+					WHERE (a.tahun = ".$tahun." or a.tahun = 2022)
 					AND a.id_pegawai = '".$id_pegawai."'
 					".$query_2."					
 					AND a.status <> '99'

@@ -68,3 +68,7 @@ application/config/database.php
 /CountDown/*
 /skpprilaku/*
 /uploads/*
+/tesajax/*
+/docsurat/*
+/ayokerja/*
+/surveyIP/*

@@ -139,19 +139,15 @@ button:hover {
 	document.getElementById("berkasseminar").disabled = true;
 	document.getElementById("berkashukuman").disabled = true;
 		
-	if (nama_jab=="struktural") 
-		{	
-			document.getElementById("tampil").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhpim'>Sudah Diklat PIM</option><option value='blmpim'>Belum Diklat PIM</option>";
-			// document.getElementById("tampiljafung").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklatjafung'>Sudah Diklat Jab. Fungsional</option><option value='blmdiklatjafung'>Belum Diklat Jab. Fungsional</option>";
-			document.getElementById("tampiljafung").innerHTML="<option value='blmdiklatjafung'>--lewati--</option>";
-			document.getElementById("tgldiklatjafung").value = "01-01-1900"
-			document.getElementById("tmpdiklatjafung").value = "-"
-			document.getElementById("jenisdiklatjafung").value = "-"
-			document.getElementById("tampil20jp").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option><option value='blm20jp'>Belum Diklat 20 JP</option>";
-			document.getElementById("tampilseminar").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhseminar'>Sudah Ikut Seminar</option><option value='blmseminar'>Belum Ikut Seminar</option>";
-			document.getElementById("nextBtn").innerHTML = "Berikutnya";
-		}
-	if (nama_jab=="fungsional")
+  if (nama_jab=="struktural") 
+    {	
+        document.getElementById("tampil").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhpim'>Sudah Diklat PIM</option><option value='blmpim'>Belum Diklat PIM</option>";
+		document.getElementById("tampiljafung").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklatjafung'>Sudah Diklat Jab. Fungsional</option><option value='blmdiklatjafung'>Belum Diklat Jab. Fungsional</option>";
+		document.getElementById("tampil20jp").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option><option value='blm20jp'>Belum Diklat 20 JP</option>";
+		document.getElementById("tampilseminar").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhseminar'>Sudah Ikut Seminar</option><option value='blmseminar'>Belum Ikut Seminar</option>";
+		document.getElementById("nextBtn").innerHTML = "Berikutnya";
+    }
+  if (nama_jab=="fungsional" || nama_jab=="pelaksana")
     {
 		
 		document.getElementById("tampil").innerHTML="<option value='blmpim'>--lewati--</option>";
@@ -164,225 +160,10 @@ button:hover {
 		document.getElementById("nextBtn").innerHTML = "Berikutnya";
     }
 	
-	 if (nama_jab=="pelaksana")
-    {
-		
-		document.getElementById("tampil").innerHTML="<option value='blmpim'>--lewati--</option>";
-		document.getElementById("tgldiklatpim").value = "01-01-1900"
-		document.getElementById("tmpdiklatpim").value = "-"
-		document.getElementById("jenisdiklatpim").value = "-"
-		document.getElementById("tampiljafung").innerHTML="<option value='blmdiklatjafung'>--lewati--</option>";
-		document.getElementById("tgldiklatjafung").value = "01-01-1900"
-		document.getElementById("tmpdiklatjafung").value = "-"
-		document.getElementById("jenisdiklatjafung").value = "-"
-		document.getElementById("tampil20jp").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option><option value='blm20jp'>Belum Diklat 20 JP</option>";
-		document.getElementById("tampilseminar").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhseminar'>Sudah Ikut Seminar/Workshop/Magang/Kursus/sejenisnya</option><option value='blmseminar'>Belum Ikut Seminar/Workshop/Magang/Kursus/sejenisnya</option>";
-		document.getElementById("nextBtn").innerHTML = "Berikutnya";
-    }
-	
 	if (nama_jab=="CPNS")
     {
 		document.getElementById("nextBtn").innerHTML = "Selesai";
 	} 
-}
-
-function hitungperilakukerja1(){
-	var nilskp1=0;
-	var nilorientasi1=0;
-	var nilintegritas = 0;
-	var nilkomitmen = 0;
-	var nilkerjasama1 = 0;
-	var nildisiplin = 0;
-	var nilkepemimpinan = 0;
-	var nilperilakukerja = 0;
-	var nilprestasikerja = 0;
-	
-	if (document.getElementById("form1").nilaiskp.value=='') {
-		nilskp1 = 0 }
-	else {
-		nilskp1= parseFloat(document.getElementById("form1").nilaiskp.value);
-	}
-	
-	document.getElementById("form1").nilaiskp60.value = "x 60% = " + ((60/100)*nilskp1).toFixed(2);
-	
-	if (document.getElementById("form1").orientasi.value=='') {
-		nilorientasi1 = 0 }
-	else {
-		nilorientasi1= parseFloat(document.getElementById("form1").orientasi.value);
-	}
-	
-	if (document.getElementById("form1").integritas.value=='') {
-		nilintegritas = 0 }
-	else {
-		nilintegritas= parseFloat(document.getElementById("form1").integritas.value);
-	}
-	
-	if (document.getElementById("form1").komitmen.value=='') {
-		nilkomitmen = 0 }
-	else {
-		nilkomitmen= parseFloat(document.getElementById("form1").komitmen.value);
-	}
-	
-	if (document.getElementById("form1").kerjasama.value=='') {
-		nilkerjasama1 = 0 }
-	else {
-		nilkerjasama1= parseFloat(document.getElementById("form1").kerjasama.value);
-	}
-	
-	if (document.getElementById("form1").disiplin.value=='') {
-		nildisiplin = 0 }
-	else {
-		nildisiplin= parseFloat(document.getElementById("form1").disiplin.value);
-	}
-	
-	if (document.getElementById("form1").kepemimpinan.value=='') {
-		nilkepemimpinan = 0 }
-	else {
-		nilkepemimpinan= parseFloat(document.getElementById("form1").kepemimpinan.value);
-	}
-		
-
-  
-  // var nilintegritas1=document.getElementById("form1").integritas.value;
-  // var nilkerjasama1=document.getElementById("form1").kerjasama.value;
-  if (nilkepemimpinan > 0) {
-	nilperilakukerja= (nilorientasi1 + nilintegritas + nilkomitmen + nilkerjasama1 + nildisiplin + nilkepemimpinan)/6 ;
-  }else{
-	nilperilakukerja= (nilorientasi1 + nilintegritas + nilkomitmen + nilkerjasama1 + nildisiplin)/5 ;
-  }
-  
-  document.getElementById("nilperilakukerja").value = nilperilakukerja.toFixed(2);
-  var nilperilakukerja40 = ((40/100)*nilperilakukerja) ;
-  document.getElementById("form1").nilperilakukerja40.value = "x 40% = " + nilperilakukerja40.toFixed(2);
-  
-  nilprestasikerja = ((60/100)*nilskp1) + ((40/100)*nilperilakukerja);
-  document.getElementById("nilprestasikerja").value = nilprestasikerja.toFixed(2);
-  
-  //=IF(G3<=50;((G3/50)*49);IF(G3<=60;(50+((19/9)*(G3-51)));IF(G3<=75;(70+((19/14)*(G3-61)));IF(G3<=90;(90+((19/14)*(G3-76)));IF(G3<=99;(110+((10/8)*(G3-91)));120)))))
-  var nilaikonversi = 0
-  if (nilprestasikerja<=50) {
-	  nilaikonversi = (nilprestasikerja/50)*49;
-  }else{
-	  if (nilprestasikerja<=60) {
-			nilaikonversi = 50+((19/9)*(nilprestasikerja-51));
-	  }
-	  else{
-		  if (nilprestasikerja<=75) {
-			nilaikonversi = 70+((19/14)*(nilprestasikerja-61));
-		  }
-		  else{
-			  if (nilprestasikerja<=90) {
-				nilaikonversi = 90+((19/14)*(nilprestasikerja-76));
-			  }
-			  else{
-				  if (nilprestasikerja<=99) {
-					nilaikonversi = 110+((10/8)*(nilprestasikerja-91));
-				  }
-				  else{
-					  nilaikonversi = 120;
-				  }
-				  
-			  }
-		  }
-		  
-	  }
-  }
-  
-  document.getElementById("nilkonversi").value = nilaikonversi.toFixed(2);
-  
- //--------------------------------------------------------------------------------------------------
- //periode 2
-	 
-		var nilskp2=0;
-		var nilorientasi2=0;
-		var nilkomitmen2 = 0;
-		var nilkerjasama2 = 0;
-		var nilinisiatif = 0;
-		var nilkepemimpinan2 = 0;
-		var nilperilakukerja2 = 0;
-		var nilprestasikerja2 = 0;
-		
-		if (document.getElementById("form1").nilaiskp2.value=='') {
-			nilaiskp2 = 0 }
-		else {
-			nilaiskp2= parseFloat(document.getElementById("form1").nilaiskp2.value);
-		}
-		
-		document.getElementById("form1").nilaiskp260.value = "x 60% = " + ((60/100)*nilaiskp2).toFixed(2);
-		
-		
-		if (document.getElementById("form1").orientasi2.value=='') {
-			nilorientasi2 = 0 }
-		else {
-			nilorientasi2= parseFloat(document.getElementById("form1").orientasi2.value);
-		}
-		
-		
-		if (document.getElementById("form1").komitmen2.value=='') {
-			nilkomitmen2 = 0 }
-		else {
-			nilkomitmen2= parseFloat(document.getElementById("form1").komitmen2.value);
-		}
-		
-		if (document.getElementById("form1").kerjasama2.value=='') {
-			nilkerjasama2 = 0 }
-		else {
-			nilkerjasama2= parseFloat(document.getElementById("form1").kerjasama2.value);
-		}
-		
-		if (document.getElementById("form1").inisiatif.value=='') {
-			nilinisiatif = 0 }
-		else {
-			nilinisiatif= parseFloat(document.getElementById("form1").inisiatif.value);
-		}
-		
-		if (document.getElementById("form1").kepemimpinan2.value=='') {
-			nilkepemimpinan2 = 0 }
-		else {
-			nilkepemimpinan2= parseFloat(document.getElementById("form1").kepemimpinan2.value);
-		}
-	  
-	  if (nilkepemimpinan2 > 0) {
-		nilperilakukerja2= (nilorientasi2 + nilkomitmen2 + nilkerjasama2 + nilinisiatif + nilkepemimpinan2)/5 ;
-	  }else{
-		nilperilakukerja2= (nilorientasi2 + nilkomitmen2 + nilkerjasama2 + nilinisiatif)/4 ;
-	  }
-	  
-	  document.getElementById("nilperilakukerja2").value = nilperilakukerja2.toFixed(2);
-	  
-	  var nilperilakukerja240 = ((40/100)*nilperilakukerja2) ;
-	  document.getElementById("form1").nilperilakukerja240.value = "x 40% = " + nilperilakukerja240.toFixed(2);
-	  
-	  nilprestasikerja2 = ((60/100)*nilaiskp2) + ((40/100)*nilperilakukerja2);
-	  document.getElementById("nilprestasikerja2").value = nilprestasikerja2.toFixed(2);
-	  
-	  var niltotalkinerja = (nilaikonversi + nilprestasikerja2)/2 ;
-	  var predikat = "SANGAT KURANG";
-	  if (niltotalkinerja<=50) {
-		  predikat = "SANGAT KURANG";
-	  }else{
-			if (niltotalkinerja<=69) {
-				  predikat = "KURANG";
-			  }else{
-					if (niltotalkinerja<=89) {
-						  predikat = "CUKUP";
-					  }else{
-							if (niltotalkinerja<=120) {
-								  predikat = "BAIK";
-							  }else{
-									predikat = "SANGAT BAIK";
-							  }  	
-					  }
-			  }
-	  }
-	  
-	  document.getElementById("predikat").value = predikat;
-		  
-		  
-	  document.getElementById("niltotal").value = niltotalkinerja.toFixed(2);
-	  
-  
-  
 }
 
 function cekdiklatpim(){
@@ -774,7 +555,7 @@ while ($row=mysqli_fetch_object($result))
   <div class="modal-content">
    <div class="modal-header">
      <!--<button type="button" class="close" data-dismiss="modal">&times;</button> --> 
-    <h2 class="modal-title" style="color:blue">PENGUKURAN INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2021</h2>
+    <h2 class="modal-title" style="color:blue">SURVEY INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2021</h2>
    </div>
    <div class="modal-body">
 			<form method="post" id="form1" name="form1" enctype="multipart/form-data" action="<?php echo site_url('Dashboard/add_survey') ?>">
@@ -821,645 +602,6 @@ while ($row=mysqli_fetch_object($result))
 					  
 				 </select></p>
 			  </div>
-				   <div class="tab"><p style="font-size:25px"><b>SKP Tahun 2021</b>: </p>
-				   <i>(untuk tanda decimal silahkan menggunakan titik (.) misal 90.50)</i><br/>
-				   <a href="<?=base_url();?>/assets_home/PETUNJUKPENGISIANSKPINDEKSPROFESIONALITAS.pdf" download><u>Klik di sini untuk petunjuk pengisian</u></a>
-				   <br/><br/>
-				   <p>
-				   
-					 <?
-								 $result2 = mysqli_query($link, "SELECT skp1.*, 
-											skp2.id AS id2, skp2.`nilaiskp` AS nilaiskp2, skp2.`orientasipelayanan` AS orientasipelayanan2, skp2.`inisiatifkerja` AS inisiatifkerja2, skp2.`komitmen` AS komitmen2, skp2.`kerjasama` AS kerjasama2, skp2.`kepemimpinan` AS kepemimpinan2, skp2.`file_skp2` , skp2.`nilaiprilakukerja` AS nilaiprilakukerja2, skp2.`nilaiprestasikerja` AS nilaiprestasikerja2, skp2.nilaitotal,
-											skp2.nip_penilai, skp2.nama_penilai, skp2.gol_penilai, skp2.jab_penilai,
-											skp2.nip_atasanpenilai, skp2.nama_atasanpenilai, skp2.gol_atasanpenilai, skp2.jab_atasanpenilai
-										FROM `tr_survey_kinerja_1` skp1
-										LEFT JOIN tr_survey_kinerja_2 skp2 ON skp1.id_pegawai = skp2.id_pegawai
-										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2021");
-										
-								 $row_cnt = $result2->num_rows;
-								
-							    if ($row_cnt != 0) {
-									while ($row=mysqli_fetch_object($result2))
-									  {
-										  $idskp1 = $row->id;
-										  $nilaiskp = $row->nilaiskp;
-										  $nilaiskp60 = "x 60% = ".((60/100)* $nilaiskp);
-										  $orientasipelayanan = $row->orientasipelayanan;
-										  $integritas= $row->integritas;
-										  $komitmen= $row->komitmen;
-										  $kerjasama= $row->kerjasama;
-										  $disiplin= $row->disiplin;
-										  $kepemimpinan= $row->kepemimpinan;
-										  $file_skp1 = $row->file_skp1;
-										  $nilaiprilakukerja = $row->nilaiprilakukerja;
-										  $nilaiprilakukerja40 = "x 40% = ".((40/100)*$nilaiprilakukerja);
-										  $nilaiprestasikerja = $row->nilaiprestasikerja;
-										  $nilaikonversi = $row->nilaikonversi;
-										  
-										  $idskp2 = $row->id2;
-										  $nilaiskp2 = $row->nilaiskp2;
-										  $nilaiskp260 = "x 60% = ".((60/100)* $nilaiskp2);
-										  $orientasipelayanan2 = $row->orientasipelayanan2;
-										  $inisiatifkerja2 = $row->inisiatifkerja2;
-										  $komitmen2= $row->komitmen2;
-										  $kerjasama2= $row->kerjasama2;
-										  $kepemimpinan2= $row->kepemimpinan2;
-										  $file_skp2 = $row->file_skp2;
-										  $nilaiprilakukerja2 = $row->nilaiprilakukerja2;
-										  $nilaiprilakukerja240 = "x 40% = ".((40/100)*$nilaiprilakukerja2);
-										  $nilaiprestasikerja2 = $row->nilaiprestasikerja2;
-										  $nilaitotal = $row->nilaitotal;
-										  $nip_penilai = $row->nip_penilai;
-										  $nama_penilai = $row->nama_penilai;
-										  $gol_penilai = $row->gol_penilai;
-										  $jab_penilai = $row->jab_penilai;
-										  $nip_atasanpenilai = $row->nip_atasanpenilai;
-										  $nama_atasanpenilai = $row->nama_atasanpenilai;
-										  $gol_atasanpenilai = $row->gol_atasanpenilai;
-										  $jab_atasanpenilai = $row->jab_atasanpenilai;
-										  
-										  $predikat = "SANGAT KURANG";
-										  if ($nilaitotal<=50) {
-											  $predikat = "SANGAT KURANG";
-										  }else{
-												if ($nilaitotal<=69) {
-													  $predikat = "KURANG";
-												  }else{
-														if ($nilaitotal<=89) {
-															  $predikat = "CUKUP";
-														  }else{
-																if ($nilaitotal<=120) {
-																	  $predikat = "BAIK";
-																  }else{
-																		$predikat = "SANGAT BAIK";
-																  }  	
-														  }
-												  }
-										  }
-										
-										echo "	<table border=1 width=1500> ";
-										echo	 "<tr>";
-										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2021)";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2021)";
-										echo	"	</td>";
-										echo	 "</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	 "<tr>";
-										echo			"<td width=400>Nilai SKP</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-											echo	"		<input type='hidden' id='idskp1' name='idskp1' value=".$idskp1.">";
-											echo	"		<input style='width:100px; text-align:right;' id='nilaiskp' type='text' name='nilaiskp' class='form-control' value=".$nilaiskp." onchange='hitungperilakukerja1()'>";
-											echo	"		<input style='width:200px; font-weight: bold; text-align:left;' id='nilaiskp60' readonly=true type='text' name='nilaiskp60' class='form-control'  value='".$nilaiskp60."';>";
-										echo	"		</div> ";	
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo			"<td width=400>Nilai SKP</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-											echo	"		<input type='hidden' id='idskp2' name='idskp2' value=".$idskp2.">";
-											echo	"		<input style='width:100px; text-align:right;' id='nilaiskp2' type='text' name='nilaiskp2' class='form-control' value=".$nilaiskp2." onchange='hitungperilakukerja1()'>";
-											echo	"		<input style='width:200px; font-weight: bold; text-align:left;' readonly=true id='nilaiskp260' type='text' name='nilaiskp260' class='form-control' value='".$nilaiskp260."';>";
-										echo	"		</div>";								
-										echo	"	</td>";
-										echo	" </tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Orientasi Pelayanan</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='orientasi' name='orientasi' class='form-control' value=".$orientasipelayanan."> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Orientasi Pelayanan</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' id='orientasi2' name='orientasi2' class='form-control' value=".$orientasipelayanan2." onchange='hitungperilakukerja1()'> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	" </tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Integritas</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='integritas' name='integritas' class='form-control' value=".$integritas."> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Komitmen</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' id='komitmen2' name='komitmen2' class='form-control' value=".$komitmen2." onchange='hitungperilakukerja1()'> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	" </tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Komitmen</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text'  style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='komitmen' name='komitmen' class='form-control' value=".$komitmen.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Kerjasama</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"		<input type='text' style='width:100px; text-align:right;' id='kerjasama2' name='kerjasama2' class='form-control' value=".$kerjasama2." onchange='hitungperilakukerja1()'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Disiplin</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='disiplin' name='disiplin' class='form-control' value=".$disiplin.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Inisiatif Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"			<input type='text' style='width:100px; text-align:right;' id='inisiatif' name='inisiatif' class='form-control' value=".$inisiatifkerja2." onchange='hitungperilakukerja1()'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Kerjasama</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"		<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='kerjasama' name='kerjasama' class='form-control' value=".$kerjasama.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Kepemimpinan <br/> (utk Struktural, Subkoordinator, atau Koordinator)</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"		<input type='text' style='width:100px; text-align:right;' id='kepemimpinan2' name='kepemimpinan2' class='form-control' value=".$kepemimpinan2." onchange='hitungperilakukerja1()'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Kepemimpinan <br/> (utk Struktural, Subkoordinator, atau Koordinator)</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='kepemimpinan' name='kepemimpinan' class='form-control' value=".$kepemimpinan.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Nilai Perilaku Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-											echo	"  <input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilperilakukerja' name='nilperilakukerja' class='form-control' value=".$nilaiprilakukerja.">";
-											echo	"  <input type='text' style='width:200px; font-weight: bold;  text-align:left;' readonly=true id='nilperilakukerja40' name='nilperilakukerja40' class='form-control' value='".$nilaiprilakukerja40."'>";
-											echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Perilaku Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"  <input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilperilakukerja2' name='nilperilakukerja2' class='form-control' value=".$nilaiprilakukerja2.">";
-										echo	"  <input type='text' style='width:200px; font-weight: bold;  text-align:left;' readonly=true id='nilperilakukerja240' name='nilperilakukerja240' class='form-control' value='".$nilaiprilakukerja240."'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Nilai Prestasi Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilprestasikerja' name='nilprestasikerja' class='form-control' value=".$nilaiprestasikerja.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Prestasi Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilprestasikerja2' name='nilprestasikerja2' class='form-control' value=".$nilaiprestasikerja2.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										
-										echo	" <tr>";
-										echo	"	<td>Nilai Konversi</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px;  font-weight: bold; text-align:right; background-color:skyblue;' id='nilkonversi' readonly=true name='nilkonversi' class='form-control' value=".$nilaikonversi.">";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Kinerja Th 2021</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='niltotal' name='niltotal' class='form-control' value=".$nilaitotal.">";
-										echo	"<input type='text' style='width:200px; font-weight: bold; text-align:Left;' id='predikat' name='predikat' readonly=true class='form-control' value='".$predikat."'>";
-										
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-
-										
-										//----------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>NIP Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:300px;  font-weight: bold; text-align:left;' placeholder='isikan Nip Pejabat Penilai' id='nipatasan' name='nipatasan' value='".$nip_penilai."' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Nama Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Nama Pejabat Penilai' id='namaatasan' name='namaatasan' value='".$nama_penilai."' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Pangkat Golongan Ruang Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Pangkat Gol. Ruang Pejabat Penilai, misal: Pembina (IV/a)' id='golatasan' name='golatasan' value='".$gol_penilai."' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//---------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Jabatan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Jabatan Pejabat Penilai' id='jabatasan' name='jabatasan' value='".$jab_penilai."' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>NIP Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:300px;  font-weight: bold; text-align:left;' id='nippejabat' name='nippejabat' value='".$nip_atasanpenilai."' placeholder='isikan Nip Atasan Pejabat Penilai'  class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Nama Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' id='namapejabat' name='namapejabat' value='".$nama_atasanpenilai."' placeholder='isikan Nama Atasan Pejabat Penilai' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Pangkat Golongan Ruang Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' id='golpejabat' name='golpejabat' value='".$gol_atasanpenilai."' placeholder='isikan Pangkat Gol. Ruang Atasan Pejabat Penilai, misal: Pembina (IV/a)' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//---------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Jabatan Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' id='jabpejabat' name='jabpejabat' value='".$jab_atasanpenilai."' placeholder='isikan Jabatan Atasan Pejabat Penilai' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	"<tr>";
-										echo	"	<td colspan=4>Upload SKP (File Maks. 1 MB)</td>";
-										echo	"	<td colspan=4>";
-										echo    	"<div class='input-group'>";
-										echo		"<input type='file' style='width:300px; align=right' id='berkasskp' name='berkasskp' class='form-control' placeholder='File Pendukung'>";
-										echo	"</div>";
-										echo	"	</td>";	
-										echo	"</tr>";			
-										//--------------------------------------------------------------------------------------------------------------	
-										echo	"<tr>";
-										echo	"	<td colspan=4>File SKP</td>";
-										echo	"<td colspan=4>";
-										echo		"<div class='input-group'>";
-										echo        "<input type='text' style='width:300px;' id='fileskp' name='fileskp' class='form-control' placeholder='No File' value='".$file_skp1."' readonly='true'>";
-										echo		"</div>";
-										echo	"</td>";
-										echo	"</tr>";
-										
-										echo	"</table><p>";
-									  }
-							   }
-							else {
-										echo "	<table border=1 width=1500> ";
-										echo	 "<tr>";
-										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2021)";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2021)";
-										echo	"	</td>";
-										echo	 "</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	 "<tr>";
-										echo			"<td width=400>Nilai SKP</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-											echo	"		<input type='hidden' id='idskp1' name='idskp1'>";
-											echo	"		<input style='width:100px; text-align:right;' id='nilaiskp' type='text' name='nilaiskp' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
-											echo	"		<input style='width:200px; font-weight: bold; text-align:left;' readonly=true id='nilaiskp60' type='text' name='nilaiskp60' class='form-control'  placeholder='x 60% = 0'>";
-										echo	"		</div> ";	
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo			"<td width=400>Nilai SKP</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-											echo	"		<input type='hidden' id='idskp2' name='idskp2'>";
-											echo	"		<input style='width:100px; text-align:right;' id='nilaiskp2' type='text' name='nilaiskp2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
-											echo	"		<input style='width:100px; font-weight: bold; text-align:left;' readonly=true id='nilaiskp260' type='text' name='nilaiskp260' class='form-control' placeholder='x 60% = 0'>";
-										echo	"		</div>";								
-										echo	"	</td>";
-										echo	" </tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Orientasi Pelayanan</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='orientasi' name='orientasi' class='form-control' placeholder=0> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Orientasi Pelayanan</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' id='orientasi2' name='orientasi2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	" </tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Integritas</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='integritas' name='integritas' class='form-control' placeholder=0> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Komitmen</td>";
-										echo	"	<td>";
-											echo	"			<div class='input-group'>";
-											echo	"			<input type='text' style='width:100px; text-align:right;' id='komitmen2' name='komitmen2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'> ";
-										echo	"			</div>";
-										echo	"	</td>";
-										echo	" </tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Komitmen</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text'  style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='komitmen' name='komitmen' class='form-control' placeholder=0>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Kerjasama</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"		<input type='text' style='width:100px; text-align:right;' id='kerjasama2' name='kerjasama2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Disiplin</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='disiplin' name='disiplin' class='form-control' placeholder=0>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Inisiatif Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"			<input type='text' style='width:100px; text-align:right;' id='inisiatif' name='inisiatif' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Kerjasama</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"		<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='kerjasama' name='kerjasama' class='form-control' placeholder=0>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Kepemimpinan <br/> (utk Struktural, Subkoordinator, atau Koordinator)</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"		<input type='text' style='width:100px; text-align:right;' id='kepemimpinan2' name='kepemimpinan2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Kepemimpinan <br/> (utk Struktural, Subkoordinator, atau Koordinator)</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='kepemimpinan' name='kepemimpinan' class='form-control' placeholder=0>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Nilai Perilaku Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-											echo	"  <input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilperilakukerja' name='nilperilakukerja' class='form-control'>";
-											echo	"  <input type='text' style='width:200px; font-weight: bold;  text-align:left;' readonly=true id='nilperilakukerja40' name='nilperilakukerja40' class='form-control' placeholder='x 40% = 0'>";
-											echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Perilaku Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"  <input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilperilakukerja2' name='nilperilakukerja2' class='form-control'>";
-										echo	"  <input type='text' style='width:100px; font-weight: bold; text-align:left;' readonly=true id='nilperilakukerja240' name='nilperilakukerja240' class='form-control' placeholder='x 40% = 0'>";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Nilai Prestasi Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilprestasikerja' name='nilprestasikerja' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Prestasi Kerja</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilprestasikerja2' name='nilprestasikerja2' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										
-										
-										echo	" <tr>";
-										echo	"	<td>Nilai Konversi</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px;  font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='nilkonversi' name='nilkonversi' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Kinerja Th 2021</td>";
-										echo	"	<td>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='niltotal' name='niltotal' class='form-control' >";
-										echo	"<input type='text' style='width:200px; font-weight: bold; text-align:Left;' readonly=true id='predikat' name='predikat' class='form-control' >";
-										
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//-------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>NIP Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:300px;  font-weight: bold; text-align:left;' placeholder='isikan Nip Pejabat Penilai' id='nipatasan' name='nipatasan' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Nama Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Nama Pejabat Penilai' id='namaatasan' name='namaatasan' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Pangkat Golongan Ruang Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Pangkat Gol. Ruang Pejabat Penilai, misal : Pembina (IV/a)' id='golatasan' name='golatasan' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//---------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Jabatan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Jabatan Pejabat Penilai' id='jabatasan' name='jabatasan' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										
-										//--------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>NIP Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:300px;  font-weight: bold; text-align:left;' placeholder='isikan Nip Atasan Pejabat Penilai' id='nippejabat' name='nippejabat' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Nama Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Nama Atasan Pejabat Penilai' id='namapejabat' name='namapejabat' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//--------------------------------------------------------------------------------------------------------------
-										echo	" <tr>";
-										echo	"	<td>Pangkat Golongan Ruang Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Pangkat Gol. Ruang Atasan Pejabat Penilai, misal : Pembina (IV/a)' id='golpejabat' name='golpejabat' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										//---------------------------------------------------------------------------------------------------------------
-										
-										echo	" <tr>";
-										echo	"	<td>Jabatan Atasan Pejabat Penilai</td>";
-										echo	"	<td colspan=5>";
-										echo	"		<div class='input-group'>";
-										echo	"<input type='text' style='width:900px;  font-weight: bold; text-align:left;' placeholder='isikan Jabatan Atasan Pejabat Penilai' id='jabpejabat' name='jabpejabat' class='form-control' >";
-										echo	"	</div>";
-										echo	"	</td>";
-										echo	"</tr>";
-										
-										//--------------------------------------------------------------------------------------------------------------
-										echo	"<tr>";
-										echo	"	<td>Upload SKP (File Maks. 1 MB)</td>";
-										echo	"	<td colspan=5>";
-										echo    	"<div class='input-group'>";
-										echo		"<input type='file' style='width:300px; align=right' id='berkasskp' name='berkasskp' class='form-control' placeholder='File Pendukung'>";
-										echo	"</div>";
-										echo	"	</td>";	
-										echo	"</tr>";			
-										//--------------------------------------------------------------------------------------------------------------	
-										echo	"<tr>";
-										echo	"	<td>File SKP</td>";
-										echo	"<td colspan=5>";
-										echo		"<div class='input-group'>";
-										echo        "<input type='text' style='width:300px;' id='fileskp' name='fileskp' class='form-control' placeholder='No File' readonly='true'>";
-										echo		"</div>";
-										echo	"</td>";
-										echo	"</tr>";
-														
-										echo	"</table><p>";
-							 } ?>	  
-							   
-							
-				  </div>
-			  
 			  <div class="tab">Jika anda menduduki jabatan struktural di tahun 2021, apakah anda sudah mengikuti diklatpim dalam jabatan eselon tersebut?<p>
 			  <i>(contoh: <b>jawab Sudah Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan sudah diklatpim III; <b>jawab Belum Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan belum diklatpim III)</i>
 				<p><select id="tampil" name="tampil" onchange="cekdiklatpim()" class="form-control"> 
@@ -1539,10 +681,6 @@ while ($row=mysqli_fetch_object($result))
 												if ($jnspim == 'lemhanas') {	
 													echo "<option value='lemhanas' selected>Lemhanas</option>  ";
 												}else{ echo "<option value='lemhanas' >Lemhanas</option>  "; }
-												if ($jnspim == 'lainnya') {	
-													echo "<option value='lainnya' selected>lainnya</option>  ";
-												}else{ echo "<option value='lainnya' >lainnya</option>  "; }
-												
 												echo "</select></td>";
 												echo "<td title='Tanggal Mulai'><input style='width:160px;' type='date' id='tgldiklatpim' name='tgldiklatpim[]' class='form-control' placeholder='Tanggal Mulai' value=".$tglpim."></td>";
 												echo "<td title='Tanggal Selesai'><input style='width:160px;' type='date' id='tglselesaipim' name='tglselesaipim[]' class='form-control' placeholder='Tanggal Selesai' value=".$tglselesaipim."></td>";
@@ -1576,7 +714,6 @@ while ($row=mysqli_fetch_object($result))
 									echo "	<option value='pim3'>pim 3</option>";
 									echo "	<option value='pim4'>pim 4</option>";
 									echo "	<option value='lemhanas'>lemhanas</opton>";
-									echo "	<option value='lainnya'>lainnya</opton>";
 									echo "</select></td>";
 									echo "<td  title='tanggal diklat'><input type='date' style='width:160px;' id='tgldiklatpim' name='tgldiklatpim[]' class='form-control' placeholder='tanggal diklat'></td>";
 									echo "<td title='Tanggal Selesai'><input style='width:160px;' type='date' id='tglselesaipim' name='tglselesaipim[]' class='form-control' placeholder='Tanggal Selesai'></td>";
@@ -1593,8 +730,8 @@ while ($row=mysqli_fetch_object($result))
 						?>
 					</TABLE> <p>
 					
-					<!-- <label for="add"><a onclick="addRow('dataTable1')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					 <label for="del"><a onclick="deleteRow('dataTable1')">Hapus Diklat</a></label> -->
+					 <label for="add"><a onclick="addRow('dataTable1')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
+					 <label for="del"><a onclick="deleteRow('dataTable1')">Hapus Diklat</a></label>
 			  </div>
 			  <div class="tab">Anda Pernah Diklat Jabatan Fungsional ?
 				<p><select id="tampiljafung" name="tampiljafung" onchange="cekdiklatjafung()" class="form-control"> 
@@ -1694,8 +831,8 @@ while ($row=mysqli_fetch_object($result))
 						   }
 						 ?> 
 						</TABLE> <p>
-					<!--	<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>-->
+						<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
+					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>
 			  </div>
 			  <div class="tab">Dalam 1 tahun terakhir (2021), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
 					 <p><select id="tampil20jp" name="tampil20jp" onchange="cekdiklatjp()" class="form-control">
@@ -1800,8 +937,8 @@ while ($row=mysqli_fetch_object($result))
 						 ?> 
 						
 						</TABLE> <p>
-						<!--<label for="add"><a onclick="addRow('dataTable3')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>-->
+						<label for="add"><a onclick="addRow('dataTable3')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
+					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>
 					 
 			  </div>
 			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2021), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
@@ -1903,10 +1040,9 @@ while ($row=mysqli_fetch_object($result))
 						 ?> 
 						
 					</TABLE> <p>
-					<!--<label for="add"><a onclick="addRow('dataTable4')">Tambah Seminar</a></label> &nbsp &nbsp &nbsp
-					<label for="del"><a onclick="deleteRow('dataTable4')">Hapus Seminar</a></label>-->
+					<label for="add"><a onclick="addRow('dataTable4')">Tambah Seminar</a></label> &nbsp &nbsp &nbsp
+					<label for="del"><a onclick="deleteRow('dataTable4')">Hapus Seminar</a></label>
 			  </div>
-			  
 			  <div class="tab"> Pendidikan Terakhir Anda:
 				<select name="pendidikan" id="pendidikan" class="form-control">
 					 <option value="pilih">--Pilih--</option>  
@@ -1983,7 +1119,67 @@ while ($row=mysqli_fetch_object($result))
 					 </select><p>
 			  </div>
 			  
-			  
+			  <div class="tab"> Hasil Penilaian Kinerja Anda di Tahun 2021 (Periode 1):
+				<select name="kinerja" id="kinerja" class="form-control">
+				 <option value="pilih">--Pilih--</option>  
+				 	<?
+						 if ($skp == 'Sangat Baik') { ?>
+								  <option value="Sangat Baik" selected>Sangat Baik (91-100)</option>  
+								  <option value="Baik">Baik (76-90)</option>  
+								  <option value="Cukup">Cukup (61-75)</option>  
+								  <option value="Kurang">Kurang (51-60)</option>  
+								  <option value="Buruk">Buruk (<50)</option> 
+						
+							<?
+							}
+						if ($skp == 'Baik') { ?>
+								  <option value="Sangat Baik">Sangat Baik (91-100)</option>  
+								  <option value="Baik" selected>Baik (76-90)</option>  
+								  <option value="Cukup">Cukup (61-75)</option>  
+								  <option value="Kurang">Kurang (51-60)</option>  
+								  <option value="Buruk">Buruk (<50)</option> 
+						
+							<?
+							}
+						if ($skp == 'Cukup') { ?>
+								  <option value="Sangat Baik">Sangat Baik (91-100)</option>  
+								  <option value="Baik">Baik (76-90)</option>  
+								  <option value="Cukup" selected>Cukup (61-75)</option>  
+								  <option value="Kurang">Kurang (51-60)</option>  
+								  <option value="Buruk">Buruk (<50)</option> 
+						
+							<?
+							}
+						if ($skp == 'Kurang') { ?>
+								  <option value="Sangat Baik">Sangat Baik (91-100)</option>  
+								  <option value="Baik">Baik (76-90)</option>  
+								  <option value="Cukup">Cukup (61-75)</option>  
+								  <option value="Kurang" selected>Kurang (51-60)</option>  
+								  <option value="Buruk">Buruk (<50)</option> 
+						
+							<?
+							}
+						if ($skp == 'Buruk') { ?>
+								  <option value="Sangat Baik">Sangat Baik (91-100)</option>  
+								  <option value="Baik">Baik (76-90)</option>  
+								  <option value="Cukup">Cukup (61-75)</option>  
+								  <option value="Kurang">Kurang (51-60)</option>  
+								  <option value="Buruk" selected>Buruk (<50)</option> 
+						
+							<?
+							}
+						if ($skp == '') { ?>
+								  <option value="Sangat Baik">Sangat Baik (91-100)</option>  
+								  <option value="Baik">Baik (76-90)</option>  
+								  <option value="Cukup">Cukup (61-75)</option>  
+								  <option value="Kurang">Kurang (51-60)</option>  
+								  <option value="Buruk">Buruk (<50)</option> 
+						
+							<?
+							}
+						?>
+				 </select><p>
+			  </div>
 			  
 			  <div class="tab">Anda Pernah Dijatuhi Hukuman Disiplin :
 				<select name="hukuman" id="hukuman" onchange="cekhukuman()" class="form-control">
@@ -2155,10 +1351,10 @@ while ($row=mysqli_fetch_object($result))
 			  </div><p><p><p><p>
 			  <div style="overflow:auto;">
 			  <div style="float:left;">
-<!--				  <button type="button" id="closeBtn" onclick="nextPrev(0)" >Tutup (Kembali ke Dashboard)</button> 
-				  <button type="button" id="closeBtn" data-dismiss="modal" onclick="nextPrev(0)">Tutup</button> -->
+<!--				  <button type="button" id="closeBtn" onclick="nextPrev(0)" >Tutup (Kembali ke Dashboard)</button> -->
+				  <button type="button" id="closeBtn" data-dismiss="modal" onclick="nextPrev(0)">Tutup</button> 
 				</div>
-				<div style="text-align:center;">
+				<div style="float:right;">
 				  <button type="button" id="prevBtn" onclick="nextPrev(-1)">Sebelumnya</button>
 				  <button type="button" id="nextBtn" onclick="nextPrev(1)" >Berikutnya</button>
 				</div>
@@ -2226,25 +1422,13 @@ function nextPrev(n) {
 	  alert("Lengkapi Pengisian Data !");
 	return false; } */
 	//alert(currentTab);
-	// if (!ValidateFile()) {
-	 // alert("Lengkapi Pengisian Data !");
-	// return false; }
-	
     if (currentTab==0 && document.getElementById("form1").jabatan.value=='CPNS') {
-		sessionStorage.setItem("showw", 0);
 	  alert("Status anda masih CPNS, Anda dapat melewati survey Indeks Profesionalitas");
 	  document.getElementById("form1").submit();
 	  return false;
 	}  
 	  
-	  if (currentTab == 2){
-		  
-		
-		if (!ValidateFile()) {
-			return false;
-		}
-		
-		
+	  if (currentTab == 1){
 		var jnsdiklat=document.getElementById("form1").tampil.value;
 		
 		  if (jnsdiklat=='sdhpim') 
@@ -2289,103 +1473,22 @@ function nextPrev(n) {
 							alert("Anda belum mengisi Jumlah Jam!");
 							return false;
 					}
-					
 					if (id=="") {
 						if (berkas=="") {
 								alert("Anda belum mengupload sertifikat!");
 								return false;
 						}
-					} 
-					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
 					}
-						
+					
+					
 				}
 			  
 		  }
 		  
 		 
 	   }
-	   
-	   if (currentTab == 1){
-		
-			// if (!ValidSizeSKP()) {
-				// return false;
-			// }
-			
-			var berkasskp=document.getElementById("form1").berkasskp.value;
-
-			if (!berkasskp=="") {
-				
-				if (!ValidateFile()) {
-					return false;
-				}
-				
-				const oFile =  document.getElementById("berkasskp").files[0];  
-
-				if (oFile.size > 1000000) // 2 MiB for bytes.
-				{
-				  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-				  return false;
-				}
-			}
-			
-			var niltotal=document.getElementById("form1").niltotal.value;
-			if ((niltotal==0) || (niltotal=='')) {
-					alert("Anda belum mengisi SKP");
-					return false;
-			}
-			var nipatasan=document.getElementById("form1").nipatasan.value;
-			if (nipatasan=='') {
-					alert("Anda belum mengisi data pejabat penilai");
-					return false;
-			}
-			var nippejabat=document.getElementById("form1").nippejabat.value;
-			if (nippejabat=='') {
-					alert("Anda belum mengisi data atasan pejabat penilai");
-					return false;
-			}
-			
-			// var _validFileExtensions = [".jpg", ".jpeg", ".pdf", ".png"];    
-			
-			// var arrInputs = document.getElementById("form1").berkasskp.value;;
-			// for (var i = 0; i < arrInputs.length; i++) {
-				// var oInput = arrInputs[i];
-				// if (oInput.type == "file") {
-					// var sFileName = oInput.value;
-					// if (sFileName.length > 0) {
-						// var blnValid = false;
-						// for (var j = 0; j < _validFileExtensions.length; j++) {
-							// var sCurExtension = _validFileExtensions[j];
-							// if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-								// blnValid = true;
-								// break;
-							// }
-						// }
-						
-						// if (!blnValid) {
-							// alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
-							// return false;
-						// }
-					// }
-				// }
-			// }
-		 
-			
-	   }
 	  
-	   if (currentTab == 3){
-		   if (!ValidateFile()) {
-				return false;
-			}
-		
+	   if (currentTab == 2){
 		var jnsdiklat=document.getElementById("form1").tampiljafung.value;
 	
 		  if (jnsdiklat=='sdhdiklatjafung') 
@@ -2442,15 +1545,6 @@ function nextPrev(n) {
 						}
 					}
 					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
 					
 				}
 			  
@@ -2459,10 +1553,7 @@ function nextPrev(n) {
 		 
 	   }
 		 
-		if (currentTab == 5){
-			if (!ValidateFile()) {
-				return false;
-			}
+		if (currentTab == 4){
 		var jnsdiklat=document.getElementById("form1").tampilseminar.value;
 		
 		  if (jnsdiklat=='sdhseminar') 
@@ -2522,24 +1613,12 @@ function nextPrev(n) {
 						}
 					}
 					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
 					
 				}
 		  }
 		}
   
-	if (currentTab == 4){
-		if (!ValidateFile()) {
-			return false;
-		}
+	if (currentTab == 3){
 		var jnsdiklat=document.getElementById("form1").tampil20jp.value;
 
 		  if (jnsdiklat=='sdhdiklat20jp') 
@@ -2599,15 +1678,7 @@ function nextPrev(n) {
 						}
 					}
 					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
+					
 					
 					
 				}
@@ -2615,10 +1686,6 @@ function nextPrev(n) {
 	}
   
   if (currentTab == 7){
-		if (!ValidateFile()) {
-			return false;
-		}
-		
 		var jnsdiklat=document.getElementById("form1").hukuman.value;
 	//alert(jnsdiklat);
 		  if (jnsdiklat!="Tidak Pernah") 
@@ -2647,19 +1714,9 @@ function nextPrev(n) {
 					if (berkas=="") {
 								alert("Anda belum Mengupload SK");
 								return false;
-					}
+						}
 				}
-				
-				if (!berkas=="") {
-							const oFile =  document.getElementById("berkashukuman").files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-				}
-				
+			    
 		  }
 	}
 	
@@ -2678,28 +1735,27 @@ function nextPrev(n) {
   if (currentTab >= x.length) {
     // ... the form gets submitted:	
 	
-	sessionStorage.setItem("showw", 0);
 	alert("Terima Kasih Sudah Mengisi Survey Indeks Profesionalitas");
-	
+	<?php $_SESSION['surveysess']=1;?>
     document.getElementById("form1").submit();
 	
 	return false;
   }
   // Otherwise, display the correct tab:
 
-  //alert(currentTab);
+//  alert(currentTab);
   
   
   
-    if (currentTab == 2) { cekenablepim(); }
+    if (currentTab == 1) { cekenablepim(); }
    
-   if (currentTab == 3) { cekenablejafung(); }
+   if (currentTab == 2) { cekenablejafung(); }
    
-   if (currentTab == 4) { cekenablejp(); }
+   if (currentTab == 3) { cekenablejp(); }
    
-  if (currentTab == 5) { cekenableseminar(); }
+  if (currentTab == 4) { cekenableseminar(); }
   
-  if (currentTab == 7) { cekenablehukuman(); }
+  if (currentTab == 5) { cekenablehukuman(); }
 	
 	showTab(currentTab);
 }
@@ -2893,45 +1949,6 @@ function validateForm() {
   
   return valid; // return the valid status
 }
-
-function ValidateFile() {
-	var _validFileExtensions = [".jpg", ".jpeg", ".pdf"];  
-    var arrInputs = form1.getElementsByTagName("input");
-    for (var i = 0; i < arrInputs.length; i++) {
-        var oInput = arrInputs[i];
-        if (oInput.type == "file") {
-            var sFileName = oInput.value;
-            if (sFileName.length > 0) {
-                var blnValid = false;
-                for (var j = 0; j < _validFileExtensions.length; j++) {
-                    var sCurExtension = _validFileExtensions[j];
-                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                        blnValid = true;
-                        break;
-                    }
-                }
-                
-                if (!blnValid) {
-                    alert("Maaf, File " + sFileName + " tidak dapat diupload, Jenis File upload harus : " + _validFileExtensions.join(", "));
-                    return false;
-                }
-            }
-        }
-    }
-  
-    return true;
-}
-
-function ValidSizeSKP() {
-		const oFile = document.getElementById("fileUpload").files[0]; // <input type="file" id="fileUpload" accept=".jpg,.png,.gif,.jpeg"/>
-
-		if (oFile.size > 2097152) // 2 MiB for bytes.
-		{
-		  alert("File size must under 2MiB!");
-		  return;
-		}
-}
-
 
 function validateForm2() {
   // This function deals with validation of the form fields

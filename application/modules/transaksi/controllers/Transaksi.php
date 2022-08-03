@@ -40,7 +40,8 @@ class Transaksi extends CI_Controller {
 		$data['title']      	= 'Transaksi';
 		$data['content']    	= 'transaksi/trx/data_transaksi2';
 		$data['list']			= $this->mtrx->list_transaksi($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
-		$data['urtug']          = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$this->year_system,'approve',1);
+		// $data['urtug']          = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),$this->year_system,'approve',1);
+		$data['urtug']          = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2021,'approve',1);
 		$data['hari_kerja']     = $this->mtrx->get_hari_kerja(date('m'),date('Y'));
 		$data['infoPegawai']    = $this->Globalrules->check_pegawai($this->session->userdata('sesUser'));
 		$data['member']         = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));
@@ -103,7 +104,7 @@ class Transaksi extends CI_Controller {
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';
 		$flag                         = array('tahun'=>date('Y'),'id_pegawai' =>$this->session->userdata('sesUser'));		
-		$data['urtug']                = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y'),'approve',1);
+		$data['urtug']                = $this->mskp->get_data_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),2021,'approve',1);
 		$data['tr_belum_diperiksa']   = $this->mtrx->status_pekerjaan('0',$this->session->userdata('sesUser'));
 		$data['tr_disetujui']         = $this->mtrx->status_pekerjaan('1',$this->session->userdata('sesUser'));
 		$data['tr_tolak']             = $this->mtrx->status_pekerjaan('2',$this->session->userdata('sesUser'));

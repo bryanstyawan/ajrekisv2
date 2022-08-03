@@ -17,14 +17,14 @@ class Dashboard extends CI_Controller {
 		error_reporting(E_ALL ^ E_WARNING);
 		$this->Globalrules->session_rule();
 		
-		 $ceksurvey = 0;
-		$ceksurvey	= $this->mlogin->ceksurvey($this->session->userdata('sesUser'));
-		if ($ceksurvey == 0) {
-			$this->session->set_userdata('surveysess', 0);
-		}
-		else{
-			$this->session->set_userdata('surveysess', 1);
-		} 
+		 // $ceksurvey = 0;
+		// $ceksurvey	= $this->mlogin->ceksurvey($this->session->userdata('sesUser'));
+		// if ($ceksurvey == 0) {
+			// $this->session->set_userdata('surveysess', 0);
+		// }
+		// else{
+			// $this->session->set_userdata('surveysess', 1);
+		// } 
  
 		if ($this->session->userdata('sesPosisi') != '') {
 			# code...
@@ -33,6 +33,7 @@ class Dashboard extends CI_Controller {
 			$data['content']                 = 'vdashboard';
 			$data['id_posisi']               = $this->session->userdata('sesPosisi');
 			$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
+			$data['totalip']         		 = $this->mdashboard->get_total_ip();
 			$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();
 			// $skp                      		= $this->Globalrules->data_summary_skp_pegawai($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'),date('Y')-1);	
 			$data['skp']					  = $this->mskp->get_persentase_target_realisasi(date('Y'));
@@ -280,24 +281,37 @@ class Dashboard extends CI_Controller {
     {
       
 		
-		$this->mdashboard->save_survey($this->session->userdata('sesUser'));
+		$post = $this->input->post();
+		$this->jns_jabatan = $post["jabatan"];
 		
-		$this->mdashboard->save_survey_diklatpim($this->session->userdata('sesUser'));
+		if ($post["jabatan"]!='pilih') {
+			
+			$this->mdashboard->save_survey($this->session->userdata('sesUser'));
+			
+			if ($post["jabatan"]!='CPNS') {
+			
+				$this->mdashboard->save_survey_skp1($this->session->userdata('sesUser'));
+				
+				$this->mdashboard->save_survey_skp2($this->session->userdata('sesUser'));
+				
+				$this->mdashboard->save_survey_diklatpim($this->session->userdata('sesUser'));
+				
+				$this->mdashboard->save_survey_diklatjafung($this->session->userdata('sesUser'));
+				
+				$this->mdashboard->save_survey_diklat20jp($this->session->userdata('sesUser'));
+				
+				$this->mdashboard->save_survey_seminar($this->session->userdata('sesUser'));
+				
+				$this->mdashboard->save_survey_hukuman($this->session->userdata('sesUser')); 
+			}
+		}
 		
-		$this->mdashboard->save_survey_diklatjafung($this->session->userdata('sesUser'));
-		
-		$this->mdashboard->save_survey_diklat20jp($this->session->userdata('sesUser'));
-		
-		$this->mdashboard->save_survey_seminar($this->session->userdata('sesUser'));
-		
-		$this->mdashboard->save_survey_hukuman($this->session->userdata('sesUser')); 
-		
-
 	     $this->session->set_userdata('surveysess', 1);		
        // $this->load->view("dashboard/home");
-	    
+	    $_SESSION['popup'] = '0';
 		redirect('dashboard/home');
 		//return 1;
+		
 		
     }
 }
