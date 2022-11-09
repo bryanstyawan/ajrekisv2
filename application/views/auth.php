@@ -591,7 +591,14 @@ function login() {
 						$("#loadprosess").modal('hide');
 						setTimeout(function(){
 							sessionStorage.setItem("showw", 1);
-							window.location.href = "<?=base_url();?>admin";							
+							// console.log(obj.);
+							if (obj.survey == 1) {
+								window.location.replace("http://sikerja.kemendagri.go.id/surveytalenta/talenta");
+							}
+							else
+							{
+								window.location.href = "<?=base_url();?>admin";
+							}							
 						}, 500);
 					}, 500);
 				}

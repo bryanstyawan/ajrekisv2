@@ -3,9 +3,7 @@
 class Mdashboard extends CI_Model 
 {
 	
-	private $_tbl_survey = "tr_survey_skp_talenta";
-	private $_tbl_skp1 = "tr_survey_kinerja_2021_1";
-	private $_tbl_skp2 = "tr_survey_kinerja_2021_2";
+	private $_tbl_survey = "tr_survey_ip";
 	
 	public function __construct () 
 	{
@@ -20,102 +18,102 @@ class Mdashboard extends CI_Model
         $post = $this->input->post();
 		$this->id_pegawai = $id_pegawai;
         $this->jns_jabatan = $post["jabatan"];
-		$this->disclaimer = $post["disclaimer"];
 		
-		// if ($post["jabatan"]=='CPNS') {
-			// $this->disclaimer = 0;
-		// }
-		// else {
-			// $this->disclaimer = $post["disclaimer"];
-		// }
+		if ($post["jabatan"]=='CPNS') {
+			$this->disclaimer = 0;
+		}
+		else {
+			$this->disclaimer = $post["disclaimer"];
+		}
 		
 		$this->input_date = date('y-m-d H:i:s');
         
+		$this->diklat_pim = $post["tampil"];
+		if ($post["tampil"]=='sdhpim') {
+				$this->n_diklat_pim = 15;
+		}
+		else
+		{ 	
+			$this->n_diklat_pim = 0;
+		}
+		
+		$this->diklat_jafung = $post["tampiljafung"];
+		if (($post["tampiljafung"]=='sdhdiklatjafung') && ($post["jabatan"]=='fungsional')) {
+				$this->n_diklat_jafung = 15;
+		}
+		else
+		{ 	
+			$this->n_diklat_jafung = 0;
+		}
+		
+		$this->diklat_20jp = $post["tampil20jp"];
+		
+		if ($post["tampil20jp"]=='sdhdiklat20jp' && $post["jabatan"]=='struktural') {
+				$this->n_diklat_20jp = 15;
+		}
+		else
+		{ 	
+			if ($post["tampil20jp"]=='sdhdiklat20jp' && $post["jabatan"]=='fungsional') {
+				$this->n_diklat_20jp = 15;
+			}
+			else
+			{
+				if ($post["tampil20jp"]=='sdhdiklat20jp' && $post["jabatan"]=='pelaksana') {
+					$this->n_diklat_20jp = 22.5;
+				}
+				else
+					{
+						$this->n_diklat_20jp = 0;
+					}						
+				}
+		}
 		
 		
-		// $this->diklat_pim = $post["tampil"];
-		// if ($post["tampil"]=='sdhpim') {
-				// $this->n_diklat_pim = 15;
-		// }
-		// else
-		// { 	
-			// $this->n_diklat_pim = 0;
-		// }
+		$this->seminar = $post["tampilseminar"];
+		if ($post["tampilseminar"]=='sdhseminar' && (($post["jabatan"]=='struktural') || ($post["jabatan"]=='fungsional')) ) {
+				$this->n_seminar = 10;
+		}
+		else
+		{ 	
+			if ($post["tampilseminar"]=='sdhseminar' && $post["jabatan"]='pelaksana') {
+				$this->n_seminar = 17.5;
+			}
+			else
+			{
+				$this->n_seminar = 0;
+			}
+		}
 		
-		// $this->diklat_jafung = $post["tampiljafung"];
-		// if (($post["tampiljafung"]=='sdhdiklatjafung') && ($post["jabatan"]=='fungsional')) {
-				// $this->n_diklat_jafung = 15;
-		// }
-		// else
-		// { 	
-			// $this->n_diklat_jafung = 0;
-		// }
+		if ($post["jabatan"]=='CPNS') {
+			$this->n_kualifikasi = 0;
+		}
+		else {
+			$this->kualifikasi = $post["pendidikan"];
+			switch ($post["pendidikan"]) {
+			  case "S3":
+				$this->n_kualifikasi = 25;
+				break;
+			  case "S2":
+				$this->n_kualifikasi = 20;
+				break;
+			  case "S1D4":
+				$this->n_kualifikasi = 15;
+				break;
+			  case "D3":
+				$this->n_kualifikasi = 10;
+				break;
+			  case "D2D1SMASMK":
+				$this->n_kualifikasi = 5;
+				break;
+			  default:
+				$this->n_kualifikasi = 1;
+			}
+		}
 		
-		// $this->diklat_20jp = $post["tampil20jp"];
-		
-		// if ($post["tampil20jp"]=='sdhdiklat20jp' && $post["jabatan"]=='struktural') {
-				// $this->n_diklat_20jp = 15;
-		// }
-		// else
-		// { 	
-			// if ($post["tampil20jp"]=='sdhdiklat20jp' && $post["jabatan"]=='fungsional') {
-				// $this->n_diklat_20jp = 15;
-			// }
-			// else
-			// {
-				// if ($post["tampil20jp"]=='sdhdiklat20jp' && $post["jabatan"]=='pelaksana') {
-					// $this->n_diklat_20jp = 22.5;
-				// }
-				// else
-					// {
-						// $this->n_diklat_20jp = 0;
-					// }						
-				// }
-		// }
-		
-		
-		// $this->seminar = $post["tampilseminar"];
-		// if ($post["tampilseminar"]=='sdhseminar' && (($post["jabatan"]=='struktural') || ($post["jabatan"]=='fungsional')) ) {
-				// $this->n_seminar = 10;
-		// }
-		// else
-		// { 	
-			// if ($post["tampilseminar"]=='sdhseminar' && $post["jabatan"]='pelaksana') {
-				// $this->n_seminar = 17.5;
-			// }
-			// else
-			// {
-				// $this->n_seminar = 0;
-			// }
-		// }
-		
-		// if ($post["jabatan"]=='CPNS') {
-			// $this->n_kualifikasi = 0;
-		// }
-		// else {
-			// $this->kualifikasi = $post["pendidikan"];
-			// switch ($post["pendidikan"]) {
-			  // case "S3":
-				// $this->n_kualifikasi = 25;
-				// break;
-			  // case "S2":
-				// $this->n_kualifikasi = 20;
-				// break;
-			  // case "S1D4":
-				// $this->n_kualifikasi = 15;
-				// break;
-			  // case "D3":
-				// $this->n_kualifikasi = 10;
-				// break;
-			  // case "D2D1SMASMK":
-				// $this->n_kualifikasi = 5;
-				// break;
-			  // default:
-				// $this->n_kualifikasi = 1;
-			// }
-		// }
-		
-		
+		if ($post["jabatan"]=='CPNS') {
+			$this->n_penilaian_kinerja = 0;
+		}
+		else {
 			$this->penilaian_kinerja = $post["predikat"];
 			
 			switch ($post["predikat"]) {
@@ -134,27 +132,27 @@ class Mdashboard extends CI_Model
 			  default:
 				$this->n_penilaian_kinerja = 1;
 			}
+		}
 		
-		
-		// if ($post["jabatan"]=='CPNS') {
-			// $this->n_hukuman_disiplin = 0;
-		// }
-		// else {
-			// $this->hukuman_disiplin= $post["hukuman"];
-			// switch ($post["hukuman"]) {
-			  // case "Berat":
-				// $this->n_hukuman_disiplin = 1;
-				// break;
-			  // case "Sedang":
-				// $this->n_hukuman_disiplin = 2;
-				// break;
-			  // case "Ringan":
-				// $this->n_hukuman_disiplin = 3;
-				// break;
-			  // default:
-				// $this->n_hukuman_disiplin = 5;
-			// }
-		// }
+		if ($post["jabatan"]=='CPNS') {
+			$this->n_hukuman_disiplin = 0;
+		}
+		else {
+			$this->hukuman_disiplin= $post["hukuman"];
+			switch ($post["hukuman"]) {
+			  case "Berat":
+				$this->n_hukuman_disiplin = 1;
+				break;
+			  case "Sedang":
+				$this->n_hukuman_disiplin = 2;
+				break;
+			  case "Ringan":
+				$this->n_hukuman_disiplin = 3;
+				break;
+			  default:
+				$this->n_hukuman_disiplin = 5;
+			}
+		}
 	
 		$this->tahun= 2021;
 		$this->db->delete($this->_tbl_survey,array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
@@ -336,7 +334,7 @@ class Mdashboard extends CI_Model
 									
 									$this->db->trans_start();
 									$this->db->where('id', $idskp1);
-									$this->db->update('tr_survey_kinerja_2021_1',$data);
+									$this->db->update('tr_survey_kinerja_1',$data);
 									$this->db->trans_complete();
 								
 						}
@@ -357,8 +355,7 @@ class Mdashboard extends CI_Model
 									'updatedate'=>date('y-m-d H:i:s'),
 									'tahun'=>$tahun
 									);
-										$this->db->delete($this->_tbl_skp1,array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
-										$this->db->insert('tr_survey_kinerja_2021_1',$datainsert);
+										$this->db->insert('tr_survey_kinerja_1',$datainsert);
 									
 						
 						}
@@ -383,7 +380,7 @@ class Mdashboard extends CI_Model
 									
 									$this->db->trans_start();
 									$this->db->where('id', $idskp1);
-									$this->db->update('tr_survey_kinerja_2021_1',$data);
+									$this->db->update('tr_survey_kinerja_1',$data);
 									$this->db->trans_complete();
 								
 						}
@@ -404,8 +401,7 @@ class Mdashboard extends CI_Model
 									'updatedate'=>date('y-m-d H:i:s'),
 									'tahun'=>$tahun
 									);
-										$this->db->delete($this->_tbl_skp1,array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
-										$this->db->insert('tr_survey_kinerja_2021_1',$datainsert);
+										$this->db->insert('tr_survey_kinerja_1',$datainsert);
 									
 						
 						}
@@ -454,7 +450,6 @@ class Mdashboard extends CI_Model
 									'nilaiprilakukerja'=>$nilperilakukerja2,
 									'nilaiprestasikerja'=>$nilprestasikerja2,
 									'nilaitotal'=>$niltotal2,
-									'nilaitotal2'=>$niltotal2,
 									'nip_penilai'=>$nipatasan,
 									'nama_penilai'=>$namaatasan,
 									'gol_penilai'=>$golatasan,
@@ -469,7 +464,7 @@ class Mdashboard extends CI_Model
 									
 									$this->db->trans_start();
 									$this->db->where('id', $idskp2);
-									$this->db->update('tr_survey_kinerja_2021_2',$data);
+									$this->db->update('tr_survey_kinerja_2',$data);
 									$this->db->trans_complete();
 								
 				}
@@ -485,7 +480,6 @@ class Mdashboard extends CI_Model
 							'nilaiprilakukerja'=>$nilperilakukerja2,
 							'nilaiprestasikerja'=>$nilprestasikerja2,
 							'nilaitotal'=>$niltotal2,
-							'nilaitotal2'=>$niltotal2,
 							'nip_penilai'=>$nipatasan,
 							'nama_penilai'=>$namaatasan,
 							'gol_penilai'=>$golatasan,
@@ -497,8 +491,7 @@ class Mdashboard extends CI_Model
 							'updatedate'=>date('y-m-d H:i:s'),
 							'tahun'=>$tahun
 							);
-								$this->db->delete($this->_tbl_skp2,array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
-								$this->db->insert('tr_survey_kinerja_2021_2',$datainsert);
+								$this->db->insert('tr_survey_kinerja_2',$datainsert);
 							
 				
 				}

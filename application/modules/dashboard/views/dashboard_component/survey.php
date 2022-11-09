@@ -17,7 +17,7 @@ body {
 
 #form1 {
   background-color: #ffffff;
-  margin: 50px auto;
+  //margin: 50px auto;
   font-family: Raleway;
   font-size: 17px;
   padding: 10px;
@@ -105,80 +105,6 @@ button:hover {
 	 
   var nama_jab=document.getElementById("form1").jabatan.value;
 	
-	document.getElementById("jenisdiklatpim").disabled = true; 
-	document.getElementById("tgldiklatpim").disabled = true; 
-	document.getElementById("tmpdiklatpim").disabled = true;
-	document.getElementById("berkas").disabled = true;
-	document.getElementById("tglselesaipim").disabled = true;
-	document.getElementById("nosertifikatpim").disabled = true;
-	document.getElementById("tglsertifikatpim").disabled = true;
-	document.getElementById("jmljampim").disabled = true;
-	document.getElementById("jenisdiklatjafung").disabled = true; 
-	document.getElementById("tgldiklatjafung").disabled = true; 
-	document.getElementById("tmpdiklatjafung").disabled = true;
-	document.getElementById("berkasjafung").disabled = true;
-	document.getElementById("tglselesaijafung").disabled = true;
-	document.getElementById("nosertifikat").disabled = true;
-	document.getElementById("tglsertifikat").disabled = true;
-	document.getElementById("jmljam").disabled = true;
-	document.getElementById("jenisdiklatjp").disabled = true; 
-	document.getElementById("tgldiklatjp").disabled = true; 
-	document.getElementById("tmpdiklatjp").disabled = true;
-	document.getElementById("berkasjp").disabled = true;
-	document.getElementById("tglselesaijp").disabled = true;
-	document.getElementById("nosertifikatjp").disabled = true;
-	document.getElementById("tglsertifikatjp").disabled = true;
-	document.getElementById("jmljamjp").disabled = true;
-	document.getElementById("jnsseminar").disabled = true; 
-	document.getElementById("tglseminar").disabled = true; 
-	document.getElementById("tmpseminar").disabled = true;
-	document.getElementById("tglselesaismnr").disabled = true; 
-	document.getElementById("nosertifikatsmnr").disabled = true;
-	document.getElementById("tglsertifikatsmnr").disabled = true;
-	document.getElementById("jmljamsmnr").disabled = true;
-	document.getElementById("berkasseminar").disabled = true;
-	document.getElementById("berkashukuman").disabled = true;
-		
-	if (nama_jab=="struktural") 
-		{	
-			document.getElementById("tampil").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhpim'>Sudah Diklat PIM</option><option value='blmpim'>Belum Diklat PIM</option>";
-			// document.getElementById("tampiljafung").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklatjafung'>Sudah Diklat Jab. Fungsional</option><option value='blmdiklatjafung'>Belum Diklat Jab. Fungsional</option>";
-			document.getElementById("tampiljafung").innerHTML="<option value='blmdiklatjafung'>--lewati--</option>";
-			document.getElementById("tgldiklatjafung").value = "01-01-1900"
-			document.getElementById("tmpdiklatjafung").value = "-"
-			document.getElementById("jenisdiklatjafung").value = "-"
-			document.getElementById("tampil20jp").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option><option value='blm20jp'>Belum Diklat 20 JP</option>";
-			document.getElementById("tampilseminar").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhseminar'>Sudah Ikut Seminar</option><option value='blmseminar'>Belum Ikut Seminar</option>";
-			document.getElementById("nextBtn").innerHTML = "Berikutnya";
-		}
-	if (nama_jab=="fungsional")
-    {
-		
-		document.getElementById("tampil").innerHTML="<option value='blmpim'>--lewati--</option>";
-		document.getElementById("tgldiklatpim").value = "01-01-1900"
-		document.getElementById("tmpdiklatpim").value = "-"
-		document.getElementById("jenisdiklatpim").value = "-"
-		document.getElementById("tampiljafung").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklatjafung'>Sudah Diklat Jab. Fungsional</option><option value='blmdiklatjafung'>Belum Diklat Jab. Fungsional</option>";
-		document.getElementById("tampil20jp").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option><option value='blm20jp'>Belum Diklat 20 JP</option>";
-		document.getElementById("tampilseminar").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhseminar'>Sudah Ikut Seminar/Workshop/Magang/Kursus/sejenisnya</option><option value='blmseminar'>Belum Ikut Seminar/Workshop/Magang/Kursus/sejenisnya</option>";
-		document.getElementById("nextBtn").innerHTML = "Berikutnya";
-    }
-	
-	 if (nama_jab=="pelaksana")
-    {
-		
-		document.getElementById("tampil").innerHTML="<option value='blmpim'>--lewati--</option>";
-		document.getElementById("tgldiklatpim").value = "01-01-1900"
-		document.getElementById("tmpdiklatpim").value = "-"
-		document.getElementById("jenisdiklatpim").value = "-"
-		document.getElementById("tampiljafung").innerHTML="<option value='blmdiklatjafung'>--lewati--</option>";
-		document.getElementById("tgldiklatjafung").value = "01-01-1900"
-		document.getElementById("tmpdiklatjafung").value = "-"
-		document.getElementById("jenisdiklatjafung").value = "-"
-		document.getElementById("tampil20jp").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option><option value='blm20jp'>Belum Diklat 20 JP</option>";
-		document.getElementById("tampilseminar").innerHTML="<option value='pilih'>--Pilih--</option><option value='sdhseminar'>Sudah Ikut Seminar/Workshop/Magang/Kursus/sejenisnya</option><option value='blmseminar'>Belum Ikut Seminar/Workshop/Magang/Kursus/sejenisnya</option>";
-		document.getElementById("nextBtn").innerHTML = "Berikutnya";
-    }
 	
 	if (nama_jab=="CPNS")
     {
@@ -385,198 +311,6 @@ function hitungperilakukerja1(){
   
 }
 
-function cekdiklatpim(){
-  var diklatpim=document.getElementById("form1").tampil.value;
-  if (diklatpim=="sdhpim")
-    {	        
-		document.getElementById("jenisdiklatpim").disabled = false; 
-		document.getElementById("tgldiklatpim").disabled = false; 
-		document.getElementById("tmpdiklatpim").disabled = false;
-		document.getElementById("berkas").disabled = false;
-		document.getElementById("tglselesaipim").disabled = false;
-		document.getElementById("nosertifikatpim").disabled = false;
-		document.getElementById("tglsertifikatpim").disabled = false;
-		document.getElementById("jmljampim").disabled = false;
-		document.getElementById("tgldiklatpim").value = "";
-		document.getElementById("tmpdiklatpim").value = "";
-		document.getElementById("jenisdiklatpim").value = "pilih";
-		document.getElementById("tglselesaipim").value = "";
-		document.getElementById("nosertifikatpim").value = "";
-		document.getElementById("tglsertifikatpim").value = "";
-		document.getElementById("jmljampim").value = "";
-		//document.getElementById("filediklatpim").value = "";
-		
-    }
-  if (diklatpim=="blmpim")
-    {	
-		document.getElementById("tgldiklatpim").value = "01-01-1900";
-		document.getElementById("tmpdiklatpim").value = "-";
-		document.getElementById("jenisdiklatpim").value = "-";
-		//document.getElementById("filediklatpim").value = "";
-		document.getElementById("tglselesaipim").value = "01-01-1900";
-		document.getElementById("nosertifikatpim").value = "-";
-		document.getElementById("tglsertifikatpim").value = "01-01-1900";
-		document.getElementById("jmljampim").value = "";
-		document.getElementById("jenisdiklatpim").disabled = true; 
-		document.getElementById("tgldiklatpim").disabled = true; 
-		document.getElementById("tmpdiklatpim").disabled = true;
-		document.getElementById("berkas").disabled = true;
-		document.getElementById("tglselesaipim").disabled = true;
-		document.getElementById("nosertifikatpim").disabled = true;
-		document.getElementById("tglsertifikatpim").disabled = true;
-		document.getElementById("jmljampim").disabled = true;
-		
-    }
-}
-
-function cekdiklatjafung(){
-  var diklat=document.getElementById("form1").tampiljafung.value;
-  if (diklat=="sdhdiklatjafung")
-    {	        
-		document.getElementById("jenisdiklatjafung").disabled = false; 
-		document.getElementById("tgldiklatjafung").disabled = false; 
-		document.getElementById("tmpdiklatjafung").disabled = false;
-		document.getElementById("berkasjafung").disabled = false;
-		document.getElementById("tglselesaijafung").disabled = false;
-		document.getElementById("nosertifikat").disabled = false;
-		document.getElementById("tglsertifikat").disabled = false;
-		document.getElementById("jmljam").disabled = false;
-		document.getElementById("tgldiklatjafung").value = "";
-		document.getElementById("tmpdiklatjafung").value = "";
-		document.getElementById("jenisdiklatjafung").value = "";
-		document.getElementById("tglselesaijafung").value = "";
-		document.getElementById("nosertifikat").value = "";
-		document.getElementById("tglsertifikat").value = "";
-		document.getElementById("jmljam").value = "";
-		//document.getElementById("filejafung").value = "";
-    }
-  if (diklat=="blmdiklatjafung")
-    {	
-		document.getElementById("tgldiklatjafung").value = "01-01-1900";
-		document.getElementById("tmpdiklatjafung").value = "-";
-		document.getElementById("tmpdiklatjafung").value = "-";
-		document.getElementById("jenisdiklatjafung").value = "-";
-		document.getElementById("tglselesaijafung").value = "01-01-1900";
-		document.getElementById("nosertifikat").value = "-";
-		document.getElementById("tglsertifikat").value = "01-01-1900";
-		document.getElementById("jmljam").value = "-";
-	//	document.getElementById("filejafung").value = "";
-		document.getElementById("jenisdiklatjafung").disabled = true; 
-		document.getElementById("tgldiklatjafung").disabled = true; 
-		document.getElementById("tmpdiklatjafung").disabled = true;
-		document.getElementById("berkasjafung").disabled = true;
-		document.getElementById("tglselesaijafung").disabled = true;
-		document.getElementById("nosertifikat").disabled = true;
-		document.getElementById("tglsertifikat").disabled = true;
-		document.getElementById("jmljam").disabled = true;
-    }
-}
-
-function cekdiklatjp(){
-  var diklat=document.getElementById("form1").tampil20jp.value;
-  if (diklat=="sdhdiklat20jp")
-    {	        
-		document.getElementById("jenisdiklatjp").disabled = false; 
-		document.getElementById("tgldiklatjp").disabled = false; 
-		document.getElementById("tmpdiklatjp").disabled = false;
-		document.getElementById("berkasjp").disabled = false;
-		document.getElementById("tglselesaijp").disabled = false;
-		document.getElementById("nosertifikatjp").disabled = false;
-		document.getElementById("tglsertifikatjp").disabled = false;
-		document.getElementById("jmljamjp").disabled = false;
-		document.getElementById("tgldiklatjp").value = "";
-		document.getElementById("tmpdiklatjp").value = "";
-		document.getElementById("jenisdiklatjp").value = "";
-		document.getElementById("tglselesaijp").value = "";
-		document.getElementById("nosertifikatjp").value = "";
-		document.getElementById("tglsertifikatjp").value = "";
-		document.getElementById("jmljamjp").value = "";
-    }
-  if (diklat=="blm20jp")
-    {	
-		document.getElementById("tgldiklatjp").value = "01-01-1900";
-		document.getElementById("tmpdiklatjp").value = "-";
-		document.getElementById("jenisdiklatjp").value = "-";
-		document.getElementById("tglselesaijp").value = "01-01-1900";
-		document.getElementById("nosertifikatjp").value = "";
-		document.getElementById("tglsertifikatjp").value = "01-01-1900";
-		document.getElementById("jmljamjp").value = "";
-		document.getElementById("jenisdiklatjp").disabled = true; 
-		document.getElementById("tgldiklatjp").disabled = true; 
-		document.getElementById("tmpdiklatjp").disabled = true;
-		document.getElementById("berkasjp").disabled = true;
-		document.getElementById("tglselesaijp").disabled = true;
-		document.getElementById("nosertifikatjp").disabled = true;
-		document.getElementById("tglsertifikatjp").disabled = true;
-		document.getElementById("jmljamjp").disabled = true;
-    }
-}
-function cekseminar(){
-  var diklat=document.getElementById("form1").tampilseminar.value;
-  if (diklat=="sdhseminar")
-    {	        
-		document.getElementById("jnsseminar").disabled = false; 
-		document.getElementById("tglseminar").disabled = false; 
-		document.getElementById("tmpseminar").disabled = false;
-		document.getElementById("berkasseminar").disabled = false;
-		document.getElementById("tglselesaismnr").disabled = false; 
-		document.getElementById("nosertifikatsmnr").disabled = false;
-		document.getElementById("tglsertifikatsmnr").disabled = false;
-		document.getElementById("jmljamsmnr").disabled = false;
-		document.getElementById("tglseminar").value = "";
-		document.getElementById("tmpseminar").value = "";
-		document.getElementById("jnsseminar").value = "";
-		document.getElementById("tglselesaismnr").value = ""; 
-		document.getElementById("nosertifikatsmnr").value = "";
-		document.getElementById("tglsertifikatsmnr").value = "";
-		document.getElementById("jmljamsmnr").value = "";
-    }
-  if (diklat=="blmseminar")
-    {	
-		document.getElementById("tglseminar").value = "01-01-1900";
-		document.getElementById("tmpseminar").value = "-";
-		document.getElementById("jnsseminar").value = "-";
-		document.getElementById("tglselesaismnr").value = "01-01-1900"; 
-		document.getElementById("nosertifikatsmnr").value = "";
-		document.getElementById("tglsertifikatsmnr").value = "01-01-1900";
-		document.getElementById("jmljamsmnr").value = "";
-		document.getElementById("jnsseminar").disabled = true; 
-		document.getElementById("tglseminar").disabled = true; 
-		document.getElementById("tmpseminar").disabled = true;
-		document.getElementById("berkasseminar").disabled = true;
-		document.getElementById("tglselesaismnr").disabled = true; 
-		document.getElementById("nosertifikatsmnr").disabled = true;
-		document.getElementById("tglsertifikatsmnr").disabled = true;
-		document.getElementById("jmljamsmnr").disabled = true;
-    }
-}
-
-function cekhukuman(){
-  var diklat=document.getElementById("form1").hukuman.value;
-  if (diklat!="Tidak Pernah")
-    {	        
-		document.getElementById("ttdsk").disabled = false; 
-		document.getElementById("tglsurat").disabled = false; 
-		document.getElementById("alasan").disabled = false;
-		document.getElementById("tglsurat").value = "";
-		document.getElementById("alasan").value = "";
-		document.getElementById("ttdsk").value = "";
-		document.getElementById("berkashukuman").disabled = false;
-    }
-  if (diklat=="Tidak Pernah")
-    {	
-		document.getElementById("tglsurat").value = "01-01-1900";
-		document.getElementById("alasan").value = "-";
-		document.getElementById("ttdsk").value = "-";
-		document.getElementById("ttdsk").disabled = true; 
-		document.getElementById("tglsurat").disabled = true; 
-		document.getElementById("alasan").disabled = true;
-		document.getElementById("berkashukuman").disabled = true;
-    }
-}
-
-
-
 	function addRow(tableID) {
 
 		var table = document.getElementById(tableID);
@@ -738,33 +472,34 @@ function cekhukuman(){
 	}
 </script>
 
-<?php
-$link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
-$jab = '';
-$jnspim = '' ;
-$jnsjafung = '' ;
-$jp = '';
-$jnsseminar = '';
-$skp='';
-$hukuman='';
-$idpeg = $this->session->userdata('sesUser') ;
-// jalankan query
-$result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2021");
- 
-// tampilkan query
-while ($row=mysqli_fetch_object($result))
-{
-  $jab = $row->jns_jabatan;
-  $jnspim = $row->diklat_pim;
-  $jnsjafung = $row->diklat_jafung;
-  $jp = $row->diklat_20jp;
-  $jnsseminar = $row->seminar;
-  $pendidikan = $row->kualifikasi;
-  $skp = $row->penilaian_kinerja;
-  $hukuman = $row->hukuman_disiplin;
-}
+ <?php
+ $link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
+ $idpeg = $this->session->userdata('sesUser') ;
+// $jab = '';
+// $jnspim = '' ;
+// $jnsjafung = '' ;
+// $jp = '';
+// $jnsseminar = '';
+// $skp='';
+// $hukuman='';
+// 
 
-?>
+// $result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2021");
+ 
+
+// while ($row=mysqli_fetch_object($result))
+// {
+  // $jab = $row->jns_jabatan;
+  // $jnspim = $row->diklat_pim;
+  // $jnsjafung = $row->diklat_jafung;
+  // $jp = $row->diklat_20jp;
+  // $jnsseminar = $row->seminar;
+  // $pendidikan = $row->kualifikasi;
+  // $skp = $row->penilaian_kinerja;
+  // $hukuman = $row->hukuman_disiplin;
+// }
+
+// ?>
  
  
 <body>
@@ -774,12 +509,25 @@ while ($row=mysqli_fetch_object($result))
   <div class="modal-content">
    <div class="modal-header">
      <!--<button type="button" class="close" data-dismiss="modal">&times;</button> --> 
-    <h2 class="modal-title" style="color:blue">PENGUKURAN INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2021</h2>
+    <h2 class="modal-title" style="color:blue">PENGISIAN NILAI SKP TAHUN 2021</h2>
    </div>
    <div class="modal-body">
 			<form method="post" id="form1" name="form1" enctype="multipart/form-data" action="<?php echo site_url('Dashboard/add_survey') ?>">
 			  <!-- One "tab" for each step in the form: -->
-			  <div class="tab">Jenis Jabatan Anda di tahun 2021:
+			  <div class="tab"> 
+				<table border="0" width="1500" >
+					<tr>
+						<td width="1400" colspan=2><label>Untuk mengisi data SKP Tahun 2021 ini, pastikan dokumen SKP Tahun 2021 (periode 1 dan periode 2) Anda sudah tersedia</label><br/>
+						<label>dan di scan dalam bentuk pdf dengan ukuran file maksimal 1 Mb (1000 Kb)</label></td>
+					</tr>
+					<tr>
+						<td width="50"><input type="checkbox" id="disclaimer" name="disclaimer" value="1"></td>
+						<td width="900"><label for="disclaimer">Saya bertanggungjawab atas kebenaran data SKP 2021 yang akan saya isi.</label><br></td>
+					</tr>
+				</table> <p>
+			  </div>
+			  
+				<div class="tab">Jenis Jabatan Anda di tahun 2021:
 			   
 				 <p><select id="jabatan" name="jabatan" onchange="tampilkan()"  class="form-control">
 					<option value="pilih">--Pilih--</option>  
@@ -809,32 +557,33 @@ while ($row=mysqli_fetch_object($result))
 										echo "<option value='pelaksana'>Pelaksana</option>" ;
 									} 
 									
-									if ($jab == 'CPNS'  ) {
-										# code...
-										echo "<option value='CPNS' selected>CPNS</option>" ;
-									}
-									else{
-										echo "<option value='CPNS'>CPNS</option>" ;
-									} 
+									// if ($jab == 'CPNS'  ) {
+										// # code...
+										// echo "<option value='CPNS' selected>CPNS</option>" ;
+									// }
+									// else{
+										// echo "<option value='CPNS'>CPNS</option>" ;
+									// } 
 						?>
 				    
 					  
 				 </select></p>
-			  </div>
-				   <div class="tab"><p style="font-size:25px"><b>SKP Tahun 2021</b>: </p>
-				   <i>(untuk tanda decimal silahkan menggunakan titik (.) misal 90.50)</i><br/>
-				   <a href="<?=base_url();?>/assets_home/PETUNJUKPENGISIANSKPINDEKSPROFESIONALITAS.pdf" download><u>Klik di sini untuk petunjuk pengisian</u></a>
+				 </div>
+				   <div class="tab"><b>Isilah nilai-nilai SKP sesuai dokumen SKP Tahun 2021 yang anda miliki</b>: 
+				   <br/><a href="<?=base_url();?>/assets_home/PETUNJUKPENGISIANSKP2021.pdf" download><u>Klik di sini untuk petunjuk pengisian</u></a>
 				   <br/><br/>
 				   <p>
+				   <i>- untuk tanda decimal silahkan menggunakan titik (.) misal 90.50</i><br/>
+				   <i>- (*) wajib diisi</i><br/>
 				   
 					 <?
 								 $result2 = mysqli_query($link, "SELECT skp1.*, 
 											skp2.id AS id2, skp2.`nilaiskp` AS nilaiskp2, skp2.`orientasipelayanan` AS orientasipelayanan2, skp2.`inisiatifkerja` AS inisiatifkerja2, skp2.`komitmen` AS komitmen2, skp2.`kerjasama` AS kerjasama2, skp2.`kepemimpinan` AS kepemimpinan2, skp2.`file_skp2` , skp2.`nilaiprilakukerja` AS nilaiprilakukerja2, skp2.`nilaiprestasikerja` AS nilaiprestasikerja2, skp2.nilaitotal,
 											skp2.nip_penilai, skp2.nama_penilai, skp2.gol_penilai, skp2.jab_penilai,
 											skp2.nip_atasanpenilai, skp2.nama_atasanpenilai, skp2.gol_atasanpenilai, skp2.jab_atasanpenilai
-										FROM `tr_survey_kinerja_1` skp1
-										LEFT JOIN tr_survey_kinerja_2 skp2 ON skp1.id_pegawai = skp2.id_pegawai
-										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2021");
+										FROM `tr_survey_kinerja_2021_1` skp1
+										LEFT JOIN tr_survey_kinerja_2021_2 skp2 ON skp1.id_pegawai = skp2.id_pegawai
+										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2022");
 										
 								 $row_cnt = $result2->num_rows;
 								
@@ -906,7 +655,7 @@ while ($row=mysqli_fetch_object($result))
 										echo	 "</tr>";
 										//--------------------------------------------------------------------------------------------------------------
 										echo	 "<tr>";
-										echo			"<td width=400>Nilai SKP</td>";
+										echo			"<td width=400>Nilai SKP *</td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 											echo	"		<input type='hidden' id='idskp1' name='idskp1' value=".$idskp1.">";
@@ -1188,7 +937,7 @@ while ($row=mysqli_fetch_object($result))
 										echo	 "</tr>";
 										//--------------------------------------------------------------------------------------------------------------
 										echo	 "<tr>";
-										echo			"<td width=400>Nilai SKP</td>";
+										echo			"<td width=400>Nilai SKP <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 											echo	"		<input type='hidden' id='idskp1' name='idskp1'>";
@@ -1197,7 +946,7 @@ while ($row=mysqli_fetch_object($result))
 										echo	"		</div> ";	
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo			"<td width=400>Nilai SKP</td>";
+										echo			"<td width=400>Nilai SKP <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 											echo	"		<input type='hidden' id='idskp2' name='idskp2'>";
@@ -1208,14 +957,14 @@ while ($row=mysqli_fetch_object($result))
 										echo	" </tr>";
 										//--------------------------------------------------------------------------------------------------------------
 										echo	" <tr>";
-										echo	"	<td>Orientasi Pelayanan</td>";
+										echo	"	<td>Orientasi Pelayanan <b>*</b></td>";
 										echo	"	<td>";
 											echo	"			<div class='input-group'>";
 											echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='orientasi' name='orientasi' class='form-control' placeholder=0> ";
 										echo	"			</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Orientasi Pelayanan</td>";
+										echo	"	<td>Orientasi Pelayanan <b>*</b></td>";
 										echo	"	<td>";
 											echo	"			<div class='input-group'>";
 											echo	"			<input type='text' style='width:100px; text-align:right;' id='orientasi2' name='orientasi2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'> ";
@@ -1225,14 +974,14 @@ while ($row=mysqli_fetch_object($result))
 										//--------------------------------------------------------------------------------------------------------------
 										
 										echo	" <tr>";
-										echo	"	<td>Integritas</td>";
+										echo	"	<td>Integritas <b>*</b></td>";
 										echo	"	<td>";
 											echo	"			<div class='input-group'>";
 											echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='integritas' name='integritas' class='form-control' placeholder=0> ";
 										echo	"			</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Komitmen</td>";
+										echo	"	<td>Komitmen <b>*</b></td>";
 										echo	"	<td>";
 											echo	"			<div class='input-group'>";
 											echo	"			<input type='text' style='width:100px; text-align:right;' id='komitmen2' name='komitmen2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'> ";
@@ -1242,14 +991,14 @@ while ($row=mysqli_fetch_object($result))
 										//--------------------------------------------------------------------------------------------------------------
 										
 										echo	" <tr>";
-										echo	"	<td>Komitmen</td>";
+										echo	"	<td>Komitmen <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text'  style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='komitmen' name='komitmen' class='form-control' placeholder=0>";
 										echo	"	</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Kerjasama</td>";
+										echo	"	<td>Kerjasama <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"		<input type='text' style='width:100px; text-align:right;' id='kerjasama2' name='kerjasama2' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
@@ -1259,14 +1008,14 @@ while ($row=mysqli_fetch_object($result))
 										//--------------------------------------------------------------------------------------------------------------
 										
 										echo	" <tr>";
-										echo	"	<td>Disiplin</td>";
+										echo	"	<td>Disiplin <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"			<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='disiplin' name='disiplin' class='form-control' placeholder=0>";
 										echo	"	</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Inisiatif Kerja</td>";
+										echo	"	<td>Inisiatif Kerja <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"			<input type='text' style='width:100px; text-align:right;' id='inisiatif' name='inisiatif' class='form-control' placeholder=0 onchange='hitungperilakukerja1()'>";
@@ -1276,7 +1025,7 @@ while ($row=mysqli_fetch_object($result))
 										//--------------------------------------------------------------------------------------------------------------
 										
 										echo	" <tr>";
-										echo	"	<td>Kerjasama</td>";
+										echo	"	<td>Kerjasama <b>*</b></td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"		<input type='text' style='width:100px; text-align:right;' onchange='hitungperilakukerja1()' id='kerjasama' name='kerjasama' class='form-control' placeholder=0>";
@@ -1360,7 +1109,7 @@ while ($row=mysqli_fetch_object($result))
 										//-------------------------------------------------------------------------------------------------------------
 										
 										echo	" <tr>";
-										echo	"	<td>NIP Pejabat Penilai</td>";
+										echo	"	<td>NIP Pejabat Penilai <b>*</b></td>";
 										echo	"	<td colspan=5>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text' style='width:300px;  font-weight: bold; text-align:left;' placeholder='isikan Nip Pejabat Penilai' id='nipatasan' name='nipatasan' class='form-control' >";
@@ -1399,7 +1148,7 @@ while ($row=mysqli_fetch_object($result))
 										//--------------------------------------------------------------------------------------------------------------
 										
 										echo	" <tr>";
-										echo	"	<td>NIP Atasan Pejabat Penilai</td>";
+										echo	"	<td>NIP Atasan Pejabat Penilai <b>*</b></td>";
 										echo	"	<td colspan=5>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text' style='width:300px;  font-weight: bold; text-align:left;' placeholder='isikan Nip Atasan Pejabat Penilai' id='nippejabat' name='nippejabat' class='form-control' >";
@@ -1459,700 +1208,8 @@ while ($row=mysqli_fetch_object($result))
 							   
 							
 				  </div>
-			  
-			  <div class="tab">Jika anda menduduki jabatan struktural di tahun 2021, apakah anda sudah mengikuti diklatpim dalam jabatan eselon tersebut?<p>
-			  <i>(contoh: <b>jawab Sudah Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan sudah diklatpim III; <b>jawab Belum Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan belum diklatpim III)</i>
-				<p><select id="tampil" name="tampil" onchange="cekdiklatpim()" class="form-control"> 
-				<option value="pilih">--Diklat PIM--</option> 
-				<?
-				 if ($jnspim == 'sdhpim') {
-						echo "<option value='sdhpim' selected>Sudah Diklat PIM</option>" ;
-						echo "<option value='blmpim'>Belum Diklat PIM</option>" ;
-					}
-				if ($jnspim == 'blmpim') {	
-						echo "<option value='sdhpim'>Sudah Diklat PIM</option>" ;
-						echo "<option value='blmpim' selected>Belum Diklat PIM</option>" ;
-					}
-				if ($jnspim == '') {	
-						echo "<option value='sdhpim'>Sudah Diklat PIM</option>" ;
-						echo "<option value='blmpim'>Belum Diklat PIM</option>" ;
-					}
-					
-				?>
-
-					 
-				</select></p>
-					
-					
-
-
-					<TABLE id="dataTable1" width="1650" border="1">
-						<th>
-							<td width="200">Jenis Diklat</td>
-							<td width="160">Tanggal Mulai</td>
-							<td width="160">Tanggal Selesai</td>
-							<td width="300">Penyelenggara</td>
-							<td width="150">No Sertifikat</td>
-							<td width="160">Tgl Sertifikat</td>
-							<td width="70">Jml Jam</td>
-							<td width="300">Upload Sertifikat (File Maks 1 MB)  </td>
-							<td width="100">File Sertifikat</td>
-						</th>
-					 <?	
-						 $result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatpim WHERE id_pegawai=".$idpeg." and tahun=2021");
-						 $row_cnt = $result2->num_rows;
-						 $i=0;
-						 
-						 if ($row_cnt != 0) {
-								  while ($row=mysqli_fetch_object($result2))
-								  {
-										  $idpim = $row->id; 
-										  $jnspim = $row->jnsdiklatpim;
-										  $tglpim = $row->tgldiklatpim;
-										  $tmppim = $row->tmpdiklatpim;
-										  $tglselesaipim = $row->tglselesai;
-										  $nosertifikatpim = $row->nosertifikat;
-										  $tglsertifikatpim = $row->tglsertifikat;
-										  $jmljampim = $row->jmljam;
-										  $filesertifikat = $row->file_sertifikat;
-										  
-										  
-										  
-										  echo "<tr>";
-											echo	"<td width='30'><input type='checkbox' name='chk'></td>";
-											echo	"<td title='Nama Diklat' >";
-											echo	"	<select id='jenisdiklatpim' style='width:200px;' name='jenisdiklatpim[]' class='form-control' placeholder='Jenis Diklat'>";
-											echo 	"	<option value='pilih'>--Pilih--</option>  ";
-												if ($jnspim == 'pim1') {	
-													echo "<option value='pim1' selected>PIM 1</option>  ";
-													
-												}else{ echo "<option value='pim1' >PIM 1</option>  "; }
-												if ($jnspim == 'pim2') {	
-													echo "<option value='pim2' selected>PIM 2</option>  ";
-												}else{ echo "<option value='pim2' >PIM 2</option>  "; }
-												if ($jnspim == 'pim3') {	
-													echo "<option value='pim3' selected>PIM 3</option>  ";
-												}else{ echo "<option value='pim3' >PIM 3</option>  "; }
-												if ($jnspim == 'pim4') {	
-													echo "<option value='pim4' selected>PIM 4</option>  ";
-												}else{ echo "<option value='pim4' >PIM 4</option>  "; }
-												if ($jnspim == 'lemhanas') {	
-													echo "<option value='lemhanas' selected>Lemhanas</option>  ";
-												}else{ echo "<option value='lemhanas' >Lemhanas</option>  "; }
-												if ($jnspim == 'lainnya') {	
-													echo "<option value='lainnya' selected>lainnya</option>  ";
-												}else{ echo "<option value='lainnya' >lainnya</option>  "; }
-												
-												echo "</select></td>";
-												echo "<td title='Tanggal Mulai'><input style='width:160px;' type='date' id='tgldiklatpim' name='tgldiklatpim[]' class='form-control' placeholder='Tanggal Mulai' value=".$tglpim."></td>";
-												echo "<td title='Tanggal Selesai'><input style='width:160px;' type='date' id='tglselesaipim' name='tglselesaipim[]' class='form-control' placeholder='Tanggal Selesai' value=".$tglselesaipim."></td>";
-												
-												echo "<td  title='Penyelenggara Diklat'><input type='text' style='width:300px;' id='tmpdiklatpim' name='tmpdiklatpim[]' class='form-control' placeholder='Penyelenggara Diklat' value='".$tmppim."'></td>";
-												echo "<td  title='No Sertifikat'><input type='text' style='width:150px;' id='nosertifikatpim' name='nosertifikatpim[]' class='form-control' placeholder='No. Sertifikat' value='".$nosertifikatpim."'></td>";
-												
-												echo "<td title='Tanggal Sertifikat'><input style='width:160px;' type='date' id='tglsertifikatpim' name='tglsertifikatpim[]' class='form-control' placeholder='Tanggal Sertifikat' value=".$tglsertifikatpim."></td>";
-												echo "<td  title='Jumlah Jam'><input type='text' style='width:70px;' id='jmljampim' name='jmljampim[]' class='form-control' placeholder='jml jam' value='".$jmljampim."'></td>";
-												echo "<td  title='Upload Sertifikat'>";
-												echo "<input type='file' style='width:300px;' id='berkas' name='berkas[]' class='form-control' placeholder='File Pendukung' value=".base_url('uploads/').$filesertifikat."></td>";
-												
-												echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokpim' name='filedokpim[]' class='form-control' placeholder='No File' value='".$filesertifikat."' readonly='true'></td>";
-												
-												echo "<td style='display:none;'><input type='text' id='idpim' name='idpim[]' class='form-control'  value='".$idpim."'></td>";
-												
-												
-										echo "</tr>";
-										$i++;
-								  }
-								  
-								
-						 }else{
-									echo "<tr>";
-									echo	"<td width='30'><input type='checkbox' name='chk'>";
-									echo	"<td title='Nama Diklat'>";
-									echo "<select id='jenisdiklatpim' style='width:200px;' name='jenisdiklatpim[]' class='form-control' placeholder='jenis diklat' disabled>";
-									echo "	<option value='pilih'>--pilih--</option>  ";
-									echo "	<option value='pim1'>pim 1</option>";
-									echo "	<option value='pim2'>pim 2</option>";
-									echo "	<option value='pim3'>pim 3</option>";
-									echo "	<option value='pim4'>pim 4</option>";
-									echo "	<option value='lemhanas'>lemhanas</opton>";
-									echo "	<option value='lainnya'>lainnya</opton>";
-									echo "</select></td>";
-									echo "<td  title='tanggal diklat'><input type='date' style='width:160px;' id='tgldiklatpim' name='tgldiklatpim[]' class='form-control' placeholder='tanggal diklat'></td>";
-									echo "<td title='Tanggal Selesai'><input style='width:160px;' type='date' id='tglselesaipim' name='tglselesaipim[]' class='form-control' placeholder='Tanggal Selesai'></td>";
-									echo "<td  title='penyelenggara diklat'><input type='text' style='width:300px;' id='tmpdiklatpim' name='tmpdiklatpim[]' class='form-control' placeholder='penyelenggara diklat'></td>";
-									echo "<td  title='No Sertifikat'><input type='text' style='width:150px;' id='nosertifikatpim' name='nosertifikatpim[]' class='form-control' placeholder='No. Sertifikat'></td>";
-									echo "<td title='Tanggal Sertifikat'><input style='width:160px;' type='date' id='tglsertifikatpim' name='tglsertifikatpim[]' class='form-control' placeholder='Tanggal Sertifikat'></td>";
-									echo "<td  title='Jumlah Jam'><input type='text' style='width:70px;' id='jmljampim' name='jmljampim[]' class='form-control' placeholder='jml jam'></td>";
-									echo "<td  title='Upload sertifikat'><input type='file' style='width:300px;' id='berkas' name='berkas[]' class='form-control' placeholder='file pendukung'></td>";
-									echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokpim' name='filedokpim[]' class='form-control' placeholder='No File' readonly='true'></td>";
-									echo "<td style='display:none;' id='colid'><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idpim' name='idpim[]' class='form-control'></td>";
-									echo "</tr>";	
-									echo "</tr>";							
-						 }
-						?>
-					</TABLE> <p>
-					
-					<!-- <label for="add"><a onclick="addRow('dataTable1')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					 <label for="del"><a onclick="deleteRow('dataTable1')">Hapus Diklat</a></label> -->
-			  </div>
-			  <div class="tab">Anda Pernah Diklat Jabatan Fungsional ?
-				<p><select id="tampiljafung" name="tampiljafung" onchange="cekdiklatjafung()" class="form-control"> 
-				<option value="pilih">--Diklat Jafung--</option> 
-				<?
-				 if ($jnsjafung == 'sdhdiklatjafung') 
-				 {
-						echo "<option value='sdhdiklatjafung' selected>Sudah Diklat Jab. Fungsional</option>" ;
-						echo "<option value='blmdiklatjafung'>Belum Diklat Jab. Fungsional</option>" ;
-					}
-				if ($jnsjafung == 'blmdiklatjafung') 
-					{
-						echo "<option value='sdhdiklatjafung'>Sudah Diklat Jab. Fungsional</option>" ;
-						echo "<option value='blmdiklatjafung' selected>Belum Diklat Jab. Fungsional</option>" ;
-					}
-				if ($jnsjafung == '')
-					{
-						echo "<option value='sdhdiklatjafung'>Sudah Diklat Jab. Fungsional</option>" ;
-						echo "<option value='blmdiklatjafung'>Belum Diklat Jab. Fungsional</option>" ;
-					}
 			
-				?>
-				</select></p>
-									
-					 
-						<TABLE id="dataTable" width="1650" border="1">
-							<th>
-								<td width="200">Jenis Diklat</td>
-								<td width="160">Tanggal Mulai</td>
-								<td width="160">Tanggal Selesai</td>
-								<td width="300">Penyelenggara</td>
-								<td width="150">No Sertifikat</td>
-								<td width="160">Tgl Sertifikat</td>
-								<td width="70">Jml Jam</td>
-								<td width="300">Upload Sertifikat (File Maks 1 MB) </td>
-								<td width="100">File Sertifikat</td>
-							</th>
-							
-							 <?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatjafung WHERE id_pegawai=".$idpeg." and tahun=2021");
-							$row_cnt = $result2->num_rows;
-						    $i=0;
-						   if ($row_cnt != 0) {
-							   	  while ($row=mysqli_fetch_object($result2))
-								  {
-										  $idjafung= $row->id;
-										  $jnsjafung = $row->jnsdiklatjafung;
-										  $tgljafung = $row->tgldiklatjafung;
-										  $tmpjafung = $row->tmpdiklatjafung;
-										  $filesertifikat = $row->file_sertifikat;
-										  $tglselesai = $row->tglselesai;
-										  $nosertifikat = $row->no_sertifikat;
-										  $tglsertifikat = $row->tgl_sertifikat;
-										  $jmljam = $row->jml_jam;
-										  echo "<tr>";
-												echo	"<td width='30'><input type='checkbox' name='chk'>";
-												echo	"<td title='Nama Diklat'>";
-												echo    "<input id='jenisdiklatjafung' style='width:200px;'  type='text' name=jenisdiklatjafung[]' class='form-control' placeholder='Nama Diklat' value='".$jnsjafung."'></td>";
-													
-												echo "<td title='Tanggal Mulai'><input type='date' style='width:160px;' id='tgldiklatjafung' name='tgldiklatjafung[]' class='form-control' placeholder='Tanggal Mulai' value=".$tgljafung."></td>";
-												
-												echo "<td title='Tanggal Selesai'><input type='date' style='width:160px;' id='tglselesaijafung' name='tglselesaijafung[]' class='form-control' placeholder='Tanggal Selesai' value=".$tglselesai."></td>";
-												
-												echo "<td title='Penyelenggara Diklat'><input style='width:300px;' type='text'  id='tmpdiklatjafung' name='tmpdiklatjafung[]' class='form-control' placeholder='Penyelenggara Diklat' value='".$tmpjafung."'></td>";
-												
-												echo "<td title='Nomor Sertifikat'><input style='width:150px;' type='text'  id='nosertifikat' name='nosertifikat[]' class='form-control' placeholder='No Sertifikat' value='".$nosertifikat."'></td>";
-												
-												echo "<td title='Tanggal Sertifikat'><input type='date' style='width:160px;' id='tglsertifikat' name='tglsertifikat[]' class='form-control' placeholder='Tanggal Sertifikat' value=".$tglsertifikat."></td>";
-												
-												echo "<td title='Jumlah Jam'><input style='width:70px;' type='text'  id='jmljam' name='jmljam[]' class='form-control' placeholder='jml jam' value='".$jmljam."'></td>";
-												
-												echo "<td  title='Upload Sertifikat'><input type='file' style='width:300px;' id='berkasjafung' name='berkasjafung[]' class='form-control' placeholder='File Pendukung' value=".base_url('uploads/').$filesertifikat."></td>";
-												
-												echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokjafung' name='filedokjafung[]' class='form-control' placeholder='No File' value='".$filesertifikat."' readonly='true'></td>";
-												
-												echo "<td style='display:none;' id='colid'><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idjafung' name='idjafung[]' class='form-control'  value='".$idjafung."'></td>";
-												
-												
-										echo "</tr>";
-								  }
-							  
-						   }
-						   else{
-							  echo "<tr>";
-									echo "<td width='30'><input type='checkbox' name='chk'>";
-									echo "<td title='Nama Diklat'><input id='jenisdiklatjafung' style='width:200px;' type='text' name=jenisdiklatjafung[]' class='form-control' placeholder='Nama Diklat'></TD>";
-									echo "<td title='Tanggal Diklat'><input type='date' style='width:160px;' id='tgldiklatjafung' name='tgldiklatjafung[]' class='form-control' placeholder='Tanggal Diklat'></td>";
-									echo "<td title='Tanggal Selesai'><input type='date' style='width:160px;' id='tglselesaijafung' name='tglselesaijafung[]' class='form-control' placeholder='Tanggal Selesai'></td>";
-									echo "<td title='Penyelenggara Diklat'><input type='text' style='width:300px;' id='tmpdiklatjafung' name='tmpdiklatjafung[]' class='form-control' placeholder='Penyelenggara Diklat'></TD>";
-									echo "<td title='Nomor Sertifikat'><input style='width:150px;' type='text'  id='nosertifikat' name='nosertifikat[]' class='form-control' placeholder='No Sertifikat'></td>";												
-									echo "<td title='Tanggal Sertifikat'><input type='date' style='width:160px;' id='tglsertifikat' name='tglsertifikat[]' class='form-control' placeholder='Tanggal Sertifikat'></td>";
-									echo "<td title='Jumlah Jam'><input style='width:70px;' type='text'  id='jmljam' name='jmljam[]' class='form-control' placeholder='jml jam'></td>";
-									echo "<td  title='Upload Sertifikat'><input style='width:300px;' type='file' id='berkasjafung' name='berkasjafung[]' class='form-control' placeholder='File Pendukung'></td>";
-									echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokjafung' name='filedokjafung[]' class='form-control' placeholder='No File' readonly='true'></td>";
-									echo "<td style='display:none;' id='colid'><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idjafung' name='idjafung[]' class='form-control' ></td>";
-									echo "</tr>";	
-						   }
-						 ?> 
-						</TABLE> <p>
-					<!--	<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>-->
-			  </div>
-			  <div class="tab">Dalam 1 tahun terakhir (2021), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
-					 <p><select id="tampil20jp" name="tampil20jp" onchange="cekdiklatjp()" class="form-control">
-					 <option value="pilih">--Diklat 20 JP--</option>
-
-					 <?
-					 if ($jp == 'sdhdiklat20jp') {
-							echo "<option value='sdhdiklat20jp' selected>Sudah Diklat 20 JP</option>" ;
-							echo "<option value='blm20jp'>Belum Diklat 20 JP</option>" ;
-					}
-					 if ($jp == 'blm20jp') {
-							echo "<option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option>" ;
-							echo "<option value='blm20jp' selected>Belum Diklat 20 JP</option>" ;
-						}
-					if ($jp == '')
-						{
-							echo "<option value='sdhdiklat20jp'>Sudah Diklat 20 JP</option>" ;
-							echo "<option value='blm20jp'>Belum Diklat 20 JP</option>" ;
-							
-						}
-					?>
-					</select></p>
-					 
-						<TABLE id="dataTable3" width="1650" border="1">
-							<th>
-								<td width="200">Jenis Diklat</td>
-								<td width="160">Tanggal Mulai</td>
-								<td width="160">Tanggal Selesai</td>
-								<td width="300">Penyelenggara</td>
-								<td width="150">No Sertifikat</td>
-								<td width="160">Tgl Sertifikat</td>
-								<td width="70">Jml Jam</td>
-								<td width="300">Upload Sertifikat (File Maks 1 MB) </td>
-								<td width="100">File Sertifikat</td>
-							</th>
-							
-							<?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklat20jp WHERE id_pegawai=".$idpeg." and tahun=2021");
-							$row_cnt = $result2->num_rows;
-						 
-						   if ($row_cnt != 0) {
-							   	  while ($row=mysqli_fetch_object($result2))
-								  {
-										  $idjp = $row->id;
-										  $jnsjp = $row->jns_diklat;
-										  $tgljp = $row->tgl_diklat;
-										  $tglselesai = $row->tglselesai;
-										  $tmpjp = $row->tmp_diklat;
-										  $nosertifikat = $row->nosertifikat;
-										  $tglsertifikat = $row->tglsertifikat;
-										  $jmljam = $row->jmljam;
-										  $filesertifikat = $row->file_sertifikat;
-										  
-										  echo "<tr>";
-												echo	"<td width='30'><input type='checkbox' name='chk'>";
-												echo	"<TD title='Nama Diklat'>";
-												echo	"<input id='jenisdiklatjp' style='width:200px;' maxlength='200px' type='text' name=jenisdiklatjp[]' class='form-control' placeholder='Nama Diklat' value='".$jnsjp."'></td>";
-																								
-												echo "<td title='Tanggal Mulai'><input type='date' style='width:160px;' id='tgldiklatjp' name='tgldiklatjp[]' class='form-control' placeholder='Tanggal Mulai' value=".$tgljp."></td>";
-												
-												echo "<td title='Tanggal Selesai'><input type='date' style='width:160px;' id='tglselesaijp' name='tglselesaijp[]' class='form-control' placeholder='Tanggal Selesai' value=".$tglselesai."></td>";
-												
-												echo "<TD title='Penyelenggara Diklat'><input style='width:300px;' type='text'  id='tmpdiklatjp' name='tmpdiklatjp[]' class='form-control' placeholder='Penyelenggara Diklat' value='".$tmpjp."'></TD>";
-												
-												echo "<TD title='No Sertifikat'><input style='width:150px;' type='text'  id='nosertifikatjp' name='nosertifikatjp[]' class='form-control' placeholder='No Sertifikat' value='".$nosertifikat."'></TD>";
-												
-												echo "<td title='Tanggal Sertifikat'><input type='date' style='width:160px;' id='tglsertifikatjp' name='tglsertifikatjp[]' class='form-control' placeholder='Tanggal Sertifikat' value=".$tglsertifikat."></td>";
-												
-												echo "<TD title='Jumlah Jam'><input style='width:70px;' type='text'  id='jmljamjp' name='jmljamjp[]' class='form-control' placeholder='jml jam' value='".$jmljam."'></TD>";
-												
-												echo "<td  title='Upload Sertifikat'><input type='file' style='width:300px;' id='berkasjp' name='berkasjp[]' class='form-control' placeholder='File Pendukung' value=".base_url('uploads/').$filesertifikat."></td>";
-												
-												echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokjp' name='filedokjp[]' class='form-control' placeholder='No File' value='".$filesertifikat."' readonly='true'></td>";
-												
-												echo "<td style='display:none;'><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idjp' name='idjp[]' class='form-control'  value='".$idjp."'></td>";
-												
-										echo "</tr>";
-								  }
-							  
-						   }
-						   else{
-							  echo "<tr>";
-									echo "<td width='30'><input type='checkbox' name='chk'>";
-									echo "<td title='Nama Diklat'><input id='jenisdiklatjp' style='width:200px;'  type='text' name=
-									jenisdiklatjp[]' class='form-control' placeholder='Nama Diklat'></TD>";
-									echo "<td title='Tanggal Diklat'><input type='date' style='width:160px;' id='tgldiklatjp' name='tgldiklatjp[]' class='form-control' placeholder='Tanggal Diklat'></td>";
-									echo "<td title='Tanggal Selesai'><input type='date' style='width:160px;' id='tglselesaijp' name='tglselesaijp[]' class='form-control' placeholder='Tanggal Selesai'></td>";
-									echo "<td title='Penyelenggara Diklat'><input type='text' style='width:300px;' id='tmpdiklatjp' name='tmpdiklatjp[]' class='form-control' placeholder='Penyelenggara Diklat'></TD>";
-									echo "<TD title='No Sertifikat'><input style='width:150px;' type='text'  id='nosertifikatjp' name='nosertifikatjp[]' class='form-control' placeholder='No Sertifikat'></TD>";
-												
-									echo "<td title='Tanggal Sertifikat'><input type='date' style='width:160px;' id='tglsertifikatjp' name='tglsertifikatjp[]' class='form-control' placeholder='Tanggal Sertifikat'></td>";
-									
-									echo "<TD title='Jumlah Jam'><input style='width:70px;' type='text'  id='jmljamjp' name='jmljamjp[]' class='form-control' placeholder='jml jam'></TD>";
-									
-									echo "<td  title='Upload Sertifikat'><input style='width:300px;' type='file' id='berkasjp' name='berkasjp[]' class='form-control' placeholder='File Pendukung'></td>";
-									
-									echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokjp' name='filedokjp[]' class='form-control' placeholder='No File' readonly='true'></td>";
-									
-									echo "<td style='display:none;' id='colid'><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idjp' name='idjp[]' class='form-control'></td>";
-									echo "</tr>";	
-						   }
-						 ?> 
-						
-						</TABLE> <p>
-						<!--<label for="add"><a onclick="addRow('dataTable3')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
-					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>-->
-					 
-			  </div>
-			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2021), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
-				   <p><select id="tampilseminar" name="tampilseminar" onchange="cekseminar()" class="form-control">
-					 <option value="pilih">--Seminar--</option>
-					  <?
-					 if ($jnsseminar == 'sdhseminar') {
-							echo "<option value='sdhseminar' selected>Sudah Ikut Seminar</option>" ;
-							echo "<option value='blmseminar'>Belum Ikut Seminar</option>" ;
-						}
-					 if ($jnsseminar == 'blmseminar'){
-							echo "<option value='sdhseminar'>Sudah Ikut Seminar</option>" ;
-							echo "<option value='blmseminar' selected>Belum Ikut Seminar</option>" ;
-						}
-					if ($jnsseminar == '')
-					{
-						echo "<option value='sdhseminar'>Sudah Ikut Seminar</option>" ;
-						echo "<option value='blmseminar'>Belum Ikut Seminar</option>" ;
-					}
-					?>
-					 </select></p>
-					 
-					<TABLE id="dataTable4" width="1650" border="1">
-							<th>
-								<td width="200">Jenis Seminar</td>
-								<td width="160">Tanggal Mulai</td>
-								<td width="160">Tanggal Selesai</td>
-								<td width="300">Penyelenggara</td>
-								<td width="150">No Sertifikat</td>
-								<td width="160">Tgl Sertifikat</td>
-								<td width="70">Jml Jam</td>
-								<td width="300">Sertifikat (File Maks 1 MB) </td>
-								<td width="100">File Sertifikat</td>
-							</th>
-							<?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_seminar WHERE id_pegawai=".$idpeg." and tahun=2021");
-							$row_cnt = $result2->num_rows;
-						 
-						   if ($row_cnt != 0) {
-							   	  while ($row=mysqli_fetch_object($result2))
-								  {
-										  $idseminar = $row->id;
-										  $jnsseminar = $row->jnsseminar;
-										  $tglseminar = $row->tglseminar;
-										  $tglselesai = $row->tglselesai;
-										  $tmpseminar = $row->tmpseminar;
-										  $nosertifikat = $row->nosertifikat;
-										  $tglsertifikat = $row->tglsertifikat;
-										  $jmljam = $row->jmljam;
-										  $filesertifikat = $row->file_sertifikat;
-										  echo "<tr>";
-												echo	"<td width='30'><input type='checkbox' name='chk'>";
-												echo	"<TD title='Nama Diklat'>";
-												echo	"<input id='jnsseminar' style='width:200px;' type='text' name=jnsseminar[]' class='form-control' placeholder='Nama Seminar' value='".$jnsseminar."'></TD>";
-													
-												echo "<td title='Tanggal Mulai'><input type='date' style='width:160px;' id='tglseminar' name='tglseminar[]' class='form-control' placeholder='Tanggal Mulai' value=".$tglseminar."></td>";
-												
-												echo "<td title='Tanggal Selesai'><input type='date' style='width:160px;' id='tglselesaismnr' name='tglselesaismnr[]' class='form-control' placeholder='Tanggal Selesai' value=".$tglselesai."></td>";
-												
-												echo "<TD title='Penyelenggara Diklat'><input style='width:300px;' id='tmpseminar' name='tmpseminar[]' class='form-control' placeholder='Penyelenggara' value='".$tmpseminar."'></TD>";
-												
-												echo "<TD title='No Sertifikat'><input style='width:150px;' id='nosertifikatsmnr' name='nosertifikatsmnr[]' class='form-control' placeholder='No Sertifikat' value='".$nosertifikat."'></TD>";
-												
-												echo "<td title='Tanggal Sertifikat'><input type='date' style='width:160px;' id='tglsertifikatsmnr' name='tglsertifikatsmnr[]' class='form-control' placeholder='Tanggal Sertifikat' value=".$tglsertifikat."></td>";
-												
-												echo "<TD title='Jumlah Jam'><input style='width:70px;' id='jmljamsmnr' name='jmljamsmnr[]' class='form-control' placeholder='jml jam' value='".$jmljam."'></TD>";
-											
-												
-												echo "<td  title='Upload Sertifikat'><input type='file' style='width:300px;' id='berkasseminar' name='berkasseminar[]' class='form-control' placeholder='File Pendukung' value=".base_url('uploads/').$filesertifikat."></td>";
-												
-												echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokseminar' name='filedokseminar[]' class='form-control' placeholder='No File' value='".$filesertifikat."' readonly='true'></td>";
-												
-												echo "<td style='display:none;' ><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idseminar' name='idseminar[]' class='form-control'  value='".$idseminar."'></td>";
-												
-												
-										echo "</tr>";
-								  }
-							  
-						   }
-						   else{
-							  echo "<tr>";
-									echo "<td width='30'><input type='checkbox' name='chk'>";
-									echo "<td title='Nama Diklat'><input id='jnsseminar' style='width:200px;' type='text' name=jnsseminar[]' class='form-control' placeholder='Nama Seminar'></TD>";
-									echo "<td title='Tanggal Diklat'><input type='date' style='width:160px;' id='tglseminar' name='tglseminar[]' class='form-control' placeholder='Tanggal Seminar'></td>";
-									echo "<td title='Tanggal Selesai'><input type='date' style='width:160px;' id='tglselesaismnr' name='tglselesaismnr[]' class='form-control' placeholder='Tanggal Selesai'></td>";
-									echo "<td title='Penyelenggara Diklat'><input type='text' style='width:300px;' id='tmpseminar' name='tmpseminar[]' class='form-control' placeholder='Penyelenggara'></TD>";
-									echo "<TD title='No Sertifikat'><input style='width:150px;' id='nosertifikatsmnr' name='nosertifikatsmnr[]' class='form-control' placeholder='No Sertifikat'></TD>";
-												
-									echo "<td title='Tanggal Sertifikat'><input type='date' style='width:160px;' id='tglsertifikatsmnr' name='tglsertifikatsmnr[]' class='form-control' placeholder='Tanggal Sertifikat'></td>";
-									
-									echo "<TD title='Jumlah Jam'><input style='width:70px;' id='jmljamsmnr' name='jmljamsmnr[]' class='form-control' placeholder='jml jam'></TD>";
-									
-									echo "<td  title='Upload Sertifikat'><input style='width:300px;' type='file' id='berkasseminar' name='berkasseminar[]' class='form-control' placeholder='File Pendukung'></td>";
-									echo "<td  title='File Sertifikat'><input type='text' style='width:100px;' id='filedokseminar' name='filedokseminar[]' class='form-control' placeholder='No File' readonly='true'></td>";
-									
-									echo "<td style='display:none;'><input type='text' style='font-size:1pt;height:1px;width:1px;' id='idseminar' name='idseminar[]' class='form-control'></td>";
-									echo "</tr>";	
-						   }
-						 ?> 
-						
-					</TABLE> <p>
-					<!--<label for="add"><a onclick="addRow('dataTable4')">Tambah Seminar</a></label> &nbsp &nbsp &nbsp
-					<label for="del"><a onclick="deleteRow('dataTable4')">Hapus Seminar</a></label>-->
-			  </div>
-			  
-			  <div class="tab"> Pendidikan Terakhir Anda:
-				<select name="pendidikan" id="pendidikan" class="form-control">
-					 <option value="pilih">--Pilih--</option>  
-					 <?
-						 if ($pendidikan == 'S3') { ?>
-								  <option value="S3" selected>S3</option>
-							   	  <option value="S2">S2</option>  
-								  <option value="S1D4">S1/D4</option>  
-								  <option value="D3">D3</option> 
-								  <option value="D2D1SMASMK">D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD">SMP/SD</option>  
-						
-							<?
-							}
-						if ($pendidikan == 'S2') { ?>
-								  <option value="S3">S3</option>
-							   	  <option value="S2" Selected>S2</option>  
-								  <option value="S1D4">S1/D4</option>  
-								  <option value="D3">D3</option> 
-								  <option value="D2D1SMASMK">D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD">SMP/SD</option>  
-							<?
-							}
-						if ($pendidikan == 'S1D4') { ?>
-								  <option value="S3">S3</option>
-							   	  <option value="S2">S2</option>  
-								  <option value="S1D4" selected>S1/D4</option>  
-								  <option value="D3">D3</option> 
-								  <option value="D2D1SMASMK">D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD">SMP/SD</option>  
-							<?
-							}
-						if ($pendidikan == 'D3') { ?>
-								  <option value="S3">S3</option>
-							   	  <option value="S2">S2</option>  
-								  <option value="S1D4">S1/D4</option>  
-								  <option value="D3" selected>D3</option> 
-								  <option value="D2D1SMASMK">D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD">SMP/SD</option>  
-							<?
-							}
-						
-						if ($pendidikan == 'D2D1SMASMK') { ?>
-								  <option value="S3">S3</option>
-							   	  <option value="S2">S2</option>  
-								  <option value="S1D4">S1/D4</option>  
-								  <option value="D3">D3</option> 
-								  <option value="D2D1SMASMK" Selected>D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD">SMP/SD</option>  
-							<?
-							}
-						
-						if ($pendidikan == 'SMPSD') { ?>
-								  <option value="S3">S3</option>
-							   	  <option value="S2">S2</option>  
-								  <option value="S1D4">S1/D4</option>  
-								  <option value="D3">D3</option> 
-								  <option value="D2D1SMASMK">D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD" selected>SMP/SD</option>  
-							<?
-							}
-						
-						if ($pendidikan == '') { ?>
-								  <option value="S3">S3</option>
-							   	  <option value="S2">S2</option>  
-								  <option value="S1D4">S1/D4</option>  
-								  <option value="D3">D3</option> 
-								  <option value="D2D1SMASMK">D2/D1/SMA/SMK</option>  
-								  <option value="SMPSD">SMP/SD</option>  
-							<?
-							}						
-						?>
-					  
-					 </select><p>
-			  </div>
-			  
-			  
-			  
-			  <div class="tab">Anda Pernah Dijatuhi Hukuman Disiplin :
-				<select name="hukuman" id="hukuman" onchange="cekhukuman()" class="form-control">
-				 <option value="pilih">--Pilih--</option>  
-				 <?
-							if ($hukuman == 'Berat') { ?>
-							  <option value="Berat" selected>Berat</option>  
-							  <option value="Sedang">Sedang</option>  
-							  <option value="Ringan">Ringan</option>  
-							  <option value="Tidak Pernah">Tidak Pernah</option>  
-						
-							<?
-							}
-							if ($hukuman == 'Sedang') { ?>
-							  <option value="Berat">Berat</option>  
-							  <option value="Sedang" selected>Sedang</option>  
-							  <option value="Ringan">Ringan</option>  
-							  <option value="Tidak Pernah">Tidak Pernah</option>  
-						
-							<?
-							}
-							if ($hukuman == 'Ringan') { ?>
-							  <option value="Berat">Berat</option>  
-							  <option value="Sedang">Sedang</option>  
-							  <option value="Ringan" selected>Ringan</option>  
-							  <option value="Tidak Pernah">Tidak Pernah</option>  
-						
-							<?
-							}
-							if ($hukuman == 'Tidak Pernah') { ?>
-							  <option value="Berat">Berat</option>  
-							  <option value="Sedang">Sedang</option>  
-							  <option value="Ringan">Ringan</option>  
-							  <option value="Tidak Pernah" selected>Tidak Pernah</option>  
-						
-							<?
-							}
-							if ($hukuman == '') { ?>
-							  <option value="Berat">Berat</option>  
-							  <option value="Sedang">Sedang</option>  
-							  <option value="Ringan">Ringan</option>  
-							  <option value="Tidak Pernah">Tidak Pernah</option>  
-							<?
-							}
-					?>
-				 </select><p>
-				 <?
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_hukuman WHERE id_pegawai=".$idpeg." and tahun=2021");
-							$row_cnt = $result2->num_rows;
-						 
-						   if ($row_cnt != 0) {
-							    while ($row=mysqli_fetch_object($result2))
-								  {
-									  $idhukuman = $row->id;
-									  $ttdsk = $row->penandatangansk;
-									  $tglsk = $row->tglsk;
-									  $alasan= $row->alasan;
-									  $filesertifikat = $row->file_sertifikat;
-									
-									echo   "	<table border=0 id='dataTable5' width=800> ";
-									echo	 "<tr>";
-									echo			"<td width=100>Penandatangan SK</td>";
-									echo	"	<td>";
-									echo	"		<div class='input-group'>";
-									echo	"	<input type='hidden' id='idhukuman' name='idhukuman' value=".$idhukuman.">";
-									//echo	"	<input type='hidden' id='filedokhukuman' name='filedokhukuman' value=".$filesertifikat.">";
-									echo	"		<input id='ttdsk' maxlength='200' size='200' type='text' name='ttdsk' class='form-control' value='".$ttdsk."'>";
-									echo	"		</div>";								
-									echo	"	</td>";
-									echo	" </tr>";
-									echo	" <tr>";
-									echo	"	<td>Tanggal Surat</td>";
-									echo	"	<td>";
-									echo	"			<div class='input-group'>";
-									echo	"					<input type='text' maxlength='100' size='100' id='tglsurat' name='tglsurat' class='form-control timerange' value=".$tglsk."> ";
-									echo	"				</div>";
-									echo	"	</td>";
-									echo	" </tr>";
-									echo	" <tr>";
-									echo	"	<td>Alasan Sanksi</td>";
-									echo	"	<td>";
-									echo	"		<div class='input-group'>";
-									echo	"<input type='text' maxlength='400' size='400' id='alasan' name='alasan' class='form-control' value='".$alasan."'>";
-									echo	"	</div>";
-									echo	"<td>";
-									echo	"</tr>";
-										
-									echo	"<tr>";
-									echo	"	<td>Upload SK (File Maks. 1 MB)</td>";
-									echo	"	<td>";
-									echo    	"<div class='input-group'>";
-									echo		"<input type='file' style='width:300px;' id='berkashukuman' name='berkashukuman' class='form-control' placeholder='File Pendukung'></td>";
-									echo	"</div>";
-									echo	"</tr>";			
-										
-									echo	"<tr>";
-									echo	"	<td>File SK</td>";
-									echo	"<td>";
-								    echo		"<div class='input-group'>";
-								    //echo		"<a href=".base_url('uploads/').$filesertifikat." target='_blank'>".$filesertifikat."</a>";
-									echo			"<input type='text' style='width:180px;' id='filedokhukuman' name='filedokhukuman' class='form-control' value='".$filesertifikat."' readonly='true'>";
-								    echo		"</div>";
-									echo	"</td>";
-								    echo	"</tr>";
-													
-									echo	"</table><p>";
-								  }
-						   }
-						else {
-									echo "	<table border=0 width=800> ";
-									echo	 "<tr>";
-									echo			"<td width=100>Penandatangan SK</td>";
-									echo	"	<td>";
-									echo	"		<div class='input-group'>";
-									echo	"	<input type='hidden' id='idhukuman' name='idhukuman'>";
-									//echo	"	<input type='hidden' id='filedokhukuman' name='filedokhukuman'>";
-									echo	"		<input id='ttdsk' maxlength='200' size='200' type='text' name='ttdsk' class='form-control'>";
-									echo	"		</div>";								
-									echo	"	</td>";
-									echo	" </tr>";
-									echo	" <tr>";
-									echo	"	<td>Tanggal Surat</td>";
-									echo	"	<td>";
-									echo	"			<div class='input-group'>";
-									echo	"					<input type='text' maxlength='100' size='100' id='tglsurat' name='tglsurat' class='form-control timerange'> ";
-									echo	"				</div>";
-									echo	"	</td>";
-									echo	" </tr>";
-									echo	" <tr>";
-									echo	"	<td>Alasan Sanksi</td>";
-									echo	"	<td>";
-									echo	"		<div class='input-group'>";
-									echo	"<input type='text' maxlength='400' size='400' id='alasan' name='alasan' class='form-control'>";
-									echo	"	</div>";
-									echo	"<td>";
-									echo	"</tr>";
-										
-									echo	"<tr>";
-									echo	"	<td>Upload SK (File Maks. 1 MB)</td>";
-									echo	"	<td>";
-									echo    	"<div class='input-group'>";
-									echo		"<input type='file' style='width:300px;' id='berkashukuman' name='berkashukuman' class='form-control' placeholder='File Pendukung'></td>";
-									echo	"</div>";
-									echo	"</tr>";			
-										
-									echo	"<tr>";
-									echo	"	<td>File SK</td>";
-									echo	"<td>";
-								    echo		"<div class='input-group'>";
-								    // echo		"No File";
-									echo        "<input type='text' style='width:180px;' id='filedokhukuman' name='filedokhukuman' class='form-control' placeholder='No File' readonly='true'>";
-								    echo		"</div>";
-									echo	"</td>";
-								    echo	"</tr>";
-													
-									echo	"</table><p>";
-						 } ?>	  
-						   
-						
-			  </div>
-			  
-			  <div class="tab"> 
-				<table border="0" width="800" >
-					<tr>
-						<td width="50"><input type="checkbox" id="disclaimer" name="disclaimer" value="1"></td>
-						<td width="900"><label for="disclaimer">Saya bertanggungjawab atas kebenaran data yang telah saya isi di dalam survey ini.</label><br></td>
-					</tr>
-				</table> <p>
-			  </div><p><p><p><p>
+			  <p><p><p><p>
 			  <div style="overflow:auto;">
 			  <div style="float:left;">
 <!--				  <button type="button" id="closeBtn" onclick="nextPrev(0)" >Tutup (Kembali ke Dashboard)</button> 
@@ -2165,12 +1222,6 @@ while ($row=mysqli_fetch_object($result))
 			  </div>
 			  <!-- Circles which indicates the steps of the form: -->
 			  <div style="text-align:center;margin-top:40px;">
-				<span class="step"></span>
-				<span class="step"></span>
-				<span class="step"></span>
-				<span class="step"></span>
-				<span class="step"></span>
-				<span class="step"></span>
 				<span class="step"></span>
 				<span class="step"></span>
 				<span class="step"></span>
@@ -2230,112 +1281,92 @@ function nextPrev(n) {
 	 // alert("Lengkapi Pengisian Data !");
 	// return false; }
 	
-    if (currentTab==0 && document.getElementById("form1").jabatan.value=='CPNS') {
-		sessionStorage.setItem("showw", 0);
-	  alert("Status anda masih CPNS, Anda dapat melewati survey Indeks Profesionalitas");
-	  document.getElementById("form1").submit();
-	  return false;
-	}  
+    // if (currentTab==0 && document.getElementById("form1").jabatan.value=='CPNS') {
+		// sessionStorage.setItem("showw", 0);
+	  // alert("Status anda masih CPNS, Anda dapat melewati survey Indeks Profesionalitas");
+	  // document.getElementById("form1").submit();
+	  // return false;
+	// }  
 	  
-	  if (currentTab == 2){
-		  
-		
-		if (!ValidateFile()) {
-			return false;
-		}
-		
-		
-		var jnsdiklat=document.getElementById("form1").tampil.value;
-		
-		  if (jnsdiklat=='sdhpim') 
-		  {
-			 
-				var table = document.getElementById("dataTable1");
-				var rowCount = table.rows.length;
-				
-				for(var i=1; i<rowCount; i++) {
-					var row = table.rows[i];
-					var tgl = row.cells[2].childNodes[0].value;
-					var tglselesaipim = row.cells[3].childNodes[0].value;
-					var tmppim = row.cells[4].childNodes[0].value;
-					var nosertifikatpim = row.cells[5].childNodes[0].value;
-					var tglsertifikatpim = row.cells[6].childNodes[0].value;
-					var jmljampim = row.cells[7].childNodes[0].value;
-					var berkas = row.cells[8].childNodes[0].value;
-					var id = row.cells[9].childNodes[0].value;
-					
-					if (tgl=="") {
-							alert("Anda belum mengisi Tanggal Diklat!");
-							return false;
-					}
-					if (tglselesaipim=="") {
-							alert("Anda belum mengisi Tanggal Selesai Diklat!");
-							return false;
-					}
-					if(tmppim=="")
-						  {
-							alert("Anda belum mengisi Tempat Diklat");
-							return false ;
-						  }
-					if (nosertifikatpim=="") {
-							alert("Anda belum mengisi No Sertifikat!");
-							return false;
-					}
-					if (tglsertifikatpim=="") {
-							alert("Anda belum mengisi Tgl Sertifikat!");
-							return false;
-					}
-					if (jmljampim=="") {
-							alert("Anda belum mengisi Jumlah Jam!");
-							return false;
-					}
-					
-					if (id=="") {
-						if (berkas=="") {
-								alert("Anda belum mengupload sertifikat!");
-								return false;
-						}
-					} 
-					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
-						
-				}
-			  
-		  }
-		  
-		 
-	   }
-	   
-	   if (currentTab == 1){
+	  
+	   if (currentTab == 2){
 		
 			// if (!ValidSizeSKP()) {
 				// return false;
 			// }
-			
-			var berkasskp=document.getElementById("form1").berkasskp.value;
-
-			if (!berkasskp=="") {
-				
-				if (!ValidateFile()) {
+			var nilskp1=document.getElementById("form1").nilaiskp.value;
+			if ((nilskp1==0) || (nilskp1=='')) {
+					alert("Anda belum mengisi nilai skp periode 1");
 					return false;
-				}
-				
-				const oFile =  document.getElementById("berkasskp").files[0];  
-
-				if (oFile.size > 1000000) // 2 MiB for bytes.
-				{
-				  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-				  return false;
-				}
 			}
+			
+			var nilorientasi=document.getElementById("form1").orientasi.value;
+			if ((nilorientasi==0) || (nilorientasi=='')) {
+					alert("Anda belum mengisi nilai orientasi pelayanan periode 1");
+					return false;
+			}
+			
+			var nilintegritas=document.getElementById("form1").integritas.value;
+			if ((nilintegritas==0) || (nilintegritas=='')) {
+					alert("Anda belum mengisi nilai integritas periode 1");
+					return false;
+			}
+			
+			var nilkomitmen=document.getElementById("form1").komitmen.value;
+			if ((nilkomitmen==0) || (nilkomitmen=='')) {
+					alert("Anda belum mengisi nilai komitmen periode 1");
+					return false;
+			}
+			
+			var nildisiplin=document.getElementById("form1").disiplin.value;
+			if ((nildisiplin==0) || (nildisiplin=='')) {
+					alert("Anda belum mengisi nilai disiplin periode 1");
+					return false;
+			}
+			
+			var nilkerjasama=document.getElementById("form1").kerjasama.value;
+			if ((nilkerjasama==0) || (nilkerjasama=='')) {
+					alert("Anda belum mengisi nilai kerjasama periode 1");
+					return false;
+			}
+			
+			var nilskp2=document.getElementById("form1").nilaiskp2.value;
+			if ((nilskp2==0) || (nilskp2=='')) {
+					alert("Anda belum mengisi nilai skp periode 2");
+					return false;
+			}
+			
+			var nilorientasi2=document.getElementById("form1").orientasi2.value;
+			if ((nilorientasi2==0) || (nilorientasi2=='')) {
+					alert("Anda belum mengisi nilai orientasi pelayanan periode 2");
+					return false;
+			}
+			
+			var nilkomitmen2=document.getElementById("form1").komitmen2.value;
+			if ((nilkomitmen2==0) || (nilkomitmen2=='')) {
+					alert("Anda belum mengisi nilai komitmen periode 2");
+					return false;
+			}
+			
+			var nilkerjasama2=document.getElementById("form1").kerjasama2.value;
+			if ((nilkerjasama2==0) || (nilkerjasama2=='')) {
+					alert("Anda belum mengisi nilai kerjasama periode 2");
+					return false;
+			}
+			
+			var nilinisiatif=document.getElementById("form1").inisiatif.value;
+			if ((nilinisiatif==0) || (nilinisiatif=='')) {
+					alert("Anda belum mengisi nilai inisiatif kerja periode 2");
+					return false;
+			}
+			
+			
+			var niltotal=document.getElementById("form1").niltotal.value;
+			if ((niltotal==0) || (niltotal=='')) {
+					alert("Anda belum mengisi SKP");
+					return false;
+			}
+			
 			
 			var niltotal=document.getElementById("form1").niltotal.value;
 			if ((niltotal==0) || (niltotal=='')) {
@@ -2351,6 +1382,28 @@ function nextPrev(n) {
 			if (nippejabat=='') {
 					alert("Anda belum mengisi data atasan pejabat penilai");
 					return false;
+			}
+			
+			var berkasskp=document.getElementById("form1").berkasskp.value;
+			
+			if (berkasskp=="") {
+					alert("Anda belum mengupload skp!");
+					return false;
+			}
+			
+			if (!berkasskp=="") {
+				
+				if (!ValidateFile()) {
+					return false;
+				}
+				
+				const oFile =  document.getElementById("berkasskp").files[0];  
+
+				if (oFile.size > 1000000) // 2 MiB for bytes.
+				{
+				  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
+				  return false;
+				}
 			}
 			
 			// var _validFileExtensions = [".jpg", ".jpeg", ".pdf", ".png"];    
@@ -2381,289 +1434,9 @@ function nextPrev(n) {
 			
 	   }
 	  
-	   if (currentTab == 3){
-		   if (!ValidateFile()) {
-				return false;
-			}
-		
-		var jnsdiklat=document.getElementById("form1").tampiljafung.value;
+	  
 	
-		  if (jnsdiklat=='sdhdiklatjafung') 
-		  {
-			 
-				var table = document.getElementById("dataTable");
-				var rowCount = table.rows.length;
-				
-				for(var i=1; i<rowCount; i++) {
-					var row = table.rows[i];
-					var nama = row.cells[1].childNodes[0].value;
-					var tgl = row.cells[2].childNodes[0].value;
-					var tglselesai = row.cells[3].childNodes[0].value;
-					var tmppim = row.cells[4].childNodes[0].value;
-					var nosertifikat = row.cells[5].childNodes[0].value;
-					var tglsertifikat = row.cells[6].childNodes[0].value;
-					var jmljam = row.cells[7].childNodes[0].value;
-					var berkas = row.cells[8].childNodes[0].value;
-					var id = row.cells[9].childNodes[0].value;
-					
-					if (nama=="") {
-							alert("Anda belum mengisi nama diklat");
-							return false;
-					}
-					if (tgl=="") {
-							alert("Anda belum mengisi Tanggal Mulai Diklat!");
-							return false;
-					}
-					if (tglselesai=="") {
-							alert("Anda belum mengisi Tanggal Selesai Diklat!");
-							return false;
-					}
-					if(tmppim=="")
-						  {
-							alert("Anda belum mengisi Tempat Diklat");
-							return false ;
-						  }
-					if (nosertifikat=="") {
-							alert("Anda belum mengisi No Sertifikat!");
-							return false;
-					}
-					if (tglsertifikat=="") {
-							alert("Anda belum mengisi Tgl Sertifikat!");
-							return false;
-					}
-					if (jmljam=="") {
-							alert("Anda belum mengisi Jumlah Jam!");
-							return false;
-					}
-					if (id=="") {
-						if (berkas=="") {
-								alert("Anda belum mengupload sertifikat!");
-								return false;
-						}
-					}
-					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
-					
-				}
-			  
-		  }
-		  
-		 
-	   }
-		 
-		if (currentTab == 5){
-			if (!ValidateFile()) {
-				return false;
-			}
-		var jnsdiklat=document.getElementById("form1").tampilseminar.value;
-		
-		  if (jnsdiklat=='sdhseminar') 
-		  {
-			  	var table = document.getElementById("dataTable4");
-				var rowCount = table.rows.length;
-				
-				for(var i=1; i<rowCount; i++) {
-					var row = table.rows[i];
-					var nama = row.cells[1].childNodes[0].value;
-					var tgl = row.cells[2].childNodes[0].value;
-					var tglselesai = row.cells[3].childNodes[0].value;
-					var tmppim = row.cells[4].childNodes[0].value;
-					var nosertifikat = row.cells[5].childNodes[0].value;
-					var tglsertifikat = row.cells[6].childNodes[0].value;
-					var jmljam = row.cells[7].childNodes[0].value;
-					var berkas = row.cells[8].childNodes[0].value;
-					var id = row.cells[9].childNodes[0].value;
-					
-					if (nama=="") {
-							alert("Anda belum mengisi nama seminar");
-							return false;
-					}
-					if (tgl=="") {
-							alert("Anda belum mengisi tanggal mulai seminar");
-							return false;
-					}
-					
-					if (tglselesai=="") {
-							alert("Anda belum mengisi tanggal selesai seminar");
-							return false;
-					}
-					if(tmppim=="")
-						  {
-							alert("Anda belum mengisi tempat seminar");
-							return false ;
-						  }
-					if(nosertifikat=="")
-						  {
-							alert("Anda belum mengisi no sertifikat");
-							return false ;
-						  }
-					if(tglsertifikat=="")
-						  {
-							alert("Anda belum mengisi tanggal sertifikat");
-							return false ;
-						  }
-					if(jmljam=="")
-						  {
-							alert("Anda belum mengisi Jumlah Jam");
-							return false ;
-						  }
-					if (id=="") {
-						if (berkas=="") {
-								alert("Anda belum mengupload sertifikat!");
-								return false;
-						}
-					}
-					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
-					
-				}
-		  }
-		}
-  
-	if (currentTab == 4){
-		if (!ValidateFile()) {
-			return false;
-		}
-		var jnsdiklat=document.getElementById("form1").tampil20jp.value;
-
-		  if (jnsdiklat=='sdhdiklat20jp') 
-		  {
-			    var table = document.getElementById("dataTable3");
-				var rowCount = table.rows.length;
-				
-				for(var i=1; i<rowCount; i++) {
-					var row = table.rows[i];
-					var nama = row.cells[1].childNodes[0].value;
-					var tgl = row.cells[2].childNodes[0].value;
-					var tglselesai = row.cells[3].childNodes[0].value;
-					var tmppim = row.cells[4].childNodes[0].value;
-					var nosertifikat = row.cells[5].childNodes[0].value;
-					var tglsertifikat 	= row.cells[6].childNodes[0].value;
-					var jmljam = row.cells[7].childNodes[0].value;
-					var berkas = row.cells[8].childNodes[0].value;
-					var id = row.cells[9].childNodes[0].value;
-					
-					if (nama=="") {
-							alert("Anda belum mengisi nama diklat");
-							return false;
-					}
-					if (tgl=="") {
-							alert("Anda belum mengisi tanggal mulai diklat");
-							return false;
-					}
-					if (tglselesai=="") {
-							alert("Anda belum mengisi tanggal selesai diklat");
-							return false;
-					}
-					
-					if(tmppim=="")
-						  {
-							alert("Anda belum mengisi tempat diklat");
-							return false ;
-						  }
-					if(nosertifikat=="")
-						  {
-							alert("Anda belum mengisi no sertifikat");
-							return false ;
-						  }
-					if(tglsertifikat=="")
-						  {
-							alert("Anda belum mengisi tgl sertifikat");
-							return false ;
-						  }
-					if(jmljam=="")
-						  {
-							alert("Anda belum mengisi Jumlah Jam");
-							return false ;
-						  }
-					if (id=="") {
-						if (berkas=="") {
-								alert("Anda belum mengupload sertifikat!");
-								return false;
-						}
-					}
-					
-					if (!berkas=="") {
-							const oFile =  row.cells[8].childNodes[0].files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-					}
-					
-					
-				}
-		  }
-	}
-  
-  if (currentTab == 7){
-		if (!ValidateFile()) {
-			return false;
-		}
-		
-		var jnsdiklat=document.getElementById("form1").hukuman.value;
-	//alert(jnsdiklat);
-		  if (jnsdiklat!="Tidak Pernah") 
-		  {
-			  
-				var tglsurat = document.getElementById("tglsurat").value ;
-				var alasan = document.getElementById("alasan").value ;
-				var ttdsk = document.getElementById("ttdsk").value ;
-				var berkas = document.getElementById("berkashukuman").value;
-				var id = document.getElementById("idhukuman").value;
-				if (ttdsk=="") {
-							alert("Anda belum mengisi Penandatangan SK");
-							return false;
-					}
-					
-				if (tglsurat=="") {
-							alert("Anda belum mengisi Tgl Surat");
-							return false;
-					}
-				
-				if (alasan=="") {
-							alert("Anda belum mengisi Alasan Hukuman Disiplin");
-							return false;
-					}
-				if (id=="") {
-					if (berkas=="") {
-								alert("Anda belum Mengupload SK");
-								return false;
-					}
-				}
-				
-				if (!berkas=="") {
-							const oFile =  document.getElementById("berkashukuman").files[0];  
-
-							if (oFile.size > 1000000) // 2 MiB for bytes.
-							{
-							  alert("File Upload Anda terlalu besar, File upload harus di bawah 1 Mb/1000 Kb!");
-							  return false;
-							}
-				}
-				
-		  }
-	}
-	
-  if (currentTab == 8)  {
+  if (currentTab == 0)  {
 	 if (!document.getElementById("disclaimer").checked == true ) {
 		alert("Anda belum mengisi pertanggungjawaban pengisian data !");
 		return false ;
@@ -2678,8 +1451,7 @@ function nextPrev(n) {
   if (currentTab >= x.length) {
     // ... the form gets submitted:	
 	
-	sessionStorage.setItem("showw", 0);
-	alert("Terima Kasih Sudah Mengisi Survey Indeks Profesionalitas");
+	alert("Terima Kasih Sudah Mengisi SKP 2021");
 	
     document.getElementById("form1").submit();
 	
@@ -2688,183 +1460,11 @@ function nextPrev(n) {
   // Otherwise, display the correct tab:
 
   //alert(currentTab);
-  
-  
-  
-    if (currentTab == 2) { cekenablepim(); }
-   
-   if (currentTab == 3) { cekenablejafung(); }
-   
-   if (currentTab == 4) { cekenablejp(); }
-   
-  if (currentTab == 5) { cekenableseminar(); }
-  
-  if (currentTab == 7) { cekenablehukuman(); }
 	
 	showTab(currentTab);
 }
 
-function cekenablepim(){
-  var diklatpim=document.getElementById("form1").tampil.value;
-  if (diklatpim=="sdhpim")
-    {	        
-		document.getElementById("jenisdiklatpim").disabled = false; 
-		document.getElementById("tgldiklatpim").disabled = false; 
-		document.getElementById("tmpdiklatpim").disabled = false;
-		document.getElementById("berkas").disabled = false;
-		document.getElementById("tglselesaipim").disabled = false;
-		document.getElementById("nosertifikatpim").disabled = false;
-		document.getElementById("tglsertifikatpim").disabled = false;
-		document.getElementById("jmljampim").disabled = false;
-		//document.getElementById("filediklatpim").disable = false;
-		
-    }
-  if (diklatpim=="blmpim")
-    {	
-		document.getElementById("tgldiklatpim").value = "01-01-1900";
-		document.getElementById("tmpdiklatpim").value = "-";
-		document.getElementById("jenisdiklatpim").value = "-";
-		document.getElementById("tglselesaipim").value ="01-01-1900";
-		document.getElementById("nosertifikatpim").value ="-";
-		document.getElementById("tglsertifikatpim").value ="01-01-1900";
-		document.getElementById("jmljampim").value ="-";
-		document.getElementById("jenisdiklatpim").disabled = true; 
-		document.getElementById("tgldiklatpim").disabled = true; 
-		document.getElementById("tmpdiklatpim").disabled = true;
-		document.getElementById("berkas").disabled = true;
-		document.getElementById("tglselesaipim").disabled = true;
-		document.getElementById("nosertifikatpim").disabled = true;
-		document.getElementById("tglsertifikatpim").disabled = true;
-		document.getElementById("jmljampim").disabled = true;
-		
-    }
-}
 
-function cekenablejafung(){
-	
-  var diklat=document.getElementById("form1").tampiljafung.value;
-  
-  if (diklat=="sdhdiklatjafung")
-    {	        
-		document.getElementById("jenisdiklatjafung").disabled = false; 
-		document.getElementById("tgldiklatjafung").disabled = false; 
-		document.getElementById("tmpdiklatjafung").disabled = false;
-		document.getElementById("berkasjafung").disabled = false;
-		document.getElementById("tglselesaijafung").disabled = false;
-		document.getElementById("nosertifikat").disabled = false;
-		document.getElementById("tglsertifikat").disabled = false;
-		document.getElementById("jmljam").disabled = false;
-		
-    }
-  if (diklat=="blmdiklatjafung")
-    {	
-		document.getElementById("tgldiklatjafung").value = "01-01-1900";
-		document.getElementById("tmpdiklatjafung").value = "-";
-		document.getElementById("tmpdiklatjafung").value = "-";
-		document.getElementById("jenisdiklatjafung").value = "-";
-		document.getElementById("tglselesaijafung").value ="01-01-1900";
-		document.getElementById("nosertifikat").value ="-";
-		document.getElementById("tglsertifikat").value ="01-01-1900";
-		document.getElementById("jmljam").value ="-";
-		document.getElementById("jenisdiklatjafung").disabled = true; 
-		document.getElementById("tgldiklatjafung").disabled = true; 
-		document.getElementById("tmpdiklatjafung").disabled = true;
-		document.getElementById("berkasjafung").disabled = true;
-		document.getElementById("tglselesaijafung").disabled = true;
-		document.getElementById("nosertifikat").disabled = true;
-		document.getElementById("tglsertifikat").disabled = true;
-		document.getElementById("jmljam").disabled = true;
-    }
-}
-
-function cekenablejp(){
-  var diklat=document.getElementById("form1").tampil20jp.value;
-  if (diklat=="sdhdiklat20jp")
-    {	        
-		document.getElementById("jenisdiklatjp").disabled = false; 
-		document.getElementById("tgldiklatjp").disabled = false; 
-		document.getElementById("tmpdiklatjp").disabled = false;
-		document.getElementById("berkasjp").disabled = false;
-		document.getElementById("tglselesaijp").disabled = false;
-		document.getElementById("nosertifikatjp").disabled = false;
-		document.getElementById("tglsertifikatjp").disabled = false;
-		document.getElementById("jmljamjp").disabled = false;
-    }
-  if (diklat=="blm20jp")
-    {	
-		document.getElementById("tgldiklatjp").value = "01-01-1900";
-		document.getElementById("tmpdiklatjp").value = "-";
-		document.getElementById("jenisdiklatjp").value = "-";
-		document.getElementById("tglselesaijp").value = "01-01-1900";
-		document.getElementById("nosertifikatjp").value = "";
-		document.getElementById("tglsertifikatjp").value = "01-01-1900";
-		document.getElementById("jmljamjp").value = "";
-		document.getElementById("jenisdiklatjp").disabled = true; 
-		document.getElementById("tgldiklatjp").disabled = true; 
-		document.getElementById("tmpdiklatjp").disabled = true;
-		document.getElementById("berkasjp").disabled = true;
-		document.getElementById("tglselesaijp").disabled = true;
-		document.getElementById("nosertifikatjp").disabled = true;
-		document.getElementById("tglsertifikatjp").disabled = true;
-		document.getElementById("jmljamjp").disabled = true;
-    }
-}
-
-function cekenableseminar(){
-  var diklat=document.getElementById("form1").tampilseminar.value;
-  if (diklat=="sdhseminar")
-    {	        
-		document.getElementById("jnsseminar").disabled = false; 
-		document.getElementById("tglseminar").disabled = false; 
-		document.getElementById("tmpseminar").disabled = false;
-		document.getElementById("berkasseminar").disabled = false;
-		document.getElementById("tglselesaismnr").disabled = false; 
-		document.getElementById("nosertifikatsmnr").disabled = false;
-		document.getElementById("tglsertifikatsmnr").disabled = false;
-		document.getElementById("jmljamsmnr").disabled = false;
-    }
-  if (diklat=="blmseminar")
-    {	
-		document.getElementById("tglseminar").value = "01-01-1900";
-		document.getElementById("tmpseminar").value = "-";
-		document.getElementById("jnsseminar").value = "-";
-		document.getElementById("tglselesaismnr").value = "01-01-1900";
-		document.getElementById("nosertifikatsmnr").value = "";
-		document.getElementById("tglsertifikatsmnr").value = "01-01-1900";
-		document.getElementById("jmljamsmnr").value = "";
-		document.getElementById("jnsseminar").disabled = true; 
-		document.getElementById("tglseminar").disabled = true; 
-		document.getElementById("tmpseminar").disabled = true;
-		document.getElementById("berkasseminar").disabled = true;
-		document.getElementById("tglselesaismnr").disabled = true; 
-		document.getElementById("nosertifikatsmnr").disabled = true;
-		document.getElementById("tglsertifikatsmnr").disabled = true;
-		document.getElementById("jmljamsmnr").disabled = true;
-    }
-}
-
-
-function cekenablehukuman(){
-  var diklat=document.getElementById("form1").hukuman.value;
-
-  if (diklat!="Tidak Pernah")
-    {	        
-		document.getElementById("ttdsk").disabled = false; 
-		document.getElementById("tglsurat").disabled = false; 
-		document.getElementById("alasan").disabled = false;
-		document.getElementById("berkashukuman").disabled = false;
-    }
-  if (diklat=="Tidak Pernah")
-    {	
-		document.getElementById("tglsurat").value = "01-01-1900";
-		document.getElementById("alasan").value = "-";
-		document.getElementById("ttdsk").value = "-";
-		document.getElementById("ttdsk").disabled = true; 
-		document.getElementById("tglsurat").disabled = true; 
-		document.getElementById("alasan").disabled = true;
-		document.getElementById("berkashukuman").disabled = true;
-    }
-}
 
 
 function validateForm() {

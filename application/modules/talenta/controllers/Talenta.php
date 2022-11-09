@@ -12,13 +12,20 @@ class Talenta extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = 'KUESIONER MANAJEMEN TALENTA';
+		// $data['title'] = 'KUESIONER KEPEGAWAIAN';
+		$data['title'] = 'SURVEY PEMETAAN KINERJA PEGAWAI NEGERI SIPIL';		
 		$data['content'] = 'talenta/data/index';
 		$data['track'] = $this->mtalenta->track_progress($this->session->userdata('sesUser'));
 		$id_posisi = $this->session->userdata('sesPosisi');
 		$data['id_pegawai'] = $this->session->userdata('sesUser');
 		$data['id_posisi'] = $id_posisi;		
 		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$id_posisi);
+
+		if ($data['track'] >= 5) {
+			# code...
+			//redirect('transaksi/home2');	
+		    redirect('dashboard/home');		
+		}
 
 		$parameter_jabatan = '';
 		if($data['infoPegawai'][0]->kat_posisi == 1 && $data['infoPegawai'][0]->kat_posisi == 6)
@@ -54,14 +61,8 @@ class Talenta extends CI_Controller {
 				$parameter_jabatan = 'Pejabat Fungsional Ahli Pertama';
 			}
 		}
-
-
-		// echo "<pre>";										
-		// print_r($data['track']);die();		
-		// echo "</pre>";		
 		
-
-		$data['indikator'] = $this->mtalenta->getIndikator();		
+		$data['indikator'] = $this->mtalenta->getIndicatorProgess($data['track']);		
 		if ($data['indikator'] != 0) {
 			# code...
 			foreach ($data['indikator'] as $key => $value) {
@@ -108,6 +109,105 @@ class Talenta extends CI_Controller {
 		// echo "</pre>";
 		$this->load->view('templateAdmin',$data);
 	}
+
+	public function talenta2()
+	{
+		// $data['title'] = 'KUESIONER KEPEGAWAIAN';
+		$data['title'] = 'SURVEY PEMETAAN KINERJA PEGAWAI NEGERI SIPIL';		
+		$data['content'] = 'talenta/data/index';
+		$data['track'] = $this->mtalenta->track_progress($this->session->userdata('sesUser'));
+		$id_posisi = $this->session->userdata('sesPosisi');
+		$data['id_pegawai'] = $this->session->userdata('sesUser');
+		$data['id_posisi'] = $id_posisi;		
+		$data['infoPegawai'] = $this->Globalrules->get_info_pegawai($this->session->userdata('sesUser'),'id',$id_posisi);
+
+		if ($data['track'] >= 5) {
+			# code...
+			redirect('transaksi/home2');			
+		}
+
+		$parameter_jabatan = '';
+		if($data['infoPegawai'][0]->kat_posisi == 1 && $data['infoPegawai'][0]->kat_posisi == 6)
+		{
+			if ($this->session->userdata('sesEs4') != 0) {
+				# code...
+				$parameter_jabatan = 'Pejabat Pengawas (Eselon IV)';
+			}
+			else
+			{
+				if ($this->session->userdata('sesEs3') != 0) {
+					# code...
+					$parameter_jabatan = 'Pejabat Administrator (Eselon III)';					
+				}
+				else
+				{
+					if ($this->session->userdata('sesEs2') != 0) {
+						# code...
+						$parameter_jabatan = 'Pejabat Pimpinan Tinggi Pratama (Eselon II)';						
+					}
+				}
+			}
+
+		}
+		else
+		{
+			if ($data['infoPegawai'][0]->kat_posisi == 4) {
+				# code...
+				$parameter_jabatan = 'Pelaksana';				
+			}
+			else
+			{
+				$parameter_jabatan = 'Pejabat Fungsional Ahli Pertama';
+			}
+		}
+		
+		$data['indikator'] = $this->mtalenta->getIndicatorProgess($data['track']);		
+		if ($data['indikator'] != 0) {
+			# code...
+			foreach ($data['indikator'] as $key => $value) {
+				# code...
+				if ($value->id_indikator != 2) {
+					# code...
+					$question = $this->mtalenta->getQuestion($value->id_indikator);
+					if ($question != 0) {
+						# code...
+						for ($i=0; $i < count($question); $i++) { 
+							# code...
+							if ($question[$i]->id_pertanyaan != 0) {
+								# code...
+								$singleAnswer = $this->mtalenta->singleAnswer($question[$i]->id_pertanyaan,$data['id_pegawai']);
+								$question[$i]->jawaban = ($singleAnswer != 0) ? $singleAnswer[0]->jawaban : null;
+								$question[$i]->jumlah = ($singleAnswer != 0) ? $singleAnswer[0]->jumlah : null;								
+							}							
+						}
+					}
+					$data['indikator'][$key]->question = $question;					
+				}
+				else
+				{
+					$question = $this->mtalenta->getQuestionJabatan($value->id_indikator,$parameter_jabatan);
+					if ($question != 0) {
+						# code...
+						for ($i=0; $i < count($question); $i++) { 
+							# code...
+							if ($question[$i]->id_pertanyaan != 0) {
+								# code...
+								$singleAnswer = $this->mtalenta->singleAnswer($question[$i]->id_pertanyaan,$data['id_pegawai']);
+								$question[$i]->jawaban = ($singleAnswer != 0) ? $singleAnswer[0]->jawaban : null;
+								$question[$i]->jumlah = ($singleAnswer != 0) ? $singleAnswer[0]->jumlah : null;								
+							}							
+						}
+					}					
+					$data['indikator'][$key]->question = $question;
+				}
+			}
+		}
+
+		// echo "<pre>";										
+		// print_r($data['indikator']);die();		
+		// echo "</pre>";
+		$this->load->view('templateAdmin',$data);
+	}	
 
 	public function index2()
 	{

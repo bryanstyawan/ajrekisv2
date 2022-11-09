@@ -196,22 +196,27 @@ $counter_soal = 0;
                     else
                     {
 
-                        if ($value->sort <= $track) {
-                            if ($value->sort == $track) {
-                                # code...
-                                $class1 = "active";
-                                $paramDisabled = 'false';                                                        
-                            }
-                            // $paramDisabled = "display:'';";
-                        }
-                        else{
-                            $class1 = "disabled";        
-                            $paramDisabled = 'true';                                    
-                            // $paramDisabled = "display:none;";
-                        }
+                        if ($value->sort == $track) {
+                            # code...
+                            $class1 = "active";
+                            $paramDisabled = 'false';                                                        
+                        }                        
+
+                        // if ($value->sort <= $track) {
+
+                        //     // $paramDisabled = "display:'';";
+                        // }
+                        // else{
+                        //     $class1 = "disabled";        
+                        //     $paramDisabled = 'true';                                    
+                        //     // $paramDisabled = "display:none;";
+                        // }
                     }
 
                     if ($value->id_indikator != 1) {
+                        // echo $class;
+                        // echo "<br>";
+                        // echo $track;
                 ?>
                     <li role="presentation" aria-disabled="<?=$paramDisabled;?>" class="<?=$class;?>"><a class="tab-header" href="#id_indikator_<?=$value->id_indikator;?>" aria-controls="<?=$value->nama_indikator;?>" role="tab" data-toggle="tab"><?=$value->nama_indikator;?></a></li>                    
                 <?php                        
@@ -248,8 +253,8 @@ $counter_soal = 0;
                     if ($value->sort == $track) {
                         # code...
                         $class1 = "active";                        
+                        $paramDisabled = "display:'';";                        
                     }
-                    $paramDisabled = "display:'';";
                 }
                 else{
                     $class1 = "disabled";                
@@ -440,10 +445,10 @@ $counter_soal = 0;
                                                         <input type="file" id="file_pendukung_<?=$value1->id_pertanyaan;?>" name="file_pendukung_<?=$value1->id_pertanyaan;?>" class="form-control">                                            
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Apabila file lebih dari satu, dimohon untuk digabungkan menjadi 1 file dalam bentuk pdf atau rar atatu zip</label>
+                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Apabila file lebih dari satu, dimohon untuk digabungkan menjadi 1 file dalam bentuk pdf atau rar atau zip</label>
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Maksimal 2MB (pdf|rar|zip)</label>                                                        
+                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">Ukuran Maksimal 2 MB (pdf|rar|zip)</label>                                                        
                                                     </div>                                                                                                                                                        
                                                 </div>                                                
                                                 <button class="btn btn-danger" onclick="upload('<?=$value1->id_pertanyaan;?>',1)">Upload</button>                                                
@@ -529,10 +534,10 @@ $counter_soal = 0;
                                                         <input type="file" id="file_pendukung_<?=$value1->id_pertanyaan;?>" name="file_pendukung_<?=$value1->id_pertanyaan;?>" class="form-control">                                            
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Apabila file lebih dari satu, dimohon untuk digabungkan menjadi 1 file dalam bentuk pdf atau rar atatu zip</label>
+                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Apabila file lebih dari satu, dimohon untuk digabungkan menjadi 1 file dalam bentuk pdf atau rar atau zip</label>
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Maksimal 2MB (pdf|rar|zip)</label>                                                        
+                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">Ukuran Maksimal 2 MB (pdf|rar|zip)</label>                                                        
                                                     </div>                                                    
                                                 </div>        
                                                 <div class="col-lg-10" style="margin-bottom:10px">
@@ -593,10 +598,10 @@ $counter_soal = 0;
                                                         <input type="file" id="file_pendukung_<?=$value1->id_pertanyaan;?>" name="file_pendukung_<?=$value1->id_pertanyaan;?>" class="form-control">                                            
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Apabila file lebih dari satu, dimohon untuk digabungkan menjadi 1 file dalam bentuk pdf atau rar atatu zip</label>
+                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Apabila file lebih dari satu, dimohon untuk digabungkan menjadi 1 file dalam bentuk pdf atau rar atau zip</label>
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">*Maksimal 2MB (pdf|rar|zip)</label>                                                        
+                                                        <label class="pull-right" style="color: #000;font-weight: 800;font-size: 14px;">Ukuran Maksimal 2 MB (pdf|rar|zip)</label>                                                        
                                                     </div>                                                                                                        
                                                 </div>        
                                                 <div class="col-lg-10" style="margin-bottom:10px">
@@ -623,9 +628,18 @@ $counter_soal = 0;
                 <?php
                 if ($value->sort == $track) {
                     # code...
+                    if ($track == 4) {
+                        # code...
+                        ?>
+                        <button class="btn btn-success pull-right" onclick="nextProgress('<?=$value->sort;?>')">Selesai</button>                
+                    <?php                        
+                    }
+                    else
+                    {
                 ?>
                     <button class="btn btn-success pull-right" onclick="nextProgress('<?=$value->sort;?>')">Selanjutnya</button>                
                 <?php
+                    }
                 }
                 ?>                
             </div>                                        
@@ -652,47 +666,64 @@ $counter_soal = 0;
     }
 
     function nextProgress(progress) {
-        $.ajax({
-            url :"<?php echo site_url()?>talenta/checkProgress/<?=$id_pegawai;?>/"+progress,
-            type:"post",
-            success:function(msg){
-                var obj = jQuery.parseJSON (msg);
-                console.log(obj.question)
-                if (obj.question == obj.questionPegawai) {
-                    Lobibox.confirm({
-                        title: "Konfirmasi",
-                        msg: "Sebelum melanjutkan tahap berikutnya, mohon periksa kembali jawaban anda.",
-                        callback: function ($this, type) {
-                            if (type === 'yes'){
-                                $.ajax({
-                                    url :"<?php echo site_url()?>talenta/nextProgress/<?=$id_pegawai;?>/"+progress,
-                                    type:"post",
-                                    success:function(msg){
-                                        $("#loadprosess").modal('hide');
-                                        location.reload();                                    
-                                    },
-                                    error:function(jqXHR,exception)
-                                    {
-                                        ajax_catch(jqXHR,exception);					
-                                    }
-                                })   
-                            }
-                        }                        
-                    })
-                }            
-                else
+        if (progress == 4) {
+            $.ajax({
+                url :"<?php echo site_url()?>talenta/nextProgress/<?=$id_pegawai;?>/"+progress,
+                type:"post",
+                success:function(msg){
+                    $("#loadprosess").modal('hide');
+                    location.reload();                                    
+                },
+                error:function(jqXHR,exception)
                 {
-                    Lobibox.notify('error', {
-                        msg: 'Anda belum menyelesaikan pertanyaan'
-                    });
-                }    
-                $("#loadprosess").modal('hide');
-            },
-            error:function(jqXHR,exception)
-            {
-                ajax_catch(jqXHR,exception);					
-            }
-        })     
+                    ajax_catch(jqXHR,exception);					
+                }
+            })            
+        }
+        else
+        {
+            $.ajax({
+                url :"<?php echo site_url()?>talenta/checkProgress/<?=$id_pegawai;?>/"+progress,
+                type:"post",
+                success:function(msg){
+                    var obj = jQuery.parseJSON (msg);
+                    console.log(obj.question)
+                    if (obj.question == obj.questionPegawai) {
+                        Lobibox.confirm({
+                            title: "Konfirmasi",
+                            msg: "Jawaban anda akan kami simpan dan tidak dapat diubah. Lanjutkan ke tahap selanjutnya ?",
+                            callback: function ($this, type) {
+                                if (type === 'yes'){
+                                    $.ajax({
+                                        url :"<?php echo site_url()?>talenta/nextProgress/<?=$id_pegawai;?>/"+progress,
+                                        type:"post",
+                                        success:function(msg){
+                                            $("#loadprosess").modal('hide');
+                                            location.reload();                                    
+                                        },
+                                        error:function(jqXHR,exception)
+                                        {
+                                            ajax_catch(jqXHR,exception);					
+                                        }
+                                    })   
+                                }
+                            }                        
+                        })
+                    }            
+                    else
+                    {
+                        Lobibox.notify('error', {
+                            msg: 'Anda belum menyelesaikan pertanyaan'
+                        });
+                    }    
+                    $("#loadprosess").modal('hide');
+                },
+                error:function(jqXHR,exception)
+                {
+                    ajax_catch(jqXHR,exception);					
+                }
+            })                 
+        }
     }
 
     function yesOrNo(id,params) {

@@ -37,6 +37,9 @@ class Transaksi extends CI_Controller {
 
 	public function home($arg=NULL)
 	{
+		// if ($this->session->userdata('surveyIsDone') == 0) {
+		// 	redirect('surveytalenta/talenta');				
+		// }		
 		$data['title']      	= 'Transaksi';
 		$data['content']    	= 'transaksi/trx/data_transaksi2';
 		$data['list']			= $this->mtrx->list_transaksi($this->session->userdata('sesUser'),$this->session->userdata('sesPosisi'));
@@ -100,6 +103,9 @@ class Transaksi extends CI_Controller {
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
+		// if ($this->session->userdata('surveyIsDone') == 0) {
+		// 	redirect('surveytalenta/talenta');				
+		// }		
 		$data['arg']                  = $arg;		
 		$data['title']                = 'Transaksi';
 		$data['content']              = 'transaksi/trx/data_transaksi';

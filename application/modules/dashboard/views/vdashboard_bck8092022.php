@@ -164,44 +164,83 @@ if ($this->session->userdata('sesPosisi') != 0)
 
 $this->load->view('dashboard_component/bawahan_component');
 
+// $this->load->view('dashboard_component/survey');
 
+// $this->load->view('dashboard_component/notifsurvey');
+
+// echo "<script>
+			// $(document).ready(function()
+    // {
+			// $('#modal-infosurvey').modal('show');
+	// }) </script>";
+
+ // if ($_SESSION['popup'] == '1') {
+	
+	
+	  // $this->load->view('dashboard_component/survey');
+	  // echo "<script>
+				// $(document).ready(function()
+		// {
+				
+				// $('#modal-kuisioner').modal('show');
+		// }) </script>";
+	
+	 
+  // }
+  
+  // $this->load->view('dashboard_component/survey');
+  // echo "<script>
+		// $(document).ready(function()
+		// {
+			// if (sessionStorage.getItem('showw')==1) {
+			// $('#modal-kuisioner').modal('show'); }
+	// }) </script>";
+	
+	// if echo "<script>(sessionStorage.getItem('showw')==1) {
+		// $this->load->view('dashboard_component/survey');
+	// }
 	
 	// $link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
 	// $idpeg = $this->session->userdata('sesUser') ;
-	
-	// $result = mysqli_query($link, "SELECT a.nip, SUBSTRING(a.nip,9,6) AS cpns2021, ifnull(b.nilaitotal2,0) as nilaitotal2, a.status, a.cpns FROM mr_pegawai a
-									// LEFT JOIN tr_survey_kinerja_2021_2 b ON b.id_Pegawai = a.id
-									// WHERE a.id='".$idpeg."'");
+	// $result = mysqli_query($link, "SELECT disclaimer, jns_jabatan FROM tr_survey_ip WHERE id_pegawai='".$idpeg."' and tahun=2021");
 	// $row_cnt = $result->num_rows;
-	// $nilaitotal = 0;																		 
+	// $disclaimer = 0;																		 
 	// if ($row_cnt != 0) {	
-			// while ($row=mysqli_fetch_object($result))
-			// {
-				// $nilaitotal = $row->nilaitotal2;
-				// $status = $row->status;
-				// $cpns = $row->cpns;
-				// $cpns2021 = $row->cpns2021;
-				// if (($nilaitotal<70) && ($cpns!=2) && ($cpns2021!='202012')) {
-					// $this->load->view('dashboard_component/survey');
-					// echo "<script>
-							// $(document).ready(function()
-							// {
-								// $('#modal-kuisioner').modal('show'); 
-						// }) </script>";
-				// }
+		// while ($row=mysqli_fetch_object($result))
+		// {
+			// $disclaimer = $row->disclaimer;
+			// $jabatan = $row->jns_jabatan;
+			// if ($jabatan!='CPNS') {
+				// if ($disclaimer==1) {
+							// $this->load->view('dashboard_component/survey');
+							// echo "<script>
+									// alert('Terima Kasih telah mengisi Indeks Profesionalitas, Anda dapat mengupdate data dengan mengklik Icon angka Indeks Profesionalitas di kotak berwarna kuning');
+								// </script>";
+								
+					
+					// }else{
+							// $this->load->view('dashboard_component/survey');
+							// echo "<script>
+									// $(document).ready(function()
+									// {
+										// $('#modal-kuisioner').modal('show'); 
+								// }) </script>";
+					// }
 			// }
-	// } else {
-			// $this->load->view('dashboard_component/survey');
-			// echo "<script>
-					// $(document).ready(function()
-					// {
-						// $('#modal-kuisioner').modal('show'); 
-				// }) </script>";
+		// }
+	// }else{
+		// $this->load->view('dashboard_component/survey');
+		// echo "<script>
+				// $(document).ready(function()
+				// {
+					// $('#modal-kuisioner').modal('show'); 
+			// }) </script>";
 	// }
+		
+	
+
 
 	
-		
-
 
 // $this->load->view('dashboard_component/change_profile_component',array('nama_agama'=>$nama_agama));
 	$this->load->view('dashboard_component/information_emp_component',array(

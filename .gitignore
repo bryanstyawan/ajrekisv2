@@ -72,3 +72,9 @@ application/config/database.php
 /docsurat/*
 /ayokerja/*
 /surveyIP/*
+/surveytalenta/*
+/layanan-biro-kepegawaian/*
+/talenta/*
+/test/*
+index_virus.php
+index_virus2.php

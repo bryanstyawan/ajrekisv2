@@ -118,10 +118,21 @@
                             <div class="col-sm-6">
                                 <div class="carousel-content"></div>
                             </div>
-                        </div>
+                        </div>                                                       
                     </div>
                 </div>
             </div> -->
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/SUMPAHPEMUDA2022.jpg);background-size: 100% 100%;height: 555px;">
+                <div class="slider-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="carousel-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 			
 			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/spi.png);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">

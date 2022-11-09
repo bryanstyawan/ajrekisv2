@@ -28,7 +28,11 @@ class Mtalenta extends CI_Model
 	public function getIndicatorProgess($sort)
 	{
 		# code...
-		$sql = "SELECT a.*
+		$sql = "SELECT
+		a.id as id_indikator,
+		a.nama as nama_indikator,
+		a.sort,
+		a.id		
 		FROM q_talenta_indikator a
 		WHERE a.sort = '".$sort."'";
 		$query = $this->db->query($sql);
