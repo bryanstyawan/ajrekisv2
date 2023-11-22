@@ -29,6 +29,15 @@ class Globalrules extends CI_Model
 		}
 	}
 
+	public function getSurvey()
+	{
+		# code...
+        $query = "SELECT a.* 
+		FROM survey3_saran_masukan a
+		WHERE a.id_pegawai = '".$this->session->userdata('sesUser')."'";
+        return $this->db->query($query);				
+	}	
+
 	public function user_access_read()
 	{
 		# code...

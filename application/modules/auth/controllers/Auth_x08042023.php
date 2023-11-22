@@ -53,10 +53,8 @@ class Auth extends CI_Controller {
 			}
 
 			//$trackSurvey = $this->mtalenta->track_progress($cekUser[0]->id);
-			$flagSurveykp = 0;
 			$flagSurveyKepeg = 0;
 			$checkPeminatan = $this->mlogin->getPeminatan($cekUser[0]->id)->result_array();
-			
 
 			// if ($data['pegawai'] != array()) {
 				# code...
@@ -91,14 +89,6 @@ class Auth extends CI_Controller {
 					# code...
 					$flagSurveyKepeg = 1;   
 				}				
-			
-			$checkkp = $this->mlogin->getkp($cekUser[0]->id)->result_array();
-			
-			if ($checkkp != array())
-			{
-				$flagSurveykp = 1;
-			}
-		
 			// // $checkRumpun = $this->mlogin->getAnswerRumpun($cekUser[0]->id)->result_array();					
 
 			// if ($checkRumpun != array()) {
@@ -157,7 +147,6 @@ class Auth extends CI_Controller {
 							'photo'           => $cekUser[0]->photo,							
 							'login'           => TRUE,
 							'sesSurveyKepeg' => $flagSurveyKepeg,
-							'sesSurveykp'    => $flagSurveykp,
 							// 'sesSurveyKepeg' => 1							
 						);
 

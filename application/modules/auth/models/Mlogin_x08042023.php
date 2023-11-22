@@ -210,19 +210,7 @@ class Mlogin extends CI_Model {
 		WHERE a.id_pegawai = '".$id."'";
         return $this->db->query($query);		
 	}	
-	
-	public function getkp($id)
-	{
-		# code...
-		// print_r($this->session->userdata());die();
-        $query = "SELECT a.* FROM nip_pangkat a
-				LEFT JOIN mr_pegawai b ON a.nip= b.nip
-				WHERE b.id NOT IN (
-					SELECT id_pegawai FROM survey_kp )
-				AND b.id = '".$id."'";
-        return $this->db->query($query);		
-	}	
-	
+
 	public function getAnswerRumpun($id)
 	{
 		# code...

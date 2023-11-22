@@ -18,28 +18,8 @@ class Dashboard extends CI_Controller {
 		# code...
 		// if ($this->session->userdata('sesSurveyKepeg') == 0) {
 		// 	# code...
-		// 	redirect('/sur vey-kepegawaian');											
+		// 	redirect('/survey-kepegawaian');											
 		// }
-		
-		// else{
-			// if ($this->session->userdata('sesSurveykp') == 1) 
-			// # code...
-			// redirect('/surveyKP');											
-		// }
-		$checkSurvey = $this->Globalrules->getSurvey()->result_array();
-		if (count($checkSurvey) == 0) {
-			# code...
-			if ($this->session->userdata('sesEs1') != 0) {
-				# code...
-				if ($this->session->userdata('sesEs2') != 0) {
-					# code...
-					redirect('/survey-kepegawaian');											
-				}
-			}
-		}
-		
-		
-		
 		$data['title']                   = '';
 		$data['content']                 = 'vdashboard1';
 		$data['id_posisi']               = $this->session->userdata('sesPosisi');
@@ -67,62 +47,6 @@ class Dashboard extends CI_Controller {
 		$data['menit_efektif_year']       = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));		
 		$this->load->view('templateAdmin',$data);		
 	}
-
-	public function home_test()
-	{
-		# code...
-		$checkSurvey = $this->Globalrules->getSurvey()->result_array();
-		if (count($checkSurvey) == 0) {
-			# code...
-			if ($this->session->userdata('sesEs1') != 0) {
-				# code...
-				if ($this->session->userdata('sesEs2') != 0) {
-					# code...
-					redirect('/survey-kepegawaian');											
-				}
-			}
-		}
-		// print_r($this->session->userdata);die();
-		// if ($this->session->userdata('sesSurveyKepeg') == 0) {
-		// 	# code...
-
-		// }
-		
-		// else{
-			// if ($this->session->userdata('sesSurveykp') == 1) 
-			// # code...
-			// redirect('/surveyKP');											
-		// }
-		
-		
-		
-		$data['title']                   = '';
-		$data['content']                 = 'vdashboard1';
-		$data['id_posisi']               = $this->session->userdata('sesPosisi');
-		$data['summary_tr']               = $this->Mmaster->data_pegawai('kinerja','eselon2 ASC,
-																eselon3 ASC,
-																eselon4 ASC,
-																kat_posisi ASC,
-																atasan ASC',array
-																(
-																	'eselon1'    => '',
-																	'eselon2'    => '',
-																	'eselon3'    => '',
-																	'eselon4'    => '',
-																	'bulan'      => date('m'),
-																	'tahun'		 => date('Y'),
-																	'pegawai'	 => $this->session->userdata('sesUser'),
-																	'posisi'	 => $this->session->userdata('sesPosisi')																		
-																));
-		$data['member']                   = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'),NULL,'penilaian_skp');																		
-		$data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
-		// $data['id_posisi']               = $this->session->userdata('sesPosisi');
-		// $data['belum_diperiksa']         = $this->stat_pekerjaan(0);	
-		// $data['totalip']         		 = $this->mdashboard->get_total_ip();
-		$data['infoPegawai']              = $this->Globalrules->get_info_pegawai();		
-		$data['menit_efektif_year']       = $this->mlaporan->get_menit_efektif_year($this->session->userdata('sesUser'));		
-		$this->load->view('templateAdmin',$data);		
-	}	
 
 	public function home()
 	{

@@ -37,6 +37,21 @@ class Transaksi extends CI_Controller {
 
 	public function home($arg=NULL)
 	{
+		$checkSurvey = $this->Globalrules->getSurvey()->result_array();
+		if (count($checkSurvey) == 0) {
+			# code...
+			if ($this->session->userdata('sesEs1') != 0) {
+				# code...
+				if ($this->session->userdata('sesEs2') != 0) {
+					# code...
+					redirect('/survey-kepegawaian');											
+				}
+			}
+		}
+		// if ($this->session->userdata('sesSurveyKepeg') == 0) {
+		// 	# code...
+		// 	redirect('/survey-kepegawaian');											
+		// }		
 		// if ($this->session->userdata('surveyIsDone') == 0) {
 		// 	redirect('surveytalenta/talenta');				
 		// }		
@@ -101,6 +116,21 @@ class Transaksi extends CI_Controller {
 
 	public function home2($arg=NULL)
 	{
+		// if ($this->session->userdata('sesSurveyKepeg') == 0) {
+			// # code...
+			// redirect('/survey-kepegawaian');											
+		// }		
+		$checkSurvey = $this->Globalrules->getSurvey()->result_array();
+		if (count($checkSurvey) == 0) {
+			# code...
+			if ($this->session->userdata('sesEs1') != 0) {
+				# code...
+				if ($this->session->userdata('sesEs2') != 0) {
+					# code...
+					redirect('/survey-kepegawaian');											
+				}
+			}
+		}		
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
 		// if ($this->session->userdata('surveyIsDone') == 0) {

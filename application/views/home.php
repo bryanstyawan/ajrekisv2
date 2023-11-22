@@ -133,7 +133,7 @@
                     </div>
                 </div>
             </div>-->
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/HUTKORPRI2022.jpg);background-size: 100% 100%;height: 555px;">
+			<!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/HUTKORPRI2022.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -143,9 +143,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 			
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/spi.png);background-size: 100% 100%;height: 555px;">
+			<!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/spi.png);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -155,7 +155,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
 			
 			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/budayakerja.jpeg);background-size: 100% 100%;height: 555px;">
@@ -170,7 +170,7 @@
                 </div>
             </div>
 			
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/zonaintegritas.jpeg);background-size: 100% 100%;height: 555px;">
+			<!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/zonaintegritas.jpeg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -180,9 +180,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 			
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PosterSikerjaZI.jpg);background-size: 100% 100%;height: 555px;">
+			<!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/PosterSikerjaZI.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -192,9 +192,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 			
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/POSTERORTALA2.jpeg);background-size: 100% 100%;height: 555px;">
+			<!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/POSTERORTALA2.jpeg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -204,9 +204,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 			
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/POSTERORTALA.png);background-size: 100% 100%;height: 555px;">
+			<!--<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/POSTERORTALA.png);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">
@@ -216,9 +216,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 			
-			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerja.jpg);background-size: 100% 100%;height: 555px;">
+			<div class="item" style="background-image: url(<?php echo base_url();?>assets_home/slider/sikerjanew.jpg);background-size: 100% 100%;height: 555px;">
                 <div class="slider-inner">
                     <div class="container">
                         <div class="row">

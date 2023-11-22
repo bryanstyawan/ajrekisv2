@@ -68,13 +68,10 @@ application/config/database.php
 /CountDown/*
 /skpprilaku/*
 /uploads/*
-/tesajax/*
-/docsurat/*
-/ayokerja/*
 /surveyIP/*
-/surveytalenta/*
-/layanan-biro-kepegawaian/*
-/talenta/*
+/ayokerja/*
+/Local Disk/*
 /test/*
-index_virus.php
-index_virus2.php
+/lamaluar/*
+/tesajax/*
+/advanced/*

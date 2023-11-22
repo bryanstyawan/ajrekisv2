@@ -690,11 +690,22 @@ function login() {
 			</tr>
 		</table> <br/> -->
 		<table border="1">
-			<tr bgcolor="lightblue">
+			<tr bgcolor="white">
 				<td>
-					<h1 style="color:black;text-align:left"><b>Untuk melakukan penilaian perilaku SKP Tahun 2022 Periode II silahkan klik tautan link di bawah ini</h3>
+					<!--<h1 style="color:black;text-align:left"><b>Untuk melakukan penilaian perilaku SKP Tahun 2022 Periode II silahkan klik tautan link di bawah ini</h3>
 				  <h1 style="color:white;text-align:left"><a href="http://sikerja.kemendagri.go.id/skpprilaku"><u>http://sikerja.kemendagri.go.id/skpprilaku</u></a></h1>
-				  <h3 style="color:red;text-align:left"><b>(Login menggunakan username dan password akun Sikerja Anda)</h3>
+				  <h3 style="color:red;text-align:left"><b>(Login menggunakan username dan password akun Sikerja Anda)</h3> -->
+				  
+				    <h2 style="color:blue; text-align:left">Kepada Yth. </br>
+					Bapak/Ibu Pegawai Negeri Sipil </br>
+					Di Lingkungan Kementerian Dalam Negeri</br></h2></br>
+					<h2 style="color:blue; text-align:left"> Untuk meningkatkan pelayanan Cuti pada Biro Kepegawaian di Lingkungan Kementerian Dalam Negeri, kami minta kepada Bapak/Ibu untuk dapat memberikan Feed Back melalui kuisioner yang kami lampirkan pada link dibawah ini. Demikian kami sampaikan, atas kerjasamanya kami ucapkan terimakasih.</br>
+					<h2 style="color:blue; text-align:center">Untuk Mengisi Survey silahkan klik disini <a href="https://forms.gle/fRKn8AX3T2S8gz1F9"> https://forms.gle/fRKn8AX3T2S8gz1F9</a> </h2>
+					<h2 style="color:blue; text-align:center">Jika Anda sudah pernah isi, anda dapat tutup popup ini dengan mengklik tombol (x) di atas</h2>
+					<h2 style="color:blue; text-align:center">	</br>
+						
+					
+					<h1 style="color:blue; text-align:center">Terima Kasih</br></br>
 				</td>
 			</tr>
 		
