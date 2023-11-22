@@ -484,7 +484,7 @@ function hitungperilakukerja1(){
 // $hukuman='';
 // 
 
-// $result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2021");
+// $result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2022");
  
 
 // while ($row=mysqli_fetch_object($result))
@@ -509,7 +509,7 @@ function hitungperilakukerja1(){
   <div class="modal-content">
    <div class="modal-header">
      <!--<button type="button" class="close" data-dismiss="modal">&times;</button> --> 
-    <h2 class="modal-title" style="color:blue">PENGISIAN NILAI SKP TAHUN 2021</h2>
+    <h2 class="modal-title" style="color:blue">PENGISIAN NILAI SKP TAHUN 2022</h2>
    </div>
    <div class="modal-body">
 			<form method="post" id="form1" name="form1" enctype="multipart/form-data" action="<?php echo site_url('Dashboard/add_survey') ?>">
@@ -517,17 +517,17 @@ function hitungperilakukerja1(){
 			  <div class="tab"> 
 				<table border="0" width="1500" >
 					<tr>
-						<td width="1400" colspan=2><label>Untuk mengisi data SKP Tahun 2021 ini, pastikan dokumen SKP Tahun 2021 (periode 1 dan periode 2) Anda sudah tersedia</label><br/>
+						<td width="1400" colspan=2><label>Untuk mengisi data SKP Tahun 2022 ini, pastikan dokumen SKP Tahun 2022 (periode 1 dan periode 2) Anda sudah tersedia</label><br/>
 						<label>dan di scan dalam bentuk pdf dengan ukuran file maksimal 1 Mb (1000 Kb)</label></td>
 					</tr>
 					<tr>
 						<td width="50"><input type="checkbox" id="disclaimer" name="disclaimer" value="1"></td>
-						<td width="900"><label for="disclaimer">Saya bertanggungjawab atas kebenaran data SKP 2021 yang akan saya isi.</label><br></td>
+						<td width="900"><label for="disclaimer">Saya bertanggungjawab atas kebenaran data SKP 2022 yang akan saya isi.</label><br></td>
 					</tr>
 				</table> <p>
 			  </div>
 			  
-				<div class="tab">Jenis Jabatan Anda di tahun 2021:
+				<div class="tab">Jenis Jabatan Anda di tahun 2022:
 			   
 				 <p><select id="jabatan" name="jabatan" onchange="tampilkan()"  class="form-control">
 					<option value="pilih">--Pilih--</option>  
@@ -569,8 +569,8 @@ function hitungperilakukerja1(){
 					  
 				 </select></p>
 				 </div>
-				   <div class="tab"><b>Isilah nilai-nilai SKP sesuai dokumen SKP Tahun 2021 yang anda miliki</b>: 
-				   <br/><a href="<?=base_url();?>/assets_home/PETUNJUKPENGISIANSKP2021.pdf" download><u>Klik di sini untuk petunjuk pengisian</u></a>
+				   <div class="tab"><b>Isilah nilai-nilai SKP sesuai dokumen SKP Tahun 2022 yang anda miliki</b>: 
+				   <br/><a href="<?=base_url();?>/assets_home/PETUNJUKPENGISIANSKP2022.pdf" download><u>Klik di sini untuk petunjuk pengisian</u></a>
 				   <br/><br/>
 				   <p>
 				   <i>- untuk tanda decimal silahkan menggunakan titik (.) misal 90.50</i><br/>
@@ -581,9 +581,9 @@ function hitungperilakukerja1(){
 											skp2.id AS id2, skp2.`nilaiskp` AS nilaiskp2, skp2.`orientasipelayanan` AS orientasipelayanan2, skp2.`inisiatifkerja` AS inisiatifkerja2, skp2.`komitmen` AS komitmen2, skp2.`kerjasama` AS kerjasama2, skp2.`kepemimpinan` AS kepemimpinan2, skp2.`file_skp2` , skp2.`nilaiprilakukerja` AS nilaiprilakukerja2, skp2.`nilaiprestasikerja` AS nilaiprestasikerja2, skp2.nilaitotal,
 											skp2.nip_penilai, skp2.nama_penilai, skp2.gol_penilai, skp2.jab_penilai,
 											skp2.nip_atasanpenilai, skp2.nama_atasanpenilai, skp2.gol_atasanpenilai, skp2.jab_atasanpenilai
-										FROM `tr_survey_kinerja_2021_1` skp1
-										LEFT JOIN tr_survey_kinerja_2021_2 skp2 ON skp1.id_pegawai = skp2.id_pegawai
-										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2022");
+										FROM `tr_survey_kinerja_2022_1` skp1
+										LEFT JOIN tr_survey_kinerja_2022_2 skp2 ON skp1.id_pegawai = skp2.id_pegawai
+										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2023");
 										
 								 $row_cnt = $result2->num_rows;
 								
@@ -648,9 +648,9 @@ function hitungperilakukerja1(){
 										
 										echo "	<table border=1 width=1500> ";
 										echo	 "<tr>";
-										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2021)";
+										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2022)";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2021)";
+										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2022)";
 										echo	"	</td>";
 										echo	 "</tr>";
 										//--------------------------------------------------------------------------------------------------------------
@@ -815,7 +815,7 @@ function hitungperilakukerja1(){
 										echo	"	</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Kinerja Th 2021</td>";
+										echo	"	<td>Nilai Kinerja Th 2022</td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='niltotal' name='niltotal' class='form-control' value=".$nilaitotal.">";
@@ -930,9 +930,9 @@ function hitungperilakukerja1(){
 							else {
 										echo "	<table border=1 width=1500> ";
 										echo	 "<tr>";
-										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2021)";
+										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2022)";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2021)";
+										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2022)";
 										echo	"	</td>";
 										echo	 "</tr>";
 										//--------------------------------------------------------------------------------------------------------------
@@ -1097,7 +1097,7 @@ function hitungperilakukerja1(){
 										echo	"	</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Kinerja Th 2021</td>";
+										echo	"	<td>Nilai Kinerja Th 2022</td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='niltotal' name='niltotal' class='form-control' >";
@@ -1451,7 +1451,7 @@ function nextPrev(n) {
   if (currentTab >= x.length) {
     // ... the form gets submitted:	
 	
-	alert("Terima Kasih Sudah Mengisi SKP 2021");
+	alert("Terima Kasih Sudah Mengisi SKP 2022");
 	
     document.getElementById("form1").submit();
 	

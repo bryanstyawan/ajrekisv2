@@ -530,7 +530,7 @@ $skp='';
 $hukuman='';
 $idpeg = $this->session->userdata('sesUser') ;
 // jalankan query
-$result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2021");
+$result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2022");
  
 // tampilkan query
 while ($row=mysqli_fetch_object($result))
@@ -555,12 +555,12 @@ while ($row=mysqli_fetch_object($result))
   <div class="modal-content">
    <div class="modal-header">
      <!--<button type="button" class="close" data-dismiss="modal">&times;</button> --> 
-    <h2 class="modal-title" style="color:blue">SURVEY INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2021</h2>
+    <h2 class="modal-title" style="color:blue">SURVEY INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2022</h2>
    </div>
    <div class="modal-body">
 			<form method="post" id="form1" name="form1" enctype="multipart/form-data" action="<?php echo site_url('Dashboard/add_survey') ?>">
 			  <!-- One "tab" for each step in the form: -->
-			  <div class="tab">Jenis Jabatan Anda di tahun 2021:
+			  <div class="tab">Jenis Jabatan Anda di tahun 2022:
 			   
 				 <p><select id="jabatan" name="jabatan" onchange="tampilkan()"  class="form-control">
 					<option value="pilih">--Pilih--</option>  
@@ -602,8 +602,8 @@ while ($row=mysqli_fetch_object($result))
 					  
 				 </select></p>
 			  </div>
-			  <div class="tab">Jika anda menduduki jabatan struktural di tahun 2021, apakah anda sudah mengikuti diklatpim dalam jabatan eselon tersebut?<p>
-			  <i>(contoh: <b>jawab Sudah Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan sudah diklatpim III; <b>jawab Belum Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan belum diklatpim III)</i>
+			  <div class="tab">Jika anda menduduki jabatan struktural di tahun 2022, apakah anda sudah mengikuti diklatpim dalam jabatan eselon tersebut?<p>
+			  <i>(contoh: <b>jawab Sudah Diklatpim</b> jika di tahun 2022 menduduki jabatan eselon III dan sudah diklatpim III; <b>jawab Belum Diklatpim</b> jika di tahun 2022 menduduki jabatan eselon III dan belum diklatpim III)</i>
 				<p><select id="tampil" name="tampil" onchange="cekdiklatpim()" class="form-control"> 
 				<option value="pilih">--Diklat PIM--</option> 
 				<?
@@ -641,7 +641,7 @@ while ($row=mysqli_fetch_object($result))
 							<td width="100">File Sertifikat</td>
 						</th>
 					 <?	
-						 $result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatpim WHERE id_pegawai=".$idpeg." and tahun=2021");
+						 $result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatpim WHERE id_pegawai=".$idpeg." and tahun=2022");
 						 $row_cnt = $result2->num_rows;
 						 $i=0;
 						 
@@ -771,7 +771,7 @@ while ($row=mysqli_fetch_object($result))
 							</th>
 							
 							 <?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatjafung WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatjafung WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						    $i=0;
 						   if ($row_cnt != 0) {
@@ -834,7 +834,7 @@ while ($row=mysqli_fetch_object($result))
 						<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
 					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>
 			  </div>
-			  <div class="tab">Dalam 1 tahun terakhir (2021), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
+			  <div class="tab">Dalam 1 tahun terakhir (2022), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
 					 <p><select id="tampil20jp" name="tampil20jp" onchange="cekdiklatjp()" class="form-control">
 					 <option value="pilih">--Diklat 20 JP--</option>
 
@@ -870,7 +870,7 @@ while ($row=mysqli_fetch_object($result))
 							</th>
 							
 							<?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklat20jp WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklat20jp WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						 
 						   if ($row_cnt != 0) {
@@ -941,7 +941,7 @@ while ($row=mysqli_fetch_object($result))
 					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>
 					 
 			  </div>
-			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2021), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
+			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2022), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
 				   <p><select id="tampilseminar" name="tampilseminar" onchange="cekseminar()" class="form-control">
 					 <option value="pilih">--Seminar--</option>
 					  <?
@@ -974,7 +974,7 @@ while ($row=mysqli_fetch_object($result))
 								<td width="100">File Sertifikat</td>
 							</th>
 							<?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_seminar WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_seminar WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						 
 						   if ($row_cnt != 0) {
@@ -1119,7 +1119,7 @@ while ($row=mysqli_fetch_object($result))
 					 </select><p>
 			  </div>
 			  
-			  <div class="tab"> Hasil Penilaian Kinerja Anda di Tahun 2021 (Periode 1):
+			  <div class="tab"> Hasil Penilaian Kinerja Anda di Tahun 2022 (Periode 1):
 				<select name="kinerja" id="kinerja" class="form-control">
 				 <option value="pilih">--Pilih--</option>  
 				 	<?
@@ -1227,7 +1227,7 @@ while ($row=mysqli_fetch_object($result))
 					?>
 				 </select><p>
 				 <?
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_hukuman WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_hukuman WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						 
 						   if ($row_cnt != 0) {

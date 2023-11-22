@@ -113,7 +113,7 @@ button:hover {
         <h1 class="modal-title" style="color:red; text-align:center">INFORMASI</h1>
       </div>
       <div class="modal-body">
-        <h2 style="color:blue; text-align:center">	Terdapat Feature Pengisian Survey Indeks Profesionalitas PNS Kemendagri Tahun 2021 </br>
+        <h2 style="color:blue; text-align:center">	Terdapat Feature Pengisian Survey Indeks Profesionalitas PNS Kemendagri Tahun 2022 </br>
 		<h2 style="color:blue; text-align:center"> Anda di himbau untuk mengisi dan mengupdate setiap ada perubahan data</br>
 		<h2 style="color:blue; text-align:center">	</br>
 			</br>

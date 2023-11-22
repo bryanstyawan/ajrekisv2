@@ -749,7 +749,7 @@ $skp='';
 $hukuman='';
 $idpeg = $this->session->userdata('sesUser') ;
 // jalankan query
-$result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2021");
+$result = mysqli_query($link, "SELECT * FROM tr_survey_ip WHERE id_pegawai=".$idpeg." and tahun=2022");
  
 // tampilkan query
 while ($row=mysqli_fetch_object($result))
@@ -774,12 +774,12 @@ while ($row=mysqli_fetch_object($result))
   <div class="modal-content">
    <div class="modal-header">
      <!--<button type="button" class="close" data-dismiss="modal">&times;</button> --> 
-    <h2 class="modal-title" style="color:blue">PENGUKURAN INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2021</h2>
+    <h2 class="modal-title" style="color:blue">PENGUKURAN INDEKS PROFESIONALITAS PNS KEMENDAGRI TAHUN 2022</h2>
    </div>
    <div class="modal-body">
 			<form method="post" id="form1" name="form1" enctype="multipart/form-data" action="<?php echo site_url('Dashboard/add_survey') ?>">
 			  <!-- One "tab" for each step in the form: -->
-			  <div class="tab">Jenis Jabatan Anda di tahun 2021:
+			  <div class="tab">Jenis Jabatan Anda di tahun 2022:
 			   
 				 <p><select id="jabatan" name="jabatan" onchange="tampilkan()"  class="form-control">
 					<option value="pilih">--Pilih--</option>  
@@ -821,7 +821,7 @@ while ($row=mysqli_fetch_object($result))
 					  
 				 </select></p>
 			  </div>
-				   <div class="tab"><p style="font-size:25px"><b>SKP Tahun 2021</b>: </p>
+				   <div class="tab"><p style="font-size:25px"><b>SKP Tahun 2022</b>: </p>
 				   <i>(untuk tanda decimal silahkan menggunakan titik (.) misal 90.50)</i><br/>
 				   <a href="<?=base_url();?>/assets_home/PETUNJUKPENGISIANSKPINDEKSPROFESIONALITAS.pdf" download><u>Klik di sini untuk petunjuk pengisian</u></a>
 				   <br/><br/>
@@ -834,7 +834,7 @@ while ($row=mysqli_fetch_object($result))
 											skp2.nip_atasanpenilai, skp2.nama_atasanpenilai, skp2.gol_atasanpenilai, skp2.jab_atasanpenilai
 										FROM `tr_survey_kinerja_1` skp1
 										LEFT JOIN tr_survey_kinerja_2 skp2 ON skp1.id_pegawai = skp2.id_pegawai
-										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2021");
+										WHERE skp1.id_pegawai = ".$idpeg." AND skp1.tahun=2022");
 										
 								 $row_cnt = $result2->num_rows;
 								
@@ -899,9 +899,9 @@ while ($row=mysqli_fetch_object($result))
 										
 										echo "	<table border=1 width=1500> ";
 										echo	 "<tr>";
-										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2021)";
+										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2022)";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2021)";
+										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2022)";
 										echo	"	</td>";
 										echo	 "</tr>";
 										//--------------------------------------------------------------------------------------------------------------
@@ -1066,7 +1066,7 @@ while ($row=mysqli_fetch_object($result))
 										echo	"	</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Kinerja Th 2021</td>";
+										echo	"	<td>Nilai Kinerja Th 2022</td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='niltotal' name='niltotal' class='form-control' value=".$nilaitotal.">";
@@ -1181,9 +1181,9 @@ while ($row=mysqli_fetch_object($result))
 							else {
 										echo "	<table border=1 width=1500> ";
 										echo	 "<tr>";
-										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2021)";
+										echo	"	<td colspan=2> <b>Periode I (Jan - Juni 2022)";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2021)";
+										echo	"	<td colspan=3> <b>Periode II (Juli - Desember 2022)";
 										echo	"	</td>";
 										echo	 "</tr>";
 										//--------------------------------------------------------------------------------------------------------------
@@ -1348,7 +1348,7 @@ while ($row=mysqli_fetch_object($result))
 										echo	"	</div>";
 										echo	"	</td>";
 										echo	"	<td> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</td>";
-										echo	"	<td>Nilai Kinerja Th 2021</td>";
+										echo	"	<td>Nilai Kinerja Th 2022</td>";
 										echo	"	<td>";
 										echo	"		<div class='input-group'>";
 										echo	"<input type='text' style='width:100px; font-weight: bold; text-align:right; background-color:skyblue;' readonly=true id='niltotal' name='niltotal' class='form-control' >";
@@ -1460,8 +1460,8 @@ while ($row=mysqli_fetch_object($result))
 							
 				  </div>
 			  
-			  <div class="tab">Jika anda menduduki jabatan struktural di tahun 2021, apakah anda sudah mengikuti diklatpim dalam jabatan eselon tersebut?<p>
-			  <i>(contoh: <b>jawab Sudah Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan sudah diklatpim III; <b>jawab Belum Diklatpim</b> jika di tahun 2021 menduduki jabatan eselon III dan belum diklatpim III)</i>
+			  <div class="tab">Jika anda menduduki jabatan struktural di tahun 2022, apakah anda sudah mengikuti diklatpim dalam jabatan eselon tersebut?<p>
+			  <i>(contoh: <b>jawab Sudah Diklatpim</b> jika di tahun 2022 menduduki jabatan eselon III dan sudah diklatpim III; <b>jawab Belum Diklatpim</b> jika di tahun 2022 menduduki jabatan eselon III dan belum diklatpim III)</i>
 				<p><select id="tampil" name="tampil" onchange="cekdiklatpim()" class="form-control"> 
 				<option value="pilih">--Diklat PIM--</option> 
 				<?
@@ -1499,7 +1499,7 @@ while ($row=mysqli_fetch_object($result))
 							<td width="100">File Sertifikat</td>
 						</th>
 					 <?	
-						 $result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatpim WHERE id_pegawai=".$idpeg." and tahun=2021");
+						 $result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatpim WHERE id_pegawai=".$idpeg." and tahun=2022");
 						 $row_cnt = $result2->num_rows;
 						 $i=0;
 						 
@@ -1634,7 +1634,7 @@ while ($row=mysqli_fetch_object($result))
 							</th>
 							
 							 <?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatjafung WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklatjafung WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						    $i=0;
 						   if ($row_cnt != 0) {
@@ -1697,7 +1697,7 @@ while ($row=mysqli_fetch_object($result))
 						<label for="add"><a onclick="addRow('dataTable')">Tambah Diklat</a></label> &nbsp &nbsp &nbsp
 					    <label for="del"><a onclick="deleteRow('dataTable')">Hapus Diklat</a></label>
 			  </div>
-			  <div class="tab">Dalam 1 tahun terakhir (2021), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
+			  <div class="tab">Dalam 1 tahun terakhir (2022), apakah anda pernah mengikuti Diklat 20 Jam Pelajaran (akumulasi JP minimal 20 JP) ?
 					 <p><select id="tampil20jp" name="tampil20jp" onchange="cekdiklatjp()" class="form-control">
 					 <option value="pilih">--Diklat 20 JP--</option>
 
@@ -1733,7 +1733,7 @@ while ($row=mysqli_fetch_object($result))
 							</th>
 							
 							<?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklat20jp WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_diklat20jp WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						 
 						   if ($row_cnt != 0) {
@@ -1804,7 +1804,7 @@ while ($row=mysqli_fetch_object($result))
 					    <label for="del"><a onclick="deleteRow('dataTable3')">Hapus Diklat</a></label>
 					 
 			  </div>
-			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2021), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
+			  <div class="tab">Dalam 2 tahun terakhir (2020 sd 2022), apakah anda pernah mengikuti Seminar/Workshop/Magang/Kursus/sejenisnya ?
 				   <p><select id="tampilseminar" name="tampilseminar" onchange="cekseminar()" class="form-control">
 					 <option value="pilih">--Seminar--</option>
 					  <?
@@ -1837,7 +1837,7 @@ while ($row=mysqli_fetch_object($result))
 								<td width="100">File Sertifikat</td>
 							</th>
 							<?	
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_seminar WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_seminar WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						 
 						   if ($row_cnt != 0) {
@@ -2031,7 +2031,7 @@ while ($row=mysqli_fetch_object($result))
 					?>
 				 </select><p>
 				 <?
-							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_hukuman WHERE id_pegawai=".$idpeg." and tahun=2021");
+							$result2 = mysqli_query($link, "SELECT * FROM tr_survey_hukuman WHERE id_pegawai=".$idpeg." and tahun=2022");
 							$row_cnt = $result2->num_rows;
 						 
 						   if ($row_cnt != 0) {

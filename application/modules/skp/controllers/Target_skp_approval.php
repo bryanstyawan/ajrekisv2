@@ -14,13 +14,13 @@ class Target_skp_approval extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2022;	
+	private $year_system = 2023;	
 
 	public function data($year_system=NULL)
 	{
 		$this->Globalrules->session_rule();
 		$this->Globalrules->notif_message();
-		$year_system              = ($year_system == NULL) ? 2021 : $year_system;
+		$year_system              = ($year_system == NULL) ? 2022 : $year_system;
 		$data['title']            = '<b>SKP</b> <i class="fa fa-angle-double-right"></i> Approval Target SKP Anggota Tim';
 		$data['subtitle']         = '';
 		$data['bawahan']          = $this->Globalrules->list_bawahan($this->session->userdata('sesPosisi'));

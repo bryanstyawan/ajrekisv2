@@ -106,7 +106,7 @@ $(document).ready(function(){
 		var es3                  = $("#select_eselon_3").val();
 		var es4                  = $("#select_eselon_4").val();
 		var select_bulan         = 1;
-		var select_tahun         = 2021;	
+		var select_tahun         = 2022;	
 
 
 		es1 = (es1 == '') ? 0 : es1 ;

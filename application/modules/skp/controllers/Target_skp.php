@@ -11,7 +11,7 @@ class Target_skp extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	private $year_system = 2022;	
+	private $year_system = 2023;	
 
 	public function data($year=NULL,$id_pegawai=NULL,$id_posisi=NULL)
 	{
@@ -99,7 +99,8 @@ class Target_skp extends CI_Controller {
 									'id_posisi'      => $posisi,
 									'tahun'          => $tahun,
 									'id_skp_master'  => $bind_data[$i]->id_skp,
-									'status'         => '6',
+									// 'status'         => '6',
+									'status'         => '1',									
 									'audit_priority' => ''
 								);
 								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
@@ -126,7 +127,8 @@ class Target_skp extends CI_Controller {
 										'id_skp_master'  => '',
 										'id_skp_jfu'     => '',
 										'id_skp_jft'     => $check_jft[$i]['id'],									
-										'status'         => '6',
+										// 'status'         => '6',
+										'status'         => '1',										
 										'audit_priority' => ''
 									);
 									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
@@ -159,7 +161,8 @@ class Target_skp extends CI_Controller {
 										'id_skp_master'  => '',
 										'id_skp_jfu'     => $check_jfu[$i]['id'],
 										'id_skp_jft'     => '',									
-										'status'         => '6',
+										// 'status'         => '6',
+										'status'         => '1',										
 										'audit_priority' => ''
 									);
 									$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);
@@ -188,7 +191,8 @@ class Target_skp extends CI_Controller {
 									'id_posisi'      => $posisi,
 									'tahun'          => $tahun,
 									'id_skp_master'  => $bind_data[$i]->id_skp,
-									'status'         => '6',
+									// 'status'         => '6',
+									'status'         => '1',									
 									'audit_priority' => ''
 								);
 								$res_data_id_friend = $this->Allcrud->addData_with_return_id('mr_skp_pegawai',$data);

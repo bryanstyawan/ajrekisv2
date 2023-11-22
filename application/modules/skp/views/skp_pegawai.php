@@ -1,5 +1,5 @@
 <?php
-$year_system = '2021';
+$year_system = '2022';
 ?>
 <input type="hidden" id="oid_kat_posisi" value="<?=$this->session->userdata('kat_posisi');?>">
 <style type="text/css">@import url("<?php echo base_url() . 'assets/plugins/tabs-checked/css/style_tabs.css'; ?>");</style>

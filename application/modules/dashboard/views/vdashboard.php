@@ -132,7 +132,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         // 'color_box' => 'background-color: #ffffcc !important;',
         // 'icon'      => '',
         // 'value_php' => (($totalip == '') ? 0 : $totalip),
-        // 'title'     => 'INDEKS PROFESIONALITAS TAHUN 2021 <br/> (Klik disini untuk mengupdate survey)',
+        // 'title'     => 'INDEKS PROFESIONALITAS TAHUN 2022 <br/> (Klik disini untuk mengupdate survey)',
         // 'html'      => ''));     				
     // $this->load->view('dashboard_component/common_component',array(
     //     'class'     => 'col-lg-2 col-xs-8',
@@ -169,8 +169,8 @@ $this->load->view('dashboard_component/bawahan_component');
 	// $link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
 	// $idpeg = $this->session->userdata('sesUser') ;
 	
-	// $result = mysqli_query($link, "SELECT a.nip, SUBSTRING(a.nip,9,6) AS cpns2021, ifnull(b.nilaitotal2,0) as nilaitotal2, a.status, a.cpns FROM mr_pegawai a
-									// LEFT JOIN tr_survey_kinerja_2021_2 b ON b.id_Pegawai = a.id
+	// $result = mysqli_query($link, "SELECT a.nip, SUBSTRING(a.nip,9,6) AS cpns2022, ifnull(b.nilaitotal2,0) as nilaitotal2, a.status, a.cpns FROM mr_pegawai a
+									// LEFT JOIN tr_survey_kinerja_2022_2 b ON b.id_Pegawai = a.id
 									// WHERE a.id='".$idpeg."'");
 	// $row_cnt = $result->num_rows;
 	// $nilaitotal = 0;																		 
@@ -180,8 +180,8 @@ $this->load->view('dashboard_component/bawahan_component');
 				// $nilaitotal = $row->nilaitotal2;
 				// $status = $row->status;
 				// $cpns = $row->cpns;
-				// $cpns2021 = $row->cpns2021;
-				// if (($nilaitotal<70) && ($cpns!=2) && ($cpns2021!='202012')) {
+				// $cpns2022 = $row->cpns2022;
+				// if (($nilaitotal<70) && ($cpns!=2) && ($cpns2022!='202012')) {
 					// $this->load->view('dashboard_component/survey');
 					// echo "<script>
 							// $(document).ready(function()

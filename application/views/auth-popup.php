@@ -671,16 +671,16 @@ function login() {
 			<a class="close" href="#">X</a>
 		<!--	
 		<h1 style="color:red;text-align:center">--INFORMASI--</h1><br/>
-		<h3 style="color:white;text-align:center"><b>Silahkan untuk melakukan penilaian perilaku SKP Tahun 2021 Periode II melalui tautan link di bawah ini</h3>
+		<h3 style="color:white;text-align:center"><b>Silahkan untuk melakukan penilaian perilaku SKP Tahun 2022 Periode II melalui tautan link di bawah ini</h3>
 		<h1 style="color:white;text-align:center"><a href="http://sikerja.kemendagri.go.id/skpprilaku"><u>http://sikerja.kemendagri.go.id/skpprilaku</u></a></h1>
 		<h3 style="color:red;text-align:center"><b>(Login menggunakan username dan password akun Sikerja Anda)</h3> -->
 		
 		<h1 style="color:red;text-align:center">--INFORMASI--</h1><br/>
 		<!--<table border="1">
 			<tr bgcolor="lightblue">
-				<td><h1 style="color:black;text-align:left"><b>Setelah Login silahkan melakukan input untuk pengukuran Indeks Profesionalitas ASN Kemendagri Tahun 2021.</h1>
+				<td><h1 style="color:black;text-align:left"><b>Setelah Login silahkan melakukan input untuk pengukuran Indeks Profesionalitas ASN Kemendagri Tahun 2022.</h1>
 					<b>Siapkan dokumen-dokumen yang akan Anda upload (jenis file pdf/jpg/png, ukuran maksimal setiap file 1 MB) antara lain: <br/>
-					1. SKP Tahun 2021 (Periode I dan II)<br/>
+					1. SKP Tahun 2022 (Periode I dan II)<br/>
 					2. Sertifikat (Diklat Struktural, Diklat Fungsional, Diklat 20 JP)<br/>
 					3. Sertifikat Seminar/Workshop), dan<br/>
 					4. Surat Hukuman Disiplin (bagi yang terkena hukuman disiplin)<br/>
@@ -692,7 +692,7 @@ function login() {
 		<table border="1">
 			<tr bgcolor="lightblue">
 				<td>
-					<h1 style="color:black;text-align:left"><b>Untuk melakukan penilaian perilaku SKP Tahun 2021 Periode II silahkan klik tautan link di bawah ini</h3>
+					<h1 style="color:black;text-align:left"><b>Untuk melakukan penilaian perilaku SKP Tahun 2022 Periode II silahkan klik tautan link di bawah ini</h3>
 				  <h1 style="color:white;text-align:left"><a href="http://sikerja.kemendagri.go.id/skpprilaku"><u>http://sikerja.kemendagri.go.id/skpprilaku</u></a></h1>
 				  <h3 style="color:red;text-align:left"><b>(Login menggunakan username dan password akun Sikerja Anda)</h3>
 				</td>

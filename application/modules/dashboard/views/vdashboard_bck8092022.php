@@ -132,7 +132,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         // 'color_box' => 'background-color: #ffffcc !important;',
         // 'icon'      => '',
         // 'value_php' => (($totalip == '') ? 0 : $totalip),
-        // 'title'     => 'INDEKS PROFESIONALITAS TAHUN 2021 <br/> (Klik disini untuk mengupdate survey)',
+        // 'title'     => 'INDEKS PROFESIONALITAS TAHUN 2022 <br/> (Klik disini untuk mengupdate survey)',
         // 'html'      => ''));     				
     // $this->load->view('dashboard_component/common_component',array(
     //     'class'     => 'col-lg-2 col-xs-8',
@@ -202,7 +202,7 @@ $this->load->view('dashboard_component/bawahan_component');
 	
 	// $link = mysqli_connect("192.168.193.15", "sikerja_asn", "asnsikerja_2019", "sikerja_new_build");
 	// $idpeg = $this->session->userdata('sesUser') ;
-	// $result = mysqli_query($link, "SELECT disclaimer, jns_jabatan FROM tr_survey_ip WHERE id_pegawai='".$idpeg."' and tahun=2021");
+	// $result = mysqli_query($link, "SELECT disclaimer, jns_jabatan FROM tr_survey_ip WHERE id_pegawai='".$idpeg."' and tahun=2022");
 	// $row_cnt = $result->num_rows;
 	// $disclaimer = 0;																		 
 	// if ($row_cnt != 0) {	

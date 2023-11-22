@@ -187,7 +187,7 @@ class Mlogin extends CI_Model {
 	}
 	
 	public function ceksurvey($id){
-		$sql = "SELECT id_pegawai from tr_survey_ip where id_pegawai = '$id' and tahun=2021";
+		$sql = "SELECT id_pegawai from tr_survey_ip where id_pegawai = '$id' and tahun=2022";
 		$query = $this->db->query($sql);
 		if($query->num_rows() == 1)
 		{

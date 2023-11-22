@@ -154,8 +154,8 @@ class Mdashboard extends CI_Model
 			}
 		}
 	
-		$this->tahun= 2021;
-		$this->db->delete($this->_tbl_survey,array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
+		$this->tahun= 2022;
+		$this->db->delete($this->_tbl_survey,array('id_pegawai'=>$id_pegawai, 'tahun' => 2022));
         $this->db->insert($this->_tbl_survey, $this);
 		
 		//return 1;
@@ -172,7 +172,7 @@ class Mdashboard extends CI_Model
 				$tglsk = (date('Y-m-d',strtotime($this->input->post("tglsurat"))));
 				$alasan = $this->input->post("alasan");   
 				$berkashukuman = $this->input->post("berkashukuman");
-				$tahun= 2021;
+				$tahun= 2022;
 				$idhukuman =  $this->input->post("idhukuman");
 				$filedok = $this->input->post("filedokhukuman");
 					
@@ -265,7 +265,7 @@ class Mdashboard extends CI_Model
 				
 			}
 			else {
-				$this->db->delete('tr_survey_hukuman',array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
+				$this->db->delete('tr_survey_hukuman',array('id_pegawai'=>$id_pegawai, 'tahun' => 2022));
 			}
 			
 		 	// echo '<script language="javascript">';
@@ -290,7 +290,7 @@ class Mdashboard extends CI_Model
 				$nilkonversi = $this->input->post("nilkonversi");
 				$berkasskp = $this->input->post("berkasskp");
 				$filedok = $this->input->post("fileskp");
-				$tahun = 2021;
+				$tahun = 2022;
 				
 				if(!empty($_FILES['berkasskp']['name'])){
 										
@@ -436,7 +436,7 @@ class Mdashboard extends CI_Model
 				$jabpejabat= $this->input->post("jabpejabat");
 				// $berkasskp2 = $this->input->post("berkasskp2");
 				// $filedok2 = $this->input->post("fileskp2");
-				$tahun=2021;
+				$tahun=2022;
 				
 				if ($idskp2!='') {
 									$data = array(
@@ -629,7 +629,7 @@ class Mdashboard extends CI_Model
 				$tglsertifikatpim = $this->input->post("tglsertifikatpim");
 				$jmljampim = $this->input->post("jmljampim");
 				$berkas = $this->input->post("berkas");
-				$tahun= 2021;
+				$tahun= 2022;
 				//$i=0;
 				
 				//for ($i =0; $i < count(jnsdiklatpim); $i++) 
@@ -741,7 +741,7 @@ class Mdashboard extends CI_Model
 				 }
 				}
 				else{
-							$this->db->delete('tr_survey_diklatpim',array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
+							$this->db->delete('tr_survey_diklatpim',array('id_pegawai'=>$id_pegawai, 'tahun' => 2022));
 				}
 		 		 	// echo '<script language="javascript">';
 			// echo 'alert("pimok")';
@@ -764,7 +764,7 @@ class Mdashboard extends CI_Model
 				$tglsertifikat = $this->input->post("tglsertifikat");
 				$jmljam = $this->input->post("jmljam");
 				
-				$tahun= 2021;
+				$tahun= 2022;
 				$idjafung =  $this->input->post("idjafung");
 				$filedok = $this->input->post("filedokjafung");
 				//$i=0;
@@ -878,7 +878,7 @@ class Mdashboard extends CI_Model
 				 }
 				}
 				else{
-							$this->db->delete('tr_survey_diklatjafung',array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
+							$this->db->delete('tr_survey_diklatjafung',array('id_pegawai'=>$id_pegawai, 'tahun' => 2022));
 				}
 				 	
     }
@@ -898,7 +898,7 @@ class Mdashboard extends CI_Model
 				$tglsertifikat = $this->input->post("tglsertifikatsmnr");
 				$jmljam = $this->input->post("jmljamsmnr");
 				$berkasseminar = $this->input->post("berkasseminar");
-				$tahun= 2021;
+				$tahun= 2022;
 				$idseminar =  $this->input->post("idseminar");
 				$filedok = $this->input->post("filedokseminar");
 				//$i=0;
@@ -1011,7 +1011,7 @@ class Mdashboard extends CI_Model
 				 }
 				}
 				else{
-							$this->db->delete('tr_survey_seminar',array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
+							$this->db->delete('tr_survey_seminar',array('id_pegawai'=>$id_pegawai, 'tahun' => 2022));
 				}
 			// echo '<script language="javascript">';
 			// echo 'alert("seminarip")';
@@ -1033,7 +1033,7 @@ class Mdashboard extends CI_Model
 				$nosertifikatjp = $this->input->post("nosertifikatjp");
 				$tglsertifikatjp = $this->input->post("tglsertifikatjp");
 				$jmljamjp = $this->input->post("jmljamjp");
-				$tahun= 2021;	
+				$tahun= 2022;	
 				$idjp =  $this->input->post("idjp");
 				$filedok = $this->input->post("filedokjp");
 				//$i=0;
@@ -1147,7 +1147,7 @@ class Mdashboard extends CI_Model
 				 }
 				}
 				else{
-							$this->db->delete('tr_survey_diklat20jp',array('id_pegawai'=>$id_pegawai, 'tahun' => 2021));
+							$this->db->delete('tr_survey_diklat20jp',array('id_pegawai'=>$id_pegawai, 'tahun' => 2022));
 				}
 				 	// echo '<script language="javascript">';
 			// echo 'alert("diklat20jpok")';
@@ -1225,7 +1225,7 @@ class Mdashboard extends CI_Model
 		$sql = "SELECT 
 						n_kualifikasi+n_diklat_pim+n_diklat_jafung+n_diklat_20jp+n_seminar+n_penilaian_kinerja+n_hukuman_disiplin AS nilai_totalip 
 				FROM tr_survey_ip 
-				WHERE tahun = 2021
+				WHERE tahun = 2022
 				AND id_pegawai = '".$this->session->userdata('sesUser')."' ";
 	 	$query = $this->db->query($sql);
 	 	if($query->num_rows() > 0)

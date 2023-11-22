@@ -319,7 +319,7 @@ class Mskp extends CI_Model
 					ON a.jenis_skp = c.id
 					LEFT OUTER JOIN mr_skp_satuan d
 					ON a.target_output = d.id
-					WHERE (a.tahun = ".$tahun." or a.tahun = 2022)
+					WHERE (a.tahun = ".$tahun.")
 					AND a.id_pegawai = '".$id_pegawai."'
 					".$query_2."					
 					AND a.status <> '99'
@@ -333,7 +333,216 @@ class Mskp extends CI_Model
 		}
 		else
 		{
-			return 0;
+			$sql     = "SELECT a.*,
+							b.*,
+							COALESCE(c.nama,'-') as `nama_jenis_skp`,
+							COALESCE(
+								(
+									SELECT aa.nama
+									FROM mr_skp_jenis aa
+									WHERE aa.id = b.edit_jenis_skp
+								),'-'
+							) as `edit_nama_jenis_skp`,
+							COALESCE(
+								(
+									SELECT
+										bb.nama
+									FROM
+										mr_skp_satuan bb
+									WHERE
+										bb.id = b.edit_target_output
+								),'-'
+							) AS `edit_target_output_name`,
+							COALESCE(
+								(
+									SELECT
+										cc.kegiatan
+									FROM
+										mr_skp_master cc
+									WHERE
+										cc.id_skp = a.id_skp_master
+								),'-'
+							) AS `kegiatan_skp`,
+							COALESCE(
+								(
+									SELECT
+										cc.status
+									FROM
+										mr_skp_master cc
+									WHERE
+										cc.id_skp = a.id_skp_master
+								),'-'
+							) AS `kegiatan_skp_status`,							
+							COALESCE(
+								(
+									SELECT
+										jfu.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu`,
+							COALESCE(
+								(
+									SELECT
+										jfu.status
+									FROM
+									mr_jabatan_fungsional_umum_uraian_tugas jfu
+									WHERE
+										jfu.id = a.id_skp_jfu
+								),'-'
+							) AS `kegiatan_skp_jfu_status`,							
+							COALESCE(
+								(
+									SELECT
+										jft.uraian_tugas
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft`,	
+							COALESCE(
+								(
+									SELECT
+										jft.status
+									FROM
+									mr_jabatan_fungsional_tertentu_uraian_tugas jft
+									WHERE
+										jft.id = a.id_skp_jft
+								),'-'
+							) AS `kegiatan_skp_jft_status`,																					
+							COALESCE(d.nama,'-') as `target_output_name`
+							".$SELECT."
+					FROM mr_skp_pegawai a
+					LEFT OUTER JOIN mr_skp_pegawai_temp b
+					ON a.skp_id = b.edit_skp_id
+					LEFT OUTER JOIN mr_skp_jenis c
+					ON a.jenis_skp = c.id
+					LEFT OUTER JOIN mr_skp_satuan d
+					ON a.target_output = d.id
+					WHERE a.tahun = 2022
+					AND a.id_pegawai = '".$id_pegawai."'
+					".$query_2."					
+					AND a.status <> '99'
+					".$query_1."
+					ORDER BY a.PK DESC, a.audit_time DESC, a.audit_priority ASC";
+		// print_r($sql);die();
+		$query2 = $this->db->query($sql);
+			//return 0;
+			if($query2->num_rows() > 0)
+			{
+				return $query2->result();
+			}else
+			{
+				//return 0;
+						$sql     = "SELECT a.*,
+									b.*,
+									COALESCE(c.nama,'-') as `nama_jenis_skp`,
+									COALESCE(
+										(
+											SELECT aa.nama
+											FROM mr_skp_jenis aa
+											WHERE aa.id = b.edit_jenis_skp
+										),'-'
+									) as `edit_nama_jenis_skp`,
+									COALESCE(
+										(
+											SELECT
+												bb.nama
+											FROM
+												mr_skp_satuan bb
+											WHERE
+												bb.id = b.edit_target_output
+										),'-'
+									) AS `edit_target_output_name`,
+									COALESCE(
+										(
+											SELECT
+												cc.kegiatan
+											FROM
+												mr_skp_master cc
+											WHERE
+												cc.id_skp = a.id_skp_master
+										),'-'
+									) AS `kegiatan_skp`,
+									COALESCE(
+										(
+											SELECT
+												cc.status
+											FROM
+												mr_skp_master cc
+											WHERE
+												cc.id_skp = a.id_skp_master
+										),'-'
+									) AS `kegiatan_skp_status`,							
+									COALESCE(
+										(
+											SELECT
+												jfu.uraian_tugas
+											FROM
+											mr_jabatan_fungsional_umum_uraian_tugas jfu
+											WHERE
+												jfu.id = a.id_skp_jfu
+										),'-'
+									) AS `kegiatan_skp_jfu`,
+									COALESCE(
+										(
+											SELECT
+												jfu.status
+											FROM
+											mr_jabatan_fungsional_umum_uraian_tugas jfu
+											WHERE
+												jfu.id = a.id_skp_jfu
+										),'-'
+									) AS `kegiatan_skp_jfu_status`,							
+									COALESCE(
+										(
+											SELECT
+												jft.uraian_tugas
+											FROM
+											mr_jabatan_fungsional_tertentu_uraian_tugas jft
+											WHERE
+												jft.id = a.id_skp_jft
+										),'-'
+									) AS `kegiatan_skp_jft`,	
+									COALESCE(
+										(
+											SELECT
+												jft.status
+											FROM
+											mr_jabatan_fungsional_tertentu_uraian_tugas jft
+											WHERE
+												jft.id = a.id_skp_jft
+										),'-'
+									) AS `kegiatan_skp_jft_status`,																					
+									COALESCE(d.nama,'-') as `target_output_name`
+									".$SELECT."
+							FROM mr_skp_pegawai a
+							LEFT OUTER JOIN mr_skp_pegawai_temp b
+							ON a.skp_id = b.edit_skp_id
+							LEFT OUTER JOIN mr_skp_jenis c
+							ON a.jenis_skp = c.id
+							LEFT OUTER JOIN mr_skp_satuan d
+							ON a.target_output = d.id
+							WHERE a.tahun = 2021
+							AND a.id_pegawai = '".$id_pegawai."'
+							".$query_2."					
+							AND a.status <> '99'
+							".$query_1."
+							ORDER BY a.PK DESC, a.audit_time DESC, a.audit_priority ASC";
+				// print_r($sql);die();
+				$query3 = $this->db->query($sql);
+					//return 0;
+					if($query3->num_rows() > 0)
+					{
+						return $query3->result();
+					}else
+					{
+						return 0;
+					}
+			}
 		}
 	}
 
