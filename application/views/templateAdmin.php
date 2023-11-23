@@ -55,7 +55,7 @@
 .footer-icon > i
 {
   background: #fff;
-  color: #00a7d0;
+  color: #063a69;
   padding: 10px;
   border-radius: 50%;
   font-size: 15px;
@@ -280,13 +280,13 @@ $(document).click(function(e) {
         <i class="fa fa-comment" aria-hidden="true"></i>
     </button>     -->
 
-    <footer class="main-footer" style="margin-left:0px;background-color: #00a7d0;padding:15px;">
+    <footer class="main-footer" style="margin-left:0px;background-color: #063a69;padding:15px;">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4 text-center" style="font-size:20px;color:#00a7d0;">
+                <div class="col-lg-4 text-center" style="font-size:20px;color:#063a69;">
                     &nbsp;
                 </div>
-                <div class="col-lg-4 text-center" style="font-size:20px;color:#00a7d0;">
+                <div class="col-lg-4 text-center" style="font-size:20px;color:#063a69;">
                     <a href="" class="footer-icon"><i class="fa fa-chrome"></i></a>
                     <a href="" class="footer-icon"><i class="fa fa-instagram"></i></a>
                     <a href="" class="footer-icon"><i class="fa fa-twitter"></i></a>

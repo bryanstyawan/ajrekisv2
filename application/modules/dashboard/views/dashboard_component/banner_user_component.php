@@ -6,7 +6,7 @@
         }
     ?>        
     <div class="col-md-12 box box-widget widget-user" style="padding:0px;">
-        <div class="widget-user-header bg-aqua-active text-center" style="left:43%!important;">
+        <div class="widget-user-header bg-aqua-active text-center" style="left:43%!important;background-color: #063a69 !important">
             <?php
                 $photo = $this->session->userdata('photo');
                 if ($photo == '-') {
@@ -36,9 +36,9 @@
         <div class="widget-user-header" style="height: 100%;max-height: 100%;">
             <h3 class="widget-user-username text-center" style="margin-top:10px;margin-bottom:15px;"><?php echo $nama_pegawai;?></h3>
             <h5 class="widget-user-desc text-center" style="margin-bottom: 15px;"><?php echo $nama_jabatan;?></h5>
-            <a class="btn btn-info" href="<?php echo site_url();?>transaksi/home2/add"><i class="fa fa-plus"></i> Tambah Data Kinerja</a>
+            <a class="btn btn-info" href="<?php echo site_url();?>transaksi/home2/add" style="background-color: #f2c217;"><i class="fa fa-plus"></i> Tambah Data Kinerja</a>
             <!-- <a class="btn btn-info" href="<?php echo site_url();?>transaksi/home/add"><i class="fa fa-plus"></i> Tambah Data Kinerja</a>                         -->
-            <a class="btn btn-md bg-purple color-palette pull-right" href="<?=site_url();?>user/info"><i class="fa fa-gear"></i> Data Pribadi</a>
+            <a class="btn btn-md color-palette pull-right" style="background-color: #f2c217;color:#fff" href="<?=site_url();?>user/info"><i class="fa fa-gear"></i> Data Pribadi</a>
         </div>        
     </div>
 </div>

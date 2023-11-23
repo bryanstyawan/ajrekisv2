@@ -26,17 +26,17 @@ class Dashboard extends CI_Controller {
 			// # code...
 			// redirect('/surveyKP');											
 		// }
-		$checkSurvey = $this->Globalrules->getSurvey()->result_array();
-		if (count($checkSurvey) == 0) {
-			# code...
-			if ($this->session->userdata('sesEs1') != 0) {
-				# code...
-				if ($this->session->userdata('sesEs2') != 0) {
-					# code...
-					redirect('/survey-kepegawaian');											
-				}
-			}
-		}
+		// $checkSurvey = $this->Globalrules->getSurvey()->result_array();
+		// if (count($checkSurvey) == 0) {
+		// 	# code...
+		// 	if ($this->session->userdata('sesEs1') != 0) {
+		// 		# code...
+		// 		if ($this->session->userdata('sesEs2') != 0) {
+		// 			# code...
+		// 			redirect('/survey-kepegawaian');											
+		// 		}
+		// 	}
+		// }
 		
 		
 		

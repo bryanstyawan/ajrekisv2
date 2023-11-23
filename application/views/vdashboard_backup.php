@@ -315,7 +315,7 @@ if ($infoPegawai != 0 || $infoPegawai != '') {
 
     <div class="col-lg-2 col-xs-8 tour-step tour4 btn-show-stat shrink" id="btn_perlu_direvisi">
 
-        <div class="small-box bg-aqua" style="background-color: #9C27B0 !important;">
+        <div class="small-box bg-aqua" style="background-color: #063a69 !important;">
             <div class="inner">
               <?php
                 $prosentase = "";

@@ -87,11 +87,6 @@ if ($this->session->userdata('sesPosisi') != 0)
                 
             </div>    
             <?php
-            // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
-            ?>
-        </div>
-            
-        <?php
         $this->load->view('dashboard_component/common_component',array(
             'class'     => 'col-lg-2 col-xs-8',
             'id'        => 'btn_masih_diproses',
@@ -139,7 +134,13 @@ if ($this->session->userdata('sesPosisi') != 0)
         //     'icon'      => '',
         //     'value_php' => $fingerprint,
         //     'title'     => 'FINGERPRINT', 
-        //     'html'      => "<label id='total_tunjangan_' />"));
+        //     'html'      => "<label id='total_tunjangan_' />"));            
+            // $this->load->view('dashboard_component/chart_pencapaian_menit_efektif_component',array('data_value'=>$data_value,'data_bulan'=>$data_bulan));                    
+            ?>
+        </div>
+            
+        <?php
+
     ?>
     </div>
     <?php

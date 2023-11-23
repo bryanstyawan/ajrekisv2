@@ -114,7 +114,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_masih_diproses',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #00a7d0;','value'=>''),
+        'icon'      => array('name'=>'fa fa-hourglass-end','style'=>'background-color: #063a69;','value'=>''),
         'value_php' => $belum_diperiksa,
         'title'     => 'PEKERJAAN BELUM DIPERIKSA',
         'html'      => ''));
@@ -130,7 +130,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => 'btn_tunjangan',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'Rp'),
+        'icon'      => array('name'=>'','style'=>'background-color: #063a69;font-size: 43px;','value'=>'Rp'),
         'value_php' => number_format($real_tunjangan_rpt),
         'title'     => 'TUNJANGAN',
         'html'      => ''));
@@ -146,7 +146,7 @@ if ($this->session->userdata('sesPosisi') != 0)
         'class'     => 'col-lg-3 col-xs-8',
         'id'        => '',
         'color_box' => 'background-color: #d2d6de !important;',
-        'icon'      => array('name'=>'','style'=>'background-color: #00a7d0;font-size: 43px;','value'=>'%'),
+        'icon'      => array('name'=>'','style'=>'background-color: #063a69;font-size: 43px;','value'=>'%'),
         'value_php' => $skp['persentase_target_realisasi']->persentase,
         'title'     => 'CAPAIAN SKP',
         'html'      => "<label>".$skp['persentase_target_realisasi']->total_realisasi_kuantitas.' / '.$skp['persentase_target_realisasi']->total_target_kuantitas."</label>"));                                        
